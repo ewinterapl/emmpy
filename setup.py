@@ -19,4 +19,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    tests_require=['nose'],
+    test_suite='nose.collector',
 )

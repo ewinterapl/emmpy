@@ -1,51 +1,215 @@
+# A weakly immutable 3-dimensional vector designed to properly support a writable subclass.
+# <p>
+# <b>Note:</b>Subclass implementers, you should only use the protected fields in this class to
+# store the contents of the vector components, otherwise all of the methods here and in the
+# operations class may break.
+# </p>
+# <p>
+# The basic data fields on this class are marked as protected to allow direct access to them
+# through subclassing. This will get around any performance issues that one may have in using this
+# vector arithmetic toolkit due to the enforcement of access to the component values through
+# accessor methods.
+# </p>
+# <p>
+# Note, the equals and hashcode implementations in this class support proper comparisons between
+# subclasses of this class and this class. The reason this works, is because by design the only
+# member variables of this class live in the parent class. If one subclasses this class and defines
+# additional members then this will most certainly break the implementation presented here.
+# </p>
+#
+# @author F.S.Turner
+
+from math import asin, pi
+
+from emmpy.crucible.core.math.vectorspace.internaloperations import InternalOperations
+from emmpy.crucible.core.units.fundamentalphysicalconstants import FundamentalPhysicalConstants
+from emmpy.com.google.common.base.preconditions import Preconditions
+
 class UnwritableVectorIJK:
 
     def __init__(self, *args):
         if len(args) == 1:
-            # List or tuple of >=3 doubles
-            if isinstance(args[0], (list, tuple)):
-                self.i = args[0][0]
-                self.j = args[0][1]
-                self.k = args[0][2]
-            # Copy constructor
+            if isinstance(args[0], list):
+                # Constructs a vector from the first three elements of an array of doubles.
+                # @param data the array of doubles
+                data = args[0]
+                self.__init__(data[0], data[1], data[2])
             elif isinstance(args[0], UnwritableVectorIJK):
-                self.i = args[0].i
-                self.j = args[0].j
-                self.k = args[0].k
+                # Copy constructor, creates a vector by copying the values of a pre-existing one.
+                # @param vector the vector whose contents are to be copied
+                vector = args[0]
+                self.__init__(vector.i, vector.j, vector.k)
             else:
                 # Throw exception
-                pass
+                raise Exception
         elif len(args) == 2:
-            # Offset and array of >=3 doubles
-            # Copy and scale
-            pass
+            if isinstance(args[0], int) and isinstance(args[1], list):
+                # Constructs a vector from the three elements of an array of double starting with the offset index.
+                # @param offset index into the data array to copy into the ith component.
+                # @param data the array of doubles
+                (offset, data) = args
+                self.__init__(data[offset], data[offset + 1], data[offset + 2])
+            elif (isinstance(args[0], int) or isinstance(args[0], float)) and isinstance(args[1], UnwritableVectorIJK):
+                # Scaling constructor, creates a new vector by applying a scalar multiple to the components of a
+                # pre-existing vector.
+                # @param scale the scale factor to apply
+                # @param vector the vector whose contents are to be scaled
+                (scale, vector) = args
+                self.__init__(scale*vector.i, scale*vector.j, scale*vector.k)
+            else:
+                # Throw exception
+                raise Exception
         elif len(args) == 3:
-            # 3 numbers
-            self.i = args[0]
-            self.j = args[1]
-            self.k = args[2]
+            # Constructs a vector from the three basic components.
+            # @param i the ith component
+            # @param j the jth component
+            # @param k the kth component
+            (i, j, k) = args
+            # The ith component of the vector, synonymous with the &quot;X-axis&quot;.
+            self.i = i
+            # The jth component of the vector, synonymous with the &quot;Y-axis&quot;.
+            self.j = j
+            # The kth component of the vector, synonymous with the &quot;Z-axis&quot;.
+            self.k = k
         else:
             # Throw exception
-            pass
+            raise Exception
 
-        # createUnitized()
-        # createNegated()
-        # createScaled()
-        # getI()
-        # getJ()
-        # getK()
-        # get(i)
-        # getLength()
-        # getDot()
-        # getSeparation()
-        # getSeparationOutOfPlane()
-        # copyOf()
-        # hashCode()
-        # equals()
-        # toString()
+    # Creates a new, unit length copy of the existing vector.
+    # <p>
+    # This code is just a convenience method that implements:
+    # <code>new UnwritableVectorIJK(1.0/this.getLength(), this)</code> in a safe manner.
+    # </p>
+    # @return a vector of unit length in the direction of the instance
+    # @throws UnsupportedOperationException if the instance vector has zero length.
+    def createUnitized(self):
+        norm = self.getLength()
+        if norm > 0.0:
+            return UnwritableVectorIJK(1.0 / norm, self)
+        raise Exception("Unable to unitize. Supplied vector has zero length.")
 
-if __name__ == '__main__':
-    v = UnwritableVectorIJK([1, 2, 3])
-    # self.assertEqual(v.i, 1.0)
-    # self.assertEqual(v.j, 2.0)
-    # self.assertEqual(v.k, 3.0)
+    #
+    # Creates a new, negated copy of an the existing vector.
+    # <p>
+    # Convenience method for: <code>new UnwritableVectorIJK(-1.0, this)</code>.
+    # </p>
+    #
+    # @return the negated vector, -this.
+    #
+    def createNegated(self):
+        return UnwritableVectorIJK(-1.0, self)
+
+    #
+    # Creates a new, scaled copy of an the existing vector by applying a scalar multiple to the
+    # components.
+    # <p>
+    # Convenience method for: <code>new UnwritableVectorIJK(scale, this)</code>.
+    # </p>
+    # 
+    # @param scale the scale factor to apply
+    # @return the scaled vector, scale*this.
+    #
+    def createScaled(self, scale):
+        return UnwritableVectorIJK(scale, self)
+
+    #
+    # Gets the ith component.
+    #
+    # @return the ith component.
+    #
+    def getI(self):
+        return self.i
+
+    #
+    # Gets the jth component.
+    #
+    # @return the jth component.
+    #
+    def getJ(self):
+        return self.j
+
+    #
+    # Gets the kth component.
+    #
+    # @return the kth component.
+    #
+    def getK(self):
+        return self.k
+
+    #
+    # Retrieves the specified component of the vector.
+    # 
+    # @param index the index of the component to retrieve. 0 = ith, 1 = jth, 2 = kth.
+    # 
+    # @return the value for the requested component
+    # 
+    # @throws IndexOutOfBoundsException if an invalid index, outside the range [0,2], is specified.
+    #
+    def get(self, index):
+        Preconditions.checkElementIndex(index, 3, "component")
+        if index == 0:
+            return self.i
+        elif index == 1:
+            return self.j
+        elif index == 2:
+            return self.k
+        else:
+            raise Exception
+
+    #
+    # Computes the standard L-2 norm, or length, of the vector.
+    #
+    # @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
+    #
+    def getLength(self):
+        return InternalOperations.computeNorm(self.i, self.j, self.k)
+
+    #
+    # Compute the dot product of this instance with another vector.
+    # 
+    # @param vector the vector to dot against the instance.
+    # 
+    # @return i*vector.i + j*vector.j + k*vector.k
+    #
+    def getDot(self, vector):
+        return self.i * vector.i + self.j * vector.j + self.k * vector.k
+
+    #
+    # Compute the angular separation in radians between this instance and another vector.
+    # 
+    # @param vector
+    # 
+    # @return the angular separation between vector and this instance in radians.
+    # 
+    # @throws UnsupportedOperationException if either this instance or the supplied vector are
+    #         {@link VectorIJK#ZERO}
+    #
+    def getSeparation(self, vector):
+        thisNorm = self.getLength()
+        vectorNorm = vector.getLength()
+
+        if thisNorm == 0.0:
+            raise Exception("Unable to compute angular separation. " + "This vector is the zero vector.")
+        elif vectorNorm == 0.0:
+            raise Exception("Unable to compute angular separation. " + "The argument supplied is the zero vector.")
+
+        dotProduct = self.getDot(vector)
+
+        if dotProduct > 0:
+            x = self.i / thisNorm - vector.i / vectorNorm
+            y = self.j / thisNorm - vector.j / vectorNorm
+            z = self.k / thisNorm - vector.k / vectorNorm
+            return 2.0 * asin(0.5 * InternalOperations.computeNorm(x, y, z))
+        elif dotProduct < 0:
+            x = self.i / thisNorm + vector.i / vectorNorm
+            y = self.j / thisNorm + vector.j / vectorNorm
+            z = self.k / thisNorm + vector.k / vectorNorm
+            return pi - 2.0 * asin(0.5 * InternalOperations.computeNorm(x, y, z))
+
+        return FundamentalPhysicalConstants.HALFPI
+
+    # getSeparationOutOfPlane()
+    # copyOf()
+    # hashCode()
+    # equals()
+    # toString()

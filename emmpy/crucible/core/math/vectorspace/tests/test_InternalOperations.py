@@ -13,5 +13,8 @@ class TestInternalOperations(unittest.TestCase):
     def test_computeNorm(self):
         self.assertTrue(np.isclose(InternalOperations.computeNorm(1, 1, 1), sqrt(3)))
 
+    def test_checkRotation(self):
+        InternalOperations.checkRotation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
 if __name__ == '__main__':
     unittest.main()

@@ -45,4 +45,52 @@ class InternalOperations:
 
         # Since we're trying to avoid overflow in the square root:
         return max * sqrt(i * i + j * j + k * k)
-#com.google.common.base.Preconditions.checkElementIndex
+
+    #   /**
+    #    * Determine if the components of a three by three matrix constitute a rotation.
+    #    * 
+    #    * @param ii ith row, ith column element
+    #    * @param ji jth row, ith column element
+    #    * @param ki kth row, ith column element
+    #    * @param ij ith row, jth column element
+    #    * @param jj jth row, jth column element
+    #    * @param kj kth row, jth column element
+    #    * @param ik ith row, kth column element
+    #    * @param jk jth row, kth column element
+    #    * @param kk kth row, kth column element
+    #    * @param normTolerance tolerance off of unity for the magnitude of the column vectors
+    #    * @param detTolerance tolerance off of unity for the determinant of the matrix
+    #    * 
+    #    * @throws MalformedRotationException if the supplied components do not adequately describe a
+    #    *         rotation given the supplied tolerances
+    #    */
+    @classmethod
+    def checkRotation(cls, ii, ji, ki, ij, jj, kj, ik, jk, kk, normTolerance, detTolerance):
+        #       throws MalformedRotationException {
+
+        testVal = cls.computeNorm(ii, ji, ki)
+        if (testVal < 1.0 - normTolerance) or (testVal > 1.0 + normTolerance):
+            raise Exception("Matrix's ith column is not sufficiently close to unit length.")
+            # throw new MalformedRotationException(
+                # "Matrix's ith column is not sufficiently close to unit length.");
+
+        #     testVal = computeNorm(ij, jj, kj);
+        #     if ((testVal < 1.0 - normTolerance) || (testVal > 1.0 + normTolerance)) {
+        #       throw new MalformedRotationException(
+        #           "Matrix's jth column is not sufficiently close to unit length.");
+        #     }
+
+        #     testVal = computeNorm(ik, jk, kk);
+        #     if ((testVal < 1.0 - normTolerance) || (testVal > 1.0 + normTolerance)) {
+        #       throw new MalformedRotationException(
+        #           "Matrix's kth column is not sufficiently close to unit length.");
+        #     }
+
+        #     testVal = computeDeterminant(ii, ji, ki, ij, jj, kj, ik, jk, kk);
+
+        #     if ((testVal < 1.0 - detTolerance) || (testVal > 1.0 + detTolerance)) {
+        #       throw new MalformedRotationException(
+        #           "Matrix's determinant is not sufficiently close to unity.");
+        #     }
+
+        #   }

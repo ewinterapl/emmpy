@@ -25,7 +25,6 @@ class InterfaceTemplate:
     
     Based on the original Java interface:
     XXX.XXX.XXX
-
     """
 
     def __init__(self):

@@ -1,9 +1,20 @@
+""" Python port of the Preconditions Java class from Google Guava.
+
+Classes
+-------
+Preconditions
+    Provides data validation functions.
+"""
+
+
 class Preconditions:
 
     """Preconditions
 
     Based on the original Java Preconditions class documented at:
     https://guava.dev/releases/19.0/api/docs/com/google/common/base/Preconditions.html
+
+    This class provides static methods which implement data validation.
     """
 
     @staticmethod

@@ -1,4 +1,8 @@
 """com
 
-Python port of original Java classes from the com hierarchy.
+Python port of Java classes from the com hierarchy.
+
+Modules
+-------
+google
 """

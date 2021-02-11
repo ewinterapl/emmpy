@@ -1,6 +1,8 @@
 """google
 
-Python port of the original Java classes from the Google Guava package:
+Python port of Java classes from the com.google hierarchy.
 
-https://guava.dev/releases/8.0/api/docs/overview-summary.html
+Modules
+-------
+common
 """

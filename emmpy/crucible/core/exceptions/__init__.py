@@ -1,0 +1,26 @@
+"""Package containing general exceptions presented by the crucible library.
+
+This package contains the parent classes of exception classes created in
+support of the crucible library. In general, exceptions contained within
+the library should descend from either CrucibleException or
+CrucibleRuntimeException.
+
+This will allow developers utilizing the library the ability to trap
+exceptions specific to crucible itself without much difficulty.
+
+@crucible.reliability reliable
+@crucible.volatility semistable
+@crucible.disclosure group
+
+@see crucible.core.exceptions.CrucibleException
+@see crucible.core.exceptions.CrucibleRuntimeException
+
+Modules
+-------
+bugexception.py
+crucibleexception.py
+crucibleruntimeexception.py
+exceptionfactory.py
+functionevaluationexception.py
+runtimeinterruptedexception.py
+"""

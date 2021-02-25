@@ -1,4 +1,9 @@
-"""crucible
+"""emmpy.crucible
 
-Python port of Java 8 version of the APL Crucible package.
+Python port of Java classes from the crucible hierarchy.
+
+Packages
+--------
+core
+crust
 """

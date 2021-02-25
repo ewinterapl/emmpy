@@ -1,6 +1,9 @@
 import unittest
 
-from emmpy.crucible.core.collections.abstractindexediterator import AbstractIndexedIterator
+from emmpy.crucible.core.collections.abstractindexediterator import (
+    AbstractIndexedIterator
+)
+
 
 class TestBuilder(unittest.TestCase):
 
@@ -24,7 +27,7 @@ class TestBuilder(unittest.TestCase):
     def test_element(self):
         with self.assertRaises(Exception):
             AbstractIndexedIterator().element(0)
-    
+
 
 if __name__ == '__main__':
     unittest.main()

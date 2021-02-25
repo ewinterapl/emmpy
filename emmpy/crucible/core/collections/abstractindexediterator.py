@@ -1,4 +1,4 @@
-"""Python port of the Java class
+"""Python port of the Java abstract class
 crucible.core.collections.AbstractIndexedIterator
 
 Classes
@@ -8,7 +8,14 @@ AbstractIndexedIterator
 """
 
 
-from emmpy.com.google.common.collect.unmodifiableiterator import UnmodifiableIterator
+# from emmpy.java.util.iterator import Iterator
+from emmpy.com.google.common.collect.unmodifiableiterator import (
+    UnmodifiableIterator
+)
+from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
+    CrucibleRuntimeException
+)
+from emmpy.java.util.nosuchelementexception import NoSuchElementException
 
 
 class AbstractIndexedIterator(UnmodifiableIterator):
@@ -24,12 +31,13 @@ class AbstractIndexedIterator(UnmodifiableIterator):
     From the original Java file:
 
     /**
-    * Simple abstract class that implements the {@link Iterator} interface from a source that is
-    * organized by index. Simply supply implementations for the two abstract methods and you'll have an
-    * {@link Iterator} that works properly.
-    * 
+    * Simple abstract class that implements the {@link Iterator} interface
+    * from a source that is organized by index. Simply supply implementations
+    * for the two abstract methods and you'll have an {@link Iterator} that
+    * works properly.
+    *
     * @author F.S.Turner
-    * 
+    *
     * @param <E> the element over which iteration is to be performed
     */
     """
@@ -41,58 +49,59 @@ class AbstractIndexedIterator(UnmodifiableIterator):
         ----------
         self : AbstractIndexedIterator
             Current object
-        
+
         Returns
         -------
         self : AbstractIndexedIterator
             Current object
         """
-        self.index = 0
+        self.__index = 0
 
-    def hasNext(self):
+    def hasNext(self) -> bool:
         """Check if there are elements remaining.
 
         Parameters
         ----------
         self : AbstractIndexedIterator
             Current object
-        
+
         Returns
         -------
         bool
             True if elements remain, else False.
         """
-        return self.index < self.elements()
+        return self.__index < self.elements()
 
-    def next(self):
+    def next(self) -> object:
         """Return the next element.
 
         Parameters
         ----------
         self : AbstractIndexedIterator
             Current object
-        
+
         Returns
         -------
         object
             Next object in list.
         """
-        if self.index < self.elements():
+        if self.__index < self.elements():
             # Post-increment index after retrieval.
-            e = self.element(index)
-            self.index = self.index + 1
+            e = self.element(self.__index)
+            self.__index += 1
             return e
-        raise Exception("Unable to access element at index:" + self.index
-                    + "from indexed elements of length:" + self.elements());
+        raise NoSuchElementException(
+            "Unable to access element at index:" + self.__index
+            + "from indexed elements of length:" + self.elements())
 
-    def elements(self):
+    def elements(self) -> int:
         """Provide the number of elements in the indexed list.
 
         Parameters
         ----------
         self : AbstractIndexedIterator
             Current object
-        
+
         Returns
         -------
         int
@@ -103,9 +112,9 @@ class AbstractIndexedIterator(UnmodifiableIterator):
         Exception
             When called.
         """
-        raise Exception
+        raise CrucibleRuntimeException
 
-    def element(self, index):
+    def element(self, index) -> object:
         """Supplies the element associated with a particular index in the
         range [0, elements()-1] respectively.
 
@@ -115,7 +124,7 @@ class AbstractIndexedIterator(UnmodifiableIterator):
             Current object
         index : int
             Index of element to return.
-        
+
         Returns
         -------
         object
@@ -126,4 +135,4 @@ class AbstractIndexedIterator(UnmodifiableIterator):
         Exception
             If called.
         """
-        raise Exception
+        raise CrucibleRuntimeException

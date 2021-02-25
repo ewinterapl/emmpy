@@ -10,5 +10,4 @@ geomagmodel
 java
 magmodel
 templates
-tests
 """

@@ -1,4 +1,4 @@
-"""tests
+"""emmpy.com.google.common.base.tests
 
 Tests for the Python port of Java classes from the com.google.common.base
 hierarchy in the Google Guava package:

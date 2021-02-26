@@ -1,4 +1,4 @@
-""" Python port of the Preconditions Java class from Google Guava.
+"""Python port of the Preconditions Java class from Google Guava.
 
 Classes
 -------
@@ -17,7 +17,7 @@ class Preconditions:
     """
 
     @staticmethod
-    def checkArgument(b, s=None, *args):
+    def checkArgument(b: bool, s: str=None, *args) -> None:
         """Verify that a condition is True.
 
         If the first argument is True, do nothing. If the first argument is
@@ -52,7 +52,7 @@ class Preconditions:
                 raise Exception
 
     @staticmethod
-    def checkElementIndex(i, n, s=None):
+    def checkElementIndex(i: int, n: int, s: str=None) -> None:
         """Verify that a sequence index is within range.
 
         If the index is within the specified range, return the index.
@@ -82,7 +82,7 @@ class Preconditions:
         return i
 
     @staticmethod
-    def checkNotNull(o, s=None, *args):
+    def checkNotNull(o: object, s: str=None, *args) -> None:
         """Verify that an object is not null (None).
 
         If the object is not None, return it. If the object is None, raise an

@@ -24,7 +24,7 @@ class UnmodifiableIterator:
         ----------
         self : UnmodifiableIterator
             New object to initialize.
-        
+
         Returns
         -------
         self : UnmodifiableIterator
@@ -41,7 +41,7 @@ class UnmodifiableIterator:
         ----------
         self : UnmodifiableIterator
             Object to remove item from.
-        
+
         Returns
         -------
         None

@@ -1,17 +1,6 @@
-"""collections
+"""emmpy.crucible.core.collections
 
 Python port of Java classes from the crucible.core.collections hierarchy.
-
-Modules
--------
-abstractindexediterator.py
-abstractreadonlylist.py
-abstractsequentialreadonlylist.py
-arrayutilities.py
-basicreference.py
-collectionutilities.py
-indexrange.py
-reference.py
 
 From the original package-info.java:
 
@@ -35,4 +24,19 @@ iterator that only presents elements that pass the filter.
 @crucible.disclosure group
 
 package crucible.core.collections;
+
+Modules
+-------
+abstractindexediterator.py
+abstractreadonlylist.py
+abstractsequentialreadonlylist.py
+arrayutilities.py
+basicreference.py
+collectionutilities.py
+indexrange.py
+reference.py
+
+Packages
+--------
+tests
 """

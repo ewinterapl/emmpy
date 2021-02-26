@@ -1,4 +1,8 @@
-"""tests
+"""empy.crucible.core.math.tests
 
-Tests for the python port of Java 8 version of the APL Crucible package.
+Tests for Python port of Java classes from the crucible.core.math hierarchy.
+
+Modules
+-------
+test_CrucibleMath.py
 """

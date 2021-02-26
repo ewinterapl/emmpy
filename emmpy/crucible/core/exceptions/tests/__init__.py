@@ -1,4 +1,7 @@
-"""Tests for package emmpy.crucible.core.exceptions
+"""emmpy.crucible.core.exceptions.tests
+
+Tests for Python port of Java classes from the crucible.core.exceptions
+hierarchy.
 
 Modules
 -------

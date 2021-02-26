@@ -1,4 +1,14 @@
-"""math
+"""empy.crucible.core.math
 
-Python port of Java 8 version of the APL Crucible package.
+Python port of Java classes from the crucible.core.math hierarchy.
+
+Packages
+--------
+coords
+functions
+intervals
+modeling
+tests
+vectorfields
+vectorspace
 """

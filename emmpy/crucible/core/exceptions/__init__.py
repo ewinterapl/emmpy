@@ -1,4 +1,8 @@
-"""Package containing general exceptions presented by the crucible library.
+"""emmpy.crucible.core.exceptions
+
+Python port of Java classes from the crucible.core.exceptions hierarchy.
+
+From the original package-info.java:
 
 This package contains the parent classes of exception classes created in
 support of the crucible library. In general, exceptions contained within

@@ -8,7 +8,6 @@ Preconditions
 
 
 class Preconditions:
-
     """Preconditions
 
     Based on the original Java Preconditions class documented at:
@@ -33,7 +32,7 @@ class Preconditions:
             First element is a string. Remaining (optional) elements are
             substituted into the first argument, treating it as a format
             string.
-        
+
         Returns
         -------
         None

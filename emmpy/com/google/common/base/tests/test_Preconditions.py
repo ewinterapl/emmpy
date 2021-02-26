@@ -2,6 +2,7 @@ import unittest
 
 from emmpy.com.google.common.base.preconditions import Preconditions
 
+
 class TestPreconditions(unittest.TestCase):
 
     def test_checkArgument(self):
@@ -34,6 +35,7 @@ class TestPreconditions(unittest.TestCase):
         with self.assertRaises(Exception) as cm:
             Preconditions.checkNotNull(None, '%s %s None.', 'This', 'is')
             self.assertEqual(cm.exception.__str__(), 'This is None.')
+
 
 if __name__ == '__main__':
     unittest.main()

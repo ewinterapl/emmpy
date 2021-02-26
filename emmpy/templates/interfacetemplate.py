@@ -1,4 +1,4 @@
-""" Template for a Python module implementing a port of a Java interface file.
+"""Template for a Python module implementing a port of a Java interface file.
 
 From PEP 257:
 https://www.python.org/dev/peps/pep-0257/#multi-line-docstrings
@@ -22,7 +22,7 @@ class InterfaceTemplate:
     """InterfaceTemplate
 
     A Python interface template ...
-    
+
     Based on the original Java interface:
     XXX.XXX.XXX
     """
@@ -43,7 +43,7 @@ class InterfaceTemplate:
         ----------
         self : InterfaceTemplate
             New object to initialize.
-        
+
         Returns
         -------
         self : InterfaceTemplate

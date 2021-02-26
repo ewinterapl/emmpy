@@ -1,13 +1,12 @@
 """emmpy.templates
 
-Templates for Java files ported to Python
+Python port of Java classes from the XXX hierarchy.
 
 Modules
 -------
-classtemplate
-interfacetemplate
+XXX
 
 Packages
 --------
-tests
+XXX
 """

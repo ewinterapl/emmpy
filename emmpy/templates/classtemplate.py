@@ -1,4 +1,4 @@
-""" Template for a Python module implementing a port of a Java class.
+"""Template for a Python module implementing a port of a Java class.
 
 From PEP 257:
 https://www.python.org/dev/peps/pep-0257/#multi-line-docstrings
@@ -22,7 +22,7 @@ class ClassTemplate:
     """ClassTemplate
 
     A Python class template ...
-    
+
     Based on the original Java class:
     XXX.XXX.XXX
     """
@@ -40,7 +40,7 @@ class ClassTemplate:
         ----------
         self : ClassTemplate
             New object to initialize.
-        
+
         Returns
         -------
         self : ClassTemplate

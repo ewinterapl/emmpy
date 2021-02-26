@@ -1,6 +1,6 @@
 """emmpy.java
 
-Python equivalents of standard Java 8 classes.
+Python port of Java classes from the java hierarchy.
 
 Packages
 --------

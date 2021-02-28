@@ -2,7 +2,18 @@ import unittest
 
 from emmpy.crucible.core.math.cruciblemath import CrucibleMath
 
+
 class TestCrucibleMath(unittest.TestCase):
+
+    def test___init__(self):
+        with self.assertRaises(Exception):
+            CrucibleMath()
+
+    def test_useJdkMath(self):
+        CrucibleMath.useJdkMath()
+
+    def test_useFastMath(self):
+        CrucibleMath.useFastMath()
 
     def test_sin(self):
         self.assertAlmostEqual(CrucibleMath.sin(0), 0)
@@ -44,7 +55,8 @@ class TestCrucibleMath(unittest.TestCase):
         self.assertAlmostEqual(CrucibleMath.cbrt(8), 2)
 
     def test_IEEEremainder(self):
-        pass
+        with self.assertRaises(Exception):
+            CrucibleMath.IEEEremainder(0, 0)
 
     def test_ceil(self):
         self.assertAlmostEqual(CrucibleMath.ceil(1.5), 2)
@@ -71,7 +83,8 @@ class TestCrucibleMath(unittest.TestCase):
         self.assertEqual(CrucibleMath.min(1, 2), 1)
 
     def test_ulp(self):
-        pass
+        with self.assertRaises(Exception):
+            CrucibleMath.ulp(0)
 
     def test_signum(self):
         self.assertAlmostEqual(CrucibleMath.signum(1), 1)
@@ -99,6 +112,7 @@ class TestCrucibleMath(unittest.TestCase):
 
     def test_rint(self):
         self.assertAlmostEqual(CrucibleMath.rint(0.5), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

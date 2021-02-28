@@ -2,6 +2,10 @@
 
 Python port of Java classes from the crucible.core.math hierarchy.
 
+Modules
+-------
+cruciblemath.py
+
 Packages
 --------
 coords

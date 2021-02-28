@@ -1,4 +1,4 @@
-"""empy.crucible.core.math.vectorspace
+"""emmpy.crucible.core.math.vectorspace
 
 Python port of Java classes from the crucible.core.math.vectorspace hierarchy.
 

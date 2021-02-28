@@ -17,7 +17,7 @@ class Builder:
         ----------
         self : Builder
             New object to initialize.
-        
+
         Returns
         -------
         self : Builder
@@ -37,7 +37,7 @@ class Builder:
         ----------
         self : Builder
             This Builder object.
-        
+
         Returns
         -------
         None

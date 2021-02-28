@@ -2,7 +2,7 @@
 
 Python port of Java classes from the crucible.core hierarchy.
 
-Paclages
+Packages
 --------
 collections
 data

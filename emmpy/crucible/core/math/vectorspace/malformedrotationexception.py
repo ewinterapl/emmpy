@@ -1,30 +1,23 @@
-# package crucible.core.math.vectorspace;
+"""malformedrotationexception.py
+"""
 
-# /**
-#  * Simple exception that indicates the specification of a rotation matrix is invalid.
-#  * 
-#  * @author F.S.Turner
-#  */
 
 class MalformedRotationException(Exception):
+    """Simple exception that indicates the specification of a rotation matrix
+    is invalid.
 
-    #   /**
-    #    * Default serialization ID.
-    #    */
+    @author F.S.Turner
+    """
+
+    # Default serialization ID.
     serialVersionUID = 1
 
-    #   public MalformedRotationException() {}
-
-    #   public MalformedRotationException(String message) {
-    #     super(message);
-    #   }
-
-    #   public MalformedRotationException(Throwable cause) {
-    #     super(cause);
-    #   }
-
-    #   public MalformedRotationException(String message, Throwable cause) {
-    #     super(message, cause);
-    #   }
-
-    # }
+    def __init__(self, *args):
+        if len(args) == 0:
+            pass
+        elif len(args) == 1:
+            Exception(self, args[0])
+        elif len(args) == 2:
+            Exception(self, args[0], args[1])
+        else:
+            raise Exception

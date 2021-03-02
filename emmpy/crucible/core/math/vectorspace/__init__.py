@@ -6,7 +6,15 @@ Modules
 -------
 internaloperations.py
 malformedrotationexception.py
+matrixij.py
+matrixijk.py
+rotationmatrixijk.py
+unwritablematrixij.py
+unwritablematrixijk.py
+unwritablevectorij.py
 unwritablevectorijk.py
+vectorij.py
+vectorijk.py
 
 Packages
 --------

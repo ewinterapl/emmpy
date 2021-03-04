@@ -18,6 +18,7 @@ from emmpy.java.lang.double import Double
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableVectorIJ:
@@ -52,16 +53,16 @@ class UnwritableVectorIJ:
                 # Constructs a vector from the first two elements of an array
                 # of doubles.
                 (data,) = args
-                UnwritableVectorIJ.__init__(self, data[0], data[1])
+                self.__init__(data[0], data[1])
             elif isinstance(args[0], UnwritableVectorIJ):
                 # Copy constructor, creates a vector by copying the values of a
                 # pre-existing one.
-                (vector, ) = args
-                UnwritableVectorIJ.__init__(self, vector.i, vector.j)
+                (vector,) = args
+                self.__init__(vector.i, vector.j)
             else:
                 raise CrucibleRuntimeException
         elif len(args) == 2:
-            if isinstance(args[0], float) and isinstance(args[1], float):
+            if isRealNumber(args[0]) and isRealNumber(args[1]):
                 # Basic 2-element constructor
                 (i, j) = args
                 # The ith component of the vector, synonymous with the X-axis.
@@ -72,15 +73,13 @@ class UnwritableVectorIJ:
                 # Constructs a vector from the two elements of an array of
                 # double starting with the offset index.
                 (offset, data) = args
-                UnwritableVectorIJ.__init__(self, data[offset],
-                                            data[offset + 1])
-            elif isinstance(args[0], float) and isinstance(args[1],
-                                                           UnwritableVectorIJ):
+                self.__init__(data[offset], data[offset + 1])
+            elif isRealNumber(args[0]) and isinstance(args[1],
+                                                      UnwritableVectorIJ):
                 # Scaling constructor, creates a new vector by applying a
                 # scalar multiple to the components of a pre-existing vector.
                 (scale, vector) = args
-                UnwritableVectorIJ.__init__(self, scale*vector.i,
-                                            scale*vector.j)
+                self.__init__(scale*vector.i, scale*vector.j)
             else:
                 raise CrucibleRuntimeException
         else:
@@ -112,7 +111,7 @@ class UnwritableVectorIJ:
 
         @return the negated vector, -this.
         """
-        return UnwritableVectorIJ(-1.0, self)
+        return UnwritableVectorIJ(-1, self)
 
     def getI(self) -> float:
         """Gets the ith component.

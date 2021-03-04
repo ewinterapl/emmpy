@@ -31,6 +31,7 @@ from emmpy.crucible.core.units.fundamentalphysicalconstants import (
     FundamentalPhysicalConstants
 )
 from emmpy.java.lang.double import Double
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableVectorIJK:
@@ -61,8 +62,8 @@ class UnwritableVectorIJK:
                 # @param data the array of doubles
                 (offset, data) = args
                 self.__init__(data[offset], data[offset + 1], data[offset + 2])
-            elif ((isinstance(args[0], int) or isinstance(args[0], float))
-                  and isinstance(args[1], UnwritableVectorIJK)):
+            elif isRealNumber(args[0]) and isinstance(args[1],
+                                                      UnwritableVectorIJK):
                 # Scaling constructor, creates a new vector by applying a
                 # scalar multiple to the components of a pre-existing vector.
                 # @param scale the scale factor to apply
@@ -109,7 +110,7 @@ class UnwritableVectorIJK:
 
         @return the negated vector, -this.
         """
-        return UnwritableVectorIJK(-1.0, self)
+        return UnwritableVectorIJK(-1, self)
 
     def createScaled(self, scale: float):
         """Creates a new, scaled copy of an the existing vector by applying a

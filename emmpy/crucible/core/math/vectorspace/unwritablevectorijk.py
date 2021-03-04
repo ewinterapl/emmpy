@@ -23,13 +23,14 @@ this will most certainly break the implementation presented here.
 
 from math import asin, pi
 
+from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     InternalOperations
 )
 from emmpy.crucible.core.units.fundamentalphysicalconstants import (
     FundamentalPhysicalConstants
 )
-from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.java.lang.double import Double
 
 
 class UnwritableVectorIJK:
@@ -251,17 +252,15 @@ class UnwritableVectorIJK:
 
     def hashCode(self) -> int:
         """Compute the hash code.
-
-        NEED TO COMPLETE THIS.
         """
-        # prime = 31
+        prime = 31
         result = 1
-        # temp = Double.doubleToLongBits(i)
-        # result = prime * result + (int) (temp ^ (temp >>> 32))
-        # temp = Double.doubleToLongBits(j)
-        # result = prime * result + (int) (temp ^ (temp >>> 32))
-        # temp = Double.doubleToLongBits(k)
-        # result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(self.i)
+        result = prime*result + temp ^ (temp >> 32)
+        temp = Double.doubleToLongBits(self.j)
+        result = prime*result + temp ^ (temp >> 32)
+        temp = Double.doubleToLongBits(self.k)
+        result = prime*result + temp ^ (temp >> 32)
         return result
 
     def equals(self, obj) -> bool:

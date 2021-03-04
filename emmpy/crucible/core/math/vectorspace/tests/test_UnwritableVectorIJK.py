@@ -102,8 +102,7 @@ class TestUnwritableVectorIJK(unittest.TestCase):
 
     def test_hashCode(self):
         v = UnwritableVectorIJK(1, 1, 1)
-        # NEED ACTUAL TEST HERE.
-        self.assertEqual(v.hashCode(), 1)
+        self.assertEqual(v.hashCode(), 1057895773279)
 
     def test_equals(self):
         v = UnwritableVectorIJK(1, 1, 1)

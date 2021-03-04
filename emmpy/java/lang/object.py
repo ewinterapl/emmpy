@@ -1,1 +1,2 @@
-class Object: pass
+class Object:
+    pass

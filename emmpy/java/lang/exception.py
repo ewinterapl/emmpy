@@ -1,3 +1,5 @@
 from emmpy.java.lang.throwable import Throwable
 
-class Exception(Throwable): pass
+
+class Exception(Throwable):
+    pass

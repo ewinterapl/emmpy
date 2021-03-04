@@ -4,6 +4,7 @@ Python port of Java classes from the java.lang hierarchy.
 
 Modules
 -------
+double.py
 exception.py
 indexoutofboundsexception.py
 object.py

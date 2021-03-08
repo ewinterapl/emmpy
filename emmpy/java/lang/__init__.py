@@ -6,6 +6,7 @@ Modules
 -------
 double.py
 exception.py
+illegalargumentexception.py
 indexoutofboundsexception.py
 object.py
 runtimeexception.py

@@ -6,6 +6,7 @@ Modules
 -------
 test_Double.py
 test_Exception.py
+test_IllegalArgumentException.py
 test_IndexOutOfBoundsException.py
 test_Object.py
 test_RuntimeException.py

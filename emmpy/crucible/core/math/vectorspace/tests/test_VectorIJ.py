@@ -3,10 +3,9 @@ from math import sqrt
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
-class TestUnwritableVectorIJ(unittest.TestCase):
+class TestVectorIJ(unittest.TestCase):
 
     def test___init__(self):
         vij = VectorIJ()

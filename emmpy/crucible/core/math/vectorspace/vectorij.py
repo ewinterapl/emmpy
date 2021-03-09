@@ -30,30 +30,21 @@ class VectorIJ(UnwritableVectorIJ):
 
     @author G.K.Stephens copy and extension of F.S.Turner
     """
-    #   /**
-    #    * The ZERO vector.
-    #    */
-    #   public static final UnwritableVectorIJ ZERO = new UnwritableVectorIJ(0, 0);
 
-    #   /**
-    #    * The I basis vector: (1,0).
-    #    */
-    #   public static final UnwritableVectorIJ I = new UnwritableVectorIJ(1, 0);
+    # The ZERO vector.
+    ZERO = UnwritableVectorIJ(0, 0)
 
-    #   /**
-    #    * The J basis vector: (0,1).
-    #    */
-    #   public static final UnwritableVectorIJ J = new UnwritableVectorIJ(0, 1);
+    # The I basis vector: (1,0).
+    I = new UnwritableVectorIJ(1, 0)
 
-    #   /**
-    #    * The negative of the I basis vector: (-1,0).
-    #    */
-    #   public static final UnwritableVectorIJ MINUS_I = new UnwritableVectorIJ(-1, 0);
+    # The J basis vector: (0,1).
+    J = new UnwritableVectorIJ(0, 1)
 
-    #   /**
-    #    * The negative of the J basis vector: (0,-1).
-    #    */
-    #   public static final UnwritableVectorIJ MINUS_J = new UnwritableVectorIJ(0, -1);
+    # The negative of the I basis vector: (-1,0).
+    MINUS_I = new UnwritableVectorIJ(-1, 0)
+
+    # The negative of the J basis vector: (0,-1).
+    MINUS_J = new UnwritableVectorIJ(0, -1)
 
     def __init__(self, *args):
         """Constructor"""

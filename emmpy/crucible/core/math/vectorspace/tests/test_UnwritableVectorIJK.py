@@ -86,14 +86,13 @@ class TestUnwritableVectorIJK(unittest.TestCase):
     def test_getSeparation(self):
         v = UnwritableVectorIJK(1, 1, 1)
         v2 = UnwritableVectorIJK(2, 1, 1)
-        v.getSeparation(v2)
-        # ADD CHECK CODE FOR THIS VALUE.
+        self.assertAlmostEqual(v.getSeparation(v2), 0.33983690945412204)
 
     def test_getSeparationOutOfPlane(self):
         v = UnwritableVectorIJK(1, 1, 1)
         v2 = UnwritableVectorIJK(2, 1, 1)
-        v.getSeparationOutOfPlane(v2)
-        # ADD CHECK CODE FOR THIS VALUE.
+        self.assertAlmostEqual(v.getSeparationOutOfPlane(v2),
+                               1.2309594173407745)
 
     def test_copyOf(self):
         v = UnwritableVectorIJK(1, 1, 1)

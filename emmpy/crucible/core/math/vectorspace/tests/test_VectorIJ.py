@@ -118,16 +118,11 @@ class TestVectorIJ(unittest.TestCase):
         self.assertAlmostEqual(vij2.j, -2)
 
     def test_asVectorIJK(self):
-        vij = VectorIJ(1.1, 2.2)
-        # vijk = vij.asVectorIJK()
-        # self.assertAlmostEqual(vijk.i, 1.1)
-        # self.assertAlmostEqual(vijk.j, 2.2)
-        # self.assertEqual(vijk.k, 0)
-        # vijk1 = VectorIJK(4.4, 5.5, 6.6)
-        # vijk2 = vij.asVectorIJK(vijk1)
-        # self.assertAlmostEqual(vijk2.i, 1.1)
-        # self.assertAlmostEqual(vijk2.j, 2.2)
-        # self.assertEqual(vijk2.k, 0)
+        v1 = VectorIJ(1.1, 2.2)
+        v2 = v1.asVectorIJK()
+        self.assertAlmostEqual(v2.i, 1.1)
+        self.assertAlmostEqual(v2.j, 2.2)
+        self.assertAlmostEqual(v2.k, 0)
 
     def test_lineProject(self):
         vij1 = VectorIJ(1, 1)
@@ -157,18 +152,18 @@ class TestVectorIJ(unittest.TestCase):
     def test_uCross(self):
         vij1 = VectorIJ(1, 0)
         vij2 = VectorIJ(0, 1)
-        # vijk = VectorIJ.uCross(vij1, vij2)
-        # self.assertAlmostEqual(vijk.i, 0)
-        # self.assertAlmostEqual(vijk.j, 0)
-        # self.assertAlmostEqual(vijk.k, 1)
+        vijk = VectorIJ.uCross(vij1, vij2)
+        self.assertAlmostEqual(vijk.i, 0)
+        self.assertAlmostEqual(vijk.j, 0)
+        self.assertAlmostEqual(vijk.k, 1)
 
     def test_cross(self):
         vij1 = VectorIJ(1, 0)
         vij2 = VectorIJ(0, 1)
-        # vijk = VectorIJ.cross(vij1, vij2)
-        # self.assertAlmostEqual(vijk.i, 0)
-        # self.assertAlmostEqual(vijk.j, 0)
-        # self.assertAlmostEqual(vijk.k, 1)
+        vijk = VectorIJ.cross(vij1, vij2)
+        self.assertAlmostEqual(vijk.i, 0)
+        self.assertAlmostEqual(vijk.j, 0)
+        self.assertAlmostEqual(vijk.k, 1)
 
     def test_subtract(self):
         vij1 = VectorIJ(1, 1)

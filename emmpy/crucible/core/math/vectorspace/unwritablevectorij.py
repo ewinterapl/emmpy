@@ -152,7 +152,6 @@ class UnwritableVectorIJ:
         """Compute the dot product of this instance with another vector.
 
         @param vector the vector to dot against the instance.
-
         @return i*vector.i + j*vector.j + k*vector.k
         """
         return self.i*vector.i + self.j*vector.j

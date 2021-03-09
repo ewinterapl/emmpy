@@ -93,7 +93,6 @@ class UnwritableVectorIJ:
         in a safe manner.
 
         @return a vector of unit length in the direction of the instance
-
         @throws UnsupportedOperationException if the instance vector has zero
         length.
         """
@@ -101,8 +100,7 @@ class UnwritableVectorIJ:
         if norm > 0.0:
             return UnwritableVectorIJ(1.0/norm, self)
         raise UnsupportedOperationException(
-            "Unable to unitize. Supplied vector has zero length."
-        )
+            "Unable to unitize. Supplied vector has zero length.")
 
     def createNegated(self):
         """Creates a new, negated copy of an the existing vector.
@@ -131,9 +129,7 @@ class UnwritableVectorIJ:
         """Get the specified component of the vector.
 
         @param index the index of the component to retrieve. 0 = ith, 1 = jth.
-
         @return the value from the requested component
-
         @throws IndexOutOfBoundsException if an invalid index, outside the
         range [0,1], is specified.
         """
@@ -166,10 +162,8 @@ class UnwritableVectorIJ:
         another vector.
 
         @param vector
-
         @return the angular separation between vector and this instance in
         radians.
-
         @throws UnsupportedOperationException if either this instance or the
         supplied vector are {@link VectorIJ#ZERO}
         """
@@ -204,7 +198,6 @@ class UnwritableVectorIJ:
         avoid making a copy wherever possible.
 
         @param vector a vector to copy.
-
         @return either a reference to vector (if vector is already only an
         instance of {@link UnwritableVectorIJ}, otherwise an unwritable copy
         of vector's contents

@@ -114,13 +114,13 @@ class VectorIJK(UnwritableVectorIJK):
         """
         return VectorIJK(self).negate()
 
-    def createScaled(self, scale):
+    def createScaled(self, scale: float):
         """Note: this method is overridden to return an instance of the
         writable subclass rather than the unwritable parent.
         """
         return VectorIJK(self).scale(scale)
 
-    def scale(self, scale_):
+    def scale(self, scale_: float):
         """Scale the vector.
         @param scale the scale factor to apply.
         @return a reference to the instance for convenience, which now contains
@@ -166,25 +166,25 @@ class VectorIJK(UnwritableVectorIJK):
         self.k = 0.0
         return self
 
-    def setI(self, i):
+    def setI(self, i: float):
         """Sets the ith component of the vector.
         @param i the ith component
         """
         self.i = i
 
-    def setJ(self, j):
+    def setJ(self, j: float):
         """Sets the jth component of the vector.
         @param j the jth component
         """
         self.j = j
 
-    def setK(self, k):
+    def setK(self, k: float):
         """Sets the kth component of the vector.
         @param k the kth component
         """
         self.k = k
 
-    def set(self, index, value):
+    def set(self, index: int, value: float):
         """Sets the specified component of the vector to a supplied value.
         @param index the index of the component to set. 0 = ith, 1 = jth,
         2 = kth.

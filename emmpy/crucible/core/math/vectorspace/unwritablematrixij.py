@@ -19,7 +19,7 @@ from emmpy.java.lang.unsupportedoperationexception import (
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class UnwritableMatrixIJ():
+class UnwritableMatrixIJ:
     """A weakly immutable 2-dimensional matrix designed to properly support
     several writable subclasses.
 
@@ -111,8 +111,8 @@ class UnwritableMatrixIJ():
                 # Column vector constructor, creates a new matrix by populating
                 # the columns of the matrix with the supplied vectors.
                 (ithColumn, jthColumn) = args
-                self.__init__(ithColumn.i, ithColumn.j, jthColumn.i,
-                              jthColumn.j)
+                self.__init__(ithColumn.i, ithColumn.j,
+                              jthColumn.i, jthColumn.j)
         elif len(args) == 3:
             # Column scaling constructor, creates a new matrix by applying
             # scalar multiples to the columns of a pre-existing matrix.
@@ -133,9 +133,8 @@ class UnwritableMatrixIJ():
                 # populating the columns of the matrix with scaled versions of
                 # the supplied vectors.
                 (scaleI, ithColumn, scaleJ, jthColumn) = args
-                UnwritableMatrixIJ.__init__(self,
-                    scaleI*ithColumn.i, scaleI*ithColumn.j,
-                    scaleJ*jthColumn.i, scaleJ*jthColumn.j)
+                self.__init__(scaleI*ithColumn.i, scaleI*ithColumn.j,
+                              scaleJ*jthColumn.i, scaleJ*jthColumn.j)
 
     def createTranspose(self):
         """Creates a new, transposed copy of the existing matrix.

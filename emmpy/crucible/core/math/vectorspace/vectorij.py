@@ -2,7 +2,9 @@
 """
 
 
-from emmpy.crucible.core.exceptions.crucibleruntimeexception import CrucibleRuntimeException
+from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
+    CrucibleRuntimeException
+)
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     InternalOperations
@@ -10,11 +12,13 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
 from emmpy.utilities.isrealnumber import isRealNumber
+
 
 class VectorIJ(UnwritableVectorIJ):
     """Writable subclass of the unwritable 2D vector parent completing the
@@ -35,16 +39,16 @@ class VectorIJ(UnwritableVectorIJ):
     ZERO = UnwritableVectorIJ(0, 0)
 
     # The I basis vector: (1,0).
-    I = new UnwritableVectorIJ(1, 0)
+    I = UnwritableVectorIJ(1, 0)
 
     # The J basis vector: (0,1).
-    J = new UnwritableVectorIJ(0, 1)
+    J = UnwritableVectorIJ(0, 1)
 
     # The negative of the I basis vector: (-1,0).
-    MINUS_I = new UnwritableVectorIJ(-1, 0)
+    MINUS_I = UnwritableVectorIJ(-1, 0)
 
     # The negative of the J basis vector: (0,-1).
-    MINUS_J = new UnwritableVectorIJ(0, -1)
+    MINUS_J = UnwritableVectorIJ(0, -1)
 
     def __init__(self, *args):
         """Constructor"""
@@ -93,8 +97,9 @@ class VectorIJ(UnwritableVectorIJ):
         writable subclass rather than the unwritable parent."""
         return VectorIJ(self).negate()
 
-    def scale(self, scale):
+    def scale(self, scale: float):
         """Scale the vector.
+
         @param scale the scale factor to apply.
         @return a reference to the instance for convenience, which now contains
         (scale*this)
@@ -105,6 +110,7 @@ class VectorIJ(UnwritableVectorIJ):
 
     def unitize(self):
         """Unitize the vector.
+
         @return a reference to the instance for convenience, which now contains
         a vector of unit length in the direction of the original vector.
         @throws UnsupportedOperationException if the vector is equal to
@@ -120,6 +126,7 @@ class VectorIJ(UnwritableVectorIJ):
 
     def negate(self):
         """Negate the vector.
+
         @return a reference to the instance, now containing -vector.
         """
         self.i *= -1
@@ -128,6 +135,7 @@ class VectorIJ(UnwritableVectorIJ):
 
     def clear(self):
         """Clear the vector.
+
         @return a reference to the instance, now containing
         {@link VectorIJ#ZERO}
         """
@@ -135,20 +143,23 @@ class VectorIJ(UnwritableVectorIJ):
         self.j = 0
         return self
 
-    def setI(self, i):
+    def setI(self, i: float):
         """Sets the ith component of the vector.
+
         @param i the ith component
         """
         self.i = i
 
-    def setJ(self, j):
+    def setJ(self, j: float):
         """Sets the jth component of the vector.
+
         @param j the jth component
         """
         self.j = j
 
-    def set(self, index, value):
+    def set(self, index: int, value: float):
         """Sets the specified component of the vector to a supplied value.
+
         @param index the index of the component to set. 0 = ith, 1 = jth.
         @param value the value with which to replace the specified component
         @throws IndexOutOfBoundsException if an invalid index, outside the
@@ -353,7 +364,8 @@ class VectorIJ(UnwritableVectorIJ):
         @param c the third vector
         @param buffer the buffer to receive the results of the combination
 
-        @return a new <code>VectorIJ</code> which now contains ( scaleA*a + scaleB*b + scaleC*c )
+        @return a new <code>VectorIJ</code> which now contains
+        ( scaleA*a + scaleB*b + scaleC*c )
 
         @see combine
         """
@@ -429,7 +441,7 @@ class VectorIJ(UnwritableVectorIJ):
         """
         if len(args) == 2:
             (a, b) = args
-            return VectorIJ.cross(a, b, VectorIJK)
+            return VectorIJ.cross(a, b, VectorIJK())
         elif len(args) == 3:
             (a, b, buffer) = args
             ti = 0.0

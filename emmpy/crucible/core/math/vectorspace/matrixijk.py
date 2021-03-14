@@ -10,18 +10,17 @@ internals of the parent classes fields.
 """
 
 
-# from emmpy.crucible.core.math.vectorspace.internaloperations import (
-#     InternalOperations
-# )
-from emmpy.crucible.core.math.vectorspace.internaloperations import InternalOperations
+from emmpy.crucible.core.math.vectorspace.internaloperations import (
+    InternalOperations
+)
 from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
 )
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-#     UnwritableVectorIJK
-# )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-# from emmpy.utilities.isrealnumber import isRealNumber
+from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
+from emmpy.java.lang.unsupportedoperationexception import (
+    UnsupportedOperationException
+)
 
 
 class MatrixIJK(UnwritableMatrixIJK):
@@ -94,7 +93,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param kthColumn the vector containing the kth column
             (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
             UnwritableMatrixIJK.__init__(
-                self,scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn)
+                self, scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn)
         elif len(args) == 9:
             # Constructs a matrix from the nine basic components.
             # @param ii ith row, ith column element
@@ -194,7 +193,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             if abs(det) < tolerance:
                 raise UnsupportedOperationException(
                     "Matrix nearly singular, unable to invert.")
-            cii = (self.jj *self.kk - self.kj*self.jk)/det
+            cii = (self.jj*self.kk - self.kj*self.jk)/det
             cij = -(self.ij*self.kk - self.kj*self.ik)/det
             cik = (self.ij*self.jk - self.jj*self.ik)/det
             cji = -(self.ji*self.kk - self.ki*self.jk)/det
@@ -556,10 +555,10 @@ class MatrixIJK(UnwritableMatrixIJK):
         """Sets the matrix components to the inverse of the supplied matrix."""
         if len(args) == 1:
             # @param matrix the matrix to invert
-            # @return a reference to the instance containing the inverse of matrix
-            # for convenience
-            # @throws IllegalArgumentException if the determinant of matrix is within
-            # {@link UnwritableMatrixIJK#INVERSION_TOLERANCE} of 0.0.
+            # @return a reference to the instance containing the inverse of
+            # matrix for convenience
+            # @throws IllegalArgumentException if the determinant of matrix is
+            # within {@link UnwritableMatrixIJK#INVERSION_TOLERANCE} of 0.0.
             (matrix,) = args
             det = matrix.getDeterminant()
             if abs(det) < UnwritableMatrixIJK.DETERMINANT_TOLERANCE:
@@ -576,6 +575,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # matrix for convenience
             # @throws IllegalArgumentException if the determinant of matrix is
             # within tolerance of 0.0.
+            (matrix, tolerance) = args
             det = matrix.getDeterminant()
             if abs(det) < tolerance:
                 raise IllegalArgumentException(
@@ -719,7 +719,8 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param b right hand matrix to transpose in the first product
             # @param c left hand matrix in the second product
             # @param d right hand matrix to transpose in the second product
-            # @return a new <code>MatrixIJK</code> containing (a x bt) + (c x dt)
+            # @return a new <code>MatrixIJK</code> containing
+            # (a x bt) + (c x dt)
             # @see MatrixIJK#mxmtadd(UnwritableMatrixIJK, UnwritableMatrixIJK,
             # UnwritableMatrixIJK, UnwritableMatrixIJK, MatrixIJK)
             (a, b, c, d) = args
@@ -881,7 +882,8 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param b the subtrahend matrix
             # @param buffer the buffer to receive the results of the
             # subtraction
-            # @return a reference to buffer for convenience which now contains (a - b)
+            # @return a reference to buffer for convenience which now contains
+            # (a - b)
             (a, b, buffer) = args
             buffer.ii = a.ii - b.ii
             buffer.ji = a.ji - b.ji

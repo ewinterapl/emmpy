@@ -6,4 +6,8 @@ hierarchy.
 Modules
 -------
 ts07equatorialmagneticfieldbuilder.py
+
+Packages
+--------
+tests
 """

@@ -5,4 +5,9 @@ hierarchy.
 
 Modules
 -------
+ts07equatorialvariablecoefficients.py
+
+Packages
+--------
+test
 """

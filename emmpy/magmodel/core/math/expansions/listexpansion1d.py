@@ -8,15 +8,12 @@ from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 class ListExpansion1D(Expansion1D):
     """ListExpansion1D"""
 
-    #   private final ImmutableList<? extends T> list;
-    #   private final int firstRadialExpansionNumber;
-    #   private final int lastRadialExpansionNumber;
-
     def __init__(self, aList, firstRadialExpansionNumber):
         """Constructor"""
         self.list = Preconditions.checkNotNull(aList)
         self.firstRadialExpansionNumber = firstRadialExpansionNumber
-        self.lastRadialExpansionNumber = firstRadialExpansionNumber + len(aList) - 1
+        self.lastRadialExpansionNumber = (
+            firstRadialExpansionNumber + len(aList) - 1)
 
     def getLowerBoundIndex(self):
         return self.firstRadialExpansionNumber

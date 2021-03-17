@@ -62,4 +62,3 @@ class CoefficientExpansion2D:
         index T<sub>ij</sub>
         """
         raise Exception
-

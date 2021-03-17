@@ -1,7 +1,5 @@
 """emmpy.magmodel.core.math.expansions.expansion1d"""
 
-# import java.util.List;
-# import crucible.core.math.vectorspace.VectorIJK;
 
 class Expansion1D:
     """An interface representing an arbitrary series expansion, that starts at

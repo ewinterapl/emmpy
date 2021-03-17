@@ -8,7 +8,7 @@ from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        c = ArrayCoefficientExpansion1D([0], 0)
+        ArrayCoefficientExpansion1D([0], 0)
 
     def test_getLowerBoundIndex(self):
         c = ArrayCoefficientExpansion1D([0], 0)

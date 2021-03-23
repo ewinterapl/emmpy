@@ -53,6 +53,12 @@ class CoefficientExpansion2DView:
     def getJUpperBoundIndex(self):
         return self.e.getJUpperBoundIndex()
 
+    def iSize(self):
+        return self.e.iSize()
+
+    def jSize(self):
+        return self.e.jSize()
+
     def getCoefficient(self, iIndex, jIndex):
         return self.e.getCoefficient(iIndex, jIndex)
 

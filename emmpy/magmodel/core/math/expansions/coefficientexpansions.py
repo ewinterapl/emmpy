@@ -162,9 +162,11 @@ class CoefficientExpansions:
                 lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber
                 + 1
             )
+            arr = []
+            for i in range(na):
+                arr.append([None]*nr)
             p = ArrayCoefficientExpansion2D(
-                [[None]*nr]*na, firstAzimuthalExpansionNumber,
-                firstRadialExpansionNumber
+                arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
             )
 
             # Create a view object to wrap the expansion.
@@ -246,9 +248,11 @@ class CoefficientExpansions:
                 lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber
                 + 1
             )
+            arr = []
+            for i in range(na):
+                arr.append([None]*nr)
             p = ArrayCoefficientExpansion2D(
-                [[None]*nr]*na, firstAzimuthalExpansionNumber,
-                firstRadialExpansionNumber
+                arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
             )
 
             # Create a view object to wrap the expansion.
@@ -307,8 +311,11 @@ class CoefficientExpansions:
             lastRadialExpansion = a.getJUpperBoundIndex()
             na = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
             nr = lastRadialExpansion - firstRadialExpansion + 1
+            arr = []
+            for i in range(na):
+                arr.append([None]*nr)
             p = ArrayCoefficientExpansion2D(
-                [[None]*nr]*na, firstAzimuthalExpansion, firstRadialExpansion
+                arr, firstAzimuthalExpansion, firstRadialExpansion
             )
             v = CoefficientExpansion2DView(p)
             v.getCoefficient = (
@@ -338,8 +345,11 @@ class CoefficientExpansions:
         # Create a dummy expansion of the appropriate size.
         nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
         na = abs(firstAzimuthalExpansionNumber)
+        arr = []
+        for i in range(na):
+            arr.append([None]*nr)
         p = ArrayCoefficientExpansion2D(
-            [[None]*nr]*na, firstAzimuthalExpansionNumber,
+            arr, firstAzimuthalExpansionNumber,
             firstRadialExpansionNumber
         )
 

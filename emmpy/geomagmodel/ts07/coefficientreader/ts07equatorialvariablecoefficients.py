@@ -1,179 +1,147 @@
 """emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 """
 
-# package geomagmodel.ts07.coefficientreader;
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static com.google.common.base.Preconditions.checkNotNull;
+from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
+    Ts07EquatorialLinearCoefficients
+)
+from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
+    Ts07EquatorialLinearCoefficients
+)
+from emmpy.java.lang.double import Double
+from emmpy.utilities.isrealnumber import isRealNumber
 
-# import java.util.List;
-
-# import com.google.common.collect.Lists;
 
 class Ts07EquatorialVariableCoefficients:
-    pass
+    """Ts07EquatorialVariableCoefficients
 
-    # /**
-    #  * 
-    #  * @author G.K.Stephens
-    #  *
-    #  */
-    # public class Ts07EquatorialVariableCoefficients {
+    @author G.K.Stephens
+    """
 
-    #   private final List<Double> currThicks;
-    #   private final double hingeDist;
-    #   private final double warpingParam;
-    #   private final double twistParam;
-    #   private final List<Ts07EquatorialLinearCoefficients> equatorialLinearCoeffs;
+    def __init__(self, currThicks, hingeDist, warpingParam, twistParam,
+                 equatorialLinearCoeffs):
+        """Constructor"""
+        if (isRealNumber(currThicks) and isRealNumber(hingeDist) and
+            isRealNumber(warpingParam) and isRealNumber(twistParam) and
+            isinstance(equatorialLinearCoeffs, list)):
+            # @param currThicks
+            # @param hingeDist
+            # @param warpingParam
+            # @param twistParam
+            # @param equatorialLinearCoeffs
+            self.currThicks = [currThicks]
+            self.hingeDist = hingeDist
+            self.warpingParam = warpingParam
+            self.twistParam = twistParam
+            self.equatorialLinearCoeffs = Preconditions.checkNotNull(equatorialLinearCoeffs)
+        elif isinstance(currThicks, list):
+            # @param currThicks
+            # @param hingeDist
+            # @param warpingParam
+            # @param twistParam
+            # @param equatorialLinearCoeffs
+            # The current sheet thickness and the number of sets of linear
+            # coeffs must be the same size.
+            Preconditions.checkArgument(len(currThicks) == len(equatorialLinearCoeffs),
+                "The number of current sheet thickness must be the same number"
+                "of current sheet linear expansions")
+            self.currThicks = Preconditions.checkNotNull(currThicks)
+            self.hingeDist = hingeDist
+            self.warpingParam = warpingParam
+            self.twistParam = twistParam
+            self.equatorialLinearCoeffs = (
+                Preconditions.checkNotNull(equatorialLinearCoeffs)
+            )
 
-    #   /**
-    #    * 
-    #    * @param currThick
-    #    * @param hingeDist
-    #    * @param warpingParam
-    #    * @param twistParam
-    #    * @param equatorialLinearCoeffs
-    #    */
-    #   public Ts07EquatorialVariableCoefficients(double currThick, double hingeDist, double warpingParam,
-    #       double twistParam, Ts07EquatorialLinearCoefficients equatorialLinearCoeffs) {
-    #     super();
-    #     this.currThicks = Lists.newArrayList(checkNotNull(currThick));
-    #     this.hingeDist = hingeDist;
-    #     this.warpingParam = warpingParam;
-    #     this.twistParam = twistParam;
-    #     this.equatorialLinearCoeffs = Lists.newArrayList(checkNotNull(equatorialLinearCoeffs));
-    #   }
+    def getCurrThicks(self):
+        return self.currThicks
 
-    #   /**
-    #    * 
-    #    * @param currThicks
-    #    * @param hingeDist
-    #    * @param warpingParam
-    #    * @param twistParam
-    #    * @param equatorialLinearCoeffs
-    #    */
-    #   public Ts07EquatorialVariableCoefficients(List<Double> currThicks, double hingeDist,
-    #       double warpingParam, double twistParam,
-    #       List<Ts07EquatorialLinearCoefficients> equatorialLinearCoeffs) {
-    #     super();
+    def getHingeDistance(self):
+        return self.hingeDist
 
-    #     // the current sheet thickness and the number of sets of linear coeffs must be the same size
-    #     checkArgument(currThicks.size() == equatorialLinearCoeffs.size(),
-    #         "The number of current sheet thickness must be the same number of current sheet linear expansions");
+    def getWarpingParam(self):
+        return self.warpingParam
 
-    #     this.currThicks = checkNotNull(currThicks);
-    #     this.hingeDist = hingeDist;
-    #     this.warpingParam = warpingParam;
-    #     this.twistParam = twistParam;
-    #     this.equatorialLinearCoeffs = checkNotNull(equatorialLinearCoeffs);
-    #   }
+    def getTwistParam(self):
+        return self.twistParam
 
-    #   public List<Double> getCurrThicks() {
-    #     return currThicks;
-    #   }
+    def getLinearCoeffs(self):
+        return self.equatorialLinearCoeffs
 
-    #   public double getHingeDistance() {
-    #     return hingeDist;
-    #   }
+    def getTotalNumberOfParameters(self):
+        return (self.getTotalNumberOfLinearParameters() +
+                self.getTotalNumberOfNonLinearParameters())
 
-    #   public double getWarpingParam() {
-    #     return warpingParam;
-    #   }
+    def getTotalNumberOfLinearParameters(self):
+        numLinear = 0
 
-    #   public double getTwistParam() {
-    #     return twistParam;
-    #   }
+        # loop through all the linear parameters and add them up
+        for lin in self.equatorialLinearCoeffs:
+            m = lin.getNumAzimuthalExpansions()
+            n = lin.getNumRadialExpansions()
+            numLinear += 2 * (n + 2 * (n * m))
+        return numLinear
 
-    #   public List<Ts07EquatorialLinearCoefficients> getLinearCoeffs() {
-    #     return equatorialLinearCoeffs;
-    #   }
+    def getTotalNumberOfNonLinearParameters(self):
+        # currThicks, hingeDist, warpingParam,TwistParam
+        return len(self.currThicks) + 3
 
-    #   public int getTotalNumberOfParameters() {
-    #     return getTotalNumberOfLinearParameters() + getTotalNumberOfNonLinearParameters();
-    #   }
+    def toString(self):
+        elc_str = ""
+        for elc in self.equatorialLinearCoeffs:
+            elc_str += elc.toString()
+        return (
+            "Ts07EquatorialVariableCoefficients [currThicks=%s, hingeDist=%s, "
+            "warpingParam=%s, twistParam=%s, equatorialLinearCoeffs=%s]" %
+            (self.currThicks, self.hingeDist, self.warpingParam,
+            self.twistParam, elc_str)
+        )
 
-    #   public int getTotalNumberOfLinearParameters() {
+    def hashCode(self):
+        prime = 31
+        result = 1
+        result = prime*result
+        if self.currThicks:
+            # result += self.currThicks.hashCode())
+            result += len(self.currThicks)  # HACK
+        result = prime*result
+        if self.equatorialLinearCoeffs:
+            # result += self.equatorialLinearCoeffs.hashCode()
+            result += len(self.equatorialLinearCoeffs)  # HACK
+        temp = Double.doubleToLongBits(self.hingeDist)
+        result = prime*result + temp^(temp >> 32)
+        temp = Double.doubleToLongBits(self.twistParam)
+        result = prime*result + temp^(temp >> 32)
+        temp = Double.doubleToLongBits(self.warpingParam)
+        result = prime*result + temp^(temp >> 32)
+        return result
 
-    #     int numLinear = 0;
-
-    #     // loop through all the linear parameters and add them up
-    #     for (Ts07EquatorialLinearCoefficients lin : equatorialLinearCoeffs) {
-    #       int m = lin.getNumAzimuthalExpansions();
-    #       int n = lin.getNumRadialExpansions();
-    #       numLinear += 2 * (n + 2 * (n * m));
-    #     }
-
-    #     return numLinear;
-    #   }
-
-    #   public int getTotalNumberOfNonLinearParameters() {
-    #     // currThicks, hingeDist, warpingParam,TwistParam
-    #     return currThicks.size() + 3;
-    #   }
-
-
-
-    #   @Override
-    #   public String toString() {
-    #     return "Ts07EquatorialVariableCoefficients [currThicks=" + currThicks + ", hingeDist="
-    #         + hingeDist + ", warpingParam=" + warpingParam + ", twistParam=" + twistParam
-    #         + ", equatorialLinearCoeffs=" + equatorialLinearCoeffs + "]";
-    #   }
-
-    #   @Override
-    #   public int hashCode() {
-    #     final int prime = 31;
-    #     int result = 1;
-    #     result = prime * result + ((currThicks == null) ? 0 : currThicks.hashCode());
-    #     result =
-    #         prime * result + ((equatorialLinearCoeffs == null) ? 0 : equatorialLinearCoeffs.hashCode());
-    #     long temp;
-    #     temp = Double.doubleToLongBits(hingeDist);
-    #     result = prime * result + (int) (temp ^ (temp >>> 32));
-    #     temp = Double.doubleToLongBits(twistParam);
-    #     result = prime * result + (int) (temp ^ (temp >>> 32));
-    #     temp = Double.doubleToLongBits(warpingParam);
-    #     result = prime * result + (int) (temp ^ (temp >>> 32));
-    #     return result;
-    #   }
-
-    #   @Override
-    #   public boolean equals(Object obj) {
-    #     if (this == obj) {
-    #       return true;
-    #     }
-    #     if (obj == null) {
-    #       return false;
-    #     }
-    #     if (getClass() != obj.getClass()) {
-    #       return false;
-    #     }
-    #     Ts07EquatorialVariableCoefficients other = (Ts07EquatorialVariableCoefficients) obj;
-    #     if (currThicks == null) {
-    #       if (other.currThicks != null) {
-    #         return false;
-    #       }
-    #     } else if (!currThicks.equals(other.currThicks)) {
-    #       return false;
-    #     }
-    #     if (equatorialLinearCoeffs == null) {
-    #       if (other.equatorialLinearCoeffs != null) {
-    #         return false;
-    #       }
-    #     } else if (!equatorialLinearCoeffs.equals(other.equatorialLinearCoeffs)) {
-    #       return false;
-    #     }
-    #     if (Double.doubleToLongBits(hingeDist) != Double.doubleToLongBits(other.hingeDist)) {
-    #       return false;
-    #     }
-    #     if (Double.doubleToLongBits(twistParam) != Double.doubleToLongBits(other.twistParam)) {
-    #       return false;
-    #     }
-    #     if (Double.doubleToLongBits(warpingParam) != Double.doubleToLongBits(other.warpingParam)) {
-    #       return false;
-    #     }
-    #     return true;
-    #   }
-
-
-    # }
+    def equals(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.__class__ != obj.__class__:
+            return False
+        other = obj
+        if self.currThicks is None:
+            if other.currThicks is not None:
+                return False
+        elif self.currThicks != other.currThicks:
+            return False
+        if self.equatorialLinearCoeffs is None:
+            if other.equatorialLinearCoeffs is not None:
+                return False
+        elif self.equatorialLinearCoeffs != other.equatorialLinearCoeffs:
+            return False
+        if (Double.doubleToLongBits(self.hingeDist) !=
+            Double.doubleToLongBits(other.hingeDist)):
+            return False
+        if (Double.doubleToLongBits(self.twistParam) !=
+            Double.doubleToLongBits(other.twistParam)):
+            return False
+        if (Double.doubleToLongBits(self.warpingParam) !=
+            Double.doubleToLongBits(other.warpingParam)):
+            return False
+        return True

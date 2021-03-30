@@ -1,5 +1,8 @@
 """Template for a Python module implementing a port of a Java interface file.
 
+N.B. This class was created from a Java interface, and therefore most of these
+methods will raise exceptions if invoked.
+
 From PEP 257:
 https://www.python.org/dev/peps/pep-0257/#multi-line-docstrings
 

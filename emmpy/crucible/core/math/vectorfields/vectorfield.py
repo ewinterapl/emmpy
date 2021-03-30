@@ -22,7 +22,7 @@ class VectorField:
 
     def evaluate(self, *args):
         """Interface - do not invoke.
-        
+
         Evaluate the field at the given position
 
         units and such are up to the implementors

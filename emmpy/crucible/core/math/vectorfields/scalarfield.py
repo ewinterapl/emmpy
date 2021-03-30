@@ -7,8 +7,9 @@ class ScalarField:
 
     @author G.K.Stephens
     """
+
     def __init__(self, location):
-        """Interface - do not instantiate"""
+        """Interface - do not instantiate."""
         raise Exception
 
     def evaluate(self, location):

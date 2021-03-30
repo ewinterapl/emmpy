@@ -21,7 +21,9 @@ class VectorField:
         raise Exception
 
     def evaluate(self, *args):
-        """Evaluate the field at the given position
+        """Interface - do not invoke.
+        
+        Evaluate the field at the given position
 
         units and such are up to the implementors
 

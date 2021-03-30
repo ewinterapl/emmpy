@@ -1,12 +1,16 @@
 import unittest
 
-from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import DifferentiableScalarFieldIJ
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    DifferentiableScalarFieldIJ
+)
 
-class TestOptionalDouble(unittest.TestCase):
+
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        DifferentiableScalarFieldIJ()
-    
+        with self.assertRaises(Exception):
+            DifferentiableScalarFieldIJ()
+
 
 if __name__ == '__main__':
     unittest.main()

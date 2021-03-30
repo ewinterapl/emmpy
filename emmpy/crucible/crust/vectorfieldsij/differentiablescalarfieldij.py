@@ -1,28 +1,19 @@
+"""emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij"""
+
+from emmpy.crucible.core.math.vectorfields.scalarfield2d import ScalarField2D
+from emmpy.crucible.crust.vectorfieldsij.scalarfieldspatialderivative import (
+    ScalarFieldIJSpatialDerivative
+)
+
 
 class DifferentiableScalarFieldIJ(ScalarField2D, ScalarFieldIJSpatialDerivative):
+    """Represents the Cartesian spatial derivatives of a ScalarField.
 
-    """DifferentiableScalarFieldIJ
+    There are three such derivatives.
 
-    Based on the original Java DifferentiableScalarField interface in
-    crucible.crust.vectorfieldsij
-
-    Represents the Cartesian spatial derivatives of a {@link ScalarField}. There are three such
-    derivatives.
-
-    @author G.K.Stephens
+    author G.K.Stephens
     """
 
     def __init__(self):
-        """Initialize a new DifferentiableScalarFieldIJ object.
-
-        Parameters
-        ----------
-        self : DifferentiableScalarFieldIJ
-            New object to initialize.
-        
-        Returns
-        -------
-        self : DifferentiableScalarFieldIJ
-            New object after initialization.
-        """
-        pass
+        """Interface - do not instantiate."""
+        raise Exception

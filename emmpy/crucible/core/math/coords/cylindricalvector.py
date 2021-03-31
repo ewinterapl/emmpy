@@ -10,9 +10,6 @@ class CylindricalVector(AbstractVector):
     @author G.K.Stephens
     """
 
-    # The ZERO vector.
-    # ZERO = CylindricalVector(0, 0, 0)
-
     def __init__(self, cylindricalRadius, longInRadians, height):
         """Constructor"""
         AbstractVector.__init__(self, cylindricalRadius, longInRadians, height)
@@ -34,3 +31,7 @@ class CylindricalVector(AbstractVector):
             "CylindricalVector [cylindricalRadius: %s, longitude: %s, height: %s]"
             % (self.getCylindricalRadius(), self.getLongitude(), self.getHeight())
         )
+
+
+# The ZERO vector.
+ZERO = CylindricalVector(0, 0, 0)

@@ -1,22 +1,11 @@
 """emmpy.geomagmodel.ts07.modeling.equatorial.ts07equtorialmagneticfieldbuilder"""
 
 
-from emmpy.com.google.common.base.preconditions import Preconditions
-from emmpy.magmodel.core.math.bessel.albertbesselfunctionevaluator import (
-    AlbertBesselFunctionEvaluator
-)
-from emmpy.magmodel.core.math.bessel.coltbesselfunctionevaluator import (
-    ColtBesselFunctionEvaluator
-)
-
 # package geomagmodel.ts07.modeling.equatorial;
-
 # import static com.google.common.base.Preconditions.checkArgument;
 # import static com.google.common.base.Preconditions.checkNotNull;
 # import static crucible.core.math.CrucibleMath.pow;
-
 # import java.util.OptionalDouble;
-
 # import crucible.core.designpatterns.Builder;
 # import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
 # import geomagmodel.t01.deformation.PositionBender;
@@ -33,6 +22,12 @@ from emmpy.magmodel.core.math.bessel.coltbesselfunctionevaluator import (
 # import magmodel.core.math.vectorfields.BasisVectorField;
 # import magmodel.core.math.vectorfields.BasisVectorFields;
 
+from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.magmodel.core.math.bessel.coltbesselfunctionevaluator import (
+    ColtBesselFunctionEvaluator
+)
+
+
 class Ts07EquatorialMagneticFieldBuilder:
     """A {@link Builder} for constructing the TS07D empirical magnetic field
     model and derivatives of the model.
@@ -40,22 +35,6 @@ class Ts07EquatorialMagneticFieldBuilder:
     @author Nicholas Sharp
     @author G.K.Stephens
     """
-
-    # public class Ts07EquatorialMagneticFieldBuilder implements Builder<BasisVectorField, Exception> {
-
-    #   private double dipoleTiltAngle;
-    #   private double dynamicPressure;
-
-    #   private Ts07EquatorialVariableCoefficients coeffs;
-    #   private double tailLength;
-    #   private ThinCurrentSheetShieldingCoefficients shieldingCoeffs;
-
-    #   /*
-    #    * Optional settings
-    #    */
-    #   private BesselFunctionEvaluator bessel = new ColtBesselFunctionEvaluator();
-    #   private boolean includeShield = true;
-    #   private OptionalDouble withTA15deformation = OptionalDouble.empty();
 
     def __init__(self, dipoleTiltAngle, dynamicPressure, coeffs, tailLength,
                  shieldingCoeffs):
@@ -89,7 +68,7 @@ class Ts07EquatorialMagneticFieldBuilder:
 
         @return this builder object
         """
-        self.bessel = AlbertBesselFunctionEvaluator(14)
+        # self.bessel = AlbertBesselFunctionEvaluator(14)
         return self
 
     def set_withTA15deformation(self, bzIMF):
@@ -118,7 +97,7 @@ class Ts07EquatorialMagneticFieldBuilder:
 
     def withoutEquatorialShielding(self):
         """Turn off equatorial shielding.
-        
+
         By default, the equatorial shielding fields are evaluated. Evaluating
         the shielding of the equatorial fields, is about 90% of the computation
         time required of the model. Since they are not needed in all
@@ -133,11 +112,10 @@ class Ts07EquatorialMagneticFieldBuilder:
 
     def build(self):
         """Builder"""
-        numCurrSheets = self.coeffs.getCurrThicks().size()
-
-        #     double hingeDistance = coeffs.getHingeDistance();
-        #     double warpingParam = coeffs.getWarpingParam();
-        #     double twistParam = coeffs.getTwistParam();
+        numCurrSheets = len(self.coeffs.getCurrThicks())
+        hingeDistance = self.coeffs.getHingeDistance()
+        warpingParam = self.coeffs.getWarpingParam()
+        twistParam = self.coeffs.getTwistParam()
 
         #     BasisVectorField[] equatorialFields = new BasisVectorField[numCurrSheets];
 

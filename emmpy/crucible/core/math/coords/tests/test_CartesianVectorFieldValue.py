@@ -5,11 +5,11 @@ from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
 )
 
 
-class TestCartesianVectorFieldValue(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        CartesianVectorFieldValue()
-
+        cvfv = CartesianVectorFieldValue([0, 0, 0], [0, 0, 0])
+        self.assertIsNotNone(cvfv)
 
 if __name__ == '__main__':
     unittest.main()

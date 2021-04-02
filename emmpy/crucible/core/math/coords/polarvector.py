@@ -1,10 +1,32 @@
-"""DESCRIPTION
-"""
+"""emmpy.crucible.core.math.coords.polarvector"""
 
 
-class PolarVector():
+from emmpy.crucible.core.math.coords.abstractvectorij import AbstractVectorIJ
 
-    def __init__(self):
-        """DESCRIPTION
-        """
-        pass
+
+class PolarVector(AbstractVectorIJ):
+    """A class representing a vector in the polar coordinate system.
+
+    @author G.K.Stephens
+    """
+
+    # The ZERO vector.
+    # ZERO = PolarVector(0, 0)
+
+    def __init__(self, radius, angle):
+        """Constructor"""        
+        AbstractVectorIJ.__init__(self, radius, angle)
+
+    def getRadius(self):
+        """@return the radius"""
+        return AbstractVectorIJ.getI(self)
+
+    def getAngle(self):
+        """@return the angle"""
+        return AbstractVectorIJ.getJ(self)
+
+    def toString(self):
+        return (
+            "PolarVector [radius: %s, angle: %s]" %
+            (self.getRadius(), self.getAngle())
+        )

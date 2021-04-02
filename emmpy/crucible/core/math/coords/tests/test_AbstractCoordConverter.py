@@ -5,10 +5,10 @@ from emmpy.crucible.core.math.coords.abstractcoordconverter import (
 )
 
 
-class TestAbstractCoordConverter(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        AbstractCoordConverter()
+        acc = AbstractCoordConverter([])
 
 
 if __name__ == '__main__':

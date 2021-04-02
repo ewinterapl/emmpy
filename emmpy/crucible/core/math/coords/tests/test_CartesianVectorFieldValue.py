@@ -11,5 +11,6 @@ class TestBuilder(unittest.TestCase):
         cvfv = CartesianVectorFieldValue([0, 0, 0], [0, 0, 0])
         self.assertIsNotNone(cvfv)
 
+
 if __name__ == '__main__':
     unittest.main()

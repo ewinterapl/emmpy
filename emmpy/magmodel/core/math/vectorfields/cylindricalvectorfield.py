@@ -44,13 +44,13 @@ class CylindricalVectorField(VectorField):
 
     @staticmethod
     def asCylindrical(field):
-    # public static CylindricalVectorField asCylindrical(VectorField field) {
         """asCylindrical"""
         if isinstance(field, CylindricalVectorField):
             return field
         else:
-            cvfv = CylindricalVectorFieldView(a)
-            cvfv.evaluate = lambda XXX: -a.getCoefficient(index)
+            pass
+            # cvfv = CylindricalVectorFieldView(a)
+            # cvfv.evaluate = lambda XXX: -a.getCoefficient(index)
 
 #     // override this default method to improve the performance of the code, we already have the
 #     // field as a Cartesian field, so there is no need to jump through the conversions
@@ -99,12 +99,12 @@ class CylindricalVectorField(VectorField):
 
     #   /**
     #    * Evaluate the field at the given position in spherical coordinates
-    #    * 
+    #    *
     #    * units and such are up to the implementors
-    #    * 
+    #    *
     #    * @param location {@link CylindricalVector}, often location
     #    * @return the resultant {@link CylindricalVector}
-    #    * 
+    #    *
     #    * @throws FunctionEvaluationException if the function cannot perform the evaluation
     #    */
     #   public CylindricalVector evaluate(CylindricalVector location);

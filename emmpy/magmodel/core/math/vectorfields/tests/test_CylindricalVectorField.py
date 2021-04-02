@@ -11,6 +11,12 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(Exception):
             CylindricalVectorField()
 
+    def test_asCylindrical(self):
+        pass
+
+    def test_evaluate(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,18 +1,14 @@
 import unittest
 
-from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
-    CrucibleRuntimeException
-)
 from emmpy.crucible.core.exceptions.runtimeinterruptedexception import (
     RuntimeInterruptedException
 )
 
 
-class TestRuntimeInterruptedException(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        with self.assertRaises(CrucibleRuntimeException):
-            RuntimeInterruptedException()
+        RuntimeInterruptedException()
 
 
 if __name__ == '__main__':

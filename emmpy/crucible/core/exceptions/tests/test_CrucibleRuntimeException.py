@@ -5,7 +5,7 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 )
 
 
-class TestCrucibleRuntimeException(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         CrucibleRuntimeException()

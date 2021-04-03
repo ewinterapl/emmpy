@@ -11,7 +11,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_build(self):
         with self.assertRaises(Exception):
-            Builder.build(None)  # Since constructor fails.
+            Builder.build(None)
 
 
 if __name__ == '__main__':

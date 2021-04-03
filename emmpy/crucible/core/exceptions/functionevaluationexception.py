@@ -1,4 +1,6 @@
-"""Runtime exception to be thrown when a function cannot be evaluated.
+"""emmpy.crucible.core.exceptions.functionevaluationexception
+
+Runtime exception to be thrown when a function cannot be evaluated.
 
 @author G.K.Stephens
 """
@@ -11,10 +13,7 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 
 class FunctionEvaluationException(CrucibleRuntimeException):
 
-    # Default serial version UID.
-    serialVersionUID = 1
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args):
         if len(args) == 0:
             s = "The function is not able to evaluate at the supplied value"
         elif len(args) == 1:
@@ -27,4 +26,4 @@ class FunctionEvaluationException(CrucibleRuntimeException):
             )
         else:
             raise CrucibleRuntimeException
-        CrucibleRuntimeException.__init__(self, s, **kwargs)
+        CrucibleRuntimeException.__init__(self, s)

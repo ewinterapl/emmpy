@@ -8,10 +8,24 @@ from emmpy.crucible.core.exceptions.functionevaluationexception import (
 )
 
 
-class TestFunctionEvaluationException(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        FunctionEvaluationException()
+        e = FunctionEvaluationException()
+        self.assertEqual(
+            e.__str__(),
+            "The function is not able to evaluate at the supplied value"
+        )
+        e = FunctionEvaluationException(1)
+        self.assertEqual(
+            e.__str__(),
+            "The function is not able to evaluate at the value 1"
+        )
+        e = FunctionEvaluationException(1, 2)
+        self.assertEqual(
+            e.__str__(),
+            "The function is not able to evaluate at the value 1. 2"
+        )
         with self.assertRaises(CrucibleRuntimeException):
             FunctionEvaluationException(1, 2, 3)
 

@@ -1,4 +1,6 @@
-"""Runtime exception generated as a result of something failing that should
+"""emmpy.crucible.core.exceptions.bugexception
+
+Runtime exception generated as a result of something failing that should
 never fail.
 
 Prototypical example would be invoking the string constructor:
@@ -16,6 +18,4 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 
 
 class BugException(CrucibleRuntimeException):
-
-    # Default serial version UID.
-    serialVersionUID = 1
+    pass

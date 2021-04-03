@@ -24,7 +24,6 @@ Modules
 bugexception.py
 crucibleexception.py
 crucibleruntimeexception.py
-exceptionfactory.py
 functionevaluationexception.py
 runtimeinterruptedexception.py
 """

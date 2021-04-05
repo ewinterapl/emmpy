@@ -8,13 +8,9 @@ from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
 )
-# from emmpy.crucible.core.math.cruciblemath import CrucibleMath
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )
-# from emmpy.crucible.core.units.fundamentalphysicalconstants import (
-#     FundamentalPhysicalConstants
-# )
 from emmpy.java.lang.double import Double
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException

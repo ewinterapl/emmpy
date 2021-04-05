@@ -1,5 +1,4 @@
-"""vectorijk.py
-"""
+"""emmpy.crucible.core.math.vectorspace.vectorijk"""
 
 
 from math import cos, sin
@@ -7,7 +6,8 @@ from math import cos, sin
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    absMaxComponent,
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
@@ -51,8 +51,7 @@ class VectorIJK(UnwritableVectorIJK):
     MINUS_K = UnwritableVectorIJK(0, 0, -1)
 
     def __init__(self, *args):
-        """Constructor
-        """
+        """Constructor"""
         if len(args) == 0:
             # Construct a vector with an initial value of
             # {@link VectorIJK#ZERO}
@@ -72,6 +71,8 @@ class VectorIJK(UnwritableVectorIJK):
                 # @param vector the vector whose contents are to be copied
                 (vector,) = args
                 UnwritableVectorIJK.__init__(self, vector)
+            else:
+                raise Exception
         elif len(args) == 2:
             if isinstance(args[0], int) and isinstance(args[1], list):
                 # Constructs a vector from the three elements of an array of
@@ -94,6 +95,8 @@ class VectorIJK(UnwritableVectorIJK):
                 # @param vector the vector whose contents are to be scaled
                 (scale, vector) = args
                 UnwritableVectorIJK.__init__(self, scale, vector)
+            else:
+                raise Exception
         elif len(args) == 3:
             # Constructs a vector from three basic components
             # @param i the ith component
@@ -101,44 +104,45 @@ class VectorIJK(UnwritableVectorIJK):
             # @param k the kth component
             (i, j, k) = args
             UnwritableVectorIJK.__init__(self, i, j, k)
+        else:
+            raise Exception
 
     def createUnitized(self):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         return VectorIJK(self).unitize()
 
     def createNegated(self):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         return VectorIJK(self).negate()
 
     def createScaled(self, scale: float):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         return VectorIJK(self).scale(scale)
 
-    def scale(self, scale_: float):
+    def scale(self, _scale: float):
         """Scale the vector.
+
         @param scale the scale factor to apply.
         @return a reference to the instance for convenience, which now contains
         (scale*this)
         """
-        self.i *= scale_
-        self.j *= scale_
-        self.k *= scale_
+        self.i *= _scale
+        self.j *= _scale
+        self.k *= _scale
         return self
 
     def unitize(self):
         """Unitize the vector.
+
         @return a reference to the instance for convenience, which now contains
         a vector of unit length in the direction of the original vector.
         @throws UnsupportedOperationException if the vector is equal to
         {@link VectorIJK#ZERO}
         """
-        norm = InternalOperations.computeNorm(self.i, self.j, self.k)
+        norm = computeNorm(self.i, self.j, self.k)
         if norm == 0.0:
             raise UnsupportedOperationException(
                 "Unable to unitize vector. Instance is zero length.")
@@ -149,6 +153,7 @@ class VectorIJK(UnwritableVectorIJK):
 
     def negate(self):
         """Negate the vector.
+
         @return a reference to the instance, now containing -vector.
         """
         self.i *= -1
@@ -157,7 +162,8 @@ class VectorIJK(UnwritableVectorIJK):
         return self
 
     def clear(self):
-        """   * Clear the vector.
+        """Clear the vector.
+
         @return a reference to the instance, now containing
         {@link VectorIJK#ZERO}
         """
@@ -168,24 +174,28 @@ class VectorIJK(UnwritableVectorIJK):
 
     def setI(self, i: float):
         """Sets the ith component of the vector.
+
         @param i the ith component
         """
         self.i = i
 
     def setJ(self, j: float):
         """Sets the jth component of the vector.
+
         @param j the jth component
         """
         self.j = j
 
     def setK(self, k: float):
         """Sets the kth component of the vector.
+
         @param k the kth component
         """
         self.k = k
 
     def set(self, index: int, value: float):
         """Sets the specified component of the vector to a supplied value.
+
         @param index the index of the component to set. 0 = ith, 1 = jth,
         2 = kth.
         @param value the value with which to replace the specified component
@@ -221,6 +231,8 @@ class VectorIJK(UnwritableVectorIJK):
                 # @return a reference to the instance
                 (data,) = args
                 return self.setTo(data[0], data[1], data[2])
+            else:
+                raise Exception
         elif len(args) == 2:
             if isRealNumber(args[0]) and isinstance(args[1],
                                                     UnwritableVectorIJK):
@@ -254,6 +266,8 @@ class VectorIJK(UnwritableVectorIJK):
                 self.j = j
                 self.k = k
                 return self
+        else:
+            raise Exception
 
     def setToUnitized(self, vector):
         """Sets the vector content to the a unit length version of another.
@@ -336,7 +350,7 @@ class VectorIJK(UnwritableVectorIJK):
                 # projecting vector onto axis, one of the axes in our basis.
                 VectorIJK.project(vector, axis, buffer)
 
-                norm = InternalOperations.computeNorm(ai, aj, ak)
+                norm = computeNorm(ai, aj, ak)
                 ai /= norm
                 aj /= norm
                 ak /= norm
@@ -367,6 +381,8 @@ class VectorIJK(UnwritableVectorIJK):
                 buffer.k = pk + cos(angle)*vk + sin(angle)*buffer.k
 
                 return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def planeProject(*args):
@@ -409,8 +425,8 @@ class VectorIJK(UnwritableVectorIJK):
             Preconditions.checkArgument(not normal.equals(VectorIJK.ZERO),
                                         "Normal must not be the zero vector.")
 
-            maxVector = InternalOperations.absMaxComponent(vector.i, vector.j,
-                                                           vector.k)
+            maxVector = absMaxComponent(vector.i, vector.j, vector.k)
+
             # Check to see if maxVector is zero length. If it is, populate
             # buffer with VectorIJK.ZERO.
             if maxVector == 0.0:
@@ -435,6 +451,8 @@ class VectorIJK(UnwritableVectorIJK):
             # Rescale the result.
             buffer.scale(maxVector)
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def project(*args):
@@ -451,54 +469,50 @@ class VectorIJK(UnwritableVectorIJK):
         from the above prescription.
         """
         if len(args) == 2:
-            if (isinstance(args[0], UnwritableVectorIJK) and
-                isinstance(args[1], UnwritableVectorIJK)):
-                # @param vector the vector to project
-                # @param onto the vector onto which vector is to be projected
-                # @return a new <code>VectorIJK</code> containing the results
-                # of the projection
-                # @throws IllegalArgumentException if onto is the equal to
-                # {@link VectorIJK#ZERO}.
-                # @see VectorIJK#project(UnwritableVectorIJK,
-                # UnwritableVectorIJK, VectorIJK)
-                (vector, onto) = args
-                return VectorIJK.project(vector, onto, VectorIJK())
+            # @param vector the vector to project
+            # @param onto the vector onto which vector is to be projected
+            # @return a new <code>VectorIJK</code> containing the results
+            # of the projection
+            # @throws IllegalArgumentException if onto is the equal to
+            # {@link VectorIJK#ZERO}.
+            # @see VectorIJK#project(UnwritableVectorIJK,
+            # UnwritableVectorIJK, VectorIJK)
+            (vector, onto) = args
+            return VectorIJK.project(vector, onto, VectorIJK())
         elif len(args) == 3:
-            if (isinstance(args[0], UnwritableVectorIJK) and
-                isinstance(args[1], UnwritableVectorIJK) and
-                isinstance(args[2], VectorIJK)):
-                # @param vector the vector to project
-                # @param onto the vector onto which vector is to be projected
-                # @param buffer the buffer to receive the contents of the
-                # projection
-                # @return a reference to buffer for convenience
-                # @throws IllegalArgumentException if onto is the equal to
-                # {@link VectorIJK#ZERO}.
-                (vector, onto, buffer) = args
-                maxVector = InternalOperations.absMaxComponent(
-                    vector.i, vector.j, vector.k)
-                maxOnto = InternalOperations.absMaxComponent(
-                    onto.i, onto.j, onto.k)
-                if maxOnto == 0:
-                    raise IllegalArgumentException(
-                        "Unable to project vector onto the zero vector.")
-                if maxVector == 0:
-                    buffer.clear()
-                    return buffer
-                r1 = onto.i/maxOnto
-                r2 = onto.j/maxOnto
-                r3 = onto.k/maxOnto
-                t1 = vector.i/maxVector
-                t2 = vector.j/maxVector
-                t3 = vector.k/maxVector
-                scaleFactor = (
-                    (t1*r1 + t2*r2 + t3*r3)*maxVector/(r1*r1 + r2*r2 + r3*r3)
-                )
-                buffer.i = r1
-                buffer.j = r2
-                buffer.k = r3
-                buffer.scale(scaleFactor)
+            # @param vector the vector to project
+            # @param onto the vector onto which vector is to be projected
+            # @param buffer the buffer to receive the contents of the
+            # projection
+            # @return a reference to buffer for convenience
+            # @throws IllegalArgumentException if onto is the equal to
+            # {@link VectorIJK#ZERO}.
+            (vector, onto, buffer) = args
+            maxVector = absMaxComponent(vector.i, vector.j, vector.k)
+            maxOnto = absMaxComponent(
+                onto.i, onto.j, onto.k)
+            if maxOnto == 0:
+                raise IllegalArgumentException(
+                    "Unable to project vector onto the zero vector.")
+            if maxVector == 0:
+                buffer.clear()
                 return buffer
+            r1 = onto.i/maxOnto
+            r2 = onto.j/maxOnto
+            r3 = onto.k/maxOnto
+            t1 = vector.i/maxVector
+            t2 = vector.j/maxVector
+            t3 = vector.k/maxVector
+            scaleFactor = (
+                (t1*r1 + t2*r2 + t3*r3)*maxVector/(r1*r1 + r2*r2 + r3*r3)
+            )
+            buffer.i = r1
+            buffer.j = r2
+            buffer.k = r3
+            buffer.scale(scaleFactor)
+            return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def combine(*args):
@@ -617,6 +631,8 @@ class VectorIJK(UnwritableVectorIJK):
             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
                         scaleE*e.k + scaleF*f.k + scaleG*g.k + scaleH*h.k)
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def uCross(*args):
@@ -639,19 +655,22 @@ class VectorIJK(UnwritableVectorIJK):
         elif len(args) == 3:
             (a, b, buffer) = args
             # We should scale each vector by its maximal component.
-            amax = InternalOperations.absMaxComponent(a.i, a.j, a.k)
-            bmax = InternalOperations.absMaxComponent(b.i, b.j, b.k)
-        if amax == 0.0 or bmax == 0.0:
-            raise IllegalArgumentException("At least one input vector is of "
-                                           + "zero length. Unable to unitize"
-                                           + " resultant cross product.")
-        ti = (a.j/amax)*(b.k/bmax) - (a.k/amax)*(b.j/bmax)
-        tj = (a.k/amax)*(b.i/bmax) - (a.i/amax)*(b.k/bmax)
-        tk = (a.i/amax)*(b.j/bmax) - (a.j/amax)*(b.i/bmax)
-        buffer.i = ti
-        buffer.j = tj
-        buffer.k = tk
-        return buffer.unitize()
+            amax = absMaxComponent(a.i, a.j, a.k)
+            bmax = absMaxComponent(b.i, b.j, b.k)
+            if amax == 0.0 or bmax == 0.0:
+                raise IllegalArgumentException(
+                    "At least one input vector is of zero length. Unable to "
+                    "unitize resultant cross product."
+                )
+            ti = (a.j/amax)*(b.k/bmax) - (a.k/amax)*(b.j/bmax)
+            tj = (a.k/amax)*(b.i/bmax) - (a.i/amax)*(b.k/bmax)
+            tk = (a.i/amax)*(b.j/bmax) - (a.j/amax)*(b.i/bmax)
+            buffer.i = ti
+            buffer.j = tj
+            buffer.k = tk
+            return buffer.unitize()
+        else:
+            raise Exception
 
     @staticmethod
     def cross(*args):
@@ -674,6 +693,8 @@ class VectorIJK(UnwritableVectorIJK):
             buffer.j = tj
             buffer.k = tk
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def pointwiseMultiply(*args):
@@ -695,6 +716,8 @@ class VectorIJK(UnwritableVectorIJK):
             buffer.j = a.j*b.j
             buffer.k = a.k*b.k
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def subtract(*args):
@@ -714,6 +737,8 @@ class VectorIJK(UnwritableVectorIJK):
             buffer.j = a.j - b.j
             buffer.k = a.k - b.k
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def add(*args):
@@ -733,6 +758,8 @@ class VectorIJK(UnwritableVectorIJK):
             buffer.j = a.j + b.j
             buffer.k = a.k + b.k
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def addAll(*args):
@@ -755,6 +782,8 @@ class VectorIJK(UnwritableVectorIJK):
                 sumJ += vector.j
                 sumK += vector.k
             return buffer.setTo(sumI, sumJ, sumK)
+        else:
+            raise Exception
 
     @staticmethod
     def addRSS(*args):
@@ -779,7 +808,9 @@ class VectorIJK(UnwritableVectorIJK):
             # Performs a component wise root sum square of two vectors (add in
             # quadrature).
             (a, b, buffer) = args
-            i = InternalOperations.computeNorm(a.i, b.i)
-            j = InternalOperations.computeNorm(a.j, b.j)
-            k = InternalOperations.computeNorm(a.k, b.k)
+            i = computeNorm(a.i, b.i)
+            j = computeNorm(a.j, b.j)
+            k = computeNorm(a.k, b.k)
             return buffer.setTo(i, j, k)
+        else:
+            raise Exception

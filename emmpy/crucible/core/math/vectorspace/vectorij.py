@@ -1,5 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.vectorij
-"""
+"""emmpy.crucible.core.math.vectorspace.vectorij"""
 
 
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
@@ -7,7 +6,8 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 )
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    absMaxComponent,
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
@@ -66,6 +66,8 @@ class VectorIJ(UnwritableVectorIJ):
                 # a pre-exisiting one.
                 (vector,) = args
                 UnwritableVectorIJ.__init__(self, vector)
+            else:
+                raise Exception
         elif len(args) == 2:
             if isRealNumber(args[0]) and isRealNumber(args[1]):
                 # Constructs a vector from two basic components.
@@ -83,6 +85,8 @@ class VectorIJ(UnwritableVectorIJ):
                 # constructed vector.
                 (scale, vector) = args
                 UnwritableVectorIJ.__init__(self, scale, vector)
+            else:
+                raise Exception
         else:
             raise CrucibleRuntimeException
 
@@ -116,7 +120,7 @@ class VectorIJ(UnwritableVectorIJ):
         @throws UnsupportedOperationException if the vector is equal to
         {@link VectorIJ#ZERO}
         """
-        norm = InternalOperations.computeNorm(self.i, self.j)
+        norm = computeNorm(self.i, self.j)
         if norm == 0.0:
             raise UnsupportedOperationException(
                 "Unable to unitize vector. Instance is zero length.")
@@ -186,6 +190,8 @@ class VectorIJ(UnwritableVectorIJ):
                 (data,) = args
                 self.setTo(data[0], data[1])
                 return self
+            else:
+                raise Exception
         elif len(args) == 2:
             if isRealNumber(args[0]) and isinstance(args[1], VectorIJ):
                 # Set by scaling an existing vector.
@@ -203,11 +209,14 @@ class VectorIJ(UnwritableVectorIJ):
                 self.i = i
                 self.j = j
                 return self
+            else:
+                raise Exception
         else:
             raise CrucibleRuntimeException
 
     def setToUnitized(self, vector):
         """Sets the vector content to the a unit length version of another.
+
         @param vector the vector whose contents are to be unitized and stored
         in the instance
         @return a reference to the instance
@@ -220,6 +229,7 @@ class VectorIJ(UnwritableVectorIJ):
 
     def setToNegated(self, vector):
         """Sets the vector content to a negated version of another.
+
         @param vector the vector whose contents are to be negated and stored
         in the instance
         @return a reference to the instance
@@ -239,6 +249,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.setJ(self.j)
             buffer.setK(0)
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def lineProject(*args):
@@ -267,7 +279,7 @@ class VectorIJ(UnwritableVectorIJ):
             return VectorIJ.lineProject(vector, normal, VectorIJ())
         elif len(args) == 3:
             (vector, normal, buffer) = args
-            maxVector = InternalOperations.absMaxComponent(vector.i, vector.j)
+            maxVector = absMaxComponent(vector.i, vector.j)
 
             # There are two unusual cases that require special treatment. The
             # first is if the normal vector is the zero vector. Fortunately,
@@ -302,6 +314,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.scale(maxVector)
 
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def project(*args):
@@ -332,8 +346,8 @@ class VectorIJ(UnwritableVectorIJ):
             return VectorIJ.project(vector, onto, VectorIJ())
         elif len(args) == 3:
             (vector, onto, buffer) = args
-            maxVector = InternalOperations.absMaxComponent(vector.i, vector.j)
-            maxOnto = InternalOperations.absMaxComponent(onto.i, onto.j)
+            maxVector = absMaxComponent(vector.i, vector.j)
+            maxOnto = absMaxComponent(onto.i, onto.j)
             if maxOnto == 0:
                 raise IllegalArgumentException(
                     "Unable to project vector onto the zero vector.")
@@ -386,6 +400,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.i = scaleA*a.i + scaleB*b.i + scaleC*c.i
             buffer.j = scaleA*a.j + scaleB*b.j + scaleC*c.j
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def uCross(*args):
@@ -412,8 +428,8 @@ class VectorIJ(UnwritableVectorIJ):
         elif len(args) == 3:
             (a, b, buffer) = args
             # We should scale each vector by its maximal component.
-            amax = InternalOperations.absMaxComponent(a.i, a.j)
-            bmax = InternalOperations.absMaxComponent(b.i, b.j)
+            amax = absMaxComponent(a.i, a.j)
+            bmax = absMaxComponent(b.i, b.j)
             if amax == 0.0 or bmax == 0.0:
                 raise IllegalArgumentException(
                     "At least one input vector is of zero" +
@@ -426,6 +442,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.setJ(tj)
             buffer.setK(tk)
             return buffer.unitize()
+        else:
+            raise Exception
 
     @staticmethod
     def cross(*args):
@@ -451,6 +469,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.setJ(tj)
             buffer.setK(tk)
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def subtract(*args):
@@ -472,6 +492,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.i = a.i - b.i
             buffer.j = a.j - b.j
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def add(*args):
@@ -493,6 +515,8 @@ class VectorIJ(UnwritableVectorIJ):
             buffer.i = a.i + b.i
             buffer.j = a.j + b.j
             return buffer
+        else:
+            raise Exception
 
     @staticmethod
     def addAll(*args):
@@ -515,6 +539,8 @@ class VectorIJ(UnwritableVectorIJ):
                 sumI += vector.i
                 sumJ += vector.j
             return buffer.setTo(sumI, sumJ)
+        else:
+            raise Exception
 
     @staticmethod
     def addRSS(*args):
@@ -535,6 +561,8 @@ class VectorIJ(UnwritableVectorIJ):
             return VectorIJ.addRSS(a, b, VectorIJ())
         elif len(args) == 3:
             (a, b, buffer) = args
-            i = InternalOperations.computeNorm(a.i, b.i)
-            j = InternalOperations.computeNorm(a.j, b.j)
+            i = computeNorm(a.i, b.i)
+            j = computeNorm(a.j, b.j)
             return buffer.setTo(i, j)
+        else:
+            raise Exception

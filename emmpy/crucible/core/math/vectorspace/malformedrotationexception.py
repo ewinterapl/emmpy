@@ -1,5 +1,4 @@
-"""malformedrotationexception.py
-"""
+"""emmpy.crucible.core.math.vectorspace.malformedrotationexception"""
 
 
 class MalformedRotationException(Exception):
@@ -8,9 +7,6 @@ class MalformedRotationException(Exception):
 
     @author F.S.Turner
     """
-
-    # Default serialization ID.
-    serialVersionUID = 1
 
     def __init__(self, *args):
         if len(args) == 0:

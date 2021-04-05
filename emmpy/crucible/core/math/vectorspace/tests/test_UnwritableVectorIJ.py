@@ -12,7 +12,7 @@ from emmpy.java.lang.unsupportedoperationexception import (
 )
 
 
-class TestUnwritableVectorIJ(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         # 1-argument forms

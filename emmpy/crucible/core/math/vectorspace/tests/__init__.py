@@ -12,6 +12,7 @@ test_MatrixIJK.py
 test_RotationMatrixIJK.py
 test_UnwritableMatrixIJ.py
 test_UnwritableMatrixIJK.py
+test_UnwritableRotationMatrixIJK.py
 test_UnwritableVectorIJ.py
 test_UnwritableVectorIJK.py
 test_VectorIJ.py

@@ -11,6 +11,7 @@ matrixijk.py
 rotationmatrixijk.py
 unwritablematrixij.py
 unwritablematrixijk.py
+unwritablerotationmatrixijk.py
 unwritablevectorij.py
 unwritablevectorijk.py
 vectorij.py

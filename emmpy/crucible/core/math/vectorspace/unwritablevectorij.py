@@ -1,19 +1,20 @@
-"""unwritablevectorij.py
-"""
+"""emmpy.crucible.core.math.vectorspace.unwritablevectorij"""
 
+
+from math import asin, pi
 
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
 )
-from emmpy.crucible.core.math.cruciblemath import CrucibleMath
+# from emmpy.crucible.core.math.cruciblemath import CrucibleMath
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    computeNorm
 )
-from emmpy.crucible.core.units.fundamentalphysicalconstants import (
-    FundamentalPhysicalConstants
-)
+# from emmpy.crucible.core.units.fundamentalphysicalconstants import (
+#     FundamentalPhysicalConstants
+# )
 from emmpy.java.lang.double import Double
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
@@ -146,7 +147,7 @@ class UnwritableVectorIJ:
 
          @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
          """
-        return InternalOperations.computeNorm(self.i, self.j)
+        return computeNorm(self.i, self.j)
 
     def getDot(self, vector) -> float:
         """Compute the dot product of this instance with another vector.
@@ -180,14 +181,12 @@ class UnwritableVectorIJ:
         if dotProduct > 0:
             x = self.i/thisNorm - vector.i/vectorNorm
             y = self.j/thisNorm - vector.j/vectorNorm
-            return 2.0*CrucibleMath.asin(
-                0.5*InternalOperations.computeNorm(x, y))
+            return 2.0*asin(0.5*computeNorm(x, y))
         elif dotProduct < 0:
             x = self.i/thisNorm + vector.i/vectorNorm
             y = self.j/thisNorm + vector.j/vectorNorm
-            return CrucibleMath.PI - 2.0*CrucibleMath.asin(
-                0.5*InternalOperations.computeNorm(x, y))
-        return FundamentalPhysicalConstants.HALFPI
+            return pi - 2*asin(0.5*computeNorm(x, y))
+        return pi/2
 
     @staticmethod
     def copyOf(vector):
@@ -229,4 +228,4 @@ class UnwritableVectorIJ:
         return True
 
     def toString(self) -> str:
-        return "[%d,%d]" % (self.i, self.j)
+        return "[%s,%s]" % (self.i, self.j)

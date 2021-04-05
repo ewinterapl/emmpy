@@ -13,7 +13,7 @@ from emmpy.java.lang.unsupportedoperationexception import (
 )
 
 
-class TestVectorIJ(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         # 0-argument form
@@ -66,7 +66,8 @@ class TestVectorIJ(unittest.TestCase):
 
     def test_unitize(self):
         vij = VectorIJ(1, 2)
-        vij.unitize()
+        vij2 = vij.unitize()
+        self.assertIs(vij2, vij)
         self.assertAlmostEqual(vij.i, 1/sqrt(5))
         self.assertAlmostEqual(vij.j, 2/sqrt(5))
         vij = VectorIJ(0, 0)
@@ -75,13 +76,15 @@ class TestVectorIJ(unittest.TestCase):
 
     def test_negate(self):
         vij = VectorIJ(1, 2)
-        vij.negate()
+        vij2 = vij.negate()
+        self.assertIs(vij2, vij)
         self.assertAlmostEqual(vij.i, -1)
         self.assertAlmostEqual(vij.j, -2)
 
     def test_clear(self):
         vij = VectorIJ(1, 2)
-        vij.clear()
+        vij2 = vij.clear()
+        self.assertIs(vij2, vij)
         self.assertEqual(vij.i, 0)
         self.assertEqual(vij.j, 0)
 
@@ -137,14 +140,16 @@ class TestVectorIJ(unittest.TestCase):
     def test_setToUnitized(self):
         vij1 = VectorIJ(1, 1)
         vij2 = VectorIJ(3, 4)
-        vij2.setToUnitized(vij1)
+        vij = vij2.setToUnitized(vij1)
+        self.assertIs(vij, vij2)
         self.assertAlmostEqual(vij2.i, 1/sqrt(2))
         self.assertAlmostEqual(vij2.j, 1/sqrt(2))
 
     def setToNegated(self):
         vij1 = VectorIJ(1, 2)
         vij2 = VectorIJ(3, 4)
-        vij2.setToNegated(vij1)
+        vij = vij2.setToNegated(vij1)
+        self.assertIs(vij, vij2)
         self.assertAlmostEqual(vij2.i, -1)
         self.assertAlmostEqual(vij2.j, -2)
 

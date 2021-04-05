@@ -1,10 +1,10 @@
 """emmpy.crucible.core.math.vectorspace.vectorij"""
 
 
+from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
 )
-from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
@@ -312,7 +312,6 @@ class VectorIJ(UnwritableVectorIJ):
 
             # Rescale the result.
             buffer.scale(maxVector)
-
             return buffer
         else:
             raise Exception

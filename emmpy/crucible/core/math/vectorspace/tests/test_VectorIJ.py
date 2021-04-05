@@ -173,11 +173,11 @@ class TestVectorIJ(unittest.TestCase):
         self.assertAlmostEqual(vij5.i, 1)
         self.assertAlmostEqual(vij5.j, 0)
         with self.assertRaises(Exception):
-            vij = VectorIJ.lineProject()
+            VectorIJ.lineProject()
         with self.assertRaises(Exception):
-            vij = VectorIJ.lineProject(None)
+            VectorIJ.lineProject(None)
         with self.assertRaises(Exception):
-            vij = VectorIJ.lineProject(None, None, None)
+            VectorIJ.lineProject(None, None, None)
 
     def test_project(self):
         vij0 = VectorIJ(0, 0)
@@ -188,6 +188,7 @@ class TestVectorIJ(unittest.TestCase):
         self.assertAlmostEqual(vij3.j, 1)
         vij4 = VectorIJ()
         vij5 = VectorIJ.project(vij1, vij2, vij4)
+        self.assertIs(vij5, vij4)
         self.assertAlmostEqual(vij4.i, 0)
         self.assertAlmostEqual(vij4.j, 1)
         with self.assertRaises(IllegalArgumentException):
@@ -302,6 +303,7 @@ class TestVectorIJ(unittest.TestCase):
         self.assertAlmostEqual(vij4.j, sqrt(20))
         with self.assertRaises(Exception):
             VectorIJ.addRSS()
+
 
 if __name__ == '__main__':
     unittest.main()

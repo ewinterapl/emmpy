@@ -23,12 +23,8 @@ this will most certainly break the implementation presented here.
 
 from math import asin, pi
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
-)
-from emmpy.crucible.core.units.fundamentalphysicalconstants import (
-    FundamentalPhysicalConstants
+    computeNorm
 )
 from emmpy.java.lang.double import Double
 from emmpy.utilities.isrealnumber import isRealNumber
@@ -155,7 +151,6 @@ class UnwritableVectorIJK:
         @throws IndexOutOfBoundsException if an invalid index, outside the
         range [0,2], is specified.
         """
-        Preconditions.checkElementIndex(index, 3, "component")
         if index == 0:
             return self.i
         elif index == 1:
@@ -170,7 +165,7 @@ class UnwritableVectorIJK:
 
         @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
         """
-        return InternalOperations.computeNorm(self.i, self.j, self.k)
+        return computeNorm(self.i, self.j, self.k)
 
     def getDot(self, vector) -> float:
         """Compute the dot product of this instance with another vector.
@@ -201,21 +196,18 @@ class UnwritableVectorIJK:
         elif vectorNorm == 0.0:
             raise Exception("Unable to compute angular separation. " +
                             "The argument supplied is the zero vector.")
-
         dotProduct = self.getDot(vector)
-
         if dotProduct > 0:
             x = self.i/thisNorm - vector.i/vectorNorm
             y = self.j/thisNorm - vector.j/vectorNorm
             z = self.k/thisNorm - vector.k/vectorNorm
-            return 2.0*asin(0.5*InternalOperations.computeNorm(x, y, z))
+            return 2.0*asin(0.5*computeNorm(x, y, z))
         elif dotProduct < 0:
             x = self.i/thisNorm + vector.i/vectorNorm
             y = self.j/thisNorm + vector.j/vectorNorm
             z = self.k/thisNorm + vector.k/vectorNorm
-            return pi - 2.0*asin(0.5*InternalOperations.computeNorm(x, y, z))
-
-        return FundamentalPhysicalConstants.HALFPI
+            return pi - 2.0*asin(0.5*computeNorm(x, y, z))
+        return pi/2
 
     def getSeparationOutOfPlane(self, normal) -> float:
         """Compute the angle this instance lies out of the plane specified by
@@ -232,9 +224,9 @@ class UnwritableVectorIJK:
         specified normal. Positive values lie on the same side as normal,
         negative on the other.
         """
-        return FundamentalPhysicalConstants.HALFPI - self.getSeparation(normal)
+        return pi/2 - self.getSeparation(normal)
 
-    @staticmethod
+    # @staticmethod
     def copyOf(vector):
         """Makes an unwritable copy of the supplied vector.
 
@@ -252,8 +244,7 @@ class UnwritableVectorIJK:
         return UnwritableVectorIJK(vector)
 
     def hashCode(self) -> int:
-        """Compute the hash code.
-        """
+        """Compute the hash code."""
         prime = 31
         result = 1
         temp = Double.doubleToLongBits(self.i)
@@ -280,4 +271,4 @@ class UnwritableVectorIJK:
         return True
 
     def toString(self) -> str:
-        return "[%d,%d,%d]" % (self.i, self.j, self.k)
+        return "[%s,%s,%s]" % (self.i, self.j, self.k)

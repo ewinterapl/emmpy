@@ -1,9 +1,10 @@
-"""unwritablematrixij.py
-"""
+"""emmpy.crucible.core.math.vectorspace.unwritablematrixij"""
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    checkRotation,
+    computeDeterminant,
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
@@ -74,6 +75,7 @@ class UnwritableMatrixIJ:
 
     def __init__(self, *args):
         """Constructor"""
+        pass
         if len(args) == 0:
             # Protected, no argument, no initialization constructor for
             # subclasses to utilize.
@@ -135,6 +137,8 @@ class UnwritableMatrixIJ:
                 (scaleI, ithColumn, scaleJ, jthColumn) = args
                 self.__init__(scaleI*ithColumn.i, scaleI*ithColumn.j,
                               scaleJ*jthColumn.i, scaleJ*jthColumn.j)
+        else:
+            raise Exception
 
     def createTranspose(self):
         """Creates a new, transposed copy of the existing matrix.
@@ -196,16 +200,16 @@ class UnwritableMatrixIJ:
         # First create the transpose, then all that's left is to scale the
         # rows appropriately.
         matrix = self.createTranspose()
-        length = InternalOperations.computeNorm(matrix.ii, matrix.ij)
+        length = computeNorm(matrix.ii, matrix.ij)
         if length*self.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
-                "ith column of matrix has length, " + length +
-                ", for which there is no inverse.")
+                "ith column of matrix has length %s, for which there is no "
+                "inverse." % length)
         matrix.ii /= length
         matrix.ii /= length
         matrix.ij /= length
         matrix.ij /= length
-        length = InternalOperations.computeNorm(matrix.ji, matrix.jj)
+        length = computeNorm(matrix.ji, matrix.jj)
         if length*self.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
                 "jth column of matrix has length, " + length +
@@ -250,8 +254,9 @@ class UnwritableMatrixIJ:
                 return self.ij
             else:
                 raise IllegalArgumentException(
-                    "Unable to retrieve element (" + row + ", " +
-                    column + "). Column index invalid.")
+                    "Unable to retrieve element (%s, %s). Column index "
+                    "invalid." % (row, column)
+                )
         elif row == 1:
             if column == 0:
                 return self.ji
@@ -259,12 +264,12 @@ class UnwritableMatrixIJ:
                 return self.jj
             else:
                 raise IllegalArgumentException(
-                    "Unable to retrieve element (" + row + ", " +
-                    column + "). Column index invalid.")
+                    "Unable to retrieve element (%s, %s). Column index "
+                    "invalid." % (row, column))
         else:
             raise IllegalArgumentException(
-                "Unable to retrieve element (" + row + ", " +
-                column + "). Row index invalid.")
+                "Unable to retrieve element (%s, %s). Row index invalid." %
+                (row, column))
 
     def getIthColumn(self, buffer):
         """Copies the ith column components into the supplied vector.
@@ -302,16 +307,16 @@ class UnwritableMatrixIJ:
             return self.getJthColumn(buffer)
         else:
             raise IllegalArgumentException(
-                "Unable to retrieve column. Index: " + columnIndex +
-                " is invalid.")
+                "Unable to retrieve column. Index: %s is invalid." %
+                columnIndex
+            )
 
     def getDeterminant(self):
         """Computes the determinant of the matrix.
 
         @return the determinant of the instance
         """
-        return InternalOperations.computeDeterminant(
-            self.ii, self.ji, self.ij, self.jj)
+        return computeDeterminant(self.ii, self.ji, self.ij, self.jj)
 
     def getTrace(self):
         """Computes the trace of the matrix.
@@ -339,9 +344,8 @@ class UnwritableMatrixIJ:
         elif len(args) == 2:
             (normTolerance, determinantTolerance) = args
         try:
-            InternalOperations.checkRotation(self.ii, self.ji, self.ij,
-                                             self.jj, normTolerance,
-                                             determinantTolerance)
+            checkRotation(self.ii, self.ji, self.ij, self.jj, normTolerance,
+                          determinantTolerance)
             return True
         except MalformedRotationException:
             return False

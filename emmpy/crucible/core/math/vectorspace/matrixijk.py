@@ -1,4 +1,4 @@
-"""matrixijk.py
+"""emmpy.crucible.core.math.vectorspace.matrixijk
 
 A writable subclass of the unwritable 3D matrix parent completing one link in
 the weak-immutability design pattern.

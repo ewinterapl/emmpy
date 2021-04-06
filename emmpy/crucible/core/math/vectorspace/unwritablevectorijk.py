@@ -1,4 +1,4 @@
-"""unwritablevectorijk.py
+"""emmpy.crucible.core.math.vectorspace.unwritablevectorijk
 
 A weakly immutable 3-dimensional vector designed to properly support a writable
 subclass.

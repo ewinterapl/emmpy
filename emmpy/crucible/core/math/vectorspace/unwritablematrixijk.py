@@ -1,5 +1,4 @@
-"""unwritablematrixijk.py
-"""
+"""emmpy.crucible.core.math.vectorspace.unwritablematrixijk"""
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (

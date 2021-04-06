@@ -1,4 +1,4 @@
-"""rotationmatrixijk.py"""
+"""emmpy.crucible.core.math.vectorspace.rotationmatrixijk"""
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (

@@ -10,9 +10,6 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
     UnwritableMatrixIJ
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
@@ -55,7 +52,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 # two or greater.
                 (data,) = args
                 UnwritableMatrixIJ.__init__(self, data)
-            elif isinstance(args[0], UnwritableMatrixIJ):
+            else:
                 # Copy constructor, creates a matrix by copying the values of a
                 # pre-existing one.
                 # @param matrix the matrix whose contents are to be copied.
@@ -71,8 +68,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 # and copied
                 (scale, matrix) = args
                 UnwritableMatrixIJ.__init__(self, scale, matrix)
-            elif (isinstance(args[0], UnwritableVectorIJ) and
-                  isinstance(args[1], UnwritableVectorIJ)):
+            else:
                 # Column vector constructor, creates a new matrix by populating
                 # the columns of the matrix with the supplied vectors.
                 # @param ithColumn the vector containing the ith column
@@ -98,10 +94,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 # @param jj jth row, jth column element
                 (ii, ji, ij, jj) = args
                 UnwritableMatrixIJ.__init__(self, ii, ji, ij, jj)
-            elif (isRealNumber(args[0]) and
-                  isinstance(args[1], UnwritableVectorIJ) and
-                  isRealNumber(args[2]) and
-                  isinstance(args[3], UnwritableVectorIJ)):
+            else:
                 # Scaled column vector constructor, creates a new matrix by
                 # populating the columns of the matrix with scaled versions of
                 # the supplied vectors
@@ -113,6 +106,8 @@ class MatrixIJ(UnwritableMatrixIJ):
                 UnwritableMatrixIJ.__init__(self,
                                             scaleI, ithColumn,
                                             scaleJ, jthColumn)
+        else:
+            raise Exception
 
     def createTranspose(self):
         """Note: this method is overridden to return an instance of the
@@ -138,8 +133,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     def createInvorted(self):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         return MatrixIJ(self).invort()
 
     def transpose(self):
@@ -211,8 +205,8 @@ class MatrixIJ(UnwritableMatrixIJ):
         length = computeNorm(self.ii, self.ij)
         if length*UnwritableMatrixIJ.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
-                "ith column of matrix has length, " + length +
-                ", for which there is no inverse.")
+                "ith column of matrix has length, %s, for which there is no "
+                "inverse." % length)
         self.ii /= length
         self.ii /= length
         self.ij /= length
@@ -221,8 +215,8 @@ class MatrixIJ(UnwritableMatrixIJ):
         length = computeNorm(self.ji, self.jj)
         if length*MatrixIJ.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
-                "jth column of matrix has length, " + length +
-                ", for which there is no inverse.")
+                "jth column of matrix has length, %s, for which there is no "
+                "inverse." % length)
         self.ji /= length
         self.ji /= length
         self.jj /= length
@@ -243,7 +237,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             self.ij *= scale
             self.jj *= scale
             return self
-        elif len(args) == 2:
+        else:
             # Scales each column of the matrix by the supplied factors.
             # @param scaleI the ith column scale
             # @param scaleJ the jth column scale
@@ -288,8 +282,8 @@ class MatrixIJ(UnwritableMatrixIJ):
                 self.ij = value
             else:
                 raise IllegalArgumentException(
-                    "Unable to set element (" + row + ", " + column +
-                    "). Column index invalid.")
+                    "Unable to set element (%s, %s). Column index invalid." %
+                    (row, column))
         elif row == 1:
             if column == 0:
                 self.ji = value
@@ -297,12 +291,12 @@ class MatrixIJ(UnwritableMatrixIJ):
                 self.jj = value
             else:
                 raise IllegalArgumentException(
-                    "Unable to set element (" + row + ", " + column +
-                    "). Column index invalid.")
+                    "Unable to set element (%s, %s). Column index invalid." %
+                    (row, column))
         else:
             raise IllegalArgumentException(
-                "Unable to set element (" + row + ", " + column +
-                "). Row index invalid.")
+                    "Unable to set element (%s, %s). Row index invalid." %
+                    (row, column))
 
     def setIthColumn(self, column):
         """Sets the ith column to the supplied vector.
@@ -337,7 +331,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             self.setJthColumn(column)
         else:
             raise IllegalArgumentException(
-                "Unable to set column. Index: " + columnIndex + " is invalid.")
+                "Unable to set column. Index: %s is invalid." % columnIndex)
 
     def setTo(self, *args):
         """Sets the components of this matrix to the supplied components"""
@@ -377,8 +371,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 self.setTo(matrix)
                 self.scale(scale)
                 return self
-            elif (isinstance(args[0], UnwritableVectorIJ) and
-                  isinstance(args[1], UnwritableVectorIJ)):
+            else:
                 # Sets the columns of this matrix to the three specified
                 # vectors.
                 # @param ithColumn the vector containing the contents to set
@@ -419,10 +412,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 self.ij = ij
                 self.jj = jj
                 return self
-            elif (isRealNumber(args[0]) and
-                  isinstance(args[1], UnwritableVectorIJ) and
-                  isRealNumber(args[2]) and
-                  isinstance(args[3], UnwritableVectorIJ)):
+            else:
                 # Sets the columns of this matrix to the scaled versions of
                 # the supplied vectors.
                 # @param scaleI scale factor to apply to ithColumn
@@ -434,6 +424,8 @@ class MatrixIJ(UnwritableMatrixIJ):
                 self.setTo(scaleI*ithColumn.i, scaleI*ithColumn.j,
                            scaleJ*jthColumn.i, scaleJ*jthColumn.j)
                 return self
+        else:
+            raise Exception
 
     def setToTranspose(self, matrix):
         """Sets this matrix components to the transpose of the supplied matrix.
@@ -531,8 +523,8 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     @staticmethod
     def mtxm(*args):
-        """Compute the product of a transpose of a matrix with another matrix.
-        """
+        """Compute the product of a transpose of a matrix with another
+        matrix."""
         if len(args) == 2:
             # @param a the left hand matrix to transpose, then multiply
             # @param b the right hand matrix
@@ -627,8 +619,7 @@ class MatrixIJ(UnwritableMatrixIJ):
     @staticmethod
     def mtxmadd(*args):
         """Compute the sum of a pair of matrix transposes multipled with
-        another matrix
-        """
+        another matrix"""
         if len(args) == 4:
             # @param a left hand matrix to transpose in the first product
             # @param b right hand matrix in the first product

@@ -1,3 +1,4 @@
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin, sqrt
 import unittest
 
@@ -7,12 +8,16 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
+from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
+from emmpy.java.lang.unsupportedoperationexception import (
+    UnsupportedOperationException
+)
 
 
-class TestUnwritableMatrixIJ(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        # 0 args
+        # 0-argument form
         m = UnwritableMatrixIJK()
         self.assertIsNone(m.ii)
         self.assertIsNone(m.ij)
@@ -23,7 +28,7 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertIsNone(m.ki)
         self.assertIsNone(m.kj)
         self.assertIsNone(m.kk)
-        # 1 2-D list arg
+        # 1-argument forms
         m = UnwritableMatrixIJK([[1.1, 2.2, 3.3, 4.4],
                                  [5.5, 6.6, 7.7, 8.8],
                                  [9.9, 1.2, 3.4, 5.6],
@@ -37,7 +42,6 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m.ik, 3.3)
         self.assertAlmostEqual(m.jk, 7.7)
         self.assertAlmostEqual(m.kk, 3.4)
-        # 1 MatrixIJK arg
         m2 = UnwritableMatrixIJK(m)
         self.assertAlmostEqual(m2.ii, 1.1)
         self.assertAlmostEqual(m2.ji, 5.5)
@@ -48,7 +52,7 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m2.ik, 3.3)
         self.assertAlmostEqual(m2.jk, 7.7)
         self.assertAlmostEqual(m2.kk, 3.4)
-        # 2 args: scale and matrix
+        # 2-argument form
         m2 = UnwritableMatrixIJK(2.0, m)
         self.assertAlmostEqual(m2.ii, 2.2)
         self.assertAlmostEqual(m2.ji, 11)
@@ -59,7 +63,7 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m2.ik, 6.6)
         self.assertAlmostEqual(m2.jk, 15.4)
         self.assertAlmostEqual(m2.kk, 6.8)
-        # 3 args: all vectors
+        # 3-argument form
         v1 = UnwritableVectorIJK(1.1, 2.2, 3.3)
         v2 = UnwritableVectorIJK(4.4, 5.5, 6.6)
         v3 = UnwritableVectorIJK(7.7, 8.8, 9.9)
@@ -73,7 +77,7 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m.ik, 7.7)
         self.assertAlmostEqual(m.jk, 8.8)
         self.assertAlmostEqual(m.kk, 9.9)
-        # 4 args: 3 scale factors, matrix
+        # 4-argument form
         m2 = UnwritableMatrixIJK(-1.0, 2, 3, m)
         self.assertAlmostEqual(m2.ii, -1.1)
         self.assertAlmostEqual(m2.ji, -2.2)
@@ -84,7 +88,7 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m2.ik, 23.1)
         self.assertAlmostEqual(m2.jk, 26.4)
         self.assertAlmostEqual(m2.kk, 29.7)
-        # 6 args: 3 x (scale, vector)
+        # 6-argument form
         v1 = UnwritableVectorIJK(1, 2, 3)
         v2 = UnwritableVectorIJK(4, 5, 6)
         v3 = UnwritableVectorIJK(7, 8, 9)
@@ -98,7 +102,7 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m.ik, 21)
         self.assertAlmostEqual(m.jk, 24)
         self.assertAlmostEqual(m.kk, 27)
-        # 9 args
+        # 9-argument form
         m = UnwritableMatrixIJK(1.1, 2.2, 3.3,
                                 4.4, 5.5, 6.6,
                                 7.7, 8.8, 9.9)
@@ -111,6 +115,9 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m.ik, 7.7)
         self.assertAlmostEqual(m.jk, 8.8)
         self.assertAlmostEqual(m.kk, 9.9)
+        # Invalid form
+        with self.assertRaises(Exception):
+            UnwritableMatrixIJK(None)
 
     def test_createTranspose(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -147,9 +154,12 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m2.ij, 3.6)
         self.assertAlmostEqual(m2.jj, -3)
         self.assertAlmostEqual(m2.kj, 0.8)
-        self.assertAlmostEqual(m2.ik, 1.4)
         self.assertAlmostEqual(m2.jk, -1)
+        self.assertAlmostEqual(m2.ik, 1.4)
         self.assertAlmostEqual(m2.kk, 0.2)
+        with self.assertRaises(UnsupportedOperationException):
+            m = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
+            m.createInverse()
 
     def test_createInvorted(self):
         a = 1
@@ -171,6 +181,9 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m2.ik, sin(1))
         self.assertAlmostEqual(m2.jk, 0)
         self.assertAlmostEqual(m2.kk, cos(1))
+        with self.assertRaises(UnsupportedOperationException):
+            m = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
+            m.createInvorted()
 
     def test_getII(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -219,30 +232,57 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(m.get(0, 2), 7)
         self.assertAlmostEqual(m.get(1, 2), 8)
         self.assertAlmostEqual(m.get(2, 2), 9)
+        with self.assertRaises(IllegalArgumentException):
+            m.get(0, 3)
+        with self.assertRaises(IllegalArgumentException):
+            m.get(1, 3)
+        with self.assertRaises(IllegalArgumentException):
+            m.get(2, 3)
+        with self.assertRaises(IllegalArgumentException):
+            m.get(3, 0)
 
     def test_getIthColumn(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v = m.getIthColumn()
-        self.assertAlmostEqual(v.i, 1)
-        self.assertAlmostEqual(v.j, 2)
-        self.assertAlmostEqual(v.k, 3)
+        v = VectorIJK()
+        v2 = m.getIthColumn()
+        self.assertAlmostEqual(v2.i, 1)
+        self.assertAlmostEqual(v2.j, 2)
+        self.assertAlmostEqual(v2.k, 3)
+        v2 = m.getIthColumn(v)
+        self.assertIs(v2, v)
+        self.assertAlmostEqual(v2.i, 1)
+        self.assertAlmostEqual(v2.j, 2)
+        self.assertAlmostEqual(v2.k, 3)
 
     def test_getJthColumn(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v = m.getJthColumn()
-        self.assertAlmostEqual(v.i, 4)
-        self.assertAlmostEqual(v.j, 5)
-        self.assertAlmostEqual(v.k, 6)
+        v = VectorIJK()
+        v2 = m.getJthColumn()
+        self.assertAlmostEqual(v2.i, 4)
+        self.assertAlmostEqual(v2.j, 5)
+        self.assertAlmostEqual(v2.k, 6)
+        v2 = m.getJthColumn(v)
+        self.assertIs(v2, v)
+        self.assertAlmostEqual(v2.i, 4)
+        self.assertAlmostEqual(v2.j, 5)
+        self.assertAlmostEqual(v2.k, 6)
 
     def test_getKthColumn(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v = m.getKthColumn()
-        self.assertAlmostEqual(v.i, 7)
-        self.assertAlmostEqual(v.j, 8)
-        self.assertAlmostEqual(v.k, 9)
+        v = VectorIJK()
+        v2 = m.getKthColumn()
+        self.assertAlmostEqual(v2.i, 7)
+        self.assertAlmostEqual(v2.j, 8)
+        self.assertAlmostEqual(v2.k, 9)
+        v2 = m.getKthColumn(v)
+        self.assertIs(v2, v)
+        self.assertAlmostEqual(v2.i, 7)
+        self.assertAlmostEqual(v2.j, 8)
+        self.assertAlmostEqual(v2.k, 9)
 
     def test_getColumn(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        v2 = VectorIJK()
         v = m.getColumn(0)
         self.assertAlmostEqual(v.i, 1)
         self.assertAlmostEqual(v.j, 2)
@@ -255,6 +295,25 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
         self.assertAlmostEqual(v.i, 7)
         self.assertAlmostEqual(v.j, 8)
         self.assertAlmostEqual(v.k, 9)
+        v = m.getColumn(0, v2)
+        self.assertIs(v, v2)
+        self.assertAlmostEqual(v.i, 1)
+        self.assertAlmostEqual(v.j, 2)
+        self.assertAlmostEqual(v.k, 3)
+        v = m.getColumn(1, v2)
+        self.assertIs(v, v2)
+        self.assertAlmostEqual(v.i, 4)
+        self.assertAlmostEqual(v.j, 5)
+        self.assertAlmostEqual(v.k, 6)
+        v = m.getColumn(2, v2)
+        self.assertIs(v, v2)
+        self.assertAlmostEqual(v.i, 7)
+        self.assertAlmostEqual(v.j, 8)
+        self.assertAlmostEqual(v.k, 9)
+        with self.assertRaises(IllegalArgumentException):
+            m.getColumn(3)
+        with self.assertRaises(Exception):
+            m.getColumn(0, 0, 0)
 
     def test_getDeterminant(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -278,7 +337,13 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
     def test_mxv(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         v = UnwritableVectorIJK(1, 2, 3)
+        vb = UnwritableVectorIJK(0, 0, 0)
         v2 = m.mxv(v)
+        self.assertAlmostEqual(v2.i, 1*1 + 4*2 + 7*3)
+        self.assertAlmostEqual(v2.j, 2*1 + 5*2 + 8*3)
+        self.assertAlmostEqual(v2.k, 3*1 + 6*2 + 9*3)
+        v2 = m.mxv(v, vb)
+        self.assertIs(v2, vb)
         self.assertAlmostEqual(v2.i, 1*1 + 4*2 + 7*3)
         self.assertAlmostEqual(v2.j, 2*1 + 5*2 + 8*3)
         self.assertAlmostEqual(v2.k, 3*1 + 6*2 + 9*3)
@@ -286,7 +351,9 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
     def test_mtxv(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         v = UnwritableVectorIJK(1, 2, 3)
-        v2 = m.mtxv(v)
+        vb = UnwritableVectorIJK(0, 0, 0)
+        v2 = m.mtxv(v, vb)
+        self.assertIs(v2, vb)
         self.assertAlmostEqual(v2.i, 1*1 + 2*2 + 3*3)
         self.assertAlmostEqual(v2.j, 4*1 + 5*2 + 6*3)
         self.assertAlmostEqual(v2.k, 7*1 + 8*2 + 9*3)
@@ -294,15 +361,15 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
     def test_copyOf(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = UnwritableMatrixIJK.copyOf(m)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        self.assertAlmostEqual(m.ki, 3)
-        self.assertAlmostEqual(m.ij, 4)
-        self.assertAlmostEqual(m.jj, 5)
-        self.assertAlmostEqual(m.kj, 6)
-        self.assertAlmostEqual(m.ik, 7)
-        self.assertAlmostEqual(m.jk, 8)
-        self.assertAlmostEqual(m.kk, 9)
+        self.assertAlmostEqual(m2.ii, 1)
+        self.assertAlmostEqual(m2.ji, 2)
+        self.assertAlmostEqual(m2.ki, 3)
+        self.assertAlmostEqual(m2.ij, 4)
+        self.assertAlmostEqual(m2.jj, 5)
+        self.assertAlmostEqual(m2.kj, 6)
+        self.assertAlmostEqual(m2.ik, 7)
+        self.assertAlmostEqual(m2.jk, 8)
+        self.assertAlmostEqual(m2.kk, 9)
 
     def test_hashCode(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -311,7 +378,28 @@ class TestUnwritableMatrixIJ(unittest.TestCase):
     def test_equals(self):
         m1 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        self.assertTrue(m1.equals(m1))
+        self.assertFalse(m1.equals(None))
+        self.assertFalse(m1.equals([]))
         self.assertTrue(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(0, 2, 3, 4, 5, 6, 7, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 0, 3, 4, 5, 6, 7, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 0, 4, 5, 6, 7, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 3, 0, 5, 6, 7, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 3, 4, 0, 6, 7, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 0, 7, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 0, 8, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 0, 9)
+        self.assertFalse(m1.equals(m2))
+        m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 0)
+        self.assertFalse(m1.equals(m2))
 
     def test_toString(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)

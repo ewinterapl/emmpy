@@ -3,13 +3,12 @@
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    checkRotation,
+    computeDeterminant,
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
-)
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.java.lang.double import Double
@@ -17,7 +16,6 @@ from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
-from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableMatrixIJK:
@@ -105,7 +103,7 @@ class UnwritableMatrixIJK:
                 self.__init__(data[0][0], data[1][0], data[2][0],
                               data[0][1], data[1][1], data[2][1],
                               data[0][2], data[1][2], data[2][2])
-            elif isinstance(args[0], UnwritableMatrixIJK):
+            else:
                 # Copy constructor, creates a matrix by copying the values of a
                 # pre-existing one.
                 # @param matrix the matrix whose contents are to be copied.
@@ -114,95 +112,78 @@ class UnwritableMatrixIJK:
                               matrix.ij, matrix.jj, matrix.kj,
                               matrix.ik, matrix.jk, matrix.kk)
         elif len(args) == 2:
-            if isRealNumber(args[0]) and isinstance(args[1],
-                                                    UnwritableMatrixIJK):
-                # Scaling constructor, creates a new matrix by applying a
-                # scalar multiple to the components of a pre-existing matrix.
-                # @param scale the scale factor to apply
-                # @param matrix the matrix whose components are to be scaled
-                # and copied
-                (scale, matrix) = args
-                self.__init__(
-                    scale*matrix.ii, scale*matrix.ji, scale*matrix.ki,
-                    scale*matrix.ij, scale*matrix.jj, scale*matrix.kj,
-                    scale*matrix.ik, scale*matrix.jk, scale*matrix.kk)
+            # Scaling constructor, creates a new matrix by applying a
+            # scalar multiple to the components of a pre-existing matrix.
+            # @param scale the scale factor to apply
+            # @param matrix the matrix whose components are to be scaled
+            # and copied
+            (scale, matrix) = args
+            self.__init__(
+                scale*matrix.ii, scale*matrix.ji, scale*matrix.ki,
+                scale*matrix.ij, scale*matrix.jj, scale*matrix.kj,
+                scale*matrix.ik, scale*matrix.jk, scale*matrix.kk)
         elif len(args) == 3:
-            if (isinstance(args[0], UnwritableVectorIJK) and
-                isinstance(args[1], UnwritableVectorIJK) and
-                isinstance(args[2], UnwritableVectorIJK)):
-                # Column vector constructor, creates a new matrix by populating
-                # the columns of the matrix with the supplied vectors.
-                # @param ithColumn the vector containing the ith column
-                # @param jthColumn the vector containing the jth column
-                # @param kthColumn the vector containing the kth column
-                (ithColumn, jthColumn, kthColumn) = args
-                self.__init__(ithColumn.i, ithColumn.j, ithColumn.k,
-                              jthColumn.i, jthColumn.j, jthColumn.k,
-                              kthColumn.i, kthColumn.j, kthColumn.k)
+            # Column vector constructor, creates a new matrix by populating
+            # the columns of the matrix with the supplied vectors.
+            # @param ithColumn the vector containing the ith column
+            # @param jthColumn the vector containing the jth column
+            # @param kthColumn the vector containing the kth column
+            (ithColumn, jthColumn, kthColumn) = args
+            self.__init__(ithColumn.i, ithColumn.j, ithColumn.k,
+                          jthColumn.i, jthColumn.j, jthColumn.k,
+                          kthColumn.i, kthColumn.j, kthColumn.k)
         elif len(args) == 4:
-            if (isRealNumber(args[0]) and isRealNumber(args[1]) and
-                isRealNumber(args[2]) and
-                isinstance(args[3], UnwritableMatrixIJK)):
-                # Column scaling constructor, creates a new matrix by applying
-                # scalar multiples to the columns of a pre-existing matrix.
-                # @param scaleI scale factor to apply to the ith column
-                # @param scaleJ scale factor to apply to the jth column
-                # @param scaleK scale factor to apply to the kth column
-                # @param matrix the matrix whose components are to be scaled
-                # and copied
-                (scaleI, scaleJ, scaleK, matrix) = args
-                self.__init__(
-                    scaleI*matrix.ii, scaleI*matrix.ji, scaleI*matrix.ki,
-                    scaleJ*matrix.ij, scaleJ*matrix.jj, scaleJ*matrix.kj,
-                    scaleK*matrix.ik, scaleK*matrix.jk, scaleK*matrix.kk)
+            # Column scaling constructor, creates a new matrix by applying
+            # scalar multiples to the columns of a pre-existing matrix.
+            # @param scaleI scale factor to apply to the ith column
+            # @param scaleJ scale factor to apply to the jth column
+            # @param scaleK scale factor to apply to the kth column
+            # @param matrix the matrix whose components are to be scaled
+            # and copied
+            (scaleI, scaleJ, scaleK, matrix) = args
+            self.__init__(
+                scaleI*matrix.ii, scaleI*matrix.ji, scaleI*matrix.ki,
+                scaleJ*matrix.ij, scaleJ*matrix.jj, scaleJ*matrix.kj,
+                scaleK*matrix.ik, scaleK*matrix.jk, scaleK*matrix.kk)
         elif len(args) == 6:
-            if (isRealNumber(args[0]) and
-                isinstance(args[1], UnwritableVectorIJK) and
-                isRealNumber(args[2]) and
-                isinstance(args[3], UnwritableVectorIJK) and
-                isRealNumber(args[4]) and
-                isinstance(args[5], UnwritableVectorIJK)):
-                # Scaled column vector constructor, creates a new matrix by
-                # populating the columns of the matrix with scaled versions of
-                # the supplied vectors
-                # @param scaleI the scale factor to apply to the ith column
-                # @param ithColumn the vector containing the ith column
-                # @param scaleJ the scale factor to apply to the jth column
-                # @param jthColumn the vector containing the jth column
-                # @param scaleK the scale factor to apply to the kth column
-                # @param kthColumn the vector containing the kth column
-                (scaleI, ithColumn, scaleJ, jthColumn, scaleK,
-                 kthColumn) = args
-                self.__init__(
-                    scaleI*ithColumn.i, scaleI*ithColumn.j, scaleI*ithColumn.k,
-                    scaleJ*jthColumn.i, scaleJ*jthColumn.j, scaleJ*jthColumn.k,
-                    scaleK*kthColumn.i, scaleK*kthColumn.j, scaleK*kthColumn.k)
+            # Scaled column vector constructor, creates a new matrix by
+            # populating the columns of the matrix with scaled versions of
+            # the supplied vectors
+            # @param scaleI the scale factor to apply to the ith column
+            # @param ithColumn the vector containing the ith column
+            # @param scaleJ the scale factor to apply to the jth column
+            # @param jthColumn the vector containing the jth column
+            # @param scaleK the scale factor to apply to the kth column
+            # @param kthColumn the vector containing the kth column
+            (scaleI, ithColumn, scaleJ, jthColumn, scaleK,
+                kthColumn) = args
+            self.__init__(
+                scaleI*ithColumn.i, scaleI*ithColumn.j, scaleI*ithColumn.k,
+                scaleJ*jthColumn.i, scaleJ*jthColumn.j, scaleJ*jthColumn.k,
+                scaleK*kthColumn.i, scaleK*kthColumn.j, scaleK*kthColumn.k)
         elif len(args) == 9:
-            if (isRealNumber(args[0]) and isRealNumber(args[1]) and
-                isRealNumber(args[2]) and isRealNumber(args[3]) and
-                isRealNumber(args[4]) and isRealNumber(args[5]) and
-                isRealNumber(args[6]) and isRealNumber(args[7]) and
-                isRealNumber(args[8])):
-                # Constructs a matrix from the nine basic components.
-                # @param ii ith row, ith column element
-                # @param ji jth row, ith column element
-                # @param ki kth row, ith column element
-                # @param ij ith row, jth column element
-                # @param jj jth row, jth column element
-                # @param kj kth row, jth column element
-                # @param ik ith row, kth column element
-                # @param jk jth row, kth column element
-                # @param kk kth row, kth column element
-                (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-                self.ii = ii
-                self.ji = ji
-                self.ki = ki
-                self.ij = ij
-                self.jj = jj
-                self.kj = kj
-                self.ik = ik
-                self.jk = jk
-                self.kk = kk
+            # Constructs a matrix from the nine basic components.
+            # @param ii ith row, ith column element
+            # @param ji jth row, ith column element
+            # @param ki kth row, ith column element
+            # @param ij ith row, jth column element
+            # @param jj jth row, jth column element
+            # @param kj kth row, jth column element
+            # @param ik ith row, kth column element
+            # @param jk jth row, kth column element
+            # @param kk kth row, kth column element
+            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
+            self.ii = ii
+            self.ji = ji
+            self.ki = ki
+            self.ij = ij
+            self.jj = jj
+            self.kj = kj
+            self.ik = ik
+            self.jk = jk
+            self.kk = kk
+        else:
+            raise Exception
 
     def createTranspose(self):
         """Creates a new, transposed copy of the existing matrix.
@@ -276,12 +257,11 @@ class UnwritableMatrixIJK:
         # appropriately.
         matrix = self.createTranspose()
 
-        length = InternalOperations.computeNorm(
-            matrix.ii, matrix.ij, matrix.ik)
+        length = computeNorm(matrix.ii, matrix.ij, matrix.ik)
         if length*self.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
-                "ith column of matrix has length, " + length +
-                ", for which there is no inverse.")
+                "ith column of matrix has length, %s, for which there is no "
+                "inverse." % length)
         matrix.ii /= length
         matrix.ii /= length
         matrix.ij /= length
@@ -289,12 +269,12 @@ class UnwritableMatrixIJK:
         matrix.ik /= length
         matrix.ik /= length
 
-        length = InternalOperations.computeNorm(
+        length = computeNorm(
             matrix.ji, matrix.jj, matrix.jk)
         if length*self.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
-                "jth column of matrix has length, " + length +
-                ", for which there is no inverse.")
+                "jth column of matrix has length, %s, for which there is no "
+                "inverse." % length)
         matrix.ji /= length
         matrix.ji /= length
         matrix.jj /= length
@@ -302,12 +282,12 @@ class UnwritableMatrixIJK:
         matrix.jk /= length
         matrix.jk /= length
 
-        length = InternalOperations.computeNorm(
+        length = computeNorm(
             matrix.ki, matrix.kj, matrix.kk)
         if length*self.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
-                "kth column of matrix has length, " + length +
-                ", for which there is no inverse.")
+                "kth column of matrix has length, %s, for which there is no "
+                "inverse." % length)
         matrix.ki /= length
         matrix.ki /= length
         matrix.kj /= length
@@ -498,13 +478,15 @@ class UnwritableMatrixIJK:
                 raise IllegalArgumentException(
                     "Unable to retrieve column. Index: %s is invalid." %
                     columnIndex)
+        else:
+            raise Exception
 
     def getDeterminant(self):
         """Computes the determinant of the matrix.
 
         @return the determinant of the instance
         """
-        return InternalOperations.computeDeterminant(
+        return computeDeterminant(
             self.ii, self.ji, self.ki,
             self.ij, self.jj, self.kj,
             self.ik, self.jk, self.kk)
@@ -534,7 +516,7 @@ class UnwritableMatrixIJK:
             # otherwise
             (normTolerance, determinantTolerance) = args
             try:
-                InternalOperations.checkRotation(
+                checkRotation(
                     self.ii, self.ji, self.ki,
                     self.ij, self.jj, self.kj,
                     self.ik, self.jk, self.kk,
@@ -667,6 +649,6 @@ class UnwritableMatrixIJK:
 
     def toString(self):
         return ("[%s,%s,%s;%s,%s,%s;%s,%s,%s]" %
-            (self.ii, self.ji, self.ki,
-             self.ij, self.jj, self.kj,
-             self.ik, self.jk, self.kk))
+                (self.ii, self.ji, self.ki,
+                 self.ij, self.jj, self.kj,
+                 self.ik, self.jk, self.kk))

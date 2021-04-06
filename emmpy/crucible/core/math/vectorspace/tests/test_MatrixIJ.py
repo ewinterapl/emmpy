@@ -1,4 +1,3 @@
-from emmpy.java.lang.unsupportedoperationexception import UnsupportedOperationException
 from math import cos, pi, sin, sqrt
 import unittest
 
@@ -8,6 +7,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
+from emmpy.java.lang.unsupportedoperationexception import (
+    UnsupportedOperationException
+)
 
 
 class TestBuilder(unittest.TestCase):

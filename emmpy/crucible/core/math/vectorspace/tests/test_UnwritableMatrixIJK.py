@@ -1,4 +1,3 @@
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin, sqrt
 import unittest
 
@@ -8,6 +7,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException

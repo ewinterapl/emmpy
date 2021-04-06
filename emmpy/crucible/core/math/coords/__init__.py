@@ -113,7 +113,7 @@ cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvector.py
-cylindrivcalvectorfieldvalue.py
+cylindricalvectorfieldvalue.py
 latitudinalcoordconverter.py
 latitudinaltocartesianjacobian.py
 latitudinalvector.py

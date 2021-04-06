@@ -5,9 +5,6 @@ methods will raise exceptions if invoked.
 """
 
 
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-
-
 class CoordConverter:
     """An interface which allows for the conversion between different
     coordinate systems to Cartesian.

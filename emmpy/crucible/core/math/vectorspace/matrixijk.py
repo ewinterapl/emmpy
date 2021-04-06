@@ -11,7 +11,7 @@ internals of the parent classes fields.
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
@@ -49,7 +49,7 @@ class MatrixIJK(UnwritableMatrixIJK):
                 # three or greater.
                 (data,) = args
                 UnwritableMatrixIJK.__init__(self, data)
-            elif isinstance(args[0], UnwritableMatrixIJK):
+            else:
                 # Copy constructor, creates a matrix by copying the values of
                 # a pre-existing one.
                 # @param matrix the matrix whose contents are to be copied.
@@ -108,6 +108,8 @@ class MatrixIJK(UnwritableMatrixIJK):
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
             UnwritableMatrixIJK.__init__(
                 self, ii, ji, ki, ij, jj, kj, ik, jk, kk)
+        else:
+            raise Exception
 
     def createTranspose(self):
         """Note: this method is overridden to return an instance of the
@@ -116,14 +118,12 @@ class MatrixIJK(UnwritableMatrixIJK):
 
     def createUnitizedColumns(self):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         return MatrixIJK(self).unitizeColumns()
 
     def createInverse(self, *args):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         if len(args) == 0:
             return MatrixIJK(self).invert()
         elif len(args) == 1:
@@ -134,8 +134,7 @@ class MatrixIJK(UnwritableMatrixIJK):
 
     def createInvorted(self):
         """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
+        writable subclass rather than the unwritable parent."""
         return MatrixIJK(self).invort()
 
     def transpose(self):
@@ -215,7 +214,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         the space available to double precision
         """
         self.transpose()
-        length = InternalOperations.computeNorm(self.ii, self.ij, self.ik)
+        length = computeNorm(self.ii, self.ij, self.ik)
         if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
                 "ith column of matrix has length, %s, for which there is no "
@@ -226,7 +225,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.ij /= length
         self.ik /= length
         self.ik /= length
-        length = InternalOperations.computeNorm(self.ji, self.jj, self.jk)
+        length = computeNorm(self.ji, self.jj, self.jk)
         if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
                 "jth column of matrix has length, %s, for which there is no "
@@ -237,7 +236,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.jj /= length
         self.jk /= length
         self.jk /= length
-        length = InternalOperations.computeNorm(self.ki, self.kj, self.kk)
+        length = computeNorm(self.ki, self.kj, self.kk)
         if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
                 "kth column of matrix has length, %s, for which there is no "
@@ -422,7 +421,6 @@ class MatrixIJK(UnwritableMatrixIJK):
     def setTo(self, *args):
         """Set the matrix components."""
         if len(args) == 1:
-            pass
             if isinstance(args[0], list):
                 # Sets the contents of this matrix to the upper three by three
                 # block of a supplied two dimensional array of doubles.
@@ -437,7 +435,7 @@ class MatrixIJK(UnwritableMatrixIJK):
                            data[0][1], data[1][1], data[2][1],
                            data[0][2], data[1][2], data[2][2])
                 return self
-            elif isinstance(args[0], UnwritableMatrixIJK):
+            else:
                 # Sets the contents of this matrix to match those of a supplied
                 # matrix
                 # @param matrix the matrix to copy
@@ -529,6 +527,8 @@ class MatrixIJK(UnwritableMatrixIJK):
             self.jk = jk
             self.kk = kk
             return self
+        else:
+            raise Exception
 
     def setToTranspose(self, matrix):
         """Sets this matrix components to the transpose of the supplied matrix.
@@ -933,7 +933,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK)
             (m, v) = args
-            return m.mtxv(v, VectorIJK())
+            return UnwritableMatrixIJK.mtxv(m, v, VectorIJK())
         elif len(args) == 3:
             # @param m the matrix
             # @param v the vector
@@ -941,7 +941,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @return a reference to buffer for convenience.
             # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK, VectorIJK)
             (m, v, buffer) = args
-            return m.mtxv(v, buffer)
+            return UnwritableMatrixIJK.mtxv(m, v, buffer)
 
     @staticmethod
     def mxv(*args):
@@ -952,7 +952,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK)
             (m, v) = args
-            return m.mxv(v, VectorIJK())
+            return UnwritableMatrixIJK.mxv(m, v, VectorIJK())
         elif len(args) == 3:
             # @param m the matrix
             # @param v the vector
@@ -960,4 +960,4 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @return a reference to buffer for convenience.
             # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK, VectorIJK)
             (m, v, buffer) = args
-            return m.mxv(v, buffer)
+            return UnwritableMatrixIJK.mxv(m, v, buffer)

@@ -2,7 +2,8 @@
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    checkRotation,
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
@@ -53,7 +54,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
         {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant is not
         within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
         """
-        InternalOperations.checkRotation(
+        checkRotation(
             matrix.ii, matrix.ji, matrix.ki,
             matrix.ij, matrix.jj, matrix.kj,
             matrix.ik, matrix.jk, matrix.kk,
@@ -209,7 +210,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
         result = UnwritableRotationMatrixIJK(self)
 
         # Normalize the first column vector of the matrix.
-        norm = InternalOperations.computeNorm(result.ii, result.ji, result.ki)
+        norm = computeNorm(result.ii, result.ji, result.ki)
         result.ii /= norm
         result.ji /= norm
         result.ki /= norm
@@ -221,7 +222,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
         result.kk = result.ii*result.jj - result.ji*result.ij
 
         # Normalize the result.
-        norm = InternalOperations.computeNorm(result.ik, result.jk, result.kk)
+        norm = computeNorm(result.ik, result.jk, result.kk)
         result.ik /= norm
         result.jk /= norm
         result.kk /= norm
@@ -231,7 +232,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
         result.jj = result.kk*result.ii - result.ik*result.ki
         result.kj = result.ik*result.ji - result.jk*result.ii
 
-        norm = InternalOperations.computeNorm(result.ij, result.jj, result.kj)
+        norm = computeNorm(result.ij, result.jj, result.kj)
         result.ij /= norm
         result.jj /= norm
         result.kj /= norm

@@ -2,7 +2,8 @@
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    checkRotation,
+    computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
@@ -204,7 +205,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         """
 
         # Normalize the first column vector of the matrix.
-        norm = InternalOperations.computeNorm(self.ii, self.ji, self.ki)
+        norm = computeNorm(self.ii, self.ji, self.ki)
         self.ii /= norm
         self.ji /= norm
         self.ki /= norm
@@ -216,7 +217,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         self.kk = self.ii*self.jj - self.ji*self.ij
 
         # Normalize the result.
-        norm = InternalOperations.computeNorm(self.ik, self.jk, self.kk)
+        norm = computeNorm(self.ik, self.jk, self.kk)
         self.ik /= norm
         self.jk /= norm
         self.kk /= norm
@@ -226,7 +227,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         self.jj = self.kk*self.ii - self.ik*self.ki
         self.kj = self.ik*self.ji - self.jk*self.ii
 
-        norm = InternalOperations.computeNorm(self.ij, self.jj, self.kj)
+        norm = computeNorm(self.ij, self.jj, self.kj)
         self.ij /= norm
         self.jj /= norm
         self.kj /= norm
@@ -365,7 +366,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
             try:
-                InternalOperations.checkRotation(
+                checkRotation(
                     ii, ji, ki, ij, jj, kj, ik, jk, kk,
                     UnwritableRotationMatrixIJK.NORM_TOLERANCE,
                     UnwritableRotationMatrixIJK.DETERMINANT_TOLERANCE)

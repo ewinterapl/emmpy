@@ -2,7 +2,6 @@
 """
 
 
-# # import crucible.core.math.vectorspace.VectorIJK;
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
@@ -68,9 +67,7 @@ class AbstractVector():
         prime = 31
         result = 1
         result = prime*result
-        if self.ijkCoordinate is None:
-            pass
-        else:
+        if self.ijkCoordinate:
             result += self.ijkCoordinate.hashCode()
         return result
 
@@ -86,7 +83,6 @@ class AbstractVector():
             return False
         if not isinstance(self, obj.__class__):
             return False
-        # AbstractVector other = (AbstractVector) obj;
         other = obj
         if self.ijkCoordinate is None:
             if other.ijkCoordinate is not None:

@@ -8,7 +8,10 @@ from emmpy.crucible.core.math.coords.abstractvector import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        AbstractVector(0, 0, 0)
+        av = AbstractVector(0, 1, 2)
+        self.assertAlmostEqual(av.ijkCoordinate.i, 0)
+        self.assertAlmostEqual(av.ijkCoordinate.j, 1)
+        self.assertAlmostEqual(av.ijkCoordinate.k, 2)
 
     def test_getI(self):
         av = AbstractVector(0.1, 1.2, 2.3)
@@ -37,6 +40,9 @@ class TestBuilder(unittest.TestCase):
         av1 = AbstractVector(0.1, 1.2, 2.3)
         av2 = AbstractVector(0.1, 1.2, 2.3)
         av3 = AbstractVector(0.2, 1.2, 2.3)
+        self.assertTrue(av1.equals(av1))
+        self.assertFalse(av1.equals(None))
+        self.assertFalse(av1.equals([0.1, 1.2, 2.3]))
         self.assertTrue(av1.equals(av2))
         self.assertFalse(av1.equals(av3))
 

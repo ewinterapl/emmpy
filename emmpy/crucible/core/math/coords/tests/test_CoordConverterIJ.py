@@ -1,12 +1,23 @@
 import unittest
 
-from emmpy.crucible.core.math.coords.coordconverterij import CoordConverterIJ
+from emmpy.crucible.core.math.coords.coordconverterij import (
+    CoordConverterIJ
+)
 
 
 class TestCoordConverterIJ(unittest.TestCase):
 
     def test___init__(self):
-        CoordConverterIJ()
+        with self.assertRaises(Exception):
+            CoordConverterIJ()
+
+    def test_toCoordinate(self):
+        with self.assertRaises(Exception):
+            CoordConverterIJ.toCoordinate(None, None)
+
+    def test_toCartesian(self):
+        with self.assertRaises(Exception):
+            CoordConverterIJ.toCartesian(None, None)
 
 
 if __name__ == '__main__':

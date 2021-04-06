@@ -4,7 +4,7 @@
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
-# import crucible.core.math.vectorspace.VectorIJ;
+
 
 class AbstractVectorIJ:
     """AbstractVectorIJ
@@ -25,7 +25,7 @@ class AbstractVectorIJ:
 
     Also, if any other methods are needed on every coordinate class, they can
     hopefully just be added in here.
- 
+
     @author G.K.Stephens
     """
 
@@ -86,4 +86,3 @@ class AbstractVectorIJ:
 
         def toString(self):
             raise Exception
-

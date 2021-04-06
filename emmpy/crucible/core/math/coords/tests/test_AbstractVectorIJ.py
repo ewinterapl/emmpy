@@ -9,7 +9,8 @@ class TestAbstractVectorIJ(unittest.TestCase):
 
     def test___init__(self):
         avij = AbstractVectorIJ(0.0, 0.1)
-        self.assertIsNotNone(avij)
+        self.assertAlmostEqual(avij.ijCoordinate.i, 0.0)
+        self.assertAlmostEqual(avij.ijCoordinate.j, 0.1)
 
     def test_getI(self):
         avij = AbstractVectorIJ(0.0, 0.1)
@@ -33,6 +34,9 @@ class TestAbstractVectorIJ(unittest.TestCase):
         avij1 = AbstractVectorIJ(0.0, 0.1)
         avij2 = AbstractVectorIJ(0.0, 0.1)
         avij3 = AbstractVectorIJ(0.0, 0.2)
+        self.assertTrue(avij1.equals(avij1))
+        self.assertFalse(avij1.equals(None))
+        self.assertFalse(avij1.equals([0.0, 0.1]))
         self.assertTrue(avij1.equals(avij2))
         self.assertFalse(avij1.equals(avij3))
 

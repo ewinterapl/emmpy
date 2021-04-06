@@ -1,4 +1,6 @@
-"""This abstract class is meant to assist implementors of new coordinate types.
+"""emmpy.crucible.core.math.coords.abstractvector
+
+This abstract class is meant to assist implementors of new coordinate types.
 """
 
 

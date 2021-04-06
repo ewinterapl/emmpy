@@ -3,7 +3,7 @@
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    InternalOperations
+    computeNorm
 )
 from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
@@ -209,7 +209,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         """
         self.transpose()
 
-        length = InternalOperations.computeNorm(self.ii, self.ij)
+        length = computeNorm(self.ii, self.ij)
         if length*UnwritableMatrixIJ.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
                 "ith column of matrix has length, " + length +
@@ -219,7 +219,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         self.ij /= length
         self.ij /= length
 
-        length = InternalOperations.computeNorm(self.ji, self.jj)
+        length = computeNorm(self.ji, self.jj)
         if length*MatrixIJ.INVORSION_BOUND < 1 or length == 0:
             raise UnsupportedOperationException(
                 "jth column of matrix has length, " + length +

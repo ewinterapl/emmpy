@@ -1,24 +1,24 @@
 """emmpy.crucible.core.math.vectorspace.matrixij"""
 
 
-from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    computeNorm
-)
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from math import sqrt
 
 from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.crucible.core.math.vectorspace.internaloperations import (
+    computeNorm
+)
+from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
+    UnwritableMatrixIJ
+)
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.utilities.isrealnumber import isRealNumber
-from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
-    UnwritableMatrixIJ
+from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
+from emmpy.java.lang.unsupportedoperationexception import (
+    UnsupportedOperationException
 )
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class MatrixIJ(UnwritableMatrixIJ):

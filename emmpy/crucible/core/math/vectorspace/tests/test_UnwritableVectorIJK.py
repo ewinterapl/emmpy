@@ -6,7 +6,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 )
 
 
-class Testbuilder(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         with self.assertRaises(Exception):

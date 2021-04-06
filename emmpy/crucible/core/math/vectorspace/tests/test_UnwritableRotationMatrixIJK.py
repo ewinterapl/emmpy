@@ -16,7 +16,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 )
 
 
-class TestUnwritableRotationMatrixIJK(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test_checkRotation(self):
         a = 1

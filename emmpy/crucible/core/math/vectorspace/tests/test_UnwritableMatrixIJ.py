@@ -16,7 +16,7 @@ from emmpy.java.lang.unsupportedoperationexception import (
 )
 
 
-class TestUnwritableMatrixIJ(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         # 0-argument form

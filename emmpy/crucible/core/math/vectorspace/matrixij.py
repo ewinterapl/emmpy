@@ -1,5 +1,4 @@
-"""matrixij.py
-"""
+"""emmpy.crucible.core.math.vectorspace.matrixij"""
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (

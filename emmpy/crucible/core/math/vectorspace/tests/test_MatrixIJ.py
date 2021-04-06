@@ -8,7 +8,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
-class TestMatrixIJ(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         m = MatrixIJ()

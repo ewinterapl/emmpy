@@ -104,6 +104,7 @@ coordconverter.py
 coordconverterij.py
 coordutilities.py
 pointonaxisexception.py
+vectorfieldvalue.py
 
 Packages
 --------

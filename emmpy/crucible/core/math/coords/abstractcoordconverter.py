@@ -2,10 +2,11 @@
 
 
 from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
 from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
 
 
-class AbstractCoordConverter(CoordConverter):
+class AbstractCoordConverter(AbstractVector, CoordConverter):
     """This is a helper class intended to encapsulate the two state methods on
     the {@link CoordConverter} interface.
 

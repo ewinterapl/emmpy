@@ -5,6 +5,7 @@ hierarchy.
 
 Modules
 -------
+test_AbstractCoordConverter.py
 test_AbstractVector.py
 test_AbstractVectorIJ.py
 test_CoordConverter.py

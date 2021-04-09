@@ -98,6 +98,7 @@ package crucible.core.math.coords;
 
 Modules
 -------
+abstractcoordconverter.py
 abstractvector.py
 abstractvectorij.py
 coordconverter.py

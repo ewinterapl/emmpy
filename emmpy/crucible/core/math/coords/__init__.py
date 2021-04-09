@@ -103,6 +103,7 @@ abstractcoordconverterij.py
 abstractvector.py
 abstractvectorfieldvalue.py
 abstractvectorij.py
+cartesianvectorfieldvalue.py
 coordconverter.py
 coordconverterij.py
 coordutilities.py

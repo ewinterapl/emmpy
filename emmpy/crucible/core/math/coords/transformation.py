@@ -6,11 +6,9 @@ methods will raise exceptions if invoked.
 
 
 from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
-# import crucible.core.math.vectorspace.MatrixIJK;
 from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
 )
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
 
 
 class Transformation(AbstractVector):

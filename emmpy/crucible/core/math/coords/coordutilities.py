@@ -16,6 +16,7 @@ def toLatitude(colatInRadians):
     """converts colatitude in radians to latitude in radians"""
     return pi/2 - colatInRadians
 
+
 def toColatitude(latInRadians):
     """converts latitude in radians to colatitude in radians"""
     return pi/2 - latInRadians

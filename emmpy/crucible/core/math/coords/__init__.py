@@ -107,6 +107,7 @@ cartesianvectorfieldvalue.py
 coordconverter.py
 coordconverterij.py
 coordutilities.py
+cylindricaltocartesianjacobian.py
 cylindricalvector.py
 pointonaxisexception.py
 transformation.py

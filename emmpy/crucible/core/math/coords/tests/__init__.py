@@ -14,6 +14,7 @@ test_CartesianVectorFieldValue.py
 test_CoordConverter.py
 test_CoordConverterIJ.py
 test_CoordUtilities.py
+test_CylindricalToCartesianJacobian.py
 test_CylindricalVector.py
 test_PointOnAxisException.py
 test_Transformation.py

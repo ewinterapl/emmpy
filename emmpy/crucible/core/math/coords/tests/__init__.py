@@ -12,5 +12,6 @@ test_CoordConverterIJ.py
 test_CoordUtilities.py
 test_PointOnAxisException.py
 test_Transformation.py
+test_TransformationIJ.py
 test_VectorFieldValue.py
 """

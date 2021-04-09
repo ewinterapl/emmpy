@@ -103,6 +103,7 @@ abstractvectorij.py
 coordconverter.py
 coordconverterij.py
 coordutilities.py
+pointonaxisexception.py
 
 Packages
 --------

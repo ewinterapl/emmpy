@@ -10,4 +10,5 @@ test_AbstractVectorIJ.py
 test_CoordConverter.py
 test_CoordConverterIJ.py
 test_CoordUtilities.py
+test_PointOnAxisException.py
 """

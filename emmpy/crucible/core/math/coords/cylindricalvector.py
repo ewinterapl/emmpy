@@ -28,8 +28,10 @@ class CylindricalVector(AbstractVector):
 
     def toString(self):
         return (
-            "CylindricalVector [cylindricalRadius: %s, longitude: %s, height: %s]"
-            % (self.getCylindricalRadius(), self.getLongitude(), self.getHeight())
+            "CylindricalVector [cylindricalRadius: %s, longitude: %s, "
+            "height: %s]"
+            % (self.getCylindricalRadius(), self.getLongitude(),
+               self.getHeight())
         )
 
 

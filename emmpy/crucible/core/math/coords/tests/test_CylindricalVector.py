@@ -6,7 +6,7 @@ from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 class TestCylindricalVector(unittest.TestCase):
 
     def test___init__(self):
-        CylindricalVector(0, 0, 0)
+        CylindricalVector(1.1, 2.2, 3.3)
 
     def test_getCylindricalRadius(self):
         cv = CylindricalVector(1.1, 2.2, 3.3)

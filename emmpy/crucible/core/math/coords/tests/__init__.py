@@ -8,6 +8,7 @@ Modules
 test_AbstractCoordConverter.py
 test_AbstractCoordConverterIJ.py
 test_AbstractVector.py
+test_AbstractVectorFieldValue.py
 test_AbstractVectorIJ.py
 test_CoordConverter.py
 test_CoordConverterIJ.py

@@ -101,6 +101,7 @@ Modules
 abstractcoordconverter.py
 abstractcoordconverterij.py
 abstractvector.py
+abstractvectorfieldvalue.py
 abstractvectorij.py
 coordconverter.py
 coordconverterij.py

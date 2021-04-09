@@ -1,8 +1,6 @@
 """emmpy.crucible.core.math.coords.abstractvectorfieldvalue"""
 
 
-# import static com.google.common.base.Preconditions.checkNotNull;
-
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.coords.vectorfieldvalue import VectorFieldValue
 
@@ -10,19 +8,12 @@ from emmpy.crucible.core.math.coords.vectorfieldvalue import VectorFieldValue
 class AbstractVectorFieldValue(VectorFieldValue):
     """AbstractVectorFieldValue"""
 
-    #    * The field containing the buffer that holds the position component of the state.
-    #   private final C position;
-
-    #    * The field containing the buffer that holds the value component of the state.
-    #   private final C value;
-
     def __init__(self, position, value):
         """Creates a state.
 
         @param position the position of one object relative to another.
         @param value the time derivative of the supplied position.
         """
-        #   public AbstractVectorFieldValue(C position, C value) {
         self.position = Preconditions.checkNotNull(position)
         self.value = Preconditions.checkNotNull(value)
 

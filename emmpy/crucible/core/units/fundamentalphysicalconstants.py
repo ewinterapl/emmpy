@@ -31,7 +31,6 @@
 
 from math import pi as PI
 
-from emmpy.crucible.core.math.cruciblemath import CrucibleMath
 
 class FundamentalPhysicalConstants:
 

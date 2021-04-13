@@ -1,14 +1,23 @@
 import unittest
 
+from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindrivcalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )
 
 
-class TestCylindricalVectorFieldValue(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        CylindricalVectorFieldValue()
+        position = CylindricalVector(1, 2, 3)
+        value = CylindricalVector(4, 5, 6)
+        cvfv = CylindricalVectorFieldValue(position, value)
+        self.assertAlmostEqual(cvfv.position.getI(), 1)
+        self.assertAlmostEqual(cvfv.position.getJ(), 2)
+        self.assertAlmostEqual(cvfv.position.getK(), 3)
+        self.assertAlmostEqual(cvfv.value.getI(), 4)
+        self.assertAlmostEqual(cvfv.value.getJ(), 5)
+        self.assertAlmostEqual(cvfv.value.getK(), 6)
 
 
 if __name__ == '__main__':

@@ -18,6 +18,7 @@ test_CylindricalCoordConverter.py
 test_CylindricalToCartesianBasisTransformation.py
 test_CylindricalToCartesianJacobian.py
 test_CylindricalVector.py
+test_CylindricalVectorFieldValue.py
 test_PointOnAxisException.py
 test_Transformation.py
 test_TransformationIJ.py

@@ -10,9 +10,6 @@ class PolarVector(AbstractVectorIJ):
     @author G.K.Stephens
     """
 
-    # The ZERO vector.
-    # ZERO = PolarVector(0, 0)
-
     def __init__(self, radius, angle):
         """Constructor"""        
         AbstractVectorIJ.__init__(self, radius, angle)
@@ -30,3 +27,6 @@ class PolarVector(AbstractVectorIJ):
             "PolarVector [radius: %s, angle: %s]" %
             (self.getRadius(), self.getAngle())
         )
+
+
+ZERO = PolarVector(0, 0)

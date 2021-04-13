@@ -112,6 +112,7 @@ cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvector.py
 cylindricalvectorfieldvalue.py
+latitudinalvector.py
 pointonaxisexception.py
 transformation.py
 transformationij.py

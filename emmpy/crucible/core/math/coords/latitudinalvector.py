@@ -9,10 +9,6 @@ class LatitudinalVector(AbstractVector):
 
     @author G.K.Stephens
     """
-    # public final class LatitudinalVector extends AbstractVector {
-
-    # The ZERO vector.
-    # ZERO = LatitudinalVector(0, 0, 0)
 
     def __init__(self, *args):
         """Constructor"""
@@ -36,3 +32,7 @@ class LatitudinalVector(AbstractVector):
             "LatitudinalVector [radius: %s, latitude: %s, longitude: %s]" %
             (self.getRadius(), self.getLatitude(), self.getLongitude())
         )
+
+
+# The ZERO vector.
+ZERO = LatitudinalVector(0, 0, 0)

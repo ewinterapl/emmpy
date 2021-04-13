@@ -125,6 +125,7 @@ sphericalcoordconverter.py
 sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py
 sphericalvector.py
+sphericalvectorfieldvalue.py
 transformation.py
 transformationij.py
 vectorfieldvalue.py

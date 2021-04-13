@@ -32,6 +32,7 @@ test_SphericalCoordConverter.py
 test_SphericalToCartesianBasisTransformation.py
 test_SphericalToCartesianJacobian.py
 test_SphericalVector.py
+test_SphericalVectorFieldValue.py
 test_Transformation.py
 test_TransformationIJ.py
 test_VectorFieldValue.py

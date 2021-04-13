@@ -23,6 +23,7 @@ test_LatitudinalCoordConverter.py
 test_LatitudinalToCartesianJacobian.py
 test_LatitudinalVector.py
 test_PointOnAxisException.py
+test_PolarToCartesianJacobian.py
 test_PolarVector.py
 test_Transformation.py
 test_TransformationIJ.py

@@ -121,6 +121,7 @@ polartocartesianjacobian.py
 polarvector.py
 radeccoordconverter.py
 radecvector.py
+sphericaltocartesianjacobian.py
 sphericalvector.py
 transformation.py
 transformationij.py

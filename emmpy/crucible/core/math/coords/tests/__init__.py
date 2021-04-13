@@ -15,6 +15,7 @@ test_CoordConverter.py
 test_CoordConverterIJ.py
 test_CoordUtilities.py
 test_CylindricalCoordConverter.py
+test_CylindricalToCartesianBasisTransformation.py
 test_CylindricalToCartesianJacobian.py
 test_CylindricalVector.py
 test_PointOnAxisException.py

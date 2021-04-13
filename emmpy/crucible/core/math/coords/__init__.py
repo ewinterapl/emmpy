@@ -108,6 +108,7 @@ coordconverter.py
 coordconverterij.py
 coordutilities.py
 cylindricalcoordconverter.py
+cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvector.py
 pointonaxisexception.py

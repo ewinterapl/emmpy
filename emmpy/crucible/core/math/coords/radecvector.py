@@ -10,9 +10,6 @@ class RaDecVector(AbstractVector):
     @author G.K.Stephens
     """
 
-    # The ZERO vector.
-    # ZERO = RaDecVector(0, 0, 0)
-
     def __init__(self, radius, raRadians, decRadians):
         """Constructor"""
         AbstractVector.__init__(self, radius, raRadians, decRadians)
@@ -34,3 +31,7 @@ class RaDecVector(AbstractVector):
             "RaDecVector [radius: %s, rightAscension: %s, declination: %s]" %
             (self.getRadius(), self.getRightAscension(), self.getDeclination())
         )
+
+
+# The ZERO vector.
+ZERO = RaDecVector(0, 0, 0)

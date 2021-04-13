@@ -119,6 +119,7 @@ pointonaxisexception.py
 polarcoordconverter.py
 polartocartesianjacobian.py
 polarvector.py
+radecvector.py
 transformation.py
 transformationij.py
 vectorfieldvalue.py

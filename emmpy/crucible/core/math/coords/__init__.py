@@ -116,6 +116,7 @@ latitudinalcoordconverter.py
 latitudinaltocartesianjacobian.py
 latitudinalvector.py
 pointonaxisexception.py
+polarcoordconverter.py
 polartocartesianjacobian.py
 polarvector.py
 transformation.py

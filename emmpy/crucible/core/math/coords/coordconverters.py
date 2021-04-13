@@ -1,164 +1,162 @@
 """emmpy.crucible.core.math.coords.coordconverters"""
 
-# import crucible.core.math.vectorspace.UnwritableVectorIJ;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJ;
-# import crucible.core.math.vectorspace.VectorIJK;
+
+from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
+    CylindricalCoordConverter
+)
+from emmpy.crucible.core.math.coords.cylindricalvector import (
+    CylindricalVector
+)
+from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
+    LatitudinalCoordConverter
+)
+from emmpy.crucible.core.math.coords.latitudinalvector import (
+    LatitudinalVector
+)
+from emmpy.crucible.core.math.coords.polarcoordconverter import (
+    PolarCoordConverter
+)
+from emmpy.crucible.core.math.coords.polarvector import (
+    PolarVector
+)
+from emmpy.crucible.core.math.coords.radeccoordconverter import (
+    RaDecCoordConverter
+)
+from emmpy.crucible.core.math.coords.radecvector import (
+    RaDecVector
+)
+from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
+    SphericalCoordConverter
+)
+from emmpy.crucible.core.math.coords.sphericalvector import (
+    SphericalVector
+)
+
 
 class CoordConverters:
     """CoordConverters
 
     @author G.K.Stephens
     """
-    # public class CoordConverters {
 
-    #   private static final SphericalCoordConverter sphericalCoordConverter =
-    #       new SphericalCoordConverter();
-    #   private static final LatitudinalCoordConverter latitudinalCoordConverter =
-    #       new LatitudinalCoordConverter();
-    #   private static final RaDecCoordConverter raDecCoordConverter = new RaDecCoordConverter();
-    #   private static final CylindricalCoordConverter cylindricalCoordConverter =
-    #       new CylindricalCoordConverter();
+    cylindricalCoordConverter = CylindricalCoordConverter()
+    latitudinalCoordConverter = LatitudinalCoordConverter()
+    polarCoordConverter = PolarCoordConverter()
+    raDecCoordConverter = RaDecCoordConverter()
+    sphericalCoordConverter = SphericalCoordConverter()
 
-    #   private CoordConverters() {}
+    def __init__(self):
+        """Constructor"""
+        pass
 
-    #   /**
-    #    * Converts a Cartesian position to spherical position.
-    #    * 
-    #    * @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian position.
-    #    * @param sphericalBuffer A {@link SphericalVector} buffer holding the spherical position;
-    #    * @return a reference to buffer for convenience.
-    #    */
-    #   public static SphericalVector convertToSpherical(UnwritableVectorIJK cartesian) {
-    #     return sphericalCoordConverter.toCoordinate(cartesian);
-    #   }
+    @staticmethod
+    def convertToCylindrical(cartesian):
+        """Converts a Cartesian position to cylindrical position.
 
-    #   /**
-    #    * Converts a spherical position to a Cartesian position.
-    #    * 
-    #    * @param spherical A {@link SphericalVector} holding the spherical position.
-    #    * @param cartesianBuffer A {@link VectorIJK} buffer holding the Cartesian position.
-    #    * @return a reference to buffer for convenience.
-    #    */
-    #   public static UnwritableVectorIJK convert(SphericalVector spherical) {
-    #     return sphericalCoordConverter.toCartesian(spherical);
-    #   }
+        @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
+        position.
+        @param cylindricalBuffer A {@link CylindricalVector} buffer holding the
+        cylindrical position;
+        @return a reference to buffer for convenience.
+        """
+        return CoordConverters.cylindricalCoordConverter.toCoordinate(
+            cartesian
+        )
 
-    #   /**
-    #    * Converts from Cartesian coordinates to Latitudinal coordinates
-    #    * 
-    #    * @param cartesian
-    #    * @param LatitudinalBuffer
-    #    * @return
-    #    */
-    #   public static LatitudinalVector convertToLatitudinal(UnwritableVectorIJK cartesian) {
-    #     return latitudinalCoordConverter.toCoordinate(cartesian);
-    #   }
+    @staticmethod
+    def convertToLatitudinal(cartesian):
+        """Converts from Cartesian coordinates to Latitudinal coordinates
 
-    #   /**
-    #    * Converts from Latitudinal coordinates to Cartesian coordinates
-    #    * 
-    #    * @param Latitudinal
-    #    * @param cartesianBuffer
-    #    * @return
-    #    */
-    #   public static UnwritableVectorIJK convert(LatitudinalVector Latitudinal) {
-    #     return latitudinalCoordConverter.toCartesian(Latitudinal);
-    #   }
+        @param cartesian
+        @param LatitudinalBuffer
+        @return
+        """
+        return CoordConverters.latitudinalCoordConverter.toCoordinate(
+            cartesian
+        )
 
-    #   /**
-    #    * Converts from Cartesian coordinates to RaDec coordinates
-    #    * 
-    #    * @param cartesian
-    #    * @param RaDecBuffer
-    #    * @return
-    #    */
-    #   public static RaDecVector convertToRaDec(UnwritableVectorIJK cartesian) {
-    #     return raDecCoordConverter.toCoordinate(cartesian);
-    #   }
+    @staticmethod
+    def convertToPolar(cartesian):
+        """Converts a Cartesian position to polar position.
 
-    #   /**
-    #    * Converts from RaDec coordinates to Cartesian coordinates
-    #    * 
-    #    * @param RaDec
-    #    * @param cartesianBuffer
-    #    * @return
-    #    */
-    #   public static UnwritableVectorIJK convert(RaDecVector RaDec) {
-    #     return raDecCoordConverter.toCartesian(RaDec);
-    #   }
+        @param cartesian A {@link UnwritableVectorIJ} holding the Cartesian
+        position.
+        @param polarBuffer A {@link PolarVector} buffer holding the polar
+        position;
+        @return a reference to buffer for convenience.
+        """
+        return CoordConverters.polarCoordConverter.toCoordinate(cartesian)
 
-    #   //
-    #   //
-    #   // /**
-    #   // * Converts from Cartesian states to RaDec states
-    #   // *
-    #   // * @param cartesian
-    #   // * @param RaDecBuffer
-    #   // * @return
-    #   // */
-    #   // public static RaDecState convert(UnwritableCartesianState cartesian,
-    #   // RaDecState raDecBuffer) {
-    #   // return raDecCoordConverter.toCoordinate(cartesian, raDecBuffer);
-    #   // }
-    #   //
-    #   // /**
-    #   // * Converts from RaDec states to Cartesian states
-    #   // *
-    #   // * @param RaDec
-    #   // * @param cartesianBuffer
-    #   // * @return
-    #   // */
-    #   // public static CartesianState convert(UnwritableRaDecState RaDec,
-    #   // CartesianState cartesianBuffer) {
-    #   // return raDecCoordConverter.toCartesian(RaDec, cartesianBuffer);
-    #   // }
+    @staticmethod
+    def convertToRaDec(cartesian):
+        """Converts from Cartesian coordinates to RaDec coordinates
 
-    #   /**
-    #    * Converts a Cartesian position to cylindrical position.
-    #    * 
-    #    * @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian position.
-    #    * @param cylindricalBuffer A {@link CylindricalVector} buffer holding the cylindrical position;
-    #    * @return a reference to buffer for convenience.
-    #    */
-    #   public static CylindricalVector convertToCylindrical(UnwritableVectorIJK cartesian) {
-    #     return cylindricalCoordConverter.toCoordinate(cartesian);
-    #   }
+        @param cartesian
+        @param RaDecBuffer
+        @return
+        """
+        return CoordConverters.raDecCoordConverter.toCoordinate(cartesian)
 
-    #   /**
-    #    * Converts a cylindrical position to a Cartesian position.
-    #    * 
-    #    * @param cylindrical A {@link CylindricalVector} holding the cylindrical position.
-    #    * @param cartesianBuffer A {@link VectorIJK} buffer holding the Cartesian position.
-    #    * @return a reference to buffer for convenience.
-    #    */
-    #   public static UnwritableVectorIJK convert(CylindricalVector cylindrical) {
-    #     return cylindricalCoordConverter.toCartesian(cylindrical);
-    #   }
+    @staticmethod
+    def convertToSpherical(cartesian):
+        """Converts a Cartesian position to spherical position.
 
-    #   // the two dimensional guys
-    #   private static PolarCoordConverter polarCoordConverter = new PolarCoordConverter();
+        @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
+        position.
+        @param sphericalBuffer A {@link SphericalVector} buffer holding the
+        spherical position;
+        @return a reference to buffer for convenience.
+        """
+        return CoordConverters.sphericalCoordConverter.toCoordinate(cartesian)
 
-    #   /**
-    #    * Converts a Cartesian position to polar position.
-    #    * 
-    #    * @param cartesian A {@link UnwritableVectorIJ} holding the Cartesian position.
-    #    * @param polarBuffer A {@link PolarVector} buffer holding the polar position;
-    #    * @return a reference to buffer for convenience.
-    #    */
-    #   public static PolarVector convertToPolar(UnwritableVectorIJ cartesian) {
-    #     return polarCoordConverter.toCoordinate(cartesian);
-    #   }
-
-    #   /**
-    #    * Converts a polar position to a Cartesian position.
-    #    * 
-    #    * @param polar A {@link PolarVector} holding the polar position.
-    #    * @param cartesianBuffer A {@link VectorIJ} buffer holding the Cartesian position.
-    #    * @return a reference to buffer for convenience.
-    #    */
-    #   public static UnwritableVectorIJ convert(PolarVector polar) {
-    #     return polarCoordConverter.toCartesian(polar);
-    #   }
-
-    # }
+    @staticmethod
+    def convert(position):
+        """Convert back to Cartesian coordinates."""
+        if isinstance(position, CylindricalVector):
+            # Converts a cylindrical position to a Cartesian position.
+            # @param cylindrical A {@link CylindricalVector} holding the
+            # cylindrical position.
+            # @param cartesianBuffer A {@link VectorIJK} buffer holding the
+            # Cartesian position.
+            # @return a reference to buffer for convenience.
+            cylindrical = position
+            return CoordConverters.cylindricalCoordConverter.toCartesian(
+                cylindrical
+            )
+        elif isinstance(position, LatitudinalVector):
+            # Converts from Latitudinal coordinates to Cartesian coordinates
+            # @param Latitudinal
+            # @param cartesianBuffer
+            # @return
+            latitudinal = position
+            return CoordConverters.latitudinalCoordConverter.toCartesian(
+                latitudinal
+            )
+        elif isinstance(position, PolarVector):
+            # Converts a polar position to a Cartesian position.
+            # @param polar A {@link PolarVector} holding the polar position.
+            # @param cartesianBuffer A {@link VectorIJ} buffer holding the
+            # Cartesian position.
+            # @return a reference to buffer for convenience.
+            polar = position
+            return CoordConverters.polarCoordConverter.toCartesian(polar)
+        elif isinstance(position, RaDecVector):
+            # Converts from RaDec coordinates to Cartesian coordinates
+            # @param RaDec
+            # @param cartesianBuffer
+            # @return
+            RaDec = position
+            return CoordConverters.raDecCoordConverter.toCartesian(RaDec)
+        elif isinstance(position, SphericalVector):
+            # Converts a spherical position to a Cartesian position.
+            # @param spherical A {@link SphericalVector} holding the spherical
+            # position.
+            # @param cartesianBuffer A {@link VectorIJK} buffer holding the
+            # Cartesian position.
+            # @return a reference to buffer for convenience.
+            spherical = position
+            return CoordConverters.sphericalCoordConverter.toCartesian(
+                spherical
+            )
+        else:
+            raise Exception

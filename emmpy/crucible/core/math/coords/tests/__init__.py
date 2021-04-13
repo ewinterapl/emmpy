@@ -13,6 +13,7 @@ test_AbstractVectorIJ.py
 test_CartesianVectorFieldValue.py
 test_CoordConverter.py
 test_CoordConverterIJ.py
+test_CoordConverters.py
 test_CoordUtilities.py
 test_CylindricalCoordConverter.py
 test_CylindricalToCartesianBasisTransformation.py

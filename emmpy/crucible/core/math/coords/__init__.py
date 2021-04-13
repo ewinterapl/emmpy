@@ -106,6 +106,7 @@ abstractvectorij.py
 cartesianvectorfieldvalue.py
 coordconverter.py
 coordconverterij.py
+coordconverters.py
 coordutilities.py
 cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py

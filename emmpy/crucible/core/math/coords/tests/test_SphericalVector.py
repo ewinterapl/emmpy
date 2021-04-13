@@ -3,7 +3,7 @@ import unittest
 from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
 
 
-class TestSphericalVector(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         sv = SphericalVector(0.1, 0.2, 0.3)

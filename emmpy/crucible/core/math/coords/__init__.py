@@ -122,6 +122,7 @@ polarvector.py
 radeccoordconverter.py
 radecvector.py
 sphericalcoordconverter.py
+sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py
 sphericalvector.py
 transformation.py

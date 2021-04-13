@@ -10,9 +10,6 @@ class SphericalVector(AbstractVector):
     @author G.K.Stephens
     """
 
-    # The ZERO vector.
-    # ZERO = SphericalVector(0, 0, 0)
-
     def __init__(self, radius, colatInRadians, longInRadians):
         """Constructor"""
         AbstractVector.__init__(self, radius, colatInRadians, longInRadians)
@@ -34,3 +31,7 @@ class SphericalVector(AbstractVector):
             "SphericalVector [radius: %s, colatitude: %s, longitude: %s]" %
             (self.getRadius(), self.getColatitude(), self.getLongitude())
         )
+
+
+# The ZERO vector.
+ZERO = SphericalVector(0, 0, 0)

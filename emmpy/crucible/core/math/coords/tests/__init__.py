@@ -28,6 +28,7 @@ test_PolarToCartesianJacobian.py
 test_PolarVector.py
 test_RaDecCoordConverter.py
 test_RaDecVector.py
+test_SphericalVector.py
 test_Transformation.py
 test_TransformationIJ.py
 test_VectorFieldValue.py

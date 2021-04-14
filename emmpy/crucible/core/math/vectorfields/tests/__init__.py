@@ -5,5 +5,8 @@ hierarchy.
 
 Modules
 -------
+test_DifferentiableVectorField.py
+test_ScalarField.py
 test_ScalarField2D.py
+test_VectorField.py
 """

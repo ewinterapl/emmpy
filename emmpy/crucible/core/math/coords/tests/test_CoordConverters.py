@@ -24,7 +24,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 )
 
 
-class TestCoordConverters(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         cc = CoordConverters()

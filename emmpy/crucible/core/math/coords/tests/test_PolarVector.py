@@ -3,7 +3,7 @@ import unittest
 from emmpy.crucible.core.math.coords.polarvector import PolarVector
 
 
-class TestPolarVector(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         pv = PolarVector(0.0, 0.1)

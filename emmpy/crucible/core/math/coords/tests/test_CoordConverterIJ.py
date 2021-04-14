@@ -5,7 +5,7 @@ from emmpy.crucible.core.math.coords.coordconverterij import (
 )
 
 
-class TestCoordConverterIJ(unittest.TestCase):
+class TestBuilderIJ(unittest.TestCase):
 
     def test___init__(self):
         with self.assertRaises(Exception):

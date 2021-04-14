@@ -5,7 +5,7 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 )
 
 
-class TestPointOnAxisException(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         PointOnAxisException()

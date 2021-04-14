@@ -5,7 +5,7 @@ from emmpy.crucible.core.math.coords.abstractvectorij import (
 )
 
 
-class TestAbstractVectorIJ(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         avij = AbstractVectorIJ(0.0, 0.1)

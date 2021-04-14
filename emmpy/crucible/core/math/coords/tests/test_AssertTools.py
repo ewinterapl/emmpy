@@ -3,7 +3,7 @@ import unittest
 from emmpy.crucible.core.math.coords.asserttools import AssertTools
 
 
-class TestAssertTools(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         AssertTools()

@@ -11,7 +11,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 )
 
 
-class TestPolarCoordConverter(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         pcc = PolarCoordConverter()

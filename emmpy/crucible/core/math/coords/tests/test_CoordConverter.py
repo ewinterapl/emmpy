@@ -3,7 +3,7 @@ import unittest
 from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
 
 
-class TestCoordConverter(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         with self.assertRaises(Exception):

@@ -17,13 +17,13 @@ class VectorField:
     """
 
     def __init__(self):
-        """Interface - do not instantiate"""
+        """INTERFACE - DO NOT INSTANTIATE"""
         raise Exception
 
     def evaluate(self, *args):
-        """Interface - do not invoke.
+        """Evaluate the field at the given position
 
-        Evaluate the field at the given position
+        INTERFACE - DO NOT INVOKE
 
         units and such are up to the implementors
 

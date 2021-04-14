@@ -5,7 +5,7 @@ from emmpy.magmodel.core.math.bessel.besselfunctionevaluator import (
 )
 
 
-class TestAlbertBesselFunctionEvaluator(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test_besselj0(self):
         with self.assertRaises(Exception):

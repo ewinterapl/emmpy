@@ -50,7 +50,7 @@ class CylindricalToCartesianBasisTransformation(Transformation):
     def mxv(self, *args):
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordValue) = args
-            return jacobian.mxv(coordValue.getVectorIJK())
+            return MatrixIJK.mxv(jacobian, coordValue.getVectorIJK())
         else:
             (inverseTransformation, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)

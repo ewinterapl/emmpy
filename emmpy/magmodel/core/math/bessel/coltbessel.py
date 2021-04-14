@@ -11,7 +11,6 @@ provided "as is" without expressed or implied warranty.
 
 
 import math
-from typing import AnyStr
 
 from emmpy.java.lang.arithmeticexception import ArithmeticException
 from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
@@ -23,7 +22,7 @@ class ColtBessel:
     """Bessel and Airy functions."""
 
     # machine constants
-    # MACHEP = 1.11022302462515654042E-16
+    MACHEP = 1.11022302462515654042E-16
     MAXLOG = 7.09782712893383996732E2
     MINLOG = -7.451332191019412076235E2
     MAXGAM = 171.624376956302725
@@ -43,10 +42,10 @@ class ColtBessel:
     # MAXLOG =  7.09782712893383996843E2         log(2**1024)
     # MINLOG = -7.08396418532264106224E2         log(2**-1022)
     # MAXNUM =  1.7976931348623158E308           2**1024
-    MACHEP =  1.11022302462515654042E-16  # 2**-53
-    MAXLOG =  7.09782712893383996843E2    # log(2**1024)
+    MACHEP = 1.11022302462515654042E-16  # 2**-53
+    MAXLOG = 7.09782712893383996843E2    # log(2**1024)
     MINLOG = -7.08396418532264106224E2    # log(2**-1022)
-    MAXNUM =  1.7976931348623158E308      # 2**1024
+    MAXNUM = 1.7976931348623158E308      # 2**1024
 
     # The global symbols for mathematical constants are
     # PI     =  3.14159265358979323846           pi
@@ -515,7 +514,7 @@ class ColtBessel:
             )
             return (y)
         return (
-            math.exp(-x)*Arithmetic.chbevl(8/x - 2, ColtBessel.B_k1, 25)/
+            math.exp(-x)*Arithmetic.chbevl(8/x - 2, ColtBessel.B_k1, 25) /
             math.sqrt(x)
         )
 
@@ -671,7 +670,7 @@ class ColtBessel:
             fn += 1.0
             pk += 2.0
             i += 1
-            if abs(t/s) > MACHEP:
+            if abs(t/s) > ColtBessel.MACHEP:
                 break
         ans = math.exp(-x)*math.sqrt(math.pi/(2.0*x))*s
         return ans
@@ -730,7 +729,10 @@ class ColtBessel:
                                            y*(0.2245904002e8 +
                                               y*(0.1020426050e6 +
                                                  y*(0.3549632885e3 + y)))))
-            return ans1/ans2 + 0.636619772*(ColtBessel.j1(x)*math.log(x) - 1.0/x)
+            return (
+                ans1/ans2 +
+                0.636619772*(ColtBessel.j1(x)*math.log(x) - 1.0/x)
+            )
         else:
             z = 8.0/x
             y = z*z
@@ -743,7 +745,10 @@ class ColtBessel:
                                       y*(0.8449199096e-5 +
                                          y*(-0.88228987e-6 +
                                             y*0.105787412e-6)))
-            return math.sqrt(0.636619772/x)*(math.sin(xx)*ans1 + z*math.cos(xx)*ans2)
+            return (
+                math.sqrt(0.636619772/x) *
+                (math.sin(xx)*ans1 + z*math.cos(xx)*ans2)
+            )
 
     @staticmethod
     def yn(n, x):

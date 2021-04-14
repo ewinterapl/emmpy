@@ -6,4 +6,5 @@ hierarchy.
 Modules
 -------
 test_DifferentiableScalarFieldIJ.py
+test_ScalarFieldSpatialDerivative.py
 """

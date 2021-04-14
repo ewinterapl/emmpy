@@ -4,6 +4,7 @@
 from math import cos, sin
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
 class CylindricalToCartesianBasisTransformation(Transformation):
@@ -52,5 +53,5 @@ class CylindricalToCartesianBasisTransformation(Transformation):
             return jacobian.mxv(coordValue.getVectorIJK())
         else:
             (inverseTransformation, cartVelocity) = args
-            vect = inverseTransformation.mxv(cartVelocity)
+            vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)
             return CylindricalVector(vect.getI(), vect.getJ(), vect.getK())

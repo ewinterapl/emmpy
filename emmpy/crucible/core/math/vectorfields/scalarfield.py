@@ -1,4 +1,8 @@
-"""emmpy.crucible.core.math.vectorfields.scalarfield"""
+"""emmpy.crucible.core.math.vectorfields.scalarfield
+
+N.B. This class was created from a Java interface, and therefore most of these
+methods will raise exceptions if invoked.
+"""
 
 
 class ScalarField:
@@ -9,11 +13,13 @@ class ScalarField:
     """
 
     def __init__(self, location):
-        """Interface - do not instantiate."""
+        """INTERFACE - DO NOT INSTANTIATE"""
         raise Exception
 
     def evaluate(self, location):
         """Evaluate the field at the given position, and return a scalar value
+
+        INTERFACE - DO NOT INVOKE.
 
         units and such are up to the implementors
 
@@ -22,5 +28,4 @@ class ScalarField:
         @throws FunctionEvaluationException if the function cannot perform the
         evaluation
         """
-        # Interface - do not invoke.
         raise Exception

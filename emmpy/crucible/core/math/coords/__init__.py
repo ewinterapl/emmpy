@@ -130,6 +130,7 @@ sphericalvectorfieldvalue.py
 transformation.py
 transformationij.py
 vectorfieldvalue.py
+vectorfieldvalueconversions.py
 
 Packages
 --------

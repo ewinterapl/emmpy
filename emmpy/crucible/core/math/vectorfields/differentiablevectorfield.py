@@ -16,47 +16,47 @@ class DifferentiableVectorField(VectorField):
     """
 
     def __init__(self):
-        """Interface - do not instantiate."""
+        """INTERFACE - DO NOT INSTANTIATE"""
         raise Exception
 
     def differentiateFiDi(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFjDi(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFkDi(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFiDj(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFjDj(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFkDj(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFiDk(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFjDk(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiateFkDk(self, location):
-        """Interface - do not invoke."""
+        """INTERFACE - DO NOT INVOKE"""
         raise Exception
 
     def differentiate(self, location):
-        """Interface - do not invoke.
+        """INTERFACE - DO NOT INVOKE
 
         Evaluate the field and the spatial derivatives at the given position
         in Cartesian coordinates

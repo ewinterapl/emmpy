@@ -7,6 +7,7 @@ hierarchy.
 Modules
 -------
 basisvectorfield.py
+cylindricalvectorfield.py
 
 Packages
 --------

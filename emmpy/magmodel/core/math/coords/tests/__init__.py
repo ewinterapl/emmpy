@@ -7,4 +7,5 @@ hierarchy.
 Modules
 -------
 test_BasisVectorField.py
+test_CylindricalVectorField.py
 """

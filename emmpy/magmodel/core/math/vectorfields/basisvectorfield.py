@@ -20,7 +20,7 @@ class BasisVectorField(VectorField):
 
     def __init__(self):
         """Interface - do not instantiate."""
-        raise Exception
+        pass
 
     def evaluate(self, location, buffer):
         """evaluate"""

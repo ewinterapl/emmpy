@@ -38,6 +38,9 @@ class ThinAsymmetricCurrentSheetBasisVectorField:
         """Constructor"""
         pass
 
+    def evaluate(self, pos):
+        pass
+
     #   private final int numAzimuthalExpansions;
     #   private final int numRadialExpansions;
 

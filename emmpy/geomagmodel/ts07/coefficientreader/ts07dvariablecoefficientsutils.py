@@ -54,6 +54,14 @@ class TS07DVariableCoefficientsUtils:
     def create(path):
         pass
 
+    @staticmethod
+    def readDipoleTiltAngle(path):
+        pass
+
+    @staticmethod
+    def readDynamicPressure(path):
+        pass
+
     # /**
     #  * A utility class for constructing and manipulating {@link TS07DVariableCoefficients}, and allows
     #  * for reading and writing the coefficients to a file.

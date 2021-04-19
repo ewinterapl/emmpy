@@ -4,6 +4,6 @@
 class AlbertBesselFunctionEvaluator:
     """AlbertBesselFunctionEvaluator"""
 
-    def __init__(self):
+    def __init__(self, n):
         """Initialize a new AlbertBesselFunctionEvaluator object."""
         pass

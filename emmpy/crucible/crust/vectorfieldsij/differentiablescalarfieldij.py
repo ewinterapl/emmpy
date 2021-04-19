@@ -21,4 +21,4 @@ class DifferentiableScalarFieldIJ(ScalarField2D, ScalarFieldIJSpatialDerivative)
 
     def __init__(self):
         """INTERFACE - DO NOT INSTANTIATE"""
-        raise Exception
+        pass

@@ -6,4 +6,5 @@ hierarchy.
 Modules
 -------
 test_TailSheetCoefficients.py
+test_ThinAsymmetricCurrentSheetBasisVectorField.py
 """

@@ -6,6 +6,7 @@ magmodel.core.modeling.equatorial.expansion hierarchy.
 Modules
 -------
 tailsheetcoefficients.py
+thinasymmetriccurrentsheetbasisvectorfield.py
 
 Packages
 --------

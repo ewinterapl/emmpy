@@ -20,33 +20,36 @@ class CurrentSheetHalfThicknesses:
     #    */
     #   private CurrentSheetHalfThicknesses() {}
 
-    #   /**
-    #    * Returns a constant current sheet half thickness
-    #    * 
-    #    * @param currentSheetHalfThickness the current sheet half thickness (in <i>R<sub>E</sub></i>)
-    #    * @return a newly created {@link DifferentiableScalarFieldIJ} representing the current sheet
-    #    *         thickness
-    #    */
-    #   public static DifferentiableScalarFieldIJ createConstant(final double currentSheetHalfThickness) {
+    @staticmethod
+    def createConstant(currentSheetHalfThickness):
+        pass
+        #   /**
+        #    * Returns a constant current sheet half thickness
+        #    * 
+        #    * @param currentSheetHalfThickness the current sheet half thickness (in <i>R<sub>E</sub></i>)
+        #    * @return a newly created {@link DifferentiableScalarFieldIJ} representing the current sheet
+        #    *         thickness
+        #    */
+        #   public static DifferentiableScalarFieldIJ createConstant(final double currentSheetHalfThickness) {
 
-    #     return new DifferentiableScalarFieldIJ() {
+        #     return new DifferentiableScalarFieldIJ() {
 
-    #       @Override
-    #       public double differentiateFDj(@SuppressWarnings("unused") UnwritableVectorIJ location) {
-    #         return 0;
-    #       }
+        #       @Override
+        #       public double differentiateFDj(@SuppressWarnings("unused") UnwritableVectorIJ location) {
+        #         return 0;
+        #       }
 
-    #       @Override
-    #       public double differentiateFDi(@SuppressWarnings("unused") UnwritableVectorIJ location) {
-    #         return 0;
-    #       }
+        #       @Override
+        #       public double differentiateFDi(@SuppressWarnings("unused") UnwritableVectorIJ location) {
+        #         return 0;
+        #       }
 
-    #       @Override
-    #       public double evaluate(@SuppressWarnings("unused") UnwritableVectorIJ location) {
-    #         return currentSheetHalfThickness;
-    #       }
-    #     };
-    #   }
+        #       @Override
+        #       public double evaluate(@SuppressWarnings("unused") UnwritableVectorIJ location) {
+        #         return currentSheetHalfThickness;
+        #       }
+        #     };
+        #   }
 
     #   /**
     #    * Returns the implementation of the current sheet half-thickness found in Tsyganenko and Sitnov

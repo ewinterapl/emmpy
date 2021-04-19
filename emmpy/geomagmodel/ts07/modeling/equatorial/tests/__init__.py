@@ -5,5 +5,6 @@ geomagmodel.ts07.modeling.equatorial hierarchy.
 
 Modules
 -------
+test_CurrentSheetHalfThicknesses.py
 test_Ts07EquatorialVariableCoefficients.py
 """

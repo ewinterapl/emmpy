@@ -5,6 +5,7 @@ hierarchy.
 
 Modules
 -------
+currentsheethalfthicknesses.py
 ts07equatorialmagneticfieldbuilder.py
 
 Packages

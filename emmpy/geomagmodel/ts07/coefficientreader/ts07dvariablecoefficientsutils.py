@@ -45,7 +45,14 @@
 
 
 class TS07DVariableCoefficientsUtils:
-    pass
+
+    def __init__(self, *args):
+        """Constructor"""
+        pass
+
+    @staticmethod
+    def create(path):
+        pass
 
     # /**
     #  * A utility class for constructing and manipulating {@link TS07DVariableCoefficients}, and allows

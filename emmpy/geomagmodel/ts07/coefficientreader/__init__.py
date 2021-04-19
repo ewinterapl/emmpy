@@ -5,6 +5,7 @@ hierarchy.
 
 Modules
 -------
+ts07dvariablecoefficientsutils.py
 ts07equatorialvariablecoefficients.py
 
 Packages

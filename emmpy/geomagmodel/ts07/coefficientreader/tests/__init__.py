@@ -5,5 +5,6 @@ geomagmodel.ts07.coefficientreader hierarchy.
 
 Modules
 -------
-test_tTs07EquatorialMagneticFieldBuilder.py
+test_TS07DVariableCoefficientsUtils.py
+test_Ts07EquatorialMagneticFieldBuilder.py
 """

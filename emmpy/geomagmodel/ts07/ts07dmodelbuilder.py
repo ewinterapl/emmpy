@@ -29,6 +29,9 @@
 
 
 from emmpy.crucible.core.designpatterns.builder import Builder
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 
 
 class TS07DModelBuilder(Builder):
@@ -39,10 +42,14 @@ class TS07DModelBuilder(Builder):
 
     @staticmethod
     def create(*args):
-        return TS07DModelBuilder(*args)
+        return TS07DModelBuilder()
 
     def withAlbertBessel(self):
         pass
+
+    @staticmethod
+    def build(*args):
+        return BasisVectorField()
 
 # /**
 #  * A {@link Builder} class that can be used to build the TS07D empirical magnetic field model.

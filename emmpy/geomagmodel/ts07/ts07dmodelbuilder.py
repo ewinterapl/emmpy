@@ -39,6 +39,9 @@ class TS07DModelBuilder(Builder):
 
     @staticmethod
     def create(*args):
+        return TS07DModelBuilder(*args)
+
+    def withAlbertBessel(self):
         pass
 
 # /**

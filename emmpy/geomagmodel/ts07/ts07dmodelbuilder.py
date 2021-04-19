@@ -32,7 +32,14 @@ from emmpy.crucible.core.designpatterns.builder import Builder
 
 
 class TS07DModelBuilder(Builder):
-    pass
+
+    def __init__(self, *args):
+        """Constructor"""
+        pass
+
+    @staticmethod
+    def create(*args):
+        pass
 
 # /**
 #  * A {@link Builder} class that can be used to build the TS07D empirical magnetic field model.

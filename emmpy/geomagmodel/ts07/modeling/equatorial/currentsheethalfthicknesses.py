@@ -1,55 +1,41 @@
 """emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses"""
 
 
+# import crucible.core.math.vectorspace.UnwritableVectorIJ;
+# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
+
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    DifferentiableScalarFieldIJ
+)
+
+
 class CurrentSheetHalfThicknesses:
-    pass
+    """Utility class to help construct different current sheet thicknesses.
 
-    # import crucible.core.math.vectorspace.UnwritableVectorIJ;
-    # import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
+    @author G.K.Stephens
+    """
 
-    # /**
-    #  * Utility class to help construct different current sheet thicknesses.
-    #  * 
-    #  * @author G.K.Stephens
-    #  *
-    #  */
-    # public class CurrentSheetHalfThicknesses {
+    def __init__(self):
+        """Constructor
 
-    #   /**
-    #    * no need to construct
-    #    */
-    #   private CurrentSheetHalfThicknesses() {}
+        no need to construct
+        """
+        pass
 
     @staticmethod
     def createConstant(currentSheetHalfThickness):
-        pass
-        #   /**
-        #    * Returns a constant current sheet half thickness
-        #    * 
-        #    * @param currentSheetHalfThickness the current sheet half thickness (in <i>R<sub>E</sub></i>)
-        #    * @return a newly created {@link DifferentiableScalarFieldIJ} representing the current sheet
-        #    *         thickness
-        #    */
-        #   public static DifferentiableScalarFieldIJ createConstant(final double currentSheetHalfThickness) {
+        """Returns a constant current sheet half thickness
 
-        #     return new DifferentiableScalarFieldIJ() {
-
-        #       @Override
-        #       public double differentiateFDj(@SuppressWarnings("unused") UnwritableVectorIJ location) {
-        #         return 0;
-        #       }
-
-        #       @Override
-        #       public double differentiateFDi(@SuppressWarnings("unused") UnwritableVectorIJ location) {
-        #         return 0;
-        #       }
-
-        #       @Override
-        #       public double evaluate(@SuppressWarnings("unused") UnwritableVectorIJ location) {
-        #         return currentSheetHalfThickness;
-        #       }
-        #     };
-        #   }
+        @param currentSheetHalfThickness the current sheet half thickness
+        (in R_E)
+        @return a newly created DifferentiableScalarFieldIJ representing the
+        current sheet thickness
+        """
+        dsfij = DifferentiableScalarFieldIJ()
+        dsfij.differentiateFDi = lambda *args: 0
+        dsfij.differentiateFDj = lambda *args: 0
+        dsfij.evaluate = lambda *args: currentSheetHalfThickness
+        return dsfij
 
     #   /**
     #    * Returns the implementation of the current sheet half-thickness found in Tsyganenko and Sitnov

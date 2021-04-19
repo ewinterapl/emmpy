@@ -17,7 +17,6 @@
 # import magmodel.core.math.vectorfields.BasisVectorField;
 
 class ThinAsymmetricCurrentSheetBasisVectorField:
-    pass
     # /**
     #  * This module described the tail fields as stated in Tsyganenko and Sitnov 2007 "Magnetospheric
     #  * configurations from a high-resolution data-based magnetic fields model", eq. 14.
@@ -34,6 +33,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField:
     #  *
     #  */
     # public class ThinAsymmetricCurrentSheetBasisVectorField implements VectorField, BasisVectorField {
+
+    def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
+        """Constructor"""
+        pass
 
     #   private final int numAzimuthalExpansions;
     #   private final int numRadialExpansions;

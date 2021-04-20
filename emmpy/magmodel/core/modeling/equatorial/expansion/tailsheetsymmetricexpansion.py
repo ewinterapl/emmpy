@@ -21,7 +21,7 @@ class TailSheetSymmetricExpansion(VectorField):
     @author G.K.Stephens
     """
 
-    def __init__(self, wavenumber, currentSheetHalfThickness, bessel):
+    def __init__(self, waveNumber, currentSheetHalfThickness, bessel):
         """Constructor
 
         @param waveNumber the wave number of this expansion

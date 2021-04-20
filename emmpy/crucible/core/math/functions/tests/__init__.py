@@ -5,5 +5,6 @@ hierarchy.
 
 Modules
 -------
+test_DifferentiableUnivariateFunction.py
 test_UnivariateFunction.py
 """

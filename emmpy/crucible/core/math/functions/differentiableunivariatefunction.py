@@ -21,7 +21,7 @@ class DifferentiableUnivariateFunction(UnivariateFunction):
 
         INTERFACE - DO NOT INSTANTIATE
         """
-        raise Exception
+        pass
 
     def differentiate(self, t):
         """Evaluates the derivative of the univariate function.

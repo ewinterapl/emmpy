@@ -1,11 +1,13 @@
 """emmpy.magmodel.core.math.trigparity"""
 
-# import static crucible.core.math.CrucibleMath.cos;
-# import static crucible.core.math.CrucibleMath.sin;
-# import crucible.core.math.functions.DifferentiableUnivariateFunction;
+
+from math import cos, sin
+
+from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
+    DifferentiableUnivariateFunction
+)
 
 
-# public enum TrigParity implements DifferentiableUnivariateFunction {
 class TrigParity(DifferentiableUnivariateFunction):
     """A representation of the odd and even parity that exists between the sine
     and cosine function. This type of parity often arises in Fourier series and
@@ -18,56 +20,22 @@ class TrigParity(DifferentiableUnivariateFunction):
     @author G.K.Stephens
     """
 
-    def __init__(self):
+    # the even trigonometric parity, the cosine function
+    EVEN = DifferentiableUnivariateFunction()
+    EVEN.evaluate = lambda t: cos(t)
+    EVEN.differentiate = lambda t: -sin(t)
+
+    # the odd trigonometric parity, the sine function
+    ODD = DifferentiableUnivariateFunction()
+    ODD.evaluate = lambda t: sin(t)
+    ODD.differentiate = lambda t: cos(t)
+
+    def __init__(self, function):
         """Constructor"""
-        pass
+        self.function = function
 
-    #   /**
-    #    * the even trigonometric parity, the cosine function
-    #    */
-    #   // EVEN(DifferentiableUnivariateFunctions.cosine()),
-    #   EVEN(new DifferentiableUnivariateFunction() {
-    #     @Override
-    #     public double evaluate(double t) {
-    #       return cos(t);
-    #     }
+    def evaluate(self, t):
+        return self.function.evaluate(t)
 
-    #     @Override
-    #     public double differentiate(double t) {
-    #       return -sin(t);
-    #     }
-    #   }),
-
-    #   /**
-    #    * the odd trigonometric parity, the sine function
-    #    */
-    #   // ODD(DifferentiableUnivariateFunctions.sine());
-    #   ODD(new DifferentiableUnivariateFunction() {
-    #     @Override
-    #     public double evaluate(double t) {
-    #       return sin(t);
-    #     }
-
-    #     @Override
-    #     public double differentiate(double t) {
-    #       return cos(t);
-    #     }
-    #   });
-
-    #   private final DifferentiableUnivariateFunction function;
-
-    #   private TrigParity(DifferentiableUnivariateFunction function) {
-    #     this.function = function;
-    #   }
-
-    #   @Override
-    #   public double evaluate(double t) {
-    #     return function.evaluate(t);
-    #   }
-
-    #   @Override
-    #   public double differentiate(double t) {
-    #     return function.differentiate(t);
-    #   }
-
-    # }
+    def differentiate(self, t):
+        return self.function.differentiate(t)

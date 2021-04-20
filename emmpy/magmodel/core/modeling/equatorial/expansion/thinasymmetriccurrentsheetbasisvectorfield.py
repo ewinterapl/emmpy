@@ -1,13 +1,12 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield"""
 
+
 # import static com.google.common.base.Preconditions.checkArgument;
 # import static com.google.common.base.Preconditions.checkNotNull;
 # import static magmodel.core.math.expansions.Expansion1Ds.createFromArray;
 # import static magmodel.core.math.expansions.Expansion2Ds.createFromArray;
 # import static magmodel.core.math.expansions.Expansion2Ds.createNull;
-
 # import com.google.common.collect.ImmutableList;
-
 # import crucible.core.math.vectorfields.VectorField;
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
@@ -16,158 +15,144 @@
 # import magmodel.core.math.bessel.BesselFunctionEvaluator;
 # import magmodel.core.math.vectorfields.BasisVectorField;
 
-class ThinAsymmetricCurrentSheetBasisVectorField:
-    # /**
-    #  * This module described the tail fields as stated in Tsyganenko and Sitnov 2007 "Magnetospheric
-    #  * configurations from a high-resolution data-based magnetic fields model", eq. 14.
-    #  * <p>
-    #  * <img src="./doc-files/ts07_eq_14.png" />
-    #  * <p>
-    #  * This is equivalent to the FORTRAN subroutine:
-    #  * <p>
-    #  * <pre>
-    #  *      SUBROUTINE UNWARPED (X,Y,Z,BXS,BYS,BZS,BXO,BYO,BZO,BXE,BYE,BZE)
-    #  *</pre>
-    #  *
-    #  * @author G.K.Stephens
-    #  *
-    #  */
-    # public class ThinAsymmetricCurrentSheetBasisVectorField implements VectorField, BasisVectorField {
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+    TailSheetCoefficients
+)
+
+
+class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
+    """This module described the tail fields as stated in Tsyganenko and Sitnov
+    2007
+
+    "Magnetospheric configurations from a high-resolution data-based magnetic
+    fields model", eq. 14.
+
+    This is equivalent to the FORTRAN subroutine:
+    SUBROUTINE UNWARPED (X,Y,Z,BXS,BYS,BZS,BXO,BYO,BZO,BXE,BYE,BZE)
+
+    @author G.K.Stephens
+    """
 
     def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
-        """Constructor"""
-        pass
+        """Constructor
 
-    def evaluate(self, pos):
-        pass
+        @param tailLength
+        @param currentSheetHalfThickness
+        @param bessel
+        """
+        self.coeffs = coeffs
+        self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
+        self.numRadialExpansions = coeffs.getNumRadialExpansions()
+        self.tailLength = tailLength
+        self.currentSheetHalfThickness = currentSheetHalfThickness
+        self.bessel = bessel
 
-    #   private final int numAzimuthalExpansions;
-    #   private final int numRadialExpansions;
+    @staticmethod
+    def createUnity(
+        tailLength, currentSheetHalfThickness, numAzimuthalExpansions,
+        numRadialExpansions, bessel
+    ):
+        """Creates a ThinAsymmetricCurrentSheetBasisVectorField where all
+        the coefficients have been set to 1.
 
-    #   private final double tailLength;
+        @param tailLength
+        @param currentSheetHalfThickness
+        @param numAzimuthalExpansions
+        @param numRadialExpansions
+        param bessel
+        return
+        """
+        #   public static ThinAsymmetricCurrentSheetBasisVectorField createUnity(double tailLength,
+        #       final DifferentiableScalarFieldIJ currentSheetHalfThickness, int numAzimuthalExpansions,
+        #       int numRadialExpansions, BesselFunctionEvaluator bessel) {
+        coeffs = TailSheetCoefficients.createUnity(
+            numAzimuthalExpansions, numRadialExpansions
+        )
 
-    #   private final DifferentiableScalarFieldIJ currentSheetHalfThickness;
-    #   private final BesselFunctionEvaluator bessel;
+        return ThinAsymmetricCurrentSheetBasisVectorField(
+            tailLength, currentSheetHalfThickness, coeffs, bessel)
 
-    #   private final TailSheetCoefficients coeffs;
-
-    #   /**
-    #    * Constructor for:
-    #    * <p>
-    #    * <img src="./doc-files/ts07_eq_14.png" />
-    #    *
-    #    * @param tailLength
-    #    * @param currentSheetHalfThickness
-    #    * @param bessel
-    #    */
-    #   public ThinAsymmetricCurrentSheetBasisVectorField(double tailLength,
-    #       final DifferentiableScalarFieldIJ currentSheetHalfThickness, TailSheetCoefficients coeffs,
-    #       BesselFunctionEvaluator bessel) {
-
-    #     // checkArgument(tailLength > 0.0, "Tail length must be greater than zero, it was %s", tailLength);
-
-    #     // this.coeffs = checkNotNull(coeffs);
-    #     this.coeffs = coeffs;
-
-    #     this.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions();
-    #     this.numRadialExpansions = coeffs.getNumRadialExpansions();
-
-    #     this.tailLength = tailLength;
-
-    #     // this.currentSheetHalfThickness = checkNotNull(currentSheetHalfThickness);
-    #     this.currentSheetHalfThickness = currentSheetHalfThickness;
-    #     // this.bessel = checkNotNull(bessel);
-    #     this.bessel = bessel;
-    #   }
-
-    #   /**
-    #    * Creates a {@link ThinAsymmetricCurrentSheetBasisVectorField} where all the coefficients have
-    #    * been set to 1.
-    #    * <p>
-    #    * <img src="./doc-files/ts07_eq_14.png" />
-    #    * <p>
-    #    * 
-    #    * @param tailLength
-    #    * @param currentSheetHalfThickness
-    #    * @param numAzimuthalExpansions
-    #    * @param numRadialExpansions
-    #    * @param bessel
-    #    * @return
-    #    */
-    #   public static ThinAsymmetricCurrentSheetBasisVectorField createUnity(double tailLength,
-    #       final DifferentiableScalarFieldIJ currentSheetHalfThickness, int numAzimuthalExpansions,
-    #       int numRadialExpansions, BesselFunctionEvaluator bessel) {
-
-    #     TailSheetCoefficients coeffs =
-    #         TailSheetCoefficients.createUnity(numAzimuthalExpansions, numRadialExpansions);
-
-    #     return new ThinAsymmetricCurrentSheetBasisVectorField(tailLength, currentSheetHalfThickness,
-    #         coeffs, bessel);
-    #   }
-
-    #   @Override
-    #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
-    #     return buffer.setTo(evaluateExpansions(location).sum());
-    #   }
+    def evaluate(self, location):
+        buffer = VectorIJK()
+        #public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
+        return buffer.setTo(self.evaluateExpansions(location).sum())
 
     #   @Override
     #   public ImmutableList<UnwritableVectorIJK> evaluateExpansion(UnwritableVectorIJK location) {
     #     return evaluateExpansions(location).getExpansionsAsList();
     #   }
 
-    #   /**
-    #    * This guy recalculates everything
-    #    * 
-    #    * @param positionVector
-    #    * @param dipoleTilt
-    #    * @param dynamicPressure
-    #    * @param includeShield
-    #    */
-    #   public TailSheetExpansions evaluateExpansions(UnwritableVectorIJK location) {
+    def evaluateExpansions(self, location):
+        """This guy recalculates everything
 
-    #     UnwritableVectorIJK[] symmetricExpansions = new UnwritableVectorIJK[numRadialExpansions];
-    #     UnwritableVectorIJK[][] oddExpansions =
-    #         new UnwritableVectorIJK[numAzimuthalExpansions][numRadialExpansions];
-    #     UnwritableVectorIJK[][] evenExpansions =
-    #         new UnwritableVectorIJK[numAzimuthalExpansions][numRadialExpansions];
+        @param positionVector
+        @param dipoleTilt
+        @param dynamicPressure
+        @param includeShield
+        """
+        symmetricExpansions = [UnwritableVectorIJK() for i in range(numRadialExpansions)]
+        oddExpansions = (
+            [[UnwritableVectorIJK() for j in numRadialExpansions]
+             for i in numAzimuthalExpansions]
+        )
+        evenExpansions = (
+            [[UnwritableVectorIJK() for j in numRadialExpansions]
+             for i in numAzimuthalExpansions]
+        )
 
-    #     // n is the radial expansion number
-    #     for (int n = 1; n <= numRadialExpansions; n++) {
-    #       // Calculate the wave number (kn = n/rho0)
-    #       double kn = n / tailLength;
+        # n is the radial expansion number
+        # for (int n = 1; n <= numRadialExpansions; n++) {
+        for n in range(1, self.numRadialExpansions + 1):
+            #   // Calculate the wave number (kn = n/rho0)
+            #   double kn = n / tailLength;
+            # Calculate the wave number (kn = n/rho0)
+            kn = n/self.tailLength
 
-    #       VectorField symBasisFunction =
-    #           new TailSheetSymmetricExpansion(kn, currentSheetHalfThickness, bessel);
+            # VectorField symBasisFunction =
+            #     new TailSheetSymmetricExpansion(kn, currentSheetHalfThickness, bessel);
+            symBasisFunction = TailSheetSymmetricExpansion(
+                kn, self.currentSheetHalfThickness, bessel
+            )
 
-    #       double a = coeffs.getTailSheetSymmetricValues().getCoefficient(n);
+            #   double a = coeffs.getTailSheetSymmetricValues().getCoefficient(n);
+            a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
 
-    #       symmetricExpansions[n - 1] = symBasisFunction.evaluate(location).scale(a);
+            #   symmetricExpansions[n - 1] = symBasisFunction.evaluate(location).scale(a);
+            symmetricExpansions[n - 1] = symBasisFunction.evaluate(location).scale(a)
 
-    #       // m is the azimuthal expansion number
-    #       for (int m = 1; m <= numAzimuthalExpansions; m++) {
+            #   // m is the azimuthal expansion number
+            #   for (int m = 1; m <= numAzimuthalExpansions; m++) {
+            # m is the azimuthal expansion number
+            for m in range(1, numAzimuthalExpansions + 1):
+                aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
+                oddBasisFunction = TailSheetAsymmetricExpansion(
+                    kn, m, TrigParity.ODD, currentSheetHalfThickness, bessel
+                )
+            #     oddExpansions[m - 1][n - 1] = oddBasisFunction.evaluate(location).scale(aOdd);
+            #     double aEven = coeffs.getTailSheetEvenValues().getCoefficient(m, n);
+            #     VectorField evenBasisFunction = new TailSheetAsymmetricExpansion(kn, m, TrigParity.EVEN,
+            #         currentSheetHalfThickness, bessel);
+            #     evenExpansions[m - 1][n - 1] = evenBasisFunction.evaluate(location).scale(aEven);
 
-    #         double aOdd = coeffs.getTailSheetOddValues().getCoefficient(m, n);
-    #         VectorField oddBasisFunction = new TailSheetAsymmetricExpansion(kn, m, TrigParity.ODD,
-    #             currentSheetHalfThickness, bessel);
-    #         oddExpansions[m - 1][n - 1] = oddBasisFunction.evaluate(location).scale(aOdd);
+            #   }
 
-    #         double aEven = coeffs.getTailSheetEvenValues().getCoefficient(m, n);
-    #         VectorField evenBasisFunction = new TailSheetAsymmetricExpansion(kn, m, TrigParity.EVEN,
-    #             currentSheetHalfThickness, bessel);
-    #         evenExpansions[m - 1][n - 1] = evenBasisFunction.evaluate(location).scale(aEven);
+            # }
 
-    #       }
+        #     if (numAzimuthalExpansions == 0) {
+        #       return new TailSheetExpansions(createFromArray(symmetricExpansions, 1),
+        #           createNull(1, 1, numRadialExpansions), createNull(1, 1, numRadialExpansions));
+        #     }
 
-    #     }
-
-    #     if (numAzimuthalExpansions == 0) {
-    #       return new TailSheetExpansions(createFromArray(symmetricExpansions, 1),
-    #           createNull(1, 1, numRadialExpansions), createNull(1, 1, numRadialExpansions));
-    #     }
-
-    #     return new TailSheetExpansions(createFromArray(symmetricExpansions, 1),
-    #         createFromArray(oddExpansions, 1, 1), createFromArray(evenExpansions, 1, 1));
-    #   }
+        #     return new TailSheetExpansions(createFromArray(symmetricExpansions, 1),
+        #         createFromArray(oddExpansions, 1, 1), createFromArray(evenExpansions, 1, 1));
+        #   }
 
     #   public int getNumAzimuthalExpansions() {
     #     return numAzimuthalExpansions;

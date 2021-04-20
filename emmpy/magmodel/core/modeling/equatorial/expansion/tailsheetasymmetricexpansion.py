@@ -1,19 +1,15 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion"""
 
 
-# import static com.google.common.base.Preconditions.checkNotNull;
-# import static crucible.core.math.CrucibleMath.atan2;
-# import static crucible.core.math.CrucibleMath.exp;
-# import static crucible.core.math.CrucibleMath.sqrt;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.UnwritableVectorIJ;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
-# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
-# import magmodel.core.math.TrigParity;
-# import magmodel.core.math.bessel.BesselFunctionEvaluator;
+from math import atan2, exp, sqrt
+
+from scipy.special import jv
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
+from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
+    UnwritableVectorIJ
+)
+
 
 class TailSheetAsymmetricExpansion(VectorField):
     """This is the odd and even type azimuthal symmetry part of the expansion
@@ -26,105 +22,85 @@ class TailSheetAsymmetricExpansion(VectorField):
 
     @author G.K.Stephens
     """
-    # public class TailSheetAsymmetricExpansion implements VectorField {
 
-    #   private final double waveNumber;
-    #   private final int azimuthalExpansionNumber;
+    def __init__(
+        self, waveNumber, azimuthalExpansionNumber, trigParity,
+        currentSheetHalfThickness, bessel
+    ):
+        """Constructor
 
-    #   private final TrigParity trigParity;
+        @param waveNumber the wave number of this expansion
+        @param azimuthalExpansionNumber the azimuthal expansion number
+        @param trigParity sine function is odd cosine is even
+        @param currentSheetHalfThickness a 2D scalar field representing the
+        current sheet half thickness throughout the equatorial current system
+        @param bessel the Bessel function evaluator
+        """
+        self.waveNumber = waveNumber
+        self.azimuthalExpansionNumber = azimuthalExpansionNumber
+        self.trigParity = trigParity
+        self.currentSheetHalfThickness = currentSheetHalfThickness
+        self.bessel = bessel
 
-    #   private final DifferentiableScalarFieldIJ currentSheetHalfThickness;
+    def evaluate(self, location, buffer):
+        m = self.azimuthalExpansionNumber
+        x = location.getI()
+        y = location.getJ()
+        z = location.getK()
+        locationIJ = UnwritableVectorIJ(x, y)
 
-    #   private final BesselFunctionEvaluator bessel;
+        # get the current sheet half thickness
+        thick = self.currentSheetHalfThickness.evaluate(locationIJ)
 
-    #   /**
-    #    * Constructor.
-    #    * 
-    #    * @param waveNumber the wave number of this expansion
-    #    * @param azimuthalExpansionNumber the azimuthal expansion number
-    #    * @param trigParity sine function is odd cosine is even
-    #    * @param currentSheetHalfThickness a 2D scalar field representing the current sheet half
-    #    *        thickness throughout the equatorial current system
-    #    * @param bessel the Bessel function evaluator
-    #    */
-    #   public TailSheetAsymmetricExpansion(double waveNumber, int azimuthalExpansionNumber,
-    #       TrigParity trigParity, DifferentiableScalarFieldIJ currentSheetHalfThickness,
-    #       BesselFunctionEvaluator bessel) {
-    #     super();
-    #     this.waveNumber = waveNumber;
-    #     this.azimuthalExpansionNumber = azimuthalExpansionNumber;
-    #     // this.trigParity = checkNotNull(trigParity);
-    #     this.trigParity = trigParity;
-    #     // this.currentSheetHalfThickness = checkNotNull(currentSheetHalfThickness);
-    #     this.currentSheetHalfThickness = currentSheetHalfThickness;
-    #     // this.bessel = checkNotNull(bessel);
-    #     this.bessel = bessel;
-    #   }
+        # now get the current sheet half thickness derivatives
+        dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
+        dThickdy = self.currentSheetHalfThickness.differentiateFDj(locationIJ)
 
-    #   @Override
-    #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
+        # convert to polar
+        rho = sqrt(x*x + y*y)
 
-    #     int m = azimuthalExpansionNumber;
+        # convert to polar
+        dThickdRho = (x*dThickdx + y*dThickdy)/rho
+        dThickdPhi = -y*dThickdx + x*dThickdy
 
-    #     double x = location.getI();
-    #     double y = location.getJ();
-    #     double z = location.getK();
+        cosPhi = x/rho
+        sinPhi = y/rho
+        phi = atan2(y, x)
 
-    #     UnwritableVectorIJ locationIJ = new UnwritableVectorIJ(x, y);
+        # introduce a finite thickness in z by replacing z with this value
+        zDist = sqrt(z*z + thick*thick)
 
-    #     // get the current sheet half thickness
-    #     double thick = currentSheetHalfThickness.evaluate(locationIJ);
+        # sine if odd, -cosine if even
+        sinMPhi = self.trigParity.evaluate(m*phi)
 
-    #     // now get the current sheet half thickness derivatives
-    #     double dThickdx = currentSheetHalfThickness.differentiateFDi(locationIJ);
-    #     double dThickdy = currentSheetHalfThickness.differentiateFDj(locationIJ);
+        # cosine if odd, sine if even
+        cosMPhi = self.trigParity.differentiate(m*phi)
 
-    #     // convert to polar
-    #     double rho = sqrt(x * x + y * y);
+        kn = self.waveNumber
+        ex = exp(-kn*zDist)
 
-    #     // convert to polar
-    #     double dThickdRho = (x * dThickdx + y * dThickdy) / rho;
-    #     double dThickdPhi = -y * dThickdx + x * dThickdy;
+        # calculate the bessel function
+        jK = jv(m, kn*rho)
 
-    #     double cosPhi = x / rho;
-    #     double sinPhi = y / rho;
-    #     double phi = atan2(y, x);
-    #     // introduce a finite thickness in z by replacing z with this value
-    #     double zDist = sqrt(z * z + thick * thick);
+        # calculate the derivative of the bessel function
+        jKDer = jv(m - 1, kn*rho) - m*jK/(kn*rho)
 
-    #     // sine if odd, -cosine if even
-    #     double sinMPhi = trigParity.evaluate(m * phi);
+        # Eq. 16 and 17 from Tsyganenko and Sitnov 2007
+        bRho = (
+            -(kn*z*jKDer*ex/zDist) *
+            (cosMPhi - thick*(dThickdPhi*(kn + 1.0/zDist)*sinMPhi)/(m*zDist))
+        )
+        bPhi = (
+            (kn*z*ex*sinMPhi/zDist) *
+            (m*jK/(kn*rho) - rho*thick*dThickdRho*jKDer*(kn + 1.0/zDist) /
+             (m*zDist))
+        )
+        bZ = kn*jK*ex*(cosMPhi - kn*thick*dThickdPhi*sinMPhi/(m*zDist))
 
-    #     // cosine if odd, sine if even
-    #     double cosMPhi = trigParity.differentiate(m * phi);
+        # Convert from cylindrical coordinates to GSM
+        buffer.setTo(bRho*cosPhi - bPhi*sinPhi, bRho*sinPhi + bPhi*cosPhi, bZ)
 
-    #     double kn = waveNumber;
-
-    #     double ex = exp(-kn * zDist);
-
-    #     // calculate the bessel function
-    #     double jK = bessel.besseljn(m, kn * rho);
-
-    #     // calculate the derivative of the bessel function
-    #     double jKDer = bessel.besseljn(m - 1, kn * rho) - m * jK / (kn * rho);
-
-    #     /*
-    #      * Eq. 16 and 17 from Tsyganenko and Sitnov 2007
-    #      */
-    #     double bRho = -(kn * z * jKDer * ex / zDist)
-    #         * (cosMPhi - thick * (dThickdPhi * (kn + 1.0 / zDist) * sinMPhi) / (m * zDist));
-    #     double bPhi = (kn * z * ex * sinMPhi / zDist) * (m * jK / (kn * rho)
-    #         - rho * thick * dThickdRho * jKDer * (kn + 1.0 / zDist) / (m * zDist));
-    #     double bZ = kn * jK * ex * (cosMPhi - kn * thick * dThickdPhi * sinMPhi / (m * zDist));
-
-    #     // Convert from cylindrical coordinates to GSM
-    #     buffer.setTo(bRho * cosPhi - bPhi * sinPhi, bRho * sinPhi + bPhi * cosPhi, bZ);
-
-    #     /*
-    #      * TODO for what ever reason, in the code the vectors are scaled by the azimuthal expansion
-    #      * number divided by the wave number, this is not in the paper, this is okay, as this will just
-    #      * rescale the scaling coeffs
-    #      */
-    #     return buffer.scale(-m / kn);
-    #   }
-    # }
+        # TODO for what ever reason, in the code the vectors are scaled by the
+        # azimuthal expansion number divided by the wave number, this is not in
+        # the paper, this is okay, as this will just rescale the scaling coeffs
+        return buffer.scale(-m/kn)

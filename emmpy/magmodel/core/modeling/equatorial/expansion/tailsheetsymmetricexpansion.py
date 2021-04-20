@@ -1,102 +1,73 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion"""
 
 
-# import static com.google.common.base.Preconditions.checkNotNull;
-# import static crucible.core.math.CrucibleMath.exp;
-# import static crucible.core.math.CrucibleMath.sqrt;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.UnwritableVectorIJ;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
-# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
-# import magmodel.core.math.bessel.BesselFunctionEvaluator;
+from math import exp, sqrt
 
+import scipy.special as sps
+
+from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
+    UnwritableVectorIJ
+)
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
 class TailSheetSymmetricExpansion(VectorField):
-    pass
+    """This is the symmetric (axissymmetric) part of the expansion of the
+    solution of the magnetic field from a thin current sheet along the z=0
+    plane, from Tsyganenko and Sitnov 2007, eq. 15.
 
-    # /**
-    #  * This is the symmetric (axissymmetric) part of the expansion of the solution of the magnetic field
-    #  * from a thin current sheet along the z=0 plane, from Tsyganenko and Sitnov 2007, eq. 15.
-    #  * <p>
-    #  * <img src="./doc-files/ts07_eq_15.png" />
-    #  * <p>
-    #  * <pre>
-    #  *      SUBROUTINE TAILSHT_S (M,X,Y,Z,BX,BY,BZ)
-    #  *</pre>
-    #  * 
-    #  * @author G.K.Stephens
-    #  *
-    #  */
-    # public class TailSheetSymmetricExpansion implements VectorField {
+    SUBROUTINE TAILSHT_S (M,X,Y,Z,BX,BY,BZ)
 
-    #   private final double waveNumber;
+    @author G.K.Stephens
+    """
 
-    #   private final DifferentiableScalarFieldIJ currentSheetHalfThickness;
+    def __init__(self):
+        """Constructor
 
-    #   private final BesselFunctionEvaluator bessel;
+        @param waveNumber the wave number of this expansion
+        @param currentSheetHalfThickness a 2D scalar field representing the
+        current sheet half thickness throughout the equatorial current system
+        @param bessel the Bessel function evaluator
+        """
+        self.waveNumber = waveNumber
+        self.currentSheetHalfThickness = currentSheetHalfThickness
+        self.bessel = bessel
 
-    #   /**
-    #    * Constructor
-    #    * 
-    #    * @param waveNumber the wave number of this expansion
-    #    * @param currentSheetHalfThickness a 2D scalar field representing the current sheet half
-    #    *        thickness throughout the equatorial current system
-    #    * @param bessel the Bessel function evaluator
-    #    */
-    #   public TailSheetSymmetricExpansion(double waveNumber,
-    #       DifferentiableScalarFieldIJ currentSheetHalfThickness, BesselFunctionEvaluator bessel) {
-    #     super();
-    #     this.waveNumber = waveNumber;
-    #     // this.currentSheetHalfThickness = checkNotNull(currentSheetHalfThickness);
-    #     this.currentSheetHalfThickness = currentSheetHalfThickness;
-    #     // this.bessel = checkNotNull(bessel);
-    #     this.bessel = bessel;
-    #   }
+    def evaluate(self, location, buffer):
+        x = location.getI()
+        y = location.getJ()
+        z = location.getK()
+        locationIJ = UnwritableVectorIJ(x, y)
 
-    #   @Override
-    #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
+        # get the current sheet half thickness
+        thick = self.currentSheetHalfThickness.evaluate(locationIJ)
 
-    #     double x = location.getI();
-    #     double y = location.getJ();
-    #     double z = location.getK();
+        # now get the current sheet half thickness derivatives
+        dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
+        dThickdy = self.currentSheetHalfThickness.differentiateFDj(locationIJ)
 
-    #     UnwritableVectorIJ locationIJ = new UnwritableVectorIJ(x, y);
+        # convert to polar
+        rho = sqrt(x*x + y*y)
 
-    #     // get the current sheet half thickness
-    #     double thick = currentSheetHalfThickness.evaluate(locationIJ);
+        # convert derivatives to polar
+        dThickdRho = (x*dThickdx + y*dThickdy)/rho
 
-    #     // now get the current sheet half thickness derivatives
-    #     double dThickdx = currentSheetHalfThickness.differentiateFDi(locationIJ);
-    #     double dThickdy = currentSheetHalfThickness.differentiateFDj(locationIJ);
+        cosPhi = x/rho
+        sinPhi = y/rho
 
-    #     // convert to polar
-    #     double rho = sqrt(x * x + y * y);
+        # introduce a finite thickness in z by replacing z with this value
+        zDist = sqrt(z*z + thick*thick)
 
-    #     // convert derivatives to polar
-    #     double dThickdRho = (x * dThickdx + y * dThickdy) / rho;
+        # kn is the wave number
+        kn = waveNumber
 
-    #     double cosPhi = x / rho;
-    #     double sinPhi = y / rho;
-    #     // introduce a finite thickness in z by replacing z with this value
-    #     double zDist = sqrt(z * z + thick * thick);
+        # evaluate the Bessel function
+        j0 = sps.j0(kn*rho)
+        j1 = sps.j1(kn*rho)
 
-    #     // kn is the wave number
-    #     double kn = waveNumber;
+        ex = exp(-kn*zDist)
+        bx = kn*z*j1*cosPhi*ex/zDist
+        by = kn*z*j1*sinPhi*ex/zDist
+        bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
 
-    #     // evaluate the Bessel function
-    #     double j0 = bessel.besselj0(kn * rho);
-    #     double j1 = bessel.besselj1(kn * rho);
-
-    #     double ex = exp(-kn * zDist);
-
-    #     double bx = kn * z * j1 * cosPhi * ex / zDist;
-    #     double by = kn * z * j1 * sinPhi * ex / zDist;
-    #     double bz = kn * ex * (j0 - thick * dThickdRho * j1 / zDist);
-
-    #     return buffer.setTo(bx, by, bz);
-    #   }
-
-    # }
+        return buffer.setTo(bx, by, bz)

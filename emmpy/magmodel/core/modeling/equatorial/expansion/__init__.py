@@ -7,6 +7,7 @@ Modules
 -------
 tailsheetasymmetricexpansion.py
 tailsheetcoefficients.py
+tailsheetexpansions.py
 tailsheetsymmetricexpansion.py
 thinasymmetriccurrentsheetbasisvectorfield.py
 

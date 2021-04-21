@@ -1,201 +1,142 @@
-"""emmpy.magmodel.core.math.expansionsexpansion1ds"""
+"""emmpy.magmodel.core.math.expansions.expansion1ds"""
 
 
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
+from emmpy.crucible.core.math.vectorspace.vectorijk import (
+    VectorIJK
+)
 from emmpy.magmodel.core.math.expansions.arrayexpansion1d import (
     ArrayExpansion1D
 )
+from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
+    CoefficientExpansion1D
+)
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 from emmpy.magmodel.core.math.expansions.listexpansion1d import ListExpansion1D
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class Expansion1Ds:
-    """Expansion1Ds"""
 
     @staticmethod
     def createFromList(aList, firstRadialExpansionNumber):
-        """createFromList
-
-        @param list
-        @param firstRadialExpansionNumber
-        @return
-        @author stephgk1
-        """
         return ListExpansion1D(aList, firstRadialExpansionNumber)
 
     @staticmethod
     def createFromArray(array, firstRadialExpansionNumber):
-        """createFromArray
-
-        @param array
-        @param firstRadialExpansionNumber
-        @return
-        """
         return ArrayExpansion1D(array, firstRadialExpansionNumber)
 
-    # NOT SURE HOW TO HANDLE THIS EMBEDDED CLASS YET. IT DOES NOT SEEM
-    # TO BE USED ANYWHERE.
+    # N.B.: EMBEDDED CLASS!
+    class Vectors:
+        """@author stephgk1"""
 
-#   public static class Vectors {
+        @staticmethod
+        def createConstant(
+            firstRadialExpansionNumber, lastRadialExpansionNumber,
+            constant
+        ):
+            constantCopy = UnwritableVectorIJK.copyOf(constant)
+            expansion1D = Expansion1D()
 
-#     /**
-#      * 
-#      * @param firstRadialExpansionNumber
-#      * @param lastRadialExpansionNumber
-#      * @param constant
-#      * @return
-#      */
-#     public static Expansion1D<UnwritableVectorIJK> createConstant(
-#         final int firstRadialExpansionNumber, final int lastRadialExpansionNumber,
-#         final UnwritableVectorIJK constant) {
+            def getUpperBoundIndexWrapper(*args2):
+                return lastRadialExpansionNumber
+            expansion1D.getUpperBoundIndex = getUpperBoundIndexWrapper
 
-#       final UnwritableVectorIJK constantCopy = UnwritableVectorIJK.copyOf(constant);
+            def getLowerBoundIndexWrapper(*args2):
+                return firstRadialExpansionNumber
+            expansion1D.getLowerBoundIndex = getLowerBoundIndexWrapper
 
-#       return new Expansion1D<UnwritableVectorIJK>() {
+            def getExpansionWrapper(*args2):
+                return constantCopy
+            expansion1D.getExpansion = getExpansionWrapper
 
-#         @Override
-#         public int getUpperBoundIndex() {
-#           return lastRadialExpansionNumber;
-#         }
+            return expansion1D
 
-#         @Override
-#         public int getLowerBoundIndex() {
-#           return firstRadialExpansionNumber;
-#         }
+        @staticmethod
+        def add(a, b):
+            firstExpansion = a.getLowerBoundIndex()
+            lastExpansion = a.getUpperBoundIndex()
+            array = [
+                UnwritableVectorIJK([0, 0, 0])
+                for i in range(lastExpansion - firstExpansion + 1)
+            ]
+            expansion1D = Expansion1D()
 
-#         @Override
-#         public UnwritableVectorIJK getExpansion(@SuppressWarnings("unused") int radialExpansion) {
-#           return constantCopy;
-#         }
-#       };
-#     }
+            def getLowerBoundIndexWrapper(*args):
+                return firstExpansion
+            expansion1D.getLowerBoundIndex = getLowerBoundIndexWrapper
 
-#     /**
-#      * 
-#      * @param a
-#      * @param b
-#      * @return
-#      */
-#     public static Expansion1D<UnwritableVectorIJK> add(final Expansion1D<UnwritableVectorIJK> a,
-#         final Expansion1D<UnwritableVectorIJK> b) {
+            def getUpperBoundIndexWrapper(*args):
+                return lastExpansion
+            expansion1D.getUpperBoundIndex = getUpperBoundIndexWrapper
 
-#       checkArgument(a.getLowerBoundIndex() == b.getLowerBoundIndex());
-#       checkArgument(a.getUpperBoundIndex() == b.getUpperBoundIndex());
+            def getExpansionWrapper(*args):
+                radialExpansion = args[1]
+                value = array[radialExpansion - firstExpansion]
+                if value is None:
+                    value = VectorIJK.add(
+                        a.getExpansion(radialExpansion),
+                        b.getExpansion(radialExpansion)
+                    )
+                    array[radialExpansion - firstExpansion] = value
+                    return value
+                return value
+            expansion1D.getExpansion = getExpansionWrapper
+            return expansion1D
 
-#       final int firstExpansion = a.getLowerBoundIndex();
-#       final int lastExpansion = a.getUpperBoundIndex();
+    @staticmethod
+    def scale(*args):
+        if isRealNumber(args[1]):
+            (a, scaleFactor) = args
+            expansion1D = Expansion1D()
 
-#       final UnwritableVectorIJK[] array =
-#           new UnwritableVectorIJK[lastExpansion - firstExpansion + 1];
+            def getLowerBoundIndexWrapper(*args):
+                return a.getLowerBoundIndex()
+            expansion1D.getLowerBoundIndex = getLowerBoundIndexWrapper
 
-#       return new Expansion1D<UnwritableVectorIJK>() {
+            def getUpperBoundIndexWrapper(*args):
+                return a.getUpperBoundIndex()
+            expansion1D.getUpperBoundIndex = getUpperBoundIndexWrapper
 
-#         @Override
-#         public int getLowerBoundIndex() {
-#           return firstExpansion;
-#         }
+            def getExpansionWrapper(*args2):
+                radialExpansion = args2[1]
+                return UnwritableVectorIJK(
+                    scaleFactor, a.getExpansion(radialExpansion)
+                )
+            expansion1D.getExpansion = getExpansionWrapper
 
-#         @Override
-#         public int getUpperBoundIndex() {
-#           return lastExpansion;
-#         }
+            return expansion1D
+        elif isinstance(args[1], CoefficientExpansion1D):
+            (a, scaleFactors) = args
+            expansion1D = Expansion1D()
 
-#         @Override
-#         public UnwritableVectorIJK getExpansion(int radialExpansion) {
+            def getLowerBoundIndexWrapper(*args):
+                return a.getLowerBoundIndex()
+            expansion1D.getLowerBoundIndex = getLowerBoundIndexWrapper
 
-#           UnwritableVectorIJK value = array[radialExpansion - firstExpansion];
+            def getUpperBoundIndexWrapper(*args):
+                return a.getUpperBoundIndex()
+            expansion1D.getUpperBoundIndex = getUpperBoundIndexWrapper
 
-#           if (value == null) {
-#             value = VectorIJK.add(a.getExpansion(radialExpansion), b.getExpansion(radialExpansion));
-#             array[radialExpansion - firstExpansion] = value;
-#             return value;
-#           }
-#           return value;
-#         }
-#       };
+            def getExpansionWrapper(*args2):
+                radialExpansion = args2[1]
+                scaleFactor = scaleFactors.getCoefficient(radialExpansion)
+                return UnwritableVectorIJK(
+                    scaleFactor, a.getExpansion(radialExpansion)
+                )
+            expansion1D.getExpansion = getExpansionWrapper
+            return expansion1D
 
-#     }
-
-#     /**
-#      * 
-#      * @param a
-#      * @param scaleFactor
-#      * @return
-#      */
-#     public static Expansion1D<UnwritableVectorIJK> scale(final Expansion1D<UnwritableVectorIJK> a,
-#         final double scaleFactor) {
-
-#       return new Expansion1D<UnwritableVectorIJK>() {
-
-#         @Override
-#         public int getLowerBoundIndex() {
-#           return a.getLowerBoundIndex();
-#         }
-
-#         @Override
-#         public int getUpperBoundIndex() {
-#           return a.getUpperBoundIndex();
-#         }
-
-#         @Override
-#         public UnwritableVectorIJK getExpansion(int radialExpansion) {
-#           return new UnwritableVectorIJK(scaleFactor, a.getExpansion(radialExpansion));
-#         }
-#       };
-#     }
-
-#     /**
-#      * 
-#      * @param a
-#      * @param scaleFactors
-#      * @return
-#      */
-#     public static Expansion1D<UnwritableVectorIJK> scale(final Expansion1D<UnwritableVectorIJK> a,
-#         final CoefficientExpansion1D scaleFactors) {
-
-#       checkArgument(a.getLowerBoundIndex() == scaleFactors.getLowerBoundIndex());
-#       checkArgument(a.getUpperBoundIndex() == scaleFactors.getUpperBoundIndex());
-
-#       return new Expansion1D<UnwritableVectorIJK>() {
-
-#         @Override
-#         public int getLowerBoundIndex() {
-#           return a.getLowerBoundIndex();
-#         }
-
-#         @Override
-#         public int getUpperBoundIndex() {
-#           return a.getUpperBoundIndex();
-#         }
-
-#         @Override
-#         public UnwritableVectorIJK getExpansion(int radialExpansion) {
-#           double scaleFactor = scaleFactors.getCoefficient(radialExpansion);
-#           return new UnwritableVectorIJK(scaleFactor, a.getExpansion(radialExpansion));
-#         }
-#       };
-#     }
-
-#     /**
-#      * 
-#      * @param a
-#      * @return
-#      */
-#     public static UnwritableVectorIJK computeSum(final Expansion1D<UnwritableVectorIJK> a) {
-
-#       double bx = 0.0;
-#       double by = 0.0;
-#       double bz = 0.0;
-
-#       for (int rad = a.getLowerBoundIndex(); rad <= a.getUpperBoundIndex(); rad++) {
-#         UnwritableVectorIJK vect = a.getExpansion(rad);
-#         bx += vect.getI();
-#         by += vect.getJ();
-#         bz += vect.getK();
-#       }
-#       return new UnwritableVectorIJK(bx, by, bz);
-#     }
-
-#   }
+    @staticmethod
+    def computeSum(a):
+        bx = 0.0
+        by = 0.0
+        bz = 0.0
+        for rad in range(a.getLowerBoundIndex(), a.getUpperBoundIndex() + 1):
+            vect = a.getExpansion(rad)
+            bx += vect.getI()
+            by += vect.getJ()
+            bz += vect.getK()
+        return UnwritableVectorIJK(bx, by, bz)

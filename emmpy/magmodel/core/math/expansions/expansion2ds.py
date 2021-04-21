@@ -1,257 +1,193 @@
 """emmpy.magmodel.core.math.expansions.expansion2ds"""
 
 
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
+    ArrayExpansion2D
+)
+from emmpy.java.lang.unsupportedoperationexception import (
+    UnsupportedOperationException
+)
+from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
+    CoefficientExpansion2D
+)
 from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
+from emmpy.utilities.isrealnumber import isRealNumber
+
 
 class Expansion2Ds:
-    pass
-
-    # NOT SURE HOW TO HANDLE THIS EMBEDDED CLASS YET.
-
-    # import static com.google.common.base.Preconditions.checkArgument;
-
-    # import crucible.core.math.vectorspace.UnwritableVectorIJK;
-    # import crucible.core.math.vectorspace.VectorIJK;
-
-    # public class Expansion2Ds {
-
-    #   /**
-    #    * 
-    #    * @param data
-    #    * @param firstAzimuthalExpansionNumber
-    #    * @param firstRadialExpansionNumber
-    #    * @return
-    #    */
-    #   public static <T> Expansion2D<T> createNull(int firstAzimuthalExpansionNumber,
-    #       int firstRadialExpansionNumber, int lastRadialExpansionNumber) {
-
-    #     return new Expansion2D<T>() {
-
-    #       @Override
-    #       public int getJLowerBoundIndex() {
-    #         return firstRadialExpansionNumber;
-    #       }
-
-    #       @Override
-    #       public int getJUpperBoundIndex() {
-    #         return lastRadialExpansionNumber;
-    #       }
-
-    #       @Override
-    #       public int getILowerBoundIndex() {
-    #         return firstAzimuthalExpansionNumber;
-    #       }
-
-    #       @Override
-    #       public int getIUpperBoundIndex() {
-    #         return firstAzimuthalExpansionNumber - 1;
-    #       }
-
-    #       @Override
-    #       public T getExpansion(@SuppressWarnings("unused") int mIndex,
-    #           @SuppressWarnings("unused") int nIndex) {
-    #         throw new UnsupportedOperationException();
-    #       }
-    #     };
-
-    #   }
-
-    #   /**
-    #    * 
-    #    * @param data
-    #    * @param firstAzimuthalExpansionNumber
-    #    * @param firstRadialExpansionNumber
-    #    * @return
-    #    */
-    #   public static <T> Expansion2D<T> createFromArray(T[][] data, int firstAzimuthalExpansionNumber,
-    #       int firstRadialExpansionNumber) {
-    #     return new ArrayExpansion2D<T>(data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber);
-    #   }
-
-    #   /**
-    #    * 
-    #    * @author stephgk1
-    #    * 
-    #    */
-    #   public static class Vectors {
-
-    #     /**
-    #      * 
-    #      * @param a
-    #      * @param b
-    #      * @return
-    #      */
-    #     public static Expansion2D<UnwritableVectorIJK> add(final Expansion2D<UnwritableVectorIJK> a,
-    #         final Expansion2D<UnwritableVectorIJK> b) {
-
-    #       checkArgument(a.getILowerBoundIndex() == b.getILowerBoundIndex());
-    #       checkArgument(a.getIUpperBoundIndex() == b.getIUpperBoundIndex());
-
-    #       checkArgument(a.getJLowerBoundIndex() == b.getJLowerBoundIndex());
-    #       checkArgument(a.getJUpperBoundIndex() == b.getJUpperBoundIndex());
-
-    #       final int firstAzimuthalExpansion = a.getILowerBoundIndex();
-    #       final int lastAzimuthalExpansion = a.getIUpperBoundIndex();
-
-    #       final int firstRadialExpansion = a.getJLowerBoundIndex();
-    #       final int lastRadialExpansion = a.getJUpperBoundIndex();
-
-    #       final UnwritableVectorIJK[][] array = new UnwritableVectorIJK[lastAzimuthalExpansion
-    #           - firstAzimuthalExpansion + 1][lastRadialExpansion - firstRadialExpansion + 1];
-
-    #       return new Expansion2D<UnwritableVectorIJK>() {
-
-
-    #         @Override
-    #         public int getILowerBoundIndex() {
-    #           return firstAzimuthalExpansion;
-    #         }
-
-    #         @Override
-    #         public int getIUpperBoundIndex() {
-    #           return lastAzimuthalExpansion;
-    #         }
-
-    #         @Override
-    #         public int getJLowerBoundIndex() {
-    #           return firstRadialExpansion;
-    #         }
-
-    #         @Override
-    #         public int getJUpperBoundIndex() {
-    #           return lastRadialExpansion;
-    #         }
-
-    #         @Override
-    #         public UnwritableVectorIJK getExpansion(int azimuthalExpansion, int radialExpansion) {
-
-    #           UnwritableVectorIJK value =
-    #               array[azimuthalExpansion - firstAzimuthalExpansion][radialExpansion
-    #                   - firstRadialExpansion];
-
-    #           if (value == null) {
-    #             value = VectorIJK.add(a.getExpansion(azimuthalExpansion, radialExpansion),
-    #                 b.getExpansion(azimuthalExpansion, radialExpansion));
-    #             array[azimuthalExpansion - firstAzimuthalExpansion][radialExpansion
-    #                 - firstRadialExpansion] = value;
-    #             return value;
-    #           }
-    #           return value;
-    #         }
-
-    #       };
-
-    #     }
-
-    #     /**
-    #      * 
-    #      * @param a
-    #      * @param scaleFactor
-    #      * @return
-    #      */
-    #     public static Expansion2D<UnwritableVectorIJK> scale(final Expansion2D<UnwritableVectorIJK> a,
-    #         final double scaleFactor) {
-
-    #       return new Expansion2D<UnwritableVectorIJK>() {
-
-    #         @Override
-    #         public int getILowerBoundIndex() {
-    #           return a.getILowerBoundIndex();
-    #         }
-
-    #         @Override
-    #         public int getIUpperBoundIndex() {
-    #           return a.getIUpperBoundIndex();
-    #         }
-
-    #         @Override
-    #         public int getJLowerBoundIndex() {
-    #           return a.getJLowerBoundIndex();
-    #         }
-
-    #         @Override
-    #         public int getJUpperBoundIndex() {
-    #           return a.getJUpperBoundIndex();
-    #         }
-
-    #         @Override
-    #         public UnwritableVectorIJK getExpansion(int azimuthalExpansion, int radialExpansion) {
-    #           return new UnwritableVectorIJK(scaleFactor,
-    #               a.getExpansion(azimuthalExpansion, radialExpansion));
-    #         }
-
-    #       };
-    #     }
 
     @staticmethod
-    def scale(a, scaleFactors):
-        """scale
+    def createNull(
+        firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
+        lastRadialExpansionNumber
+    ):
+        expansion2D = Expansion2D()
 
-        @param a
-        @param scaleFactors
-        @return
-        """
-    #     public static Expansion2D<UnwritableVectorIJK> scale(final Expansion2D<UnwritableVectorIJK> a,
-    #         final CoefficientExpansion2D scaleFactors) {
+        def getJLowerBoundIndexWrapper(ignoredSelf):
+            return firstRadialExpansionNumber
+        expansion2D.getJLowerBoundIndex = getJLowerBoundIndexWrapper
 
-    #       checkArgument(a.getJLowerBoundIndex() == scaleFactors.getJLowerBoundIndex());
-    #       checkArgument(a.getJUpperBoundIndex() == scaleFactors.getJUpperBoundIndex());
+        def getJUpperBoundIndexWrapper(ignoredSelf):
+            return lastRadialExpansionNumber
+        expansion2D.getJUpperBoundIndex = getJUpperBoundIndexWrapper
 
-    #       return new Expansion2D<UnwritableVectorIJK>() {
+        def getILowerBoundIndexWrapper(ignoredSelf):
+            return firstAzimuthalExpansionNumber
+        expansion2D.getILowerBoundIndex = getILowerBoundIndexWrapper
 
-    #         @Override
-    #         public int getILowerBoundIndex() {
-    #           return a.getILowerBoundIndex();
-    #         }
+        def getIUpperBoundIndexWrapper(ignoredSelf):
+            return firstAzimuthalExpansionNumber - 1
+        expansion2D.getIUpperBoundIndex = getIUpperBoundIndexWrapper
 
-    #         @Override
-    #         public int getIUpperBoundIndex() {
-    #           return a.getIUpperBoundIndex();
-    #         }
+        def getExpansionWrapper(ignoredSelf):
+            raise UnsupportedOperationException()
+        expansion2D.getExpansion = getExpansionWrapper
 
-    #         @Override
-    #         public int getJLowerBoundIndex() {
-    #           return a.getJLowerBoundIndex();
-    #         }
+        return expansion2D
 
-    #         @Override
-    #         public int getJUpperBoundIndex() {
-    #           return a.getJUpperBoundIndex();
-    #         }
+    @staticmethod
+    def createFromArray(
+        data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
+    ):
+        return ArrayExpansion2D(
+            data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
+        )
 
-    #         @Override
-    #         public UnwritableVectorIJK getExpansion(int azimuthalExpansion, int radialExpansion) {
-    #           double scaleFactor = scaleFactors.getCoefficient(azimuthalExpansion, radialExpansion);
-    #           return new UnwritableVectorIJK(scaleFactor,
-    #               a.getExpansion(azimuthalExpansion, radialExpansion));
-    #         }
-    #       };
-    #     }
+    # N.B. NESTED CLASS UNUSED!
+    # @author stephgk1
+    class Vectors:
 
-    #     /**
-    #      * 
-    #      * @param a
-    #      * @return
-    #      */
-    #     public static UnwritableVectorIJK computeSum(final Expansion2D<UnwritableVectorIJK> a) {
+        @staticmethod
+        def add(a, b):
+            firstAzimuthalExpansion = a.getILowerBoundIndex()
+            lastAzimuthalExpansion = a.getIUpperBoundIndex()
+            firstRadialExpansion = a.getJLowerBoundIndex()
+            lastRadialExpansion = a.getJUpperBoundIndex()
+            array = [
+                [UnwritableVectorIJK([0, 0, 0])
+                 for j in range(lastRadialExpansion - firstRadialExpansion +
+                                1 + 1)]
+                for i in range(
+                    lastAzimuthalExpansion - firstAzimuthalExpansion + 1 + 1
+                )
+            ]
+            expansion2D = Expansion2D()
 
-    #       double bx = 0.0;
-    #       double by = 0.0;
-    #       double bz = 0.0;
-    #       for (int az = a.getILowerBoundIndex(); az <= a
-    #           .getIUpperBoundIndex(); az++) {
-    #         for (int rad = a.getJLowerBoundIndex(); rad <= a
-    #             .getJUpperBoundIndex(); rad++) {
-    #           UnwritableVectorIJK vect = a.getExpansion(az, rad);
-    #           bx += vect.getI();
-    #           by += vect.getJ();
-    #           bz += vect.getK();
-    #         }
-    #       }
-    #       return new UnwritableVectorIJK(bx, by, bz);
-    #     }
+            def getILowerBoundIndexWrapper(ignoredSelf):
+                return firstAzimuthalExpansion
+            expansion2D.getILowerBoundIndex = getILowerBoundIndexWrapper
 
-    #   }
+            def getIUpperBoundIndexWrapper(ignoredSelf):
+                return lastAzimuthalExpansion
+            expansion2D.getIUpperBoundIndex = getIUpperBoundIndexWrapper
 
+            def getJLowerBoundIndexWrapper(ignoredSelf):
+                return firstRadialExpansion
+            expansion2D.getJLowerBoundIndex = getJLowerBoundIndexWrapper
 
-    # }
+            def getJUpperBoundIndexWrapper(ignoredSelf):
+                return lastRadialExpansion
+            expansion2D.getJUpperBoundIndex = getJUpperBoundIndexWrapper
+
+            def getExpansionWrapper(
+                ignoredSelf, azimuthalExpansion, radialExpansion
+            ):
+                value = (
+                    array[azimuthalExpansion - firstAzimuthalExpansion]
+                         [radialExpansion - firstRadialExpansion]
+                )
+                if value is None:
+                    value = VectorIJK.add(
+                        a.getExpansion(azimuthalExpansion, radialExpansion),
+                        b.getExpansion(azimuthalExpansion, radialExpansion)
+                    )
+                    array[azimuthalExpansion -
+                          firstAzimuthalExpansion][radialExpansion -
+                                                   firstRadialExpansion] = (
+                                                    value
+                                                   )
+                    return value
+                return value
+            expansion2D.getExpansion = getExpansionWrapper
+            return expansion2D
+
+    @staticmethod
+    def scale(*args):
+        if isRealNumber(args[1]):
+            (a, scaleFactor) = args
+            expansion2D = Expansion2D()
+
+            def getILowerBoundIndexWrapper(ignoredSelf):
+                return a.getILowerBoundIndex()
+            expansion2D.getILowerBoundIndex = getILowerBoundIndexWrapper
+
+            def getIUpperBoundIndexWrapper(ignoredSelf):
+                return a.getIUpperBoundIndex()
+            expansion2D.getIUpperBoundIndex = getIUpperBoundIndexWrapper
+
+            def getJLowerBoundIndexWrapper(ignoredSelf):
+                return a.getJLowerBoundIndex()
+            expansion2D.getJLowerBoundIndex = getJLowerBoundIndexWrapper
+
+            def getJUpperBoundIndexWrapper(ignoredSelf):
+                return a.getJUpperBoundIndex()
+            expansion2D.getJUpperBoundIndex = getJUpperBoundIndexWrapper
+
+            def getExpansionWrapper(
+                ignoredSelf, azimuthalExpansion, radialExpansion
+            ):
+                return UnwritableVectorIJK(
+                    scaleFactor,
+                    a.getExpansion(azimuthalExpansion, radialExpansion)
+                )
+        elif isinstance(args[1], CoefficientExpansion2D):
+            (a, scaleFactors) = args
+            expansion2D = Expansion2D()
+
+            def getILowerBoundIndexWrapper(ignoredSelf):
+                return a.getILowerBoundIndex()
+            expansion2D.getILowerBoundIndex = getILowerBoundIndexWrapper
+
+            def getIUpperBoundIndexWrapper(ignoredSelf):
+                return a.getIUpperBoundIndex()
+            expansion2D.getIUpperBoundIndex = getIUpperBoundIndexWrapper
+
+            def getJLowerBoundIndexWrapper(ignoredSelf):
+                return a.getJLowerBoundIndex()
+            expansion2D.getJLowerBoundIndex = getJLowerBoundIndexWrapper
+
+            def getJUpperBoundIndexWrapper(ignoredSelf):
+                return a.getJUpperBoundIndex()
+            expansion2D.getJUpperBoundIndex = getJUpperBoundIndexWrapper
+
+            def getExpansionWrapper(
+                ignoredSelf, azimuthalExpansion, radialExpansion
+            ):
+                scaleFactor = scaleFactors.getCoefficient(
+                    azimuthalExpansion, radialExpansion
+                )
+                return UnwritableVectorIJK(
+                    scaleFactor,
+                    a.getExpansion(azimuthalExpansion, radialExpansion)
+                )
+
+            return expansion2D
+
+    @staticmethod
+    def computeSum(a):
+        bx = 0.0
+        by = 0.0
+        bz = 0.0
+        for az in range(a.getILowerBoundIndex(), a.getIUpperBoundIndex + 1):
+            for rad in range(
+                a.getJLowerBoundIndex(), a.getJUpperBoundIndex() + 1
+            ):
+                vect = a.getExpansion(az, rad)
+                bx += vect.getI()
+                by += vect.getJ()
+                bz += vect.getK()
+        return UnwritableVectorIJK(bx, by, bz)

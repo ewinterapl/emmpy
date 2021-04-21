@@ -1,33 +1,24 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield"""
 
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static com.google.common.base.Preconditions.checkNotNull;
-# import static magmodel.core.math.expansions.Expansion1Ds.createFromArray;
-# import static magmodel.core.math.expansions.Expansion2Ds.createFromArray;
-# import static magmodel.core.math.expansions.Expansion2Ds.createNull;
-# import com.google.common.collect.ImmutableList;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
-# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
-# import magmodel.core.math.TrigParity;
-# import magmodel.core.math.bessel.BesselFunctionEvaluator;
-# import magmodel.core.math.vectorfields.BasisVectorField;
-
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
+from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
+)
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
+    TailSheetAsymmetricExpansion
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
-    TailSheetAsymmetricExpansion
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
+    TailSheetExpansions
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
@@ -87,10 +78,8 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         buffer = VectorIJK()
         return buffer.setTo(self.evaluateExpansions(location).sum())
 
-    #   @Override
-    #   public ImmutableList<UnwritableVectorIJK> evaluateExpansion(UnwritableVectorIJK location) {
-    #     return evaluateExpansions(location).getExpansionsAsList();
-    #   }
+    def evaluateExpansion(self, location):
+        return self.evaluateExpansions(location).getExpansionsAsList()
 
     def evaluateExpansions(self, location):
         """This guy recalculates everything
@@ -101,13 +90,17 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         @param includeShield
         """
         zeros = [0, 0, 0]
-        symmetricExpansions = [UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)]
+        symmetricExpansions = [
+            UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)
+        ]
         oddExpansions = (
-            [[UnwritableVectorIJK(zeros) for j in range(self.numRadialExpansions)]
+            [[UnwritableVectorIJK(zeros)
+              for j in range(self.numRadialExpansions)]
              for i in range(self.numAzimuthalExpansions)]
         )
         evenExpansions = (
-            [[UnwritableVectorIJK(zeros) for j in range(self.numRadialExpansions)]
+            [[UnwritableVectorIJK(zeros)
+              for j in range(self.numRadialExpansions)]
              for i in range(self.numAzimuthalExpansions)]
         )
 
@@ -123,25 +116,36 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
             a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
 
-            symmetricExpansions[n - 1] = symBasisFunction.evaluate(location).scale(a)
+            symmetricExpansions[n - 1] = (
+                symBasisFunction.evaluate(location).scale(a)
+            )
 
             # m is the azimuthal expansion number
             for m in range(1, self.numAzimuthalExpansions + 1):
                 aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
                 oddBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness, self.bessel
+                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
+                    self.bessel
                 )
-                oddExpansions[m - 1][n - 1] = oddBasisFunction.evaluate(location).scale(aOdd)
-                aEven = self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
+                oddExpansions[m - 1][n - 1] = (
+                    oddBasisFunction.evaluate(location).scale(aOdd)
+                )
+                aEven = (
+                    self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
+                )
                 evenBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness, self.bessel
+                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
+                    self.bessel
                 )
-                evenExpansions[m - 1][n - 1] = evenBasisFunction.evaluate(location).scale(aEven)
+                evenExpansions[m - 1][n - 1] = (
+                    evenBasisFunction.evaluate(location).scale(aEven)
+                )
 
             if self.numAzimuthalExpansions == 0:
                 return TailSheetExpansions(
-                    createFromArray(symmetricExpansions, 1),
-                   createNull(1, 1, numRadialExpansions), createNull(1, 1, numRadialExpansions)
+                    Expansion1Ds.createFromArray(symmetricExpansions, 1),
+                    Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
+                    Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
                 )
 
             return TailSheetExpansions(
@@ -150,17 +154,14 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 self.createFromArray(evenExpansions, 1, 1)
             )
 
-    #   public int getNumAzimuthalExpansions() {
-    #     return numAzimuthalExpansions;
-    #   }
+    def getNumAzimuthalExpansions(self):
+        return self.numAzimuthalExpansions
 
-    #   public int getNumRadialExpansions() {
-    #     return numRadialExpansions;
-    #   }
+    def getNumRadialExpansions(self):
+        return self.numRadialExpansions
 
-    #   @Override
-    #   public int getNumberOfBasisFunctions() {
-    #     return numRadialExpansions + 2 * numRadialExpansions * numAzimuthalExpansions;
-    #   }
-
-    # }
+    def getNumberOfBasisFunctions(self):
+        return (
+            self.numRadialExpansions +
+            2*self.numRadialExpansions*self.numAzimuthalExpansions
+        )

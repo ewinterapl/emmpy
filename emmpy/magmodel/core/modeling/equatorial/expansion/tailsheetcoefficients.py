@@ -157,9 +157,9 @@ class TailSheetCoefficients:
         return ("TailSheetCoefficients [tailSheetSymmetricValues=%s"
                 ", tailSheetOddValues=%s, tailSheetEvenValues=%s"
                 ", numAzimuthalExpansions=%s, numRadialExpansions=%s]" %
-                (self.tailSheetSymmetricValues.toString(),
-                 self.tailSheetOddValues.toString(),
-                 self.tailSheetEvenValues.toString(),
+                (self.tailSheetSymmetricValues,
+                 self.tailSheetOddValues,
+                 self.tailSheetEvenValues,
                  self.numAzimuthalExpansions, self.numRadialExpansions))
 
     def hashCode(self):

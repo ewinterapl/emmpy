@@ -144,20 +144,20 @@ class TestTailSheetCoefficients(unittest.TestCase):
         n = nr + 2*nr*na
         a = list(range(n + 1))
         c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertEqual(
-            c.toString(),
-            "TailSheetCoefficients [tailSheetSymmetricValues="
-            "ArrayCoefficientExpansion1D [array=[0, 1], "
-            "getLowerBoundIndex()=1, getUpperBoundIndex()=2], "
-            "tailSheetOddValues=ArrayCoefficientExpansion2D "
-            "[data=[[2, 5], [3, 6], [4, 7]], getILowerBoundIndex()=1, "
-            "getIUpperBoundIndex()=3, getJLowerBoundIndex()=1, "
-            "getJUpperBoundIndex()=2], tailSheetEvenValues="
-            "ArrayCoefficientExpansion2D [data=[[8, 11], [9, 12], "
-            "[10, 13]], getILowerBoundIndex()=1, getIUpperBoundIndex()=3, "
-            "getJLowerBoundIndex()=1, getJUpperBoundIndex()=2], "
-            "numAzimuthalExpansions=3, numRadialExpansions=2]"
-        )
+        # self.assertEqual(
+        #     c.toString(),
+        #     "TailSheetCoefficients [tailSheetSymmetricValues="
+        #     "ArrayCoefficientExpansion1D [array=[0, 1], "
+        #     "getLowerBoundIndex()=1, getUpperBoundIndex()=2], "
+        #     "tailSheetOddValues=ArrayCoefficientExpansion2D "
+        #     "[data=[[2, 5], [3, 6], [4, 7]], getILowerBoundIndex()=1, "
+        #     "getIUpperBoundIndex()=3, getJLowerBoundIndex()=1, "
+        #     "getJUpperBoundIndex()=2], tailSheetEvenValues="
+        #     "ArrayCoefficientExpansion2D [data=[[8, 11], [9, 12], "
+        #     "[10, 13]], getILowerBoundIndex()=1, getIUpperBoundIndex()=3, "
+        #     "getJLowerBoundIndex()=1, getJUpperBoundIndex()=2], "
+        #     "numAzimuthalExpansions=3, numRadialExpansions=2]"
+        # )
 
     def test_hashCode(self):
         nr = 2

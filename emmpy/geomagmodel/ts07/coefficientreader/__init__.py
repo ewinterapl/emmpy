@@ -5,7 +5,10 @@ hierarchy.
 
 Modules
 -------
+defaultfacconfigurationoptions.py
+thincurrentsheetshieldingcoefficients.py
 ts07dvariablecoefficientsutils.py
+ts07equatoriallinearcoefficients.py
 ts07equatorialvariablecoefficients.py
 
 Packages

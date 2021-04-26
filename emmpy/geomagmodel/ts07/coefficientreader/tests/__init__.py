@@ -5,6 +5,9 @@ geomagmodel.ts07.coefficientreader hierarchy.
 
 Modules
 -------
+test_DefaultFacConfigurationOptions.py
+test_ThinCurrentSheetShieldingCoefficients.py
 test_TS07DVariableCoefficientsUtils.py
-test_Ts07EquatorialMagneticFieldBuilder.py
+test_Ts07EquatorialLinearCoefficients.py
+test_Ts07EquatorialVariableCoefficients.py
 """

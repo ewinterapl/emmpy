@@ -3,6 +3,9 @@
 
 import sys
 
+from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
+    UnwritableVectorIJ
+)
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
@@ -13,6 +16,9 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses impo
     CurrentSheetHalfThicknesses
 )
 from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
+from emmpy.magmodel.core.math.bessel.albertbesselfunctionevaluator import (
+    AlbertBesselFunctionEvaluator
+)
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
@@ -24,7 +30,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 def ModelRunApp():
     print("Starting ModelRunApp()")
     runThinSheet()
-    runTs07D()
+    # runTs07D()
     print("Ending ModelRunApp()")
 
 
@@ -51,12 +57,11 @@ def runThinSheet():
     coeffs = TailSheetCoefficients.createUnity(numAz, numRad)
 
     # use Jay Albert's Bessel function evaluator
-    # bessel = AlbertBesselFunctionEvaluator(14)
+    bessel = AlbertBesselFunctionEvaluator(14)
 
     # now construct the thin sheet field model
-    # IGNORE LAST ARGUMENT (bessel)
     model = ThinAsymmetricCurrentSheetBasisVectorField(
-        tailLength, currentSheetHalfThickness, coeffs, None
+        tailLength, currentSheetHalfThickness, coeffs, bessel
     )
 
     # evaluate the model at r=(4,5,-2)

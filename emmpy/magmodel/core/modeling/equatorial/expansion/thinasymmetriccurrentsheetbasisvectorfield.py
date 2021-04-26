@@ -141,18 +141,18 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     evenBasisFunction.evaluate(location).scale(aEven)
                 )
 
-            if self.numAzimuthalExpansions == 0:
-                return TailSheetExpansions(
-                    Expansion1Ds.createFromArray(symmetricExpansions, 1),
-                    Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
-                    Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
-                )
-
+        if self.numAzimuthalExpansions == 0:
             return TailSheetExpansions(
                 Expansion1Ds.createFromArray(symmetricExpansions, 1),
-                Expansion2Ds.createFromArray(oddExpansions, 1, 1),
-                Expansion2Ds.createFromArray(evenExpansions, 1, 1)
+                Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
+                Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
             )
+
+        return TailSheetExpansions(
+            Expansion1Ds.createFromArray(symmetricExpansions, 1),
+            Expansion2Ds.createFromArray(oddExpansions, 1, 1),
+            Expansion2Ds.createFromArray(evenExpansions, 1, 1)
+        )
 
     def getNumAzimuthalExpansions(self):
         return self.numAzimuthalExpansions

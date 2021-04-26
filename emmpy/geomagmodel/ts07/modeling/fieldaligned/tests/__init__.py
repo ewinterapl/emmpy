@@ -5,5 +5,6 @@ geomagmodel.ts07.modeling.fieldaligned hierarchy.
 
 Modules
 -------
+test_FacConfigurationOptions.py
 test_Ffunction.py
 """

@@ -12,6 +12,7 @@ thincurrentsheetshieldingcoefficients.py
 ts07dvariablecoefficientsutils.py
 ts07equatoriallinearcoefficients.py
 ts07equatorialvariablecoefficients.py
+ts07facvariablecoefficients.py
 
 Packages
 --------

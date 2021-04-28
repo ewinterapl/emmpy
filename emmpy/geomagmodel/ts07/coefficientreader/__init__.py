@@ -9,6 +9,7 @@ defaultfacconfigurationoptions.py
 facconfiguration.py
 facregion.py
 thincurrentsheetshieldingcoefficients.py
+ts07dvariablecoefficients.py
 ts07dvariablecoefficientsutils.py
 ts07equatoriallinearcoefficients.py
 ts07equatorialvariablecoefficients.py

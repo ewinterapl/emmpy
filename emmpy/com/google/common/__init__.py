@@ -8,5 +8,6 @@ https://guava.dev/releases/8.0/api/docs/overview-summary.html
 Packages
 --------
 base
+cache
 collect
 """

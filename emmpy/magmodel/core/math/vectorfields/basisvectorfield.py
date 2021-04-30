@@ -25,6 +25,7 @@ class BasisVectorField(VectorField):
     def evaluate(self, location, buffer):
         """evaluate"""
         basisVectors = self.evaluateExpansion(location)
+        # basisVectors = VectorField.evaluateExpansion(self, location)
         fx = 0.0
         fy = 0.0
         fz = 0.0

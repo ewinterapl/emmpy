@@ -437,13 +437,17 @@ class TS07DVariableCoefficientsUtils:
                 count += 1
 
         if count == 4:
-            return DefaultFacConfigurationOptions.TS07D
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.TS07D)
         elif count == 6:
-            return DefaultFacConfigurationOptions.FAC6
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.FAC6)
         elif count == 12:
-            return DefaultFacConfigurationOptions.FAC12
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.FAC12)
         elif count == 16:
-            return DefaultFacConfigurationOptions.FAC16
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.FAC16)
         else:
             raise RuntimeException(
                 "Invalid number of FACs to construct a "
@@ -564,7 +568,7 @@ class TS07DVariableCoefficientsUtils:
             facAmps[i] = coeffs[numExpansions + 1 + i]
 
         currThicks = coeffs[
-            numExpansions + numFacFields + 1,
+            numExpansions + numFacFields + 1:
             numExpansions + numFacFields + 1 + numCurrentSheets
         ]
         hingeDist = coeffs[numExpansions + numFacFields + numCurrentSheets + 1]

@@ -11,7 +11,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficie
 )
 
 
-class TestThinCurrentSheetShieldingCoefficients(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         na = 3

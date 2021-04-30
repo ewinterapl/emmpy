@@ -17,7 +17,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 )
 
 
-class TestTs07EquatorialVariableCoefficients(unittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)

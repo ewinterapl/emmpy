@@ -9,6 +9,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
 )
@@ -30,7 +31,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 def ModelRunApp():
     print("Starting ModelRunApp()")
     runThinSheet()
-    # runTs07D()
+    runTs07D()
     print("Ending ModelRunApp()")
 
 
@@ -102,9 +103,9 @@ def runTs07D():
 
     # evaluate the magnetic field
     # TEMPORARY BUFFER - REMOVE LATER.
-    # buffer = VectorIJK()
-    # bVect = model.evaluate(pos, buffer)
-    # print(bVect)
+    buffer = VectorIJK()
+    bVect = model.evaluate(pos, buffer)
+    print(bVect)
 
     print("Ending runTs07D()")
 

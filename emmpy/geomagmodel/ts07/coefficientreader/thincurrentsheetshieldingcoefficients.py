@@ -1,12 +1,7 @@
 """emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients.py"""
 
 
-
 from emmpy.com.google.common.base.preconditions import Preconditions
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.expansions.CoefficientExpansion2D;
-# import magmodel.core.math.expansions.Expansion1D;
-# import magmodel.core.math.expansions.Expansion2D;
 
 
 class ThinCurrentSheetShieldingCoefficients:
@@ -20,15 +15,6 @@ class ThinCurrentSheetShieldingCoefficients:
     @author Nicholas Sharp
     @author G.K.Stephens
     """
-
-    # private final int numAzimuthalExpansions;
-    # private final int numRadialExpansions;
-    # private final Expansion1D<CoefficientExpansion2D> symmetricTailExpansion;
-    # private final Expansion1D<CoefficientExpansion1D> symmetricTailWaveExpansion;
-    # private final Expansion2D<CoefficientExpansion2D> oddTailExpansion;
-    # private final Expansion2D<CoefficientExpansion1D> oddTailWaveExpansion;
-    # private final Expansion2D<CoefficientExpansion2D> evenTailExpansion;
-    # private final Expansion2D<CoefficientExpansion1D> evenTailWaveExpansion;
 
     def __init__(
         self, numAzimuthalExpansions, numRadialExpansions,
@@ -47,14 +33,6 @@ class ThinCurrentSheetShieldingCoefficients:
         @param evenTailExpansion
         @param evenTailWaveExpansion
         """
-        # ThinCurrentSheetShieldingCoefficients(int numAzimuthalExpansions, int numRadialExpansions,
-        #     Expansion1D<CoefficientExpansion2D> symmetricTailExpansion,
-        #     Expansion1D<CoefficientExpansion1D> symmetricTailWaveExpansion,
-        #     Expansion2D<CoefficientExpansion2D> oddTailExpansion,
-        #     Expansion2D<CoefficientExpansion1D> oddTailWaveExpansion,
-        #     Expansion2D<CoefficientExpansion2D> evenTailExpansion,
-        #     Expansion2D<CoefficientExpansion1D> evenTailWaveExpansion) {
-
         self.numRadialExpansions = (
             Preconditions.checkNotNull(numRadialExpansions)
         )

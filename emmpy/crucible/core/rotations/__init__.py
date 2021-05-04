@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+axisandangle.py
 rotation.py
 unwritablerotation.py
 

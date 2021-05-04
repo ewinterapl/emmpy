@@ -4,6 +4,9 @@
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
     TS07DStaticCoefficientsFactory
 )
+from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
+    DipoleShieldingField
+)
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
@@ -314,8 +317,8 @@ class TS07DModelBuilder:
         dipoleShieldingField = (
             BasisVectorFields.asBasisField(
                 DipoleShieldingField.createScaled(
-                    dipoleTiltAngle, dynamicPressure,
-                    variableCoefficients.getDipoleShieldingAmplitude()
+                    self.dipoleTiltAngle, self.dynamicPressure,
+                    self.variableCoefficients.getDipoleShieldingAmplitude()
                 )
             )
         )

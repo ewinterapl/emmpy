@@ -1,7 +1,14 @@
-"""empy.crucible.core.math.rotations
+"""emmpy.crucible.core.math.rotations
 
-Python port of Java classes from the crucible.core.math.rotations hierarchy.
+Python port of Java classes from the
+crucible.core.math.rotations
+hierarchy.
 
 Modules
 -------
+unwritablerotation.py
+
+Packages
+--------
+tests
 """

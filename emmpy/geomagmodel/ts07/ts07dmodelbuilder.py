@@ -44,7 +44,7 @@ class TS07DModelBuilder:
 
         # by default, do not use Albert's Bessel function evaluator, use
         # Tsyganenko's by default
-        self.withAlbertBessel = False
+        self.withAlbertBesselFunction = False
 
         # by default, we will be consistent with the original FORTRAN code and
         # will not check the magnetopause boundary
@@ -177,7 +177,7 @@ class TS07DModelBuilder:
 
         return this builder object
         """
-        self.withAlbertBessel = True
+        self.withAlbertBesselFunction = True
         return self
 
     def withoutAlbertBessel(self):
@@ -190,7 +190,7 @@ class TS07DModelBuilder:
 
         return this builder object
         """
-        self.withAlbertBessel = False
+        self.withAlbertBesselFunction = False
         return self
 
     def withTA15deformation(self, bzIMF):
@@ -397,7 +397,7 @@ class TS07DModelBuilder:
         )
 
         # If true, use Jay Albert's Bessel function evaluator
-        if self.withAlbertBessel:
+        if self.withAlbertBesselFunction:
             equatorialFieldBuilder.withAlbertBessel()
 
         # If true, the equatorial fields are shielded

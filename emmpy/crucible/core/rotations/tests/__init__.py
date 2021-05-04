@@ -6,5 +6,6 @@ hierarchy.
 
 Modules
 -------
+test_Rotation.py
 test_UnwritableRotation.py
 """

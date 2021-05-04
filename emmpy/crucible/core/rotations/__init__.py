@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+rotation.py
 unwritablerotation.py
 
 Packages

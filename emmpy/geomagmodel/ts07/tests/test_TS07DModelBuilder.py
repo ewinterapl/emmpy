@@ -14,10 +14,10 @@ class TestBuilder(unittest.TestCase):
     def test_createStandardResolution(self):
         pass
 
-    def test_withDipoleTiltAnfle(self):
+    def test_withDipoleTiltAngleValue(self):
         pass
 
-    def test_withDynamicPressure(self):
+    def test_withDynamicPressureValue(self):
         pass
 
     def test_withVariableCoefficientValues(self):

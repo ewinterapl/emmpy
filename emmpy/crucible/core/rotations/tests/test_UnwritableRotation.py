@@ -8,7 +8,12 @@ from emmpy.crucible.core.rotations.unwritablerotation import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        pass
+        with self.assertRaises(Exception):
+            UnwritableRotation()
+
+    def test_getRotation(self):
+        with self.assertRaises(Exception):
+            UnwritableRotation.getRotation(None, None)
 
 
 if __name__ == '__main__':

@@ -323,6 +323,8 @@ class CoefficientExpansions:
                 a.getCoefficient(azimuthalExpansion, radialExpansion) +
                 b.getCoefficient(azimuthalExpansion, radialExpansion)
             )
+        else:
+            raise Exception
 
         # Return the view.
         return v

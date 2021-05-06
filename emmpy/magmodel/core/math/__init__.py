@@ -4,6 +4,7 @@ Python port of Java classes from the magmodel.core.math hierarchy.
 
 Modules
 -------
+perpendicularandparallelcartesianharmonicfield.py
 trigparity.py
 
 Packages

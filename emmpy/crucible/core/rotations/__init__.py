@@ -7,6 +7,7 @@ hierarchy.
 Modules
 -------
 axisandangle.py
+quaternion.py
 rotation.py
 unwritablerotation.py
 

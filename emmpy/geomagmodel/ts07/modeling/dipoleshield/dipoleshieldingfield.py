@@ -99,14 +99,16 @@ class DipoleShieldingField:
          [-329.3619944, 308.6011161, -31.30824526],
          [-372.3384278, 286.7594095, -27.42344605]],
         1, 1)
-    #     c = createExpansionFromArray(new double[][] {{-150.4874688f, 1.395023949f, -56.85224007f},
-    #         {-43.48705106f, 1.073551279f, 12.21404266f}, {5.799964188f, -1.044652977f, 3.536082962f}},
-    #         1, 1);
-    #     d = createExpansionFromArray(new double[][] {{2.669338538f, -.5540427503f, 3.681827033f},
-    #         {5.103131905f, -.6673083508f, 4.177465543f}, {-.3977802319f, .5703560010f, -3.222069852f}},
-    #         1, 1);
-
-    #   }
+    c = CoefficientExpansions.createExpansionFromArray(
+        [[-150.4874688, 1.395023949, -56.85224007],
+         [-43.48705106, 1.073551279, 12.21404266],
+         [5.799964188, -1.044652977, 3.536082962]],
+        1, 1)
+    d = CoefficientExpansions.createExpansionFromArray(
+        [[2.669338538, -.5540427503, 3.681827033],
+         [5.103131905, -.6673083508, 4.177465543],
+         [-.3977802319, .5703560010, -3.222069852]],
+        1, 1)
 
     @staticmethod
     def create(dipoleTiltAngle, dynamicPressure):
@@ -125,7 +127,8 @@ class DipoleShieldingField:
         parrCoeffs = CoefficientExpansions.add(
             CoefficientExpansions.scale(DipoleShieldingField.c,
                                         sin(dipoleTiltAngle)),
-            CoefficientExpansions.scale(d, sin(2*dipoleTiltAngle)))
+            CoefficientExpansions.scale(DipoleShieldingField.d,
+                                        sin(2*dipoleTiltAngle)))
         ppchf = (
             PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
                 TrigParity.EVEN, dipoleTiltAngle*kappaPerp,

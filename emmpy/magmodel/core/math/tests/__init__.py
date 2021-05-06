@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+test_AlternateCartesianHarmonicField.py
 test_CartesianHarmonicField.py
 test_PerpendicularAndParallelCartesianHarmonicField.py
 test_TrigParity.py

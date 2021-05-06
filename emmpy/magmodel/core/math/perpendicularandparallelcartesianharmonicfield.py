@@ -1,31 +1,30 @@
 """emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield"""
 
 
-# import com.google.common.collect.ImmutableList;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.RotationMatrixIJK;
-# import crucible.core.math.vectorspace.UnwritableRotationMatrixIJK;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.expansions.CoefficientExpansion2D;
-
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
+from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
+    AlternateCartesianHarmonicField
+)
 from emmpy.magmodel.core.math.cartesianharmonicfield import (
     CartesianHarmonicField
 )
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
+from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
+    RotationMatrixIJK
+)
 
 
 class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     """Represents the linear combination of a perpendicular and parallel
     Cartesian harmonic vector field.
-    
+
     This is often useful because a VectorField can be decomposed into the sum
     of a vertical and horizontal vector field.
 
@@ -36,8 +35,6 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     author G.K.Stephens
     author Nicholas Sharp
     """
-    #   private final BasisVectorField perpendicularField;
-    #   private final BasisVectorField parallelField;
 
     def __init__(self, perpendicularField, parallelField):
         """Constructor"""
@@ -100,9 +97,11 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
             q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 
         # the rotation matrices about Y axis
-        perpendicularRotation = AxisAndAngle(VectorIJK.J,
+        perpendicularRotation = AxisAndAngle(
+            VectorIJK.J,
             -perpendicularTiltAngle).getRotation(RotationMatrixIJK())
-        parallelRotation = AxisAndAngle(VectorIJK.J,
+        parallelRotation = AxisAndAngle(
+            VectorIJK.J,
             -parallelTiltAngle).getRotation(RotationMatrixIJK())
 
         # now rotate the fields
@@ -115,7 +114,8 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
             rotatedPerpField, rotatedParaField)
 
     @staticmethod
-    def createWithRotationAndAlternate(trigParityI, perpendicularTiltAngle, p,
+    def createWithRotationAndAlternate(
+        trigParityI, perpendicularTiltAngle, p,
         r, perpCoeffs, parallelTiltAngle, q, s, parrCoeffs):
         """Creates a PerpendicularAndParallelCartesianHarmonicField where each
         field is rotated by an arbitrary angle about the y-axis
@@ -141,67 +141,52 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         """
 
         # construct the unrotated fields
-        perpField =
-            new AlternateCartesianHarmonicField(p, r, perpCoeffs, trigParityI, TrigParity.ODD);
-        BasisVectorField paraField =
-            new CartesianHarmonicField(q, s, parrCoeffs, trigParityI, TrigParity.EVEN);
+        perpField = AlternateCartesianHarmonicField(
+            p, r, perpCoeffs, trigParityI, TrigParity.ODD)
+        paraField = CartesianHarmonicField(
+            q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 
-    #     // the rotation matrices about Y axis
-    #     UnwritableRotationMatrixIJK perpendicularRotation =
-    #         new AxisAndAngle(VectorIJK.J, -perpendicularTiltAngle).getRotation(new RotationMatrixIJK());
-    #     UnwritableRotationMatrixIJK parallelRotation =
-    #         new AxisAndAngle(VectorIJK.J, -parallelTiltAngle).getRotation(new RotationMatrixIJK());
+        # the rotation matrices about Y axis
+        perpendicularRotation = AxisAndAngle(
+            VectorIJK.J,
+            -perpendicularTiltAngle).getRotation(RotationMatrixIJK())
+        parallelRotation = AxisAndAngle(
+            VectorIJK.J,
+            -parallelTiltAngle).getRotation(RotationMatrixIJK())
 
-    #     // now rotate the fields
-    #     BasisVectorField rotatedPerpField = BasisVectorFields.rotate(perpField, perpendicularRotation);
-    #     BasisVectorField rotatedParaField = BasisVectorFields.rotate(paraField, parallelRotation);
+        # now rotate the fields
+        rotatedPerpField = BasisVectorFields.rotate(
+            perpField, perpendicularRotation)
+        rotatedParaField = BasisVectorFields.rotate(
+            paraField, parallelRotation)
 
-    #     return new PerpendicularAndParallelCartesianHarmonicField(rotatedPerpField, rotatedParaField);
-    #   }
+        return PerpendicularAndParallelCartesianHarmonicField(
+            rotatedPerpField, rotatedParaField)
 
-    #   @Override
-    #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
+    def evaluate(self, location, buffer):
+        perpField = self.perpendicularField.evaluate(location)
+        parField = self.parallelField.evaluate(location, buffer)
+        VectorIJK.add(perpField, parField, buffer)
+        return buffer
 
-    #     VectorIJK perpField = perpendicularField.evaluate(location);
-    #     VectorIJK parField = parallelField.evaluate(location, buffer);
+    def evaluateExpansion(self, location):
+        perpFields = self.perpendicularField.evaluateExpansion(location)
+        parFields = self.parallelField.evaluateExpansion(location)
+        expansions = []
+        for f in perpFields:
+            expansions.append(f)
+        for f in parFields:
+            expansions.append(f)
+        return expansions
 
-    #     VectorIJK.add(perpField, parField, buffer);
+    def getNumberOfBasisFunctions(self):
+        return (self.perpendicularField.getNumberOfBasisFunctions()
+                + self.parallelField.getNumberOfBasisFunctions())
 
-    #     return buffer;
-    #   }
+    def getPerpendicularField(self):
+        """return the perpendicular field"""
+        return self.perpendicularField
 
-    #   @Override
-    #   public ImmutableList<UnwritableVectorIJK> evaluateExpansion(UnwritableVectorIJK location) {
-
-    #     ImmutableList<UnwritableVectorIJK> perpFields = perpendicularField.evaluateExpansion(location);
-    #     ImmutableList<UnwritableVectorIJK> parFields = parallelField.evaluateExpansion(location);
-
-    #     ImmutableList.Builder<UnwritableVectorIJK> expansions = ImmutableList.builder();
-
-    #     expansions.addAll(perpFields);
-    #     expansions.addAll(parFields);
-
-    #     return expansions.build();
-    #   }
-
-    #   @Override
-    #   public int getNumberOfBasisFunctions() {
-    #     return (perpendicularField.getNumberOfBasisFunctions()
-    #         + parallelField.getNumberOfBasisFunctions());
-    #   }
-
-    #   /**
-    #    * @return the perpendicular field
-    #    */
-    #   public BasisVectorField getPerpendicularField() {
-    #     return perpendicularField;
-    #   }
-
-    #   /**
-    #    * @return the parallel field
-    #    */
-    #   public BasisVectorField getParallelField() {
-    #     return parallelField;
-    #   }
-
-    # }
+    def getParallelField(self):
+        """return the parallel field"""
+        return self.parallelField

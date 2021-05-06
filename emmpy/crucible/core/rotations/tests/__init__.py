@@ -7,6 +7,7 @@ hierarchy.
 Modules
 -------
 test_AxisAndAngle.py
+test_PrivilegedRotationMatrixIJK.py
 test_Quaternion.py
 test_Rotation.py
 test_UnwritableRotation.py

@@ -8,7 +8,6 @@
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import magmodel.core.math.expansions.CoefficientExpansion1D;
 # import magmodel.core.math.expansions.CoefficientExpansion2D;
-# import magmodel.core.math.vectorfields.BasisVectorFields;
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
@@ -17,6 +16,9 @@ from emmpy.magmodel.core.math.cartesianharmonicfield import (
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
+)
+from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
+    BasisVectorFields
 )
 
 
@@ -66,6 +68,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         return PerpendicularAndParallelCartesianHarmonicField(
             perpendicularVectorField, parallelDipoleShieldingField)
 
+    @staticmethod
     def createWithRotation(trigParityI, perpendicularTiltAngle, p, r,
                            perpCoeffs, parallelTiltAngle, q, s, parrCoeffs):
         """Creates a PerpendicularAndParallelCartesianHarmonicField where each
@@ -97,49 +100,51 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
             q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 
         # the rotation matrices about Y axis
-        perpendicularRotation = AxisAndAngle(
-            VectorIJK.J,
+        perpendicularRotation = AxisAndAngle(VectorIJK.J,
             -perpendicularTiltAngle).getRotation(RotationMatrixIJK())
-        parallelRotation = AxisAndAngle(
-            VectorIJK.J,
+        parallelRotation = AxisAndAngle(VectorIJK.J,
             -parallelTiltAngle).getRotation(RotationMatrixIJK())
 
-        # // now rotate the fields
-        # BasisVectorField rotatedPerpField = BasisVectorFields.rotate(perpField, perpendicularRotation);
-        # BasisVectorField rotatedParaField = BasisVectorFields.rotate(paraField, parallelRotation);
+        # now rotate the fields
+        rotatedPerpField = BasisVectorFields.rotate(perpField,
+                                                    perpendicularRotation)
+        rotatedParaField = BasisVectorFields.rotate(paraField,
+                                                    parallelRotation)
 
-        # return new PerpendicularAndParallelCartesianHarmonicField(rotatedPerpField, rotatedParaField);
+        return PerpendicularAndParallelCartesianHarmonicField(
+            rotatedPerpField, rotatedParaField)
 
-    #   /**
-    #    * Creates a {@link PerpendicularAndParallelCartesianHarmonicField} where each field is rotated by
-    #    * an arbitrary angle about the y-axis, i.e.:
-    #    * <p>
-    #    * <img src="doc-files/perpAndParrWithRotation.png" />
-    #    * <p>
-    #    * Described in detail in the appendix of Tsyganenko [1998].
-    #    * 
-    #    * @param trigParityI the {@link TrigParity} associated with the Y terms (odd=sine, even=cosine)
-    #    * @param perpendicularTiltAngle the angle to rotate the perpendicular field about the y-axis
-    #    * @param p an expansion containing the nonlinear set of coefficients p<sub>i</sub>
-    #    * @param r an expansion containing the nonlinear set of coefficients r<sub>k</sub>
-    #    * @param perpCoeffs an expansion containing the linear scaling coefficients (a<sub>ik</sub>)
-    #    * @param parallelTiltAngle the angle to rotate the parallel field about the y-axis
-    #    * @param q an expansion containing the nonlinear set of coefficients q<sub>i</sub>
-    #    * @param s an expansion containing the nonlinear set of coefficients s<sub>k</sub>
-    #    * @param parrCoeffs an expansion containing the linear scaling coefficients (b<sub>ik</sub>)
-    #    * 
-    #    * @return a newly constructed {@link PerpendicularAndParallelCartesianHarmonicField}
-    #    */
-    #   public static PerpendicularAndParallelCartesianHarmonicField createWithRotationAndAlternate(
-    #       TrigParity trigParityI, double perpendicularTiltAngle, CoefficientExpansion1D p,
-    #       CoefficientExpansion1D r, CoefficientExpansion2D perpCoeffs, double parallelTiltAngle,
-    #       CoefficientExpansion1D q, CoefficientExpansion1D s, CoefficientExpansion2D parrCoeffs) {
+    @staticmethod
+    def createWithRotationAndAlternate(trigParityI, perpendicularTiltAngle, p,
+        r, perpCoeffs, parallelTiltAngle, q, s, parrCoeffs):
+        """Creates a PerpendicularAndParallelCartesianHarmonicField where each
+        field is rotated by an arbitrary angle about the y-axis
 
-    #     // construct the unrotated fields
-    #     BasisVectorField perpField =
-    #         new AlternateCartesianHarmonicField(p, r, perpCoeffs, trigParityI, TrigParity.ODD);
-    #     BasisVectorField paraField =
-    #         new CartesianHarmonicField(q, s, parrCoeffs, trigParityI, TrigParity.EVEN);
+        Described in detail in the appendix of Tsyganenko [1998].
+
+        param trigParityI the {@link TrigParity} associated with the Y terms
+        (odd=sine, even=cosine)
+        param perpendicularTiltAngle the angle to rotate the perpendicular
+        field about the y-axis
+        param p an expansion containing the nonlinear set of coefficients p_i
+        param r an expansion containing the nonlinear set of coefficients r_k
+        param perpCoeffs an expansion containing the linear scaling
+        coefficients a_ik
+        param parallelTiltAngle the angle to rotate the parallel field about
+        the y-axis
+        param q an expansion containing the nonlinear set of coefficients q)i
+        param s an expansion containing the nonlinear set of coefficients s_k
+        param parrCoeffs an expansion containing the linear scaling
+        coefficients b_ik
+        return a newly constructed
+        PerpendicularAndParallelCartesianHarmonicField
+        """
+
+        # construct the unrotated fields
+        perpField =
+            new AlternateCartesianHarmonicField(p, r, perpCoeffs, trigParityI, TrigParity.ODD);
+        BasisVectorField paraField =
+            new CartesianHarmonicField(q, s, parrCoeffs, trigParityI, TrigParity.EVEN);
 
     #     // the rotation matrices about Y axis
     #     UnwritableRotationMatrixIJK perpendicularRotation =

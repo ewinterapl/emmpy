@@ -143,7 +143,7 @@ class AxisAndAngle(Rotation):
                 # preserve the integrity of the instance under configuration
                 # and to prevent the handling of unnecessary unchecked
                 # exceptions.
-                q = new Quaternion()
+                q = Quaternion()
                 # First convert the supplied matrix to a quaternion.
                 q.setTo(matrix)
                 q.getVector(axis)

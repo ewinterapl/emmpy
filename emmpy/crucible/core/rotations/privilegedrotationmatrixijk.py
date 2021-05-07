@@ -4,7 +4,6 @@
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
 
 
 class PrivilegedRotationMatrixIJK(RotationMatrixIJK):

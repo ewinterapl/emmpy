@@ -15,7 +15,6 @@ from math import exp, sqrt
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -57,8 +56,8 @@ class CartesianHarmonicField(BasisVectorField):
         self.piCoeffs = piCoeffs
         self.pkCoeffs = pkCoeffs
         self.aikCoeffs = aikCoeffs
-        self.trigParityI = TrigParity.trigParityI
-        self.trigParityK = TrigParity.trigParityK
+        self.trigParityI = trigParityI
+        self.trigParityK = trigParityK
         self.firstI = aikCoeffs.getILowerBoundIndex()
         self.lastI = aikCoeffs.getIUpperBoundIndex()
         self.firstK = aikCoeffs.getJLowerBoundIndex()

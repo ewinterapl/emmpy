@@ -43,12 +43,12 @@ class CurrentSheetHalfThicknesses:
     #    * <p>
     #    * <img src="./doc-files/ts07_eq_18.png" />
     #    * <p>
-    #    * 
+    #    *
     #    * @param d0 the asymptotic half-thickness of the current sheet in the center of the distant tail
     #    * @param epsilon
     #    * @param alpha rate of current sheet expansion in the sunward direction
     #    * @param beta rate of current sheet expansion in the dawn-dusk direction
-    #    * 
+    #    *
     #    * @return a newly constructed {@link DifferentiableScalarFieldIJ} of the current sheet
     #    *         half-thickness
     #    */

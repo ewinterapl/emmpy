@@ -18,7 +18,7 @@ class VectorField:
 
     def __init__(self):
         """INTERFACE - DO NOT INSTANTIATE"""
-        raise Exception
+        pass
 
     def evaluate(self, *args):
         """Evaluate the field at the given position

@@ -7,8 +7,7 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        with self.assertRaises(Exception):
-            VectorField()
+        pass
 
     def test_evaluate(self):
         with self.assertRaises(Exception):

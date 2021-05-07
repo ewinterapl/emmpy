@@ -1,6 +1,8 @@
 import unittest
 
-from emmpy.geomagmodel.t01.deformation.twistwarpfunction import TwistWarpFunction
+from emmpy.geomagmodel.t01.deformation.twistwarpfunction import (
+    TwistWarpFunction
+)
 
 
 class TestBuilder(unittest.TestCase):

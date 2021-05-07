@@ -95,10 +95,12 @@ class BasisVectorFields:
         @return a newly constructed BasisVectorField
         """
         bvf = BasisVectorField()
-        bvf.evaluateExpansion = (
-            lambda location:
-            [field.evaluateExpansion(field, location) for field in fields]
-        )
+        def my_evaluateExpansion(location):
+            result = []
+            for field in fields:
+                result.extend(field.evaluateExpansion(location))
+            return result
+        bvf.evaluateExpansion = my_evaluateExpansion
         bvf.getNumberOfBasisFunctions = (
             lambda my_self: sum([field.getNumberOfBasisFunctions()
                                 for field in fields])

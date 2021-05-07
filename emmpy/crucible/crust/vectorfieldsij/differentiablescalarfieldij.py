@@ -11,7 +11,8 @@ from emmpy.crucible.crust.vectorfieldsij.scalarfieldspatialderivative import (
 )
 
 
-class DifferentiableScalarFieldIJ(ScalarField2D, ScalarFieldIJSpatialDerivative):
+class DifferentiableScalarFieldIJ(
+    ScalarField2D, ScalarFieldIJSpatialDerivative):
     """Represents the Cartesian spatial derivatives of a ScalarField.
 
     There are three such derivatives.

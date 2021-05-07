@@ -1,29 +1,11 @@
 """emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory"""
 
 
-# import java.io.File;
-# import java.io.IOException;
-# import java.net.URL;
-# import java.nio.file.Path;
-# import java.util.Scanner;
-# import magmodel.core.RetrievePathFromUrl;
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.expansions.CoefficientExpansion2D;
-# import magmodel.core.math.expansions.CoefficientExpansions;
-# import magmodel.core.math.expansions.Expansion1D;
-# import magmodel.core.math.expansions.Expansion2D;
-
 import os
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-    CoefficientExpansion1D
-)
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
-)
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
 )
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
@@ -110,14 +92,16 @@ class TS07DStaticCoefficientsFactory:
     @staticmethod
     def createFromBuiltInNewSet(numAzimuthalExpansions, numRadialExpansions):
         return TS07DStaticCoefficientsFactory.create(
-            TS07DStaticCoefficientsFactory.retrieveNewBuiltInCoefficientsPath(),
+            TS07DStaticCoefficientsFactory.
+            retrieveNewBuiltInCoefficientsPath(),
             numAzimuthalExpansions, numRadialExpansions)
 
-
     @staticmethod
-    def createFromBuiltInOriginalSet(numAzimuthalExpansions, numRadialExpansions):
+    def createFromBuiltInOriginalSet(
+        numAzimuthalExpansions, numRadialExpansions):
         return TS07DStaticCoefficientsFactory.create(
-            TS07DStaticCoefficientsFactory.retrieveOriginalBuiltInCoefficientsPath(),
+            TS07DStaticCoefficientsFactory.
+            retrieveOriginalBuiltInCoefficientsPath(),
             numAzimuthalExpansions, numRadialExpansions)
 
     @staticmethod
@@ -177,8 +161,8 @@ class TS07DStaticCoefficientsFactory:
                                       fileName + "%02d_%02d.par" % (n, m))
                 with open(inFile) as f:
                     values = (
-                        [[None]*numRadialExpansions]*
-                         numShieldAzimuthalExpansions
+                        [[None]*numRadialExpansions] *
+                        numShieldAzimuthalExpansions
                     )
                     for l in range(numShieldAzimuthalExpansions):
                         for k in range(1, numShieldRadialExpansions + 1):
@@ -232,7 +216,12 @@ class TS07DStaticCoefficientsFactory:
         that are in the source code
         """
         # raise Exception
-        return "/Users/winteel1/Library/Application Support/Code/User/workspaceStorage/7d689292dbc4b95e32290e2fa94e6dcf/redhat.java/jdt_ws/mag_e7ab7177/bin/geomagmodel/ts07/coefficientreader/staticcoefficients/coeffs_n8_m6"
+        return (
+            "/Users/winteel1/Library/Application Support/Code/User/"
+            "workspaceStorage/7d689292dbc4b95e32290e2fa94e6dcf/redhat.java/"
+            "jdt_ws/mag_e7ab7177/bin/geomagmodel/ts07/coefficientreader/"
+            "staticcoefficients/coeffs_n8_m6"
+        )
         #   public static Path retrieveOriginalBuiltInCoefficientsPath() {
         #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n8_m6/");
         #     if (url == null) {

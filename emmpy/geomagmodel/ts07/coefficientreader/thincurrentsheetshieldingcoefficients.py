@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients.py"""
+"""emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients"""
 
 
 from emmpy.com.google.common.base.preconditions import Preconditions

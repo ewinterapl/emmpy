@@ -78,8 +78,8 @@ class DipoleShieldingField:
 
     #   static {
 
-    #     kappaPerp = .8385953499E-01; // Previously T1
-    #     kappaParallel = .3477844929; // Previously T2
+    kappaPerp = .8385953499E-01  # Previously T1
+    kappaParallel = .3477844929  # Previously T2
 
     p = CoefficientExpansions.createExpansionFromArray(
         [9.620648151, 6.082014949, 27.75216226], 1)
@@ -130,13 +130,16 @@ class DipoleShieldingField:
             CoefficientExpansions.scale(DipoleShieldingField.d,
                                         sin(2*dipoleTiltAngle)))
         ppchf = (
-            PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
-                TrigParity.EVEN, dipoleTiltAngle*kappaPerp,
+            PerpendicularAndParallelCartesianHarmonicField.
+            createWithRotationAndAlternate(
+                TrigParity.EVEN,
+                dipoleTiltAngle*DipoleShieldingField.kappaPerp,
                 CoefficientExpansions.invert(DipoleShieldingField.p),
-                CoefficientExpansions.invert(DipoleShieldingField.r), perpCoeffs,
-                dipoleTiltAngle*kappaParallel,
+                CoefficientExpansions.invert(DipoleShieldingField.r),
+                perpCoeffs, dipoleTiltAngle*DipoleShieldingField.kappaParallel,
                 CoefficientExpansions.invert(DipoleShieldingField.q),
-                CoefficientExpansions.invert(DipoleShieldingField.s), parrCoeffs)
+                CoefficientExpansions.invert(DipoleShieldingField.s),
+                parrCoeffs)
         )
 
     #     VectorField ppchf =

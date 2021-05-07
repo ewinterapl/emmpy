@@ -1,12 +1,13 @@
 import unittest
 
 from emmpy.crucible.core.units.plasmavelocitytotemp import PlasmaVelocityToTemp
-# from emmpy.crucible.core.math.cruciblemath import CrucibleMath
 
-class TestPlasmaVelocityToTemp(unittest.TestCase):
+
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         pvtt = PlasmaVelocityToTemp(0)
+        self.assertIsNotNone(pvtt)
 
     def test_getTempInKelvins(self):
         pvtt = PlasmaVelocityToTemp(1)

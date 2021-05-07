@@ -2,13 +2,7 @@
 """
 
 
-from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
-    Ts07EquatorialLinearCoefficients
-)
 from emmpy.com.google.common.base.preconditions import Preconditions
-from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
-    Ts07EquatorialLinearCoefficients
-)
 from emmpy.java.lang.double import Double
 from emmpy.utilities.isrealnumber import isRealNumber
 
@@ -34,7 +28,8 @@ class Ts07EquatorialVariableCoefficients:
             self.hingeDist = hingeDist
             self.warpingParam = warpingParam
             self.twistParam = twistParam
-            self.equatorialLinearCoeffs = Preconditions.checkNotNull(equatorialLinearCoeffs)
+            self.equatorialLinearCoeffs = Preconditions.checkNotNull(
+                equatorialLinearCoeffs)
         elif isinstance(currThicks, list):
             # @param currThicks
             # @param hingeDist
@@ -43,7 +38,8 @@ class Ts07EquatorialVariableCoefficients:
             # @param equatorialLinearCoeffs
             # The current sheet thickness and the number of sets of linear
             # coeffs must be the same size.
-            Preconditions.checkArgument(len(currThicks) == len(equatorialLinearCoeffs),
+            Preconditions.checkArgument(
+                len(currThicks) == len(equatorialLinearCoeffs),
                 "The number of current sheet thickness must be the same number"
                 "of current sheet linear expansions")
             self.currThicks = Preconditions.checkNotNull(currThicks)
@@ -95,7 +91,7 @@ class Ts07EquatorialVariableCoefficients:
             "Ts07EquatorialVariableCoefficients [currThicks=%s, hingeDist=%s, "
             "warpingParam=%s, twistParam=%s, equatorialLinearCoeffs=%s]" %
             (self.currThicks, self.hingeDist, self.warpingParam,
-            self.twistParam, elc_str)
+             self.twistParam, elc_str)
         )
 
     def hashCode(self):
@@ -110,11 +106,11 @@ class Ts07EquatorialVariableCoefficients:
             # result += self.equatorialLinearCoeffs.hashCode()
             result += len(self.equatorialLinearCoeffs)  # HACK
         temp = Double.doubleToLongBits(self.hingeDist)
-        result = prime*result + temp^(temp >> 32)
+        result = prime*result + temp ^ (temp >> 32)
         temp = Double.doubleToLongBits(self.twistParam)
-        result = prime*result + temp^(temp >> 32)
+        result = prime*result + temp ^ (temp >> 32)
         temp = Double.doubleToLongBits(self.warpingParam)
-        result = prime*result + temp^(temp >> 32)
+        result = prime*result + temp ^ (temp >> 32)
         return result
 
     def equals(self, obj):

@@ -95,6 +95,7 @@ class BasisVectorFields:
         @return a newly constructed BasisVectorField
         """
         bvf = BasisVectorField()
+
         def my_evaluateExpansion(location):
             result = []
             for field in fields:

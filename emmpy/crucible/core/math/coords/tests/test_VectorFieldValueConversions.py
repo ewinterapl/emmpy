@@ -141,5 +141,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(Exception):
             VectorFieldValueConversions.convert([], [], [])
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,27 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.equatorial.ts07equtorialmagneticfieldbuilder"""
 
 
-# package geomagmodel.ts07.modeling.equatorial;
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static com.google.common.base.Preconditions.checkNotNull;
-# import static crucible.core.math.CrucibleMath.pow;
-# import java.util.OptionalDouble;
-# import crucible.core.designpatterns.Builder;
-# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
-# import geomagmodel.t01.deformation.PositionBender;
-# import geomagmodel.t01.deformation.TwistWarpFfunction;
-# import geomagmodel.ta15.modeling.deformation.DeformationI;
-# import geomagmodel.ta15.modeling.deformation.DeformationII;
-# import geomagmodel.ts07.coefficientreader.ThinCurrentSheetShieldingCoefficients;
-# import geomagmodel.ts07.coefficientreader.Ts07EquatorialLinearCoefficients;
-# import geomagmodel.ts07.coefficientreader.Ts07EquatorialVariableCoefficients;
-# import magmodel.core.math.bessel.AlbertBesselFunctionEvaluator;
-# import magmodel.core.math.bessel.BesselFunctionEvaluator;
-# import magmodel.core.math.bessel.ColtBesselFunctionEvaluator;
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.vectorfields.BasisVectorField;
-# import magmodel.core.math.vectorfields.BasisVectorFields;
-
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.magmodel.core.math.bessel.coltbesselfunctionevaluator import (
     ColtBesselFunctionEvaluator
@@ -46,9 +25,6 @@ class Ts07EquatorialMagneticFieldBuilder:
         @param tailLength
         @param shieldingCoeffs
         """
-        #   public Ts07EquatorialMagneticFieldBuilder(double dipoleTiltAngle, double dynamicPressure,
-        #       Ts07EquatorialVariableCoefficients coeffs, double tailLength,
-        #       ThinCurrentSheetShieldingCoefficients shieldingCoeffs) {
         self.dipoleTiltAngle = dipoleTiltAngle
         self.dynamicPressure = dynamicPressure
         self.coeffs = Preconditions.checkNotNull(coeffs)

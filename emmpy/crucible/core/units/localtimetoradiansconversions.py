@@ -15,7 +15,9 @@
 #  * @author vandejd1
 #  */
 
-from emmpy.crucible.core.math.cruciblemath import CrucibleMath
+
+from math import pi
+
 
 class LocalTimeToRadiansConversions:
 
@@ -33,7 +35,7 @@ class LocalTimeToRadiansConversions:
         #     // first convert to radians ( divide by 24, multiply by 2Pi),
         #     // then subtract Pi because of the offset between the
         #     // zero point of the clock face and the coordinate frame
-        return localtimeHours * (CrucibleMath.PI * 2 / 24.0) - CrucibleMath.PI
+        return localtimeHours * (pi * 2 / 24.0) - pi
 
     #   /**
     #    * @param posEastLongInRads given a longitude in radians (either 0 to 2Pi or -Pi to +Pi, or any
@@ -48,10 +50,10 @@ class LocalTimeToRadiansConversions:
         #     // I want to know how far around past the -X axis this longitude is, and
         #     // the east longitude tells me how far around from +X it is, so I first
         #     // subtract off Pi
-        posEastLongInRads -= CrucibleMath.PI
+        posEastLongInRads -= pi
 
         #     // make sure the longitude is from 0 to 2*Pi:
-        TWOPI = CrucibleMath.PI * 2.0
+        TWOPI = pi * 2.0
         while posEastLongInRads < 0:
             posEastLongInRads += TWOPI
         while posEastLongInRads > TWOPI:

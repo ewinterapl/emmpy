@@ -11,7 +11,7 @@ class PolarVector(AbstractVectorIJ):
     """
 
     def __init__(self, radius, angle):
-        """Constructor"""        
+        """Constructor"""
         AbstractVectorIJ.__init__(self, radius, angle)
 
     def getRadius(self):

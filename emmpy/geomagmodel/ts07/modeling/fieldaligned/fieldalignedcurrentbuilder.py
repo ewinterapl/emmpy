@@ -90,11 +90,11 @@ class FieldAlignedCurrentBuilder(Builder):
             self.deltaTheta = options.getDeltaTheta()
             self.trigParity = options.getTrigParity()
             # needed to deform the conical field, eq. 18 & 19 T02
-            self.a = A[region - 1][mode - 1]
-            self.b = B[region - 1][mode - 1]
-            self.c = C[region - 1][mode - 1]
-            self.d = D[region - 1][mode - 1]
-            self.bmScaleFactor = BM[region - 1][mode - 1]
+            self.a = A[region - 1][self.mode - 1]
+            self.b = B[region - 1][self.mode - 1]
+            self.c = C[region - 1][self.mode - 1]
+            self.d = D[region - 1][self.mode - 1]
+            self.bmScaleFactor = BM[region - 1][self.mode - 1]
             # needed for stretching, eq. 21, 22, 23, 24, &25 T02
             self.dipoleTilt = dipoleTilt
             self.dynamicPressure = dynamicPressure

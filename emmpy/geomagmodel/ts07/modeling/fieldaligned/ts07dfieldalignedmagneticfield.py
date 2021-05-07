@@ -1,16 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield"""
 
 
-# import static crucible.core.math.vectorfields.VectorFields.add;
-# import static crucible.core.math.vectorfields.VectorFields.addAll;
-# import static crucible.core.math.vectorfields.VectorFields.scale;
-# import com.google.common.collect.ImmutableList;
-# import com.google.common.collect.Lists;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
-# import magmodel.core.math.vectorfields.BasisVectorField;
-
 from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -96,16 +86,11 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
 
     #         basisFunctionsBuilder.add(scale(add(field, shieldingField), 1.0 / amp));
 
-
     #       } else {
     #         basisFunctionsBuilder.add(scale(field, 1.0 / amp));
     #       }
 
     #     }
-
-
-
-
 
     #     this.internalFields = internalFieldsBuilder.build();
     #     this.shieldingFields = shieldingFieldsBuilder.build();

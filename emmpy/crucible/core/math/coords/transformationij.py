@@ -55,7 +55,7 @@ class TransformationIJ(AbstractVectorIJ):
         system.
 
         INTERFACE - DO NOT INVOKE.
-        
+
         Note, that this takes a coordinate position and not the Cartesian
         position, allowing the implementor to leverage the other method.
 

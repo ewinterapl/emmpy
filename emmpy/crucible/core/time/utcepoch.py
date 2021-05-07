@@ -127,7 +127,8 @@ class UTCEpoch:
                         other_hr = 0
                         other_doy += 1
                         if ((calendar.isleap(other_yr) and other_doy > 366) or
-                            (not calendar.isleap(other_yr) and other_day > 365)):
+                            (not calendar.isleap(other_yr) and
+                             other_doy > 365)):
                             other_doy = 1
                             other_yr += 1
         return [other_yr, other_doy, other_hr, other_min, other_intSec,
@@ -187,7 +188,7 @@ class UTCEpoch:
                             other_doy += 1
                             if ((calendar.isleap(other_yr) and other_doy > 366)
                                 or
-                                (not calendar.isleap(other_yr) and other_day >
+                                (not calendar.isleap(other_yr) and other_doy >
                                  365)):
                                 other_doy = 1
                                 other_yr += 1
@@ -340,7 +341,7 @@ class UTCEpoch:
         prevYear = year
         if prevDoy < 1:
             prevYear -= 1
-            if calendar.isleap(prevYr):
+            if calendar.isleap(prevYear):
                 prevDoy = 366
             else:
                 prevDoy = 365
@@ -504,7 +505,7 @@ class UTCEpoch:
                     other_hr = 0
                     other_doy += 1
                     if ((calendar.isleap(other_yr) and other_doy > 366) or
-                        (not calendar.isleap(other_yr) and other_day > 365)):
+                        (not calendar.isleap(other_yr) and other_doy > 365)):
                         other_doy = 1
                         other_yr += 1
         return [other_yr, other_doy, other_hr, other_min, other_sec]
@@ -533,7 +534,7 @@ class UTCEpoch:
                 other_hr = 0
                 other_doy += 1
                 if ((calendar.isleap(other_yr) and other_doy > 366) or
-                    (not calendar.isleap(other_yr) and other_day > 365)):
+                    (not calendar.isleap(other_yr) and other_doy > 365)):
                     other_doy = 1
                     other_yr += 1
         return [other_yr, other_doy, other_hr, other_min]

@@ -28,9 +28,6 @@ from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
 from emmpy.crucible.core.math.vectorspace.matrixijk import (
     MatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 
 
 class VectorFieldValueConversions:
@@ -59,7 +56,8 @@ class VectorFieldValueConversions:
             # coordinate
             (cartesian,) = args
             matrix = MatrixIJK()
-            position = CoordConverters.convertToCylindrical(cartesian.getPosition())
+            position = CoordConverters.convertToCylindrical(
+                cartesian.getPosition())
             VectorFieldValueConversions.CYLINDRICAL.getInverseTransformation(
                 position, matrix
             )
@@ -80,7 +78,8 @@ class VectorFieldValueConversions:
             VectorFieldValueConversions.CYLINDRICAL.getInverseTransformation(
                 position, matrix
             )
-            value = VectorFieldValueConversions.CYLINDRICAL.mxv(matrix, cartValue)
+            value = VectorFieldValueConversions.CYLINDRICAL.mxv(
+                matrix, cartValue)
             return CylindricalVectorFieldValue(position, value)
         else:
             raise Exception
@@ -204,8 +203,10 @@ class VectorFieldValueConversions:
                 (sphPos, sphValue) = args
                 matrix = MatrixIJK()
                 position = CoordConverters.convert(sphPos)
-                VectorFieldValueConversions.SPHERICAL.getTransformation(sphPos, matrix)
-                value = VectorFieldValueConversions.SPHERICAL.mxv(matrix, sphValue)
+                VectorFieldValueConversions.SPHERICAL.getTransformation(
+                    sphPos, matrix)
+                value = VectorFieldValueConversions.SPHERICAL.mxv(
+                    matrix, sphValue)
                 return CartesianVectorFieldValue(position, value)
             else:
                 raise Exception

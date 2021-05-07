@@ -100,7 +100,7 @@ class TestBuilder(unittest.TestCase):
         pass
 
     def test_getNextMin(self):
-        (year, doy, hour, minute, second) = (2021, 32, 1, 2, 3.456789)
+        (year, doy, hour, minute) = (2021, 32, 1, 2)
         utce = UTCEpoch.getNextMin(year, doy, hour, minute)
         self.assertEqual(utce.year, year)
         self.assertEqual(utce.doy, doy)
@@ -108,7 +108,7 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(utce.min, minute + 1)
 
     def test_getPreviousMin(self):
-        (year, doy, hour, minute, second) = (2021, 32, 1, 2, 3.456789)
+        (year, doy, hour, minute) = (2021, 32, 1, 2)
         utce = UTCEpoch.getPreviousMin(year, doy, hour, minute)
         self.assertEqual(utce.year, year)
         self.assertEqual(utce.doy, doy)
@@ -116,40 +116,40 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(utce.min, minute - 1)
 
     def test_getNextHour(self):
-        (year, doy, hour, minute, second) = (2021, 32, 1, 2, 3.456789)
+        (year, doy, hour) = (2021, 32, 1)
         utce = UTCEpoch.getNextHour(year, doy, hour)
         self.assertEqual(utce.year, year)
         self.assertEqual(utce.doy, doy)
         self.assertEqual(utce.hour, hour + 1)
 
     def test_getPreviousHour(self):
-        (year, doy, hour, minute, second) = (2021, 32, 1, 2, 3.456789)
+        (year, doy, hour) = (2021, 32, 1)
         utce = UTCEpoch.getPreviousHour(year, doy, hour)
         self.assertEqual(utce.year, year)
         self.assertEqual(utce.doy, doy)
         self.assertEqual(utce.hour, hour - 1)
 
     def test_getNextDay(self):
-        (year, doy, hour, minute, second) = (2021, 32, 1, 2, 3.456789)
+        (year, doy) = (2021, 32)
         utce = UTCEpoch.getNextDay(year, doy)
         self.assertEqual(utce.year, year)
         self.assertEqual(utce.doy, doy + 1)
 
     def test_getPreviousDay(self):
-        (year, doy, hour, minute, second) = (2021, 32, 1, 2, 3.456789)
+        (year, doy) = (2021, 32)
         utce = UTCEpoch.getPreviousDay(year, doy)
         self.assertEqual(utce.year, year)
         self.assertEqual(utce.doy, doy - 1)
 
     def test_getNextMonth(self):
-        (year, month, day, hour, minute, second) = (2021, 2, 1, 1, 2, 3.4)
+        (year, month) = (2021, 2)
         utce = UTCEpoch.getNextMonth(year, month)
         self.assertEqual(utce.year, year)
         # NEED TO CONVERT DOY TO MONTHDAY
         # self.assertEqual(utce.month, month + 1)
 
     def test_getPreviousMonth(self):
-        (year, month, day, hour, minute, second) = (2021, 2, 1, 1, 2, 3.4)
+        (year, month) = (2021, 2)
         utce = UTCEpoch.getPreviousMonth(year, month)
         self.assertEqual(utce.year, year)
         # NEED TO CONVERT DOY TO MONTHDAY

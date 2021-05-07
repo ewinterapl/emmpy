@@ -1,6 +1,7 @@
 """emmpy.geomagmodel.ts07.coefficientreaderts07dvariablecoefficients"""
 
 
+from emmpy.java.lang.double import Double
 from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
     Ts07NonLinearParameters
 )
@@ -115,7 +116,7 @@ class TS07DVariableCoefficients:
         if self.__class__ != obj.__class__:
             return False
         other = obj
-        if (Double.doubleToLongBits(cfAmplitude) !=
+        if (Double.doubleToLongBits(self.cfAmplitude) !=
             Double.doubleToLongBits(other.cfAmplitude)):
             return False
         if self.equatorialCoeffs is None:

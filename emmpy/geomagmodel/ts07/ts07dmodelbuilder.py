@@ -1,6 +1,14 @@
 """emmpy.geomagmodel.ts07.ts07dmodelbuilder"""
 
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
+    ThinCurrentSheetShieldingCoefficients
+)
+from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
+    TS07DVariableCoefficientsUtils
+)
 from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
     Ts07EquatorialVariableCoefficients
 )
@@ -382,7 +390,7 @@ class TS07DModelBuilder:
             twistFact = self.parameters.getTwistFact()
             region1KappaScaling = self.parameters.getFacRegion1Kappa()
             region2KappaScaling = self.parameters.getFacRegion2Kappa()
-            checkArgument(numCurrSheets == (
+            Preconditions.checkArgument(numCurrSheets == (
                 self.parameters.getCurrentSheetThicknesses().size())
             )
             currentSheetThicknesses = (
@@ -439,10 +447,10 @@ class TS07DModelBuilder:
 
         if self.withMagnetopause:
             if self.dipoleTiltAngle == 0:
-                magnetopause = T96Magnetopause.createTS07(dynamicPressure)
+                magnetopause = T96Magnetopause.createTS07(self.dynamicPressure)
             else:
                 magnetopause = T96Magnetopause.createBentTS07(
-                    dynamicPressure, dipoleTiltAngle, hingeDistance)
+                    self.dynamicPressure, self.dipoleTiltAngle, hingeDistance)
             return BasisVectorFields.filter(
                 totalExternalField, magnetopause, VectorIJK.ZERO)
         return totalExternalField

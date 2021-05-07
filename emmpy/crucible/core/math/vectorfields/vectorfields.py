@@ -195,6 +195,7 @@ class VectorFields:
         ( a x b )
         """
         vf = VectorField()
+
         def my_evaluate(location, buffer):
             aVect = a.evaluate(location)
             b.evaluate(location, buffer)
@@ -231,6 +232,7 @@ class VectorFields:
         field where the vector has been unitized
         """
         vf = VectorField()
+
         def my_evaluate(location, buffer):
             field.evaluate(location, buffer)
             return buffer.unitize()
@@ -251,6 +253,7 @@ class VectorFields:
         field where the vector has been unitized
         """
         vf = VectorField()
+
         def my_evaluate(location, buffer):
             field.evaluate(location, buffer)
             if (buffer.getI() == 0.0 and buffer.getJ() == 0.0 and
@@ -334,7 +337,7 @@ class VectorFields:
         evaluate and save the values for future retrieval, then this method
         provides a wrapper implementation that caches the values of the
         VectorField.
-        
+
         Set the maxItemsToCache to the most you want to cache.
 
         NOTE: this is not view safe, if the input VectorField is changing,
@@ -373,7 +376,7 @@ class VectorFields:
     #    * Performs the following Composition:
     #    * <p>
     #    * <b>OutputVectorFuction</b>(t) = <b>Field</b>(<b>Path</b>(t))
-    #    * 
+    #    *
     #    * @param field a {@link VectorField}
     #    * @param path a path through the field parameterized on t
     #    * @return a newly constructed {@link VectorIJKFunction}
@@ -393,11 +396,11 @@ class VectorFields:
     #    * <b>F</b>(<b>r</b>)&#8901;d<b>r</b> = <b>G</b>(t) = <b>F</b>(<b>r</b>(t))&#8901;<b>r</b>'(t)*dt
     #    * <p>
     #    * See http://en.wikipedia.org/wiki/Line_integral# Line_integral_of_a_vector_field
-    #    * 
+    #    *
     #    * @param field a {@link VectorField}
     #    * @param path a {@link DifferentiableUnivariateFunction} defining a path through the field
     #    *        parameterized on t, for which the derivative as a function of t is known
-    #    * 
+    #    *
     #    * @return a newly created {@link UnivariateFunction} that is the value of the line integrand at
     #    *         point t
     #    */
@@ -413,7 +416,7 @@ class VectorFields:
 
     #   /**
     #    * Creates a vector field that is a gradient view of the supplied scalar field.
-    #    * 
+    #    *
     #    * @param field a scalar field
     #    * @return a newly created vector field that computes the component-wise gradient of the input
     #    *         field <code> (&#8711;F)</code>
@@ -432,7 +435,7 @@ class VectorFields:
 
     #   /**
     #    * Creates a vector field that is a curl view of the supplied vector field.
-    #    * 
+    #    *
     #    * @param field a vector field
     #    * @return a newly created vector field that computes the component-wise curl of the input field
     #    *         <code> (&#8711; x <b>F</b>)</code>
@@ -460,7 +463,7 @@ class VectorFields:
     #    * This is the same as simply averaging the forward and backward derivative estimates usually
     #    * utilized to numerically estimate derivatives.
     #    * </p>
-    #    * 
+    #    *
     #    * @param field the {@link VectorField} to differentiate numerically
     #    * @param deltaI the delta in the i Cartesian argument to step away from the point of interest in
     #    *        evaluating the derivative

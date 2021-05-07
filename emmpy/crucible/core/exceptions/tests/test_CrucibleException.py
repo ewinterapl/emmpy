@@ -3,7 +3,7 @@ import unittest
 from emmpy.crucible.core.exceptions.crucibleexception import CrucibleException
 
 
-class TestBuilderunittest.TestCase):
+class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         CrucibleException()

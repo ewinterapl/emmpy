@@ -1,20 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield"""
 
 
-# import static crucible.core.math.CrucibleMath.cos;
-# import static crucible.core.math.CrucibleMath.pow;
-# import static crucible.core.math.CrucibleMath.sin;
-# import static magmodel.core.math.expansions.CoefficientExpansions.add;
-# import static magmodel.core.math.expansions.CoefficientExpansions.createExpansionFromArray;
-# import static magmodel.core.math.expansions.CoefficientExpansions.invert;
-# import static magmodel.core.math.expansions.CoefficientExpansions.scale;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorfields.VectorFields;
-# import magmodel.core.math.PerpendicularAndParallelCartesianHarmonicField;
-# import magmodel.core.math.TrigParity;
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.expansions.CoefficientExpansion2D;
-
 from math import cos, sin
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
@@ -52,35 +38,17 @@ class DipoleShieldingField:
     c    harmonics (A(1)-A(36).
     c  The 14 nonlinear parameters (A(37)-A(50) are the scales Pi,Ri,Qi,and Si
     C   entering the arguments of exponents, sines, and cosines in each of the
-    C   18 "Cartesian" harmonics  PLUS TWO TILT ANGLES FOR THE CARTESIAN HARMONICS
-    C       (ONE FOR THE PSI=0 MODE AND ANOTHER FOR THE PSI=90 MODE)
+    C   18 "Cartesian" harmonics  PLUS TWO TILT ANGLES FOR THE CARTESIAN
+    C       HARMONICS (ONE FOR THE PSI=0 MODE AND ANOTHER FOR THE PSI=90 MODE)
 
     author Nicholas Sharp
     author G.K.Stephens
     """
 
-    #   private final static double kappaPerp;
-    #   private final static double kappaParallel;
-
-    #   // These coefficients were determined in Tsyganenko 2002-1 referenced
-    #   // above.
-    #   private final static CoefficientExpansion1D p;
-    #   private final static CoefficientExpansion1D r;
-
-    #   private final static CoefficientExpansion1D q;
-    #   private final static CoefficientExpansion1D s;
-
-    #   private final static CoefficientExpansion2D a;
-    #   private final static CoefficientExpansion2D b;
-
-    #   private final static CoefficientExpansion2D c;
-    #   private final static CoefficientExpansion2D d;
-
-    #   static {
-
     kappaPerp = .8385953499E-01  # Previously T1
     kappaParallel = .3477844929  # Previously T2
 
+    # These coefficients were determined in Tsyganenko 2002-1 referenced above.
     p = CoefficientExpansions.createExpansionFromArray(
         [9.620648151, 6.082014949, 27.75216226], 1)
     r = CoefficientExpansions.createExpansionFromArray(
@@ -142,17 +110,25 @@ class DipoleShieldingField:
                 parrCoeffs)
         )
 
-    #     VectorField ppchf =
-    #         PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
-    #             TrigParity.EVEN, dipoleTiltAngle * kappaPerp, invert(p), invert(r), perpCoeffs,
-    #             dipoleTiltAngle * kappaParallel, invert(q), invert(s), parrCoeffs);
+        ppchf = (
+            PerpendicularAndParallelCartesianHarmonicField.
+            createWithRotationAndAlternate(
+                TrigParity.EVEN,
+                dipoleTiltAngle*DipoleShieldingField.kappaPerp,
+                CoefficientExpansions.invert(DipoleShieldingField.p),
+                CoefficientExpansions.invert(DipoleShieldingField.r),
+                perpCoeffs,
+                dipoleTiltAngle*DipoleShieldingField.kappaParallel,
+                CoefficientExpansions.invert(DipoleShieldingField.q),
+                CoefficientExpansions.invert(DipoleShieldingField.s),
+                parrCoeffs)
+        )
 
-    #     double pDynScale3 = pDynScale * pDynScale * pDynScale;
-    #     VectorField dipoleShieldingField =
-    #         VectorFields.scale(VectorFields.scaleLocation(ppchf, pDynScale), pDynScale3);
+        pDynScale3 = pDynScale*pDynScale*pDynScale
+        dipoleShieldingField = (VectorFields.scale(
+            VectorFields.scaleLocation(ppchf, pDynScale), pDynScale3))
 
-    #     return dipoleShieldingField;
-    #   }
+        return dipoleShieldingField
 
     @staticmethod
     def createScaled(dipoleTiltAngle, dynamicPressure, scaleFactor):

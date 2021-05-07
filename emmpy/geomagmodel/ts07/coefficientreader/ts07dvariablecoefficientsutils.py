@@ -24,20 +24,11 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
 from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
     Ts07FacVariableCoefficients
 )
-
-from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-    CoefficientExpansion1D
-)
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
-)
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.java.lang.runtimeexception import RuntimeException
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 
 
 class TS07DVariableCoefficientsUtils:
@@ -152,7 +143,8 @@ class TS07DVariableCoefficientsUtils:
             # constructed by parsing the ASCII file
 
             # the number of asymmetric expansions is simply the n*m
-            numAsymmetricExpansions = numRadialExpansions*numAzimuthalExpansions
+            numAsymmetricExpansions = (
+                numRadialExpansions*numAzimuthalExpansions)
 
             # half the number of equatorial expansion coefficients, r+2*(r*a),
             # this is half the expansions as the dynamic pressure terms double
@@ -195,50 +187,47 @@ class TS07DVariableCoefficientsUtils:
                 # sort them in case they aren't ordered
                 coeffsFiles.sort()
 
-                #     /*
-                #      * Reading the files takes some time, so let's use a cache
-                #      */
+                # Reading the files takes some time, so let's use a cache
 
-                #     // cache loader
-                #     CacheLoader<Integer, TS07DVariableCoefficients> cacheLoader =
-                #         new TS07DVariableCoefficientsCacheLoader(coeffsFiles, numCurrentSheets,
-                #             numAzimuthalExpansions, numRadialExpansions, facConfiguration);
+                # // cache loader
+                # CacheLoader<Integer, TS07DVariableCoefficients> cacheLoader =
+                #     new TS07DVariableCoefficientsCacheLoader(coeffsFiles, numCurrentSheets,
+                #         numAzimuthalExpansions, numRadialExpansions, facConfiguration);
 
-                #     // make the cache
-                #     final LoadingCache<Integer, TS07DVariableCoefficients> loadingCache =
-                #         CacheBuilder.newBuilder().maximumSize(maxCacheSize).build(cacheLoader);
+                # // make the cache
+                # final LoadingCache<Integer, TS07DVariableCoefficients> loadingCache =
+                #     CacheBuilder.newBuilder().maximumSize(maxCacheSize).build(cacheLoader);
 
-                #     // turn it into a GaugedIndexable
-                #     GaugedIndexable<TS07DVariableCoefficients> gi =
-                #         new TS07DVariableCoefficientsGaugedIndexable(coeffsFiles, utcNumerator, loadingCache);
+                # // turn it into a GaugedIndexable
+                # GaugedIndexable<TS07DVariableCoefficients> gi =
+                #     new TS07DVariableCoefficientsGaugedIndexable(coeffsFiles, utcNumerator, loadingCache);
 
-                #     // add the searching
-                #     GaugedIndexable<TS07DVariableCoefficients> coefficients = GaugedIndexables.binarySearch(gi);
+                # // add the searching
+                # GaugedIndexable<TS07DVariableCoefficients> coefficients = GaugedIndexables.binarySearch(gi);
 
-                #     // finally, interpolate the function
-                #     return TS07DVariableCoefficientsUtils.interpolate(coefficients);
-                #   }
+                # // finally, interpolate the function
+                # return TS07DVariableCoefficientsUtils.interpolate(coefficients);
+                # }
             elif isinstance(args[1], str):
                 pass
-                #   /**
-                #    * Constructs a {@link Function} of {@link TS07DVariableCoefficients} as a function of time from a
-                #    * directory (or directory tree) of {@link TS07DVariableCoefficients} files. The file names must
-                #    * match YEAR_DOY_HH_MM.par, and the time axis is determined by the file name and the input
-                #    * {@link UTCNumerator}. The coefficients are linearly interpolated.
-                #    * <p>
-                #    * TODO the current implementation will not step into sym links.
-                #    * 
-                #    * @param utcNumerator
-                #    * @param variableCoeffsDir the directory that contains the variable coefficients files, the file
-                #    *        name must be in the format YEAR_DOY_HH_MM.par.
-                #    * @param numAzimuthalExpansions
-                #    * @param numRadialExpansions
-                #    * @param facConfiguration
-                #    * 
-                #    * @return a newly constructed {@link Function} that takes a {@link Double} representing the time
-                #    *         (matching the time system from the input from the {@link UTCNumerator}) and returns a
-                #    *         {@link TS07DVariableCoefficients}, that is interpolated
-                #    */
+                # * Constructs a {@link Function} of {@link TS07DVariableCoefficients} as a function of time from a
+                # * directory (or directory tree) of {@link TS07DVariableCoefficients} files. The file names must
+                # * match YEAR_DOY_HH_MM.par, and the time axis is determined by the file name and the input
+                # * {@link UTCNumerator}. The coefficients are linearly interpolated.
+                # * <p>
+                # * TODO the current implementation will not step into sym links.
+                # *
+                # * @param utcNumerator
+                # * @param variableCoeffsDir the directory that contains the variable coefficients files, the file
+                # *        name must be in the format YEAR_DOY_HH_MM.par.
+                # * @param numAzimuthalExpansions
+                # * @param numRadialExpansions
+                # * @param facConfiguration
+                # *
+                # * @return a newly constructed {@link Function} that takes a {@link Double} representing the time
+                # *         (matching the time system from the input from the {@link UTCNumerator}) and returns a
+                # *         {@link TS07DVariableCoefficients}, that is interpolated
+                # */
                 #   public static Function<Double, TS07DVariableCoefficients> create(final UTCNumerator utcNumerator,
                 #       final Path variableCoeffsDir, final int numCurrentSheets, final int numAzimuthalExpansions,
                 #       final int numRadialExpansions, final FacConfiguration facConfiguration) {
@@ -394,7 +383,7 @@ class TS07DVariableCoefficientsUtils:
         file.
 
         @param variableCoefficientsFile an ASCII file containing a list of the
-        coefficients 
+        coefficients
         @return the azimuthal expansion number parsed from the file
         """
         m = 0
@@ -704,13 +693,15 @@ class TS07DVariableCoefficientsUtils:
             (outputFile, coeffs) = args
             # @param outputFile the output file to write
             # @param coeffs the set of {@link TS07DVariableCoefficients}
-            self.writeToAnnotatedFile(outputFile, coeffs, -9999.99, -9999.99)
+            TS07DVariableCoefficientsUtils.writeToAnnotatedFile(
+                outputFile, coeffs, -9999.99, -9999.99)
         elif len(args) == 4:
             (outputFile, coeffs, qValue, brms) = args
             # Given a set of TS07DVariableCoefficients, writes the files to an
             # ASCII file in the annotated format.
             format = "%15.6G"
-            self.writeToFile(outputFile, format, coeffs, qValue, brms)
+            TS07DVariableCoefficientsUtils.writeToFile(
+                outputFile, format, coeffs, qValue, brms)
 
     @staticmethod
     def createUnityLinear(
@@ -788,7 +779,7 @@ class TS07DVariableCoefficientsUtils:
                 # /**
                 # * Creates a new set of {@link TS07DVariableCoefficients} by interpolating between the two sets of
                 # * input coefficients. Each individual coefficient is linearly interpolated.
-                # * 
+                # *
                 # * @param coefficients1 the first set of coefficients
                 # * @param coefficients2 the second set of coefficients
                 # * @param time1 the time associated with the first set of coefficients

@@ -66,6 +66,7 @@ class AxisAndAngle(Rotation):
             # param axis any vector whose length is strictly greater than zero.
             # param angle the rotation angle specified in radians.
             # throws UnsupportedOperationException if the length of axis is zero.
+            self.__init__()
             self.setTo(axis, angle)
         elif len(args) == 4:
             (axisi, axisj, axisk, angle) = args
@@ -165,6 +166,8 @@ class AxisAndAngle(Rotation):
                 self.angle = 2*atan2(axis.getLength(), scalar)
                 self.axis.unitize()
                 return self
+            else:
+                raise Exception
         elif len(args) == 2:
             (axis, angle) = args
             # Simultaneously set the axis and angle.

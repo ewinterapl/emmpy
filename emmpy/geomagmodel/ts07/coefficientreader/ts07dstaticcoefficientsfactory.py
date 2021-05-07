@@ -11,21 +11,21 @@
 # import magmodel.core.math.expansions.CoefficientExpansion2D;
 # import magmodel.core.math.expansions.CoefficientExpansions;
 # import magmodel.core.math.expansions.Expansion1D;
-# import magmodel.core.math.expansions.Expansion1Ds;
 # import magmodel.core.math.expansions.Expansion2D;
-# import magmodel.core.math.expansions.Expansion2Ds;
 
 import os
 
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
     CoefficientExpansion1D
 )
+from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
+from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
@@ -76,7 +76,7 @@ class TS07DStaticCoefficientsFactory:
 
     @staticmethod
     def create(*args):
-        if len(rgs) == 1:
+        if len(args) == 1:
             (staticCoeffDirectory,) = args
             # Parses the static coefficients needed for the TS07D model from
             # the directory where the coefficients live.
@@ -138,7 +138,7 @@ class TS07DStaticCoefficientsFactory:
                 [[None]*numShieldRadialExpansions]*numShieldAzimuthalExpansions
             )
             waveNumberValues = [None]*numShieldRadialExpansions
-            with open(fileName) as f:
+            with open(inFile) as f:
                 for l in range(numShieldAzimuthalExpansions):
                     for k in range(1, numShieldRadialExpansions + 1):
                         # IS THIS RIGHT? ASSUMES 1 VALUE PER LINE.
@@ -231,7 +231,8 @@ class TS07DStaticCoefficientsFactory:
         """this method handles the details of grabbing the static coefficients
         that are in the source code
         """
-        raise Exception
+        # raise Exception
+        return "/Users/winteel1/Library/Application Support/Code/User/workspaceStorage/7d689292dbc4b95e32290e2fa94e6dcf/redhat.java/jdt_ws/mag_e7ab7177/bin/geomagmodel/ts07/coefficientreader/staticcoefficients/coeffs_n8_m6"
         #   public static Path retrieveOriginalBuiltInCoefficientsPath() {
         #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n8_m6/");
         #     if (url == null) {

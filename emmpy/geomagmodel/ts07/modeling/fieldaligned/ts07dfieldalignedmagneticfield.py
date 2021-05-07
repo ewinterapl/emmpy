@@ -9,9 +9,9 @@
 # import crucible.core.math.vectorfields.VectorField;
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
-# import magmodel.core.math.TrigParity;
 # import magmodel.core.math.vectorfields.BasisVectorField;
 
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -64,14 +64,15 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         for option in options:
             amp = option.getAmplitudeScaling()
             basisCoefficientsBuilder.append(amp)
-            region = option.getRegion().getAsInt()
+            region = option.getRegion()
             kappa = region1KappaScaling
             if region == 2:
                 kappa = region2KappaScaling
 
             shieldingParity = TrigParity.EVEN
             scaleFactor = amp*scaling
-            if option.getTrigParity().equals(TrigParity.EVEN):
+            # if option.getTrigParity().equals(TrigParity.EVEN):
+            if option.getTrigParity() is TrigParity.EVEN:
                 scaleFactor = -scaleFactor
                 shieldingParity = TrigParity.ODD
 

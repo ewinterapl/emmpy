@@ -32,7 +32,7 @@ class BasisVectorFields:
     def asBasisField(field):
         bvf = BasisVectorField()
         bvf.evaluateExpansion = (
-            lambda my_self, location: field.evaluate(location)
+            lambda location, buffer: field.evaluate(location)
         )
         bvf.getNumberOfBasisFunctions = lambda my_self: 1
         return bvf
@@ -96,8 +96,8 @@ class BasisVectorFields:
         """
         bvf = BasisVectorField()
         bvf.evaluateExpansion = (
-            lambda my_self, location:
-            [field.evaluateExpansion(location) for field in fields]
+            lambda location:
+            [field.evaluateExpansion(field, location) for field in fields]
         )
         bvf.getNumberOfBasisFunctions = (
             lambda my_self: sum([field.getNumberOfBasisFunctions()

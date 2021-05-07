@@ -1,11 +1,20 @@
 """emmpy.geomagmodel.ts07.ts07dmodelbuilder"""
 
 
+from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
+    Ts07EquatorialVariableCoefficients
+)
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
     TS07DStaticCoefficientsFactory
 )
 from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
     DipoleShieldingField
+)
+from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
+    Ts07EquatorialMagneticFieldBuilder
+)
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
+    Ts07DFieldAlignedMagneticField
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
@@ -362,8 +371,8 @@ class TS07DModelBuilder:
             getCurrentSheetThicknesses()
         )
         numCurrSheets = (
-            self.variableCoefficients.getNonLinearParameters().
-            getCurrentSheetThicknesses().size()
+            len(self.variableCoefficients.getNonLinearParameters().
+                getCurrentSheetThicknesses())
         )
 
         # The parameters have been updated
@@ -396,7 +405,7 @@ class TS07DModelBuilder:
 
         equatorialFieldBuilder = Ts07EquatorialMagneticFieldBuilder(
             self.dipoleTiltAngle, self.dynamicPressure, currentCoeffs,
-            tailLength, self.staticCoefficients
+            self.tailLength, self.staticCoefficients
         )
 
         # If true, use Jay Albert's Bessel function evaluator
@@ -418,15 +427,15 @@ class TS07DModelBuilder:
 
         # The field aligned current
         fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
-            dipoleTiltAngle, dynamicPressure, region1KappaScaling,
+            self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
             region2KappaScaling,
-            variableCoefficients.getFacCoefficients().getFacConfigurations(),
-            True)
+            self.variableCoefficients.getFacCoefficients().
+            getFacConfigurations(), True)
 
         # and finally construct the total model
         totalExternalField = BasisVectorFields.concatAll(
-            dipoleShieldingField, equatorialFieldBuilder.build(),
-            fieldAlignedField)
+            [dipoleShieldingField, equatorialFieldBuilder.build(),
+             fieldAlignedField])
 
         if self.withMagnetopause:
             if self.dipoleTiltAngle == 0:

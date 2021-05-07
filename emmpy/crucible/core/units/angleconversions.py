@@ -1,11 +1,10 @@
 # package crucible.core.units;
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static crucible.core.math.CrucibleMath.toRadians;
+from math import radians
 
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.units.fundamentalphysicalconstants import FundamentalPhysicalConstants
-from emmpy.crucible.core.math.cruciblemath import CrucibleMath
+
 
 class AngleConversions:
 
@@ -43,4 +42,4 @@ class AngleConversions:
         Preconditions.checkArgument(minutes < 60 and minutes >= 0, "minutes must be 0-59")
         Preconditions.checkArgument(seconds < 60.0 and seconds >= 0, "seconds must be 0-<60")
 
-        return CrucibleMath.toRadians(degrees + minutes / 60.0 + seconds / 3600.0)
+        return radians(degrees + minutes / 60.0 + seconds / 3600.0)

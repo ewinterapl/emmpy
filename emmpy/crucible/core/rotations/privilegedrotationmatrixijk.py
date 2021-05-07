@@ -73,7 +73,7 @@ class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
         elif len(args) == 9:
             # see RotationMatrixIJK#setTo(double, double, double, double,
             # double, double, double, double, double)
-            (self, ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
+            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
             self.ii = ii
             self.ji = ji
             self.ki = ki

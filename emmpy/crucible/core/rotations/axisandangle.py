@@ -4,6 +4,9 @@
 from math import atan2, pi
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
+    RotationMatrixIJK
+)
 from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
     UnwritableRotationMatrixIJK
 )
@@ -65,7 +68,8 @@ class AxisAndAngle(Rotation):
             # axis and angle.
             # param axis any vector whose length is strictly greater than zero.
             # param angle the rotation angle specified in radians.
-            # throws UnsupportedOperationException if the length of axis is zero.
+            # throws UnsupportedOperationException if the length of axis is
+            # zero.
             self.__init__()
             self.setTo(axis, angle)
         elif len(args) == 4:
@@ -147,11 +151,11 @@ class AxisAndAngle(Rotation):
                 q = Quaternion()
                 # First convert the supplied matrix to a quaternion.
                 q.setTo(matrix)
-                q.getVector(axis)
+                q.getVector(self.axis)
                 # Handle the identity rotation case. By convention, all
                 # rotations that are identity rotations have their axis as
                 # VectorIJK.K.
-                if axis.getLength() == 0.0:
+                if self.axis.getLength() == 0.0:
                     self.angle = 0
                     self.axis.setTo(VectorIJK.K)
                     return self
@@ -163,7 +167,7 @@ class AxisAndAngle(Rotation):
                 if scalar == 0.0:
                     self.angle = pi
                     return self
-                self.angle = 2*atan2(axis.getLength(), scalar)
+                self.angle = 2*atan2(self.axis.getLength(), scalar)
                 self.axis.unitize()
                 return self
             else:
@@ -213,7 +217,7 @@ class AxisAndAngle(Rotation):
     def hashCode(self):
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(angle)
+        temp = Double.doubleToLongBits(self.angle)
         result = prime*result + temp ^ (temp >> 32)
         result = prime*result
         if self.axis is not None:

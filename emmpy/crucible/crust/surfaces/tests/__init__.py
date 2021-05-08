@@ -13,4 +13,5 @@ test_NoIntersectionException.py
 test_Surface.py
 test_SurfaceIntersectionComputer.py
 test_SurfaceNormalComputer.py
+test_UnwritablePlane.py
 """

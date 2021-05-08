@@ -8,6 +8,7 @@ Modules
 -------
 test_Ellipsoid.py
 test_EllipsoidalIntersectionComputer.py
+test_EllipsoidalPlaneIntersectionComputer.py
 test_NoIntersectionException.py
 test_Surface.py
 test_SurfaceIntersectionComputer.py

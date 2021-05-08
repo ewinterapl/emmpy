@@ -8,6 +8,7 @@ Modules
 -------
 ellipsoid.py
 ellipsoidalintersectioncomputer.py
+ellipsoidalplaneintersectioncomputer.py
 nointersectionexception.py
 surface.py
 surfaceintersectioncomputer.py

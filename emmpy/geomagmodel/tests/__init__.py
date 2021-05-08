@@ -6,5 +6,6 @@ hierarchy
 
 Modules
 -------
+test_MagnetopauseOutput.py
 test_T96Magnetopause.py
 """

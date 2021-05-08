@@ -1,4 +1,8 @@
-"""emmpy.crucible.crust.surfaces.surface"""
+"""emmpy.crucible.crust.surfaces.surface
+
+N.B. This class was created from a Java interface, and therefore most of these
+methods will raise exceptions if invoked.
+"""
 
 
 from emmpy.crucible.crust.surfaces.surfaceintersectioncomputer import (

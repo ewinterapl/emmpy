@@ -20,45 +20,31 @@
 
 
 class T96Magnetopause:
-    pass
+    """From Tsy. 1995
 
-    # /**
-    #  * From Tsy. 1995
-    #  * <p>
-    #  * <pre>
-    #  * X = x0 - a(1 - s*t)
-    #  * Y = a(s0^2 - 1)^.5 * (1 - t^2)^.5 * cos(phi)
-    #  * Z = a(s0^2 - 1)^.5 * (1 - t^2)^.5 * sin(phi)
-    #  * </pre>
-    #  * 
-    #  * @author stephgk1
-    #  *
-    #  */
-    # public class T96Magnetopause implements Surface, Predicate<UnwritableVectorIJK> {
+    X = x0 - a(1 - s*t)
+    Y = a(s0^2 - 1)^.5 * (1 - t^2)^.5 * cos(phi)
+    Z = a(s0^2 - 1)^.5 * (1 - t^2)^.5 * sin(phi)
 
-    #   private static double averagePressure = 2.0;
+    author stephgk1
+    """
 
-    #   private final double scaledA0;
-    #   private final double sigma0;
-    #   private final double scaledX0;
-
-    #   // XM is the center of the ellipsoid
-    #   private final double XM;
-
-    #   private final double semiMajorAxis;
-    #   private final double semiMinorAxis;
-
-    #   private final UnwritableVectorIJK ellipsoidCenter;
-
-    #   private final Surface ellipsoidalSurface;
-    #   private final Surface cylindricalSurface;
+    # private static double averagePressure = 2.0;
+    # private final double scaledA0;
+    # private final double sigma0;
+    # private final double scaledX0;
+    # // XM is the center of the ellipsoid
+    # private final double XM;
+    # private final double semiMajorAxis;
+    # private final double semiMinorAxis;
+    # private final UnwritableVectorIJK ellipsoidCenter;
+    # private final Surface ellipsoidalSurface;
+    # private final Surface cylindricalSurface;
 
     #   public static T96Magnetopause createGeopack(double dynamicPressure) {
-
     #     double A0 = 70.;
     #     double sigma0 = 1.08;
     #     double X00 = 5.48;
-
     #     double scalingPowerIndex = 0.14;
 
     #     return new T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex);
@@ -191,20 +177,6 @@ class T96Magnetopause:
     #     this.ellipsoidalSurface = Surfaces.offset(ellipsoid, ellipsoidCenter.createNegated());
     #     this.cylindricalSurface = Surfaces.createCylinderAlongX(semiMinorAxis);
     #   }
-
-    #   // VectorIJK computeIntersection(UnwritableVectorIJK source,
-    #   // UnwritableVectorIJK ray, VectorIJK buffer) {
-    #   //
-    #   // try {
-    #   //
-    #   // } catch (Exception e) {
-    #   // // TODO: handle exception
-    #   // }
-    #   // ellipsoidalSurface.compute(source, ray, buffer);
-    #   //
-    #   // cylindricalSurface.compute(source, ray, buffer);
-    #   //
-    #   // }
 
     #   @Override
     #   public VectorIJK computeOutwardNormal(UnwritableVectorIJK surfacePoint, VectorIJK buffer) {

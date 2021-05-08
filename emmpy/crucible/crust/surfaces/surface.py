@@ -10,4 +10,10 @@ from emmpy.crucible.crust.surfaces.surfacenormalcomputer import (
 
 
 class Surface(SurfaceNormalComputer, SurfaceIntersectionComputer):
-    pass
+
+    def __init__(self):
+        """Constructor
+
+        INTERFACE - DO NOT INSTANTIATE
+        """
+        raise Exception

@@ -6,7 +6,8 @@ from emmpy.crucible.crust.surfaces.surface import Surface
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        pass
+        with self.assertRaises(Exception):
+            Surface()
 
 
 if __name__ == '__main__':

@@ -7,6 +7,7 @@ hierarchy.
 Modules
 -------
 ellipsoid.py
+ellipsoidalintersectioncomputer.py
 surface.py
 surfaceintersectioncomputer.py
 surfacenormalcomputer.py

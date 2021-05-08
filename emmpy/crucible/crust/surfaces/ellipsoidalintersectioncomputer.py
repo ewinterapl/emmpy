@@ -1,10 +1,13 @@
 """emmpy.crucible.crust.surfaces.ellipsoidalintersectioncomputer"""
 
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
+from math import sqrt
 
+from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.crust.surfaces.nointersectionexception import (
+    NoIntersectionException
+)
 from emmpy.crucible.crust.surfaces.surfaceintersectioncomputer import (
     SurfaceIntersectionComputer
 )
@@ -84,41 +87,35 @@ class EllipsoidalIntersectionComputer(SurfaceIntersectionComputer):
         # handling the outside the sphere case:
         sign = 1.0
         if ymag > 1.0:
+
             # If p is outside of the unit sphere, or if x points in the same
             # direction as yproj (indicating the ray points away from the
             # sphere), then there can be no intersection.
-          if ((pmag > 1.0) || (yproj.getDot(x) > 0.0)) {
-            throw new NoIntersectionException("No intersection exists.");
-    #       }
-    #       /*
-    #        * If pmag is precisely 1.0, then it is the single unique point of intersection.
-    #        */
-    #       if (pmag == 1.0) {
-    #         buffer.setTo(p);
-    #         invertScaleToUnit(buffer);
-    #         return buffer;
-    #       }
-    #       /*
-    #        * Set the sign to a negative value, as we have a non-trivial intersection and the component
-    #        * along UX we are adding to P points towards Y.
-    #        */
-    #       sign = -1.0;
+            if pmag > 1.0 or yproj.getDot(x) > 0.0:
+                raise NoIntersectionException("No intersection exists.")
 
-    #     if (ymag == 1.0) {
-    #       /*
-    #        * The source lies on the ellipsoid, so it is clearly the first point of intersection.
-    #        */
-    #       buffer.setTo(source);
-    #       return buffer;
-    #     }
-    #     /*
-    #      * There is a little work left to do at this point. scale is the length of the half chord at p
-    #      * away from the unit sphere's center to either intersection point.
-    #      */
-    #     double scale = Math.sqrt(Math.max(0.0, 1 - pmag * pmag));
-    #     VectorIJK.combine(1.0, p, sign * scale, ux, buffer);
-    #     invertScaleToUnit(buffer);
-    #     return buffer;
-    #   }
+            # If pmag is precisely 1.0, then it is the single unique point of
+            # intersection.
+            if pmag == 1.0:
+                buffer.setTo(p)
+                self.invertScaleToUnit(buffer)
+                return buffer
 
-    # }
+            # Set the sign to a negative value, as we have a non-trivial
+            # intersection and the component along UX we are adding to P points
+            # towards Y.
+            sign = -1.0
+
+        if ymag == 1.0:
+            # The source lies on the ellipsoid, so it is clearly the first
+            # point of intersection.
+            buffer.setTo(source)
+            return buffer
+
+        # There is a little work left to do at this point. scale is the length
+        # of the half chord at p away from the unit sphere's center to either
+        # intersection point.
+        scale = sqrt(max(0.0, 1 - pmag*pmag))
+        VectorIJK.combine(1.0, p, sign*scale, ux, buffer)
+        self.invertScaleToUnit(buffer)
+        return buffer

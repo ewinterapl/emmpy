@@ -7,4 +7,5 @@ hierarchy.
 Modules
 -------
 surface.py
+surfacenormalcomputer.py
 """

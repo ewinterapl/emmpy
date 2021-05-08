@@ -10,6 +10,7 @@ ellipsoid.py
 ellipsoidalintersectioncomputer.py
 ellipsoidalplaneintersectioncomputer.py
 nointersectionexception.py
+plane.py
 surface.py
 surfaceintersectioncomputer.py
 surfacenormalcomputer.py

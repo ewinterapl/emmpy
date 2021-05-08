@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+test_Ellipsoid.py
 test_Surface.py
 test_SurfaceIntersectionComputer.py
 test_SurfaceNormalComputer.py

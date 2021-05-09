@@ -6,7 +6,18 @@ from emmpy.crucible.crust.surfaces.ellipsoidalplaneintersectioncomputer import (
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        pass
+
+    def test_distort(self):
+        pass
+
+    def test_distortInverse(self):
+        pass
+
+    def test_intersects(self):
+        pass
 
 
 if __name__ == '__main__':

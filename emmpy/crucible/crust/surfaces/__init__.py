@@ -14,5 +14,6 @@ plane.py
 surface.py
 surfaceintersectioncomputer.py
 surfacenormalcomputer.py
+unwritableellipse.py
 unwritableplane.py
 """

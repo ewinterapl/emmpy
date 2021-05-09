@@ -14,5 +14,6 @@ test_Plane.py
 test_Surface.py
 test_SurfaceIntersectionComputer.py
 test_SurfaceNormalComputer.py
+test_UnwritableEllipse.py
 test_UnwritablePlane.py
 """

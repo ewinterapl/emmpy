@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+ellipse.py
 ellipsetype.py
 ellipsoid.py
 ellipsoidalintersectioncomputer.py

@@ -2,6 +2,7 @@
 
 
 from emmpy.crucible.core.designpatterns.writable import Writable
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.crust.surfaces.unwritableellipse import UnwritableEllipse
 
 

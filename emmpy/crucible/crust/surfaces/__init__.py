@@ -14,6 +14,7 @@ ellipsoidallimbcomputer.py
 ellipsoidalplaneintersectioncomputer.py
 ellipsoidalsurfacenormalcomputer.py
 nointersectionexception.py
+offsetsurface.py
 plane.py
 sphere.py
 sphericalsurfacenormalcomputer.py

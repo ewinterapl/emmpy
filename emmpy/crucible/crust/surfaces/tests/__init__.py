@@ -14,6 +14,7 @@ test_EllipsoidalLimbComputer.py
 test_EllipsoidalPlaneIntersectionComputer.py
 test_EllipsoidalSurfaceNormalComputer.py
 test_NoIntersectionException.py
+test_OffsetSurface.py
 test_Plane.py
 test_Sphere.py
 test_SphericalSurfaceNormalComputer.py

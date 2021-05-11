@@ -16,6 +16,7 @@ test_EllipsoidalSurfaceNormalComputer.py
 test_NoIntersectionException.py
 test_OffsetSurface.py
 test_Plane.py
+test_RotatedSurface.py
 test_Sphere.py
 test_SphericalSurfaceNormalComputer.py
 test_Surface.py

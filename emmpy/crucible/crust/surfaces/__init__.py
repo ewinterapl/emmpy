@@ -10,6 +10,7 @@ ellipse.py
 ellipsetype.py
 ellipsoid.py
 ellipsoidalintersectioncomputer.py
+ellipsoidallimbcomputer.py
 ellipsoidalplaneintersectioncomputer.py
 nointersectionexception.py
 plane.py

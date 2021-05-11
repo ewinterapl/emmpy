@@ -10,6 +10,7 @@ test_Ellipse.py
 test_EllipseType.py
 test_Ellipsoid.py
 test_EllipsoidalIntersectionComputer.py
+test_EllipsoidalLimbComputer.py
 test_EllipsoidalPlaneIntersectionComputer.py
 test_NoIntersectionException.py
 test_Plane.py

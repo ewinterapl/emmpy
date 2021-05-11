@@ -4,8 +4,10 @@
 from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
     UnwritableRotationMatrixIJK
 )
+from emmpy.crucible.crust.surfaces.cylinder import Cylinder
 from emmpy.crucible.crust.surfaces.ellipsoid import Ellipsoid
 from emmpy.crucible.crust.surfaces.offsetsurface import OffsetSurface
+from emmpy.crucible.crust.surfaces.rotatedsurface import RotatedSurface
 from emmpy.crucible.crust.surfaces.sphere import Sphere
 
 
@@ -39,15 +41,12 @@ class Surfaces:
 
     @staticmethod
     def createCylinderAlongX(radius):
-        return new RotatedSurface(new Cylinder(radius), ROTATE_Z_TO_X);
-    # }
+        return RotatedSurface(Cylinder(radius), Surfaces.ROTATE_Z_TO_X)
 
-    # public static Surface createCylinderAlongY(double radius) {
-    #     return new RotatedSurface(new Cylinder(radius), ROTATE_Z_TO_Y);
-    # }
+    @staticmethod
+    def createCylinderAlongY(radius):
+        return RotatedSurface(Cylinder(radius), Surfaces.ROTATE_Z_TO_Y)
 
-    # public static Surface createCylinderAlongZ(double radius) {
-    #     return new Cylinder(radius);
-    # }
-
-    # }
+    @staticmethod
+    def createCylinderAlongZ(radius):
+        return Cylinder(radius)

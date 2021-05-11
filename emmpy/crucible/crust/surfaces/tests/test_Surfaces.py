@@ -17,6 +17,15 @@ class TestBuilder(unittest.TestCase):
     def test_offset(self):
         pass
 
+    def test_createCylinderAlongX(self):
+        pass
+
+    def test_createCylinderAlongY(self):
+        pass
+
+    def test_createCylinderAlongZ(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

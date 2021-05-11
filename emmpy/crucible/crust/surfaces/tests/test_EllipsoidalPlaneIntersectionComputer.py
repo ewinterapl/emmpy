@@ -19,6 +19,12 @@ class TestBuilder(unittest.TestCase):
     def test_intersects(self):
         pass
 
+    def test_intersect(self):
+        pass
+
+    def test_clampToUnitLength(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,8 +1,9 @@
 """emmpy.crucible.crust.surfaces.ellipsoidalplaneintersectioncomputer."""
 
 
-# import static com.google.common.base.Preconditions.checkArgument;
+from math import sqrt
 
+from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.crust.surfaces.plane import Plane
 
@@ -51,61 +52,47 @@ class EllipsoidalPlaneIntersectionComputer:
         # the unit sphere in the distorted space.
         return p.getLength() <= 1.0
 
-    #   Ellipse intersect(UnwritablePlane plane, Ellipse buffer) {
-    #    * Determine the ellipse of intersection of a plane with this ellipsoid.
-    #    * 
-    #    * @param plane
-    #    * @param buffer
-    #    * @return
-    #    * 
-    #    * @throws IllegalArgumentException if the plane does not intersect the ellipse.
-    #    */
+    def intersect(self, plane, buffer):
+        """Determine the ellipse of intersection of a plane with this
+        ellipsoid.
 
-    #     checkArgument(plane.getConstant() <= maxRadius, "Plane does not intersect ellipse.");
+        throws IllegalArgumentException if the plane does not intersect the
+        ellipse.
+        """
+        Preconditions.checkArgument(
+            plane.getConstant() <= self.maxRadius,
+            "Plane does not intersect ellipse."
+        )
 
-    #     /*
-    #      * Distort the input plane into the space where the ellipsoid is a unit sphere.
-    #      */
-    #     VectorIJK u = new VectorIJK();
-    #     VectorIJK v = new VectorIJK();
-    #     VectorIJK p = new VectorIJK();
+        # Distort the input plane into the space where the ellipsoid is a unit
+        # sphere.
+        u = VectorIJK()
+        v = VectorIJK()
+        p = VectorIJK()
+        plane.getSpanningVectors(u, v)
+        plane.getPoint(p)
+        self.distort(u)
+        self.distort(v)
+        self.distort(p)
+        distortedPlane = Plane(p, u, v)
 
-    #     plane.getSpanningVectors(u, v);
-    #     plane.getPoint(p);
+        # The point and spanning vector retrieval methods on plane always
+        # return a point that is closest to the origin in the input plane.
+        # This point is the center of the intersection circle. The spanning
+        distortedPlane.getPoint(p)
+        distortedPlane.getSpanningVectors(u, v)
+        dist = p.getLength()
+        Preconditions.checkArgument(
+            dist <= 1.0, "Plane does not intersect ellipse."
+        )
+        radius = sqrt(self.clampToUnitLength(1.0 - dist*dist))
+        u.scale(radius)
+        v.scale(radius)
+        self.distortInverse(p)
+        self.distortInverse(u)
+        self.distortInverse(v)
+        buffer.setTo(p, u, v)
+        return buffer
 
-    #     distort(u);
-    #     distort(v);
-    #     distort(p);
-
-    #     Plane distortedPlane = new Plane(p, u, v);
-
-    #     /*
-    #      * The point and spanning vector retrieval methods on plane always return a point that is
-    #      * closest to the origin in the input plane. This point is the center of the intersection
-    #      * circle. The spanning
-    #      */
-    #     distortedPlane.getPoint(p);
-    #     distortedPlane.getSpanningVectors(u, v);
-
-    #     double dist = p.getLength();
-    #     checkArgument(dist <= 1.0, "Plane does not intersect ellipse.");
-
-    #     double radius = Math.sqrt(clampToUnitLength(1.0 - dist * dist));
-
-    #     u.scale(radius);
-    #     v.scale(radius);
-
-    #     distortInverse(p);
-    #     distortInverse(u);
-    #     distortInverse(v);
-
-    #     buffer.setTo(p, u, v);
-
-    #     return buffer;
-    #   }
-
-    #   private double clampToUnitLength(double value) {
-    #     return Math.max(0.0, Math.min(value, 1.0));
-    #   }
-
-    # }
+    def clampToUnitLength(self, value):
+        return max(0.0, min(value, 1.0))

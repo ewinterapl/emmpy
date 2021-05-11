@@ -1,12 +1,6 @@
 """emmpy.crucible.crust.surfaces.unwritableellipse"""
 
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import com.google.common.base.MoreObjects;
-# import crucible.core.math.vectorspace.UnwritableRotationMatrixIJK;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.crust.surfaces.Ellipse.Type;
-
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
@@ -174,94 +168,94 @@ class UnwritableEllipse:
         """
         EllipseType.intersect(self, plane, bufferOne, bufferTwo)
 
-        def getPlane(self, *args):
-            if len(args) == 0:
-                return self.getPlane(Plane())
-            elif len(args) == 1:
-                (buffer,) = args
-                Preconditions.checkArgument(
-                    self.type == EllipseType.ELLIPSE,
-                    "Only non-degenerate ellipses can be turned into a plane."
-                )
-                buffer.setTo(self.center, self.smajor, self.sminor)
-                return buffer
+    def getPlane(self, *args):
+        if len(args) == 0:
+            return self.getPlane(Plane())
+        elif len(args) == 1:
+            (buffer,) = args
+            Preconditions.checkArgument(
+                self.type == EllipseType.ELLIPSE,
+                "Only non-degenerate ellipses can be turned into a plane."
+            )
+            buffer.setTo(self.center, self.smajor, self.sminor)
+            return buffer
 
-        def setTo(self, *args):
-            if len(args) == 1:
-                (ellipse,) = args
-                # Package private method to safely configure the instance to
-                # that of another ellipse.
-                # param ellipse the ellipse to copy
-                # return a reference to the instance
-                self.theCenter.setTo(ellipse.theCenter)
-                self.theSmajor.setTo(ellipse.theSmajor)
-                self.theSminor.setTo(ellipse.theSminor)
-                self.type = ellipse.type
+    def setTo(self, *args):
+        if len(args) == 1:
+            (ellipse,) = args
+            # Package private method to safely configure the instance to
+            # that of another ellipse.
+            # param ellipse the ellipse to copy
+            # return a reference to the instance
+            self.theCenter.setTo(ellipse.theCenter)
+            self.theSmajor.setTo(ellipse.theSmajor)
+            self.theSminor.setTo(ellipse.theSminor)
+            self.type = ellipse.type
+            return self
+        elif len(args) == 3:
+            (center, u, v) = args
+            # Package private method used to configure the internals of the
+            # ellipse to the center and supplied generating vectors.
+            # param center the center of the ellipse
+            # param u a generating vector (possibly VectorIJK.ZERO)
+            # param v another generating vector (possibly VectorIJK.ZERO,
+            # or parallel to u)
+            # return a reference to the instance
+            self.theCenter.setTo(center)
+            matrix = MatrixIJ()
+            values = VectorIJ()
+            tmp = VectorIJK()
+            scale = max(u.getLength(), v.getLength())
+
+            # This is an exceptional case representing a single point in
+            # space.
+            if scale == 0.0:
+                self.theSmajor.setTo(VectorIJK.ZERO)
+                self.theSminor.setTo(VectorIJK.ZERO)
+                self.type = EllipseType.POINT
                 return self
-            elif len(args) == 3:
-                (center, u, v) = args
-                # Package private method used to configure the internals of the
-                # ellipse to the center and supplied generating vectors.
-                # param center the center of the ellipse
-                # param u a generating vector (possibly VectorIJK.ZERO)
-                # param v another generating vector (possibly VectorIJK.ZERO,
-                # or parallel to u)
-                # return a reference to the instance
-                self.theCenter.setTo(center)
-                matrix = MatrixIJ()
-                values = VectorIJ()
-                tmp = VectorIJK()
-                scale = max(u.getLength(), v.getLength())
 
-                # This is an exceptional case representing a single point in
-                # space.
-                if scale == 0.0:
-                    self.theSmajor.setTo(VectorIJK.ZERO)
-                    self.theSminor.setTo(VectorIJK.ZERO)
-                    self.type = EllipseType.POINT
-                    return self
+            self.theSmajor.setTo(u).scale(1.0/scale)
+            self.theSminor.setTo(v).scale(1.0/scale)
+            offDiagonals = self.theSmajor.getDot(self.theSminor)
+            matrix.setTo(
+                self.theSmajor.getDot(self.theSmajor),
+                offDiagonals, offDiagonals,
+                self.theSminor.getDot(self.theSminor)
+            )
 
-                self.theSmajor.setTo(u).scale(1.0/scale)
-                self.theSminor.setTo(v).scale(1.0/scale)
-                offDiagonals = self.theSmajor.getDot(self.theSminor)
-                matrix.setTo(
-                    self.theSmajor.getDot(self.theSmajor),
-                    offDiagonals, offDiagonals,
-                    self.theSminor.getDot(self.theSminor)
-                )
+            # Diagonalize matrix.
+            MatrixIJ.diagonalizeSymmetricMatrix(matrix, values, matrix)
 
-                # Diagonalize matrix.
-                MatrixIJ.diagonalizeSymmetricMatrix(matrix, values, matrix)
-
-                # Compute the semi-axes.
-                (major, minor) = (None, None)
-                if abs(values.getI()) >= abs(values.getJ()):
-                    # The first eigenvector corresponds to the semi-major axes.
-                    major = 0
-                    minor = 1
-                else:
-                    # The second eigenvector corresponds to the semi-major
-                    # axis.
-                    major = 1
-                    minor = 0
-
-                VectorIJK.combine(
-                    matrix.get(0, major), self.theSmajor, matrix.get(1, major),
-                    self.theSminor, tmp
-                )
-                VectorIJK.combine(
-                    matrix.get(0, minor), self.theSmajor, matrix.get(1, minor),
-                    self.theSminor, self.theSminor
-                )
-                self.theSmajor.setTo(tmp)
-
-                # Restore the scaling.
-                self.theSmajor.scale(scale)
-                self.theSminor.scale(scale)
-                self.type = self.determineType(self)
-                return self
+            # Compute the semi-axes.
+            (major, minor) = (None, None)
+            if abs(values.getI()) >= abs(values.getJ()):
+                # The first eigenvector corresponds to the semi-major axes.
+                major = 0
+                minor = 1
             else:
-                raise Exception
+                # The second eigenvector corresponds to the semi-major
+                # axis.
+                major = 1
+                minor = 0
+
+            VectorIJK.combine(
+                matrix.get(0, major), self.theSmajor, matrix.get(1, major),
+                self.theSminor, tmp
+            )
+            VectorIJK.combine(
+                matrix.get(0, minor), self.theSmajor, matrix.get(1, minor),
+                self.theSminor, self.theSminor
+            )
+            self.theSmajor.setTo(tmp)
+
+            # Restore the scaling.
+            self.theSmajor.scale(scale)
+            self.theSminor.scale(scale)
+            self.type = self.determineType(self)
+            return self
+        else:
+            raise Exception
 
     def determineType(self):
         """Simple method that encapsulates the type selection logic by

@@ -16,6 +16,7 @@ ellipsoidalsurfacenormalcomputer.py
 nointersectionexception.py
 plane.py
 sphere.py
+sphericalsurfacenormalcomputer.py
 surface.py
 surfaces.py
 surfaceintersectioncomputer.py

@@ -4,7 +4,9 @@ from emmpy.crucible.crust.surfaces.surfaces import Surfaces
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        pass
 
 
 if __name__ == '__main__':

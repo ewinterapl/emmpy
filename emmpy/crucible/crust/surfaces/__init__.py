@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+circle.py
 cylinder.py
 ellipse.py
 ellipsetype.py

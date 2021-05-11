@@ -16,6 +16,7 @@ test_EllipsoidalSurfaceNormalComputer.py
 test_NoIntersectionException.py
 test_Plane.py
 test_Surface.py
+test_Surfaces.py
 test_SurfaceIntersectionComputer.py
 test_SurfaceNormalComputer.py
 test_UnwritableEllipse.py

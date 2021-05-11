@@ -1,11 +1,20 @@
 """emmpy.crucible.crust.surfaces.ellipsoid"""
 
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.crust.surfaces.surface import Surface
+from emmpy.crucible.crust.surfaces.ellipsoidalintersectioncomputer import (
+    EllipsoidalIntersectionComputer
+)
+from emmpy.crucible.crust.surfaces.ellipsoidallimbcomputer import (
+    EllipsoidalLimbComputer
+)
+from emmpy.crucible.crust.surfaces.ellipsoidalplaneintersectioncomputer import (
+    EllipsoidalPlaneIntersectionComputer
+)
+from emmpy.crucible.crust.surfaces.ellipsoidalsurfacenormalcomputer import (
+    EllipsoidalSurfaceNormalComputer
+)
 
 
 class Ellipsoid(Surface):
@@ -15,16 +24,6 @@ class Ellipsoid(Surface):
     ellipse to a location (NPELPT) Nearest point on an ellipsoid to a line
     (NPEDLN)
     """
-
-    # private final double a;
-    # private final double b;
-    # private final double c;
-    # private final double minRadius;
-    # private final double maxRadius;
-    # private final EllipsoidalSurfaceNormalComputer normalComputer;
-    # private final EllipsoidalIntersectionComputer intersectionComputer;
-    # private final EllipsoidalPlaneIntersectionComputer planeIntersectionComputer;
-    # private final EllipsoidalLimbComputer limbComputer;
 
     def __init__(self, a, b, c):
         """Constructor"""
@@ -39,78 +38,63 @@ class Ellipsoid(Surface):
         self.c = c
         self.minRadius = min(a, b, c)
         self.maxRadius = max(a, b, c)
+        self.normalComputer = (
+            EllipsoidalSurfaceNormalComputer(a, b, c, self.minRadius)
+        )
+        self.intersectionComputer = EllipsoidalIntersectionComputer(a, b, c)
+        self.planeIntersectionComputer = (
+            EllipsoidalPlaneIntersectionComputer(a, b, c)
+        )
+        self.limbComputer = EllipsoidalLimbComputer(a, b, c)
 
-    #     this.normalComputer = new EllipsoidalSurfaceNormalComputer(a, b, c, minRadius);
-    #     this.intersectionComputer = new EllipsoidalIntersectionComputer(a, b, c);
-    #     this.planeIntersectionComputer = new EllipsoidalPlaneIntersectionComputer(a, b, c);
-    #     this.limbComputer = new EllipsoidalLimbComputer(a, b, c);
-    #   }
+    def computeOutwardNormal(self, surfacePoint, buffer):
+        return self.normalComputer.computeOutwardNormal(surfacePoint, buffer)
 
-    #   @Override
-    #   public VectorIJK computeOutwardNormal(UnwritableVectorIJK surfacePoint, VectorIJK buffer) {
-    #     return normalComputer.computeOutwardNormal(surfacePoint, buffer);
-    #   }
+    def intersects(self, *args):
+        if len(args) == 1:
+            (plane,) = args
+            return self.planeIntersectionComputer.intersects(plane)
+        elif len(args) == 2:
+            (source, ray) = args
+            return self.intersectionComputer.intersects(source, ray)
+        else:
+            raise Exception
 
-    #   @Override
-    #   public boolean intersects(UnwritableVectorIJK source, UnwritableVectorIJK ray) {
-    #     return intersectionComputer.intersects(source, ray);
-    #   }
+    def compute(self, source, ray, buffer):
+        return self.intersectionComputer.compute(source, ray, buffer)
 
-    #   @Override
-    #   public VectorIJK compute(UnwritableVectorIJK source, UnwritableVectorIJK ray, VectorIJK buffer) {
-    #     return intersectionComputer.compute(source, ray, buffer);
-    #   }
+    def intersect(self, plane, buffer):
+        return self.planeIntersectionComputer.intersect(plane, buffer)
 
-    #   public boolean intersects(UnwritablePlane plane) {
-    #     return planeIntersectionComputer.intersects(plane);
-    #   }
+    def computeLimb(self, viewPoint, buffer):
+        return self.limbComputer.computeLimb(viewPoint, buffer)
 
-    #   public Ellipse intersect(UnwritablePlane plane, Ellipse buffer) {
-    #     return planeIntersectionComputer.intersect(plane, buffer);
-    #   }
+    def isInterior(self, location):
+        """Determines if the supplied location is interior to the surface
 
-    #   public Ellipse computeLimb(UnwritableVectorIJK viewPoint, Ellipse buffer) {
-    #     return limbComputer.computeLimb(viewPoint, buffer);
-    #   }
+        param location the supplied location
+        return true if location is interior
+        """
+        x = location.getI()
+        y = location.getJ()
+        z = location.getK()
+        value = x*x/(self.a*self.a) + y*y/(self.b*self.b) + z*z/(self.c*self.c)
+        return value < 1
 
-    #   /**
-    #    * Determines if the supplied location is interior to the surface
-    #    * 
-    #    * @param location the supplied location
-    #    * @return true if location is interior
-    #    */
-    #   public boolean isInterior(UnwritableVectorIJK location) {
-    #     double x = location.getI();
-    #     double y = location.getJ();
-    #     double z = location.getK();
+    def getRadii(self, buffer):
+        return buffer.setTo(self.a, self.b, self.c)
 
-    #     double value = x * x / (a * a) + y * y / (b * b) + z * z / (c * c);
+    def getA(self):
+        return self.a
 
-    #     return value < 1;
-    #   }
+    def getB(self):
+        return self.b
 
-    #   public VectorIJK getRadii(VectorIJK buffer) {
-    #     return buffer.setTo(a, b, c);
-    #   }
+    def getC(self):
+        return self.c
 
-    #   public double getA() {
-    #     return a;
-    #   }
+    def getMinRadius(self):
+        return self.minRadius
 
-    #   public double getB() {
-    #     return b;
-    #   }
-
-    #   public double getC() {
-    #     return c;
-    #   }
-
-    #   public double getMinRadius() {
-    #     return minRadius;
-    #   }
-
-    #   public double getMaxRadius() {
-    #     return maxRadius;
-    #   }
-
-    # }
+    def getMaxRadius(self):
+        return self.maxRadius

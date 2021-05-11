@@ -1,11 +1,11 @@
 """emmpy.crucible.crust.surfaces.sphere"""
 
 
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
-
 from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.crust.surfaces.ellipsoid import Ellipsoid
+from emmpy.crucible.crust.surfaces.sphericalsurfacenormalcomputer import (
+    SphericalSurfaceNormalComputer
+)
 
 
 class Sphere(Ellipsoid):
@@ -19,13 +19,8 @@ class Sphere(Ellipsoid):
         )
         self.normalComputer = SphericalSurfaceNormalComputer()
 
-    # public double getRadius() {
-    #     return getA();
-    # }
+    def getRadius(self):
+        return self.getA()
 
-    # @Override
-    # public VectorIJK computeOutwardNormal(UnwritableVectorIJK surfacePoint, VectorIJK buffer) {
-    #     return normalComputer.computeOutwardNormal(surfacePoint, buffer);
-    # }
-
-    # }
+    def computeOutwardNormal(self, surfacePoint, buffer):
+        return self.normalComputer.computeOutwardNormal(surfacePoint, buffer)

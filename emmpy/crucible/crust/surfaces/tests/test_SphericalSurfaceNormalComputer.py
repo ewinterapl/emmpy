@@ -6,7 +6,9 @@ from emmpy.crucible.crust.surfaces.sphericalsurfacenormalcomputer import (
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test_computeOutwardNormal(self):
+        pass
 
 
 if __name__ == '__main__':

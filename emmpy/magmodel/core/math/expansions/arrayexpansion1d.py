@@ -7,14 +7,13 @@ from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 
 
 class ArrayExpansion1D(Expansion1D):
-    pass
 
-    # def __init__(self, array, firstRadialExpansionNumber):
-    #     self.array = Preconditions.checkNotNull(array)
-    #     self.firstRadialExpansionNumber = firstRadialExpansionNumber
-    #     self.lastRadialExpansionNumber = (
-    #         firstRadialExpansionNumber + len(array) - 1
-    #     )
+    def __init__(self, array, firstRadialExpansionNumber):
+        self.array = array
+        self.firstRadialExpansionNumber = firstRadialExpansionNumber
+        self.lastRadialExpansionNumber = (
+            firstRadialExpansionNumber + len(array) - 1
+        )
 
     # def getLowerBoundIndex(self):
     #     return self.firstRadialExpansionNumber

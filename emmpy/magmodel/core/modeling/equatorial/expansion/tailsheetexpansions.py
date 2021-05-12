@@ -1,9 +1,9 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions"""
 
 
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-#     UnwritableVectorIJK
-# )
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 # from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 # from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 
@@ -110,34 +110,34 @@ class TailSheetExpansions:
 
     #     return basisFunctions
 
-    # def sum(self):
-    #     bxSum = 0.0
-    #     bySum = 0.0
-    #     bzSum = 0.0
+    def sum(self):
+        bxSum = 0.0
+        bySum = 0.0
+        bzSum = 0.0
 
-    #     # n is the radial expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
-    #         basisFunction = self.tailSheetSymmetricValues.getExpansion(n)
-    #         bxSum += basisFunction.getI()
-    #         bySum += basisFunction.getJ()
-    #         bzSum += basisFunction.getK()
+        # n is the radial expansion number
+        for n in range(1, self.numRadialExpansions + 1):
+            basisFunction = self.tailSheetSymmetricValues.getExpansion(n)
+            bxSum += basisFunction.getI()
+            bySum += basisFunction.getJ()
+            bzSum += basisFunction.getK()
 
-    #     # n is the radial expansion number
-    #     # m is the azimuthal expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
-    #         for m in range(1, self.numAzimuthalExpansions + 1):
-    #             basisFunction = self.tailSheetOddValues.getExpansion(m, n)
-    #             bxSum += basisFunction.getI()
-    #             bySum += basisFunction.getJ()
-    #             bzSum += basisFunction.getK()
+        # n is the radial expansion number
+        # m is the azimuthal expansion number
+        for n in range(1, self.numRadialExpansions + 1):
+            for m in range(1, self.numAzimuthalExpansions + 1):
+                basisFunction = self.tailSheetOddValues.getExpansion(m, n)
+                bxSum += basisFunction.getI()
+                bySum += basisFunction.getJ()
+                bzSum += basisFunction.getK()
 
-    #     # n is the radial expansion number
-    #     # m is the azimuthal expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
-    #         for m in range(1, self.numAzimuthalExpansions + 1):
-    #             basisFunction = self.tailSheetEvenValues.getExpansion(m, n)
-    #             bxSum += basisFunction.getI()
-    #             bySum += basisFunction.getJ()
-    #             bzSum += basisFunction.getK()
+        # n is the radial expansion number
+        # m is the azimuthal expansion number
+        for n in range(1, self.numRadialExpansions + 1):
+            for m in range(1, self.numAzimuthalExpansions + 1):
+                basisFunction = self.tailSheetEvenValues.getExpansion(m, n)
+                bxSum += basisFunction.getI()
+                bySum += basisFunction.getJ()
+                bzSum += basisFunction.getK()
 
-    #     return UnwritableVectorIJK(bxSum, bySum, bzSum)
+        return UnwritableVectorIJK(bxSum, bySum, bzSum)

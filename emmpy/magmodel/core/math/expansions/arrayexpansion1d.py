@@ -21,8 +21,8 @@ class ArrayExpansion1D(Expansion1D):
     # def getUpperBoundIndex(self):
     #     return self.lastRadialExpansionNumber
 
-    # def getExpansion(self, radialExpansion):
-    #     return self.array[radialExpansion - self.firstRadialExpansionNumber]
+    def getExpansion(self, radialExpansion):
+        return self.array[radialExpansion - self.firstRadialExpansionNumber]
 
     # def toString(self):
     #     return (

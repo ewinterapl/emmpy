@@ -33,8 +33,8 @@ class ArrayExpansion2D(Expansion2D):
     def getIUpperBoundIndex(self):
         return self.lastAzimuthalExpansionNumber
 
-    # def getExpansion(self, azimuthalExpansion, radialExpansion):
-    #     return (
-    #         self.data[azimuthalExpansion - self.firstAzimuthalExpansionNumber]
-    #                  [radialExpansion - self.firstRadialExpansionNumber]
-    #     )
+    def getExpansion(self, azimuthalExpansion, radialExpansion):
+        return (
+            self.data[azimuthalExpansion - self.firstAzimuthalExpansionNumber]
+            [radialExpansion - self.firstRadialExpansionNumber]
+        )

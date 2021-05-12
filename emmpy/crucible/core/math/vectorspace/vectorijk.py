@@ -217,25 +217,25 @@ class VectorIJK(UnwritableVectorIJK):
     def setTo(self, *args):
         """Set the vector contents."""
         if len(args) == 1:
-            raise Exception
-    #         if isinstance(args[0], UnwritableVectorIJK):
-    #             # Set the vector contents to match those of another.
-    #             # @param vector the vector whose contents are to be copied into
-    #             # the vector
-    #             (vector,) = args
-    #             self.i = vector.i
-    #             self.j = vector.j
-    #             self.k = vector.k
-    #             return self
-    #         elif isinstance(args[0], list):
+            if isinstance(args[0], UnwritableVectorIJK):
+                # Set the vector contents to match those of another.
+                # param vector the vector whose contents are to be copied into
+                # the vector
+                (vector,) = args
+                self.i = vector.i
+                self.j = vector.j
+                self.k = vector.k
+                return self
+            elif isinstance(args[0], list):
+                raise Exception
     #             # Sets the basic components of a vector copying the values from
     #             # the supplied array.
     #             # @param data the array of doubles to copy.
     #             # @return a reference to the instance
     #             (data,) = args
     #             return self.setTo(data[0], data[1], data[2])
-    #         else:
-    #             raise Exception
+            else:
+                raise Exception
         elif len(args) == 2:
             raise Exception
     #         if isRealNumber(args[0]) and isinstance(args[1],

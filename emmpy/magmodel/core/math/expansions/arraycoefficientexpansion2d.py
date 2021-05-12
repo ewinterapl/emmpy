@@ -27,19 +27,19 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
         self.iLowerBoundIndex = iLowerBoundIndex
         self.jLowerBoundIndex = jLowerBoundIndex
 
-    # def getILowerBoundIndex(self):
-    #     return self.iLowerBoundIndex
+    def getILowerBoundIndex(self):
+        return self.iLowerBoundIndex
 
-    # def getIUpperBoundIndex(self):
-    #     iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
-    #     return iUpperBoundIndex
+    def getIUpperBoundIndex(self):
+        iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
+        return iUpperBoundIndex
 
-    # def getJLowerBoundIndex(self):
-    #     return self.jLowerBoundIndex
+    def getJLowerBoundIndex(self):
+        return self.jLowerBoundIndex
 
-    # def getJUpperBoundIndex(self):
-    #     jUpperBoundIndex = self.jLowerBoundIndex + len(self.data[0]) - 1
-    #     return jUpperBoundIndex
+    def getJUpperBoundIndex(self):
+        jUpperBoundIndex = self.jLowerBoundIndex + len(self.data[0]) - 1
+        return jUpperBoundIndex
 
     # def getCoefficient(self, azimuthalExpansion, radialExpansion):
     #     return (

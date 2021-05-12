@@ -16,9 +16,9 @@ from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
     CoefficientExpansion1D
 )
-# from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-#     CoefficientExpansion2D
-# )
+from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
+    CoefficientExpansion2D
+)
 
 
 class CoefficientExpansions:
@@ -99,11 +99,11 @@ class CoefficientExpansions:
             p = ArrayCoefficientExpansion1D(
                 [None]*n, firstRadialExpansionNumber
             )
-            v = CoefficientExpansion1D()
+            ce = CoefficientExpansion1D()
             # These lambdas are not bound methods.
-            v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-            v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-            v.getCoefficient = lambda index: 1
+            ce.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
+            ce.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
+            ce.getCoefficient = lambda index: 1
         elif len(args) == 4:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber) = args
@@ -112,29 +112,27 @@ class CoefficientExpansions:
             na = (lastAzimuthalExpansionNumber -
                   firstAzimuthalExpansionNumber + 1)
             arr = [[None]*nr]*na
-    #         p = ArrayCoefficientExpansion2D(
-    #             arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-    #         )
+            p = ArrayCoefficientExpansion2D(
+                arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
+            )
 
-    #         # Create a view object to wrap the expansion.
-    #         v = CoefficientExpansion2D()
-    #         v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-    #         v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
-    #         v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
-    #         v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
-    #         v.iSize = lambda: p.iSize()
-    #         v.jSize = lambda: p.jSize()
-
-    #         # Replace the getCoefficient() method with a method that always
-    #         # returns the constant, as a closure.
-    #         v.getCoefficient = (
-    #             lambda azimuthalExpansion, radialExpansion: 1
-    #         )
+            # Create the expansion.
+            ce = CoefficientExpansion2D()
+            # These lambdas are not bound methods.
+            ce.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
+            ce.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
+            ce.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
+            ce.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
+            ce.iSize = lambda: p.iSize()
+            ce.jSize = lambda: p.jSize()
+            ce.getCoefficient = (
+                lambda azimuthalExpansion, radialExpansion: 1
+            )
         else:
             raise Exception
 
-        # Return the view.
-        return v
+        # Return the coefficient expansion.
+        return ce
 
     # @staticmethod
     # def scale(a, scaleFactor):

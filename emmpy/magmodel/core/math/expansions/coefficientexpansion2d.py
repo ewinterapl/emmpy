@@ -27,23 +27,23 @@ class CoefficientExpansion2D:
     #                 j + self.getJLowerBoundIndex())
     #     return anArray
 
-    # def iSize(self):
-    #     """@return the number of elements of the expansion"""
-    #     size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
-    #     return size
+    def iSize(self):
+        """return the number of elements of the expansion"""
+        size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
+        return size
 
-    # def jSize(self):
-    #     """@return the number of elements of the expansion"""
-    #     size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
-    #     return size
+    def jSize(self):
+        """return the number of elements of the expansion"""
+        size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
+        return size
 
-    # def getILowerBoundIndex(self):
-    #     """@return the lower bound index of the expansion (L<sub>i</sub>)"""
-    #     raise Exception
+    def getILowerBoundIndex(self):
+        """return the lower bound index of the expansion (L_i)"""
+        raise Exception
 
-    # def getIUpperBoundIndex(self):
-    #     """@return the upper bound index of the expansion (U<sub>i</sub>)"""
-    #     raise Exception
+    def getIUpperBoundIndex(self):
+        """return the upper bound index of the expansion (U_i)"""
+        raise Exception
 
     # def getJLowerBoundIndex(self):
     #     """@return the lower bound index of the expansion (L<sub>j</sub>)"""

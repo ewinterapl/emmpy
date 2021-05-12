@@ -1,41 +1,39 @@
 """emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses"""
 
 
-# import crucible.core.math.vectorspace.UnwritableVectorIJ;
-# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
-
-from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
-    DifferentiableScalarFieldIJ
-)
+# from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+#     DifferentiableScalarFieldIJ
+# )
 
 
 class CurrentSheetHalfThicknesses:
+    pass
     """Utility class to help construct different current sheet thicknesses.
 
     @author G.K.Stephens
     """
 
-    def __init__(self):
-        """Constructor
+    # def __init__(self):
+    #     """Constructor
 
-        no need to construct
-        """
-        pass
+    #     no need to construct
+    #     """
+    #     pass
 
-    @staticmethod
-    def createConstant(currentSheetHalfThickness):
-        """Returns a constant current sheet half thickness
+    # @staticmethod
+    # def createConstant(currentSheetHalfThickness):
+    #     """Returns a constant current sheet half thickness
 
-        @param currentSheetHalfThickness the current sheet half thickness
-        (in R_E)
-        @return a newly created DifferentiableScalarFieldIJ representing the
-        current sheet thickness
-        """
-        dsfij = DifferentiableScalarFieldIJ()
-        dsfij.differentiateFDi = lambda *args: 0
-        dsfij.differentiateFDj = lambda *args: 0
-        dsfij.evaluate = lambda *args: currentSheetHalfThickness
-        return dsfij
+    #     @param currentSheetHalfThickness the current sheet half thickness
+    #     (in R_E)
+    #     @return a newly created DifferentiableScalarFieldIJ representing the
+    #     current sheet thickness
+    #     """
+    #     dsfij = DifferentiableScalarFieldIJ()
+    #     dsfij.differentiateFDi = lambda *args: 0
+    #     dsfij.differentiateFDj = lambda *args: 0
+    #     dsfij.evaluate = lambda *args: currentSheetHalfThickness
+    #     return dsfij
 
     #   /**
     #    * Returns the implementation of the current sheet half-thickness found in Tsyganenko and Sitnov

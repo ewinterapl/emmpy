@@ -42,9 +42,9 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
         self.numRadialExpansions = coeffs.getNumRadialExpansions()
-    #     self.tailLength = tailLength
-    #     self.currentSheetHalfThickness = currentSheetHalfThickness
-    #     self.bessel = bessel
+        self.tailLength = tailLength
+        self.currentSheetHalfThickness = currentSheetHalfThickness
+        self.bessel = bessel
 
     # @staticmethod
     # def createUnity(

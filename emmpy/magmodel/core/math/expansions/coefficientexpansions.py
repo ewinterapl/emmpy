@@ -13,9 +13,9 @@ from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
 # from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
 #     ArrayCoefficientExpansion2D
 # )
-# from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-#     CoefficientExpansion1D
-# )
+from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
+    CoefficientExpansion1D
+)
 # from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
 #     CoefficientExpansion2D
 # )
@@ -99,7 +99,7 @@ class CoefficientExpansions:
             p = ArrayCoefficientExpansion1D(
                 [None]*n, firstRadialExpansionNumber
             )
-    #         v = CoefficientExpansion1D()
+            v = CoefficientExpansion1D()
     #         v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
     #         v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
     #         v.getCoefficient = lambda index: 1

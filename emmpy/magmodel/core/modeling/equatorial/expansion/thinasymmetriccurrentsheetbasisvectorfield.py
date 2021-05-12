@@ -20,9 +20,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 # from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
 #     TailSheetExpansions
 # )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
-#     TailSheetSymmetricExpansion
-# )
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
+    TailSheetSymmetricExpansion
+)
 
 
 class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
@@ -81,30 +81,32 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
     def evaluateExpansions(self, location):
         """This guy recalculates everything"""
+
+        # Preallocate the arrays of vectors for the expansions.
         zeros = [0, 0, 0]
         symmetricExpansions = [
             UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)
         ]
-    #     oddExpansions = (
-    #         [[UnwritableVectorIJK(zeros)
-    #           for j in range(self.numRadialExpansions)]
-    #          for i in range(self.numAzimuthalExpansions)]
-    #     )
-    #     evenExpansions = (
-    #         [[UnwritableVectorIJK(zeros)
-    #           for j in range(self.numRadialExpansions)]
-    #          for i in range(self.numAzimuthalExpansions)]
-    #     )
+        oddExpansions = (
+            [[UnwritableVectorIJK(zeros)
+              for j in range(self.numRadialExpansions)]
+             for i in range(self.numAzimuthalExpansions)]
+        )
+        evenExpansions = (
+            [[UnwritableVectorIJK(zeros)
+              for j in range(self.numRadialExpansions)]
+             for i in range(self.numAzimuthalExpansions)]
+        )
 
-    #     # n is the radial expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
+        # n is the radial expansion number
+        for n in range(1, self.numRadialExpansions + 1):
 
-    #         # Calculate the wave number (kn = n/rho0)
-    #         kn = n/self.tailLength
+            # Calculate the wave number (kn = n/rho0)
+            kn = n/self.tailLength
 
-    #         symBasisFunction = TailSheetSymmetricExpansion(
-    #             kn, self.currentSheetHalfThickness, self.bessel
-    #         )
+            symBasisFunction = TailSheetSymmetricExpansion(
+                kn, self.currentSheetHalfThickness, self.bessel
+            )
 
     #         a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
 

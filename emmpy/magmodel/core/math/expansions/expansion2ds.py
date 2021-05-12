@@ -19,13 +19,11 @@
 
 
 class Expansion2Ds:
-    pass
 
-    # @staticmethod
-    # def createNull(
-    #     firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
-    #     lastRadialExpansionNumber
-    # ):
+    @staticmethod
+    def createNull(firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
+                   lastRadialExpansionNumber):
+        pass
     #     expansion2D = Expansion2D()
 
     #     def getJLowerBoundIndexWrapper(ignoredSelf):

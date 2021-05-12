@@ -96,9 +96,9 @@ class TailSheetCoefficients:
         """return the odd coefficients a_mn^o"""
         return self.tailSheetOddValues
 
-    # def getTailSheetEvenValues(self):
-    #     """@return the even coefficients a<sub>n</sub><sup>(e)</sup>"""
-    #     return self.tailSheetEvenValues
+    def getTailSheetEvenValues(self):
+        """return the even coefficients a_n^e"""
+        return self.tailSheetEvenValues
 
     # def getAsSingleExpansion(self):
     #     """@return the {@link TailSheetCoefficients} expressed as a single

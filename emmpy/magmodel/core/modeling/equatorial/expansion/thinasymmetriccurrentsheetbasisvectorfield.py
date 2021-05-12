@@ -126,15 +126,12 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
                     self.bessel
                 )
-                obf_eval = oddBasisFunction.evaluate(location)
-                # obf_eval.scale(odd)
-                # ORIGINAL CODE
-                # oddExpansions[m - 1][n - 1] = (
-                #     oddBasisFunction.evaluate(location).scale(aOdd)
-                # )
-    #             aEven = (
-    #                 self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
-    #             )
+                oddExpansions[m - 1][n - 1] = (
+                    oddBasisFunction.evaluate(location).scale(aOdd)
+                )
+                aEven = (
+                    self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
+                )
     #             evenBasisFunction = TailSheetAsymmetricExpansion(
     #                 kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
     #                 self.bessel

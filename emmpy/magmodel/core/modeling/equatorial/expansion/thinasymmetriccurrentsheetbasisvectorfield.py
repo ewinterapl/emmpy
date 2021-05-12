@@ -8,9 +8,9 @@
 # from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 # from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 # from emmpy.magmodel.core.math.trigparity import TrigParity
-# from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
-#     BasisVectorField
-# )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 # from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
 #     TailSheetAsymmetricExpansion
 # )

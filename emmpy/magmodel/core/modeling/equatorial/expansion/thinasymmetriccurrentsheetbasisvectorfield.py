@@ -132,10 +132,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 aEven = (
                     self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
                 )
-    #             evenBasisFunction = TailSheetAsymmetricExpansion(
-    #                 kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
-    #                 self.bessel
-    #             )
+                evenBasisFunction = TailSheetAsymmetricExpansion(
+                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
+                    self.bessel
+                )
     #             evenExpansions[m - 1][n - 1] = (
     #                 evenBasisFunction.evaluate(location).scale(aEven)
     #             )

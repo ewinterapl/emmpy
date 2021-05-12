@@ -21,10 +21,10 @@ class TrigParity(DifferentiableUnivariateFunction):
     """
     pass
 
-    # # the even trigonometric parity, the cosine function
-    # EVEN = DifferentiableUnivariateFunction()
-    # EVEN.evaluate = lambda t: cos(t)
-    # EVEN.differentiate = lambda t: -sin(t)
+    # the even trigonometric parity, the cosine function
+    EVEN = DifferentiableUnivariateFunction()
+    EVEN.evaluate = lambda t: cos(t)
+    EVEN.differentiate = lambda t: -sin(t)
 
     # the odd trigonometric parity, the sine function
     ODD = DifferentiableUnivariateFunction()

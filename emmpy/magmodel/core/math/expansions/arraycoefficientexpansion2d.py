@@ -10,25 +10,22 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
 
 
 class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
-    pass
 
-    # def __init__(self,  data, iLowerBoundIndex, jLowerBoundIndex):
-    #     """Converts a 2D double array into a {@link CoefficientExpansion2D} by
-    #     wrapping the array. Note, this is a view friendly implementation, so
-    #     the returned {@link CoefficientExpansion2D} will change as the array
-    #     changes.
+    def __init__(self,  data, iLowerBoundIndex, jLowerBoundIndex):
+        """Converts a 2D double array into a CoefficientExpansion2D by
+        wrapping the array. Note, this is a view friendly implementation, so
+        the returned CoefficientExpansion2D will change as the array changes.
 
-    #     Note, the supplied array must be rectangular (not ragged). This check
-    #     is performed on construction but not on subsequent retrievals. This
-    #     makes this a potentially unsafe implementation, if the supplied array
-    #     becomes ragged after construction.
+        Note, the supplied array must be rectangular (not ragged). This check
+        is performed on construction but not on subsequent retrievals. This
+        makes this a potentially unsafe implementation, if the supplied array
+        becomes ragged after construction.
 
-    #     @author G.K.Stephens
-    #     """
-    #     self.data = Preconditions.checkNotNull(data)
-    #     Preconditions.checkArgument(not isRagged(data))
-    #     self.iLowerBoundIndex = iLowerBoundIndex
-    #     self.jLowerBoundIndex = jLowerBoundIndex
+        author G.K.Stephens
+        """
+        self.data = data
+        self.iLowerBoundIndex = iLowerBoundIndex
+        self.jLowerBoundIndex = jLowerBoundIndex
 
     # def getILowerBoundIndex(self):
     #     return self.iLowerBoundIndex

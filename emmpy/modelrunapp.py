@@ -10,9 +10,9 @@ import sys
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
 #     TS07DVariableCoefficientsUtils
 # )
-# from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-#     CurrentSheetHalfThicknesses
-# )
+from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
+    CurrentSheetHalfThicknesses
+)
 # from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
 # from emmpy.magmodel.core.math.bessel.albertbesselfunctionevaluator import (
 #     AlbertBesselFunctionEvaluator
@@ -36,20 +36,20 @@ def runThinSheet():
     """Builds and runs the thin sheet model"""
     print("Starting runThinSheet()")
 
-#     # use a resolution of (M,N)=(4,5)
-#     numAz = 4
-#     numRad = 5
+    # use a resolution of (M,N)=(4,5)
+    numAz = 4
+    numRad = 5
 
-#     # the standard value of rho0
-#     tailLength = 20.0
+    # the standard value of rho0
+    tailLength = 20.0
 
-#     # a typical value of D
-#     currSheetThick = 2.3
+    # a typical value of D
+    currSheetThick = 2.3
 
-#     # Construct a constant current sheet half thickness
-#     currentSheetHalfThickness = (
-#         CurrentSheetHalfThicknesses.createConstant(currSheetThick)
-#     )
+    # Construct a constant current sheet half thickness
+    currentSheetHalfThickness = (
+        CurrentSheetHalfThicknesses.createConstant(currSheetThick)
+    )
 
 #     # Set all the linear coeffs to 1.0
 #     coeffs = TailSheetCoefficients.createUnity(numAz, numRad)

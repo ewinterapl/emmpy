@@ -1,9 +1,9 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients"""
 
 
-# from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-#     CoefficientExpansions
-# )
+from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
+    CoefficientExpansions
+)
 
 
 class TailSheetCoefficients:
@@ -41,20 +41,14 @@ class TailSheetCoefficients:
     @staticmethod
     def createUnity(numAzimuthalExpansions, numRadialExpansions):
         """Creates a {@link TailSheetCoefficients} where all the coefficients
-        have been set to 1
-
-        @param numAzimuthalExpansions
-        @param numRadialExpansions
-        @return
-        """
-        pass
-    #     return TailSheetCoefficients(
-    #         CoefficientExpansions.createUnity(1, numRadialExpansions),
-    #         CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
-    #                                           numRadialExpansions),
-    #         CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
-    #                                           numRadialExpansions)
-    #     )
+        have been set to 1"""
+        return TailSheetCoefficients(
+            CoefficientExpansions.createUnity(1, numRadialExpansions),
+            CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
+                                              numRadialExpansions),
+            CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
+                                              numRadialExpansions)
+        )
 
     # @staticmethod
     # def createFromArray(array, numAzimuthalExpansions, numRadialExpansions):

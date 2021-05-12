@@ -5,9 +5,9 @@ methods will raise exceptions if invoked.
 """
 
 
-# from emmpy.crucible.core.math.functions.univariatefunction import (
-#     UnivariateFunction
-# )
+from emmpy.crucible.core.math.functions.univariatefunction import (
+    UnivariateFunction
+)
 
 
 class DifferentiableUnivariateFunction(UnivariateFunction):

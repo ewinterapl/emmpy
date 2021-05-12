@@ -8,24 +8,25 @@ methods will raise exceptions if invoked.
 class UnivariateFunction:
     """Simple interface describing a function of a single variable.
 
-    @author F.S.Turner
+    author F.S.Turner
     """
+    pass
 
-    def __init__(self):
-        """Constructor
+    # def __init__(self):
+    #     """Constructor
 
-        INTERFACE - DO NOT INSTANTIATE.
-        """
-        raise Exception
+    #     INTERFACE - DO NOT INSTANTIATE.
+    #     """
+    #     raise Exception
 
-    def evaluate(self, t):
-        """Evaluates the function at the specified value.
+    # def evaluate(self, t):
+    #     """Evaluates the function at the specified value.
 
-        INTERFACE - DO NOT INVOKE
+    #     INTERFACE - DO NOT INVOKE
 
-        @param t the value of interest
-        @return the value of the function at t
-        @throws FunctionEvaluationException if the function cannot perform the
-        evaluation
-        """
-        raise Exception
+    #     @param t the value of interest
+    #     @return the value of the function at t
+    #     @throws FunctionEvaluationException if the function cannot perform the
+    #     evaluation
+    #     """
+    #     raise Exception

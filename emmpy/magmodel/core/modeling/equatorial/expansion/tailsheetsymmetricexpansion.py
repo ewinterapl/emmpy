@@ -35,7 +35,8 @@ class TailSheetSymmetricExpansion(VectorField):
         self.currentSheetHalfThickness = currentSheetHalfThickness
         self.bessel = bessel
 
-    # def evaluate(self, *args):
+    def evaluate(self, *args):
+        pass
     #     if len(args) == 1:
     #         (location,) = args
     #         buffer = VectorIJK()

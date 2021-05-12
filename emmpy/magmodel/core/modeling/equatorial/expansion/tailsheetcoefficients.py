@@ -27,8 +27,8 @@ class TailSheetCoefficients:
 
     @staticmethod
     def createUnity(numAzimuthalExpansions, numRadialExpansions):
-        """Creates a {@link TailSheetCoefficients} where all the coefficients
-        have been set to 1"""
+        """Creates a TailSheetCoefficientswhere all the coefficients have been
+        set to 1"""
         return TailSheetCoefficients(
             CoefficientExpansions.createUnity(1, numRadialExpansions),
             CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,

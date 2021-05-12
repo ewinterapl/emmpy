@@ -1,9 +1,9 @@
 """emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses"""
 
 
-# from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
-#     DifferentiableScalarFieldIJ
-# )
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    DifferentiableScalarFieldIJ
+)
 
 
 class CurrentSheetHalfThicknesses:
@@ -29,12 +29,12 @@ class CurrentSheetHalfThicknesses:
         return a newly created DifferentiableScalarFieldIJ representing the
         current sheet thickness
         """
-        pass
-    #     dsfij = DifferentiableScalarFieldIJ()
-    #     dsfij.differentiateFDi = lambda *args: 0
-    #     dsfij.differentiateFDj = lambda *args: 0
-    #     dsfij.evaluate = lambda *args: currentSheetHalfThickness
-    #     return dsfij
+        dsfij = DifferentiableScalarFieldIJ()
+        # These lambdas are not bound methods.
+        dsfij.differentiateFDi = lambda my_location: 0
+        dsfij.differentiateFDj = lambda my_location: 0
+        dsfij.evaluate = lambda my_location: currentSheetHalfThickness
+        return dsfij
 
     #   /**
     #    * Returns the implementation of the current sheet half-thickness found in Tsyganenko and Sitnov

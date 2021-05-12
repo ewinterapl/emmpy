@@ -1,11 +1,11 @@
 """emmpy.magmodel.core.math.trigparity"""
 
 
-from math import cos, sin
+# from math import cos, sin
 
-from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
-    DifferentiableUnivariateFunction
-)
+# from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
+#     DifferentiableUnivariateFunction
+# )
 
 
 class TrigParity(DifferentiableUnivariateFunction):
@@ -17,25 +17,26 @@ class TrigParity(DifferentiableUnivariateFunction):
     EVEN: f(x) = cos(x), df/dx = -sin(x)
     ODD: f(x) = sin(x), df/dx = cos(x)
 
-    @author G.K.Stephens
+    author G.K.Stephens
     """
+    pass
 
-    # the even trigonometric parity, the cosine function
-    EVEN = DifferentiableUnivariateFunction()
-    EVEN.evaluate = lambda t: cos(t)
-    EVEN.differentiate = lambda t: -sin(t)
+    # # the even trigonometric parity, the cosine function
+    # EVEN = DifferentiableUnivariateFunction()
+    # EVEN.evaluate = lambda t: cos(t)
+    # EVEN.differentiate = lambda t: -sin(t)
 
-    # the odd trigonometric parity, the sine function
-    ODD = DifferentiableUnivariateFunction()
-    ODD.evaluate = lambda t: sin(t)
-    ODD.differentiate = lambda t: cos(t)
+    # # the odd trigonometric parity, the sine function
+    # ODD = DifferentiableUnivariateFunction()
+    # ODD.evaluate = lambda t: sin(t)
+    # ODD.differentiate = lambda t: cos(t)
 
-    def __init__(self, function):
-        """Constructor"""
-        self.function = function
+    # def __init__(self, function):
+    #     """Constructor"""
+    #     self.function = function
 
-    def evaluate(self, t):
-        return self.function.evaluate(t)
+    # def evaluate(self, t):
+    #     return self.function.evaluate(t)
 
-    def differentiate(self, t):
-        return self.function.differentiate(t)
+    # def differentiate(self, t):
+    #     return self.function.differentiate(t)

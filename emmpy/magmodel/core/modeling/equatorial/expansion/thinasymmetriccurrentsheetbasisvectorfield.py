@@ -7,7 +7,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 # from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-# from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )

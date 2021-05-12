@@ -25,24 +25,22 @@ class TailSheetAsymmetricExpansion(VectorField):
     """
     pass
 
-    # def __init__(
-    #     self, waveNumber, azimuthalExpansionNumber, trigParity,
-    #     currentSheetHalfThickness, bessel
-    # ):
-    #     """Constructor
+    def __init__(self, waveNumber, azimuthalExpansionNumber, trigParity,
+                 currentSheetHalfThickness, bessel):
+        """Constructor
 
-    #     @param waveNumber the wave number of this expansion
-    #     @param azimuthalExpansionNumber the azimuthal expansion number
-    #     @param trigParity sine function is odd cosine is even
-    #     @param currentSheetHalfThickness a 2D scalar field representing the
-    #     current sheet half thickness throughout the equatorial current system
-    #     @param bessel the Bessel function evaluator
-    #     """
-    #     self.waveNumber = waveNumber
-    #     self.azimuthalExpansionNumber = azimuthalExpansionNumber
-    #     self.trigParity = trigParity
-    #     self.currentSheetHalfThickness = currentSheetHalfThickness
-    #     self.bessel = bessel
+        param waveNumber the wave number of this expansion
+        param azimuthalExpansionNumber the azimuthal expansion number
+        param trigParity sine function is odd cosine is even
+        param currentSheetHalfThickness a 2D scalar field representing the
+        current sheet half thickness throughout the equatorial current system
+        param bessel the Bessel function evaluator
+        """
+        self.waveNumber = waveNumber
+        self.azimuthalExpansionNumber = azimuthalExpansionNumber
+        self.trigParity = trigParity
+        self.currentSheetHalfThickness = currentSheetHalfThickness
+        self.bessel = bessel
 
     # def evaluate(self, *args):
     #     if len(args) == 1:

@@ -5,9 +5,9 @@
 #     UnwritableVectorIJK
 # )
 # from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-# from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
-#     ArrayExpansion2D
-# )
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
+    ArrayExpansion2D
+)
 # from emmpy.java.lang.unsupportedoperationexception import (
 #     UnsupportedOperationException
 # )
@@ -33,13 +33,12 @@ class Expansion2Ds:
         expansion2D.getExpansion = getExpansionWrapper
         return expansion2D
 
-    # @staticmethod
-    # def createFromArray(
-    #     data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-    # ):
-    #     return ArrayExpansion2D(
-    #         data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-    #     )
+    @staticmethod
+    def createFromArray(data, firstAzimuthalExpansionNumber,
+                        firstRadialExpansionNumber):
+        return ArrayExpansion2D(
+            data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
+        )
 
     # # N.B. NESTED CLASS UNUSED!
     # # @author stephgk1

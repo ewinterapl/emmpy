@@ -146,12 +146,11 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
                 Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
             )
-
-    #     return TailSheetExpansions(
-    #         Expansion1Ds.createFromArray(symmetricExpansions, 1),
-    #         Expansion2Ds.createFromArray(oddExpansions, 1, 1),
-    #         Expansion2Ds.createFromArray(evenExpansions, 1, 1)
-    #     )
+        return TailSheetExpansions(
+            Expansion1Ds.createFromArray(symmetricExpansions, 1),
+            Expansion2Ds.createFromArray(oddExpansions, 1, 1),
+            Expansion2Ds.createFromArray(evenExpansions, 1, 1)
+        )
 
     # def getNumAzimuthalExpansions(self):
     #     return self.numAzimuthalExpansions

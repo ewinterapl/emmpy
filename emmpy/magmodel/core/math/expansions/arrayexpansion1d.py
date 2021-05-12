@@ -3,7 +3,7 @@
 
 # from emmpy.com.google.common.base.preconditions import Preconditions
 # from emmpy.java.util.arrays import Arrays
-# from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
+from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 
 
 class ArrayExpansion1D(Expansion1D):

@@ -12,6 +12,7 @@ class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
     """author G.K.Stephens"""
 
     def __init__(self, array, firstExpansionNumber):
+        self.array = array
         self.firstExpansionNumber = firstExpansionNumber
 
     # def getLowerBoundIndex(self):

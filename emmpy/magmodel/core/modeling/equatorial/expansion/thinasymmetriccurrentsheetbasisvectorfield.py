@@ -17,9 +17,9 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpans
 # from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
 #     TailSheetCoefficients
 # )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
-#     TailSheetExpansions
-# )
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
+    TailSheetExpansions
+)
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
@@ -136,16 +136,16 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
                     self.bessel
                 )
-    #             evenExpansions[m - 1][n - 1] = (
-    #                 evenBasisFunction.evaluate(location).scale(aEven)
-    #             )
+                evenExpansions[m - 1][n - 1] = (
+                    evenBasisFunction.evaluate(location).scale(aEven)
+                )
 
-    #     if self.numAzimuthalExpansions == 0:
-    #         return TailSheetExpansions(
-    #             Expansion1Ds.createFromArray(symmetricExpansions, 1),
-    #             Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
-    #             Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
-    #         )
+        if self.numAzimuthalExpansions == 0:
+            return TailSheetExpansions(
+                Expansion1Ds.createFromArray(symmetricExpansions, 1),
+                Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
+                Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
+            )
 
     #     return TailSheetExpansions(
     #         Expansion1Ds.createFromArray(symmetricExpansions, 1),

@@ -24,28 +24,14 @@ class Expansion2Ds:
     def createNull(firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
                    lastRadialExpansionNumber):
         expansion2D = Expansion2D()
-
-    #     def getJLowerBoundIndexWrapper(ignoredSelf):
-    #         return firstRadialExpansionNumber
-    #     expansion2D.getJLowerBoundIndex = getJLowerBoundIndexWrapper
-
-    #     def getJUpperBoundIndexWrapper(ignoredSelf):
-    #         return lastRadialExpansionNumber
-    #     expansion2D.getJUpperBoundIndex = getJUpperBoundIndexWrapper
-
-    #     def getILowerBoundIndexWrapper(ignoredSelf):
-    #         return firstAzimuthalExpansionNumber
-    #     expansion2D.getILowerBoundIndex = getILowerBoundIndexWrapper
-
-    #     def getIUpperBoundIndexWrapper(ignoredSelf):
-    #         return firstAzimuthalExpansionNumber - 1
-    #     expansion2D.getIUpperBoundIndex = getIUpperBoundIndexWrapper
-
-    #     def getExpansionWrapper(ignoredSelf):
-    #         raise UnsupportedOperationException()
-    #     expansion2D.getExpansion = getExpansionWrapper
-
-    #     return expansion2D
+        expansion2D.getJLowerBoundIndex = lambda: firstRadialExpansionNumber
+        expansion2D.getJUpperBoundIndex = lambda: lastRadialExpansionNumber
+        expansion2D.getILowerBoundIndex = lambda: firstAzimuthalExpansionNumber
+        expansion2D.getIUpperBoundIndex = firstAzimuthalExpansionNumber - 1
+        def getExpansionWrapper(ignoredSelf):
+            raise UnsupportedOperationException()
+        expansion2D.getExpansion = getExpansionWrapper
+        return expansion2D
 
     # @staticmethod
     # def createFromArray(

@@ -7,25 +7,19 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
 
 
 class TailSheetCoefficients:
-    pass
-    # """This is a container class for the coefficients used for the
-    # {@link ThinAsymmetricCurrentSheetBasisVectorField} class.
+    """This is a container class for the coefficients used for the
+    ThinAsymmetricCurrentSheetBasisVectorField class.
 
-    # That is, this class holds the symmetric a<sub>n</sub><sup>(s)</sup>, odd
-    # a<sub>mn</sub><sup>(o)</sup>, and even a<sub>mn</sub><sup>(e)</sup>
-    # coefficients used in the expansion.
+    That is, this class holds the symmetric a_n^s, odd a_mn^o>, and even
+    a_mn^e) coefficients used in the expansion.
 
-    # @author G.K.Stephens
-    # """
+    author G.K.Stephens
+    """
 
-    # def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
-    #              tailSheetEvenValues):
-    #     """Constructor
-
-    #     @param tailSheetSymmetricValues
-    #     @param tailSheetOddValues
-    #     @param tailSheetEvenValues
-    #     """
+    def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
+                 tailSheetEvenValues):
+        """Constructor"""
+        pass
     #     self.tailSheetSymmetricValues = tailSheetSymmetricValues
     #     self.tailSheetOddValues = tailSheetOddValues
     #     self.tailSheetEvenValues = tailSheetEvenValues

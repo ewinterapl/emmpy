@@ -11,7 +11,6 @@ class CoefficientExpansion1D:
 
     author G.K.Stephens
     """
-    pass
 
     # def toArray(self):
     #     """@return a newly constructed double array containing the elements of
@@ -27,20 +26,19 @@ class CoefficientExpansion1D:
     #     size = self.getUpperBoundIndex() - self.getLowerBoundIndex() + 1
     #     return size
 
-    # def getLowerBoundIndex(self):
-    #     """@return the lower bound index of the expansion (L)"""
-    #     raise Exception
+    def getLowerBoundIndex(self):
+        """return the lower bound index of the expansion (L)"""
+        raise Exception
 
-    # def getUpperBoundIndex(self):
-    #     """@return the upper bound index of the expansion (U)"""
-    #     raise Exception
+    def getUpperBoundIndex(self):
+        """return the upper bound index of the expansion (U)"""
+        raise Exception
 
-    # def getCoefficient(self, index):
-    #     """gets ith coefficient for the expansion T<sub>i</sub> in &#8721;
-    #     T<sub>i</sub>
+    def getCoefficient(self, index):
+        """gets ith coefficient for the expansion T_i
 
-    #     @param index the index i
-    #     @return the ith coefficient for the expansion corresponding to the
-    #     index T<sub>i</sub>
-    #     """
-    #     raise Exception
+        param index the index i
+        return the ith coefficient for the expansion corresponding to the
+        index T_i
+        """
+        raise Exception

@@ -9,7 +9,7 @@
 #     UnwritableVectorIJ
 # )
 # from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-# from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
+from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
 class TailSheetSymmetricExpansion(VectorField):
@@ -23,17 +23,17 @@ class TailSheetSymmetricExpansion(VectorField):
     """
     pass
 
-    # def __init__(self, waveNumber, currentSheetHalfThickness, bessel):
-    #     """Constructor
+    def __init__(self, waveNumber, currentSheetHalfThickness, bessel):
+        """Constructor
 
-    #     @param waveNumber the wave number of this expansion
-    #     @param currentSheetHalfThickness a 2D scalar field representing the
-    #     current sheet half thickness throughout the equatorial current system
-    #     @param bessel the Bessel function evaluator
-    #     """
-    #     self.waveNumber = waveNumber
-    #     self.currentSheetHalfThickness = currentSheetHalfThickness
-    #     self.bessel = bessel
+        param waveNumber the wave number of this expansion
+        param currentSheetHalfThickness a 2D scalar field representing the
+        current sheet half thickness throughout the equatorial current system
+        param bessel the Bessel function evaluator
+        """
+        self.waveNumber = waveNumber
+        self.currentSheetHalfThickness = currentSheetHalfThickness
+        self.bessel = bessel
 
     # def evaluate(self, *args):
     #     if len(args) == 1:

@@ -28,7 +28,6 @@ class VectorIJK(UnwritableVectorIJK):
 
     author F.S.Turner
     """
-    pass
 
     # # The ZERO vector.
     # ZERO = UnwritableVectorIJK(0, 0, 0)
@@ -51,13 +50,14 @@ class VectorIJK(UnwritableVectorIJK):
     # # The negative of the K basis vector: (0,0,-1).
     # MINUS_K = UnwritableVectorIJK(0, 0, -1)
 
-    # def __init__(self, *args):
-    #     """Constructor"""
-    #     if len(args) == 0:
+    def __init__(self, *args):
+        if len(args) == 0:
+            raise Exception
     #         # Construct a vector with an initial value of
     #         # {@link VectorIJK#ZERO}
     #         UnwritableVectorIJK.__init__(self, 0, 0, 0)
-    #     elif len(args) == 1:
+        elif len(args) == 1:
+            raise Exception
     #         if isinstance(args[0], list):
     #             # Constructs a vector from the first three elements of an array
     #             # of doubles.
@@ -74,7 +74,8 @@ class VectorIJK(UnwritableVectorIJK):
     #             UnwritableVectorIJK.__init__(self, vector)
     #         else:
     #             raise Exception
-    #     elif len(args) == 2:
+        elif len(args) == 2:
+            raise Exception
     #         if isinstance(args[0], int) and isinstance(args[1], list):
     #             # Constructs a vector from the three elements of an array of
     #             # double starting with the offset index.
@@ -98,15 +99,16 @@ class VectorIJK(UnwritableVectorIJK):
     #             UnwritableVectorIJK.__init__(self, scale, vector)
     #         else:
     #             raise Exception
-    #     elif len(args) == 3:
+        elif len(args) == 3:
+            raise Exception
     #         # Constructs a vector from three basic components
     #         # @param i the ith component
     #         # @param j the jth component
     #         # @param k the kth component
     #         (i, j, k) = args
     #         UnwritableVectorIJK.__init__(self, i, j, k)
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception
 
     # def createUnitized(self):
     #     """Note: this method is overridden to return an instance of the

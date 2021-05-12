@@ -10,9 +10,9 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
 
 class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
     """author G.K.Stephens"""
-    pass
 
-    # def __init__(self, array, firstExpansionNumber):
+    def __init__(self, array, firstExpansionNumber):
+        pass
     #     self.array = Preconditions.checkNotNull(array)
     #     self.firstExpansionNumber = firstExpansionNumber
 

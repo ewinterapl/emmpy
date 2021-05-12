@@ -11,9 +11,9 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
-#     TailSheetAsymmetricExpansion
-# )
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
+    TailSheetAsymmetricExpansion
+)
 # from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
 #     TailSheetCoefficients
 # )
@@ -122,10 +122,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             # m is the azimuthal expansion number
             for m in range(1, self.numAzimuthalExpansions + 1):
                 aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
-    #             oddBasisFunction = TailSheetAsymmetricExpansion(
-    #                 kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
-    #                 self.bessel
-    #             )
+                oddBasisFunction = TailSheetAsymmetricExpansion(
+                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
+                    self.bessel
+                )
     #             oddExpansions[m - 1][n - 1] = (
     #                 oddBasisFunction.evaluate(location).scale(aOdd)
     #             )

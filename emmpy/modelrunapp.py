@@ -3,9 +3,9 @@
 
 import sys
 
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-#     UnwritableVectorIJK
-# )
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 # from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
 #     TS07DVariableCoefficientsUtils
@@ -63,8 +63,8 @@ def runThinSheet():
         tailLength, currentSheetHalfThickness, coeffs, bessel
     )
 
-#     # evaluate the model at r=(4,5,-2)
-#     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
+    # evaluate the model at r=(4,5,-2)
+    pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
 
 #     # evaluate the magnetic field
 #     bVect = model.evaluate(pos)

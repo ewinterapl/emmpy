@@ -19,18 +19,11 @@ class TailSheetCoefficients:
     def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
                  tailSheetEvenValues):
         """Constructor"""
-        pass
-    #     self.tailSheetSymmetricValues = tailSheetSymmetricValues
-    #     self.tailSheetOddValues = tailSheetOddValues
-    #     self.tailSheetEvenValues = tailSheetEvenValues
-
-    #     # TODO add checks
-    #     # checkArgument(tailSheetSymmetricValues.getLowerBoundIndex());
-    #     # checkArgument(expression);
-    #     # checkArgument(expression);
-
-    #     self.numAzimuthalExpansions = tailSheetOddValues.iSize()
-    #     self.numRadialExpansions = tailSheetOddValues.jSize()
+        self.tailSheetSymmetricValues = tailSheetSymmetricValues
+        self.tailSheetOddValues = tailSheetOddValues
+        self.tailSheetEvenValues = tailSheetEvenValues
+        self.numAzimuthalExpansions = tailSheetOddValues.iSize()
+        self.numRadialExpansions = tailSheetOddValues.jSize()
 
     @staticmethod
     def createUnity(numAzimuthalExpansions, numRadialExpansions):

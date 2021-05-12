@@ -15,10 +15,10 @@ class DifferentiableScalarFieldIJ(
       ScalarField2D, ScalarFieldIJSpatialDerivative):
     """Represents the Cartesian spatial derivatives of a ScalarField.
 
-    # There are three such derivatives.
+    There are three such derivatives.
 
-    # author G.K.Stephens
-    # """
+    author G.K.Stephens
+    """
 
     def __init__(self):
         """Do-nothing constructor to avoid Exception in inherited ScalarField2D

@@ -15,7 +15,7 @@
 # from emmpy.java.lang.unsupportedoperationexception import (
 #     UnsupportedOperationException
 # )
-# from emmpy.utilities.isrealnumber import isRealNumber
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableVectorIJ:
@@ -42,11 +42,10 @@ class UnwritableVectorIJ:
 
     author G.K.Stephens copy and extension of F.S.Turner
     """
-    pass
 
-    # def __init__(self, *args):
-    #     """Constructor"""
-    #     if len(args) == 1:
+    def __init__(self, *args):
+        if len(args) == 1:
+            raise Exception
     #         if isinstance(args[0], list):
     #             # Constructs a vector from the first two elements of an array
     #             # of doubles.
@@ -59,29 +58,31 @@ class UnwritableVectorIJ:
     #             self.__init__(vector.i, vector.j)
     #         else:
     #             raise CrucibleRuntimeException
-    #     elif len(args) == 2:
-    #         if isRealNumber(args[0]) and isRealNumber(args[1]):
-    #             # Basic 2-element constructor
-    #             (i, j) = args
+        elif len(args) == 2:
+            if isRealNumber(args[0]) and isRealNumber(args[1]):
+                # Basic 2-element constructor
+                (i, j) = args
     #             # The ith component of the vector, synonymous with the X-axis.
     #             self.i = i
     #             # The jth component of the vector, synonymous with the Y-axis.
     #             self.j = j
-    #         elif isinstance(args[0], int) and isinstance(args[1], list):
+            elif isinstance(args[0], int) and isinstance(args[1], list):
+                raise Exception
     #             # Constructs a vector from the two elements of an array of
     #             # double starting with the offset index.
     #             (offset, data) = args
     #             self.__init__(data[offset], data[offset + 1])
-    #         elif isRealNumber(args[0]) and isinstance(args[1],
-    #                                                   UnwritableVectorIJ):
+            elif (isRealNumber(args[0]) and
+                  isinstance(args[1], UnwritableVectorIJ)):
+                  raise Exception
     #             # Scaling constructor, creates a new vector by applying a
     #             # scalar multiple to the components of a pre-existing vector.
     #             (scale, vector) = args
     #             self.__init__(scale*vector.i, scale*vector.j)
-    #         else:
-    #             raise CrucibleRuntimeException
-    #     else:
-    #         raise CrucibleRuntimeException
+            else:
+                raise CrucibleRuntimeException
+        else:
+            raise CrucibleRuntimeException
 
     # def createUnitized(self):
     #     """Creates a new, unit length copy of the existing vector.

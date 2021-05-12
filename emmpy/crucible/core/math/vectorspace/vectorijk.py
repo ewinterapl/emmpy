@@ -214,9 +214,10 @@ class VectorIJK(UnwritableVectorIJK):
     #     else:
     #         raise BugException
 
-    # def setTo(self, *args):
-    #     """Set the vector contents."""
-    #     if len(args) == 1:
+    def setTo(self, *args):
+        """Set the vector contents."""
+        if len(args) == 1:
+            raise Exception
     #         if isinstance(args[0], UnwritableVectorIJK):
     #             # Set the vector contents to match those of another.
     #             # @param vector the vector whose contents are to be copied into
@@ -235,7 +236,8 @@ class VectorIJK(UnwritableVectorIJK):
     #             return self.setTo(data[0], data[1], data[2])
     #         else:
     #             raise Exception
-    #     elif len(args) == 2:
+        elif len(args) == 2:
+            raise Exception
     #         if isRealNumber(args[0]) and isinstance(args[1],
     #                                                 UnwritableVectorIJK):
     #             # Set the vector contents to match the scale of another.
@@ -256,7 +258,8 @@ class VectorIJK(UnwritableVectorIJK):
     #             (offset, data) = args
     #             return self.setTo(data[offset], data[offset + 1],
     #                               data[offset + 2])
-    #     elif len(args) == 3:
+        elif len(args) == 3:
+            raise Exception
     #         if (isRealNumber(args[0]) and isRealNumber(args[1])
     #             and isRealNumber(args[2])):
     #             # Sets the basic components of the vector.
@@ -268,8 +271,8 @@ class VectorIJK(UnwritableVectorIJK):
     #             self.j = j
     #             self.k = k
     #             return self
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception
 
     # def setToUnitized(self, vector):
     #     """Sets the vector content to the a unit length version of another.

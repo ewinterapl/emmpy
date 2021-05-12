@@ -46,8 +46,8 @@ class TailSheetSymmetricExpansion(VectorField):
             z = location.getK()
             locationIJ = UnwritableVectorIJ(x, y)
 
-    #         # get the current sheet half thickness
-    #         thick = self.currentSheetHalfThickness.evaluate(locationIJ)
+            # get the current sheet half thickness
+            thick = self.currentSheetHalfThickness.evaluate(locationIJ)
 
     #         # now get the current sheet half thickness derivatives
     #         dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
@@ -77,6 +77,6 @@ class TailSheetSymmetricExpansion(VectorField):
     #         by = kn*z*j1*sinPhi*ex/zDist
     #         bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
 
-    #         return buffer.setTo(bx, by, bz)
+            return buffer.setTo(bx, by, bz)
         else:
             raise Exception

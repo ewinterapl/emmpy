@@ -7,9 +7,9 @@
 # from emmpy.java.lang.unsupportedoperationexception import (
 #     UnsupportedOperationException
 # )
-# from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
-#     ArrayCoefficientExpansion1D
-# )
+from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
+    ArrayCoefficientExpansion1D
+)
 # from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
 #     ArrayCoefficientExpansion2D
 # )
@@ -96,9 +96,9 @@ class CoefficientExpansions:
             (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
             # Create a dummy expansion of the appropriate size.
             n = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-    #         p = ArrayCoefficientExpansion1D(
-    #             [None]*n, firstRadialExpansionNumber
-    #         )
+            p = ArrayCoefficientExpansion1D(
+                [None]*n, firstRadialExpansionNumber
+            )
     #         v = CoefficientExpansion1D()
     #         v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
     #         v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()

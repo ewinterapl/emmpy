@@ -127,6 +127,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     self.bessel
                 )
                 obf_eval = oddBasisFunction.evaluate(location)
+                # obf_eval.scale(odd)
                 # ORIGINAL CODE
                 # oddExpansions[m - 1][n - 1] = (
                 #     oddBasisFunction.evaluate(location).scale(aOdd)

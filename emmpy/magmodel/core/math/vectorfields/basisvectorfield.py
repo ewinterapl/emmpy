@@ -4,7 +4,7 @@ N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
 """
 
-# from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
+from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
 class BasisVectorField(VectorField):

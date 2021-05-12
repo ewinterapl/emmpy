@@ -37,16 +37,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
-    #     """Constructor
-
-    #     @param tailLength
-    #     @param currentSheetHalfThickness
-    #     @param bessel
-    #     """
-    #     self.coeffs = coeffs
+    def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
+        pass
+        # self.coeffs = coeffs
     #     self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
     #     self.numRadialExpansions = coeffs.getNumRadialExpansions()
     #     self.tailLength = tailLength

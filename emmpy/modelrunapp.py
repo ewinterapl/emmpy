@@ -68,7 +68,7 @@ def runThinSheet():
 
     # evaluate the magnetic field
     bVect = model.evaluate(pos)
-#     print(bVect.toString())
+    print(bVect.toString())
 
     print("Ending runThinSheet()")
 

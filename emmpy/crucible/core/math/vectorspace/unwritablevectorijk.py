@@ -34,24 +34,21 @@ class UnwritableVectorIJK:
 
     def __init__(self, *args):
         if len(args) == 1:
-            raise Exception
-    #         if isinstance(args[0], list):
-    #             # Constructs a vector from the first three elements of an
-    #             # array of doubles.
-    #             # @param data the array of doubles
-    #             data = args[0]
-    #             self.__init__(data[0], data[1], data[2])
+            if isinstance(args[0], list):
+                # Constructs a vector from the first three elements of an
+                # array of doubles.
+                # @aram data the array of doubles
+                data = args[0]
+                self.__init__(data[0], data[1], data[2])
     #         elif isinstance(args[0], UnwritableVectorIJK):
     #             # Copy constructor, creates a vector by copying the values of a
     #             # pre-existing one.
     #             # @param vector the vector whose contents are to be copied
     #             vector = args[0]
     #             self.__init__(vector.i, vector.j, vector.k)
-    #         else:
-    #             # Throw exception
-    #             raise Exception
-        elif len(args) == 2:
-            raise Exception
+            else:
+                raise Exception
+        # elif len(args) == 2:
     #         if isinstance(args[0], int) and isinstance(args[1], list):
     #             # Constructs a vector from the three elements of an array of
     #             # double starting with the offset index.

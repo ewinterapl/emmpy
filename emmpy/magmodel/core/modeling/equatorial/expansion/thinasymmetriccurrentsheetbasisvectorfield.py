@@ -1,9 +1,9 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield"""
 
 
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-#     UnwritableVectorIJK
-# )
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 # from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
@@ -81,11 +81,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
     def evaluateExpansions(self, location):
         """This guy recalculates everything"""
-        pass
-    #     zeros = [0, 0, 0]
-    #     symmetricExpansions = [
-    #         UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)
-    #     ]
+        zeros = [0, 0, 0]
+        symmetricExpansions = [
+            UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)
+        ]
     #     oddExpansions = (
     #         [[UnwritableVectorIJK(zeros)
     #           for j in range(self.numRadialExpansions)]

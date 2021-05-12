@@ -44,7 +44,7 @@ class TailSheetCoefficients:
     #     @param array
     #     @param numAzimuthalExpansions
     #     @param numRadialExpansions
-    #     @return
+    #     @retuxrn
     #     """
 
     #     sym = [None]*numRadialExpansions
@@ -92,9 +92,9 @@ class TailSheetCoefficients:
         """return the symmetric coefficients a_n^s"""
         return self.tailSheetSymmetricValues
 
-    # def getTailSheetOddValues(self):
-    #     """@return the odd coefficients a<sub>mn</sub><sup>(o)</sup>"""
-    #     return self.tailSheetOddValues
+    def getTailSheetOddValues(self):
+        """return the odd coefficients a_mn^o"""
+        return self.tailSheetOddValues
 
     # def getTailSheetEvenValues(self):
     #     """@return the even coefficients a<sub>n</sub><sup>(e)</sup>"""

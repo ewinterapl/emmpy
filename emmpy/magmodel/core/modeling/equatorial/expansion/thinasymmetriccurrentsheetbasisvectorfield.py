@@ -119,9 +119,9 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             #     symBasisFunction.evaluate(location).scale(a)
             # )
 
-    #         # m is the azimuthal expansion number
-    #         for m in range(1, self.numAzimuthalExpansions + 1):
-    #             aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
+            # m is the azimuthal expansion number
+            for m in range(1, self.numAzimuthalExpansions + 1):
+                aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
     #             oddBasisFunction = TailSheetAsymmetricExpansion(
     #                 kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
     #                 self.bessel

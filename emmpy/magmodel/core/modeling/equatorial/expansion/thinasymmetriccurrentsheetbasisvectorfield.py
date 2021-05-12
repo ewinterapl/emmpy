@@ -41,7 +41,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
-    #     self.numRadialExpansions = coeffs.getNumRadialExpansions()
+        self.numRadialExpansions = coeffs.getNumRadialExpansions()
     #     self.tailLength = tailLength
     #     self.currentSheetHalfThickness = currentSheetHalfThickness
     #     self.bessel = bessel

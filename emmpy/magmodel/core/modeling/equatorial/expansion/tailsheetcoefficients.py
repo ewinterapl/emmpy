@@ -129,8 +129,8 @@ class TailSheetCoefficients:
     def getNumAzimuthalExpansions(self):
         return self.numAzimuthalExpansions
 
-    # def getNumRadialExpansions(self):
-    #     return self.numRadialExpansions
+    def getNumRadialExpansions(self):
+        return self.numRadialExpansions
 
     # def getNumberOfExpansions(self):
     #     return (self.numRadialExpansions +

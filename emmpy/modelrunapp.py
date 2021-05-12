@@ -54,8 +54,8 @@ def runThinSheet():
     # Set all the linear coeffs to 1.0
     coeffs = TailSheetCoefficients.createUnity(numAz, numRad)
 
-#     # use Jay Albert's Bessel function evaluator
-#     bessel = AlbertBesselFunctionEvaluator(14)
+    # # use Jay Albert's Bessel function evaluator
+    # bessel = AlbertBesselFunctionEvaluator(14)
 
 #     # now construct the thin sheet field model
 #     model = ThinAsymmetricCurrentSheetBasisVectorField(

@@ -27,14 +27,14 @@ import sys
 
 def ModelRunApp():
     print("Starting ModelRunApp()")
-    # runThinSheet()
+    runThinSheet()
     # runTs07D()
     print("Ending ModelRunApp()")
 
 
-# def runThinSheet():
-#     """Builds and runs the thin sheet model"""
-#     print("Starting runThinSheet()")
+def runThinSheet():
+    """Builds and runs the thin sheet model"""
+    print("Starting runThinSheet()")
 
 #     # use a resolution of (M,N)=(4,5)
 #     numAz = 4
@@ -69,7 +69,7 @@ def ModelRunApp():
 #     bVect = model.evaluate(pos)
 #     print(bVect.toString())
 
-#     print("Ending runThinSheet()")
+    print("Ending runThinSheet()")
 
 
 # def runTs07D():

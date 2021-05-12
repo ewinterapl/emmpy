@@ -126,8 +126,8 @@ class TailSheetCoefficients:
     #             count += 1
     #     return CoefficientExpansions.createExpansionFromArray(coeffs, 1)
 
-    # def getNumAzimuthalExpansions(self):
-    #     return self.numAzimuthalExpansions
+    def getNumAzimuthalExpansions(self):
+        return self.numAzimuthalExpansions
 
     # def getNumRadialExpansions(self):
     #     return self.numRadialExpansions

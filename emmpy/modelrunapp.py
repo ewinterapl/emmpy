@@ -20,9 +20,9 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses impo
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
-#     ThinAsymmetricCurrentSheetBasisVectorField
-# )
+from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
+    ThinAsymmetricCurrentSheetBasisVectorField
+)
 
 
 def ModelRunApp():
@@ -56,11 +56,12 @@ def runThinSheet():
 
     # # use Jay Albert's Bessel function evaluator
     # bessel = AlbertBesselFunctionEvaluator(14)
+    bessel = None
 
-#     # now construct the thin sheet field model
-#     model = ThinAsymmetricCurrentSheetBasisVectorField(
-#         tailLength, currentSheetHalfThickness, coeffs, bessel
-#     )
+    # now construct the thin sheet field model
+    model = ThinAsymmetricCurrentSheetBasisVectorField(
+        tailLength, currentSheetHalfThickness, coeffs, bessel
+    )
 
 #     # evaluate the model at r=(4,5,-2)
 #     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)

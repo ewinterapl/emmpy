@@ -12,14 +12,15 @@ from emmpy.crucible.crust.vectorfieldsij.scalarfieldspatialderivative import (
 
 
 class DifferentiableScalarFieldIJ(
-    ScalarField2D, ScalarFieldIJSpatialDerivative):
+      ScalarField2D, ScalarFieldIJSpatialDerivative):
     """Represents the Cartesian spatial derivatives of a ScalarField.
 
-    There are three such derivatives.
+    # There are three such derivatives.
 
-    author G.K.Stephens
-    """
+    # author G.K.Stephens
+    # """
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE"""
+        """Do-nothing constructor to avoid Exception in inherited ScalarField2D
+        constructor"""
         pass

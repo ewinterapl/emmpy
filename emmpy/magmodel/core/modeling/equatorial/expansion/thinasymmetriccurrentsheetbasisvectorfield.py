@@ -70,19 +70,18 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
     def evaluate(self, location):
         buffer = VectorIJK()
+        e = self.evaluateExpansions(location)
+        # sum = e.sum()
+        # buffer.setTo(sum)
+        # ORIGINAL
         # return buffer.setTo(self.evaluateExpansions(location).sum())
 
     # def evaluateExpansion(self, location):
     #     return self.evaluateExpansions(location).getExpansionsAsList()
 
-    # def evaluateExpansions(self, location):
-    #     """This guy recalculates everything
-
-    #     @param positionVector
-    #     @param dipoleTilt
-    #     @param dynamicPressure
-    #     @param includeShield
-    #     """
+    def evaluateExpansions(self, location):
+        """This guy recalculates everything"""
+        pass
     #     zeros = [0, 0, 0]
     #     symmetricExpansions = [
     #         UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)

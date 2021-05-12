@@ -1,7 +1,7 @@
 """Direct Python port of ModelRunApp.java"""
 
 
-# import sys
+import sys
 
 # from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 #     UnwritableVectorIJK
@@ -25,11 +25,11 @@
 # )
 
 
-# def ModelRunApp():
-#     print("Starting ModelRunApp()")
-#     runThinSheet()
-#     runTs07D()
-#     print("Ending ModelRunApp()")
+def ModelRunApp():
+    print("Starting ModelRunApp()")
+    # runThinSheet()
+    # runTs07D()
+    print("Ending ModelRunApp()")
 
 
 # def runThinSheet():
@@ -108,8 +108,7 @@
 
 
 if __name__ == "__main__":
-    pass
-    # args = sys.argv
-    # print("Starting main()")
-    # ModelRunApp()
-    # print("Ending main()")
+    args = sys.argv
+    print("Starting main()")
+    ModelRunApp()
+    print("Ending main()")

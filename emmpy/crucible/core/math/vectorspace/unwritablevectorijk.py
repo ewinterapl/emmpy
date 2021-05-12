@@ -31,9 +31,10 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 
 
 class UnwritableVectorIJK:
-    pass
-    # def __init__(self, *args):
-    #     if len(args) == 1:
+
+    def __init__(self, *args):
+        if len(args) == 1:
+            raise Exception
     #         if isinstance(args[0], list):
     #             # Constructs a vector from the first three elements of an
     #             # array of doubles.
@@ -49,7 +50,8 @@ class UnwritableVectorIJK:
     #         else:
     #             # Throw exception
     #             raise Exception
-    #     elif len(args) == 2:
+        elif len(args) == 2:
+            raise Exception
     #         if isinstance(args[0], int) and isinstance(args[1], list):
     #             # Constructs a vector from the three elements of an array of
     #             # double starting with the offset index.
@@ -69,20 +71,20 @@ class UnwritableVectorIJK:
     #         else:
     #             # Throw exception
     #             raise Exception
-    #     elif len(args) == 3:
-    #         # Constructs a vector from the three basic components.
-    #         # @param i the ith component
-    #         # @param j the jth component
-    #         # @param k the kth component
-    #         (i, j, k) = args
-    #         # The ith component of the vector, synonymous with the X-axis
-    #         self.i = i
-    #         # The jth component of the vector, synonymous with the Y-axis
-    #         self.j = j
-    #         # The kth component of the vector, synonymous with the Z-axis
-    #         self.k = k
-    #     else:
-    #         raise Exception
+        elif len(args) == 3:
+            # Constructs a vector from the three basic components.
+            # param i the ith component
+            # param j the jth component
+            # param k the kth component
+            (i, j, k) = args
+            # The ith component of the vector, synonymous with the X-axis
+            self.i = i
+            # The jth component of the vector, synonymous with the Y-axis
+            self.j = j
+            # The kth component of the vector, synonymous with the Z-axis
+            self.k = k
+        else:
+            raise Exception
 
     # def createUnitized(self):
     #     """Creates a new, unit length copy of the existing vector.

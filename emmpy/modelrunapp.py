@@ -66,8 +66,8 @@ def runThinSheet():
     # evaluate the model at r=(4,5,-2)
     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
 
-#     # evaluate the magnetic field
-#     bVect = model.evaluate(pos)
+    # evaluate the magnetic field
+    bVect = model.evaluate(pos)
 #     print(bVect.toString())
 
     print("Ending runThinSheet()")

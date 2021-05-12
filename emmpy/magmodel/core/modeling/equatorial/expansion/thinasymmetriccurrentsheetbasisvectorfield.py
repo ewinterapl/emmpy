@@ -68,9 +68,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     #     return ThinAsymmetricCurrentSheetBasisVectorField(
     #         tailLength, currentSheetHalfThickness, coeffs, bessel)
 
-    # def evaluate(self, location):
-    #     buffer = VectorIJK()
-    #     return buffer.setTo(self.evaluateExpansions(location).sum())
+    def evaluate(self, location):
+        pass
+        # buffer = VectorIJK()
+        # return buffer.setTo(self.evaluateExpansions(location).sum())
 
     # def evaluateExpansion(self, location):
     #     return self.evaluateExpansions(location).getExpansionsAsList()

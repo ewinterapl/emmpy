@@ -260,5 +260,5 @@ class UnwritableVectorIJK:
     #         return False
     #     return True
 
-    # def toString(self) -> str:
-    #     return "[%s,%s,%s]" % (self.i, self.j, self.k)
+    def toString(self):
+        return "[%s,%s,%s]" % (self.i, self.j, self.k)

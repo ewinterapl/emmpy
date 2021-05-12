@@ -22,7 +22,6 @@
 
 
 class CoefficientExpansions:
-    pass
 
     # @staticmethod
     # def createExpansionFromArray(*args):
@@ -91,14 +90,9 @@ class CoefficientExpansions:
     #     # Return the view.
     #     return v
 
-    # @staticmethod
-    # def createUnity(*args):
-    #     """createUnity()
-
-    #     @param firstRadialExpansionNumber
-    #     @param lastRadialExpansionNumber
-    #     @return
-    #     """
+    @staticmethod
+    def createUnity(*args):
+        pass
     #     if len(args) == 2:
     #         (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
     #         # Create a dummy expansion of the appropriate size.

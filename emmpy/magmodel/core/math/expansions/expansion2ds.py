@@ -14,7 +14,7 @@
 # from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
 #     CoefficientExpansion2D
 # )
-# from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
+from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
 # from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -23,8 +23,7 @@ class Expansion2Ds:
     @staticmethod
     def createNull(firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
                    lastRadialExpansionNumber):
-        pass
-    #     expansion2D = Expansion2D()
+        expansion2D = Expansion2D()
 
     #     def getJLowerBoundIndexWrapper(ignoredSelf):
     #         return firstRadialExpansionNumber

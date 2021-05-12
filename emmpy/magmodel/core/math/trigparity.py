@@ -3,9 +3,9 @@
 
 # from math import cos, sin
 
-# from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
-#     DifferentiableUnivariateFunction
-# )
+from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
+    DifferentiableUnivariateFunction
+)
 
 
 class TrigParity(DifferentiableUnivariateFunction):

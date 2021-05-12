@@ -20,15 +20,16 @@ class CurrentSheetHalfThicknesses:
     #     """
     #     pass
 
-    # @staticmethod
-    # def createConstant(currentSheetHalfThickness):
-    #     """Returns a constant current sheet half thickness
+    @staticmethod
+    def createConstant(currentSheetHalfThickness):
+        """Returns a constant current sheet half thickness
 
-    #     @param currentSheetHalfThickness the current sheet half thickness
-    #     (in R_E)
-    #     @return a newly created DifferentiableScalarFieldIJ representing the
-    #     current sheet thickness
-    #     """
+        param currentSheetHalfThickness the current sheet half thickness
+        (in R_E)
+        return a newly created DifferentiableScalarFieldIJ representing the
+        current sheet thickness
+        """
+        pass
     #     dsfij = DifferentiableScalarFieldIJ()
     #     dsfij.differentiateFDi = lambda *args: 0
     #     dsfij.differentiateFDj = lambda *args: 0

@@ -15,16 +15,14 @@ class TailSheetExpansions:
 
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(
-    #     self, tailSheetSymmetricValues, tailSheetOddValues, tailSheetEvenValues
-    # ):
-    #     self.tailSheetSymmetricValues = tailSheetSymmetricValues
-    #     self.tailSheetOddValues = tailSheetOddValues
-    #     self.tailSheetEvenValues = tailSheetEvenValues
-    #     self.numAzimuthalExpansions = tailSheetOddValues.iSize()
-    #     self.numRadialExpansions = tailSheetOddValues.jSize()
+    def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
+                 tailSheetEvenValues):
+        self.tailSheetSymmetricValues = tailSheetSymmetricValues
+        self.tailSheetOddValues = tailSheetOddValues
+        self.tailSheetEvenValues = tailSheetEvenValues
+        self.numAzimuthalExpansions = tailSheetOddValues.iSize()
+        self.numRadialExpansions = tailSheetOddValues.jSize()
 
     # def getTailSheetSymmetricValues(self):
     #     return self.tailSheetSymmetricValues

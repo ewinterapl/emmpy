@@ -16,23 +16,23 @@ class Expansion2D:
     """
     pass
 
-    # def iSize(self):
-    #     """@return the number of elements of the expansion"""
-    #     size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
-    #     return size
+    def iSize(self):
+        """return the number of elements of the expansion"""
+        size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
+        return size
 
-    # def jSize(self):
-    #     """@return the number of elements of the expansion"""
-    #     size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
-    #     return size
+    def jSize(self):
+        """return the number of elements of the expansion"""
+        size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
+        return size
 
-    # def getILowerBoundIndex(self):
-    #     """@return the lower bound index of the expansion (L)"""
-    #     raise Exception
+    def getILowerBoundIndex(self):
+        """return the lower bound index of the expansion (L)"""
+        raise Exception
 
-    # def getIUpperBoundIndex(self):
-    #     """@return the upper bound index of the expansion (U<sub>i</sub>)"""
-    #     raise Exception
+    def getIUpperBoundIndex(self):
+        """return the upper bound index of the expansion (U<sub>i</sub>)"""
+        raise Exception
 
     # def getJLowerBoundIndex(self):
     #     """@return the lower bound index of the expansion (L<sub>j</sub>)"""

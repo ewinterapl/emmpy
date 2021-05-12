@@ -21,17 +21,17 @@ class ArrayExpansion2D(Expansion2D):
             firstRadialExpansionNumber + len(data[0]) - 1
         )
 
-    # def getJLowerBoundIndex(self):
-    #     return self.firstRadialExpansionNumber
+    def getJLowerBoundIndex(self):
+        return self.firstRadialExpansionNumber
 
-    # def getJUpperBoundIndex(self):
-    #     return self.lastRadialExpansionNumber
+    def getJUpperBoundIndex(self):
+        return self.lastRadialExpansionNumber
 
-    # def getILowerBoundIndex(self):
-    #     return self.firstAzimuthalExpansionNumber
+    def getILowerBoundIndex(self):
+        return self.firstAzimuthalExpansionNumber
 
-    # def getIUpperBoundIndex(self):
-    #     return self.lastAzimuthalExpansionNumber
+    def getIUpperBoundIndex(self):
+        return self.lastAzimuthalExpansionNumber
 
     # def getExpansion(self, azimuthalExpansion, radialExpansion):
     #     return (

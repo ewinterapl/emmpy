@@ -92,11 +92,10 @@ class CoefficientExpansions:
 
     @staticmethod
     def createUnity(*args):
-        pass
-    #     if len(args) == 2:
-    #         (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-    #         # Create a dummy expansion of the appropriate size.
-    #         n = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+        if len(args) == 2:
+            (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
+            # Create a dummy expansion of the appropriate size.
+            n = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
     #         p = ArrayCoefficientExpansion1D(
     #             [None]*n, firstRadialExpansionNumber
     #         )
@@ -104,7 +103,8 @@ class CoefficientExpansions:
     #         v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
     #         v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
     #         v.getCoefficient = lambda index: 1
-    #     elif len(args) == 4:
+        elif len(args) == 4:
+            raise Exception
     #         (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
     #          firstRadialExpansionNumber, lastRadialExpansionNumber) = args
     #         # Create a dummy expansion of the appropriate size.
@@ -134,11 +134,11 @@ class CoefficientExpansions:
     #         v.getCoefficient = (
     #             lambda azimuthalExpansion, radialExpansion: 1
     #         )
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception
 
-    #     # Return the view.
-    #     return v
+        # Return the view.
+        return v
 
     # @staticmethod
     # def scale(a, scaleFactor):

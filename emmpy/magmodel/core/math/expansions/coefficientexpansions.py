@@ -100,9 +100,10 @@ class CoefficientExpansions:
                 [None]*n, firstRadialExpansionNumber
             )
             v = CoefficientExpansion1D()
-    #         v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-    #         v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-    #         v.getCoefficient = lambda index: 1
+            # These lambdas are not bound methods.
+            v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
+            v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
+            v.getCoefficient = lambda index: 1
         elif len(args) == 4:
             raise Exception
     #         (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,

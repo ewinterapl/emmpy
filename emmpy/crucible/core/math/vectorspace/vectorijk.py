@@ -52,10 +52,9 @@ class VectorIJK(UnwritableVectorIJK):
 
     def __init__(self, *args):
         if len(args) == 0:
-            raise Exception
-    #         # Construct a vector with an initial value of
-    #         # {@link VectorIJK#ZERO}
-    #         UnwritableVectorIJK.__init__(self, 0, 0, 0)
+            # Construct a vector with an initial value of
+            # VectorIJK.ZERO
+            UnwritableVectorIJK.__init__(self, 0, 0, 0)
         elif len(args) == 1:
             raise Exception
     #         if isinstance(args[0], list):

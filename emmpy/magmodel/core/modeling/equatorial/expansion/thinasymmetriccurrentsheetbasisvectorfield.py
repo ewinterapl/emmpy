@@ -107,8 +107,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             symBasisFunction = TailSheetSymmetricExpansion(
                 kn, self.currentSheetHalfThickness, self.bessel
             )
-
-    #         a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
+            tssv = self.coeffs.getTailSheetSymmetricValues()
+            # a = tssv.getCoefficient(n)
+            # ORIGINAL CODE
+            # a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
 
     #         symmetricExpansions[n - 1] = (
     #             symBasisFunction.evaluate(location).scale(a)

@@ -88,9 +88,9 @@ class TailSheetCoefficients:
     #         CoefficientExpansions.createExpansionFromArray(odd, 1, 1),
     #         CoefficientExpansions.createExpansionFromArray(even, 1, 1))
 
-    # def getTailSheetSymmetricValues(self):
-    #     """@return the symmetric coefficients a<sub>n</sub><sup>(s)</sup>"""
-    #     return self.tailSheetSymmetricValues
+    def getTailSheetSymmetricValues(self):
+        """return the symmetric coefficients a_n^s"""
+        return self.tailSheetSymmetricValues
 
     # def getTailSheetOddValues(self):
     #     """@return the odd coefficients a<sub>mn</sub><sup>(o)</sup>"""

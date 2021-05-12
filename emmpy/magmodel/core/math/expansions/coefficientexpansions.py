@@ -10,9 +10,9 @@
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
-# from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
-#     ArrayCoefficientExpansion2D
-# )
+from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
+)
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
     CoefficientExpansion1D
 )
@@ -105,18 +105,13 @@ class CoefficientExpansions:
             v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
             v.getCoefficient = lambda index: 1
         elif len(args) == 4:
-            raise Exception
-    #         (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
-    #          firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-    #         # Create a dummy expansion of the appropriate size.
-    #         nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-    #         na = (
-    #             lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber
-    #             + 1
-    #         )
-    #         arr = []
-    #         for i in range(na):
-    #             arr.append([None]*nr)
+            (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
+             firstRadialExpansionNumber, lastRadialExpansionNumber) = args
+            # Create a dummy expansion of the appropriate size.
+            nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+            na = (lastAzimuthalExpansionNumber -
+                  firstAzimuthalExpansionNumber + 1)
+            arr = [[None]*nr]*na
     #         p = ArrayCoefficientExpansion2D(
     #             arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
     #         )

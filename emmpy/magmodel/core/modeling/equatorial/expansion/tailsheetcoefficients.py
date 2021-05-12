@@ -38,15 +38,16 @@ class TailSheetCoefficients:
     #     self.numAzimuthalExpansions = tailSheetOddValues.iSize()
     #     self.numRadialExpansions = tailSheetOddValues.jSize()
 
-    # @staticmethod
-    # def createUnity(numAzimuthalExpansions, numRadialExpansions):
-    #     """Creates a {@link TailSheetCoefficients} where all the coefficients
-    #     have been set to 1
+    @staticmethod
+    def createUnity(numAzimuthalExpansions, numRadialExpansions):
+        """Creates a {@link TailSheetCoefficients} where all the coefficients
+        have been set to 1
 
-    #     @param numAzimuthalExpansions
-    #     @param numRadialExpansions
-    #     @return
-    #     """
+        @param numAzimuthalExpansions
+        @param numRadialExpansions
+        @return
+        """
+        pass
     #     return TailSheetCoefficients(
     #         CoefficientExpansions.createUnity(1, numRadialExpansions),
     #         CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,

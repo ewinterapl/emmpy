@@ -1,9 +1,9 @@
 """emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion"""
 
 
-# from math import exp, sqrt
+from math import exp, sqrt
 
-# import scipy.special as sps
+import scipy.special as sps
 
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
@@ -49,33 +49,32 @@ class TailSheetSymmetricExpansion(VectorField):
             # get the current sheet half thickness
             thick = self.currentSheetHalfThickness.evaluate(locationIJ)
 
-    #         # now get the current sheet half thickness derivatives
-    #         dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
-    #         dThickdy = self.currentSheetHalfThickness.differentiateFDj(locationIJ)
+            # now get the current sheet half thickness derivatives
+            dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
+            dThickdy = self.currentSheetHalfThickness.differentiateFDj(locationIJ)
 
-    #         # convert to polar
-    #         rho = sqrt(x*x + y*y)
+            # convert to polar
+            rho = sqrt(x*x + y*y)
 
-    #         # convert derivatives to polar
-    #         dThickdRho = (x*dThickdx + y*dThickdy)/rho
+            # convert derivatives to polar
+            dThickdRho = (x*dThickdx + y*dThickdy)/rho
+            cosPhi = x/rho
+            sinPhi = y/rho
 
-    #         cosPhi = x/rho
-    #         sinPhi = y/rho
+            # introduce a finite thickness in z by replacing z with this value
+            zDist = sqrt(z*z + thick*thick)
 
-    #         # introduce a finite thickness in z by replacing z with this value
-    #         zDist = sqrt(z*z + thick*thick)
+            # kn is the wave number
+            kn = self.waveNumber
 
-    #         # kn is the wave number
-    #         kn = self.waveNumber
+            # evaluate the Bessel function
+            j0 = sps.j0(kn*rho)
+            j1 = sps.j1(kn*rho)
 
-    #         # evaluate the Bessel function
-    #         j0 = sps.j0(kn*rho)
-    #         j1 = sps.j1(kn*rho)
-
-    #         ex = exp(-kn*zDist)
-    #         bx = kn*z*j1*cosPhi*ex/zDist
-    #         by = kn*z*j1*sinPhi*ex/zDist
-    #         bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
+            ex = exp(-kn*zDist)
+            bx = kn*z*j1*cosPhi*ex/zDist
+            by = kn*z*j1*sinPhi*ex/zDist
+            bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
 
             return buffer.setTo(bx, by, bz)
         else:

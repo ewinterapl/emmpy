@@ -124,17 +124,17 @@ class VectorIJK(UnwritableVectorIJK):
     #     writable subclass rather than the unwritable parent."""
     #     return VectorIJK(self).scale(scale)
 
-    # def scale(self, _scale: float):
-    #     """Scale the vector.
+    def scale(self, _scale: float):
+        """Scale the vector.
 
-    #     @param scale the scale factor to apply.
-    #     @return a reference to the instance for convenience, which now contains
-    #     (scale*this)
-    #     """
-    #     self.i *= _scale
-    #     self.j *= _scale
-    #     self.k *= _scale
-    #     return self
+        param scale the scale factor to apply.
+        return a reference to the instance for convenience, which now contains
+        (scale*this)
+        """
+        self.i *= _scale
+        self.j *= _scale
+        self.k *= _scale
+        return self
 
     # def unitize(self):
     #     """Unitize the vector.
@@ -259,18 +259,15 @@ class VectorIJK(UnwritableVectorIJK):
     #             return self.setTo(data[offset], data[offset + 1],
     #                               data[offset + 2])
         elif len(args) == 3:
-            raise Exception
-    #         if (isRealNumber(args[0]) and isRealNumber(args[1])
-    #             and isRealNumber(args[2])):
-    #             # Sets the basic components of the vector.
-    #             # @param i the ith component
-    #             # @param j the jth component
-    #             # @param k the kth component
-    #             (i, j, k) = args
-    #             self.i = i
-    #             self.j = j
-    #             self.k = k
-    #             return self
+                (i, j, k) = args
+                # Sets the basic components of the vector.
+                # param i the ith component
+                # param j the jth component
+                # param k the kth component
+                self.i = i
+                self.j = j
+                self.k = k
+                return self
         else:
             raise Exception
 

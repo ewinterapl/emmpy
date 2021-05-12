@@ -5,10 +5,10 @@
 
 # import scipy.special as sps
 
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-#     UnwritableVectorIJ
-# )
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
+    UnwritableVectorIJ
+)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
@@ -21,7 +21,6 @@ class TailSheetSymmetricExpansion(VectorField):
 
     author G.K.Stephens
     """
-    pass
 
     def __init__(self, waveNumber, currentSheetHalfThickness, bessel):
         """Constructor
@@ -36,17 +35,16 @@ class TailSheetSymmetricExpansion(VectorField):
         self.bessel = bessel
 
     def evaluate(self, *args):
-        pass
-    #     if len(args) == 1:
-    #         (location,) = args
-    #         buffer = VectorIJK()
-    #         return self.evaluate(location, buffer)
-    #     elif len(args) == 2:
-    #         (location, buffer) = args
-    #         x = location.getI()
-    #         y = location.getJ()
-    #         z = location.getK()
-    #         locationIJ = UnwritableVectorIJ(x, y)
+        if len(args) == 1:
+            (location,) = args
+            buffer = VectorIJK()
+            return self.evaluate(location, buffer)
+        elif len(args) == 2:
+            (location, buffer) = args
+            x = location.getI()
+            y = location.getJ()
+            z = location.getK()
+            locationIJ = UnwritableVectorIJ(x, y)
 
     #         # get the current sheet half thickness
     #         thick = self.currentSheetHalfThickness.evaluate(locationIJ)
@@ -80,5 +78,5 @@ class TailSheetSymmetricExpansion(VectorField):
     #         bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
 
     #         return buffer.setTo(bx, by, bz)
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception

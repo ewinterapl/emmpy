@@ -111,9 +111,13 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             a = tssv.getCoefficient(n)
             # ORIGINAL CODE
             # a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
-            symmetricExpansions[n - 1] = (
-                symBasisFunction.evaluate(location).scale(a)
-            )
+            sbf_eval = symBasisFunction.evaluate(location)
+            sbf_eval.scale(a)
+            symmetricExpansions[n - 1] = sbf_eval
+            # ORIGINAL CODE
+            # symmetricExpansions[n - 1] = (
+            #     symBasisFunction.evaluate(location).scale(a)
+            # )
 
     #         # m is the azimuthal expansion number
     #         for m in range(1, self.numAzimuthalExpansions + 1):

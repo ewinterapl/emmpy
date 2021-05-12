@@ -118,26 +118,17 @@ class UnwritableVectorIJK:
     #     """
     #     return UnwritableVectorIJK(scale, self)
 
-    # def getI(self) -> float:
-    #     """Gets the ith component.
+    def getI(self):
+        """Gets the ith component."""
+        return self.i
 
-    #     @return the ith component.
-    #     """
-    #     return self.i
+    def getJ(self):
+        """Gets the jth component."""
+        return self.j
 
-    # def getJ(self) -> float:
-    #     """Gets the jth component.
-
-    #     @return the jth component.
-    #     """
-    #     return self.j
-
-    # def getK(self) -> float:
-    #     """Gets the kth component.
-
-    #     @return the kth component.
-    #     """
-    #     return self.k
+    def getK(self):
+        """Gets the kth component."""
+        return self.k
 
     # def get(self, index: int) -> float:
     #     """Retrieves the specified component of the vector.

@@ -12,7 +12,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_createConstant(self):
         dsfij = CurrentSheetHalfThicknesses.createConstant(1.9)
-        self.assertAlmostEqual(dsfij.evaluate(), 1.9)
+        self.assertAlmostEqual(dsfij.evaluate(None), 1.9)
 
 
 if __name__ == '__main__':

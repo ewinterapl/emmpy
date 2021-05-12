@@ -7,9 +7,9 @@
 # from emmpy.crucible.core.math.vectorspace.vectorijk import (
 #     VectorIJK
 # )
-# from emmpy.magmodel.core.math.expansions.arrayexpansion1d import (
-#     ArrayExpansion1D
-# )
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import (
+    ArrayExpansion1D
+)
 # from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
 #     CoefficientExpansion1D
 # )
@@ -25,9 +25,9 @@ class Expansion1Ds:
     # def createFromList(aList, firstRadialExpansionNumber):
     #     return ListExpansion1D(aList, firstRadialExpansionNumber)
 
-    # @staticmethod
-    # def createFromArray(array, firstRadialExpansionNumber):
-    #     return ArrayExpansion1D(array, firstRadialExpansionNumber)
+    @staticmethod
+    def createFromArray(array, firstRadialExpansionNumber):
+        return ArrayExpansion1D(array, firstRadialExpansionNumber)
 
     # # N.B.: EMBEDDED CLASS!
     # class Vectors:

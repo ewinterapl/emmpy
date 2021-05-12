@@ -39,7 +39,7 @@ class UnwritableVectorIJK:
                 # array of doubles.
                 # @aram data the array of doubles
                 data = args[0]
-                self.__init__(data[0], data[1], data[2])
+                UnwritableVectorIJK.__init__(self, data[0], data[1], data[2])
     #         elif isinstance(args[0], UnwritableVectorIJK):
     #             # Copy constructor, creates a vector by copying the values of a
     #             # pre-existing one.

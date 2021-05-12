@@ -56,23 +56,23 @@ class VectorIJK(UnwritableVectorIJK):
             # VectorIJK.ZERO
             UnwritableVectorIJK.__init__(self, 0, 0, 0)
         elif len(args) == 1:
-            raise Exception
-    #         if isinstance(args[0], list):
-    #             # Constructs a vector from the first three elements of an array
-    #             # of doubles.
-    #             # @param data the array of doubles.
-    #             # @throws IndexOutOfBoundsException if the supplied data array
-    #             # does not contain at least three elements
-    #             (data,) = args
-    #             UnwritableVectorIJK.__init__(self, data)
-    #         elif isinstance(args[0], UnwritableVectorIJK):
+            if isinstance(args[0], list):
+                # Constructs a vector from the first three elements of an array
+                # of doubles.
+                # param data the array of doubles.
+                # throws IndexOutOfBoundsException if the supplied data array
+                # does not contain at least three elements
+                (data,) = args
+                UnwritableVectorIJK.__init__(self, data)
+            elif isinstance(args[0], UnwritableVectorIJK):
+                raise Exception
     #             # Copy constructor, creates a vector by copying the values of
     #             # a pre-exisiting one.
     #             # @param vector the vector whose contents are to be copied
     #             (vector,) = args
     #             UnwritableVectorIJK.__init__(self, vector)
-    #         else:
-    #             raise Exception
+            else:
+                raise Exception
         elif len(args) == 2:
             raise Exception
     #         if isinstance(args[0], int) and isinstance(args[1], list):

@@ -9,7 +9,7 @@ from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 # from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 #     UnwritableVectorIJ
 # )
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TailSheetAsymmetricExpansion(VectorField):
@@ -42,12 +42,13 @@ class TailSheetAsymmetricExpansion(VectorField):
         self.currentSheetHalfThickness = currentSheetHalfThickness
         self.bessel = bessel
 
-    # def evaluate(self, *args):
-    #     if len(args) == 1:
-    #         (location,) = args
-    #         buffer = VectorIJK([0, 0, 0])
+    def evaluate(self, *args):
+        if len(args) == 1:
+            (location,) = args
+            buffer = VectorIJK([0, 0, 0])
     #         return self.evaluate(location, buffer)
-    #     elif len(args) == 2:
+        elif len(args) == 2:
+            raise Exception
     #         (location, buffer) = args
     #         m = self.azimuthalExpansionNumber
     #         x = location.getI()
@@ -110,3 +111,5 @@ class TailSheetAsymmetricExpansion(VectorField):
     #         # azimuthal expansion number divided by the wave number, this is not in
     #         # the paper, this is okay, as this will just rescale the scaling coeffs
     #         return buffer.scale(-m/kn)
+        else:
+            raise Exception

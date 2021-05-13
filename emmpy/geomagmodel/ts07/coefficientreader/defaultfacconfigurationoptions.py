@@ -7,9 +7,9 @@ from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
 # from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
 #     FacRegion
 # )
-# from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
-#     FacConfigurationOptions
-# )
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
+    FacConfigurationOptions
+)
 # from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
@@ -33,35 +33,37 @@ class DefaultFacConfigurationOptions(FacConfiguration):
         """Constructor"""
         self.numberOfFields = numberOfFields
 
-    # def createFromCoeffs(self, coeffs):
-    #     if self.numberOfFields == DefaultFacConfigurationOptions.TS07D:
-    #         return DefaultFacConfigurationOptions.getTs07(coeffs)
-    #     elif self.numberOfFields == DefaultFacConfigurationOptions.FAC6:
-    #         return DefaultFacConfigurationOptions.get6Fac(coeffs)
-    #     elif self.numberOfFields == DefaultFacConfigurationOptions.FAC12:
-    #         return DefaultFacConfigurationOptions.get12Fac(coeffs)
-    #     elif self.numberOfFields == DefaultFacConfigurationOptions.FAC16:
-    #         return DefaultFacConfigurationOptions.get16Fac(coeffs)
-    #     else:
-    #         raise Exception
+    def createFromCoeffs(self, coeffs):
+        if self.numberOfFields == DefaultFacConfigurationOptions.TS07D:
+            return DefaultFacConfigurationOptions.getTs07(coeffs)
+        elif self.numberOfFields == DefaultFacConfigurationOptions.FAC6:
+            raise Exception
+            # return DefaultFacConfigurationOptions.get6Fac(coeffs)
+        elif self.numberOfFields == DefaultFacConfigurationOptions.FAC12:
+            raise Exception
+            # return DefaultFacConfigurationOptions.get12Fac(coeffs)
+        elif self.numberOfFields == DefaultFacConfigurationOptions.FAC16:
+            raise Exception
+            # return DefaultFacConfigurationOptions.get16Fac(coeffs)
+        else:
+            raise Exception
 
     def getNumberOfFields(self):
         return self.numberOfFields
 
-    # @staticmethod
-    # def getTs07(coeffs):
-    #     """The TS07 Field Aligned currents"""
+    @staticmethod
+    def getTs07(coeffs):
+        """The TS07 Field Aligned currents"""
+        smoothed = False
+        count = 0
 
-    #     smoothed = False
-    #     count = 0
-
-    #     # region 1
-    #     region1Mode1Asym = FacConfigurationOptions(
-    #         coeffs[count], FacRegion.REGION_1, 1, TrigParity.ODD,
-    #         DefaultFacConfigurationOptions.r1_m1_theta0,
-    #         DefaultFacConfigurationOptions.r1_deltaTheta,
-    #         smoothed, DefaultFacConfigurationOptions.shielded
-    #     )
+        # region 1
+        region1Mode1Asym = FacConfigurationOptions(
+            coeffs[count], FacRegion.REGION_1, 1, TrigParity.ODD,
+            DefaultFacConfigurationOptions.r1_m1_theta0,
+            DefaultFacConfigurationOptions.r1_deltaTheta,
+            smoothed, DefaultFacConfigurationOptions.shielded
+        )
     #     count += 1
     #     region1Mode2Asym = FacConfigurationOptions(
     #         coeffs[count], FacRegion.REGION_1, 2, TrigParity.ODD,

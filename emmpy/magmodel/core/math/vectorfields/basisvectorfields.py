@@ -75,38 +75,38 @@ class BasisVectorFields:
     #     bvf.toString = lambda my_self: a.toString() + " + " + b.toString()
     #     return bvf
 
-    # @staticmethod
-    # def concatAll(fields):
-    #     """Concatenates multiple BasisVectorFields into a single
-    #     BasisVectorField
+    @staticmethod
+    def concatAll(fields):
+        """Concatenates multiple BasisVectorFields into a single
+        BasisVectorField
 
-    #     Note, this is different from add(BasisVectorField, BasisVectorField)
+        Note, this is different from add(BasisVectorField, BasisVectorField)
 
-    #     @param a a BasisVectorField
-    #     @param b another BasisVectorField
-    #     @return a newly constructed BasisVectorField
-    #     """
-    #     bvf = BasisVectorField()
+        param a a BasisVectorField
+        param b another BasisVectorField
+        return a newly constructed BasisVectorField
+        """
+        bvf = BasisVectorField()
 
-    #     def my_evaluateExpansion(location):
-    #         result = []
-    #         for field in fields:
-    #             result.extend(field.evaluateExpansion(location))
-    #         return result
-    #     bvf.evaluateExpansion = my_evaluateExpansion
-    #     bvf.getNumberOfBasisFunctions = (
-    #         lambda my_self: sum([field.getNumberOfBasisFunctions()
-    #                             for field in fields])
-    #     )
+        def my_evaluateExpansion(location):
+            result = []
+            for field in fields:
+                result.extend(field.evaluateExpansion(location))
+            return result
+        bvf.evaluateExpansion = my_evaluateExpansion
+        bvf.getNumberOfBasisFunctions = (
+            lambda my_self: sum([field.getNumberOfBasisFunctions()
+                                for field in fields])
+        )
 
-    #     def my_toString(my_self):
-    #         s = ""
-    #         for field in fields:
-    #             s += field.toString()
-    #             s += " "
-    #         return s
-    #     bvf.toString = my_toString
-    #     return bvf
+        def my_toString(my_self):
+            s = ""
+            for field in fields:
+                s += field.toString()
+                s += " "
+            return s
+        bvf.toString = my_toString
+        return bvf
 
     # @staticmethod
     # def add(a, b):

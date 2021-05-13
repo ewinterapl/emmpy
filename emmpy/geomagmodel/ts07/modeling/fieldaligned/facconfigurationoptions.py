@@ -38,8 +38,8 @@ class FacConfigurationOptions:
         self.smoothed = smoothed
         self.shielded = shielded
 
-    # def getAmplitudeScaling(self):
-    #     return self.amplitudeScaling
+    def getAmplitudeScaling(self):
+        return self.amplitudeScaling
 
     # def getRegion(self):
     #     return self.region

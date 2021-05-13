@@ -439,10 +439,10 @@ class TS07DModelBuilder:
             self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
             region2KappaScaling, fcs, True)
 
-    #     # and finally construct the total model
-    #     totalExternalField = BasisVectorFields.concatAll(
-    #         [dipoleShieldingField, equatorialFieldBuilder.build(),
-    #          fieldAlignedField])
+        # and finally construct the total model
+        totalExternalField = BasisVectorFields.concatAll(
+            [dipoleShieldingField, equatorialFieldBuilder.build(),
+             fieldAlignedField])
 
     #     if self.withMagnetopause:
     #         if self.dipoleTiltAngle == 0:

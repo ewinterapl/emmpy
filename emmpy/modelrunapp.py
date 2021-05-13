@@ -83,9 +83,9 @@ def runTs07D():
     # read the coeffs/parameters from the file
     coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
 
-#     # read the dipole tilt angle and dynamic pressure from the coeffs file
-#     dipoleTilt = TS07DVariableCoefficientsUtils.readDipoleTiltAngle(coeffsFile)
-#     pDyn = TS07DVariableCoefficientsUtils.readDynamicPressure(coeffsFile)
+    # read the dipole tilt angle and dynamic pressure from the coeffs file
+    dipoleTilt = TS07DVariableCoefficientsUtils.readDipoleTiltAngle(coeffsFile)
+    pDyn = TS07DVariableCoefficientsUtils.readDynamicPressure(coeffsFile)
 
 #     # construct the model builder
 #     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)

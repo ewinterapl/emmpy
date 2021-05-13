@@ -335,34 +335,35 @@ class TS07DVariableCoefficientsUtils:
     #             break
     #     return B_rms
 
-    # @staticmethod
-    # def readDynamicPressure(variableCoefficientsFile):
-    #     """Parses the dynamic pressure from the variable coefficients file.
+    @staticmethod
+    def readDynamicPressure(variableCoefficientsFile):
+        """Parses the dynamic pressure from the variable coefficients file.
 
-    #     @param variableCoefficientsFile an ASCII file containing a list of the
-    #     coefficients
-    #     @return the dynamic pressure parsed from the file
-    #     """
-    #     Pdyn = None
-    #     for line in open(variableCoefficientsFile):
-    #         if "Pdyn=" in line:
-    #             Pdyn = float(line.split()[-1])
-    #             break
-    #     return Pdyn
+        param variableCoefficientsFile an ASCII file containing a list of the
+        coefficients
+        return the dynamic pressure parsed from the file
+        """
+        Pdyn = None
+        for line in open(variableCoefficientsFile):
+            if "Pdyn=" in line:
+                Pdyn = float(line.split()[-1])
+                break
+        return Pdyn
 
-    # @staticmethod
-    # def readDipoleTiltAngle(variableCoefficientsFile):
-    #     """Parses the dipole tilt angle from the variable coefficients file.
+    @staticmethod
+    def readDipoleTiltAngle(variableCoefficientsFile):
+        """Parses the dipole tilt angle from the variable coefficients file.
 
-    #     @param variableCoefficientsFile an ASCII file containing a list of the coefficients
-    #     @return the dipole tilt angle parsed from the file
-    #     """
-    #     tilt = None
-    #     for line in open(variableCoefficientsFile):
-    #         if "tilt=" in line:
-    #             tilt = float(line.split()[-1])
-    #             break
-    #     return tilt
+        param variableCoefficientsFile an ASCII file containing a list of the
+        coefficients
+        return the dipole tilt angle parsed from the file
+        """
+        tilt = None
+        for line in open(variableCoefficientsFile):
+            if "tilt=" in line:
+                tilt = float(line.split()[-1])
+                break
+        return tilt
 
     @staticmethod
     def readCurrentSheetNumber(variableCoefficientsFile):

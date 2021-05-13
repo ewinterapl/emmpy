@@ -5,7 +5,7 @@ methods will raise exceptions if invoked.
 """
 
 
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class VectorField:
@@ -20,29 +20,29 @@ class VectorField:
     def __init__(self):
         pass
 
-    # def evaluate(self, *args):
-    #     """Evaluate the field at the given position
+    def evaluate(self, *args):
+        """Evaluate the field at the given position
 
-    #     INTERFACE - DO NOT INVOKE
+        INTERFACE - DO NOT INVOKE
 
-    #     units and such are up to the implementors
+        units and such are up to the implementors
 
-    #     throws FunctionEvaluationException if the function cannot perform the
-    #     evaluation
-    #     """
-    #     if len(args) == 1:
-    #         # param location VectorIJK, often location
-    #         # return the resultant VectorIJK
-    #         (location,) = args
-    #         return self.evaluate(location, VectorIJK())
-    #     elif len(args) == 2:
-    #         # Evaluate the field at the given position, put the result into the
-    #         # buffer and return the buffer
-    #         # param location VectorIJK, often location
-    #         # param buffer a VectorIJK buffer that will hold the result of the
-    #         # evaluation
-    #         # return the buffer
-    #         (location, buffer) = args
-    #         raise Exception
-    #     else:
-    #         raise Exception
+        throws FunctionEvaluationException if the function cannot perform the
+        evaluation
+        """
+        if len(args) == 1:
+            # param location VectorIJK, often location
+            # return the resultant VectorIJK
+            (location,) = args
+            return self.evaluate(location, VectorIJK())
+        elif len(args) == 2:
+            # Evaluate the field at the given position, put the result into the
+            # buffer and return the buffer
+            # param location VectorIJK, often location
+            # param buffer a VectorIJK buffer that will hold the result of the
+            # evaluation
+            # return the buffer
+            (location, buffer) = args
+            raise Exception
+        else:
+            raise Exception

@@ -109,26 +109,24 @@ class DipoleShieldingField:
                 CoefficientExpansions.invert(DipoleShieldingField.s),
                 parrCoeffs)
         )
+        ppchf = (
+            PerpendicularAndParallelCartesianHarmonicField.
+            createWithRotationAndAlternate(
+                TrigParity.EVEN,
+                dipoleTiltAngle*DipoleShieldingField.kappaPerp,
+                CoefficientExpansions.invert(DipoleShieldingField.p),
+                CoefficientExpansions.invert(DipoleShieldingField.r),
+                perpCoeffs,
+                dipoleTiltAngle*DipoleShieldingField.kappaParallel,
+                CoefficientExpansions.invert(DipoleShieldingField.q),
+                CoefficientExpansions.invert(DipoleShieldingField.s),
+                parrCoeffs)
+        )
+        pDynScale3 = pDynScale*pDynScale*pDynScale
+        dipoleShieldingField = (VectorFields.scale(
+            VectorFields.scaleLocation(ppchf, pDynScale), pDynScale3))
 
-    #     ppchf = (
-    #         PerpendicularAndParallelCartesianHarmonicField.
-    #         createWithRotationAndAlternate(
-    #             TrigParity.EVEN,
-    #             dipoleTiltAngle*DipoleShieldingField.kappaPerp,
-    #             CoefficientExpansions.invert(DipoleShieldingField.p),
-    #             CoefficientExpansions.invert(DipoleShieldingField.r),
-    #             perpCoeffs,
-    #             dipoleTiltAngle*DipoleShieldingField.kappaParallel,
-    #             CoefficientExpansions.invert(DipoleShieldingField.q),
-    #             CoefficientExpansions.invert(DipoleShieldingField.s),
-    #             parrCoeffs)
-    #     )
-
-    #     pDynScale3 = pDynScale*pDynScale*pDynScale
-    #     dipoleShieldingField = (VectorFields.scale(
-    #         VectorFields.scaleLocation(ppchf, pDynScale), pDynScale3))
-
-    #     return dipoleShieldingField
+        return dipoleShieldingField
 
     @staticmethod
     def createScaled(dipoleTiltAngle, dynamicPressure, scaleFactor):

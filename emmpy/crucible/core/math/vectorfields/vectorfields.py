@@ -8,9 +8,9 @@ Copyright (C) 2012 The Johns Hopkins University Applied Physics Laboratory
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-#     UnwritableVectorIJK
-# )
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 
 
 class VectorFields:
@@ -136,22 +136,22 @@ class VectorFields:
         )
         return vf
 
-    # @staticmethod
-    # def scaleLocation(field, scaleFactor):
-    #     """Creates a vector field by scaling the input location vector of the
-    #     supplied vector field.
+    @staticmethod
+    def scaleLocation(field, scaleFactor):
+        """Creates a vector field by scaling the input location vector of the
+        supplied vector field.
 
-    #     param field a vector field
-    #     param scaleFactor a value to scale the location vector
-    #     return a newly created vector field that scales the input location
-    #     vector ( location*scaleFactor )
-    #     """
-    #     vf = VectorField()
-    #     vf.evaluate = (
-    #         lambda location, buffer:
-    #         field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)
-    #     )
-    #     return vf
+        param field a vector field
+        param scaleFactor a value to scale the location vector
+        return a newly created vector field that scales the input location
+        vector ( location*scaleFactor )
+        """
+        vf = VectorField()
+        vf.evaluate = (
+            lambda location, buffer:
+            field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)
+        )
+        return vf
 
     # @staticmethod
     # def multiply(a, b):

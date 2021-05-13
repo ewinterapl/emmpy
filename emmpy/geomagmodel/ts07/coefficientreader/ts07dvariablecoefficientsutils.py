@@ -12,9 +12,9 @@ from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions imp
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients import (
 #     TS07DVariableCoefficients
 # )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
-#     Ts07EquatorialLinearCoefficients
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
+    Ts07EquatorialLinearCoefficients
+)
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
 #     Ts07EquatorialVariableCoefficients
 # )
@@ -152,7 +152,6 @@ class TS07DVariableCoefficientsUtils:
             # this is half the expansions as the dynamic pressure terms double
             # this number
             numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
-
             numExpansions = numHalfExpansions*2*numCurrentSheets
 
             # tot = 1(dipShield)+numExpansions+numSheets+
@@ -472,7 +471,6 @@ class TS07DVariableCoefficientsUtils:
         # is half the expansions as the dynamic pressure terms double this
         # number
         numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
-
         numExpansions = numHalfExpansions*2*numCurrentSheets
 
         # 2*halfExpansions + 11 other coefficients
@@ -484,7 +482,6 @@ class TS07DVariableCoefficientsUtils:
         # Parse file data into proper variables. This too will need to be
         # changed if different coefficient formats are use.
         cfAmplitude = coeffs[0]
-
         eqLinearCoeffs = []
 
         # loop through the number of current sheets
@@ -518,36 +515,35 @@ class TS07DVariableCoefficientsUtils:
             aSymExpansion = (
                 CoefficientExpansions.createExpansionFromArray(aSym, 1)
             )
-    #         aSymPdynDependentExpansion = (
-    #             CoefficientExpansions.createExpansionFromArray(
-    #                 aSymPdynDependent, 1
-    #             )
-    #         )
-    #         aOddExpansion = (
-    #             CoefficientExpansions.createExpansionFromArray(aOdd, 1, 1)
-    #         )
-    #         aOddPdynDependentExpansion = (
-    #             CoefficientExpansions.createExpansionFromArray(
-    #                 aOddPdynDependent, 1, 1
-    #             )
-    #         )
-    #         aEvenExpansion = (
-    #             CoefficientExpansions.createExpansionFromArray(aEven, 1, 1)
-    #         )
-    #         aEvenPdynDependentExpansion = (
-    #             CoefficientExpansions.createExpansionFromArray(
-    #                 aEvenPdynDependent, 1, 1
-    #             )
-    #         )
-
-    #         equatorialLinearCoeffs = (
-    #             Ts07EquatorialLinearCoefficients.create(
-    #                 aSymExpansion, aSymPdynDependentExpansion,
-    #                 aOddExpansion, aOddPdynDependentExpansion,
-    #                 aEvenExpansion, aEvenPdynDependentExpansion,
-    #                 numAzimuthalExpansions, numRadialExpansions
-    #             )
-    #         )
+            aSymPdynDependentExpansion = (
+                CoefficientExpansions.createExpansionFromArray(
+                    aSymPdynDependent, 1
+                )
+            )
+            aOddExpansion = (
+                CoefficientExpansions.createExpansionFromArray(aOdd, 1, 1)
+            )
+            aOddPdynDependentExpansion = (
+                CoefficientExpansions.createExpansionFromArray(
+                    aOddPdynDependent, 1, 1
+                )
+            )
+            aEvenExpansion = (
+                CoefficientExpansions.createExpansionFromArray(aEven, 1, 1)
+            )
+            aEvenPdynDependentExpansion = (
+                CoefficientExpansions.createExpansionFromArray(
+                    aEvenPdynDependent, 1, 1
+                )
+            )
+            equatorialLinearCoeffs = (
+                Ts07EquatorialLinearCoefficients.create(
+                    aSymExpansion, aSymPdynDependentExpansion,
+                    aOddExpansion, aOddPdynDependentExpansion,
+                    aEvenExpansion, aEvenPdynDependentExpansion,
+                    numAzimuthalExpansions, numRadialExpansions
+                )
+            )
     #         eqLinearCoeffs.append(equatorialLinearCoeffs)
 
     #     numFacFields = facConfiguration.getNumberOfFields()

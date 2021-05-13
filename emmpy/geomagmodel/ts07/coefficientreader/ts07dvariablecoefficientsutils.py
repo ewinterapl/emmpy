@@ -18,11 +18,11 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients i
 from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
     Ts07EquatorialVariableCoefficients
 )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
+    Ts07FacVariableCoefficients
+)
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
 #     Ts07NonLinearParameters
-# )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
-#     Ts07FacVariableCoefficients
 # )
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
@@ -485,7 +485,6 @@ class TS07DVariableCoefficientsUtils:
         eqLinearCoeffs = []
 
         # loop through the number of current sheets
-        # for (int nCurr = 0; nCurr < numCurrentSheets; nCurr++) {
         for nCurr in range(numCurrentSheets):
             index = nCurr*numHalfExpansions*2
             aSym = [None]*numRadialExpansions
@@ -569,9 +568,9 @@ class TS07DVariableCoefficientsUtils:
             currThicks, hingeDist, warpParam, twistFact, eqLinearCoeffs
         )
 
-    #     fac = Ts07FacVariableCoefficients(
-    #         facKappa1, facKappa2, facConfiguration.createFromCoeffs(facAmps)
-    #     )
+        fac = Ts07FacVariableCoefficients(
+            facKappa1, facKappa2, facConfiguration.createFromCoeffs(facAmps)
+        )
 
     #     return TS07DVariableCoefficients(
     #         cfAmplitude, equatorialVariableCoeffs, fac

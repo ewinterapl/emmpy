@@ -9,7 +9,7 @@ class FacRegion:
     """
     pass
 
-    # REGION_1 = 1
+    REGION_1 = 1
     # REGION_2 = 2
 
     # def __init__(self, number):

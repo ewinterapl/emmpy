@@ -10,7 +10,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
     FacConfigurationOptions
 )
-# from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
 class DefaultFacConfigurationOptions(FacConfiguration):
@@ -21,13 +21,13 @@ class DefaultFacConfigurationOptions(FacConfiguration):
     # FAC12 = 12
     # FAC16 = 16
 
-    # r1_m1_theta0 = 0.7113544659
+    r1_m1_theta0 = 0.7113544659
     # r1_m2_theta0 = 0.5567714182
     # r2_m1_theta0 = 0.8867880020
     # r2_m2_theta0 = 0.7247997430
-    # r1_deltaTheta = 0.06
+    r1_deltaTheta = 0.06
     # r2_deltaTheta = 0.09
-    # shielded = True
+    shielded = True
 
     def __init__(self, numberOfFields):
         """Constructor"""

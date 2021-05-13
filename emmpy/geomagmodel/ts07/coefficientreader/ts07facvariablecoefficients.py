@@ -5,15 +5,14 @@ from emmpy.java.lang.double import Double
 
 
 class Ts07FacVariableCoefficients:
-    pass
 
-    # def __init__(
-    #     self, region1KappaScaling, region2KappaScaling, facConfigurations
-    # ):
-    #     """Constructor"""
-    #     self.region1KappaScaling = region1KappaScaling
-    #     self.region2KappaScaling = region2KappaScaling
-    #     self.facConfigurations = facConfigurations
+    def __init__(
+        self, region1KappaScaling, region2KappaScaling, facConfigurations
+    ):
+        """Constructor"""
+        self.region1KappaScaling = region1KappaScaling
+        self.region2KappaScaling = region2KappaScaling
+        self.facConfigurations = facConfigurations
 
     # def getRegion1KappaScaling(self):
     #     return self.region1KappaScaling

@@ -489,14 +489,20 @@ class TS07DVariableCoefficientsUtils:
             index = nCurr*numHalfExpansions*2
             aSym = [None]*numRadialExpansions
             aSymPdynDependent = [None]*numRadialExpansions
-            aOdd = [[None]*numRadialExpansions]*numAzimuthalExpansions
-            aOddPdynDependent = (
-                [[None]*numRadialExpansions]*numAzimuthalExpansions
-            )
-            aEven = [[None]*numRadialExpansions]*numAzimuthalExpansions
-            aEvenPdynDependent = (
-                [[None]*numRadialExpansions]*numAzimuthalExpansions
-            )
+            aOdd = []
+            aOddPdynDependent = []
+            aEven = []
+            aEvenPdynDependent = []
+            for i in range(numAzimuthalExpansions):
+                aOdd.append([])
+                aOddPdynDependent.append([])
+                aEven.append([])
+                aEvenPdynDependent.append([])
+                for j in range(numRadialExpansions):
+                    aOdd[i].append(None)
+                    aOddPdynDependent[i].append(None)
+                    aEven[i].append(None)
+                    aEvenPdynDependent[i].append(None)
             for n in range(numRadialExpansions):
                 index += 1
                 aSym[n] = coeffs[index]

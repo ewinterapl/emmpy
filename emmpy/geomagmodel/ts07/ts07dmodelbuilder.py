@@ -21,9 +21,9 @@ from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
 from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
     Ts07EquatorialMagneticFieldBuilder
 )
-# from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
-#     Ts07DFieldAlignedMagneticField
-# )
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
+    Ts07DFieldAlignedMagneticField
+)
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
@@ -414,29 +414,29 @@ class TS07DModelBuilder:
             self.tailLength, self.staticCoefficients
         )
 
-    #     # If true, use Jay Albert's Bessel function evaluator
-    #     if self.withAlbertBesselFunction:
-    #         equatorialFieldBuilder.withAlbertBessel()
+        # If true, use Jay Albert's Bessel function evaluator
+        if self.withAlbertBesselFunction:
+            equatorialFieldBuilder.withAlbertBessel()
 
-    #     # If true, the equatorial fields are shielded
-    #     if self.includeEquatorialShielding:
-    #         equatorialFieldBuilder.withEquatorialShielding()
-    #     else:
-    #         equatorialFieldBuilder.withoutEquatorialShielding()
+        # If true, the equatorial fields are shielded
+        if self.includeEquatorialShielding:
+            equatorialFieldBuilder.withEquatorialShielding()
+        else:
+            equatorialFieldBuilder.withoutEquatorialShielding()
 
-    #     # If true, the equatorial fields are deformed using the TA15 instead
-    #     # of the T01 deformation
-    #     if self.withTA15deformation is not None:
-    #         equatorialFieldBuilder.withTA15deformation(
-    #             self.withTA15deformation
-    #         )
+        # If true, the equatorial fields are deformed using the TA15 instead
+        # of the T01 deformation
+        if self.withTA15deformation is not None:
+            equatorialFieldBuilder.withTA15deformation(
+                self.withTA15deformation
+            )
 
-    #     # The field aligned current
-    #     fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
-    #         self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
-    #         region2KappaScaling,
-    #         self.variableCoefficients.getFacCoefficients().
-    #         getFacConfigurations(), True)
+        # The field aligned current
+        fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
+            self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
+            region2KappaScaling,
+            self.variableCoefficients.getFacCoefficients().
+            getFacConfigurations(), True)
 
     #     # and finally construct the total model
     #     totalExternalField = BasisVectorFields.concatAll(

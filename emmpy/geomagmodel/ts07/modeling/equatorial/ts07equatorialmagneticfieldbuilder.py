@@ -52,31 +52,31 @@ class Ts07EquatorialMagneticFieldBuilder:
     #     self.withTA15deformation = bzIMF
     #     return self
 
-    # def withEquatorialShielding(self):
-    #     """Turn on equatorial shielding.
+    def withEquatorialShielding(self):
+        """Turn on equatorial shielding.
 
-    #     By default, the equatorial shielding fields are evaluated, so if you
-    #     haven't previously turned them off, you won't need to call this.
+        By default, the equatorial shielding fields are evaluated, so if you
+        haven't previously turned them off, you won't need to call this.
 
-    #     @return this builder object
-    #     """
-    #     self.includeShield = True
-    #     return self
+        return this builder object
+        """
+        self.includeShield = True
+        return self
 
-    # def withoutEquatorialShielding(self):
-    #     """Turn off equatorial shielding.
+    def withoutEquatorialShielding(self):
+        """Turn off equatorial shielding.
 
-    #     By default, the equatorial shielding fields are evaluated. Evaluating
-    #     the shielding of the equatorial fields, is about 90% of the computation
-    #     time required of the model. Since they are not needed in all
-    #     applications, like computing the current density inside the
-    #     magnetopause, the option to turn them off can significantly speed up
-    #     the code.
+        By default, the equatorial shielding fields are evaluated. Evaluating
+        the shielding of the equatorial fields, is about 90% of the computation
+        time required of the model. Since they are not needed in all
+        applications, like computing the current density inside the
+        magnetopause, the option to turn them off can significantly speed up
+        the code.
 
-    #     @return this builder object
-    #     """
-    #     self.includeShield = False
-    #     return self
+        return this builder object
+        """
+        self.includeShield = False
+        return self
 
     # def build(self):
     #     """Builder"""

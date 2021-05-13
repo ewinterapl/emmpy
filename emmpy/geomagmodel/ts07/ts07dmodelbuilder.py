@@ -432,11 +432,12 @@ class TS07DModelBuilder:
             )
 
         # The field aligned current
+        # self.variableCoefficients is a TS07DVariableCoefficients
+        fc = self.variableCoefficients.getFacCoefficients()
+        fcs = fc.getFacConfigurations()
         fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
             self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
-            region2KappaScaling,
-            self.variableCoefficients.getFacCoefficients().
-            getFacConfigurations(), True)
+            region2KappaScaling, fcs, True)
 
     #     # and finally construct the total model
     #     totalExternalField = BasisVectorFields.concatAll(

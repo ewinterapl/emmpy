@@ -2,9 +2,9 @@
 
 
 # from emmpy.magmodel.core.math.trigparity import TrigParity
-# from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
-#     BasisVectorField
-# )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 
 
 class Ts07DFieldAlignedMagneticField(BasisVectorField):
@@ -21,31 +21,40 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
     """
     pass
 
-    # def __init__(self, dipoleTiltAngle, dynamicPressure, region1KappaScaling,
-    #              region2KappaScaling, options, includeShielding):
-    #     """Constructor"""
+    def __init__(self, dipoleTiltAngle, dynamicPressure, region1KappaScaling,
+                 region2KappaScaling, options, includeShielding):
+        """Constructor
 
-    #     self.includeShielding = includeShielding
+        double dipoleTiltAngle
+        double dynamicPressure
+        double region1KappaScaling
+        double region2KappaScaling
+        Iterable<FacConfigurationOptions> options
+        boolean includeShielding
+        return Ts07DFieldAlignedMagneticField
+        """
 
-    #     # Magnitudes are multiplied by 800 to approximately normalize them with
-    #     # the magnitudes of other basis functions. The actual value of this
-    #     # normalization factor is quite arbitrary because it will be adjusted
-    #     # for in the linear fitting process.
-    #     # TODO I'm not sure why this has to be negated, in Tsy.'s code, he
-    #     # rotates the sine implementation instead of replacing it with a
-    #     # cosine. My guess is that he rotates it the wrong way making it a -cos
-    #     # instead
-    #     scaling = 800.0
+        self.includeShielding = includeShielding
 
-    #     internalFieldsBuilder = []
-    #     shieldingFieldsBuilder = []
-    #     basisFunctionsBuilder = []
-    #     basisCoefficientsBuilder = []
+        # Magnitudes are multiplied by 800 to approximately normalize them with
+        # the magnitudes of other basis functions. The actual value of this
+        # normalization factor is quite arbitrary because it will be adjusted
+        # for in the linear fitting process.
+        # TODO I'm not sure why this has to be negated, in Tsy.'s code, he
+        # rotates the sine implementation instead of replacing it with a
+        # cosine. My guess is that he rotates it the wrong way making it a -cos
+        # instead
+        scaling = 800.0
 
-    #     # construct all the fields, unlike in the original TS07D, instead of 4
-    #     # FAC systems, this now supports any number
-    #     for option in options:
-    #         amp = option.getAmplitudeScaling()
+        internalFieldsBuilder = []
+        shieldingFieldsBuilder = []
+        basisFunctionsBuilder = []
+        basisCoefficientsBuilder = []
+
+        # construct all the fields, unlike in the original TS07D, instead of 4
+        # FAC systems, this now supports any number
+        for option in options:
+            amp = option.getAmplitudeScaling()
     #         basisCoefficientsBuilder.append(amp)
     #         region = option.getRegion()
     #         kappa = region1KappaScaling
@@ -97,26 +106,26 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
     # #     this.basisCoefficients = basisCoefficientsBuilder.build();
     # #   }
 
-    # @staticmethod
-    # def create(dipoleTiltAngle, dynamicPressure, region1KappaScaling,
-    #            region2KappaScaling, options, includeShielding):
-    #     """Creates a new Ts07DFieldAlignedMagneticField module from the
-    #     provided list of FacConfigurationOptions.
+    @staticmethod
+    def create(dipoleTiltAngle, dynamicPressure, region1KappaScaling,
+               region2KappaScaling, options, includeShielding):
+        """Creates a new Ts07DFieldAlignedMagneticField module from the
+        provided list of FacConfigurationOptions.
 
-    #     @param dipoleTiltAngle the dipole tilt angle
-    #     @param dynamicPressure the dynamic pressure
-    #     @param facKappaScale_R1 the global spatial scaling of the region-1
-    #     field aligned current modules
-    #     @param facKappaScale_R2 the global spatial scaling of the region-2
-    #     field aligned current modules
-    #     @param options (list)
-    #     @param includeShielding (bool)
-    #     @return a newly constructed
-    #     CopyOfModifiedTs07DFieldAlignedMagneticField
-    #     """
-    #     return Ts07DFieldAlignedMagneticField(
-    #         dipoleTiltAngle, dynamicPressure, region1KappaScaling,
-    #         region2KappaScaling, options, includeShielding)
+        param dipoleTiltAngle the dipole tilt angle
+        param dynamicPressure the dynamic pressure
+        param facKappaScale_R1 the global spatial scaling of the region-1
+        field aligned current modules
+        param facKappaScale_R2 the global spatial scaling of the region-2
+        field aligned current modules
+        param options (list)
+        param includeShielding (bool)
+        return a newly constructed
+        CopyOfModifiedTs07DFieldAlignedMagneticField
+        """
+        return Ts07DFieldAlignedMagneticField(
+            dipoleTiltAngle, dynamicPressure, region1KappaScaling,
+            region2KappaScaling, options, includeShielding)
 
     # #   @Override
     # #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {

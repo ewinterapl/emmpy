@@ -20,8 +20,8 @@ class Ts07FacVariableCoefficients:
     def getRegion2KappaScaling(self):
         return self.region2KappaScaling
 
-    # def getFacConfigurations(self):
-    #     return self.facConfigurations
+    def getFacConfigurations(self):
+        return self.facConfigurations
 
     # def getLienarCoefficients(self):
     #     """we must construct a new one every time so that it doesn't change"""

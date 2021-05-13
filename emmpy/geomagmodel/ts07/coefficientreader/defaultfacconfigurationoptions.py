@@ -22,11 +22,11 @@ class DefaultFacConfigurationOptions(FacConfiguration):
     # FAC16 = 16
 
     r1_m1_theta0 = 0.7113544659
-    # r1_m2_theta0 = 0.5567714182
-    # r2_m1_theta0 = 0.8867880020
+    r1_m2_theta0 = 0.5567714182
+    r2_m1_theta0 = 0.8867880020
     # r2_m2_theta0 = 0.7247997430
     r1_deltaTheta = 0.06
-    # r2_deltaTheta = 0.09
+    r2_deltaTheta = 0.09
     shielded = True
 
     def __init__(self, numberOfFields):
@@ -64,33 +64,33 @@ class DefaultFacConfigurationOptions(FacConfiguration):
             DefaultFacConfigurationOptions.r1_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
         )
-    #     count += 1
-    #     region1Mode2Asym = FacConfigurationOptions(
-    #         coeffs[count], FacRegion.REGION_1, 2, TrigParity.ODD,
-    #         DefaultFacConfigurationOptions.r1_m2_theta0,
-    #         DefaultFacConfigurationOptions.r1_deltaTheta,
-    #         smoothed, DefaultFacConfigurationOptions.shielded
-    #     )
-    #     count += 1
+        count += 1
+        region1Mode2Asym = FacConfigurationOptions(
+            coeffs[count], FacRegion.REGION_1, 2, TrigParity.ODD,
+            DefaultFacConfigurationOptions.r1_m2_theta0,
+            DefaultFacConfigurationOptions.r1_deltaTheta,
+            smoothed, DefaultFacConfigurationOptions.shielded
+        )
+        count += 1
 
-    #     # region 2
-    #     region2Mode1Asym = FacConfigurationOptions(
-    #         coeffs[count], FacRegion.REGION_2, 1, TrigParity.ODD,
-    #         DefaultFacConfigurationOptions.r2_m1_theta0,
-    #         DefaultFacConfigurationOptions.r2_deltaTheta,
-    #         smoothed, DefaultFacConfigurationOptions.shielded
-    #     )
-    #     count += 1
-    #     region2Mode1Sym = FacConfigurationOptions(
-    #         coeffs[count], FacRegion.REGION_2, 1, TrigParity.EVEN,
-    #         DefaultFacConfigurationOptions.r2_m1_theta0,
-    #         DefaultFacConfigurationOptions.r2_deltaTheta,
-    #         smoothed, DefaultFacConfigurationOptions.shielded
-    #     )
-    #     count += 1
+        # region 2
+        region2Mode1Asym = FacConfigurationOptions(
+            coeffs[count], FacRegion.REGION_2, 1, TrigParity.ODD,
+            DefaultFacConfigurationOptions.r2_m1_theta0,
+            DefaultFacConfigurationOptions.r2_deltaTheta,
+            smoothed, DefaultFacConfigurationOptions.shielded
+        )
+        count += 1
+        region2Mode1Sym = FacConfigurationOptions(
+            coeffs[count], FacRegion.REGION_2, 1, TrigParity.EVEN,
+            DefaultFacConfigurationOptions.r2_m1_theta0,
+            DefaultFacConfigurationOptions.r2_deltaTheta,
+            smoothed, DefaultFacConfigurationOptions.shielded
+        )
+        count += 1
 
-    #     return (region1Mode1Asym, region1Mode2Asym, region2Mode1Asym,
-    #             region2Mode1Sym)
+        return (region1Mode1Asym, region1Mode2Asym, region2Mode1Asym,
+                region2Mode1Sym)
 
     # @staticmethod
     # def get6Fac(coeffs):

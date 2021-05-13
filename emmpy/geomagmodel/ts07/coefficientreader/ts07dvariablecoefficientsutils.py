@@ -15,9 +15,9 @@ from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions imp
 from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
     Ts07EquatorialLinearCoefficients
 )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
-#     Ts07EquatorialVariableCoefficients
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
+    Ts07EquatorialVariableCoefficients
+)
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
 #     Ts07NonLinearParameters
 # )
@@ -544,30 +544,30 @@ class TS07DVariableCoefficientsUtils:
                     numAzimuthalExpansions, numRadialExpansions
                 )
             )
-    #         eqLinearCoeffs.append(equatorialLinearCoeffs)
+            eqLinearCoeffs.append(equatorialLinearCoeffs)
 
-    #     numFacFields = facConfiguration.getNumberOfFields()
+        numFacFields = facConfiguration.getNumberOfFields()
 
-    #     # the field aligned current amplitudes
-    #     facAmps = [None]*numFacFields
-    #     for i in range(numFacFields):
-    #         facAmps[i] = coeffs[numExpansions + 1 + i]
+        # the field aligned current amplitudes
+        facAmps = [None]*numFacFields
+        for i in range(numFacFields):
+            facAmps[i] = coeffs[numExpansions + 1 + i]
 
-    #     currThicks = coeffs[
-    #         numExpansions + numFacFields + 1:
-    #         numExpansions + numFacFields + 1 + numCurrentSheets
-    #     ]
-    #     hingeDist = coeffs[numExpansions + numFacFields + numCurrentSheets + 1]
-    #     warpParam = coeffs[numExpansions + numFacFields + numCurrentSheets + 2]
-    #     facKappa1 = coeffs[numExpansions + numFacFields + numCurrentSheets + 3]
-    #     facKappa2 = coeffs[numExpansions + numFacFields + numCurrentSheets + 4]
-    #     # NOTE, this is a deviation from the FORTRAN code, the FORTRAN code
-    #     # handles this in the WARPED subroutine
-    #     twistFact = coeffs[numExpansions + numFacFields + numCurrentSheets + 5]
+        currThicks = coeffs[
+            numExpansions + numFacFields + 1:
+            numExpansions + numFacFields + 1 + numCurrentSheets
+        ]
+        hingeDist = coeffs[numExpansions + numFacFields + numCurrentSheets + 1]
+        warpParam = coeffs[numExpansions + numFacFields + numCurrentSheets + 2]
+        facKappa1 = coeffs[numExpansions + numFacFields + numCurrentSheets + 3]
+        facKappa2 = coeffs[numExpansions + numFacFields + numCurrentSheets + 4]
+        # NOTE, this is a deviation from the FORTRAN code, the FORTRAN code
+        # handles this in the WARPED subroutine
+        twistFact = coeffs[numExpansions + numFacFields + numCurrentSheets + 5]
 
-    #     equatorialVariableCoeffs = Ts07EquatorialVariableCoefficients(
-    #         currThicks, hingeDist, warpParam, twistFact, eqLinearCoeffs
-    #     )
+        equatorialVariableCoeffs = Ts07EquatorialVariableCoefficients(
+            currThicks, hingeDist, warpParam, twistFact, eqLinearCoeffs
+        )
 
     #     fac = Ts07FacVariableCoefficients(
     #         facKappa1, facKappa2, facConfiguration.createFromCoeffs(facAmps)

@@ -1,10 +1,12 @@
 """emmpy.geomagmodel.ts07.modeling.equatorial.ts07equtorialmagneticfieldbuilder"""
 
 
-# from emmpy.com.google.common.base.preconditions import Preconditions
-# from emmpy.magmodel.core.math.bessel.coltbesselfunctionevaluator import (
-#     ColtBesselFunctionEvaluator
-# )
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    DifferentiableScalarFieldIJ
+)
+from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
+    CurrentSheetHalfThicknesses
+)
 
 
 class Ts07EquatorialMagneticFieldBuilder:
@@ -78,42 +80,23 @@ class Ts07EquatorialMagneticFieldBuilder:
         self.includeShield = False
         return self
 
-    # def build(self):
-    #     """Builder"""
-    #     numCurrSheets = len(self.coeffs.getCurrThicks())
-    #     hingeDistance = self.coeffs.getHingeDistance()
-    #     warpingParam = self.coeffs.getWarpingParam()
-    #     twistParam = self.coeffs.getTwistParam()
+    def build(self):
+        numCurrSheets = len(self.coeffs.getCurrThicks())
+        hingeDistance = self.coeffs.getHingeDistance()
+        warpingParam = self.coeffs.getWarpingParam()
+        twistParam = self.coeffs.getTwistParam()
+        equatorialFields = [None]*numCurrSheets
 
-    #     #     BasisVectorField[] equatorialFields = new BasisVectorField[numCurrSheets];
+        # loop through each of the current sheets
+        for currSheetIndex in range(numCurrSheets):
+            currSheetThick = self.coeffs.getCurrThicks()[currSheetIndex]
+            linearCoeffs = self.coeffs.getLinearCoeffs()[currSheetIndex]
 
-    #     #     // loop through each of the current sheets
-    #     #     for (int currSheetIndex = 0; currSheetIndex < numCurrSheets; currSheetIndex++) {
-
-    #     #       double currSheetThick = coeffs.getCurrThicks().get(currSheetIndex);
-
-    #     #       Ts07EquatorialLinearCoefficients linearCoeffs = coeffs.getLinearCoeffs().get(currSheetIndex);
-
-    #     #       /*
-    #     #        * Check the inputs
-    #     #        */
-    #     #       checkArgument(dynamicPressure > 0, "dynamic pressure must be greater than zero");
-    #     #       // check that the number of expansions is consistent
-    #     #       checkArgument(
-    #     #           linearCoeffs.getNumAzimuthalExpansions() == shieldingCoeffs.getNumAzimuthalExpansions(),
-    #     #           "The number of radial expansions for the variable coefficients "
-    #     #               + "is %s, while for the shielding coefficients it is %s",
-    #     #           linearCoeffs.getNumAzimuthalExpansions(), shieldingCoeffs.getNumAzimuthalExpansions());
-    #     #       checkArgument(
-    #     #           linearCoeffs.getNumRadialExpansions() == shieldingCoeffs.getNumRadialExpansions(),
-    #     #           "The number of radial expansions for the variable coefficients "
-    #     #               + "is %s, while for the shielding coefficients it is %s",
-    #     #           linearCoeffs.getNumRadialExpansions(), shieldingCoeffs.getNumRadialExpansions());
-
-    #     #       // Construct a constant current sheet half thickness
-    #     #       DifferentiableScalarFieldIJ currentSheetHalfThickness =
-    #     #           CurrentSheetHalfThicknesses.createConstant(currSheetThick);
-
+            # Construct a constant current sheet half thickness
+            currentSheetHalfThickness = (
+                CurrentSheetHalfThicknesses.createConstant(currSheetThick)
+            )
+    
     #     #       // Construct the shielded thin current sheet
     #     #       ShieldedThinCurrentSheetField thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
     #     #           currentSheetHalfThickness, tailLength, bessel, shieldingCoeffs, includeShield);

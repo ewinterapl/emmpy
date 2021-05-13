@@ -7,10 +7,9 @@ from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
 
 
 class CurrentSheetHalfThicknesses:
-    pass
     """Utility class to help construct different current sheet thicknesses.
 
-    @author G.K.Stephens
+    author G.K.Stephens
     """
 
     # def __init__(self):

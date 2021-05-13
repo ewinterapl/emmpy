@@ -45,8 +45,8 @@ class DefaultFacConfigurationOptions(FacConfiguration):
     #     else:
     #         raise Exception
 
-    # def getNumberOfFields(self):
-    #     return self.numberOfFields
+    def getNumberOfFields(self):
+        return self.numberOfFields
 
     # @staticmethod
     # def getTs07(coeffs):

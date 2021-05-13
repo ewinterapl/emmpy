@@ -2,13 +2,13 @@
 
 
 # import os
-# import re
+import re
 
 # from emmpy.crucible.core.time.utcepoch import UTCEpoch
 
-# from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions import (
-#     DefaultFacConfigurationOptions
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions import (
+    DefaultFacConfigurationOptions
+)
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients import (
 #     TS07DVariableCoefficients
 # )
@@ -24,9 +24,9 @@
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
 #     Ts07FacVariableCoefficients
 # )
-# from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-#     CoefficientExpansions
-# )
+from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
+    CoefficientExpansions
+)
 # from emmpy.magmodel.core.math.trigparity import TrigParity
 # from emmpy.java.lang.runtimeexception import RuntimeException
 
@@ -70,40 +70,39 @@ class TS07DVariableCoefficientsUtils:
     @staticmethod
     def create(*args):
         if len(args) == 1:
-            raise Exception
-    #         (variableCoefficientsFile,) = args
-    #         # Constructs the TS07D set of coefficients from the ASCII file
-    #         # WITH a customized resolution. This set of coefficient can be
-    #         # used to construct the TS07D model. The model configuration is
-    #         # interpreted from the file.
-    #         # @param variableCoefficientsFile an ASCII file containing a list
-    #         # of the coefficients
-    #         # @return a newly constructed set of TS07DVariableCoefficients
-    #         # constructed by parsing the ASCII file
-    #         numCurrentSheets = (
-    #             TS07DVariableCoefficientsUtils.readCurrentSheetNumber(
-    #                 variableCoefficientsFile
-    #             )
-    #         )
-    #         numAzimuthalExpansions = (
-    #             TS07DVariableCoefficientsUtils.readAzimuthalExpansionNumber(
-    #                 variableCoefficientsFile
-    #             )
-    #         )
-    #         numRadialExpansions = (
-    #             TS07DVariableCoefficientsUtils.readRadialExpansionNumber(
-    #                 variableCoefficientsFile
-    #             )
-    #         )
-    #         facConfiguration = (
-    #             TS07DVariableCoefficientsUtils.readFACConfiguration(
-    #                 variableCoefficientsFile
-    #             )
-    #         )
-    #         return TS07DVariableCoefficientsUtils.create(
-    #             variableCoefficientsFile, numCurrentSheets,
-    #             numAzimuthalExpansions, numRadialExpansions, facConfiguration
-    #         )
+            (variableCoefficientsFile,) = args
+            # Constructs the TS07D set of coefficients from the ASCII file
+            # WITH a customized resolution. This set of coefficient can be
+            # used to construct the TS07D model. The model configuration is
+            # interpreted from the file.
+            # param variableCoefficientsFile an ASCII file containing a list
+            # of the coefficients
+            # return a newly constructed set of TS07DVariableCoefficients
+            # constructed by parsing the ASCII file
+            numCurrentSheets = (
+                TS07DVariableCoefficientsUtils.readCurrentSheetNumber(
+                    variableCoefficientsFile
+                )
+            )
+            numAzimuthalExpansions = (
+                TS07DVariableCoefficientsUtils.readAzimuthalExpansionNumber(
+                    variableCoefficientsFile
+                )
+            )
+            numRadialExpansions = (
+                TS07DVariableCoefficientsUtils.readRadialExpansionNumber(
+                    variableCoefficientsFile
+                )
+            )
+            facConfiguration = (
+                TS07DVariableCoefficientsUtils.readFACConfiguration(
+                    variableCoefficientsFile
+                )
+            )
+            return TS07DVariableCoefficientsUtils.create(
+                variableCoefficientsFile, numCurrentSheets,
+                numAzimuthalExpansions, numRadialExpansions, facConfiguration
+            )
         elif len(args) == 4:
             raise Exception
     #         (variableCoefficientsFile, numAzimuthalExpansions,
@@ -126,62 +125,61 @@ class TS07DVariableCoefficientsUtils:
     #             facConfiguration
     #         )
         elif len(args) == 5:
-            raise Exception
-    #         (variableCoefficientsFile, numCurrentSheets,
-    #          numAzimuthalExpansions, numRadialExpansions,
-    #          facConfiguration) = args
-    #         # Constructs the TS07D set of coefficients from the ASCII file WITH
-    #         # a customized resolution and with MANY current sheets. This set of
-    #         # coefficient can be used to construct the TS07D model.
-    #         # This is package private because (at least for now) we want to
-    #         # limit the public API to only support 1 or 2 current sheets, not
-    #         # many current sheets.
-    #         # @param variableCoefficientsFile an ASCII file containing a list
-    #         # of the coefficients
-    #         # @param numCurrentSheets the number of current sheets
-    #         # @param numAzimuthalExpansions referred to as m
-    #         # @param numRadialExpansions referred to as n
-    #         # @param facConfiguration describes how to build the field aligned
-    #         # current system
-    #         # @return a newly constructed set of TS07DVariableCoefficients
-    #         # constructed by parsing the ASCII file
+            (variableCoefficientsFile, numCurrentSheets,
+             numAzimuthalExpansions, numRadialExpansions,
+             facConfiguration) = args
+            # Constructs the TS07D set of coefficients from the ASCII file WITH
+            # a customized resolution and with MANY current sheets. This set of
+            # coefficient can be used to construct the TS07D model.
+            # This is package private because (at least for now) we want to
+            # limit the public API to only support 1 or 2 current sheets, not
+            # many current sheets.
+            # param variableCoefficientsFile an ASCII file containing a list
+            # of the coefficients
+            # param numCurrentSheets the number of current sheets
+            # param numAzimuthalExpansions referred to as m
+            # param numRadialExpansions referred to as n
+            # param facConfiguration describes how to build the field aligned
+            # current system
+            # return a newly constructed set of TS07DVariableCoefficients
+            # constructed by parsing the ASCII file
 
-    #         # the number of asymmetric expansions is simply the n*m
-    #         numAsymmetricExpansions = (
-    #             numRadialExpansions*numAzimuthalExpansions)
+            # the number of asymmetric expansions is simply the n*m
+            numAsymmetricExpansions = (
+                numRadialExpansions*numAzimuthalExpansions)
 
-    #         # half the number of equatorial expansion coefficients, r+2*(r*a),
-    #         # this is half the expansions as the dynamic pressure terms double
-    #         # this number
-    #         numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
+            # half the number of equatorial expansion coefficients, r+2*(r*a),
+            # this is half the expansions as the dynamic pressure terms double
+            # this number
+            numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
 
-    #         numExpansions = numHalfExpansions*2*numCurrentSheets
+            numExpansions = numHalfExpansions*2*numCurrentSheets
 
-    #         # tot = 1(dipShield)+numExpansions+numSheets+
-    #         # 5(hinge,warp,Kappa1,Kappa2,twist)+fac
-    #         totalNumberOfCoefficients = (
-    #             1 + numExpansions + numCurrentSheets + 5 +
-    #             facConfiguration.getNumberOfFields()
-    #         )
+            # tot = 1(dipShield)+numExpansions+numSheets+
+            # 5(hinge,warp,Kappa1,Kappa2,twist)+fac
+            totalNumberOfCoefficients = (
+                1 + numExpansions + numCurrentSheets + 5 +
+                facConfiguration.getNumberOfFields()
+            )
 
-    #         coeffs = [None]*totalNumberOfCoefficients
-    #         lineNumber = 0
-    #         for line in open(variableCoefficientsFile):
-    #             try:
-    #                 coeffs[lineNumber] = float(line.split()[0])
-    #                 lineNumber += 1
-    #             except ValueError:
-    #                 break
+            coeffs = [None]*totalNumberOfCoefficients
+            lineNumber = 0
+            for line in open(variableCoefficientsFile):
+                try:
+                    coeffs[lineNumber] = float(line.split()[0])
+                    lineNumber += 1
+                except ValueError:
+                    break
 
-    #         # NOTE, this is a deviation from the FORTRAN code, the FORTRAN
-    #         # code handles this in the WARPED subroutine
-    #         twist = coeffs[-1]/10
-    #         coeffs[-1] = twist
+            # NOTE, this is a deviation from the FORTRAN code, the FORTRAN
+            # code handles this in the WARPED subroutine
+            twist = coeffs[-1]/10
+            coeffs[-1] = twist
 
-    #         return TS07DVariableCoefficientsUtils.createFromArray(
-    #             coeffs, numCurrentSheets, numAzimuthalExpansions,
-    #             numRadialExpansions, facConfiguration
-    #         )
+            return TS07DVariableCoefficientsUtils.createFromArray(
+                coeffs, numCurrentSheets, numAzimuthalExpansions,
+                numRadialExpansions, facConfiguration
+            )
         elif len(args) == 6:
             raise Exception
     #         if isinstance(args[1], list):
@@ -367,161 +365,159 @@ class TS07DVariableCoefficientsUtils:
     #             break
     #     return tilt
 
-    # @staticmethod
-    # def readCurrentSheetNumber(variableCoefficientsFile):
-    #     """Parses the number of current sheets from the variable coefficients
-    #     file.
+    @staticmethod
+    def readCurrentSheetNumber(variableCoefficientsFile):
+        """Parses the number of current sheets from the variable coefficients
+        file.
 
-    #     @param variableCoefficientsFile an ASCII file containing a list of the
-    #     coefficients
-    #     @return the number of current sheets parsed from the file
-    #     """
-    #     numCurrSheets = 0
-    #     for line in open(variableCoefficientsFile):
-    #         if " # current sheet thickness" in line:
-    #             numCurrSheets += 1
-    #     return numCurrSheets
+        param variableCoefficientsFile an ASCII file containing a list of the
+        coefficients
+        return the number of current sheets parsed from the file
+        """
+        numCurrSheets = 0
+        for line in open(variableCoefficientsFile):
+            if " # current sheet thickness" in line:
+                numCurrSheets += 1
+        return numCurrSheets
 
-    # @staticmethod
-    # def readAzimuthalExpansionNumber(variableCoefficientsFile):
-    #     """Parses the azimuthal expansion number from the variable coefficients
-    #     file.
+    @staticmethod
+    def readAzimuthalExpansionNumber(variableCoefficientsFile):
+        """Parses the azimuthal expansion number from the variable coefficients
+        file.
 
-    #     @param variableCoefficientsFile an ASCII file containing a list of the
-    #     coefficients
-    #     @return the azimuthal expansion number parsed from the file
-    #     """
-    #     m = 0
-    #     for line in open(variableCoefficientsFile):
-    #         if "M=" in line:
-    #             m_str = line.split()[-1]
-    #             m = int(m_str)
-    #             break
-    #     return m
+        param variableCoefficientsFile an ASCII file containing a list of the
+        coefficients
+        return the azimuthal expansion number parsed from the file
+        """
+        m = 0
+        for line in open(variableCoefficientsFile):
+            if "M=" in line:
+                m_str = line.split()[-1]
+                m = int(m_str)
+                break
+        return m
 
-    # @staticmethod
-    # def readRadialExpansionNumber(variableCoefficientsFile):
-    #     """Parses the radial expansion number from the variable coefficients
-    #     file.
+    @staticmethod
+    def readRadialExpansionNumber(variableCoefficientsFile):
+        """Parses the radial expansion number from the variable coefficients
+        file.
 
-    #     @param variableCoefficientsFile an ASCII file containing a list of
-    #     the coefficients
-    #     @return the radial expansion number parsed from the file
-    #     """
-    #     n = 0
-    #     for line in open(variableCoefficientsFile):
-    #         if "N=" in line:
-    #             n_str = line.split()[-1]
-    #             n = int(n_str)
-    #             break
-    #     return n
+        param variableCoefficientsFile an ASCII file containing a list of
+        the coefficients
+        return the radial expansion number parsed from the file
+        """
+        n = 0
+        for line in open(variableCoefficientsFile):
+            if "N=" in line:
+                n_str = line.split()[-1]
+                n = int(n_str)
+                break
+        return n
 
-    # @staticmethod
-    # def readFACConfiguration(variableCoefficientsFile):
-    #     """Parses the FAC configuration number from the variable coefficients
-    #     file.
+    @staticmethod
+    def readFACConfiguration(variableCoefficientsFile):
+        """Parses the FAC configuration number from the variable coefficients
+        file.
 
-    #     @param variableCoefficientsFile an ASCII file containing a list of the
-    #     coefficients
-    #     @return the FAC configuration number parsed from the file
-    #     """
-    #     count = 0
-    #     for line in open(variableCoefficientsFile):
-    #         if re.search("# reg-[1|2] M-[1|2]", line):
-    #             count += 1
+        param variableCoefficientsFile an ASCII file containing a list of the
+        coefficients
+        return the FAC configuration number parsed from the file
+        """
+        count = 0
+        for line in open(variableCoefficientsFile):
+            if re.search("# reg-[1|2] M-[1|2]", line):
+                count += 1
 
-    #     if count == 4:
-    #         return DefaultFacConfigurationOptions(
-    #             DefaultFacConfigurationOptions.TS07D)
-    #     elif count == 6:
-    #         return DefaultFacConfigurationOptions(
-    #             DefaultFacConfigurationOptions.FAC6)
-    #     elif count == 12:
-    #         return DefaultFacConfigurationOptions(
-    #             DefaultFacConfigurationOptions.FAC12)
-    #     elif count == 16:
-    #         return DefaultFacConfigurationOptions(
-    #             DefaultFacConfigurationOptions.FAC16)
-    #     else:
-    #         raise RuntimeException(
-    #             "Invalid number of FACs to construct a "
-    #             "DefaultFacConfiguration"
-    #         )
+        if count == 4:
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.TS07D)
+        elif count == 6:
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.FAC6)
+        elif count == 12:
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.FAC12)
+        elif count == 16:
+            return DefaultFacConfigurationOptions(
+                DefaultFacConfigurationOptions.FAC16)
+        else:
+            raise RuntimeException(
+                "Invalid number of FACs to construct a "
+                "DefaultFacConfiguration"
+            )
 
-    # @staticmethod
-    # def createFromArray(
-    #     coeffs, numCurrentSheets, numAzimuthalExpansions, numRadialExpansions,
-    #     facConfiguration
-    # ):
-    #     """Constructs a newly constructed Ts07FacVariableCoefficients from an
-    #     array of doubles.
+    @staticmethod
+    def createFromArray(
+        coeffs, numCurrentSheets, numAzimuthalExpansions, numRadialExpansions,
+        facConfiguration
+    ):
+        """Constructs a newly constructed Ts07FacVariableCoefficients from an
+        array of doubles.
 
-    #     A double array is the data structured used in the Fortran version of
-    #     the code.
+        A double array is the data structured used in the Fortran version of
+        the code.
 
-    #     @param coefficients an array containing the coefficients
-    #     @param numAzimuthalExpansions referred to as m
-    #     @param numRadialExpansions referred to as n
-    #     @param facConfiguration describes how to build the field aligned
-    #     current system
-    #     @return a newly constructed {@link TS07DVariableCoefficients}
-    #     """
+        param coefficients an array containing the coefficients
+        param numAzimuthalExpansions referred to as m
+        param numRadialExpansions referred to as n
+        param facConfiguration describes how to build the field aligned
+        current system
+        return a newly constructed {@link TS07DVariableCoefficients}
+        """
 
-    #     # the number of asymmetric expansions is simply the n*m
-    #     numAsymmetricExpansions = numRadialExpansions*numAzimuthalExpansions
+        # the number of asymmetric expansions is simply the n*m
+        numAsymmetricExpansions = numRadialExpansions*numAzimuthalExpansions
 
-    #     # half the number of equatorial expansion coefficients, r+2*(r*a), this
-    #     # is half the expansions as the dynamic pressure terms double this
-    #     # number
-    #     numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
+        # half the number of equatorial expansion coefficients, r+2*(r*a), this
+        # is half the expansions as the dynamic pressure terms double this
+        # number
+        numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
 
-    #     numExpansions = numHalfExpansions*2*numCurrentSheets
+        numExpansions = numHalfExpansions*2*numCurrentSheets
 
-    #     # 2*halfExpansions + 11 other coefficients
-    #     totalNumberOfCoefficients = (
-    #         numExpansions + 1 + numCurrentSheets + 5 +
-    #         facConfiguration.getNumberOfFields()
-    #     )
+        # 2*halfExpansions + 11 other coefficients
+        totalNumberOfCoefficients = (
+            numExpansions + 1 + numCurrentSheets + 5 +
+            facConfiguration.getNumberOfFields()
+        )
 
-    #     # Parse file data into proper variables. This too will need to be
-    #     # changed if different coefficient formats are use.
-    #     cfAmplitude = coeffs[0]
+        # Parse file data into proper variables. This too will need to be
+        # changed if different coefficient formats are use.
+        cfAmplitude = coeffs[0]
 
-    #     eqLinearCoeffs = []
+        eqLinearCoeffs = []
 
-    #     # loop through the number of current sheets
-    #     # for (int nCurr = 0; nCurr < numCurrentSheets; nCurr++) {
-    #     for nCurr in range(numCurrentSheets):
-    #         index = nCurr*numHalfExpansions*2
-    #         aSym = [None]*numRadialExpansions
-    #         aSymPdynDependent = [None]*numRadialExpansions
-    #         aOdd = [[None]*numRadialExpansions]*numAzimuthalExpansions
-    #         aOddPdynDependent = (
-    #             [[None]*numRadialExpansions]*numAzimuthalExpansions
-    #         )
-    #         aEven = [[None]*numRadialExpansions]*numAzimuthalExpansions
-    #         aEvenPdynDependent = (
-    #             [[None]*numRadialExpansions]*numAzimuthalExpansions
-    #         )
-    #         for n in range(numRadialExpansions):
-    #             index += 1
-    #             aSym[n] = coeffs[index]
-    #             aSymPdynDependent[n] = coeffs[index + numHalfExpansions]
-
-    #         for n in range(numRadialExpansions):
-    #             for m in range(numAzimuthalExpansions):
-    #                 index += 1
-    #                 aOdd[m][n] = coeffs[index]
-    #                 aOddPdynDependent[m][n] = coeffs[index + numHalfExpansions]
-    #                 aEven[m][n] = coeffs[index + numAsymmetricExpansions]
-    #                 aEvenPdynDependent[m][n] = (
-    #                     coeffs[index + numHalfExpansions +
-    #                            numAsymmetricExpansions]
-    #                 )
-
-    #         aSymExpansion = (
-    #             CoefficientExpansions.createExpansionFromArray(aSym, 1)
-    #         )
+        # loop through the number of current sheets
+        # for (int nCurr = 0; nCurr < numCurrentSheets; nCurr++) {
+        for nCurr in range(numCurrentSheets):
+            index = nCurr*numHalfExpansions*2
+            aSym = [None]*numRadialExpansions
+            aSymPdynDependent = [None]*numRadialExpansions
+            aOdd = [[None]*numRadialExpansions]*numAzimuthalExpansions
+            aOddPdynDependent = (
+                [[None]*numRadialExpansions]*numAzimuthalExpansions
+            )
+            aEven = [[None]*numRadialExpansions]*numAzimuthalExpansions
+            aEvenPdynDependent = (
+                [[None]*numRadialExpansions]*numAzimuthalExpansions
+            )
+            for n in range(numRadialExpansions):
+                index += 1
+                aSym[n] = coeffs[index]
+                aSymPdynDependent[n] = coeffs[index + numHalfExpansions]
+            for n in range(numRadialExpansions):
+                for m in range(numAzimuthalExpansions):
+                    index += 1
+                    aOdd[m][n] = coeffs[index]
+                    aOddPdynDependent[m][n] = coeffs[index + numHalfExpansions]
+                    aEven[m][n] = coeffs[index + numAsymmetricExpansions]
+                    aEvenPdynDependent[m][n] = (
+                        coeffs[index + numHalfExpansions +
+                               numAsymmetricExpansions]
+                    )
+            aSymExpansion = (
+                CoefficientExpansions.createExpansionFromArray(aSym, 1)
+            )
     #         aSymPdynDependentExpansion = (
     #             CoefficientExpansions.createExpansionFromArray(
     #                 aSymPdynDependent, 1

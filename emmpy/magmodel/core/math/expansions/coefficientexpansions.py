@@ -23,20 +23,20 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
 
 class CoefficientExpansions:
 
-    # @staticmethod
-    # def createExpansionFromArray(*args):
-    #     """Wraps an array and returns a view of the array as a
-    #     {@link CoefficientExpansion1D}."""
-    #     if len(args) == 2:
-    #         # @param data the array that backs the
-    #         # {@link CoefficientExpansion1D}
-    #         # @param firstExpansionNumber the first index to be used in the
-    #         # expansion
-    #         # @return a newly created {@link CoefficientExpansion1D} that is a
-    #         # view of the input array
-    #         (data, firstExpansionNumber) = args
-    #         return ArrayCoefficientExpansion1D(data, firstExpansionNumber)
-    #     elif len(args) == 3:
+    @staticmethod
+    def createExpansionFromArray(*args):
+        """Wraps an array and returns a view of the array as a
+        CoefficientExpansion1D."""
+        if len(args) == 2:
+            # param data the array that backs the CoefficientExpansion1D
+            # param firstExpansionNumber the first index to be used in the
+            # expansion
+            # return a newly created CoefficientExpansion1D that is a view of
+            # the input array
+            (data, firstExpansionNumber) = args
+            return ArrayCoefficientExpansion1D(data, firstExpansionNumber)
+        elif len(args) == 3:
+            raise Exception
     #         # @param data the 2D array that backs the
     #         # {@link CoefficientExpansion2D}
     #         # @param firstIexpansionNumber the first index to be used in the
@@ -48,8 +48,8 @@ class CoefficientExpansions:
     #         (data, firstIexpansionNumber, firstJexpansionNumber) = args
     #         return ArrayCoefficientExpansion2D(data, firstIexpansionNumber,
     #                                            firstJexpansionNumber)
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception
 
     # @staticmethod
     # def invert(p):

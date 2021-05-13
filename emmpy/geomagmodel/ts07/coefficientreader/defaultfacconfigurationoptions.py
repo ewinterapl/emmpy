@@ -1,9 +1,9 @@
 """emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions"""
 
 
-# from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
-#     FacConfiguration
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
+    FacConfiguration
+)
 # from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
 #     FacRegion
 # )

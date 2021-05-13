@@ -42,38 +42,38 @@ class TS07DModelBuilder:
     """
     pass
 
-    # def __init__(self, dipoleTiltAngle, dynamicPressure, variableCoefficients):
-    #     """Constructor, this is package private as this should be constructed
-    #     using the create methods"""
-    #     self.dipoleTiltAngle = dipoleTiltAngle
-    #     self.dynamicPressure = dynamicPressure
-    #     self.variableCoefficients = variableCoefficients
-    #     self.parameters = None
+    def __init__(self, dipoleTiltAngle, dynamicPressure, variableCoefficients):
+        """Constructor, this is package private as this should be constructed
+        using the create methods"""
+        self.dipoleTiltAngle = dipoleTiltAngle
+        self.dynamicPressure = dynamicPressure
+        self.variableCoefficients = variableCoefficients
+        self.parameters = None
 
-    #     # the standard tail length is 20.0 Re
-    #     self.tailLength = 20.0
+        # the standard tail length is 20.0 Re
+        self.tailLength = 20.0
 
-    #     # by default the equatorial shielding is included
-    #     self.includeEquatorialShielding = True
+        # by default the equatorial shielding is included
+        self.includeEquatorialShielding = True
 
-    #     # Constructing the static coefficients is expensive, much more
-    #     # expensive than the model evaluation, so don't construct until/unless
-    #     # necessary. When build is called, if it is still null (i.e. the user
-    #     # never called a withStaticCoeffs method), construct using the default
-    #     # at that time.
-    #     self.staticCoefficients = None
+        # Constructing the static coefficients is expensive, much more
+        # expensive than the model evaluation, so don't construct until/unless
+        # necessary. When build is called, if it is still null (i.e. the user
+        # never called a withStaticCoeffs method), construct using the default
+        # at that time.
+        self.staticCoefficients = None
 
-    #     # by default, do not use Albert's Bessel function evaluator, use
-    #     # Tsyganenko's by default
-    #     self.withAlbertBesselFunction = False
+        # by default, do not use Albert's Bessel function evaluator, use
+        # Tsyganenko's by default
+        self.withAlbertBesselFunction = False
 
-    #     # by default, we will be consistent with the original FORTRAN code and
-    #     # will not check the magnetopause boundary
-    #     self.withMagnetopause = False
+        # by default, we will be consistent with the original FORTRAN code and
+        # will not check the magnetopause boundary
+        self.withMagnetopause = False
 
-    #     self.twistParameterSet = None
-    #     self.twistParameter = None
-    #     self.withTA15deformation = None
+        self.twistParameterSet = None
+        self.twistParameter = None
+        self.withTA15deformation = None
 
     @staticmethod
     def create(*args):

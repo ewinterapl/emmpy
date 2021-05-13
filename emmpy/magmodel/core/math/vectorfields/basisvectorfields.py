@@ -8,9 +8,9 @@
 # from emmpy.crucible.core.math.vectorspace.vectorijk import (
 #     VectorIJK
 # )
-# from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
-#     BasisVectorField
-# )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 
 
 class BasisVectorFields:
@@ -19,11 +19,10 @@ class BasisVectorFields:
 
     author G.K.Stephens
     """
-    pass
 
-    # @staticmethod
-    # def asBasisField(field):
-    #     bvf = BasisVectorField()
+    @staticmethod
+    def asBasisField(field):
+        bvf = BasisVectorField()
     #     bvf.evaluateExpansion = (
     #         lambda location, buffer: field.evaluate(location)
     #     )

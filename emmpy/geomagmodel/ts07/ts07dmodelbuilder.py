@@ -15,9 +15,9 @@
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
 #     TS07DStaticCoefficientsFactory
 # )
-# from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
-#     DipoleShieldingField
-# )
+from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
+    DipoleShieldingField
+)
 # from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
 #     Ts07EquatorialMagneticFieldBuilder
 # )

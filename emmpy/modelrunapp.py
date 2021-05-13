@@ -28,7 +28,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 def ModelRunApp():
     print("Starting ModelRunApp()")
     runThinSheet()
-    # runTs07D()
+    runTs07D()
     print("Ending ModelRunApp()")
 
 
@@ -73,9 +73,9 @@ def runThinSheet():
     print("Ending runThinSheet()")
 
 
-# def runTs07D():
-#     """Builds and runs the TS07D model"""
-#     print("Starting runTs07D()")
+def runTs07D():
+    """Builds and runs the TS07D model"""
+    print("Starting runTs07D()")
 
 #     # use a coeffs file from the March 2015 St. Patty's Day storm
 #     coeffsFile = "/Users/winteel1/mag/2015_076_16_20.par"
@@ -105,7 +105,7 @@ def runThinSheet():
 #     bVect = model.evaluate(pos, buffer)
 #     print(bVect)
 
-#     print("Ending runTs07D()")
+    print("Ending runTs07D()")
 
 
 if __name__ == "__main__":

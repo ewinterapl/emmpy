@@ -7,7 +7,7 @@ Copyright (C) 2012 The Johns Hopkins University Applied Physics Laboratory
 """
 
 
-# from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
+from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 # from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 #     UnwritableVectorIJK
 # )
@@ -21,7 +21,6 @@ class VectorFields:
     author vandejd1
     author G.K.Stephens
     """
-    pass
 
     # def __init__(self):
     #     """Constructor
@@ -118,24 +117,24 @@ class VectorFields:
     #     )
     #     return vf
 
-    # @staticmethod
-    # def scale(field, scaleFactor):
-    #     """Creates a vector field by scaling the output of the supplied vector
-    #     field.
+    @staticmethod
+    def scale(field, scaleFactor):
+        """Creates a vector field by scaling the output of the supplied vector
+        field.
 
-    #     The location is not scaled.
+        The location is not scaled.
 
-    #     param field a vector field
-    #     param scaleFactor a value to scale the output
-    #     return a newly created vector field that computes the scale
-    #     ( a*scaleFactor )
-    #     """
-    #     vf = VectorField()
-    #     vf.evaluate = (
-    #         lambda my_self, location, buffer:
-    #         field.evaluate(location, buffer).scale(scaleFactor)
-    #     )
-    #     return vf
+        param field a vector field
+        param scaleFactor a value to scale the output
+        return a newly created vector field that computes the scale
+        ( a*scaleFactor )
+        """
+        vf = VectorField()
+        vf.evaluate = (
+            lambda location, buffer:
+            field.evaluate(location, buffer).scale(scaleFactor)
+        )
+        return vf
 
     # @staticmethod
     # def scaleLocation(field, scaleFactor):

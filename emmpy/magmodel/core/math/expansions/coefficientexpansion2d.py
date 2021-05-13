@@ -45,21 +45,20 @@ class CoefficientExpansion2D:
         """return the upper bound index of the expansion (U_i)"""
         raise Exception
 
-    # def getJLowerBoundIndex(self):
-    #     """@return the lower bound index of the expansion (L<sub>j</sub>)"""
-    #     raise Exception
+    def getJLowerBoundIndex(self):
+        """return the lower bound index of the expansion (L<sub>j</sub>)"""
+        raise Exception
 
-    # def getJUpperBoundIndex(self):
-    #     """@return the upper bound index of the expansion (U<sub>j</sub>)"""
-    #     raise Exception
+    def getJUpperBoundIndex(self):
+        """return the upper bound index of the expansion (U<sub>j</sub>)"""
+        raise Exception
 
-    # def getCoefficient(self, iIndex, jIndex):
-    #     """gets i-jth coefficient for the expansion T<sub>ij</sub> in &#8721;
-    #     T<sub>ij</sub>
+    def getCoefficient(self, iIndex, jIndex):
+        """gets i-jth coefficient for the expansion T_ij
 
-    #     @param iIndex the index i
-    #     @param jIndex the index j
-    #     @return the i-jth coefficient for the expansion corresponding to the
-    #     index T<sub>ij</sub>
-    #     """
-    #     raise Exception
+        param iIndex the index i
+        param jIndex the index j
+        return the i-jth coefficient for the expansion corresponding to the
+        index T_ij
+        """
+        raise Exception

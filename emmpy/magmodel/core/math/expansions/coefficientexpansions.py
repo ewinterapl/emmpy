@@ -3,7 +3,7 @@
 
 # from math import floor
 
-# from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.com.google.common.base.preconditions import Preconditions
 # from emmpy.java.lang.unsupportedoperationexception import (
 #     UnsupportedOperationException
 # )
@@ -132,18 +132,14 @@ class CoefficientExpansions:
         # Return the coefficient expansion.
         return ce
 
-    # @staticmethod
-    # def scale(a, scaleFactor):
-    #     """scale
+    @staticmethod
+    def scale(a, scaleFactor):
 
-    #     @param a
-    #     @param scaleFactor
-    #     @return
-    #     """
-    #     # Create a view object to wrap the expansion.
-    #     # Replace the getCoefficient() method with a method that always returns
-    #     # the scaled value, as a closure.
-    #     if isinstance(a, CoefficientExpansion1D):
+        # Create a view object to wrap the expansion.
+        # Replace the getCoefficient() method with a method that always returns
+        # the scaled value, as a closure.
+        if isinstance(a, CoefficientExpansion1D):
+            raise Exception
     #         v = CoefficientExpansion1D()
     #         v.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
     #         v.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
@@ -152,25 +148,25 @@ class CoefficientExpansions:
     #                 scaleFactor*a.getCoefficient(radialExpansion)
     #             )
     #         )
-    #     elif isinstance(a, CoefficientExpansion2D):
-    #         v = CoefficientExpansion2D()
-    #         v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
-    #         v.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
-    #         v.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
-    #         v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
-    #         v.iSize = lambda: a.iSize()
-    #         v.jSize = lambda: a.jSize()
+        elif isinstance(a, CoefficientExpansion2D):
+            v = CoefficientExpansion2D()
+            v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
+            v.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
+            v.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
+            v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
+            v.iSize = lambda: a.iSize()
+            v.jSize = lambda: a.jSize()
     #         v.getCoefficient = (
     #             lambda azimuthalExpansion, radialExpansion: (
     #                 scaleFactor*a.getCoefficient(azimuthalExpansion,
     #                                              radialExpansion)
     #             )
     #         )
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception
 
-    #     # Return the view.
-    #     return v
+        # Return the view.
+        return v
 
     # @staticmethod
     # def createConstant(*args):
@@ -232,21 +228,15 @@ class CoefficientExpansions:
     #     # Return the view.
     #     return v
 
-    # @staticmethod
-    # def add(a, b):
-    #     """add
-
-    #     @param a
-    #     @param b
-    #     @return
-    #     """
-
-    #     # Make sure the expansions are compatible.
-    #     # Create a dummy expansion of the appropriate size.
-    #     # Create a view object to wrap the expansion.
-    #     # Replace the getCoefficient() method with a method that always returns
-    #     # the sum, as a closure.
-    #     if isinstance(a, CoefficientExpansion1D):
+    @staticmethod
+    def add(a, b):
+        # Make sure the expansions are compatible.
+        # Create a dummy expansion of the appropriate size.
+        # Create a view object to wrap the expansion.
+        # Replace the getCoefficient() method with a method that always returns
+        # the sum, as a closure.
+        if isinstance(a, CoefficientExpansion1D):
+            raise Exception
     #         Preconditions.checkArgument(a.getLowerBoundIndex() ==
     #                                     b.getLowerBoundIndex())
     #         Preconditions.checkArgument(a.getUpperBoundIndex() ==
@@ -263,41 +253,41 @@ class CoefficientExpansions:
     #             a.getCoefficient(radialExpansion) +
     #             b.getCoefficient(radialExpansion)
     #         )
-    #     elif isinstance(a, CoefficientExpansion2D):
-    #         Preconditions.checkArgument(a.getILowerBoundIndex() ==
-    #                                     b.getILowerBoundIndex())
-    #         Preconditions.checkArgument(a.getIUpperBoundIndex() ==
-    #                                     b.getIUpperBoundIndex())
-    #         Preconditions.checkArgument(a.getJLowerBoundIndex() ==
-    #                                     b.getJLowerBoundIndex())
-    #         Preconditions.checkArgument(a.getJUpperBoundIndex() ==
-    #                                     b.getJUpperBoundIndex())
-    #         firstAzimuthalExpansion = a.getILowerBoundIndex()
-    #         lastAzimuthalExpansion = a.getIUpperBoundIndex()
-    #         firstRadialExpansion = a.getJLowerBoundIndex()
-    #         lastRadialExpansion = a.getJUpperBoundIndex()
-    #         na = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
-    #         nr = lastRadialExpansion - firstRadialExpansion + 1
-    #         arr = []
-    #         for i in range(na):
-    #             arr.append([None]*nr)
-    #         p = ArrayCoefficientExpansion2D(
-    #             arr, firstAzimuthalExpansion, firstRadialExpansion
-    #         )
-    #         v = CoefficientExpansion2D()
-    #         v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-    #         v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
-    #         v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
-    #         v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
-    #         v.iSize = lambda: p.iSize()
-    #         v.jSize = lambda: p.jSize()
-    #         v.getCoefficient = (
-    #             lambda azimuthalExpansion, radialExpansion:
-    #             a.getCoefficient(azimuthalExpansion, radialExpansion) +
-    #             b.getCoefficient(azimuthalExpansion, radialExpansion)
-    #         )
-    #     else:
-    #         raise Exception
+        elif isinstance(a, CoefficientExpansion2D):
+            Preconditions.checkArgument(a.getILowerBoundIndex() ==
+                                        b.getILowerBoundIndex())
+            Preconditions.checkArgument(a.getIUpperBoundIndex() ==
+                                        b.getIUpperBoundIndex())
+            Preconditions.checkArgument(a.getJLowerBoundIndex() ==
+                                        b.getJLowerBoundIndex())
+            Preconditions.checkArgument(a.getJUpperBoundIndex() ==
+                                        b.getJUpperBoundIndex())
+            firstAzimuthalExpansion = a.getILowerBoundIndex()
+            lastAzimuthalExpansion = a.getIUpperBoundIndex()
+            firstRadialExpansion = a.getJLowerBoundIndex()
+            lastRadialExpansion = a.getJUpperBoundIndex()
+            na = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
+            nr = lastRadialExpansion - firstRadialExpansion + 1
+            arr = []
+            for i in range(na):
+                arr.append([None]*nr)
+            p = ArrayCoefficientExpansion2D(
+                arr, firstAzimuthalExpansion, firstRadialExpansion
+            )
+            v = CoefficientExpansion2D()
+            v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
+            v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
+            v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
+            v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
+            v.iSize = lambda: p.iSize()
+            v.jSize = lambda: p.jSize()
+            v.getCoefficient = (
+                lambda azimuthalExpansion, radialExpansion:
+                a.getCoefficient(azimuthalExpansion, radialExpansion) +
+                b.getCoefficient(azimuthalExpansion, radialExpansion)
+            )
+        else:
+            raise Exception
 
     #     # Return the view.
     #     return v

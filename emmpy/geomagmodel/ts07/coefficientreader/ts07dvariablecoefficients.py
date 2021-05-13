@@ -51,10 +51,10 @@ class TS07DVariableCoefficients:
         """return the amplitude of the dipole shielding field"""
         return self.cfAmplitude
 
-    # def getFacCoefficients(self):
-    #     """@return the field-aligned current linear and non-linear
-    #     parameters"""
-    #     return self.facCoeffs
+    def getFacCoefficients(self):
+        """return the field-aligned current linear and non-linear
+        parameters"""
+        return self.facCoeffs
 
     # def getNonLinearParameters(self):
     #     """@return all the non-linear parameters in the TS07D model"""

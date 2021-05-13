@@ -357,18 +357,18 @@ class TS07DModelBuilder:
             self.variableCoefficients.getEquatorialCoefficients().
             getHingeDistance()
         )
-    #     warpingParam = (
-    #         self.variableCoefficients.getEquatorialCoefficients().
-    #         getWarpingParam()
-    #     )
-    #     twistFact = (
-    #         self.variableCoefficients.getEquatorialCoefficients().
-    #         getTwistParam()
-    #     )
-    #     region1KappaScaling = (
-    #         self.variableCoefficients.getFacCoefficients().
-    #         getRegion1KappaScaling()
-    #     )
+        warpingParam = (
+            self.variableCoefficients.getEquatorialCoefficients().
+            getWarpingParam()
+        )
+        twistFact = (
+            self.variableCoefficients.getEquatorialCoefficients().
+            getTwistParam()
+        )
+        region1KappaScaling = (
+            self.variableCoefficients.getFacCoefficients().
+            getRegion1KappaScaling()
+        )
     #     region2KappaScaling = (
     #         self.variableCoefficients.getFacCoefficients().
     #         getRegion2KappaScaling()

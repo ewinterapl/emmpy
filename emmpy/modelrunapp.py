@@ -81,6 +81,7 @@ def runTs07D():
     coeffsFile = "/Users/winteel1/mag/2015_076_16_20.par"
 
     # read the coeffs/parameters from the file
+    # Returns a TS07DVariableCoefficients
     coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
 
     # read the dipole tilt angle and dynamic pressure from the coeffs file

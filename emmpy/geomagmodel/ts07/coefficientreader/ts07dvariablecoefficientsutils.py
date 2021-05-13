@@ -39,11 +39,10 @@ class TS07DVariableCoefficientsUtils:
     author Nicholas Sharp
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(self):
-    #     """DO NOT INSTANTIATE"""
-    #     raise Exception
+    def __init__(self):
+        """DO NOT INSTANTIATE"""
+        raise Exception
 
     # @staticmethod
     # def createTS07D(variableCoefficientsFile):

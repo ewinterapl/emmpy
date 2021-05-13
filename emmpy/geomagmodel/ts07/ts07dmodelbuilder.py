@@ -330,8 +330,8 @@ class TS07DModelBuilder:
     #     self.withMagnetopause = True
     #     return self
 
-    # def build(self):
-
+    def build(self):
+        pass
     #     # construct the dipole shielding field
     #     dipoleShieldingField = (
     #         BasisVectorFields.asBasisField(

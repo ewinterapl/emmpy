@@ -90,11 +90,11 @@ def runTs07D():
     # construct the model builder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
 
-#     # optional setting to use Jay Albert's Bessel function evaluator
-#     modelBuilder.withAlbertBessel()
+    # # optional setting to use Jay Albert's Bessel function evaluator
+    # modelBuilder.withAlbertBessel()
 
-#     # now construct the TS07D model
-#     model = modelBuilder.build()
+    # now construct the TS07D model
+    model = modelBuilder.build()
 
 #     # evaluate the model at r=(4,5,-2)
 #     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)

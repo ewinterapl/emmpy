@@ -16,7 +16,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
 class DefaultFacConfigurationOptions(FacConfiguration):
     """author G.K.Stephens"""
 
-    # TS07D = 4
+    TS07D = 4
     # FAC6 = 6
     # FAC12 = 12
     # FAC16 = 16
@@ -29,9 +29,9 @@ class DefaultFacConfigurationOptions(FacConfiguration):
     # r2_deltaTheta = 0.09
     # shielded = True
 
-    # def __init__(self, numberOfFields):
-    #     """Constructor"""
-    #     self.numberOfFields = numberOfFields
+    def __init__(self, numberOfFields):
+        """Constructor"""
+        self.numberOfFields = numberOfFields
 
     # def createFromCoeffs(self, coeffs):
     #     if self.numberOfFields == DefaultFacConfigurationOptions.TS07D:

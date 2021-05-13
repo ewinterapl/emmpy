@@ -43,17 +43,17 @@ class Ts07EquatorialVariableCoefficients:
         else:
             raise Exception
 
-    # def getCurrThicks(self):
-    #     return self.currThicks
+    def getCurrThicks(self):
+        return self.currThicks
 
-    # def getHingeDistance(self):
-    #     return self.hingeDist
+    def getHingeDistance(self):
+        return self.hingeDist
 
-    # def getWarpingParam(self):
-    #     return self.warpingParam
+    def getWarpingParam(self):
+        return self.warpingParam
 
-    # def getTwistParam(self):
-    #     return self.twistParam
+    def getTwistParam(self):
+        return self.twistParam
 
     # def getLinearCoeffs(self):
     #     return self.equatorialLinearCoeffs

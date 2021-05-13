@@ -14,11 +14,11 @@ class Ts07FacVariableCoefficients:
         self.region2KappaScaling = region2KappaScaling
         self.facConfigurations = facConfigurations
 
-    # def getRegion1KappaScaling(self):
-    #     return self.region1KappaScaling
+    def getRegion1KappaScaling(self):
+        return self.region1KappaScaling
 
-    # def getRegion2KappaScaling(self):
-    #     return self.region2KappaScaling
+    def getRegion2KappaScaling(self):
+        return self.region2KappaScaling
 
     # def getFacConfigurations(self):
     #     return self.facConfigurations

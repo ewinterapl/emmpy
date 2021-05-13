@@ -9,9 +9,9 @@ import re
 from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions import (
     DefaultFacConfigurationOptions
 )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients import (
-#     TS07DVariableCoefficients
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients import (
+    TS07DVariableCoefficients
+)
 from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients import (
     Ts07EquatorialLinearCoefficients
 )
@@ -572,9 +572,9 @@ class TS07DVariableCoefficientsUtils:
             facKappa1, facKappa2, facConfiguration.createFromCoeffs(facAmps)
         )
 
-    #     return TS07DVariableCoefficients(
-    #         cfAmplitude, equatorialVariableCoeffs, fac
-    #     )
+        return TS07DVariableCoefficients(
+            cfAmplitude, equatorialVariableCoeffs, fac
+        )
 
     # @staticmethod
     # def writeToFile(*args):

@@ -7,9 +7,9 @@ from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
-# from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
-#     PerpendicularAndParallelCartesianHarmonicField
-# )
+from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
+    PerpendicularAndParallelCartesianHarmonicField
+)
 # from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
@@ -97,19 +97,18 @@ class DipoleShieldingField:
                                         sin(dipoleTiltAngle)),
             CoefficientExpansions.scale(DipoleShieldingField.d,
                                         sin(2*dipoleTiltAngle)))
-        raise Exception("RESUME HERE")
-    #     ppchf = (
-    #         PerpendicularAndParallelCartesianHarmonicField.
-    #         createWithRotationAndAlternate(
-    #             TrigParity.EVEN,
-    #             dipoleTiltAngle*DipoleShieldingField.kappaPerp,
-    #             CoefficientExpansions.invert(DipoleShieldingField.p),
-    #             CoefficientExpansions.invert(DipoleShieldingField.r),
-    #             perpCoeffs, dipoleTiltAngle*DipoleShieldingField.kappaParallel,
-    #             CoefficientExpansions.invert(DipoleShieldingField.q),
-    #             CoefficientExpansions.invert(DipoleShieldingField.s),
-    #             parrCoeffs)
-    #     )
+        ppchf = (
+            PerpendicularAndParallelCartesianHarmonicField.
+            createWithRotationAndAlternate(
+                TrigParity.EVEN,
+                dipoleTiltAngle*DipoleShieldingField.kappaPerp,
+                CoefficientExpansions.invert(DipoleShieldingField.p),
+                CoefficientExpansions.invert(DipoleShieldingField.r),
+                perpCoeffs, dipoleTiltAngle*DipoleShieldingField.kappaParallel,
+                CoefficientExpansions.invert(DipoleShieldingField.q),
+                CoefficientExpansions.invert(DipoleShieldingField.s),
+                parrCoeffs)
+        )
 
     #     ppchf = (
     #         PerpendicularAndParallelCartesianHarmonicField.

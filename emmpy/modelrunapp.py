@@ -97,8 +97,8 @@ def runTs07D():
     # now construct the TS07D model
     model = modelBuilder.build()
 
-#     # evaluate the model at r=(4,5,-2)
-#     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
+    # evaluate the model at r=(4,5,-2)
+    pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
 
 #     # evaluate the magnetic field
 #     # TEMPORARY BUFFER - REMOVE LATER.

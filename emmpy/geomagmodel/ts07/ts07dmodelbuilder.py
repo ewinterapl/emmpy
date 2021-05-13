@@ -9,18 +9,18 @@
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
 #     TS07DVariableCoefficientsUtils
 # )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
-#     Ts07EquatorialVariableCoefficients
-# )
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
     TS07DStaticCoefficientsFactory
+)
+from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
+    Ts07EquatorialVariableCoefficients
 )
 from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
     DipoleShieldingField
 )
-# from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
-#     Ts07EquatorialMagneticFieldBuilder
-# )
+from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
+    Ts07EquatorialMagneticFieldBuilder
+)
 # from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
 #     Ts07DFieldAlignedMagneticField
 # )
@@ -369,53 +369,50 @@ class TS07DModelBuilder:
             self.variableCoefficients.getFacCoefficients().
             getRegion1KappaScaling()
         )
-    #     region2KappaScaling = (
-    #         self.variableCoefficients.getFacCoefficients().
-    #         getRegion2KappaScaling()
-    #     )
+        region2KappaScaling = (
+            self.variableCoefficients.getFacCoefficients().
+            getRegion2KappaScaling()
+        )
 
-    #     # Current sheet thickness
-    #     currentSheetThicknesses = (
-    #         self.variableCoefficients.getNonLinearParameters().
-    #         getCurrentSheetThicknesses()
-    #     )
-    #     numCurrSheets = (
-    #         len(self.variableCoefficients.getNonLinearParameters().
-    #             getCurrentSheetThicknesses())
-    #     )
+        # Current sheet thickness
+        currentSheetThicknesses = (
+            self.variableCoefficients.getNonLinearParameters().
+            getCurrentSheetThicknesses()
+        )
+        numCurrSheets = (
+            len(self.variableCoefficients.getNonLinearParameters().
+                getCurrentSheetThicknesses())
+        )
 
-    #     # The parameters have been updated
-    #     if self.parameters is not None:
-    #         hingeDistance = self.parameters.getHingeDist()
-    #         warpingParam = self.parameters.getWarpParam()
-    #         twistFact = self.parameters.getTwistFact()
-    #         region1KappaScaling = self.parameters.getFacRegion1Kappa()
-    #         region2KappaScaling = self.parameters.getFacRegion2Kappa()
-    #         Preconditions.checkArgument(numCurrSheets == (
-    #             self.parameters.getCurrentSheetThicknesses().size())
-    #         )
-    #         currentSheetThicknesses = (
-    #             self.parameters.getCurrentSheetThicknesses()
-    #         )
+        # The parameters have been updated
+        if self.parameters is not None:
+            hingeDistance = self.parameters.getHingeDist()
+            warpingParam = self.parameters.getWarpParam()
+            twistFact = self.parameters.getTwistFact()
+            region1KappaScaling = self.parameters.getFacRegion1Kappa()
+            region2KappaScaling = self.parameters.getFacRegion2Kappa()
+            currentSheetThicknesses = (
+                self.parameters.getCurrentSheetThicknesses()
+            )
 
-    #     # If the withTwistParameter method has been called, then use the value
-    #     # provided when the method was called. TODO, what if the user calls
-    #     # withTwistParameter and then later calls
-    #     # withVariableCoefficientValues? Wouldn't you expect the last method
-    #     # call to override the previous, this is not what happens.
-    #     if self.twistParameterSet:
-    #         twistFact = self.twistParameter
+        # If the withTwistParameter method has been called, then use the value
+        # provided when the method was called. TODO, what if the user calls
+        # withTwistParameter and then later calls
+        # withVariableCoefficientValues? Wouldn't you expect the last method
+        # call to override the previous, this is not what happens.
+        if self.twistParameterSet:
+            twistFact = self.twistParameter
 
-    #     currentCoeffs = Ts07EquatorialVariableCoefficients(
-    #         currentSheetThicknesses, hingeDistance, warpingParam, twistFact,
-    #         self.variableCoefficients.getEquatorialCoefficients().
-    #         getLinearCoeffs()
-    #     )
+        currentCoeffs = Ts07EquatorialVariableCoefficients(
+            currentSheetThicknesses, hingeDistance, warpingParam, twistFact,
+            self.variableCoefficients.getEquatorialCoefficients().
+            getLinearCoeffs()
+        )
 
-    #     equatorialFieldBuilder = Ts07EquatorialMagneticFieldBuilder(
-    #         self.dipoleTiltAngle, self.dynamicPressure, currentCoeffs,
-    #         self.tailLength, self.staticCoefficients
-    #     )
+        equatorialFieldBuilder = Ts07EquatorialMagneticFieldBuilder(
+            self.dipoleTiltAngle, self.dynamicPressure, currentCoeffs,
+            self.tailLength, self.staticCoefficients
+        )
 
     #     # If true, use Jay Albert's Bessel function evaluator
     #     if self.withAlbertBesselFunction:

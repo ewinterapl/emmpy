@@ -56,9 +56,9 @@ class TS07DVariableCoefficients:
         parameters"""
         return self.facCoeffs
 
-    # def getNonLinearParameters(self):
-    #     """@return all the non-linear parameters in the TS07D model"""
-    #     return self.nonLinearParameters
+    def getNonLinearParameters(self):
+        """return all the non-linear parameters in the TS07D model"""
+        return self.nonLinearParameters
 
     # def getTotalNumberOfParameters(self):
     #     """@return the total number of non-linear and linear parameters in the

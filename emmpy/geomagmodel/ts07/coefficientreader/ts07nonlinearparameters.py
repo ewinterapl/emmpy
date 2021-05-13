@@ -30,8 +30,8 @@ class Ts07NonLinearParameters:
     # def getFacRegion2Kappa(self):
     #     return self.facRegion2Kappa
 
-    # def getCurrentSheetThicknesses(self):
-    #     return self.currThicks
+    def getCurrentSheetThicknesses(self):
+        return self.currThicks
 
     # def getHingeDist(self):
     #     return self.hingeDist

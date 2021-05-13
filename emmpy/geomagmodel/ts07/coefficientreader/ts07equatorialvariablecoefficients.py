@@ -55,8 +55,8 @@ class Ts07EquatorialVariableCoefficients:
     def getTwistParam(self):
         return self.twistParam
 
-    # def getLinearCoeffs(self):
-    #     return self.equatorialLinearCoeffs
+    def getLinearCoeffs(self):
+        return self.equatorialLinearCoeffs
 
     # def getTotalNumberOfParameters(self):
     #     return (self.getTotalNumberOfLinearParameters() +

@@ -13,7 +13,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils imp
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
     CurrentSheetHalfThicknesses
 )
-# from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
+from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
 # from emmpy.magmodel.core.math.bessel.albertbesselfunctionevaluator import (
 #     AlbertBesselFunctionEvaluator
 # )
@@ -87,8 +87,8 @@ def runTs07D():
     dipoleTilt = TS07DVariableCoefficientsUtils.readDipoleTiltAngle(coeffsFile)
     pDyn = TS07DVariableCoefficientsUtils.readDynamicPressure(coeffsFile)
 
-#     # construct the model builder
-#     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
+    # construct the model builder
+    modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
 
 #     # optional setting to use Jay Albert's Bessel function evaluator
 #     modelBuilder.withAlbertBessel()

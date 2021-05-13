@@ -9,22 +9,22 @@ from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficie
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
-# from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
+from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 
 
-# class SymmetricCylindricalExpansionPair:
-#     """author stephgk1"""
+class SymmetricCylindricalExpansionPair:
+    """author stephgk1"""
 
-#     def __init__(self, tailExpansion, waveExpansion):
-#         self.tailExpansion = tailExpansion
-#         self.waveExpansion = waveExpansion
+    def __init__(self, tailExpansion, waveExpansion):
+        self.tailExpansion = tailExpansion
+        self.waveExpansion = waveExpansion
 
-#     def getTailExpansion(self):
-#         return self.tailExpansion
+    def getTailExpansion(self):
+        return self.tailExpansion
 
-#     def getWaveExpansion(self):
-#         return self.waveExpansion
+    def getWaveExpansion(self):
+        return self.waveExpansion
 
 
 class AsymmetricCylindricalExpansionPair:
@@ -34,11 +34,11 @@ class AsymmetricCylindricalExpansionPair:
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
-#     def getTailExpansion(self):
-#         return self.tailExpansion
+    def getTailExpansion(self):
+        return self.tailExpansion
 
-#     def getWaveExpansion(self):
-#         return self.waveExpansion
+    def getWaveExpansion(self):
+        return self.waveExpansion
 
 
 class TS07DStaticCoefficientsFactory:
@@ -143,10 +143,10 @@ class TS07DStaticCoefficientsFactory:
                     waveNumberValues, 1)
             )
 
-    #     return SymmetricCylindricalExpansionPair(
-    #         Expansion1Ds.createFromArray(expansions, 1),
-    #         Expansion1Ds.createFromArray(waveExpansions, 1)
-    #     )
+        return SymmetricCylindricalExpansionPair(
+            Expansion1Ds.createFromArray(expansions, 1),
+            Expansion1Ds.createFromArray(waveExpansions, 1)
+        )
 
     @staticmethod
     def readTail(staticCoeffDirectory, numAzimuthalExpansions,

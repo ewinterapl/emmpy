@@ -43,9 +43,9 @@ class TS07DVariableCoefficients:
             currThicks, hingeDist, warpParam, twistFact
         )
 
-    # def getEquatorialCoefficients(self):
-    #     """@return the linear and non-linear equatorial parameters"""
-    #     return self.equatorialCoeffs
+    def getEquatorialCoefficients(self):
+        """return the linear and non-linear equatorial parameters"""
+        return self.equatorialCoeffs
 
     def getDipoleShieldingAmplitude(self):
         """return the amplitude of the dipole shielding field"""

@@ -40,7 +40,6 @@ class TS07DModelBuilder:
 
     author G.K.Stephens
     """
-    pass
 
     def __init__(self, dipoleTiltAngle, dynamicPressure, variableCoefficients):
         """Constructor, this is package private as this should be constructed
@@ -353,11 +352,11 @@ class TS07DModelBuilder:
                 )
             )
 
-    #     # these are constant across all the current sheets
-    #     hingeDistance = (
-    #         self.variableCoefficients.getEquatorialCoefficients().
-    #         getHingeDistance()
-    #     )
+        # these are constant across all the current sheets
+        hingeDistance = (
+            self.variableCoefficients.getEquatorialCoefficients().
+            getHingeDistance()
+        )
     #     warpingParam = (
     #         self.variableCoefficients.getEquatorialCoefficients().
     #         getWarpingParam()

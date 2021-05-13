@@ -21,18 +21,16 @@ class BasisVectorField(VectorField):
     def __init__(self):
         pass
 
-    # def evaluate(self, location, buffer):
-    #     """evaluate"""
-    #     # basisVectors = self.evaluateExpansion(location)
-    #     basisVectors = self.evaluateExpansion(location)
-    #     fx = 0.0
-    #     fy = 0.0
-    #     fz = 0.0
-    #     for basisVector in basisVectors:
-    #         fx += basisVector.getI()
-    #         fy += basisVector.getJ()
-    #         fz += basisVector.getK()
-    #     return buffer.setTo(fx, fy, fz)
+    def evaluate(self, location, buffer):
+        basisVectors = self.evaluateExpansion(location)
+        fx = 0.0
+        fy = 0.0
+        fz = 0.0
+        for basisVector in basisVectors:
+            fx += basisVector.getI()
+            fy += basisVector.getJ()
+            fz += basisVector.getK()
+        return buffer.setTo(fx, fy, fz)
 
     def evaluateExpansion(self, location):
         """Evaluate the field expansion at the given position, and returns an

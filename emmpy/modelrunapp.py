@@ -6,7 +6,7 @@ import sys
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
 )
@@ -96,15 +96,16 @@ def runTs07D():
 
     # now construct the TS07D model
     model = modelBuilder.build()
+    # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
 
     # evaluate the model at r=(4,5,-2)
     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
 
-#     # evaluate the magnetic field
-#     # TEMPORARY BUFFER - REMOVE LATER.
-#     buffer = VectorIJK()
-#     bVect = model.evaluate(pos, buffer)
-#     print(bVect)
+    # evaluate the magnetic field
+    # TEMPORARY BUFFER - REMOVE LATER.
+    buffer = VectorIJK()
+    bVect = model.evaluate(pos, buffer)
+    print(bVect)
 
     print("Ending runTs07D()")
 

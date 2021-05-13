@@ -91,7 +91,11 @@ class BasisVectorFields:
         def my_evaluateExpansion(location):
             result = []
             for field in fields:
-                result.extend(field.evaluateExpansion(location))
+                # field is:
+                # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
+                # But evaluate() is a lambda from WHERE?
+                e = field.evaluateExpansion(location)
+                result.extend(e)
             return result
         bvf.evaluateExpansion = my_evaluateExpansion
         bvf.getNumberOfBasisFunctions = (

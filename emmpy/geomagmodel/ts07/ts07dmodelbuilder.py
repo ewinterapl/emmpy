@@ -12,9 +12,9 @@
 # from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
 #     Ts07EquatorialVariableCoefficients
 # )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
-#     TS07DStaticCoefficientsFactory
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
+    TS07DStaticCoefficientsFactory
+)
 from emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield import (
     DipoleShieldingField
 )
@@ -342,16 +342,16 @@ class TS07DModelBuilder:
             )
         )
 
-    #     # If the staticCoeffs are still null, than the user never specified
-    #     # them with one of the withStaticCoeffs methods. By default, they will
-    #     # now be initialized to the original set of TS07D static coefficients.
-    #     if self.staticCoefficients is None:
-    #         self.staticCoefficients = (
-    #             TS07DStaticCoefficientsFactory.create(
-    #                 TS07DStaticCoefficientsFactory.
-    #                 retrieveOriginalBuiltInCoefficientsPath()
-    #             )
-    #         )
+        # If the staticCoeffs are still null, than the user never specified
+        # them with one of the withStaticCoeffs methods. By default, they will
+        # now be initialized to the original set of TS07D static coefficients.
+        if self.staticCoefficients is None:
+            self.staticCoefficients = (
+                TS07DStaticCoefficientsFactory.create(
+                    TS07DStaticCoefficientsFactory.
+                    retrieveOriginalBuiltInCoefficientsPath()
+                )
+            )
 
     #     # these are constant across all the current sheets
     #     hingeDistance = (

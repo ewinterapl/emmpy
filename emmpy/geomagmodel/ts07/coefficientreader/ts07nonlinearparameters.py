@@ -11,19 +11,18 @@ class Ts07NonLinearParameters:
 
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(
-    #     self, facRegion1Kappa, facRegion2Kappa, currThicks, hingeDist,
-    #     warpParam, twistFact
-    # ):
-    #     """Constructor"""
-    #     self.facRegion1Kappa = facRegion1Kappa
-    #     self.facRegion2Kappa = facRegion2Kappa
-    #     self.currThicks = currThicks
-    #     self.hingeDist = hingeDist
-    #     self.warpParam = warpParam
-    #     self.twistFact = twistFact
+    def __init__(
+        self, facRegion1Kappa, facRegion2Kappa, currThicks, hingeDist,
+        warpParam, twistFact
+    ):
+        """Constructor"""
+        self.facRegion1Kappa = facRegion1Kappa
+        self.facRegion2Kappa = facRegion2Kappa
+        self.currThicks = currThicks
+        self.hingeDist = hingeDist
+        self.warpParam = warpParam
+        self.twistFact = twistFact
 
     # def getFacRegion1Kappa(self):
     #     return self.facRegion1Kappa

@@ -7,9 +7,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
 # from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
-#     TS07DVariableCoefficientsUtils
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
+    TS07DVariableCoefficientsUtils
+)
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
     CurrentSheetHalfThicknesses
 )
@@ -77,11 +77,11 @@ def runTs07D():
     """Builds and runs the TS07D model"""
     print("Starting runTs07D()")
 
-#     # use a coeffs file from the March 2015 St. Patty's Day storm
-#     coeffsFile = "/Users/winteel1/mag/2015_076_16_20.par"
+    # use a coeffs file from the March 2015 St. Patty's Day storm
+    coeffsFile = "/Users/winteel1/mag/2015_076_16_20.par"
 
-#     # read the coeffs/parameters from the file
-#     coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
+    # read the coeffs/parameters from the file
+    coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
 
 #     # read the dipole tilt angle and dynamic pressure from the coeffs file
 #     dipoleTilt = TS07DVariableCoefficientsUtils.readDipoleTiltAngle(coeffsFile)

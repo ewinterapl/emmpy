@@ -444,12 +444,14 @@ class TS07DModelBuilder:
             [dipoleShieldingField, equatorialFieldBuilder.build(),
              fieldAlignedField])
 
-    #     if self.withMagnetopause:
-    #         if self.dipoleTiltAngle == 0:
+        if self.withMagnetopause:
+            if self.dipoleTiltAngle == 0:
+                raise Exception
     #             magnetopause = T96Magnetopause.createTS07(self.dynamicPressure)
-    #         else:
+            else:
+                raise Exception
     #             magnetopause = T96Magnetopause.createBentTS07(
     #                 self.dynamicPressure, self.dipoleTiltAngle, hingeDistance)
     #         return BasisVectorFields.filter(
     #             totalExternalField, magnetopause, VectorIJK.ZERO)
-    #     return totalExternalField
+        return totalExternalField

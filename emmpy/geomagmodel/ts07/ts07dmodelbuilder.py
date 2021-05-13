@@ -75,24 +75,25 @@ class TS07DModelBuilder:
     #     self.twistParameter = None
     #     self.withTA15deformation = None
 
-    # @staticmethod
-    # def create(*args):
-    #     """Creates a new Builder that can be used to construct the TS07D
-    #     model."""
-    #     if len(args) == 3:
-    #         (dipoleTiltAngle, dynamicPressure, variableCoefficients) = args
-    #         # This set of inputs (dipole tilt, dynamic pressure, and
-    #         # variable coefficients) is the minimal set to construct the
-    #         # standard TS07D model. Other customizations to the model are
-    #         # available as methods on the builder.
-    #         # Defaults set: shielding fields ON, static coeffs ORIGINAL
-    #         # param dipoleTiltAngle the dipole tilt angle in radians
-    #         # param dynamicPressure the dynamic pressure of the solar wind
-    #         # param variableCoefficients the set of coefficients for the model
-    #         # return a newly constructed builder
-    #         return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure,
-    #                                  variableCoefficients)
-    #     elif len(args) == 5:
+    @staticmethod
+    def create(*args):
+        """Creates a new Builder that can be used to construct the TS07D
+        model."""
+        if len(args) == 3:
+            (dipoleTiltAngle, dynamicPressure, variableCoefficients) = args
+            # This set of inputs (dipole tilt, dynamic pressure, and
+            # variable coefficients) is the minimal set to construct the
+            # standard TS07D model. Other customizations to the model are
+            # available as methods on the builder.
+            # Defaults set: shielding fields ON, static coeffs ORIGINAL
+            # param dipoleTiltAngle the dipole tilt angle in radians
+            # param dynamicPressure the dynamic pressure of the solar wind
+            # param variableCoefficients the set of coefficients for the model
+            # return a newly constructed builder
+            return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure,
+                                     variableCoefficients)
+        elif len(args) == 5:
+            raise Exception
     #         (dipoleTiltAngle, dynamicPressure, variableCoefficientsFile,
     #          numAzimuthalExpansions, numRadialExpansions,
     #          facConfiguration) = args
@@ -112,8 +113,8 @@ class TS07DModelBuilder:
     #             variableCoefficientsFile, numAzimuthalExpansions,
     #             numRadialExpansions, facConfiguration)
     #         return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure, coeffs)
-    #     else:
-    #         raise Exception
+        else:
+            raise Exception
 
     # @staticmethod
     # def createStandardResolution(dipoleTiltAngle, dynamicPressure,

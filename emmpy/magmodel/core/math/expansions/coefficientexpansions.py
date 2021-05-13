@@ -36,18 +36,16 @@ class CoefficientExpansions:
             (data, firstExpansionNumber) = args
             return ArrayCoefficientExpansion1D(data, firstExpansionNumber)
         elif len(args) == 3:
-            raise Exception
-    #         # @param data the 2D array that backs the
-    #         # {@link CoefficientExpansion2D}
-    #         # @param firstIexpansionNumber the first index to be used in the
-    #         # first dimension of the expansion
-    #         # @param firstJexpansionNumber the first index to be used in the
-    #         # second dimensions of the expansion
-    #         # @return a newly created {@link CoefficientExpansion2D} that is a
-    #         # view of the input array
-    #         (data, firstIexpansionNumber, firstJexpansionNumber) = args
-    #         return ArrayCoefficientExpansion2D(data, firstIexpansionNumber,
-    #                                            firstJexpansionNumber)
+            # param data the 2D array that backs the CoefficientExpansion2D
+            # param firstIexpansionNumber the first index to be used in the
+            # first dimension of the expansion
+            # param firstJexpansionNumber the first index to be used in the
+            # second dimensions of the expansion
+            # return a newly created CoefficientExpansion2D that is a view of
+            # the input array
+            (data, firstIexpansionNumber, firstJexpansionNumber) = args
+            return ArrayCoefficientExpansion2D(data, firstIexpansionNumber,
+                                               firstJexpansionNumber)
         else:
             raise Exception
 

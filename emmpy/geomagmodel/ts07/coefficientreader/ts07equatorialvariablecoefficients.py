@@ -4,19 +4,18 @@
 
 # from emmpy.com.google.common.base.preconditions import Preconditions
 # from emmpy.java.lang.double import Double
-# from emmpy.utilities.isrealnumber import isRealNumber
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class Ts07EquatorialVariableCoefficients:
     """author G.K.Stephens"""
-    pass
 
-    # def __init__(self, currThicks, hingeDist, warpingParam, twistParam,
-    #              equatorialLinearCoeffs):
-    #     """Constructor"""
-    #     if (isRealNumber(currThicks) and isRealNumber(hingeDist) and
-    #         isRealNumber(warpingParam) and isRealNumber(twistParam) and
-    #         isinstance(equatorialLinearCoeffs, list)):
+    def __init__(self, currThicks, hingeDist, warpingParam, twistParam,
+                 equatorialLinearCoeffs):
+        if (isRealNumber(currThicks) and isRealNumber(hingeDist) and
+            isRealNumber(warpingParam) and isRealNumber(twistParam) and
+            isinstance(equatorialLinearCoeffs, list)):
+            raise Exception
     #         # @param currThicks
     #         # @param hingeDist
     #         # @param warpingParam
@@ -28,25 +27,21 @@ class Ts07EquatorialVariableCoefficients:
     #         self.twistParam = twistParam
     #         self.equatorialLinearCoeffs = Preconditions.checkNotNull(
     #             equatorialLinearCoeffs)
-    #     elif isinstance(currThicks, list):
-    #         # @param currThicks
-    #         # @param hingeDist
-    #         # @param warpingParam
-    #         # @param twistParam
-    #         # @param equatorialLinearCoeffs
-    #         # The current sheet thickness and the number of sets of linear
-    #         # coeffs must be the same size.
-    #         Preconditions.checkArgument(
-    #             len(currThicks) == len(equatorialLinearCoeffs),
-    #             "The number of current sheet thickness must be the same number"
-    #             "of current sheet linear expansions")
-    #         self.currThicks = Preconditions.checkNotNull(currThicks)
-    #         self.hingeDist = hingeDist
-    #         self.warpingParam = warpingParam
-    #         self.twistParam = twistParam
-    #         self.equatorialLinearCoeffs = (
-    #             Preconditions.checkNotNull(equatorialLinearCoeffs)
-    #         )
+        elif isinstance(currThicks, list):
+            # param currThicks
+            # param hingeDist
+            # param warpingParam
+            # param twistParam
+            # param equatorialLinearCoeffs
+            # The current sheet thickness and the number of sets of linear
+            # coeffs must be the same size.
+            self.currThicks = currThicks
+            self.hingeDist = hingeDist
+            self.warpingParam = warpingParam
+            self.twistParam = twistParam
+            self.equatorialLinearCoeffs = equatorialLinearCoeffs
+        else:
+            raise Exception
 
     # def getCurrThicks(self):
     #     return self.currThicks

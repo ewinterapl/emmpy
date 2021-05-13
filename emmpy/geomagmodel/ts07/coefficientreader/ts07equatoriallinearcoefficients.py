@@ -6,9 +6,9 @@
 # from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
 #     CoefficientExpansions
 # )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
-#     TailSheetCoefficients
-# )
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+    TailSheetCoefficients
+)
 
 
 class Ts07EquatorialLinearCoefficients:
@@ -27,10 +27,10 @@ class Ts07EquatorialLinearCoefficients:
         symPdynDependent, aOdd, aOddPdynDependent, aEven,
         aEvenPdynDependent, numAzimuthalExpansions, numRadialExpansions):
         pass
-    #     coeffs = TailSheetCoefficients(sym, aOdd, aEven)
-    #     pdynDependentCoeffs = TailSheetCoefficients(
-    #         symPdynDependent, aOddPdynDependent, aEvenPdynDependent
-    #     )
+        coeffs = TailSheetCoefficients(sym, aOdd, aEven)
+        pdynDependentCoeffs = TailSheetCoefficients(
+            symPdynDependent, aOddPdynDependent, aEvenPdynDependent
+        )
     #     return Ts07EquatorialLinearCoefficients(
     #         coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
     #         numRadialExpansions

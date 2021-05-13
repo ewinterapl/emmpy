@@ -13,7 +13,6 @@
 
 class Ts07EquatorialLinearCoefficients:
     """author G.K.Stephens"""
-    pass
 
     # def __init__(self, coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
     #              numRadialExpansions):
@@ -22,11 +21,12 @@ class Ts07EquatorialLinearCoefficients:
     #     self.numAzimuthalExpansions = numAzimuthalExpansions
     #     self.numRadialExpansions = numRadialExpansions
 
-    # @staticmethod
-    # def create(
-    #     sym,
-    #     symPdynDependent, aOdd, aOddPdynDependent, aEven,
-    #     aEvenPdynDependent, numAzimuthalExpansions, numRadialExpansions):
+    @staticmethod
+    def create(
+        sym,
+        symPdynDependent, aOdd, aOddPdynDependent, aEven,
+        aEvenPdynDependent, numAzimuthalExpansions, numRadialExpansions):
+        pass
     #     coeffs = TailSheetCoefficients(sym, aOdd, aEven)
     #     pdynDependentCoeffs = TailSheetCoefficients(
     #         symPdynDependent, aOddPdynDependent, aEvenPdynDependent

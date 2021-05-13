@@ -34,17 +34,17 @@ class BasisVectorField(VectorField):
     #         fz += basisVector.getK()
     #     return buffer.setTo(fx, fy, fz)
 
-    # def evaluateExpansion(self, location):
-    #     """Evaluate the field expansion at the given position, and returns an
-    #     ImmutableList of the results of each individual field in the expansion
+    def evaluateExpansion(self, location):
+        """Evaluate the field expansion at the given position, and returns an
+        ImmutableList of the results of each individual field in the expansion
 
-    #     param location VectorIJK, often location
-    #     return the result of evaluating each of the Basis functions VectorField
-    #     for the given location as an ImmutableList
-    #     throws FunctionEvaluationException if the function cannot perform the
-    #     evaluation
-    #     """
-    #     raise Exception
+        param location VectorIJK, often location
+        return the result of evaluating each of the Basis functions VectorField
+        for the given location as an ImmutableList
+        throws FunctionEvaluationException if the function cannot perform the
+        evaluation
+        """
+        raise Exception
 
     # def getNumberOfBasisFunctions(self):
     #     """return the number of individual vector fields in the expansion"""

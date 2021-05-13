@@ -2,9 +2,9 @@
 
 
 # from emmpy.java.lang.double import Double
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
-#     Ts07NonLinearParameters
-# )
+from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
+    Ts07NonLinearParameters
+)
 
 
 class TS07DVariableCoefficients:
@@ -17,40 +17,39 @@ class TS07DVariableCoefficients:
     author Nicholas Sharp
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(self, cfAmplitude, equatorialCoeffs, facCoeffs):
-    #     """Constructor
+    def __init__(self, cfAmplitude, equatorialCoeffs, facCoeffs):
+        """Constructor
 
-    #     Constructor is package private, should be constructed using the
-    #     TS07DVariableCoefficientsUtils class.
+        Constructor is package private, should be constructed using the
+        TS07DVariableCoefficientsUtils class.
 
-    #     @param cfAmplitude the amplitude for the dipole shielding field
-    #     @param equatorialCoeffs the parameters and coefficients for
-    #     constructing the equatorial currents
-    #     param facCoeffs the parameters and coefficients for constructing the
-    #     field aligned currents
-    #     """
-    #     self.cfAmplitude = cfAmplitude
-    #     self.equatorialCoeffs = equatorialCoeffs
-    #     self.facCoeffs = facCoeffs
-    #     currThicks = equatorialCoeffs.getCurrThicks()
-    #     hingeDist = equatorialCoeffs.getHingeDistance()
-    #     warpParam = equatorialCoeffs.getWarpingParam()
-    #     twistFact = equatorialCoeffs.getTwistParam()
-    #     self.nonLinearParameters = Ts07NonLinearParameters(
-    #         facCoeffs.getRegion1KappaScaling(),
-    #         facCoeffs.getRegion2KappaScaling(),
-    #         currThicks, hingeDist, warpParam, twistFact
-    #     )
+        param cfAmplitude the amplitude for the dipole shielding field
+        param equatorialCoeffs the parameters and coefficients for
+        constructing the equatorial currents
+        param facCoeffs the parameters and coefficients for constructing the
+        field aligned currents
+        """
+        self.cfAmplitude = cfAmplitude
+        self.equatorialCoeffs = equatorialCoeffs
+        self.facCoeffs = facCoeffs
+        currThicks = equatorialCoeffs.getCurrThicks()
+        hingeDist = equatorialCoeffs.getHingeDistance()
+        warpParam = equatorialCoeffs.getWarpingParam()
+        twistFact = equatorialCoeffs.getTwistParam()
+        self.nonLinearParameters = Ts07NonLinearParameters(
+            facCoeffs.getRegion1KappaScaling(),
+            facCoeffs.getRegion2KappaScaling(),
+            currThicks, hingeDist, warpParam, twistFact
+        )
 
     # def getEquatorialCoefficients(self):
     #     """@return the linear and non-linear equatorial parameters"""
     #     return self.equatorialCoeffs
 
-    # def getDipoleShieldingAmplitude(self):
-    #     """@return the amplitude of the dipole shielding field"""
-    #     return self.cfAmplitude
+    def getDipoleShieldingAmplitude(self):
+        """return the amplitude of the dipole shielding field"""
+        return self.cfAmplitude
 
     # def getFacCoefficients(self):
     #     """@return the field-aligned current linear and non-linear

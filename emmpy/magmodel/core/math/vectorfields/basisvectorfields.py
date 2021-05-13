@@ -23,11 +23,11 @@ class BasisVectorFields:
     @staticmethod
     def asBasisField(field):
         bvf = BasisVectorField()
-    #     bvf.evaluateExpansion = (
-    #         lambda location, buffer: field.evaluate(location)
-    #     )
-    #     bvf.getNumberOfBasisFunctions = lambda my_self: 1
-    #     return bvf
+        bvf.evaluateExpansion = (
+            lambda location, buffer: field.evaluate(location)
+        )
+        bvf.getNumberOfBasisFunctions = lambda my_self: 1
+        return bvf
 
     # @staticmethod
     # def scaleLocation(field, scaleFactor):

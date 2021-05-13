@@ -1,16 +1,6 @@
 """emmpy.magmodel.core.math.cartesianharmonicfield"""
 
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static com.google.common.base.Preconditions.checkNotNull;
-# import static crucible.core.math.CrucibleMath.exp;
-# import static crucible.core.math.CrucibleMath.sqrt;
-# import com.google.common.collect.ImmutableList;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.expansions.CoefficientExpansion2D;
-# import magmodel.core.math.expansions.Expansion2D;
-
 from math import exp, sqrt
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -95,7 +85,11 @@ class CartesianHarmonicField(BasisVectorField):
         x = location.getI()
         y = location.getJ()
         z = location.getK()
-        expansions = [[None]*self.aikCoeffs.jSize()]*self.aikCoeffs.iSize()
+        expansions = []
+        for i in range(self.aikCoeffs.iSize()):
+            expansions.append([])
+            for j in range(self.aikCoeffs.jSize()):
+                expansions[i].append(None)
         for i in range(self.firstI, self.lastI + 1):
             pi = self.piCoeffs.getCoefficient(i)
             sinYpi = self.trigParityI.evaluate(pi*y)

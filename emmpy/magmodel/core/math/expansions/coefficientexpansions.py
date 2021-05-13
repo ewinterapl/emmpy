@@ -111,7 +111,11 @@ class CoefficientExpansions:
             nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
             na = (lastAzimuthalExpansionNumber -
                   firstAzimuthalExpansionNumber + 1)
-            arr = [[None]*nr]*na
+            arr = []
+            for i in range(na):
+                arr.append([])
+                for j in range(nr):
+                    arr[i].append(None)
             p = ArrayCoefficientExpansion2D(
                 arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
             )

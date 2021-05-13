@@ -119,9 +119,11 @@ class TS07DStaticCoefficientsFactory:
         for i in range(1, numRadialExpansions + 1):
             fileName = "tailamebhr_%02d.par" % i
             inFile = os.path.join(staticCoeffDirectory, fileName)
-            values = (
-                [[None]*numShieldRadialExpansions]*numShieldAzimuthalExpansions
-            )
+            values = []
+            for i in range(numShieldAzimuthalExpansions):
+                values.append([])
+                for j in range(numShieldRadialExpansions):
+                    values[i].append(None)
             waveNumberValues = [None]*numShieldRadialExpansions
             with open(inFile) as f:
                 for l in range(numShieldAzimuthalExpansions):
@@ -154,17 +156,24 @@ class TS07DStaticCoefficientsFactory:
         """Reads in the Tail coefficients from file"""
         numShieldAzimuthalExpansions = 15
         numShieldRadialExpansions = 5
-        expansions = [[None]*numRadialExpansions]*numAzimuthalExpansions
-        waveExpansions = [[None]*numRadialExpansions]*numAzimuthalExpansions
+        expansions = []
+        waveExpansions = []
+        for i in range(numAzimuthalExpansions):
+            expansions.append([])
+            waveExpansions.append([])
+            for j in range(numRadialExpansions):
+                expansions[i].append(None)
+                waveExpansions[i].append(None)
         for n in range(1, numRadialExpansions + 1):
             for m in range(1, numAzimuthalExpansions + 1):
                 inFile = os.path.join(staticCoeffDirectory,
                                       fileName + "%02d_%02d.par" % (n, m))
                 with open(inFile) as f:
-                    values = (
-                        [[None]*numRadialExpansions] *
-                        numShieldAzimuthalExpansions
-                    )
+                    values = []
+                    for i in range(numShieldAzimuthalExpansions):
+                        values.append([])
+                        for j in range(numShieldRadialExpansions):
+                            values[i].append(None)
                     for l in range(numShieldAzimuthalExpansions):
                         for k in range(1, numShieldRadialExpansions + 1):
                             # IS THIS RIGHT? ASSUMES 1 VALUE PER LINE.

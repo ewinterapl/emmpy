@@ -14,26 +14,17 @@ class Ts07EquatorialMagneticFieldBuilder:
     author Nicholas Sharp
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(self, dipoleTiltAngle, dynamicPressure, coeffs, tailLength,
-    #              shieldingCoeffs):
-    #     """Constructor
-
-    #     @param dipoleTiltAngle
-    #     @param dynamicPressure
-    #     @param coeffs
-    #     @param tailLength
-    #     @param shieldingCoeffs
-    #     """
-    #     self.dipoleTiltAngle = dipoleTiltAngle
-    #     self.dynamicPressure = dynamicPressure
-    #     self.coeffs = Preconditions.checkNotNull(coeffs)
-    #     self.tailLength = tailLength
-    #     self.shieldingCoeffs = Preconditions.checkNotNull(shieldingCoeffs)
-    #     self.bessel = ColtBesselFunctionEvaluator()
-    #     self.includeShield = True
-    #     self.withTA15deformation = 0
+    def __init__(self, dipoleTiltAngle, dynamicPressure, coeffs, tailLength,
+                 shieldingCoeffs):
+        self.dipoleTiltAngle = dipoleTiltAngle
+        self.dynamicPressure = dynamicPressure
+        self.coeffs = coeffs
+        self.tailLength = tailLength
+        self.shieldingCoeffs = shieldingCoeffs
+        self.bessel = None
+        self.includeShield = True
+        self.withTA15deformation = 0
 
     # def withAlbertBessel(self):
     #     """Use Jay Albert's faster Bessel function evaluator.

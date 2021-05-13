@@ -24,9 +24,9 @@
 # from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
 #     Ts07DFieldAlignedMagneticField
 # )
-# from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
-#     BasisVectorFields
-# )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
+    BasisVectorFields
+)
 
 
 class TS07DModelBuilder:
@@ -331,16 +331,16 @@ class TS07DModelBuilder:
     #     return self
 
     def build(self):
-        pass
-    #     # construct the dipole shielding field
-    #     dipoleShieldingField = (
-    #         BasisVectorFields.asBasisField(
-    #             DipoleShieldingField.createScaled(
-    #                 self.dipoleTiltAngle, self.dynamicPressure,
-    #                 self.variableCoefficients.getDipoleShieldingAmplitude()
-    #             )
-    #         )
-    #     )
+
+        # construct the dipole shielding field
+        dipoleShieldingField = (
+            BasisVectorFields.asBasisField(
+                DipoleShieldingField.createScaled(
+                    self.dipoleTiltAngle, self.dynamicPressure,
+                    self.variableCoefficients.getDipoleShieldingAmplitude()
+                )
+            )
+        )
 
     #     # If the staticCoeffs are still null, than the user never specified
     #     # them with one of the withStaticCoeffs methods. By default, they will

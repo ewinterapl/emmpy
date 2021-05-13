@@ -67,9 +67,10 @@ class TS07DVariableCoefficientsUtils:
     #         ts07Fac
     #     )
 
-    # @staticmethod
-    # def create(*args):
-    #     if len(args) == 1:
+    @staticmethod
+    def create(*args):
+        if len(args) == 1:
+            raise Exception
     #         (variableCoefficientsFile,) = args
     #         # Constructs the TS07D set of coefficients from the ASCII file
     #         # WITH a customized resolution. This set of coefficient can be
@@ -103,7 +104,8 @@ class TS07DVariableCoefficientsUtils:
     #             variableCoefficientsFile, numCurrentSheets,
     #             numAzimuthalExpansions, numRadialExpansions, facConfiguration
     #         )
-    #     elif len(args) == 4:
+        elif len(args) == 4:
+            raise Exception
     #         (variableCoefficientsFile, numAzimuthalExpansions,
     #          numRadialExpansions, facConfiguration) = args
     #         # Constructs the TS07D set of coefficients from the ASCII file WITH
@@ -123,7 +125,8 @@ class TS07DVariableCoefficientsUtils:
     #             numAzimuthalExpansions, numRadialExpansions,
     #             facConfiguration
     #         )
-    #     elif len(args) == 5:
+        elif len(args) == 5:
+            raise Exception
     #         (variableCoefficientsFile, numCurrentSheets,
     #          numAzimuthalExpansions, numRadialExpansions,
     #          facConfiguration) = args
@@ -179,7 +182,8 @@ class TS07DVariableCoefficientsUtils:
     #             coeffs, numCurrentSheets, numAzimuthalExpansions,
     #             numRadialExpansions, facConfiguration
     #         )
-    #     elif len(args) == 6:
+        elif len(args) == 6:
+            raise Exception
     #         if isinstance(args[1], list):
     #             (utcNumerator, coeffsFiles, numCurrentSheets,
     #              numAzimuthalExpansions, numRadialExpansions, facConfiguration,
@@ -259,8 +263,8 @@ class TS07DVariableCoefficientsUtils:
     #             #     return create(utcNumerator, coeffsFiles, numCurrentSheets, numAzimuthalExpansions,
     #             #         numRadialExpansions, facConfiguration, maxCacheSize);
     #             #   }
-    #         else:
-    #             raise Exception
+        else:
+            raise Exception
 
     #     #   /**
     #     #    * Full constructor, in general you should not call this.

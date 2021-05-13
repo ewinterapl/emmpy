@@ -14,12 +14,12 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 class Ts07EquatorialLinearCoefficients:
     """author G.K.Stephens"""
 
-    # def __init__(self, coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
-    #              numRadialExpansions):
-    #     self.coeffs = coeffs
-    #     self.pdynDependentCoeffs = pdynDependentCoeffs
-    #     self.numAzimuthalExpansions = numAzimuthalExpansions
-    #     self.numRadialExpansions = numRadialExpansions
+    def __init__(self, coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
+                 numRadialExpansions):
+        self.coeffs = coeffs
+        self.pdynDependentCoeffs = pdynDependentCoeffs
+        self.numAzimuthalExpansions = numAzimuthalExpansions
+        self.numRadialExpansions = numRadialExpansions
 
     @staticmethod
     def create(
@@ -31,10 +31,10 @@ class Ts07EquatorialLinearCoefficients:
         pdynDependentCoeffs = TailSheetCoefficients(
             symPdynDependent, aOddPdynDependent, aEvenPdynDependent
         )
-    #     return Ts07EquatorialLinearCoefficients(
-    #         coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
-    #         numRadialExpansions
-    #     )
+        return Ts07EquatorialLinearCoefficients(
+            coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
+            numRadialExpansions
+        )
 
     # def getNumAzimuthalExpansions(self):
     #     return self.numAzimuthalExpansions

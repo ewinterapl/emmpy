@@ -97,9 +97,9 @@ class Ts07EquatorialMagneticFieldBuilder:
                 CurrentSheetHalfThicknesses.createConstant(currSheetThick)
             )
     
-    #     #       // Construct the shielded thin current sheet
-    #     #       ShieldedThinCurrentSheetField thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
-    #     #           currentSheetHalfThickness, tailLength, bessel, shieldingCoeffs, includeShield);
+            # Construct the shielded thin current sheet
+            ShieldedThinCurrentSheetField thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
+                currentSheetHalfThickness, tailLength, bessel, shieldingCoeffs, includeShield);
 
     #     #       /*
     #     #        * if the with TA15 deformation was called, apply the TA15 deformation instead of the T01

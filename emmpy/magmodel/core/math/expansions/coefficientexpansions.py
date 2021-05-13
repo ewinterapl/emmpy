@@ -49,19 +49,21 @@ class CoefficientExpansions:
         else:
             raise Exception
 
-    # @staticmethod
-    # def invert(p):
-    #     """Returns an inverted view of the supplied expansion coefficients.
+    @staticmethod
+    def invert(p):
+        """Returns an inverted view of the supplied expansion coefficients.
 
-    #     p[i] = 1/p[i]
-    #     @param p the set of coefficients p<sub>i</sub> to invert
-    #     @return the inverted set of coefficients p'<sub>i</sub>
-    #     """
-    #     ce1d = CoefficientExpansion1D()
-    #     ce1d.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-    #     ce1d.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-    #     ce1d.getCoefficient = lambda index: 1/p.getCoefficient(index)
-    #     return ce1d
+        p[i] = 1/p[i]
+        
+        param p the set of coefficients p<sub>i</sub> to invert
+        return the inverted set of coefficients p'<sub>i</sub>
+        """
+        ce1d = CoefficientExpansion1D()
+        # These lambdas are not bound methods
+        ce1d.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
+        ce1d.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
+        ce1d.getCoefficient = lambda index: 1/p.getCoefficient(index)
+        return ce1d
 
     # @staticmethod
     # def negate(a):

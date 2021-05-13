@@ -10,9 +10,9 @@
 #     CartesianHarmonicField
 # )
 # from emmpy.magmodel.core.math.trigparity import TrigParity
-# from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
-#     BasisVectorField
-# )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 # from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
 #     BasisVectorFields
 # )
@@ -114,33 +114,33 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     #     return PerpendicularAndParallelCartesianHarmonicField(
     #         rotatedPerpField, rotatedParaField)
 
-    # @staticmethod
-    # def createWithRotationAndAlternate(
-    #     trigParityI, perpendicularTiltAngle, p,
-    #     r, perpCoeffs, parallelTiltAngle, q, s, parrCoeffs):
-    #     """Creates a PerpendicularAndParallelCartesianHarmonicField where each
-    #     field is rotated by an arbitrary angle about the y-axis
+    @staticmethod
+    def createWithRotationAndAlternate(
+        trigParityI, perpendicularTiltAngle, p,
+        r, perpCoeffs, parallelTiltAngle, q, s, parrCoeffs):
+        """Creates a PerpendicularAndParallelCartesianHarmonicField where each
+        field is rotated by an arbitrary angle about the y-axis
 
-    #     Described in detail in the appendix of Tsyganenko [1998].
+        Described in detail in the appendix of Tsyganenko [1998].
 
-    #     param trigParityI the {@link TrigParity} associated with the Y terms
-    #     (odd=sine, even=cosine)
-    #     param perpendicularTiltAngle the angle to rotate the perpendicular
-    #     field about the y-axis
-    #     param p an expansion containing the nonlinear set of coefficients p_i
-    #     param r an expansion containing the nonlinear set of coefficients r_k
-    #     param perpCoeffs an expansion containing the linear scaling
-    #     coefficients a_ik
-    #     param parallelTiltAngle the angle to rotate the parallel field about
-    #     the y-axis
-    #     param q an expansion containing the nonlinear set of coefficients q)i
-    #     param s an expansion containing the nonlinear set of coefficients s_k
-    #     param parrCoeffs an expansion containing the linear scaling
-    #     coefficients b_ik
-    #     return a newly constructed
-    #     PerpendicularAndParallelCartesianHarmonicField
-    #     """
-
+        param trigParityI the {@link TrigParity} associated with the Y terms
+        (odd=sine, even=cosine)
+        param perpendicularTiltAngle the angle to rotate the perpendicular
+        field about the y-axis
+        param p an expansion containing the nonlinear set of coefficients p_i
+        param r an expansion containing the nonlinear set of coefficients r_k
+        param perpCoeffs an expansion containing the linear scaling
+        coefficients a_ik
+        param parallelTiltAngle the angle to rotate the parallel field about
+        the y-axis
+        param q an expansion containing the nonlinear set of coefficients q)i
+        param s an expansion containing the nonlinear set of coefficients s_k
+        param parrCoeffs an expansion containing the linear scaling
+        coefficients b_ik
+        return a newly constructed
+        PerpendicularAndParallelCartesianHarmonicField
+        """
+        pass
     #     # construct the unrotated fields
     #     perpField = AlternateCartesianHarmonicField(
     #         p, r, perpCoeffs, trigParityI, TrigParity.ODD)

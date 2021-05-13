@@ -10,7 +10,7 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-# from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
 class DipoleShieldingField:
@@ -45,18 +45,18 @@ class DipoleShieldingField:
     author G.K.Stephens
     """
 
-    # kappaPerp = .8385953499E-01  # Previously T1
-    # kappaParallel = .3477844929  # Previously T2
+    kappaPerp = .8385953499E-01  # Previously T1
+    kappaParallel = .3477844929  # Previously T2
 
-    # # These coefficients were determined in Tsyganenko 2002-1 referenced above.
-    # p = CoefficientExpansions.createExpansionFromArray(
-    #     [9.620648151, 6.082014949, 27.75216226], 1)
-    # r = CoefficientExpansions.createExpansionFromArray(
-    #     [12.44199571, 5.122226936, 6.982039615], 1)
-    # q = CoefficientExpansions.createExpansionFromArray(
-    #     [20.12149582, 6.150973118, 4.663639687], 1)
-    # s = CoefficientExpansions.createExpansionFromArray(
-    #     [15.73319647, 2.303504968, 5.840511214], 1)
+    # These coefficients were determined in Tsyganenko 2002-1 referenced above.
+    p = CoefficientExpansions.createExpansionFromArray(
+        [9.620648151, 6.082014949, 27.75216226], 1)
+    r = CoefficientExpansions.createExpansionFromArray(
+        [12.44199571, 5.122226936, 6.982039615], 1)
+    q = CoefficientExpansions.createExpansionFromArray(
+        [20.12149582, 6.150973118, 4.663639687], 1)
+    s = CoefficientExpansions.createExpansionFromArray(
+        [15.73319647, 2.303504968, 5.840511214], 1)
     a = CoefficientExpansions.createExpansionFromArray(
         [[-901.2327248, 817.6208321, -83.73539535],
          [336.8781402, -311.2947120, 31.94469304],

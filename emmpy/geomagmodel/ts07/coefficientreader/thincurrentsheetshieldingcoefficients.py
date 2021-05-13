@@ -50,8 +50,8 @@ class ThinCurrentSheetShieldingCoefficients:
     # def getEvenTailWaveExpansion(self):
     #     return self.evenTailWaveExpansion
 
-    # def getNumRadialExpansions(self):
-    #     return self.numRadialExpansions
+    def getNumRadialExpansions(self):
+        return self.numRadialExpansions
 
-    # def getNumAzimuthalExpansions(self):
-    #     return self.numAzimuthalExpansions
+    def getNumAzimuthalExpansions(self):
+        return self.numAzimuthalExpansions

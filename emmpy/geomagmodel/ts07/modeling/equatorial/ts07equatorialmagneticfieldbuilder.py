@@ -7,6 +7,9 @@ from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
     CurrentSheetHalfThicknesses
 )
+from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield import (
+    ShieldedThinCurrentSheetField
+)
 
 
 class Ts07EquatorialMagneticFieldBuilder:
@@ -98,8 +101,9 @@ class Ts07EquatorialMagneticFieldBuilder:
             )
     
             # Construct the shielded thin current sheet
-            ShieldedThinCurrentSheetField thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
-                currentSheetHalfThickness, tailLength, bessel, shieldingCoeffs, includeShield);
+            thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
+                currentSheetHalfThickness, self.tailLength, self.bessel,
+                self.shieldingCoeffs, self.includeShield)
 
     #     #       /*
     #     #        * if the with TA15 deformation was called, apply the TA15 deformation instead of the T01

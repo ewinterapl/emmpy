@@ -12,8 +12,10 @@
 # import magmodel.core.math.expansions.Expansion2Ds;
 # import magmodel.core.modeling.equatorial.expansion.TailSheetCoefficients;
 # import magmodel.core.modeling.equatorial.expansion.TailSheetExpansions;
-# import magmodel.core.modeling.equatorial.expansion.ThinAsymmetricCurrentSheetBasisVectorField;
 
+from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
+    ThinAsymmetricCurrentSheetBasisVectorField
+)
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -80,11 +82,12 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         param boolean includeShield
         return ShieldedThinCurrentSheetField
         """
-        pass
-    #     ThinAsymmetricCurrentSheetBasisVectorField thinCurrentSheet =
-    #         ThinAsymmetricCurrentSheetBasisVectorField.createUnity(tailLength,
-    #             currentSheetHalfThickness, staticCoefficients.getNumAzimuthalExpansions(),
-    #             staticCoefficients.getNumRadialExpansions(), bessel);
+        thinCurrentSheet = (
+            ThinAsymmetricCurrentSheetBasisVectorField.createUnity(
+                tailLength, currentSheetHalfThickness,
+                staticCoefficients.getNumAzimuthalExpansions(),
+                staticCoefficients.getNumRadialExpansions(), bessel)
+        )
     #     ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield =
     #         new ThinAsymmetricCurrentSheetBasisVectorShieldingField(staticCoefficients, bessel);
     #     return new ShieldedThinCurrentSheetField(thinCurrentSheet, thinCurrentSheetShield,

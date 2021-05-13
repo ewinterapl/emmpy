@@ -14,9 +14,9 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
     TailSheetAsymmetricExpansion
 )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
-#     TailSheetCoefficients
-# )
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+    TailSheetCoefficients
+)
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
@@ -46,27 +46,26 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         self.currentSheetHalfThickness = currentSheetHalfThickness
         self.bessel = bessel
 
-    # @staticmethod
-    # def createUnity(
-    #     tailLength, currentSheetHalfThickness, numAzimuthalExpansions,
-    #     numRadialExpansions, bessel
-    # ):
-    #     """Creates a ThinAsymmetricCurrentSheetBasisVectorField where all
-    #     the coefficients have been set to 1.
+    @staticmethod
+    def createUnity(
+        tailLength, currentSheetHalfThickness, numAzimuthalExpansions,
+        numRadialExpansions, bessel
+    ):
+        """Creates a ThinAsymmetricCurrentSheetBasisVectorField where all
+        the coefficients have been set to 1.
 
-    #     @param tailLength
-    #     @param currentSheetHalfThickness
-    #     @param numAzimuthalExpansions
-    #     @param numRadialExpansions
-    #     param bessel
-    #     return
-    #     """
-    #     coeffs = TailSheetCoefficients.createUnity(
-    #         numAzimuthalExpansions, numRadialExpansions
-    #     )
-
-    #     return ThinAsymmetricCurrentSheetBasisVectorField(
-    #         tailLength, currentSheetHalfThickness, coeffs, bessel)
+        param tailLength
+        param currentSheetHalfThickness
+        param numAzimuthalExpansions
+        param numRadialExpansions
+        param bessel
+        return
+        """
+        coeffs = TailSheetCoefficients.createUnity(
+            numAzimuthalExpansions, numRadialExpansions
+        )
+        return ThinAsymmetricCurrentSheetBasisVectorField(
+            tailLength, currentSheetHalfThickness, coeffs, bessel)
 
     def evaluate(self, location):
         buffer = VectorIJK()

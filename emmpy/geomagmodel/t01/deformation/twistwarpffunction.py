@@ -9,7 +9,6 @@
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
 # import geomagmodel.ts07.modeling.fieldaligned.Ffunction.FDerivatives;
-# import magmodel.core.math.deformation.CylindricalBasisFieldDeformation;
 # import magmodel.core.math.deformation.CylindricalFieldDeformation;
 # import magmodel.core.math.vectorfields.BasisVectorField;
 # import magmodel.core.math.vectorfields.CylindricalBasisVectorField;
@@ -19,6 +18,9 @@ from math import sin
 
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
+)
+from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation import (
+    CylindricalBasisFieldDeformation
 )
 from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
     DifferentiableCylindricalVectorField
@@ -108,9 +110,9 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         # Construct the deformation
         deformation = TwistWarpFfunction(warpParam, twistParam, dipoleTilt)
 
-    #     // Deform the cylindrical field
-    #     CylindricalBasisFieldDeformation deformedFieldCyl =
-    #         new CylindricalBasisFieldDeformation(undeformedFieldCyl, deformation);
+        # Deform the cylindrical field
+        deformedFieldCyl = CylindricalBasisFieldDeformation(
+            undeformedFieldCyl, deformation)
 
     #     // Convert the deformed field back to Cartesian coordinates
     #     BasisVectorField deformedField = CylindricalCoordsXAligned.convertBasisField(deformedFieldCyl);

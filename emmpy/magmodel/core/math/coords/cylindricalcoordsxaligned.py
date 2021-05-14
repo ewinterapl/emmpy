@@ -10,6 +10,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 from emmpy.crucible.core.units.fundamentalphysicalconstants import (
     FundamentalPhysicalConstants
 )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
     CylindricalBasisVectorField
 )
@@ -156,17 +159,30 @@ class CylindricalCoordsXAligned:
             #         return convertFieldValue(locCart, fieldCart);
             #       }
         elif isinstance(args[0], CylindricalBasisVectorField):
-            raise Exception
-            # (cylField,) = args
-            #   /**
-            #    * Converts a Cartesian {@link BasisVectorField} to a {@link CylindricalBasisVectorField}
-            #    * 
-            #    * @param cartesian a Cartesian {@link BasisVectorField}
-            #    * @return a newly constructed {@link CylindricalBasisVectorField}
-            #    */
-            #   public static BasisVectorField convertBasisField(CylindricalBasisVectorField cylField) {
-
-            #     return new BasisVectorField() {
+            (cylField,) = args
+            # Converts a CylindricalBasisVectorField to a Cartesian
+            # BasisVectorField
+            # param cylField a CylindricalBasisVectorField
+            # return a newly constructed Cartesian BasisVectorField
+            bvf = BasisVectorField()
+            def my_evaluateExpansion(location):
+                # param UnwritableVectorIJK location
+                # return ImmutableList<UnwritableVectorIJK>
+                locCyl = CylindricalCoordsXAligned.convert(location)
+                fieldCylExpansion = cylField.evaluateExpansion(locCyl)
+                fieldExpansion = []
+                for fieldCyl in fieldCylExpansion:
+                    fieldExpansion.append(
+                        CylindricalCoordsXAligned.convertFieldValue(
+                            locCyl, fieldCyl
+                        )
+                )
+                return fieldExpansion
+            bvf.evaluateExpansion = my_evaluateExpansion
+            bvf.getNumberOfBasisFunctions = (
+                lambda: cylField.getNumberOfBasisFunctions()
+            )
+            return bvf
         else:
             raise Exception
 

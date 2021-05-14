@@ -9,16 +9,21 @@
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
 # import geomagmodel.ts07.modeling.fieldaligned.Ffunction.FDerivatives;
-# import magmodel.core.math.coords.CylindricalCoordsXAligned;
 # import magmodel.core.math.deformation.CylindricalBasisFieldDeformation;
 # import magmodel.core.math.deformation.CylindricalFieldDeformation;
 # import magmodel.core.math.vectorfields.BasisVectorField;
 # import magmodel.core.math.vectorfields.CylindricalBasisVectorField;
 # import magmodel.core.math.vectorfields.CylindricalVectorField;
-# import magmodel.core.math.vectorfields.DifferentiableCylindricalVectorField;
+
+from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
+    CylindricalCoordsXAligned
+)
+from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
+    DifferentiableCylindricalVectorField
+)
 
 
-class TwistWarpFfunction:
+class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     """Defines a transformation that deforms the polar angle to introduce a
     twisting of the tail current sheet and a tilt warping in the Y-Z plane and
     its partial derivatives with respect to the original coordinates
@@ -34,31 +39,36 @@ class TwistWarpFfunction:
 
     author G.K.Stephens
     """
-    # public class TwistWarpFfunction implements DifferentiableCylindricalVectorField {
 
-    #   private final double dG_dx = 0;
-    #   private final double xL = 20;
-    #   private final double dxL_dx = 0;
+    # private final double dG_dx = 0;
+    # private final double xL = 20;
+    # private final double dxL_dx = 0;
+    # private final double warpParam;
+    # private final double twistParam;
+    # private final double sinDipoleTilt;
 
-    #   private final double warpParam;
-    #   private final double twistParam;
+    def __init__(self):
+        """Constructor
 
-    #   private final double sinDipoleTilt;
+        Default constructor to avoid inherited constructor exception.
+        """
+        pass
 
-    #   /**
-    #    * 
-    #    * @param dipoleTilt
-    #    * @param warpParam
-    #    * @param twistParam
-    #    * @param undeformedField
-    #    * @return
-    #    */
-    #   public static VectorField deformField(double dipoleTilt, double warpParam, double twistParam,
-    #       VectorField undeformedField) {
+    @staticmethod
+    def deformField(dipoleTilt, warpParam, twistParam, undeformedField):
+        """deformFIeld
 
-    #     // Convert the supplied undeformed field to cylindrical coordinates
-    #     CylindricalVectorField undeformedFieldCyl =
-    #         CylindricalCoordsXAligned.convertField(undeformedField);
+        param double dipoleTilt
+        param double warpParam
+        param double twistParam
+        param VectorField undeformedField
+        return VectorField
+        """
+
+        # Convert the supplied undeformed field to cylindrical coordinates
+        # CylindricalVectorField
+        undeformedFieldCyl = CylindricalCoordsXAligned.convertField(
+            undeformedField)
 
     #     // Construct the deformation
     #     TwistWarpFfunction deformation = new TwistWarpFfunction(warpParam, twistParam, dipoleTilt);

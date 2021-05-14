@@ -6,7 +6,9 @@ from emmpy.geomagmodel.t01.deformation.twistwarpfunction import (
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        self.assertIsNotNone(TwistWarpFfunction())
 
 
 if __name__ == '__main__':

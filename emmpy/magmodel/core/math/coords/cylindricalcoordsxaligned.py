@@ -3,7 +3,6 @@
 
 from math import atan2, cos, sin, sqrt
 
-from emmpy.crucible.core.math.vectorspace.bas import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK

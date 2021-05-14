@@ -9,5 +9,4 @@ https://guava.dev/releases/8.0/api/docs/com/google/common/base/package-summary.h
 Modules
 -------
 test_Preconditions.py
-test_Predicate.py
 """

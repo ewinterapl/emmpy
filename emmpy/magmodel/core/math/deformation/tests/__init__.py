@@ -6,5 +6,6 @@ hierarchy.
 Modules
 -------
 test_BasisVectorFieldDeformation.py
+test_CylindricalBasisVectorFieldDeformation.py
 test_VectorFieldDeformation.py
 """

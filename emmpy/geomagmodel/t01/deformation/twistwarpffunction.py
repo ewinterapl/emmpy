@@ -61,21 +61,21 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         self.twistParam = twistParam
         self.sinDipoleTilt = sin(dipoleTilt)
 
-    @staticmethod
-    def deformField(dipoleTilt, warpParam, twistParam, undeformedField):
-        """deformFIeld
+    # @staticmethod
+    # def deformField(dipoleTilt, warpParam, twistParam, undeformedField):
+    #     """deformFIeld
 
-        param double dipoleTilt
-        param double warpParam
-        param double twistParam
-        param VectorField undeformedField - assumed Cartesian
-        return VectorField
-        """
+    #     param double dipoleTilt
+    #     param double warpParam
+    #     param double twistParam
+    #     param VectorField undeformedField - assumed Cartesian
+    #     return VectorField
+    #     """
 
-        # Convert the supplied undeformed field to cylindrical coordinates
-        # CylindricalVectorField
-        undeformedFieldCyl = CylindricalCoordsXAligned.convertField(
-            undeformedField)
+    #     # Convert the supplied undeformed field to cylindrical coordinates
+    #     # CylindricalVectorField
+    #     undeformedFieldCyl = CylindricalCoordsXAligned.convertField(
+    #         undeformedField)
 
     #     // Construct the deformation
     #     TwistWarpFfunction deformation = new TwistWarpFfunction(warpParam, twistParam, dipoleTilt);
@@ -90,20 +90,20 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     #     return deformedField;
     #   }
 
-    #   /**
-    #    * 
-    #    * @param dipoleTilt
-    #    * @param warpParam
-    #    * @param twistParam
-    #    * @param undeformedField
-    #    * @return
-    #    */
-    #   public static BasisVectorField deformBasisField(double dipoleTilt, double warpParam,
-    #       double twistParam, BasisVectorField undeformedField) {
+    @staticmethod
+    def deformBasisField(dipoleTilt, warpParam, twistParam, undeformedField):
+        """deformBasisField
 
-    #     // Convert the supplied undeformed field to cylindrical coordinates
-    #     CylindricalBasisVectorField undeformedFieldCyl =
-    #         CylindricalCoordsXAligned.convertBasisField(undeformedField);
+        param double dipoleTilt
+        param double warpParam
+        param double twistParam
+        param BasisVectorField undeformedField
+        return BasisVectorField
+        """
+
+        # Convert the supplied undeformed field to cylindrical coordinates
+        undeformedFieldCyl = CylindricalCoordsXAligned.convertBasisField(
+            undeformedField)
 
     #     // Construct the deformation
     #     TwistWarpFfunction deformation = new TwistWarpFfunction(warpParam, twistParam, dipoleTilt);

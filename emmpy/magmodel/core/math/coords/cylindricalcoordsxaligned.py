@@ -10,10 +10,12 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 from emmpy.crucible.core.units.fundamentalphysicalconstants import (
     FundamentalPhysicalConstants
 )
+from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
+    CylindricalBasisVectorField
+)
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
 )
-
 
 # class CylindricalBasisVectorField:
 #     """CylindricalBasisVectorField
@@ -152,8 +154,8 @@ class CylindricalCoordsXAligned:
             #         // convert the field to cylindrical
             #         return convertFieldValue(locCart, fieldCart);
             #       }
-        # elif isinstance(args[0], CylindricalBasisVectorField):
-            # raise Exception
+        elif isinstance(args[0], CylindricalBasisVectorField):
+            raise Exception
             # (cylField,) = args
             #   /**
             #    * Converts a Cartesian {@link BasisVectorField} to a {@link CylindricalBasisVectorField}

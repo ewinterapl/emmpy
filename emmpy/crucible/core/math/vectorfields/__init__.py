@@ -6,7 +6,6 @@ hierarchy.
 
 Modules
 -------
-differentiablevectorfield.py
 scalarfield.py
 scalarfield2d.py
 vectorfield.py

@@ -9,7 +9,7 @@ from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
 # from emmpy.magmodel.core.math.cartesianharmonicfield import (
 #     CartesianHarmonicField
 # )
-# from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )

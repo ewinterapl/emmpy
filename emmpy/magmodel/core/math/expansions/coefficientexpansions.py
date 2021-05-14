@@ -259,6 +259,7 @@ class CoefficientExpansions:
     #             a.getCoefficient(radialExpansion) +
     #             b.getCoefficient(radialExpansion)
     #         )
+            # return v
         elif isinstance(a, CoefficientExpansion2D):
             Preconditions.checkArgument(a.getILowerBoundIndex() ==
                                         b.getILowerBoundIndex())
@@ -274,31 +275,19 @@ class CoefficientExpansions:
             lastRadialExpansion = a.getJUpperBoundIndex()
             na = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
             nr = lastRadialExpansion - firstRadialExpansion + 1
-            arr = []
-            for i in range(na):
-                arr.append([])
-                for j in range(nr):
-                    arr[i].append(None)
-            p = ArrayCoefficientExpansion2D(
-                arr, firstAzimuthalExpansion, firstRadialExpansion
-            )
-            v = CoefficientExpansion2D()
-            v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-            v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
-            v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
-            v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
-            v.iSize = lambda: p.iSize()
-            v.jSize = lambda: p.jSize()
-            v.getCoefficient = (
+            ce2d = CoefficientExpansion2D()
+            ce2d.getILowerBoundIndex = lambda: firstAzimuthalExpansion
+            ce2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansion
+            ce2d.getJLowerBoundIndex = lambda: firstRadialExpansion
+            ce2d.getJUpperBoundIndex = lambda: lastRadialExpansion
+            ce2d.getCoefficient = (
                 lambda azimuthalExpansion, radialExpansion:
                 a.getCoefficient(azimuthalExpansion, radialExpansion) +
                 b.getCoefficient(azimuthalExpansion, radialExpansion)
             )
+            return ce2d
         else:
             raise Exception
-
-    #     # Return the view.
-    #     return v
 
     # @staticmethod
     # def createNullExpansion(

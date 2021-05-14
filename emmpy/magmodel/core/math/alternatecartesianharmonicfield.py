@@ -5,9 +5,9 @@
 
 # from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-# from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
-#     BasisVectorField
-# )
+from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+    BasisVectorField
+)
 
 
 class AlternateCartesianHarmonicField(BasisVectorField):
@@ -31,20 +31,19 @@ class AlternateCartesianHarmonicField(BasisVectorField):
 
     author G.K.Stephens
     """
-    pass
 
-    # def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
-    #              trigParityK):
-    #     """Constructor"""
-    #     self.piCoeffs = piCoeffs
-    #     self.pkCoeffs = pkCoeffs
-    #     self.aikCoeffs = aikCoeffs
-    #     self.trigParityI = trigParityI
-    #     self.trigParityK = trigParityK
-    #     self.firstI = aikCoeffs.getILowerBoundIndex()
-    #     self.lastI = aikCoeffs.getIUpperBoundIndex()
-    #     self.firstK = aikCoeffs.getJLowerBoundIndex()
-    #     self.lastK = aikCoeffs.getJUpperBoundIndex()
+    def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
+                 trigParityK):
+        """Constructor"""
+        self.piCoeffs = piCoeffs
+        self.pkCoeffs = pkCoeffs
+        self.aikCoeffs = aikCoeffs
+        self.trigParityI = trigParityI
+        self.trigParityK = trigParityK
+        self.firstI = aikCoeffs.getILowerBoundIndex()
+        self.lastI = aikCoeffs.getIUpperBoundIndex()
+        self.firstK = aikCoeffs.getJLowerBoundIndex()
+        self.lastK = aikCoeffs.getJUpperBoundIndex()
 
     # def evaluate(self, location, buffer):
     #     x = location.getI()

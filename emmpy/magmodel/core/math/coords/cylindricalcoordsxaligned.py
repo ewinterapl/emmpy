@@ -10,6 +10,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 from emmpy.crucible.core.units.fundamentalphysicalconstants import (
     FundamentalPhysicalConstants
 )
+from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
+    CylindricalVectorField
+)
 
 
 # class CylindricalBasisVectorField:
@@ -127,13 +130,14 @@ class CylindricalCoordsXAligned:
     @staticmethod
     def convertBasisField(*args):
         if isinstance(args[0], UnwritableVectorIJK):
-            (cartesian,) = args
+            raise Exception
+            # (cartesian,) = args
             # Converts a Cartesian BasisVectorField to a CylindricalBasisVectorField
             # @param cartesian a Cartesian BasisVectorField
             # return a newly constructed CylindricalBasisVectorField
             #   public static CylindricalBasisVectorField
             # convertBasisField(BasisVectorField cartesian) {
-            cylbvf = CylindricalBasisVectorField(cartesian)
+            # cylbvf = CylindricalBasisVectorField(cartesian)
             #     return new CylindricalBasisVectorField() {
 
             #       @Override
@@ -148,8 +152,9 @@ class CylindricalCoordsXAligned:
             #         // convert the field to cylindrical
             #         return convertFieldValue(locCart, fieldCart);
             #       }
-        elif isinstance(args[0], CylindricalBasisVectorField):
-            (cylField,) = args
+        # elif isinstance(args[0], CylindricalBasisVectorField):
+            # raise Exception
+            # (cylField,) = args
             #   /**
             #    * Converts a Cartesian {@link BasisVectorField} to a {@link CylindricalBasisVectorField}
             #    * 
@@ -164,54 +169,32 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertField(cartesian):
-        pass
-        #   /**
-        #    * Converts a Cartesian {@link VectorField} to a {@link CylindricalVectorField}
-        #    * 
-        #    * @param cartesian a Cartesian {@link VectorField}
-        #    * @return a newly constructed {@link CylindricalVectorField}
-        #    */
-        #   public static CylindricalVectorField convertField(VectorField cartesian) {
+        """Converts a Cartesian VectorField to a CylindricalVectorField
 
-        #     return new CylindricalVectorField() {
-
-        #       // CylindricalVectorField has a default method that evaluates the Cartesian field, we must
-        #       // override that method here because otherwise the conversion will go through the standard +Z
-        #       // aligned conversion
-        #       @Override
-        #       public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
-        #         return cartesian.evaluate(location, buffer);
-        #       }
-
-        #   /**
-        #    * Converts a {@link CylindricalVectorField} to a Cartesian {@link VectorField}
-        #    * 
-        #    * @param cylField a {@link CylindricalVectorField}
-        #    * @return a newly constructed Cartesian {@link VectorField}
-        #    */
-        #   public static VectorField convertField(CylindricalVectorField cylField) {
-
-        #     return new VectorField() {
-
-        #       @Override
-        #       public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
-
-        #         CylindricalVector locSphere = convert(location);
-                
-        #         CylindricalVector fieldSphere = cylField.evaluate(locSphere);
-                
-        #         UnwritableVectorIJK fieldValue = convertFieldValue(locSphere, fieldSphere);
-
-        #         buffer.setTo(fieldValue);
-
-        #         return buffer;
-        #       }
-
-        #     };
-
-        #   }
-
-        # }
+        param cartesian a Cartesian VectorField
+        return a newly constructed CylindricalVectorField
+        """
+        cvf = CylindricalVectorField()
+        # CylindricalVectorField has a default method that evaluates the
+        # Cartesian field, we must override that method here because otherwise
+        # the conversion will go through the standard +Z  aligned conversion
+        def my_evaluate(*args):
+            if len(args) == 1:
+                (location,) = args
+                # convert the coordinate to Cartesian
+                locCart = CylindricalCoordsXAligned.convert(location)
+                # evaluate the Cartesian field
+                fieldCart = cartesian.evaluate(locCart)
+                # convert the field to cylindrical
+                return CylindricalCoordsXAligned.convertFieldValue(
+                    locCart, fieldCart)
+            elif len(args) == 2:
+                (location, buffer) = args
+                return cartesian.evaluate(location, buffer)
+            else:
+                raise Exception
+        cvf.evaluate = my_evaluate
+        return cvf
 
     def evaluateExpansion(self, location):
         pass

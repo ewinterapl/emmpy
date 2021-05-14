@@ -61,7 +61,7 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         param double dipoleTilt
         param double warpParam
         param double twistParam
-        param VectorField undeformedField
+        param VectorField undeformedField - assumed Cartesian
         return VectorField
         """
 

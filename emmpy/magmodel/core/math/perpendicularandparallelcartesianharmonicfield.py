@@ -3,9 +3,9 @@
 
 # from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
-# from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
-#     AlternateCartesianHarmonicField
-# )
+from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
+    AlternateCartesianHarmonicField
+)
 # from emmpy.magmodel.core.math.cartesianharmonicfield import (
 #     CartesianHarmonicField
 # )
@@ -140,10 +140,10 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         return a newly constructed
         PerpendicularAndParallelCartesianHarmonicField
         """
-        pass
-    #     # construct the unrotated fields
-    #     perpField = AlternateCartesianHarmonicField(
-    #         p, r, perpCoeffs, trigParityI, TrigParity.ODD)
+
+        # construct the unrotated fields
+        perpField = AlternateCartesianHarmonicField(
+            p, r, perpCoeffs, trigParityI, TrigParity.ODD)
     #     paraField = CartesianHarmonicField(
     #         q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 

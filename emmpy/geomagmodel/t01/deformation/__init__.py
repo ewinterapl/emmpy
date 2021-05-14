@@ -6,7 +6,7 @@ hierarchy.
 
 Modules
 -------
-twistwarpfunction.py
+twistwarpffunction.py
 
 Packages
 --------

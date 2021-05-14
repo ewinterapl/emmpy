@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.t01.deformation.twistwarpfunction"""
+"""emmpy.geomagmodel.t01.deformation.twistwarpffunction"""
 
 
 # import static crucible.core.math.CrucibleMath.cos;
@@ -14,6 +14,8 @@
 # import magmodel.core.math.vectorfields.BasisVectorField;
 # import magmodel.core.math.vectorfields.CylindricalBasisVectorField;
 # import magmodel.core.math.vectorfields.CylindricalVectorField;
+
+from math import sin
 
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
@@ -40,19 +42,24 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     author G.K.Stephens
     """
 
-    # private final double dG_dx = 0;
-    # private final double xL = 20;
-    # private final double dxL_dx = 0;
-    # private final double warpParam;
-    # private final double twistParam;
-    # private final double sinDipoleTilt;
+    dG_dx = 0
+    xL = 20
+    dxL_dx = 0
 
-    def __init__(self):
-        """Constructor
+    def __init__(self, warpParam, twistParam, dipoleTilt):
+        """Constructs the following function (from Tsyganenko 1998 eq. 14) and
+        its derivatives:
 
-        Default constructor to avoid inherited constructor exception.
+        where in this implementation, L(X) is just a constant L=20.0, and
+        phi_t = -T*X, where T is the twist parameter.
+
+        param warpParam the double parameter G in the function
+        param twistParam the double parameter
+        param double dipoleTilt
         """
-        pass
+        self.warpParam = warpParam
+        self.twistParam = twistParam
+        self.sinDipoleTilt = sin(dipoleTilt)
 
     @staticmethod
     def deformField(dipoleTilt, warpParam, twistParam, undeformedField):
@@ -109,25 +116,6 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     #     BasisVectorField deformedField = CylindricalCoordsXAligned.convertBasisField(deformedFieldCyl);
 
     #     return deformedField;
-    #   }
-
-    #   /**
-    #    * Constructs the following function (from Tsyganenko 1998 eq. 14) and it's derivatives:
-    #    * <p>
-    #    * <img src="./doc-files/t98_eq_14.png"/>
-    #    * <p>
-    #    * where in this implementation, L(X) is just a constant L=20.0, and phi_t = -T*X, where T is the
-    #    * twist parameter.
-    #    * 
-    #    * @param warpParam the parameter G in the function
-    #    * @param twistParam the parameter
-    #    * @param dipoleTilt
-    #    */
-    #   public TwistWarpFfunction(double warpParam, double twistParam, double dipoleTilt) {
-    #     super();
-    #     this.warpParam = warpParam;
-    #     this.twistParam = twistParam;
-    #     this.sinDipoleTilt = sin(dipoleTilt);
     #   }
 
     #   @Override

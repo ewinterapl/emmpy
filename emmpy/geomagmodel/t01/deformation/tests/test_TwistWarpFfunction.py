@@ -1,6 +1,6 @@
 import unittest
 
-from emmpy.geomagmodel.t01.deformation.twistwarpfunction import (
+from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
     TwistWarpFfunction
 )
 
@@ -8,7 +8,7 @@ from emmpy.geomagmodel.t01.deformation.twistwarpfunction import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        self.assertIsNotNone(TwistWarpFfunction())
+        self.assertIsNotNone(TwistWarpFfunction(0.0, 0.0, 0.0))
 
 
 if __name__ == '__main__':

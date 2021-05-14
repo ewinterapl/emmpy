@@ -24,6 +24,8 @@ class BasisVectorFields:
     def asBasisField(field):
         bvf = BasisVectorField()
         bvf.evaluateExpansion = (
+            HERE IS THE PROBLEM
+            SHOULD THIS LAMBDA RETURN A LIST? YES!
             lambda location, buffer: field.evaluate(location, buffer)
         )
         bvf.getNumberOfBasisFunctions = lambda my_self: 1

@@ -7,4 +7,5 @@ Modules
 basisvectorfield.py
 basisvectorfields.py
 cylindricalvectorfield.py
+differentiablecylindricalvectorfield.py
 """

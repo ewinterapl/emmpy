@@ -6,7 +6,14 @@ from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield 
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        with self.assertRaises(Exception):
+            DifferentiableCylindricalVectorField()
+
+    def test_differentiate(self):
+        with self.assertRaises(Exception):
+            DifferentiableCylindricalVectorField.differentiate(None, None)
 
 
 if __name__ == '__main__':

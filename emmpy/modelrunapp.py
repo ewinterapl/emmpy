@@ -27,6 +27,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 
 def ModelRunApp():
     print("Starting ModelRunApp()")
+    # runThinSheet() produces identical results in Java and Python.
     runThinSheet()
     runTs07D()
     print("Ending ModelRunApp()")
@@ -81,7 +82,8 @@ def runTs07D():
     coeffsFile = "/Users/winteel1/mag/2015_076_16_20.par"
 
     # read the coeffs/parameters from the file
-    # Returns a TS07DVariableCoefficients
+    # Returns a 
+    # emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients.TS07DVariableCoefficients
     coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
 
     # read the dipole tilt angle and dynamic pressure from the coeffs file
@@ -91,10 +93,11 @@ def runTs07D():
     # construct the model builder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
 
-    # # optional setting to use Jay Albert's Bessel function evaluator
+    # optional setting to use Jay Albert's Bessel function evaluator
     # modelBuilder.withAlbertBessel()
 
     # now construct the TS07D model
+    # Python and Java identical to this point.
     model = modelBuilder.build()
     # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
 
@@ -103,9 +106,9 @@ def runTs07D():
 
     # evaluate the magnetic field
     # TEMPORARY BUFFER - REMOVE LATER.
-    # buffer = VectorIJK()
-    # bVect = model.evaluate(pos, buffer)
-    # print(bVect)
+    buffer = VectorIJK()
+    bVect = model.evaluate(pos)
+    print(bVect)
 
     print("Ending runTs07D()")
 

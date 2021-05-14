@@ -105,13 +105,11 @@ class Ts07EquatorialMagneticFieldBuilder:
                 currentSheetHalfThickness, self.tailLength, self.bessel,
                 self.shieldingCoeffs, self.includeShield)
 
-    #     #       /*
-    #     #        * if the with TA15 deformation was called, apply the TA15 deformation instead of the T01
-    #     #        * deformation
-    #     #        */
-    #     #       BasisVectorField bentWarpedField = thinCurrentSheet;
-    #     #       if (withTA15deformation.isPresent()) {
-
+            # if the with TA15 deformation was called, apply the TA15
+            # deformation instead of the T01 deformation
+            bentWarpedField = thinCurrentSheet
+            if self.withTA15deformation:
+                raise Exception
     #     #         // warp the shielded thin current sheet
     #     #         BasisVectorField warpedField = DeformationII.deformBasisField(dipoleTiltAngle,
     #     #             hingeDistance, warpingParam, twistParam, thinCurrentSheet);
@@ -121,13 +119,13 @@ class Ts07EquatorialMagneticFieldBuilder:
     #     #         // now apply the bending deformation to the warped field
     #     #         bentWarpedField =
     #     #             DeformationI.deformBasisField(dipoleTiltAngle, hingeDistance, bzIMF, warpedField);
-    #     #       }
-    #     #       // the T01 deformation (standard for TS07D)
-    #     #       else {
+            else:
+                # the T01 deformation (standard for TS07D)
 
-    #     #         // warp the shielded thin current sheet
-    #     #         BasisVectorField warpedField = TwistWarpFfunction.deformBasisField(dipoleTiltAngle,
-    #     #             warpingParam, twistParam, thinCurrentSheet);
+                # warp the shielded thin current sheet
+                warpedField = TwistWarpFfunction.deformBasisField(
+                    self.dipoleTiltAngle, warpingParam, twistParam,
+                    thinCurrentSheet)
 
     #     #         // now apply the bending deformation to the warped field
     #     #         bentWarpedField =

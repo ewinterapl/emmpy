@@ -11,6 +11,7 @@ t96magnetopause.py
 
 Packages
 --------
+t01
 tests
 ts07
 """

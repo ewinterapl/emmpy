@@ -8,5 +8,6 @@ Modules
 -------
 test_CurrentSheetHalfThicknesses.py
 test_ShieldedThinCurrentSheetField.py
+test_ThinAsymmetricCurrentSheetBasisVectorShieldingField.py
 test_Ts07EquatorialVariableCoefficients.py
 """

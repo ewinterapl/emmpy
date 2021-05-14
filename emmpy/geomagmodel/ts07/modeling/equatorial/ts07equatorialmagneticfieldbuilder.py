@@ -4,6 +4,9 @@
 from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
     DifferentiableScalarFieldIJ
 )
+from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
+    TwistWarpFfunction
+)
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
     CurrentSheetHalfThicknesses
 )

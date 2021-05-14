@@ -131,6 +131,7 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertBasisField(*args):
+        print(args)
         if isinstance(args[0], UnwritableVectorIJK):
             raise Exception
             # (cartesian,) = args

@@ -120,10 +120,10 @@ class TS07DStaticCoefficientsFactory:
             fileName = "tailamebhr_%02d.par" % i
             inFile = os.path.join(staticCoeffDirectory, fileName)
             values = []
-            for i in range(numShieldAzimuthalExpansions):
+            for ii in range(numShieldAzimuthalExpansions):
                 values.append([])
-                for j in range(numShieldRadialExpansions):
-                    values[i].append(None)
+                for jj in range(numShieldRadialExpansions):
+                    values[ii].append(None)
             waveNumberValues = [None]*numShieldRadialExpansions
             with open(inFile) as f:
                 for l in range(numShieldAzimuthalExpansions):

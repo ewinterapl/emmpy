@@ -276,7 +276,9 @@ class CoefficientExpansions:
             nr = lastRadialExpansion - firstRadialExpansion + 1
             arr = []
             for i in range(na):
-                arr.append([None]*nr)
+                arr.append([])
+                for j in range(nr):
+                    arr[i].append(None)
             p = ArrayCoefficientExpansion2D(
                 arr, firstAzimuthalExpansion, firstRadialExpansion
             )

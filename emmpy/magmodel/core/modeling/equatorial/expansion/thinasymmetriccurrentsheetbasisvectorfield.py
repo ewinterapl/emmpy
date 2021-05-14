@@ -140,11 +140,11 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             Expansion2Ds.createFromArray(evenExpansions, 1, 1)
         )
 
-    # def getNumAzimuthalExpansions(self):
-    #     return self.numAzimuthalExpansions
+    def getNumAzimuthalExpansions(self):
+        return self.numAzimuthalExpansions
 
-    # def getNumRadialExpansions(self):
-    #     return self.numRadialExpansions
+    def getNumRadialExpansions(self):
+        return self.numRadialExpansions
 
     # def getNumberOfBasisFunctions(self):
     #     return (

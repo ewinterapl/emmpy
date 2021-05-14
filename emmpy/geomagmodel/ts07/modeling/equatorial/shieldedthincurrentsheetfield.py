@@ -13,6 +13,9 @@
 # import magmodel.core.modeling.equatorial.expansion.TailSheetCoefficients;
 # import magmodel.core.modeling.equatorial.expansion.TailSheetExpansions;
 
+from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
+    ThinAsymmetricCurrentSheetBasisVectorShieldingField
+)
 from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
     ThinAsymmetricCurrentSheetBasisVectorField
 )
@@ -30,22 +33,19 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
     #   private final int numRadialExpansions;
     #   private final boolean includeShield;
 
-    #   /**
-    #    * 
-    #    * @param thinCurrentSheet
-    #    * @param thinCurrentSheetShield
-    #    * @param includeShield
-    #    */
-    #   ShieldedThinCurrentSheetField(ThinAsymmetricCurrentSheetBasisVectorField thinCurrentSheet,
-    #       ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield,
-    #       boolean includeShield) {
-    #     super();
-    #     this.thinCurrentSheet = thinCurrentSheet;
-    #     this.thinCurrentSheetShield = thinCurrentSheetShield;
-    #     this.includeShield = includeShield;
-    #     this.numAzimuthalExpansions = thinCurrentSheet.getNumAzimuthalExpansions();
-    #     this.numRadialExpansions = thinCurrentSheet.getNumRadialExpansions();
-    #   }
+    def __init__(self, thinCurrentSheet, thinCurrentSheetShield,
+        includeShield):
+        """Constructor
+
+        param ThinAsymmetricCurrentSheetBasisVectorField thinCurrentSheet
+        param ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield
+        param includeShield includeShield
+        """
+        self.thinCurrentSheet = thinCurrentSheet
+        self.thinCurrentSheetShield = thinCurrentSheetShield
+        self.includeShield = includeShield
+        self.numAzimuthalExpansions = thinCurrentSheet.getNumAzimuthalExpansions()
+        self.numRadialExpansions = thinCurrentSheet.getNumRadialExpansions()
 
     #   /**
     #    * 
@@ -88,11 +88,10 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
                 staticCoefficients.getNumAzimuthalExpansions(),
                 staticCoefficients.getNumRadialExpansions(), bessel)
         )
-    #     ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield =
-    #         new ThinAsymmetricCurrentSheetBasisVectorShieldingField(staticCoefficients, bessel);
-    #     return new ShieldedThinCurrentSheetField(thinCurrentSheet, thinCurrentSheetShield,
-    #         includeShield);
-    #   }
+        thinCurrentSheetShield = ThinAsymmetricCurrentSheetBasisVectorShieldingField(
+            staticCoefficients, bessel)
+        return ShieldedThinCurrentSheetField(
+            thinCurrentSheet, thinCurrentSheetShield, includeShield)
 
     #   /**
     #    * 

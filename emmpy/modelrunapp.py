@@ -107,7 +107,7 @@ def runTs07D():
     # evaluate the magnetic field
     # TEMPORARY BUFFER - REMOVE LATER.
     buffer = VectorIJK()
-    bVect = model.evaluate(pos)
+    bVect = model.evaluate(pos, buffer)
     print(bVect)
 
     print("Ending runTs07D()")

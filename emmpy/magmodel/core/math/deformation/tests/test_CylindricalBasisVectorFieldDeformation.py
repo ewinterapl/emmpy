@@ -1,3 +1,4 @@
+from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import CylindricalBasisVectorField
 import unittest
 
 from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation import (
@@ -6,7 +7,9 @@ from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation impor
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        self.assertIsNotNone(CylindricalBasisFieldDeformation(None, None))
 
 
 if __name__ == '__main__':

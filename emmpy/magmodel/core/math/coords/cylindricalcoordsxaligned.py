@@ -158,7 +158,7 @@ class CylindricalCoordsXAligned:
             #         // convert the field to cylindrical
             #         return convertFieldValue(locCart, fieldCart);
             #       }
-        elif isinstance(args[0], BasisVectorField):
+        elif isinstance(args[0], CylindricalBasisVectorField):
             (cylField,) = args
             # Converts a CylindricalBasisVectorField to a Cartesian
             # BasisVectorField

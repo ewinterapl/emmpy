@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+positionbender.py
 twistwarpffunction.py
 
 Packages

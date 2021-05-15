@@ -130,10 +130,9 @@ class Ts07EquatorialMagneticFieldBuilder:
                     self.dipoleTiltAngle, warpingParam, twistParam,
                     thinCurrentSheet)
 
-    #     #         // now apply the bending deformation to the warped field
-    #     #         bentWarpedField =
-    #     #             PositionBender.deformBasisField(dipoleTiltAngle, hingeDistance, warpedField);
-    #     #       }
+                # now apply the bending deformation to the warped field
+                bentWarpedField = PositionBender.deformBasisField(
+                    dipoleTiltAngle, hingeDistance, warpedField)
 
     #     #       // Scale position vector for solar wind (see Tsy 2002-1 2.4)
     #     #       /*

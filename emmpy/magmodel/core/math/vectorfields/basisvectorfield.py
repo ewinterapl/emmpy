@@ -4,6 +4,7 @@ N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
 """
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
@@ -21,16 +22,22 @@ class BasisVectorField(VectorField):
     def __init__(self):
         pass
 
-    def evaluate(self, location, buffer):
-        basisVectors = self.evaluateExpansion(location, buffer)
-        fx = 0.0
-        fy = 0.0
-        fz = 0.0
-        for basisVector in basisVectors:
-            fx += basisVector.getI()
-            fy += basisVector.getJ()
-            fz += basisVector.getK()
-        return buffer.setTo(fx, fy, fz)
+    def evaluate(self, *args):
+        if len(args) == 1:
+            (location,) = args
+            buffer = VectorIJK()
+            return self.evaluate(location, buffer)
+        elif len(args) == 2:
+            (location, buffer) = args
+            basisVectors = self.evaluateExpansion(location, buffer)
+            fx = 0.0
+            fy = 0.0
+            fz = 0.0
+            for basisVector in basisVectors:
+                fx += basisVector.getI()
+                fy += basisVector.getJ()
+                fz += basisVector.getK()
+            return buffer.setTo(fx, fy, fz)
 
     def evaluateExpansion(self, location):
         """Evaluate the field expansion at the given position, and returns an

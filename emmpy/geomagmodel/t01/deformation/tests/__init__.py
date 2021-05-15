@@ -6,5 +6,6 @@ hierarchy
 
 Modules
 -------
+test_PositionBender.py
 test_TwistWarpFfunction.py
 """

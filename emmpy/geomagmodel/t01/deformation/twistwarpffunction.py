@@ -114,11 +114,11 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         deformedFieldCyl = CylindricalBasisFieldDeformation(
             undeformedFieldCyl, deformation)
 
-    #     // Convert the deformed field back to Cartesian coordinates
-    #     BasisVectorField deformedField = CylindricalCoordsXAligned.convertBasisField(deformedFieldCyl);
+        # Convert the deformed field back to Cartesian coordinates
+        deformedField = CylindricalCoordsXAligned.convertBasisField(
+            deformedFieldCyl)
 
-    #     return deformedField;
-    #   }
+        return deformedField
 
     #   @Override
     #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {

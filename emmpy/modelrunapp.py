@@ -91,6 +91,8 @@ def runTs07D():
     pDyn = TS07DVariableCoefficientsUtils.readDynamicPressure(coeffsFile)
 
     # construct the model builder
+    # Returns a
+    # emmpy.geomagmodel.ts07.ts07dmodelbuilder.TS07DModelBuilder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
 
     # optional setting to use Jay Albert's Bessel function evaluator
@@ -98,16 +100,16 @@ def runTs07D():
 
     # now construct the TS07D model
     # Python and Java identical to this point.
-    model = modelBuilder.build()
+    # Returns a
     # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
+    model = modelBuilder.build()
 
     # evaluate the model at r=(4,5,-2)
     pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
 
     # evaluate the magnetic field
-    # TEMPORARY BUFFER - REMOVE LATER.
-    buffer = VectorIJK()
-    bVect = model.evaluate(pos, buffer)
+    # Returns an UnwritableVectorIJK.
+    bVect = model.evaluate(pos)
     print(bVect)
 
     print("Ending runTs07D()")

@@ -6,7 +6,9 @@ from emmpy.geomagmodel.t01.deformation.positionbender import (
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test_deformBasisField(self):
+        pass
 
 
 if __name__ == '__main__':

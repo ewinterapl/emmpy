@@ -100,31 +100,32 @@ class TailSheetCoefficients:
         """return the even coefficients a_n^e"""
         return self.tailSheetEvenValues
 
-    # def getAsSingleExpansion(self):
-    #     """@return the {@link TailSheetCoefficients} expressed as a single
-    #     {@link CoefficientExpansion1D} expansion"""
-    #     firstM = 1
-    #     lastM = self.numAzimuthalExpansions
-    #     firstN = 1
-    #     lastN = self.numRadialExpansions
-    #     coeffs = [None]*self.getNumberOfExpansions()
-    #     count = 0
+    def getAsSingleExpansion(self):
+        """return the TailSheetCoefficients expressed as a single
+        CoefficientExpansion1D expansion"""
+        firstM = 1
+        lastM = self.numAzimuthalExpansions
+        firstN = 1
+        lastN = self.numRadialExpansions
+        coeffs = [None]*self.getNumberOfExpansions()
+        count = 0
 
-    #     # the pressure independent terms
-    #     for n in range(firstN, lastN + 1):
-    #         coeffs[count] = self.tailSheetSymmetricValues.getCoefficient(n)
-    #         count += 1
+        # the pressure independent terms
+        for n in range(firstN, lastN + 1):
+            coeffs[count] = self.tailSheetSymmetricValues.getCoefficient(n)
+            count += 1
 
-    #     for n in range(firstN, lastN + 1):
-    #         for m in range(firstM, lastM + 1):
-    #             coeffs[count] = self.tailSheetOddValues.getCoefficient(m, n)
-    #             count += 1
+        for n in range(firstN, lastN + 1):
+            for m in range(firstM, lastM + 1):
+                coeffs[count] = self.tailSheetOddValues.getCoefficient(m, n)
+                count += 1
 
-    #     for n in range(firstN, lastN + 1):
-    #         for m in range(firstM, lastM + 1):
-    #             coeffs[count] = self.tailSheetEvenValues.getCoefficient(m, n)
-    #             count += 1
-    #     return CoefficientExpansions.createExpansionFromArray(coeffs, 1)
+        for n in range(firstN, lastN + 1):
+            for m in range(firstM, lastM + 1):
+                coeffs[count] = self.tailSheetEvenValues.getCoefficient(m, n)
+                count += 1
+
+        return CoefficientExpansions.createExpansionFromArray(coeffs, 1)
 
     def getNumAzimuthalExpansions(self):
         return self.numAzimuthalExpansions

@@ -147,10 +147,11 @@ class Ts07EquatorialMagneticFieldBuilder:
                 # result in tenths of differences between the Java and the
                 # Fortran version of the model
                 pdynScaling = pow(self.dynamicPressure/2.0, 0.155)
-                BasisVectorField scaledBentWarpedField =
-                    BasisVectorFields.scaleLocation(bentWarpedField, pdynScaling);
+                scaledBentWarpedField = BasisVectorFields.scaleLocation(
+                    bentWarpedField, pdynScaling)
 
-    #     #       CoefficientExpansion1D coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion();
+                # CoefficientExpansion1D
+                coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion()
     #     #       CoefficientExpansion1D pdynCoeffs =
     #     #           linearCoeffs.getPdynScaledCoeffs(dynamicPressure).getAsSingleExpansion();
 

@@ -4,6 +4,9 @@
 from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
     DifferentiableScalarFieldIJ
 )
+from emmpy.geomagmodel.t01.deformation.positionbender import (
+    PositionBender
+)
 from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
     TwistWarpFfunction
 )
@@ -12,6 +15,9 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses impo
 )
 from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield import (
     ShieldedThinCurrentSheetField
+)
+from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
+    BasisVectorFields
 )
 
 
@@ -132,17 +138,17 @@ class Ts07EquatorialMagneticFieldBuilder:
 
                 # now apply the bending deformation to the warped field
                 bentWarpedField = PositionBender.deformBasisField(
-                    dipoleTiltAngle, hingeDistance, warpedField)
+                    self.dipoleTiltAngle, hingeDistance, warpedField)
 
-    #     #       // Scale position vector for solar wind (see Tsy 2002-1 2.4)
-    #     #       /*
-    #     #        * Note: this is a point of inconsistency with the Fortran code, in the Fortran this
-    #     #        * calculation is done in single precision. When the field values are very large, this can
-    #     #        * result in tenths of differences between the Java and the Fortran version of the model
-    #     #        */
-    #     #       double pdynScaling = pow(dynamicPressure / 2.0, 0.155);
-    #     #       BasisVectorField scaledBentWarpedField =
-    #     #           BasisVectorFields.scaleLocation(bentWarpedField, pdynScaling);
+                # Scale position vector for solar wind (see Tsy 2002-1 2.4)
+                # Note: this is a point of inconsistency with the Fortran
+                # code, in the Fortran this calculation is done in single
+                # precision. When the field values are very large, this can
+                # result in tenths of differences between the Java and the
+                # Fortran version of the model
+                pdynScaling = pow(self.dynamicPressure/2.0, 0.155)
+                BasisVectorField scaledBentWarpedField =
+                    BasisVectorFields.scaleLocation(bentWarpedField, pdynScaling);
 
     #     #       CoefficientExpansion1D coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion();
     #     #       CoefficientExpansion1D pdynCoeffs =

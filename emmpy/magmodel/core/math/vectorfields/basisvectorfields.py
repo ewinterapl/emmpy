@@ -2,9 +2,9 @@
 
 
 # from emmpy.com.google.common.base.preconditions import Preconditions
-# from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-#     UnwritableVectorIJK
-# )
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 # from emmpy.crucible.core.math.vectorspace.vectorijk import (
 #     VectorIJK
 # )
@@ -31,29 +31,29 @@ class BasisVectorFields:
         bvf.getNumberOfBasisFunctions = lambda my_self: 1
         return bvf
 
-    # @staticmethod
-    # def scaleLocation(field, scaleFactor):
-    #     """Creates a vector field by scaling the input location vector of the
-    #     supplied vector field.
+    @staticmethod
+    def scaleLocation(field, scaleFactor):
+        """Creates a vector field by scaling the input location vector of the
+        supplied vector field.
 
-    #     @param field a vector field
-    #     @param scaleFactor a value to scale the location vector
-    #     @return a newly created vector field that scales the input location
-    #     vector (location*scaleFactor )
-    #     """
-    #     bvf = BasisVectorField()
-    #     bvf.evaluate = (
-    #         lambda my_self, location, buffer:
-    #         field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)
-    #     )
-    #     bvf.evaluateExpansion = (
-    #         lambda my_self, location:
-    #         field.evaluateExpansion(UnwritableVectorIJK(scaleFactor, location))
-    #     )
-    #     bvf.getNumberOfBasisFunctions = (
-    #         lambda my_self: field.getNumberOfBasisFunctions()
-    #     )
-    #     return bvf
+        param BasisVectorField field a vector field
+        param float scaleFactor a value to scale the location vector
+        return BasisVectorField a newly created vector field that scales the
+        input location vector (location*scaleFactor)
+        """
+        bvf = BasisVectorField()
+        bvf.evaluate = (
+            lambda location, buffer:
+            field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)
+        )
+        bvf.evaluateExpansion = (
+            lambda location:
+            field.evaluateExpansion(UnwritableVectorIJK(scaleFactor, location))
+        )
+        bvf.getNumberOfBasisFunctions = (
+            lambda: field.getNumberOfBasisFunctions()
+        )
+        return bvf
 
     # @staticmethod
     # def concat(a, b):

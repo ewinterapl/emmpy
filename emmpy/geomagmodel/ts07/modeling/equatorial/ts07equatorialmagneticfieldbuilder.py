@@ -164,10 +164,6 @@ class Ts07EquatorialMagneticFieldBuilder:
                 equatorialField = BasisVectorFields.expandCoefficients2(
                     scaledBentWarpedField, coeffs, pdynCoeffs)
 
-    #     #       equatorialFields[currSheetIndex] = equatorialField;
-    #     #     }
+                equatorialFields[currSheetIndex] = equatorialField;
 
-    #     #     return BasisVectorFields.concatAll(equatorialFields);
-    #     #   }
-
-    # # }
+            return BasisVectorFields.concatAll(equatorialFields)

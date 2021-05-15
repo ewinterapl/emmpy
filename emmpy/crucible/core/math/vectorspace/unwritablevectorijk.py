@@ -48,8 +48,9 @@ class UnwritableVectorIJK:
     #             self.__init__(vector.i, vector.j, vector.k)
             else:
                 raise Exception
-        # elif len(args) == 2:
-    #         if isinstance(args[0], int) and isinstance(args[1], list):
+        elif len(args) == 2:
+            if isinstance(args[0], int) and isinstance(args[1], list):
+                raise Exception
     #             # Constructs a vector from the three elements of an array of
     #             # double starting with the offset index.
     #             # @param offset index into the data array to copy into the ith
@@ -57,17 +58,16 @@ class UnwritableVectorIJK:
     #             # @param data the array of doubles
     #             (offset, data) = args
     #             self.__init__(data[offset], data[offset + 1], data[offset + 2])
-    #         elif isRealNumber(args[0]) and isinstance(args[1],
-    #                                                   UnwritableVectorIJK):
-    #             # Scaling constructor, creates a new vector by applying a
-    #             # scalar multiple to the components of a pre-existing vector.
-    #             # @param scale the scale factor to apply
-    #             # @param vector the vector whose contents are to be scaled
-    #             (scale, vector) = args
-    #             self.__init__(scale*vector.i, scale*vector.j, scale*vector.k)
-    #         else:
-    #             # Throw exception
-    #             raise Exception
+            elif isRealNumber(args[0]) and isinstance(args[1],
+                                                      UnwritableVectorIJK):
+                # Scaling constructor, creates a new vector by applying a
+                # scalar multiple to the components of a pre-existing vector.
+                # @param scale the scale factor to apply
+                # @param vector the vector whose contents are to be scaled
+                (scale, vector) = args
+                self.__init__(scale*vector.i, scale*vector.j, scale*vector.k)
+            else:
+                raise Exception
         elif len(args) == 3:
             # Constructs a vector from the three basic components.
             # param i the ith component
@@ -107,16 +107,16 @@ class UnwritableVectorIJK:
     #     """
     #     return UnwritableVectorIJK(-1, self)
 
-    # def createScaled(self, scale: float):
-    #     """Creates a new, scaled copy of an the existing vector by applying a
-    #     scalar multiple to the components.
+    def createScaled(self, scale: float):
+        """Creates a new, scaled copy of an the existing vector by applying a
+        scalar multiple to the components.
 
-    #     Convenience method for: new UnwritableVectorIJK(scale, this).
+        Convenience method for: new UnwritableVectorIJK(scale, this).
 
-    #     @param scale the scale factor to apply
-    #     @return the scaled vector, scale*this.
-    #     """
-    #     return UnwritableVectorIJK(scale, self)
+        param scale the scale factor to apply
+        return the scaled vector, scale*this.
+        """
+        return UnwritableVectorIJK(scale, self)
 
     def getI(self):
         """Gets the ith component."""

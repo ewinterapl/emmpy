@@ -188,51 +188,53 @@ class BasisVectorFields:
     #     bvf.evaluateExpansion = my_evaluateExpansion
     #     return bvf
 
-    # @staticmethod
-    # def expandCoefficients2(field, coeffs, moreCoeffs):
-    #     """Expands the supplied BasisVectorField
+    @staticmethod
+    def expandCoefficients2(field, coeffs, moreCoeffs):
+        """Expands the supplied BasisVectorField
 
-    #     Note: no checking is performed to ensure consistency
+        Note: no checking is performed to ensure consistency
 
-    #     @param field a {@link BasisVectorField}
-    #     @param coeffs
-    #     @param moreCoeffs
-    #     @return
-    #     """
-    #     bvf = BasisVectorField()
-    #     bvf.getNumberOfBasisFunctions = (
-    #         lambda my_self:
-    #         field.getNumberOfBasisFunctions()*(1 + len(moreCoeffs))
-    #     )
+        param BasisVectorField field
+        param CoefficientExpansion1D coeffs
+        param CoefficientExpansion1D moreCoeffs
+        return BasisVectorField
+        """
+        bvf = BasisVectorField()
+        bvf.getNumberOfBasisFunctions = (
+            lambda my_self:
+            field.getNumberOfBasisFunctions()*(1 + len(moreCoeffs))
+        )
 
-    #     def my_evaluateExpansion(my_self, location):
-    #         # evaluate the supplied basis function expansion
-    #         expansions = field.evaluateExpansion(location)
-    #         scaledExpansions = []
-    #         # get the lower bound index for the coefficients, we have to assume
-    #         # that this is the same for all the other sets of coefficients
-    #         expansionIndex = coeffs.getLowerBoundIndex()
-    #         # Now, loop through the coefficients
-    #         for expansion in expansions:
-    #             scaledExpansions.append(
-    #                 expansion.createScaled(
-    #                     coeffs.getCoefficient(expansionIndex)
-    #                 )
-    #             )
-    #             expansionIndex += 1
-    #         for c in moreCoeffs:
-    #             expansionIndex = coeffs.getLowerBoundIndex()
-    #             for expansion in expansions:
-    #                 scaledExpansions.append(
-    #                     expansion.createScaled(
-    #                         c.getCoefficient(expansionIndex)
-    #                     )
-    #                 )
-    #                 expansionIndex += 1
-    #         return scaledExpansions.build()
-    #     bvf.evaluateExpansion = my_evaluateExpansion
+        def my_evaluateExpansion(location):
+            # evaluate the supplied basis function expansion
+            # list of UnwritableVectorIJK
+            expansions = field.evaluateExpansion(location)
+            # list of UnwritableVectorIJK
+            scaledExpansions = []
+            # get the lower bound index for the coefficients, we have to assume
+            # that this is the same for all the other sets of coefficients
+            expansionIndex = coeffs.getLowerBoundIndex()
+            # Now, loop through the coefficients
+            for expansion in expansions:
+                scaledExpansions.append(
+                    expansion.createScaled(
+                        coeffs.getCoefficient(expansionIndex)
+                    )
+                )
+                expansionIndex += 1
+            for c in moreCoeffs:
+                expansionIndex = coeffs.getLowerBoundIndex()
+                for expansion in expansions:
+                    scaledExpansions.append(
+                        expansion.createScaled(
+                            c.getCoefficient(expansionIndex)
+                        )
+                    )
+                    expansionIndex += 1
+            return scaledExpansions.build()
+        bvf.evaluateExpansion = my_evaluateExpansion
 
-    #     return bvf
+        return bvf
 
     # @staticmethod
     # def rotate(field, matrix):

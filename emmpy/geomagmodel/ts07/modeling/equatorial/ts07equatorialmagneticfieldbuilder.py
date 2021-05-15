@@ -152,12 +152,17 @@ class Ts07EquatorialMagneticFieldBuilder:
 
                 # CoefficientExpansion1D
                 coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion()
-    #     #       CoefficientExpansion1D pdynCoeffs =
-    #     #           linearCoeffs.getPdynScaledCoeffs(dynamicPressure).getAsSingleExpansion();
+                # CoefficientExpansion1D
+                pdynCoeffs = (
+                    linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure).
+                    getAsSingleExpansion()
+                )
 
-    #     #       // Finally, expand the coefficients by including a term that includes the dynamical pressure
-    #     #       BasisVectorField equatorialField =
-    #     #           BasisVectorFields.expandCoefficients2(scaledBentWarpedField, coeffs, pdynCoeffs);
+                # Finally, expand the coefficients by including a term that
+                # includes the dynamical pressure
+                # BasisVectorField
+                equatorialField = BasisVectorFields.expandCoefficients2(
+                    scaledBentWarpedField, coeffs, pdynCoeffs)
 
     #     #       equatorialFields[currSheetIndex] = equatorialField;
     #     #     }

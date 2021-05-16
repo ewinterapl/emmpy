@@ -133,9 +133,9 @@ class TailSheetCoefficients:
     def getNumRadialExpansions(self):
         return self.numRadialExpansions
 
-    # def getNumberOfExpansions(self):
-    #     return (self.numRadialExpansions +
-    #             2*(self.numAzimuthalExpansions*self.numRadialExpansions))
+    def getNumberOfExpansions(self):
+        return (self.numRadialExpansions +
+                2*(self.numAzimuthalExpansions*self.numRadialExpansions))
 
     # def toString(self):
     #     return ("TailSheetCoefficients [tailSheetSymmetricValues=%s"

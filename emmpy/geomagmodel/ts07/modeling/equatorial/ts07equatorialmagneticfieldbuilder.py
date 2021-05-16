@@ -153,10 +153,12 @@ class Ts07EquatorialMagneticFieldBuilder:
                 # CoefficientExpansion1D
                 coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion()
                 # CoefficientExpansion1D
-                pdynCoeffs = (
-                    linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure).
-                    getAsSingleExpansion()
-                )
+                pdsc = linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure)
+                pdynCoeffs = pdsc.getAsSingleExpansion()
+                # pdynCoeffs = (
+                #     linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure).
+                #     getAsSingleExpansion()
+                # )
 
                 # Finally, expand the coefficients by including a term that
                 # includes the dynamical pressure

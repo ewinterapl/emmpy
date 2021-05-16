@@ -440,8 +440,9 @@ class TS07DModelBuilder:
             region2KappaScaling, fcs, True)
 
         # and finally construct the total model
+        emf = equatorialFieldBuilder.build()
         totalExternalField = BasisVectorFields.concatAll(
-            [dipoleShieldingField, equatorialFieldBuilder.build(),
+            [dipoleShieldingField, emf,
              fieldAlignedField])
 
         if self.withMagnetopause:

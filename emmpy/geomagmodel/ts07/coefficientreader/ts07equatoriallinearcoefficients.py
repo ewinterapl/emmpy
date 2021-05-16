@@ -1,11 +1,11 @@
 """emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients"""
 
 
-# from math import sqrt
+from math import sqrt
 
-# from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-#     CoefficientExpansions
-# )
+from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
+    CoefficientExpansions
+)
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
@@ -42,28 +42,28 @@ class Ts07EquatorialLinearCoefficients:
     # def getNumRadialExpansions(self):
     #     return self.numRadialExpansions
 
-    # def getCoeffs(self):
-    #     return self.coeffs
+    def getCoeffs(self):
+        return self.coeffs
 
     # def getPdynDependentCoeffs(self):
     #     return self.pdynDependentCoeffs
 
-    # def getPdynScaledCoeffs(self, dynamicPressure):
-    #     pDyn0 = 2.0
-    #     pDynNormalized = sqrt(dynamicPressure/pDyn0) - 1
-    #     symPdynDependent = CoefficientExpansions.scale(
-    #         self.pdynDependentCoeffs.getTailSheetSymmetricValues(),
-    #         pDynNormalized
-    #     )
-    #     aOddPdynDependent = CoefficientExpansions.scale(
-    #         self.pdynDependentCoeffs.getTailSheetOddValues(), pDynNormalized
-    #     )
-    #     aEvenPdynDependent = CoefficientExpansions.scale(
-    #         self.pdynDependentCoeffs.getTailSheetEvenValues(), pDynNormalized
-    #     )
-    #     return TailSheetCoefficients(
-    #         symPdynDependent, aOddPdynDependent, aEvenPdynDependent
-    #     )
+    def getPdynScaledCoeffs(self, dynamicPressure):
+        pDyn0 = 2.0
+        pDynNormalized = sqrt(dynamicPressure/pDyn0) - 1
+        symPdynDependent = CoefficientExpansions.scale(
+            self.pdynDependentCoeffs.getTailSheetSymmetricValues(),
+            pDynNormalized
+        )
+        aOddPdynDependent = CoefficientExpansions.scale(
+            self.pdynDependentCoeffs.getTailSheetOddValues(), pDynNormalized
+        )
+        aEvenPdynDependent = CoefficientExpansions.scale(
+            self.pdynDependentCoeffs.getTailSheetEvenValues(), pDynNormalized
+        )
+        return TailSheetCoefficients(
+            symPdynDependent, aOddPdynDependent, aEvenPdynDependent
+        )
 
     # def toString(self):
     #     return (

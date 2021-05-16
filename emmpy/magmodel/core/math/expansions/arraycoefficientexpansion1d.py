@@ -22,8 +22,8 @@ class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
     #     lastExpansionNumber = self.firstExpansionNumber + len(self.array) - 1
     #     return lastExpansionNumber
 
-    # def getCoefficient(self, index):
-    #     return self.array[index - self.firstExpansionNumber]
+    def getCoefficient(self, index):
+        return self.array[index - self.firstExpansionNumber]
 
     # def toString(self):
     #     return (

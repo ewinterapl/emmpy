@@ -132,6 +132,7 @@ class CoefficientExpansions:
             ce.getCoefficient = (
                 lambda azimuthalExpansion, radialExpansion: 1
             )
+            return ce
         else:
             raise Exception
 
@@ -145,15 +146,15 @@ class CoefficientExpansions:
         # Replace the getCoefficient() method with a method that always returns
         # the scaled value, as a closure.
         if isinstance(a, CoefficientExpansion1D):
-            raise Exception
-    #         v = CoefficientExpansion1D()
-    #         v.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
-    #         v.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
-    #         v.getCoefficient = (
-    #             lambda radialExpansion: (
-    #                 scaleFactor*a.getCoefficient(radialExpansion)
-    #             )
-    #         )
+            ce1d = CoefficientExpansion1D()
+            ce1d.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
+            ce1d.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
+            ce1d.getCoefficient = (
+                lambda radialExpansion: (
+                    scaleFactor*a.getCoefficient(radialExpansion)
+                )
+            )
+            return ce1d
         elif isinstance(a, CoefficientExpansion2D):
             v = CoefficientExpansion2D()
             v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
@@ -168,11 +169,9 @@ class CoefficientExpansions:
     #                                              radialExpansion)
     #             )
     #         )
+            return v
         else:
             raise Exception
-
-        # Return the view.
-        return v
 
     # @staticmethod
     # def createConstant(*args):

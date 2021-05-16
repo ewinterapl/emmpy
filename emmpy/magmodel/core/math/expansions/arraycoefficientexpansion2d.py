@@ -41,11 +41,11 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
         jUpperBoundIndex = self.jLowerBoundIndex + len(self.data[0]) - 1
         return jUpperBoundIndex
 
-    # def getCoefficient(self, azimuthalExpansion, radialExpansion):
-    #     return (
-    #         self.data[azimuthalExpansion - self.iLowerBoundIndex]
-    #                  [radialExpansion - self.jLowerBoundIndex]
-    #     )
+    def getCoefficient(self, azimuthalExpansion, radialExpansion):
+        return (
+            self.data[azimuthalExpansion - self.iLowerBoundIndex]
+                     [radialExpansion - self.jLowerBoundIndex]
+        )
 
     # def toString(self):
     #     return (

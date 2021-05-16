@@ -46,7 +46,7 @@ class PositionBender(DifferentiableVectorField):
     # private final double rh2 = -5.2;
     # private final double epsilon = 3;
 
-    def PositionBender(self, dipoleTilt, hingeDistance):
+    def __init__(self, dipoleTilt, hingeDistance):
         """Constructor
 
         param double dipoleTilt

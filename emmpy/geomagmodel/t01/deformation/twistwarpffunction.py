@@ -104,17 +104,21 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         """
 
         # Convert the supplied undeformed field to cylindrical coordinates
+        # CylindricalBasisVectorField
         undeformedFieldCyl = CylindricalCoordsXAligned.convertBasisField(
             undeformedField)
 
         # Construct the deformation
+        # TwistWarpFfunction
         deformation = TwistWarpFfunction(warpParam, twistParam, dipoleTilt)
 
         # Deform the cylindrical field
+        # CylindricalBasisFieldDeformation
         deformedFieldCyl = CylindricalBasisFieldDeformation(
             undeformedFieldCyl, deformation)
 
         # Convert the deformed field back to Cartesian coordinates
+        # BasisVectorField
         deformedField = CylindricalCoordsXAligned.convertBasisField(
             deformedFieldCyl)
 

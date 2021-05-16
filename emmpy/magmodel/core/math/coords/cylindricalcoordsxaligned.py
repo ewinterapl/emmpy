@@ -134,30 +134,56 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertBasisField(*args):
-        print(args)
-        if isinstance(args[0], UnwritableVectorIJK):
-            raise Exception
-            # (cartesian,) = args
+        if isinstance(args[0], BasisVectorField):
+            (cartesian,) = args
             # Converts a Cartesian BasisVectorField to a CylindricalBasisVectorField
-            # @param cartesian a Cartesian BasisVectorField
+            # param cartesian a Cartesian BasisVectorField
             # return a newly constructed CylindricalBasisVectorField
-            #   public static CylindricalBasisVectorField
-            # convertBasisField(BasisVectorField cartesian) {
-            # cylbvf = CylindricalBasisVectorField(cartesian)
-            #     return new CylindricalBasisVectorField() {
+            cylbvf = CylindricalBasisVectorField()
 
-            #       @Override
-            #       public CylindricalVector evaluate(CylindricalVector location) {
+            def my_evaluate(location):
+                # CylindricalVector location
 
-            #         // convert the coordinate to Cartesian
-            #         UnwritableVectorIJK locCart = convert(location);
+                # convert the coordinate to Cartesian
+                # UnwritableVectorIJK
+                locCart = CylindricalCoordsXAligned.convert(location)
 
-            #         // evaluate the Cartesian field
-            #         UnwritableVectorIJK fieldCart = cartesian.evaluate(locCart);
+                #  evaluate the Cartesian field
+                # UnwritableVectorIJK
+                fieldCart = cartesian.evaluate(locCart)
 
-            #         // convert the field to cylindrical
-            #         return convertFieldValue(locCart, fieldCart);
-            #       }
+                # convert the field to cylindrical
+                return CylindricalCoordsXAligned.convertFieldValue(
+                    locCart, fieldCart)
+            cylbvf.evaluate = my_evaluate
+
+            def my_evaluateExpansion(location):
+                # CylindricalVector location
+
+                # convert the coordinate to Cartesian
+                # UnwritableVectorIJK
+                locCart = CylindricalCoordsXAligned.convert(location)
+
+                # evaluate the Cartesian field
+                # list
+                fieldCartExpansion = (
+                    CylindricalCoordsXAligned.cartesian.evaluateExpansion(
+                        locCart)
+                )
+                fieldCylExpansion = []
+                # UnwritableVectorIJK fieldCart
+                for fieldCart in fieldCartExpansion:
+                    fieldCylExpansion.append(
+                        CylindricalCoordsXAligned.convertFieldValue(
+                            locCart, fieldCart))
+                return fieldCylExpansion
+            cylbvf = my_evaluateExpansion
+
+            cylbvf.getNumberOfBasisFunctions = (
+                lambda: cartesian.getNumberOfBasisFunctions()
+            )
+            return cylbvf
+
         elif isinstance(args[0], CylindricalBasisVectorField):
             (cylField,) = args
             # Converts a CylindricalBasisVectorField to a Cartesian

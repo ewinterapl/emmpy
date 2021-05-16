@@ -31,7 +31,7 @@ class CylindricalBasisVectorField(CylindricalVectorField):
 
         INTERFACE - DO NOT INSTANTIATE
         """
-        raise Exception
+        pass
 
     #   @Override
     #   public default VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {

@@ -8,4 +8,5 @@ Modules
 -------
 conicalcurrentmagneticfield.py
 tfunction.py
+twoconicalfields.py
 """

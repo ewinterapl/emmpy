@@ -1,6 +1,8 @@
 import unittest
 
-from emmpy.magmodel.core.modeling.fac import conicalcurrentmagneticfield
+from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
+    ConicalCurrentMagneticField
+)
 
 
 class TestBuilder(unittest.TestCase):

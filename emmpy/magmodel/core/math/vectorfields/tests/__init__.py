@@ -10,5 +10,6 @@ test_BasisVectorField.py
 test_BasisVectorFields.py
 test_CylindricalVectorField.py
 test_DifferentiableCylindricalVectorField.py
+test_SphericalScalarField.py
 test_SphericalVectorField.py
 """

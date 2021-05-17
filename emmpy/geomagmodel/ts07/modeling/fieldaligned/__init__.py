@@ -10,6 +10,7 @@ birkelanddeformationfunction.py
 facconfigurationoptions.py
 ffunction.py
 fieldalignedcurrentbuilder.py
+fieldalignedcurrentshiedingbuilder.py
 scaledfield.py
 smoothedconicalcurrentmagneticfield.py
 stretchedfield.py

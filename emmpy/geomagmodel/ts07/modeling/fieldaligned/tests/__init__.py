@@ -10,6 +10,7 @@ test_BirkelandDeformationFunction.py
 test_FacConfigurationOptions.py
 test_Ffunction.py
 test_FieldAlignedCurrentBuilder.py
+test_FieldAlignedCurrentShiedingBuilder.py
 test_ScaledField.py
 test_SmoothedConicalCurrentMagneticField.py
 test_StretchedField.py

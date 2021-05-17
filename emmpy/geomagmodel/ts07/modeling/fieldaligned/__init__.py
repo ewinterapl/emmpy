@@ -9,4 +9,6 @@ Modules
 facconfigurationoptions.py
 ffunction.py
 fieldalignedcurrentbuilder.py
+smoothedconicalcurrentmagneticfield.py
+ts07dfieldaligned,agneticfield.py
 """

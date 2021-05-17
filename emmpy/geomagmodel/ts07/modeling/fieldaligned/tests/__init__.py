@@ -9,4 +9,6 @@ Modules
 test_FacConfigurationOptions.py
 test_Ffunction.py
 test_FieldAlignedCurrentBuilder.py
+test_SmoothedConicalCurrentMagneticField.py
+test_Ts07DFieldAlignedMagneticField.py
 """

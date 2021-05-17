@@ -77,28 +77,28 @@ class VectorFields:
     #     )
     #     return vf
 
-    # @staticmethod
-    # def addAll(fields):
-    #     """Creates a vector field by adding all the supplied vector fields.
+    @staticmethod
+    def addAll(fields):
+        """Creates a vector field by adding all the supplied vector fields.
 
-    #     param fields a varargs of vector fields
-    #     return a newly created vector field that computes the component-wise
-    #     sum ( a + b + ...) of all the vector fields
-    #     """
-    #     vf = VectorField()
+        param fields a varargs of vector fields
+        return a newly created vector field that computes the component-wise
+        sum ( a + b + ...) of all the vector fields
+        """
+        vf = VectorField()
 
-    #     def my_evaluate(location, buffer):
-    #         fx = 0.0
-    #         fy = 0.0
-    #         fz = 0.0
-    #         for field in fields:
-    #             field.evaluate(location, buffer)
-    #             fx += buffer.getI()
-    #             fy += buffer.getJ()
-    #             fz += buffer.getK()
-    #         return buffer.setTo(fx, fy, fz)
-    #     vf.evaluate = my_evaluate
-    #     return vf
+        def my_evaluate(location, buffer):
+            fx = 0.0
+            fy = 0.0
+            fz = 0.0
+            for field in fields:
+                field.evaluate(location, buffer)
+                fx += buffer.getI()
+                fy += buffer.getJ()
+                fz += buffer.getK()
+            return buffer.setTo(fx, fy, fz)
+        vf.evaluate = my_evaluate
+        return vf
 
     # @staticmethod
     # def negate(field):

@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+birkelanddeformationfunction.py
 facconfigurationoptions.py
 ffunction.py
 fieldalignedcurrentbuilder.py

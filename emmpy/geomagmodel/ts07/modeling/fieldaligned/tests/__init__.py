@@ -6,6 +6,7 @@ hierarchy.
 
 Modules
 -------
+test_BirkelandDeformationFunction.py
 test_FacConfigurationOptions.py
 test_Ffunction.py
 test_FieldAlignedCurrentBuilder.py

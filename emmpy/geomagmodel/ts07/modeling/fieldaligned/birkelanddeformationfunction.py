@@ -7,10 +7,12 @@
 # import java.util.Arrays;
 # import crucible.core.math.coords.SphericalVector;
 
-from emmpy.magmodel.core.math.vectorfields.dif
+from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
+    DifferentiableSphericalVectorField
+)
 
 
-class BirkelandDeformationFunction:
+class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
     """Represents the analytical deformation of spherical coordinates to model
     the shape of Birkeland current sheets as described in Tsyganenko 2002
     "A model of the near magnetosphere with a dawn-dusk asymmetry

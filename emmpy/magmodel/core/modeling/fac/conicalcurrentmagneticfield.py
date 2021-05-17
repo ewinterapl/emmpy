@@ -1,11 +1,9 @@
 """emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield"""
 
 
-# import static crucible.core.math.CrucibleMath.sin;
-# import crucible.core.math.coords.SphericalVector;
-# import crucible.core.math.functions.DifferentiableUnivariateFunction;
-# import magmodel.core.math.TrigParity;
+from math import sin
 
+from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
 from emmpy.magmodel.core.modeling.fac.tfunction import TFunction
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
@@ -39,54 +37,53 @@ class ConicalCurrentMagneticField(SphericalVectorField):
         param int mode
         param TrigParity trigParity
         """
-    #   ConicalCurrentMagneticField(TFunction tFunction, int mode, TrigParity trigParity) {
-    #     super();
-    #   private final DifferentiableUnivariateFunction tFunction;
-    #     this.tFunction = tFunction;
-    #     this.mode = mode;
-    #   private final TrigParity trigParity;
-    #     this.trigParity = trigParity;
-    #   }
+        # DifferentiableUnivariateFunction tFunction
+        self.tFunction = tFunction
+        # int mode
+        self.mode = mode
+        # TrigParity trigParity
+        self.trigParity = trigParity
 
-    #   /**
-    #    * Creates a {@link ConicalCurrentMagneticField} where the current sheet is centered at theta0 and
-    #    * has a half thickness of deltaTheta. The theta co-latitude dependence (theta) is determined by
-    #    * the {@link TFunction}.
-    #    * 
-    #    * @param theta0 a polar angle (colatitude) that is the center of the conical current sheet
-    #    * @param deltaTheta the half thickness of the conical current sheet
-    #    * @param mode the mode of the harmonic (m)
-    #    * @param trigParity the parity of the harmonic (EVEN for cosine and ODD for sine)
-    #    * @return a newly constructed {@link ConicalCurrentMagneticField}
-    #    */
-    #   public static ConicalCurrentMagneticField create(double theta0, double deltaTheta, int mode,
-    #       TrigParity trigParity) {
-    #     return new ConicalCurrentMagneticField(TFunction.createFromDelta(theta0, deltaTheta, mode),
-    #         mode, trigParity);
-    #   }
+    @staticmethod
+    def create(theta0, deltaTheta, mode, trigParity):
+        """Creates a ConicalCurrentMagneticField where the current sheet is
+        centered at theta0 and has a half thickness of deltaTheta.
+        
+        The theta co-latitude dependence (theta) is determined by the
+        TFunction.
 
-    #   /**
-    #    * Evaluates the field at the given position in the spherical coordinate system
-    #    * 
-    #    * @param location the location to evaluate the field
-    #    * @return the result of the evaluation
-    #    */
-    #   @Override
-    #   public SphericalVector evaluate(SphericalVector location) {
-    #     /*
-    #      * This is the curl of equation 16
-    #      */
-    #     double r = location.getRadius();
-    #     double phi = location.getLongitude();
-    #     double theta = location.getColatitude();
-    #     double t = tFunction.evaluate(theta);
-    #     double dt_dTheta = tFunction.differentiate(theta);
-    #     // even or odd
-    #     double sinMphi = trigParity.evaluate(mode * phi);
-    #     double cosMphi = trigParity.differentiate(mode * phi);
-    #     double br = 0.0;
-    #     double bTheta = mode * t * cosMphi / (r * sin(theta));
-    #     double bPhi = -dt_dTheta * sinMphi / r;
-    #     return new SphericalVector(br, bTheta, bPhi);
-    #   }
-    # }
+        param double theta0 a polar angle (colatitude) that is the center of
+        the conical current sheet
+        param double deltaTheta the half thickness of the conical current sheet
+        param int mode the mode of the harmonic (m)
+        param TrigParity trigParity the parity of the harmonic (EVEN for cosine
+        and ODD for sine)
+        return a newly constructed ConicalCurrentMagneticField
+        """
+        return ConicalCurrentMagneticField(
+            TFunction.createFromDelta(theta0, deltaTheta, mode),
+            mode, trigParity
+        )
+
+    def evaluate(self, location):
+        """Evaluates the field at the given position in the spherical
+        coordinate system
+
+        param SphericalVector location the location to evaluate the field
+        return SphericalVector the result of the evaluation
+        """
+
+        # This is the curl of equation 16
+        # float r, phi, theta, t, dt_dTheta, sinMphi, cosMphi, br, bTheta, bPhi
+        r = location.getRadius()
+        phi = location.getLongitude()
+        theta = location.getColatitude()
+        t = self.tFunction.evaluate(theta)
+        dt_dTheta = self.tFunction.differentiate(theta)
+        # even or odd
+        sinMphi = self.trigParity.evaluate(self.mode*phi)
+        cosMphi = self.trigParity.differentiate(self.mode*phi)
+        br = 0.0
+        bTheta = self.mode*t*cosMphi/(r*sin(theta))
+        bPhi = -dt_dTheta*sinMphi/r
+        return SphericalVector(br, bTheta, bPhi)

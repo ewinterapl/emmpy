@@ -6,7 +6,15 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.stretchedfield import (
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        pass
+
+    def test_evaluate(self):
+        pass
+
+    def test_evaluate2(self):
+        pass
 
 
 if __name__ == '__main__':

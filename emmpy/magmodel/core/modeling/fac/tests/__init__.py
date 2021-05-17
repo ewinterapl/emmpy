@@ -9,4 +9,5 @@ Modules
 test_ConicalCurrentMagneticField.py
 test_TFunction.py
 test_TwoConicalFields.py
+test_XYPlaneReflectedField.py
 """

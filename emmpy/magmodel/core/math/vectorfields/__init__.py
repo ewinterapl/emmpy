@@ -10,6 +10,7 @@ basisvectorfield.py
 basisvectorfields.py
 cylindricalvectorfield.py
 differentiablecylindricalvectorfield.py
+differentiablesphericalvectorfield.py
 sphericalscalarfield.py
 sphericalvectorfield.py
 """

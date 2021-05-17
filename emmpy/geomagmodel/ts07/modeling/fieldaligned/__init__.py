@@ -10,6 +10,7 @@ birkelanddeformationfunction.py
 facconfigurationoptions.py
 ffunction.py
 fieldalignedcurrentbuilder.py
+scaledfield.py
 smoothedconicalcurrentmagneticfield.py
 ts07dfieldaligned,agneticfield.py
 """

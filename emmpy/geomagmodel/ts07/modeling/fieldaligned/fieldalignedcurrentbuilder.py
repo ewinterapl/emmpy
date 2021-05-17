@@ -17,6 +17,9 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction i
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.scaledfield import (
     ScaledField
 )
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.stretchedfield import (
+    StretchedField
+)
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.smoothedconicalcurrentmagneticfield import (
     SmoothedConicalCurrentMagneticField
 )

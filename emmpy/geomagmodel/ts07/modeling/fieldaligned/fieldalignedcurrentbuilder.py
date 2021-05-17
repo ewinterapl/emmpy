@@ -8,9 +8,7 @@
 # import crucible.core.designpatterns.Builder;
 # import crucible.core.math.vectorfields.VectorField;
 # import magmodel.core.math.TrigParity;
-# import magmodel.core.math.deformation.SphericalFieldDeformation;
 # import magmodel.core.math.vectorfields.SphericalVectorField;
-# import magmodel.core.modeling.fac.TwoConicalFields;
 
 from emmpy.crucible.core.designpatterns.builder import Builder
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
@@ -19,9 +17,13 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction i
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.smoothedconicalcurrentmagneticfield import (
     SmoothedConicalCurrentMagneticField
 )
+from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
+    SphericalFieldDeformation
+)
 from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
+from emmpy.magmodel.core.modeling.fac.twoconicalfields import TwoConicalFields
 
 
 # Below are the TS07 values, if you don't overrride these, this is what will
@@ -177,11 +179,13 @@ class FieldAlignedCurrentBuilder(Builder):
             )
 
         # deform the conical field,
-        deformation = BirkelandDeformationFunction(a, b, c, d)
+        deformation = BirkelandDeformationFunction(
+            self.a, self.b, self.c, self.d
+        )
         deformedField = self.scale(
             SphericalFieldDeformation(undeformedConicalField,
                                       deformation),
-            bmScaleFactor
+            self.bmScaleFactor
         )
 
         # make it two cones

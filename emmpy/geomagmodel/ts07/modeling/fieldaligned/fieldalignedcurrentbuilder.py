@@ -13,6 +13,9 @@
 # import magmodel.core.modeling.fac.TwoConicalFields;
 
 from emmpy.crucible.core.designpatterns.builder import Builder
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
+    BirkelandDeformationFunction
+)
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.smoothedconicalcurrentmagneticfield import (
     SmoothedConicalCurrentMagneticField
 )

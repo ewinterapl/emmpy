@@ -6,5 +6,6 @@ Modules
 -------
 basisvectorfielddeformation.py
 cylindricalbasisvectorfielddeformation.py
+sphericalfielddeformation.py
 vectorfielddeformation.py
 """

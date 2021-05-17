@@ -95,11 +95,12 @@ def runTs07D():
     # emmpy.geomagmodel.ts07.ts07dmodelbuilder.TS07DModelBuilder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
 
+    # Python and Java identical to this point.
+
     # optional setting to use Jay Albert's Bessel function evaluator
     # modelBuilder.withAlbertBessel()
 
     # now construct the TS07D model
-    # Python and Java identical to this point.
     # Returns a
     # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
     model = modelBuilder.build()

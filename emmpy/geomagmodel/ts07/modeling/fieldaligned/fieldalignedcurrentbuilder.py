@@ -101,7 +101,7 @@ class FieldAlignedCurrentBuilder(Builder):
             self.kappa = kappa
             self.dPhi = D_PHI[region - 1]
             self.scalingCoefficient = options.getAmplitudeScaling()
-        elif len(args) == 6:
+        elif len(args) == 7:
             (region, mode, trigParity, dipoleTilt, dynamicPressure, kappa,
              scalingCoefficient) = args
             # @param region region 1 or 2

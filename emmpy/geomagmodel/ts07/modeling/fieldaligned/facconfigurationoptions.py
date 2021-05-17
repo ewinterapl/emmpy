@@ -41,23 +41,23 @@ class FacConfigurationOptions:
     def getAmplitudeScaling(self):
         return self.amplitudeScaling
 
-    # def getRegion(self):
-    #     return self.region
+    def getRegion(self):
+        return self.region
 
-    # def getMode(self):
-    #     return self.mode
+    def getMode(self):
+        return self.mode
 
-    # def getTrigParity(self):
-    #     return self.trigParity
+    def getTrigParity(self):
+        return self.trigParity
 
-    # def getTheta0(self):
-    #     return self.theta0
+    def getTheta0(self):
+        return self.theta0
 
-    # def getDeltaTheta(self):
-    #     return self.deltaTheta
+    def getDeltaTheta(self):
+        return self.deltaTheta
 
-    # def isSmoothed(self):
-    #     return self.smoothed
+    def isSmoothed(self):
+        return self.smoothed
 
     # def isShielded(self):
     #     return self.shielded

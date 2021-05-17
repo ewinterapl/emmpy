@@ -1,7 +1,10 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield"""
 
 
-# from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
+    FieldAlignedCurrentBuilder
+)
+from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -55,56 +58,47 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         # FAC systems, this now supports any number
         for option in options:
             amp = option.getAmplitudeScaling()
-    #         basisCoefficientsBuilder.append(amp)
-    #         region = option.getRegion()
-    #         kappa = region1KappaScaling
-    #         if region == 2:
-    #             kappa = region2KappaScaling
+            basisCoefficientsBuilder.append(amp)
+            region = option.getRegion()
+            kappa = region1KappaScaling
+            if region == 2:
+                kappa = region2KappaScaling
+            shieldingParity = TrigParity.EVEN
+            scaleFactor = amp*scaling
+            if option.getTrigParity() is TrigParity.EVEN:
+                scaleFactor = -scaleFactor
+                shieldingParity = TrigParity.ODD
 
-    #         shieldingParity = TrigParity.EVEN
-    #         scaleFactor = amp*scaling
-    #         # if option.getTrigParity().equals(TrigParity.EVEN):
-    #         if option.getTrigParity() is TrigParity.EVEN:
-    #             scaleFactor = -scaleFactor
-    #             shieldingParity = TrigParity.ODD
+            builder = FieldAlignedCurrentBuilder(
+                option.getRegion(), option.getMode(), option.getTrigParity(),
+                dipoleTiltAngle, dynamicPressure, kappa, scaleFactor)
+            builder.withTheta0(option.getTheta0())
+            builder.withDeltaTheta(option.getDeltaTheta())
+            builder.setSmoothing(option.isSmoothed())
 
-    # #       FieldAlignedCurrentBuilder builder =
-    # #           new FieldAlignedCurrentBuilder(option.getRegion().getAsInt(), option.getMode(),
-    # #               option.getTrigParity(), dipoleTiltAngle, dynamicPressure, kappa, scaleFactor);
-    # #       builder.withTheta0(option.getTheta0());
-    # #       builder.withDeltaTheta(option.getDeltaTheta());
-    # #       builder.setSmoothing(option.isSmoothed());
+            field = builder.build()
+            internalFieldsBuilder.append(field)
 
-    # #       VectorField field = builder.build();
-    # #       internalFieldsBuilder.add(field);
+            if option.isShielded():
+                shieldingField = FieldAlignedCurrentShiedingBuilder(
+                    option.getRegion().getAsInt(), option.getMode(),
+                    shieldingParity, dipoleTiltAngle, dynamicPressure, kappa,
+                    amp).build()
+                shieldingFieldsBuilder.append(shieldingField)
+                basisFunctionsBuilder.append(
+                    self.scale(self.add(field, shieldingField), 1.0/amp))
+            else:
+                basisFunctionsBuilder.append(self.scale(field, 1.0/amp))
 
-    # #       if (option.isShielded()) {
+        self.internalFields = internalFieldsBuilder
+        self.shieldingFields = shieldingFieldsBuilder
+        self.internalField = self.addAll(self.internalFields)
 
-    # #         VectorField shieldingField =
-    # #             new FieldAlignedCurrentShiedingBuilder(option.getRegion().getAsInt(), option.getMode(),
-    # #                 shieldingParity, dipoleTiltAngle, dynamicPressure, kappa, amp).build();
+        # Scale position vector for solar wind (see Tsy 2002-1 2.4)
+        self.shieldingField = self.addAll(self.shieldingFields)
 
-    # #         shieldingFieldsBuilder.add(shieldingField);
-
-    # #         basisFunctionsBuilder.add(scale(add(field, shieldingField), 1.0 / amp));
-
-    # #       } else {
-    # #         basisFunctionsBuilder.add(scale(field, 1.0 / amp));
-    # #       }
-
-    # #     }
-
-    # #     this.internalFields = internalFieldsBuilder.build();
-    # #     this.shieldingFields = shieldingFieldsBuilder.build();
-
-    # #     this.internalField = addAll(internalFields.toArray(new VectorField[internalFields.size()]));
-
-    # #     // Scale position vector for solar wind (see Tsy 2002-1 2.4)
-    # #     this.shieldingField = addAll(shieldingFields.toArray(new VectorField[shieldingFields.size()]));
-
-    # #     this.basisFunctions = basisFunctionsBuilder.build();
-    # #     this.basisCoefficients = basisCoefficientsBuilder.build();
-    # #   }
+        self.basisFunctions = basisFunctionsBuilder
+        self.basisCoefficients = basisCoefficientsBuilder
 
     @staticmethod
     def create(dipoleTiltAngle, dynamicPressure, region1KappaScaling,

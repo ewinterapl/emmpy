@@ -1,15 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder"""
 
 
-# import static com.google.common.base.Preconditions.checkNotNull;
-# import static crucible.core.math.CrucibleMath.pow;
-# import static crucible.core.math.vectorfields.VectorFields.scale;
-# import static crucible.core.math.vectorfields.VectorFields.scaleLocation;
-# import crucible.core.designpatterns.Builder;
-# import crucible.core.math.vectorfields.VectorField;
-# import magmodel.core.math.TrigParity;
-# import magmodel.core.math.vectorfields.SphericalVectorField;
-
 from emmpy.crucible.core.designpatterns.builder import Builder
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
     BirkelandDeformationFunction

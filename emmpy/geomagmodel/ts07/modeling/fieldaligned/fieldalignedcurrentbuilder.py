@@ -10,10 +10,12 @@
 # import magmodel.core.math.TrigParity;
 # import magmodel.core.math.deformation.SphericalFieldDeformation;
 # import magmodel.core.math.vectorfields.SphericalVectorField;
-# import magmodel.core.modeling.fac.ConicalCurrentMagneticField;
 # import magmodel.core.modeling.fac.TwoConicalFields;
 
 from emmpy.crucible.core.designpatterns.builder import Builder
+from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
+    ConicalCurrentMagneticField
+)
 
 
 # Below are the TS07 values, if you don't overrride these, this is what will

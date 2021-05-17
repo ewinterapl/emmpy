@@ -7,4 +7,5 @@ hierarchy.
 Modules
 -------
 conicalcurrentmagneticfield.py
+tfunction.py
 """

@@ -6,7 +6,12 @@ from emmpy.magmodel.core.modeling.fac.twoconicalfields import (
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test___init__(self):
+        pass
+
+    def test_evaluate(self):
+        pass
 
 
 if __name__ == '__main__':

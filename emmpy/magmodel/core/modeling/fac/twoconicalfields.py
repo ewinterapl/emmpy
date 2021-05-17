@@ -1,12 +1,15 @@
 """emmpy.magmodel.core.modeling.fac.twoconicalfields"""
 
 
-# import static crucible.core.math.vectorfields.VectorFields.add;
 # import static crucible.core.math.vectorfields.VectorFields.negate;
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
+from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
+    XYPlaneReflectedField
+)
 
 
 class TwoConicalFields(VectorField):
@@ -30,11 +33,14 @@ class TwoConicalFields(VectorField):
         param VectorField field
         """
         # VectorField field
-        self.field = self.add(field, new XYPlaneReflectedField(negate(field)));
+        self.field = VectorFields.add(
+            field, XYPlaneReflectedField(VectorFields.negate(field))
+        )
 
-    #   @Override
-    #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
-    #     return field.evaluate(location, buffer);
-    #   }
+    def evaluate(self, location, buffer):
+        """evaluate
 
-    # }
+        param UnwritableVectorIJK location
+        param VectorIJK buffer
+        """
+        return self.field.evaluate(location, buffer)

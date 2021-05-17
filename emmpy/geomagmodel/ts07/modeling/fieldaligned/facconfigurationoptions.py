@@ -59,8 +59,8 @@ class FacConfigurationOptions:
     def isSmoothed(self):
         return self.smoothed
 
-    # def isShielded(self):
-    #     return self.shielded
+    def isShielded(self):
+        return self.shielded
 
     # def toString(self):
     #     return (

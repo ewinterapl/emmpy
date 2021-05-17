@@ -2,6 +2,7 @@
 
 
 from emmpy.crucible.core.designpatterns.builder import Builder
+from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
     BirkelandDeformationFunction
 )
@@ -179,7 +180,7 @@ class FieldAlignedCurrentBuilder(Builder):
         deformation = BirkelandDeformationFunction(
             self.a, self.b, self.c, self.d
         )
-        deformedField = self.scale(
+        deformedField = VectorFields.scale(
             SphericalFieldDeformation(undeformedConicalField,
                                       deformation),
             self.bmScaleFactor
@@ -189,7 +190,7 @@ class FieldAlignedCurrentBuilder(Builder):
         twoCones = TwoConicalFields(deformedField)
 
         # scale the FIELD output by the coefficient
-        scaledTwoCones = self.scale(twoCones, self.scalingCoefficient)
+        scaledTwoCones = VectorFields.scale(twoCones, self.scalingCoefficient)
 
         stretchedField = ScaledField(
             StretchedField(
@@ -198,7 +199,7 @@ class FieldAlignedCurrentBuilder(Builder):
         )
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4)
-        pDynScaledField = self.scaleLocation(
+        pDynScaledField = VectorFields.scaleLocation(
             stretchedField, dynamicPressureScalingFactor
         )
 

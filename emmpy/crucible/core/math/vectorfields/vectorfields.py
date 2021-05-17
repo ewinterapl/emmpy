@@ -11,6 +11,7 @@ from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class VectorFields:
@@ -61,21 +62,21 @@ class VectorFields:
     #     vf.evaluate = lambda location, buffer: buffer.setTo(vector)
     #     return vf
 
-    # @staticmethod
-    # def add(a, b):
-    #     """Creates a vector field by adding the two supplied vector fields.
+    @staticmethod
+    def add(a, b):
+        """Creates a vector field by adding the two supplied vector fields.
 
-    #     param a a vector field
-    #     param b another vector field
-    #     return a newly created vector field that computes the component-wise
-    #     sum ( a + b )
-    #     """
-    #     vf = VectorField()
-    #     vf.evaluate = (
-    #         lambda location, buffer:
-    #         VectorIJK.add(a.evaluate(location), b.evaluate(location), buffer)
-    #     )
-    #     return vf
+        param a a vector field
+        param b another vector field
+        return a newly created vector field that computes the component-wise
+        sum ( a + b )
+        """
+        vf = VectorField()
+        vf.evaluate = (
+            lambda location, buffer:
+            VectorIJK.add(a.evaluate(location), b.evaluate(location), buffer)
+        )
+        return vf
 
     @staticmethod
     def addAll(fields):
@@ -100,22 +101,22 @@ class VectorFields:
         vf.evaluate = my_evaluate
         return vf
 
-    # @staticmethod
-    # def negate(field):
-    #     """Creates a vector field by negating the output of the supplied vector
-    #     field.
+    @staticmethod
+    def negate(field):
+        """Creates a vector field by negating the output of the supplied vector
+        field.
 
-    #     The location is not negated.
+        The location is not negated.
 
-    #     param field a vector field
-    #     return a newly created vector field that negates the value of the input
-    #     field
-    #     """
-    #     vf = VectorField()
-    #     vf.evaluate = (
-    #         lambda location, buffer: field.evaluate(location, buffer).negate()
-    #     )
-    #     return vf
+        param field a vector field
+        return a newly created vector field that negates the value of the input
+        field
+        """
+        vf = VectorField()
+        vf.evaluate = (
+            lambda location, buffer: field.evaluate(location, buffer).negate()
+        )
+        return vf
 
     @staticmethod
     def scale(field, scaleFactor):

@@ -12,5 +12,6 @@ ffunction.py
 fieldalignedcurrentbuilder.py
 scaledfield.py
 smoothedconicalcurrentmagneticfield.py
+stretchedfield.py
 ts07dfieldaligned,agneticfield.py
 """

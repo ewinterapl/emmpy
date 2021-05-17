@@ -12,5 +12,6 @@ test_Ffunction.py
 test_FieldAlignedCurrentBuilder.py
 test_ScaledField.py
 test_SmoothedConicalCurrentMagneticField.py
+test_StretchedField.py
 test_Ts07DFieldAlignedMagneticField.py
 """

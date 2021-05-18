@@ -1,14 +1,14 @@
 """emmpy.crucible.core.math.vectorspace.vectorijk"""
 
 
-# from math import cos, sin
+from math import cos, sin
 
 # from emmpy.com.google.common.base.preconditions import Preconditions
 # from emmpy.crucible.core.exceptions.bugexception import BugException
-# from emmpy.crucible.core.math.vectorspace.internaloperations import (
-#     absMaxComponent,
-#     computeNorm
-# )
+from emmpy.crucible.core.math.vectorspace.internaloperations import (
+    absMaxComponent,
+    computeNorm
+)
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
@@ -32,8 +32,8 @@ class VectorIJK(UnwritableVectorIJK):
     # # The ZERO vector.
     # ZERO = UnwritableVectorIJK(0, 0, 0)
 
-    # # The I basis vector: (1,0,0).
-    # I = UnwritableVectorIJK(1, 0, 0)
+    # The I basis vector: (1,0,0).
+    I = UnwritableVectorIJK(1, 0, 0)
 
     # The J basis vector: (0,1,0).
     J = UnwritableVectorIJK(0, 1, 0)
@@ -134,22 +134,22 @@ class VectorIJK(UnwritableVectorIJK):
         self.k *= _scale
         return self
 
-    # def unitize(self):
-    #     """Unitize the vector.
+    def unitize(self):
+        """Unitize the vector.
 
-    #     @return a reference to the instance for convenience, which now contains
-    #     a vector of unit length in the direction of the original vector.
-    #     @throws UnsupportedOperationException if the vector is equal to
-    #     {@link VectorIJK#ZERO}
-    #     """
-    #     norm = computeNorm(self.i, self.j, self.k)
-    #     if norm == 0.0:
-    #         raise UnsupportedOperationException(
-    #             "Unable to unitize vector. Instance is zero length.")
-    #     self.i /= norm
-    #     self.j /= norm
-    #     self.k /= norm
-    #     return self
+        @return a reference to the instance for convenience, which now contains
+        a vector of unit length in the direction of the original vector.
+        @throws UnsupportedOperationException if the vector is equal to
+        {@link VectorIJK#ZERO}
+        """
+        norm = computeNorm(self.i, self.j, self.k)
+        if norm == 0.0:
+            raise UnsupportedOperationException(
+                "Unable to unitize vector. Instance is zero length.")
+        self.i /= norm
+        self.j /= norm
+        self.k /= norm
+        return self
 
     # def negate(self):
     #     """Negate the vector.
@@ -289,100 +289,100 @@ class VectorIJK(UnwritableVectorIJK):
     #     self.setTo(vector)
     #     return self.negate()
 
-    # @staticmethod
-    # def rotate(*args):
-    #     """Rotate the vector."""
-    #     if len(args) == 3:
-    #         if (isinstance(args[0], UnwritableVectorIJK) and
-    #             isinstance(args[1], UnwritableVectorIJK) and
-    #             isinstance(args[2], float)):
-    #             # Rotate one vector about another by an angle specified in
-    #             # radians.
-    #             # @param vector the vector to rotate
-    #             # @param axis the axis about which to rotate vector
-    #             # @param angle the angle, in radians, through which to rotate
-    #             # @return a reference to buffer for convenience
-    #             # @throws IllegalArgumentException if the axis is equal to
-    #             # {@link VectorIJK#ZERO}.
-    #             # @see VectorIJK#rotate(UnwritableVectorIJK,
-    #             # UnwritableVectorIJK, double, VectorIJK)
-    #             (vector, axis, angle) = args
-    #             return VectorIJK.rotate(vector, axis, angle, VectorIJK())
-    #     elif len(args) == 4:
-    #         if (isinstance(args[0], UnwritableVectorIJK) and
-    #             isinstance(args[1], UnwritableVectorIJK) and
-    #             isinstance(args[2], float) and
-    #             isinstance(args[3], VectorIJK)):
-    #             # Rotate one vector about another by an angle specified in
-    #             # radians. An example is perhaps the most straightforward
-    #             # means to explain this methods action. Given an axis (0,0,1)
-    #             # and a rotation angle of PI/2, this method does the following:
+    @staticmethod
+    def rotate(*args):
+        """Rotate the vector."""
+        if len(args) == 3:
+            if (isinstance(args[0], UnwritableVectorIJK) and
+                isinstance(args[1], UnwritableVectorIJK) and
+                isinstance(args[2], float)):
+                # Rotate one vector about another by an angle specified in
+                # radians.
+                # @param vector the vector to rotate
+                # @param axis the axis about which to rotate vector
+                # @param angle the angle, in radians, through which to rotate
+                # @return a reference to buffer for convenience
+                # @throws IllegalArgumentException if the axis is equal to
+                # {@link VectorIJK#ZERO}.
+                # @see VectorIJK#rotate(UnwritableVectorIJK,
+                # UnwritableVectorIJK, double, VectorIJK)
+                (vector, axis, angle) = args
+                return VectorIJK.rotate(vector, axis, angle, VectorIJK())
+        elif len(args) == 4:
+            if (isinstance(args[0], UnwritableVectorIJK) and
+                isinstance(args[1], UnwritableVectorIJK) and
+                isinstance(args[2], float) and
+                isinstance(args[3], VectorIJK)):
+                # Rotate one vector about another by an angle specified in
+                # radians. An example is perhaps the most straightforward
+                # means to explain this methods action. Given an axis (0,0,1)
+                # and a rotation angle of PI/2, this method does the following:
 
-    #             #    vector         buffer
-    #             # ( 1, 2, 3 )   ( -2, 1, 3 )
-    #             # ( 1, 0, 0 )   ( 0, 1, 0 )
-    #             # ( 0, 1, 0 )   ( -1, 0, 0 )
+                #    vector         buffer
+                # ( 1, 2, 3 )   ( -2, 1, 3 )
+                # ( 1, 0, 0 )   ( 0, 1, 0 )
+                # ( 0, 1, 0 )   ( -1, 0, 0 )
 
-    #             # @param vector the vector to rotate
-    #             # @param axis the axis about which to rotate vector
-    #             # @param angle the angle, in radians, through which to rotate
-    #             # @param buffer the buffer to receive the contents of the
-    #             # rotation
-    #             # @return a reference to buffer for convenience
-    #             # @throws IllegalArgumentException if the axis is equal to
-    #             # {@link VectorIJK#ZERO}.
-    #             (vector, axis, angle, buffer) = args
+                # @param vector the vector to rotate
+                # @param axis the axis about which to rotate vector
+                # @param angle the angle, in radians, through which to rotate
+                # @param buffer the buffer to receive the contents of the
+                # rotation
+                # @return a reference to buffer for convenience
+                # @throws IllegalArgumentException if the axis is equal to
+                # {@link VectorIJK#ZERO}.
+                (vector, axis, angle, buffer) = args
 
-    #             # There is one exceptional case, namely if we try to rotate
-    #             # about the zero vector. We can check this by using the project
-    #             # method, as it will throw the desired runtime exception. First
-    #             # cache the contents of vector and axis as input, since we do
-    #             # not know if buffer is equivalent to either of them.
-    #             vi = vector.i
-    #             vj = vector.j
-    #             vk = vector.k
-    #             ai = axis.i
-    #             aj = axis.j
-    #             ak = axis.k
+                # There is one exceptional case, namely if we try to rotate
+                # about the zero vector. We can check this by using the project
+                # method, as it will throw the desired runtime exception. First
+                # cache the contents of vector and axis as input, since we do
+                # not know if buffer is equivalent to either of them.
+                vi = vector.i
+                vj = vector.j
+                vk = vector.k
+                ai = axis.i
+                aj = axis.j
+                ak = axis.k
 
-    #             # At this point, we are going to build a basis that is
-    #             # convenient for computing the rotated vector. Start by
-    #             # projecting vector onto axis, one of the axes in our basis.
-    #             VectorIJK.project(vector, axis, buffer)
+                # At this point, we are going to build a basis that is
+                # convenient for computing the rotated vector. Start by
+                # projecting vector onto axis, one of the axes in our basis.
+                VectorIJK.project(vector, axis, buffer)
 
-    #             norm = computeNorm(ai, aj, ak)
-    #             ai /= norm
-    #             aj /= norm
-    #             ak /= norm
+                norm = computeNorm(ai, aj, ak)
+                ai /= norm
+                aj /= norm
+                ak /= norm
 
-    #             #  Store the contents of buffer as this is one of the
-    #             # components of our rotated vector in the new basis.
-    #             pi = buffer.i
-    #             pj = buffer.j
-    #             pk = buffer.k
+                #  Store the contents of buffer as this is one of the
+                # components of our rotated vector in the new basis.
+                pi = buffer.i
+                pj = buffer.j
+                pk = buffer.k
 
-    #             # To determine one of the other vectors in the basis, simply
-    #             # subtract buffer from vector.
-    #             vi -= buffer.i
-    #             vj -= buffer.j
-    #             vk -= buffer.k
+                # To determine one of the other vectors in the basis, simply
+                # subtract buffer from vector.
+                vi -= buffer.i
+                vj -= buffer.j
+                vk -= buffer.k
 
-    #             # Now determine the third basis vector by computing the cross
-    #             # product of a unit vector in the direction of axis with
-    #             # buffer.
-    #             buffer.i = aj*vk - ak*vj
-    #             buffer.j = ak*vi - ai*vk
-    #             buffer.k = ai*vj - aj*vi
+                # Now determine the third basis vector by computing the cross
+                # product of a unit vector in the direction of axis with
+                # buffer.
+                buffer.i = aj*vk - ak*vj
+                buffer.j = ak*vi - ai*vk
+                buffer.k = ai*vj - aj*vi
 
-    #             # The desired vector projection against this new basis is:
-    #             # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
-    #             buffer.i = pi + cos(angle)*vi + sin(angle)*buffer.i
-    #             buffer.j = pj + cos(angle)*vj + sin(angle)*buffer.j
-    #             buffer.k = pk + cos(angle)*vk + sin(angle)*buffer.k
+                # The desired vector projection against this new basis is:
+                # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
+                buffer.i = pi + cos(angle)*vi + sin(angle)*buffer.i
+                buffer.j = pj + cos(angle)*vj + sin(angle)*buffer.j
+                buffer.k = pk + cos(angle)*vk + sin(angle)*buffer.k
 
-    #             return buffer
-    #     else:
-    #         raise Exception
+                return buffer
+        else:
+            raise Exception
 
     # @staticmethod
     # def planeProject(*args):
@@ -454,65 +454,65 @@ class VectorIJK(UnwritableVectorIJK):
     #     else:
     #         raise Exception
 
-    # @staticmethod
-    # def project(*args):
-    #     """Compute the projection of one vector onto another.
+    @staticmethod
+    def project(*args):
+        """Compute the projection of one vector onto another.
 
-    #     Algebraicly, this routine effectively computes:
+        Algebraicly, this routine effectively computes:
 
-    #     <vector, onto> * onto
-    #     ---------------------
-    #          || onto ||
+        <vector, onto> * onto
+        ---------------------
+             || onto ||
 
-    #     where <> denotes the standard scalar product and ||x|| the norm of x.
-    #     For numeric precision reasons the implementation may vary slightly
-    #     from the above prescription.
-    #     """
-    #     if len(args) == 2:
-    #         # @param vector the vector to project
-    #         # @param onto the vector onto which vector is to be projected
-    #         # @return a new <code>VectorIJK</code> containing the results
-    #         # of the projection
-    #         # @throws IllegalArgumentException if onto is the equal to
-    #         # {@link VectorIJK#ZERO}.
-    #         # @see VectorIJK#project(UnwritableVectorIJK,
-    #         # UnwritableVectorIJK, VectorIJK)
-    #         (vector, onto) = args
-    #         return VectorIJK.project(vector, onto, VectorIJK())
-    #     elif len(args) == 3:
-    #         # @param vector the vector to project
-    #         # @param onto the vector onto which vector is to be projected
-    #         # @param buffer the buffer to receive the contents of the
-    #         # projection
-    #         # @return a reference to buffer for convenience
-    #         # @throws IllegalArgumentException if onto is the equal to
-    #         # {@link VectorIJK#ZERO}.
-    #         (vector, onto, buffer) = args
-    #         maxVector = absMaxComponent(vector.i, vector.j, vector.k)
-    #         maxOnto = absMaxComponent(
-    #             onto.i, onto.j, onto.k)
-    #         if maxOnto == 0:
-    #             raise IllegalArgumentException(
-    #                 "Unable to project vector onto the zero vector.")
-    #         if maxVector == 0:
-    #             buffer.clear()
-    #             return buffer
-    #         r1 = onto.i/maxOnto
-    #         r2 = onto.j/maxOnto
-    #         r3 = onto.k/maxOnto
-    #         t1 = vector.i/maxVector
-    #         t2 = vector.j/maxVector
-    #         t3 = vector.k/maxVector
-    #         scaleFactor = (
-    #             (t1*r1 + t2*r2 + t3*r3)*maxVector/(r1*r1 + r2*r2 + r3*r3)
-    #         )
-    #         buffer.i = r1
-    #         buffer.j = r2
-    #         buffer.k = r3
-    #         buffer.scale(scaleFactor)
-    #         return buffer
-    #     else:
-    #         raise Exception
+        where <> denotes the standard scalar product and ||x|| the norm of x.
+        For numeric precision reasons the implementation may vary slightly
+        from the above prescription.
+        """
+        if len(args) == 2:
+            # @param vector the vector to project
+            # @param onto the vector onto which vector is to be projected
+            # @return a new <code>VectorIJK</code> containing the results
+            # of the projection
+            # @throws IllegalArgumentException if onto is the equal to
+            # {@link VectorIJK#ZERO}.
+            # @see VectorIJK#project(UnwritableVectorIJK,
+            # UnwritableVectorIJK, VectorIJK)
+            (vector, onto) = args
+            return VectorIJK.project(vector, onto, VectorIJK())
+        elif len(args) == 3:
+            # @param vector the vector to project
+            # @param onto the vector onto which vector is to be projected
+            # @param buffer the buffer to receive the contents of the
+            # projection
+            # @return a reference to buffer for convenience
+            # @throws IllegalArgumentException if onto is the equal to
+            # {@link VectorIJK#ZERO}.
+            (vector, onto, buffer) = args
+            maxVector = absMaxComponent(vector.i, vector.j, vector.k)
+            maxOnto = absMaxComponent(
+                onto.i, onto.j, onto.k)
+            if maxOnto == 0:
+                raise IllegalArgumentException(
+                    "Unable to project vector onto the zero vector.")
+            if maxVector == 0:
+                buffer.clear()
+                return buffer
+            r1 = onto.i/maxOnto
+            r2 = onto.j/maxOnto
+            r3 = onto.k/maxOnto
+            t1 = vector.i/maxVector
+            t2 = vector.j/maxVector
+            t3 = vector.k/maxVector
+            scaleFactor = (
+                (t1*r1 + t2*r2 + t3*r3)*maxVector/(r1*r1 + r2*r2 + r3*r3)
+            )
+            buffer.i = r1
+            buffer.j = r2
+            buffer.k = r3
+            buffer.scale(scaleFactor)
+            return buffer
+        else:
+            raise Exception
 
     # @staticmethod
     # def combine(*args):

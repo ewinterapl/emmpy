@@ -1,6 +1,7 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield"""
 
 
+from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
 )
@@ -89,16 +90,16 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                     amp).build()
                 shieldingFieldsBuilder.append(shieldingField)
                 basisFunctionsBuilder.append(
-                    self.scale(self.add(field, shieldingField), 1.0/amp))
+                    VectorFields.scale(VectorFields.add(field, shieldingField), 1.0/amp))
             else:
                 basisFunctionsBuilder.append(self.scale(field, 1.0/amp))
 
         self.internalFields = internalFieldsBuilder
         self.shieldingFields = shieldingFieldsBuilder
-        self.internalField = self.addAll(self.internalFields)
+        self.internalField = VectorFields.addAll(self.internalFields)
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4)
-        self.shieldingField = self.addAll(self.shieldingFields)
+        self.shieldingField = VectorFields.addAll(self.shieldingFields)
 
         self.basisFunctions = basisFunctionsBuilder
         self.basisCoefficients = basisCoefficientsBuilder

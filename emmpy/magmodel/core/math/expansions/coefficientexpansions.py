@@ -94,50 +94,30 @@ class CoefficientExpansions:
     def createUnity(*args):
         if len(args) == 2:
             (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-            # Create a dummy expansion of the appropriate size.
-            n = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            p = ArrayCoefficientExpansion1D(
-                [None]*n, firstRadialExpansionNumber
-            )
-            ce = CoefficientExpansion1D()
+            # int firstRadialExpansionNumber, lastRadialExpansionNumber
+            ce1d = CoefficientExpansion1D()
             # These lambdas are not bound methods.
-            ce.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-            ce.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-            ce.getCoefficient = lambda index: 1
+            ce1d.getLowerBoundIndex = lambda: firstRadialExpansionNumber
+            ce1d.getUpperBoundIndex = lambda: lastRadialExpansionNumber
+            ce1d.getCoefficient = lambda radialExpansion: 1.0
+            return ce1d
         elif len(args) == 4:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-            # Create a dummy expansion of the appropriate size.
-            nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            na = (lastAzimuthalExpansionNumber -
-                  firstAzimuthalExpansionNumber + 1)
-            arr = []
-            for i in range(na):
-                arr.append([])
-                for j in range(nr):
-                    arr[i].append(None)
-            p = ArrayCoefficientExpansion2D(
-                arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-            )
-
-            # Create the expansion.
-            ce = CoefficientExpansion2D()
+            # int firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
+            # firstRadialExpansionNumber, lastRadialExpansionNumber
+            ce2d = CoefficientExpansion2D()
             # These lambdas are not bound methods.
-            ce.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-            ce.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
-            ce.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
-            ce.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
-            ce.iSize = lambda: p.iSize()
-            ce.jSize = lambda: p.jSize()
-            ce.getCoefficient = (
-                lambda azimuthalExpansion, radialExpansion: 1
+            ce2d.getILowerBoundIndex = lambda: firstAzimuthalExpansionNumber
+            ce2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansionNumber
+            ce2d.getJLowerBoundIndex = lambda: firstRadialExpansionNumber
+            ce2d.getJUpperBoundIndex = lambda: lastRadialExpansionNumber
+            ce2d.getCoefficient = (
+                lambda azimuthalExpansion, radialExpansion: 1.0
             )
-            return ce
+            return ce2d
         else:
             raise Exception
-
-        # Return the coefficient expansion.
-        return ce
 
     @staticmethod
     def scale(a, scaleFactor):
@@ -163,12 +143,12 @@ class CoefficientExpansions:
             v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
             v.iSize = lambda: a.iSize()
             v.jSize = lambda: a.jSize()
-    #         v.getCoefficient = (
-    #             lambda azimuthalExpansion, radialExpansion: (
-    #                 scaleFactor*a.getCoefficient(azimuthalExpansion,
-    #                                              radialExpansion)
-    #             )
-    #         )
+            v.getCoefficient = (
+                lambda azimuthalExpansion, radialExpansion: (
+                    scaleFactor*a.getCoefficient(azimuthalExpansion,
+                                                 radialExpansion)
+                )
+            )
             return v
         else:
             raise Exception

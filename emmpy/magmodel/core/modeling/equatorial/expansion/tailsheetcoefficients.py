@@ -37,56 +37,56 @@ class TailSheetCoefficients:
                                               numRadialExpansions)
         )
 
-    # @staticmethod
-    # def createFromArray(array, numAzimuthalExpansions, numRadialExpansions):
-    #     """Creates a {@link TailSheetCoefficients} from a double array.
+    @staticmethod
+    def createFromArray(array, numAzimuthalExpansions, numRadialExpansions):
+        """Creates a {@link TailSheetCoefficients} from a double array.
 
-    #     @param array
-    #     @param numAzimuthalExpansions
-    #     @param numRadialExpansions
-    #     @retuxrn
-    #     """
+        @param array
+        @param numAzimuthalExpansions
+        @param numRadialExpansions
+        @retuxrn
+        """
 
-    #     sym = [None]*numRadialExpansions
-    #     odd = []
-    #     even = []
-    #     for i in range(numAzimuthalExpansions):
-    #         odd.append([None]*numRadialExpansions)
-    #         even.append([None]*numRadialExpansions)
+        sym = [None]*numRadialExpansions
+        odd = []
+        even = []
+        for i in range(numAzimuthalExpansions):
+            odd.append([None]*numRadialExpansions)
+            even.append([None]*numRadialExpansions)
 
-    #     # n is the radial expansion number
-    #     count = 0
-    #     for n in range(1, numRadialExpansions + 1):
-    #         sym[n - 1] = array[count]
-    #         count += 1
+        # n is the radial expansion number
+        count = 0
+        for n in range(1, numRadialExpansions + 1):
+            sym[n - 1] = array[count]
+            count += 1
 
-    #     # n is the radial expansion number
-    #     # m is the azimuthal expansion number
-    #     for n in range(1, numRadialExpansions + 1):
-    #         for m in range(1, numAzimuthalExpansions + 1):
-    #             odd[m - 1][n - 1] = array[count]
-    #             count += 1
+        # n is the radial expansion number
+        # m is the azimuthal expansion number
+        for n in range(1, numRadialExpansions + 1):
+            for m in range(1, numAzimuthalExpansions + 1):
+                odd[m - 1][n - 1] = array[count]
+                count += 1
 
-    #     # n is the radial expansion number
-    #     # m is the azimuthal expansion number
-    #     for n in range(1, numRadialExpansions + 1):
-    #         for m in range(1, numAzimuthalExpansions + 1):
-    #             even[m - 1][n - 1] = array[count]
-    #             count += 1
+        # n is the radial expansion number
+        # m is the azimuthal expansion number
+        for n in range(1, numRadialExpansions + 1):
+            for m in range(1, numAzimuthalExpansions + 1):
+                even[m - 1][n - 1] = array[count]
+                count += 1
 
-    #     if numAzimuthalExpansions == 0:
-    #         return TailSheetCoefficients(
-    #             CoefficientExpansions.createExpansionFromArray(sym, 1),
-    #             CoefficientExpansions.createNullExpansion(1, 1,
-    #                                                       numRadialExpansions),
-    #             CoefficientExpansions.createNullExpansion(1, 1,
-    #                                                       numRadialExpansions)
-    #         )
+        if numAzimuthalExpansions == 0:
+            return TailSheetCoefficients(
+                CoefficientExpansions.createExpansionFromArray(sym, 1),
+                CoefficientExpansions.createNullExpansion(1, 1,
+                                                          numRadialExpansions),
+                CoefficientExpansions.createNullExpansion(1, 1,
+                                                          numRadialExpansions)
+            )
 
-    #     return TailSheetCoefficients(
-    #         CoefficientExpansions.createExpansionFromArray(sym, 1),
-    #         CoefficientExpansions.createExpansionFromArray(odd, 1, 1),
-    #         CoefficientExpansions.createExpansionFromArray(even, 1, 1))
+        return TailSheetCoefficients(
+            CoefficientExpansions.createExpansionFromArray(sym, 1),
+            CoefficientExpansions.createExpansionFromArray(odd, 1, 1),
+            CoefficientExpansions.createExpansionFromArray(even, 1, 1))
 
     def getTailSheetSymmetricValues(self):
         """return the symmetric coefficients a_n^s"""

@@ -87,8 +87,8 @@ class CoefficientExpansions:
         else:
             raise Exception
 
-    #     # Return the view.
-    #     return v
+        # Return the view.
+        return v
 
     @staticmethod
     def createUnity(*args):

@@ -65,12 +65,11 @@ class VectorIJK(UnwritableVectorIJK):
                 (data,) = args
                 UnwritableVectorIJK.__init__(self, data)
             elif isinstance(args[0], UnwritableVectorIJK):
-                raise Exception
-    #             # Copy constructor, creates a vector by copying the values of
-    #             # a pre-exisiting one.
-    #             # @param vector the vector whose contents are to be copied
-    #             (vector,) = args
-    #             UnwritableVectorIJK.__init__(self, vector)
+                # Copy constructor, creates a vector by copying the values of
+                # a pre-exisiting one.
+                # @param vector the vector whose contents are to be copied
+                (vector,) = args
+                UnwritableVectorIJK.__init__(self, vector)
             else:
                 raise Exception
         elif len(args) == 2:

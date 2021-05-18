@@ -40,12 +40,12 @@ class UnwritableVectorIJK:
                 # @aram data the array of doubles
                 data = args[0]
                 UnwritableVectorIJK.__init__(self, data[0], data[1], data[2])
-    #         elif isinstance(args[0], UnwritableVectorIJK):
-    #             # Copy constructor, creates a vector by copying the values of a
-    #             # pre-existing one.
-    #             # @param vector the vector whose contents are to be copied
-    #             vector = args[0]
-    #             self.__init__(vector.i, vector.j, vector.k)
+            elif isinstance(args[0], UnwritableVectorIJK):
+                # Copy constructor, creates a vector by copying the values of a
+                # pre-existing one.
+                # @param vector the vector whose contents are to be copied
+                vector = args[0]
+                self.__init__(vector.i, vector.j, vector.k)
             else:
                 raise Exception
         elif len(args) == 2:

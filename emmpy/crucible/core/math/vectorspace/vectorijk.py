@@ -98,13 +98,12 @@ class VectorIJK(UnwritableVectorIJK):
     #         else:
     #             raise Exception
         elif len(args) == 3:
-            raise Exception
-    #         # Constructs a vector from three basic components
-    #         # @param i the ith component
-    #         # @param j the jth component
-    #         # @param k the kth component
-    #         (i, j, k) = args
-    #         UnwritableVectorIJK.__init__(self, i, j, k)
+            # Constructs a vector from three basic components
+            # @param i the ith component
+            # @param j the jth component
+            # @param k the kth component
+            (i, j, k) = args
+            UnwritableVectorIJK.__init__(self, i, j, k)
         else:
             raise Exception
 

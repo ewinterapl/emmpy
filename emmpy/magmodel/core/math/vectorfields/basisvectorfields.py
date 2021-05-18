@@ -236,23 +236,23 @@ class BasisVectorFields:
 
         return bvf
 
-    # @staticmethod
-    # def rotate(field, matrix):
-    #     """Rotates"""
-    #     bvf = BasisVectorField()
+    @staticmethod
+    def rotate(field, matrix):
+        """Rotates"""
+        bvf = BasisVectorField()
 
-    #     def my_evaluate(my_self, location, buffer):
-    #         # rotate the location
-    #         rotated = matrix.mxv(location)
-    #         # evaluate using the rotated vector
-    #         field.evaluate(rotated, buffer)
-    #         # rotate the field value back
-    #         return matrix.mtxv(buffer, buffer)
-    #     bvf.evaluate = my_evaluate
+        def my_evaluate(my_self, location, buffer):
+            # rotate the location
+            rotated = matrix.mxv(location)
+            # evaluate using the rotated vector
+            field.evaluate(rotated, buffer)
+            # rotate the field value back
+            return matrix.mtxv(buffer, buffer)
+        bvf.evaluate = my_evaluate
 
-    #     bvf.getNumberOfBasisFunctions = (
-    #         lambda my_self: field.getNumberOfBasisFunctions()
-    #     )
+        bvf.getNumberOfBasisFunctions = (
+            lambda my_self: field.getNumberOfBasisFunctions()
+        )
 
     #     def my_evaluateExpansion(my_self, location):
     #         # rotate the location

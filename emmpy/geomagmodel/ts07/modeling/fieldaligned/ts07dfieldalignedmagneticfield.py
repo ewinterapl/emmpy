@@ -4,6 +4,9 @@
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
 )
+from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder import (
+    FieldAlignedCurrentShiedingBuilder
+)
 from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -81,7 +84,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
 
             if option.isShielded():
                 shieldingField = FieldAlignedCurrentShiedingBuilder(
-                    option.getRegion().getAsInt(), option.getMode(),
+                    option.getRegion(), option.getMode(),
                     shieldingParity, dipoleTiltAngle, dynamicPressure, kappa,
                     amp).build()
                 shieldingFieldsBuilder.append(shieldingField)

@@ -65,27 +65,27 @@ class CoefficientExpansions:
         ce1d.getCoefficient = lambda index: 1/p.getCoefficient(index)
         return ce1d
 
-    # @staticmethod
-    # def negate(a):
-    #     v = None
-    #     if isinstance(a, CoefficientExpansion1D):
-    #         v = CoefficientExpansion1D()
-    #         v.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
-    #         v.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
-    #         v.getCoefficient = lambda index: -a.getCoefficient(index)
-    #     elif isinstance(a, CoefficientExpansion2D):
-    #         v = CoefficientExpansion2D()
-    #         v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
-    #         v.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
-    #         v.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
-    #         v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
-    #         v.iSize = lambda: a.iSize()
-    #         v.jSize = lambda: a.jSize()
-    #         v.getCoefficient = lambda iExpansion, kExpansion: (
-    #             -a.getCoefficient(iExpansion, kExpansion)
-    #         )
-    #     else:
-    #         raise Exception
+    @staticmethod
+    def negate(a):
+        v = None
+        if isinstance(a, CoefficientExpansion1D):
+            v = CoefficientExpansion1D()
+            v.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
+            v.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
+            v.getCoefficient = lambda index: -a.getCoefficient(index)
+        elif isinstance(a, CoefficientExpansion2D):
+            v = CoefficientExpansion2D()
+            v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
+            v.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
+            v.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
+            v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
+            v.iSize = lambda: a.iSize()
+            v.jSize = lambda: a.jSize()
+            v.getCoefficient = lambda iExpansion, kExpansion: (
+                -a.getCoefficient(iExpansion, kExpansion)
+            )
+        else:
+            raise Exception
 
     #     # Return the view.
     #     return v

@@ -35,11 +35,11 @@ class VectorIJK(UnwritableVectorIJK):
     # # The I basis vector: (1,0,0).
     # I = UnwritableVectorIJK(1, 0, 0)
 
-    # # The J basis vector: (0,1,0).
-    # J = UnwritableVectorIJK(0, 1, 0)
+    # The J basis vector: (0,1,0).
+    J = UnwritableVectorIJK(0, 1, 0)
 
-    # # The K basis vector: (0,0,1).
-    # K = UnwritableVectorIJK(0, 0, 1)
+    # The K basis vector: (0,0,1).
+    K = UnwritableVectorIJK(0, 0, 1)
 
     # # The negative of the I basis vector: (-1,0,0).
     # MINUS_I = UnwritableVectorIJK(-1, 0, 0)

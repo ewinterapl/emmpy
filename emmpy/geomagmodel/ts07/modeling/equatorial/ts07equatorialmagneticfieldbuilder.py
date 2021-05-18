@@ -93,29 +93,37 @@ class Ts07EquatorialMagneticFieldBuilder:
         return self
 
     def build(self):
+        # int numCurrSheets
         numCurrSheets = len(self.coeffs.getCurrThicks())
+        # float hingeDistance, warpingParam, twistParam
         hingeDistance = self.coeffs.getHingeDistance()
         warpingParam = self.coeffs.getWarpingParam()
         twistParam = self.coeffs.getTwistParam()
+        # [BasisVectorField] equatorialFields
         equatorialFields = [None]*numCurrSheets
 
         # loop through each of the current sheets
         for currSheetIndex in range(numCurrSheets):
+            # double currSheetThick
             currSheetThick = self.coeffs.getCurrThicks()[currSheetIndex]
+            # Ts07EquatorialLinearCoefficients linearCoeffs
             linearCoeffs = self.coeffs.getLinearCoeffs()[currSheetIndex]
 
             # Construct a constant current sheet half thickness
+            # DifferentiableScalarFieldIJ currentSheetHalfThickness
             currentSheetHalfThickness = (
                 CurrentSheetHalfThicknesses.createConstant(currSheetThick)
             )
     
             # Construct the shielded thin current sheet
+            # ShieldedThinCurrentSheetField thinCurrentSheet
             thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
                 currentSheetHalfThickness, self.tailLength, self.bessel,
                 self.shieldingCoeffs, self.includeShield)
 
             # if the with TA15 deformation was called, apply the TA15
             # deformation instead of the T01 deformation
+            # BasisVectorField bentWarpedField
             bentWarpedField = thinCurrentSheet
             if self.withTA15deformation:
                 raise Exception
@@ -132,11 +140,13 @@ class Ts07EquatorialMagneticFieldBuilder:
                 # the T01 deformation (standard for TS07D)
 
                 # warp the shielded thin current sheet
+                # BasisVectorField warpedField
                 warpedField = TwistWarpFfunction.deformBasisField(
                     self.dipoleTiltAngle, warpingParam, twistParam,
                     thinCurrentSheet)
 
                 # now apply the bending deformation to the warped field
+                # BasisVectorFieldDeformation bentWarpedField
                 bentWarpedField = PositionBender.deformBasisField(
                     self.dipoleTiltAngle, hingeDistance, warpedField)
 
@@ -147,12 +157,13 @@ class Ts07EquatorialMagneticFieldBuilder:
                 # result in tenths of differences between the Java and the
                 # Fortran version of the model
                 pdynScaling = pow(self.dynamicPressure/2.0, 0.155)
+                # BasisVectorField scaledBentWarpedField
                 scaledBentWarpedField = BasisVectorFields.scaleLocation(
                     bentWarpedField, pdynScaling)
 
-                # CoefficientExpansion1D
+                # CoefficientExpansion1D or ArrayCoefficientExpansion1D?
                 coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion()
-                # CoefficientExpansion1D
+                # TailSheetCoefficients pdsc
                 pdsc = linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure)
                 pdynCoeffs = pdsc.getAsSingleExpansion()
                 # pdynCoeffs = (

@@ -23,24 +23,27 @@ class VectorFields:
     author G.K.Stephens
     """
 
-    # def __init__(self):
-    #     """Constructor
+    def __init__(self):
+        """Constructor
 
-    #     DO NOT INSTANTIATE
-    #     """
-    #     raise Exception
+        INTERFACE - DO NOT INSTANTIATE
+        """
+        raise Exception
 
-    # @staticmethod
-    # def createIdentity():
-    #     """Creates a VectorField} where the returned value is the same value as
-    #     the supplied input.
+    @staticmethod
+    def createIdentity():
+        """Creates a VectorField} where the returned value is the same value as
+        the supplied input.
 
-    #     return a newly constructed VectorField where the returned value is the
-    #     same as the supplied input
-    #     """
-    #     vf = VectorField()
-    #     vf.evaluate = lambda location, buffer: buffer.setTo(location)
-    #     return vf
+        return a newly constructed VectorField where the returned value is the
+        same as the supplied input
+        """
+        vf = VectorField()
+        # UnwritableVectorIJK location
+        # VectorIJK buffer
+        # vf.evaluate() returns VectorIJK = buffer
+        vf.evaluate = lambda location, buffer: buffer.setTo(location)
+        return vf
 
     # @staticmethod
     # def createSampled(field, x):
@@ -66,13 +69,16 @@ class VectorFields:
     def add(a, b):
         """Creates a vector field by adding the two supplied vector fields.
 
-        param a a vector field
-        param b another vector field
-        return a newly created vector field that computes the component-wise
-        sum ( a + b )
+        param a a VectorField
+        param b another VectorField
+        return a newly created VectorField that computes the component-wise
+        sum (a + b)
         """
         vf = VectorField()
         vf.evaluate = (
+            # UnwritableVectorIJK location
+            # VectorIJK buffer
+            # Returns VectorIJK
             lambda location, buffer:
             VectorIJK.add(a.evaluate(location), b.evaluate(location), buffer)
         )
@@ -82,21 +88,25 @@ class VectorFields:
     def addAll(fields):
         """Creates a vector field by adding all the supplied vector fields.
 
-        param fields a varargs of vector fields
+        param fields a list of VectorField
         return a newly created vector field that computes the component-wise
         sum ( a + b + ...) of all the vector fields
         """
         vf = VectorField()
 
         def my_evaluate(location, buffer):
+            # UnwritableVectorIJK location
+            # VectorIJK buffer
             fx = 0.0
             fy = 0.0
             fz = 0.0
             for field in fields:
+                # VectorField field
                 field.evaluate(location, buffer)
                 fx += buffer.getI()
                 fy += buffer.getJ()
                 fz += buffer.getK()
+            # Return buffer = VectorIJK
             return buffer.setTo(fx, fy, fz)
         vf.evaluate = my_evaluate
         return vf
@@ -108,13 +118,15 @@ class VectorFields:
 
         The location is not negated.
 
-        param field a vector field
-        return a newly created vector field that negates the value of the input
+        param field a VectorField
+        return a newly created VectorField that negates the value of the input
         field
         """
         vf = VectorField()
+        # UnwritableVectorIJK location
+        # VectorIJK buffer
         vf.evaluate = (
-            lambda location, buffer: field.evaluate(location, buffer).negate()
+           lambda location, buffer: field.evaluate(location, buffer).negate()
         )
         return vf
 
@@ -125,12 +137,14 @@ class VectorFields:
 
         The location is not scaled.
 
-        param field a vector field
-        param scaleFactor a value to scale the output
-        return a newly created vector field that computes the scale
-        ( a*scaleFactor )
+        param field a VectorField
+        param scaleFactor a float value to scale the output
+        return a newly created VectorField that computes the scale
+        (a*scaleFactor)
         """
         vf = VectorField()
+        # UnwritableVectorIJK location
+        # VectorIJK buffer
         vf.evaluate = (
             lambda location, buffer:
             field.evaluate(location, buffer).scale(scaleFactor)
@@ -142,12 +156,14 @@ class VectorFields:
         """Creates a vector field by scaling the input location vector of the
         supplied vector field.
 
-        param field a vector field
-        param scaleFactor a value to scale the location vector
-        return a newly created vector field that scales the input location
-        vector ( location*scaleFactor )
+        param field a VectorField
+        param scaleFactor a float value to scale the location vector
+        return a newly created VectorField that scales the input location
+        vector (location*scaleFactor)
         """
         vf = VectorField()
+        # UnwritableVectorIJK location
+        # VectorIJK buffer
         vf.evaluate = (
             lambda location, buffer:
             field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)

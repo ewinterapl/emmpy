@@ -24,11 +24,9 @@ class BasisVectorFields:
     def asBasisField(field):
         bvf = BasisVectorField()
         bvf.evaluateExpansion = (
-            # HERE IS THE PROBLEM
-            # SHOULD THIS LAMBDA RETURN A LIST? YES!
-            lambda location, buffer: field.evaluate(location, buffer)
+            lambda location: [field.evaluate(location)]
         )
-        bvf.getNumberOfBasisFunctions = lambda my_self: 1
+        bvf.getNumberOfBasisFunctions = lambda: 1
         return bvf
 
     @staticmethod
@@ -90,13 +88,13 @@ class BasisVectorFields:
         """
         bvf = BasisVectorField()
 
-        def my_evaluateExpansion(location, buffer):
+        def my_evaluateExpansion(location):
             result = []
             for field in fields:
                 # field is:
                 # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
                 # But evaluate() is a lambda from WHERE?
-                e = field.evaluateExpansion(location, buffer)
+                e = field.evaluateExpansion(location)
                 result.extend(e)
             return result
         bvf.evaluateExpansion = my_evaluateExpansion

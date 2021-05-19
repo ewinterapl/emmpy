@@ -29,7 +29,7 @@ class BasisVectorField(VectorField):
             return self.evaluate(location, buffer)
         elif len(args) == 2:
             (location, buffer) = args
-            basisVectors = self.evaluateExpansion(location, buffer)
+            basisVectors = self.evaluateExpansion(location)
             fx = 0.0
             fy = 0.0
             fz = 0.0
@@ -51,6 +51,6 @@ class BasisVectorField(VectorField):
         """
         raise Exception
 
-    # def getNumberOfBasisFunctions(self):
-    #     """return the number of individual vector fields in the expansion"""
-    #     raise Exception
+    def getNumberOfBasisFunctions(self):
+        """return the number of individual vector fields in the expansion"""
+        raise Exception

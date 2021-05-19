@@ -28,7 +28,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 def ModelRunApp():
     print("Starting ModelRunApp()")
     # runThinSheet() produces identical results in Java and Python.
-    runThinSheet()
+    # runThinSheet()
     runTs07D()
     print("Ending ModelRunApp()")
 

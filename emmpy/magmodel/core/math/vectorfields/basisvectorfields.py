@@ -239,32 +239,31 @@ class BasisVectorFields:
         """Rotates"""
         bvf = BasisVectorField()
 
-        def my_evaluate(my_self, location, buffer):
+        def my_evaluate(location, buffer):
             # rotate the location
-            rotated = matrix.mxv(location)
+            rotated = matrix.NDmxv(location)
             # evaluate using the rotated vector
             field.evaluate(rotated, buffer)
             # rotate the field value back
             return matrix.mtxv(buffer, buffer)
         bvf.evaluate = my_evaluate
-
         bvf.getNumberOfBasisFunctions = (
-            lambda my_self: field.getNumberOfBasisFunctions()
+            lambda: field.getNumberOfBasisFunctions()
         )
 
-    #     def my_evaluateExpansion(my_self, location):
-    #         # rotate the location
-    #         rotated = matrix.mxv(location)
-    #         # evaluate using the rotated vector
-    #         expansions = field.evaluateExpansion(rotated)
-    #         # rotate the field value back
-    #         rotatedExpansions = []
-    #         for expansion in expansions:
-    #             rotatedExpansions.append(matrix.mtxv(expansion))
-    #         return rotatedExpansions
-    #     bvf.evaluateExpansion = my_evaluateExpansion
+        def my_evaluateExpansion(location):
+            # rotate the location
+            rotated = matrix.mxv(location)
+            # evaluate using the rotated vector
+            expansions = field.evaluateExpansion(rotated)
+            # rotate the field value back
+            rotatedExpansions = []
+            for expansion in expansions:
+                rotatedExpansions.append(matrix.mtxv(expansion))
+            return rotatedExpansions
+        bvf.evaluateExpansion = my_evaluateExpansion
 
-    #     return bvf
+        return bvf
 
     # @staticmethod
     # def filter(field, retainIfTrue, fillValue):

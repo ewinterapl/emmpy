@@ -144,25 +144,25 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         # construct the unrotated fields
         perpField = AlternateCartesianHarmonicField(
             p, r, perpCoeffs, trigParityI, TrigParity.ODD)
-    #     paraField = CartesianHarmonicField(
-    #         q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
+        paraField = CartesianHarmonicField(
+            q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 
-    #     # the rotation matrices about Y axis
-    #     perpendicularRotation = AxisAndAngle(
-    #         VectorIJK.J,
-    #         -perpendicularTiltAngle).getRotation(RotationMatrixIJK())
-    #     parallelRotation = AxisAndAngle(
-    #         VectorIJK.J,
-    #         -parallelTiltAngle).getRotation(RotationMatrixIJK())
+        # the rotation matrices about Y axis
+        perpendicularRotation = AxisAndAngle(
+            VectorIJK.J,
+            -perpendicularTiltAngle).getRotation(RotationMatrixIJK())
+        parallelRotation = AxisAndAngle(
+            VectorIJK.J,
+            -parallelTiltAngle).getRotation(RotationMatrixIJK())
 
-    #     # now rotate the fields
-    #     rotatedPerpField = BasisVectorFields.rotate(
-    #         perpField, perpendicularRotation)
-    #     rotatedParaField = BasisVectorFields.rotate(
-    #         paraField, parallelRotation)
+        # now rotate the fields
+        rotatedPerpField = BasisVectorFields.rotate(
+            perpField, perpendicularRotation)
+        rotatedParaField = BasisVectorFields.rotate(
+            paraField, parallelRotation)
 
-    #     return PerpendicularAndParallelCartesianHarmonicField(
-    #         rotatedPerpField, rotatedParaField)
+        return PerpendicularAndParallelCartesianHarmonicField(
+            rotatedPerpField, rotatedParaField)
 
     # def evaluate(self, location, buffer):
     #     perpField = self.perpendicularField.evaluate(location)

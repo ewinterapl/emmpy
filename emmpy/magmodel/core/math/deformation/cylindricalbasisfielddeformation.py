@@ -2,12 +2,15 @@
 
 
 # import com.google.common.collect.ImmutableList;
-# import crucible.core.math.coords.CylindricalVector;
 # import crucible.core.math.vectorspace.MatrixIJK;
 # import crucible.core.math.vectorspace.UnwritableMatrixIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
 # import magmodel.core.math.vectorfields.DifferentiableCylindricalVectorField;
 
+from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
+    CylindricalFieldDeformation
+)
 from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
     CylindricalBasisVectorField
 )
@@ -28,22 +31,34 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
         self.originalField = originalField
         self.coordDeformation = coordDeformation
 
-    #   @Override
-    #   public ImmutableList<CylindricalVector> evaluateExpansion(CylindricalVector originalCoordinate) {
-    #     DifferentiableCylindricalVectorField.Results deformed =
-    #         coordDeformation.differentiate(originalCoordinate);
-    #     UnwritableMatrixIJK trans =
-    #         CylindricalFieldDeformation.computeMatrix(deformed, originalCoordinate);
-    #     ImmutableList<CylindricalVector> bFieldExpansion =
-    #         originalField.evaluateExpansion(deformed.getF());
-    #     ImmutableList.Builder<CylindricalVector> bFieldExpansionDeformed = ImmutableList.builder();
-    #     for (CylindricalVector bField : bFieldExpansion) {
-    #       VectorIJK v = trans.mxv(
-    #           new VectorIJK(bField.getCylindricalRadius(), bField.getLongitude(), bField.getHeight()));
-    #       bFieldExpansionDeformed.add(new CylindricalVector(v.getI(), v.getJ(), v.getK()));
-    #     }
-    #     return bFieldExpansionDeformed.build();
-    #   }
+    def evaluateExpansion(self, originalCoordinate):
+        """evaluateExpansion
+
+        param CylindricalVector originalCoordinate
+        return [CylindricalVector]
+        """
+
+        # DifferentiableCylindricalVectorField.Results deformed
+        deformed = self.coordDeformation.differentiate(originalCoordinate)
+        # UnwritableMatrixIJK trans
+        trans = CylindricalFieldDeformation.computeMatrix(
+            deformed, originalCoordinate
+        )
+        # [CylindricalVector] bFieldExpansion
+        bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
+        # [CylindricalVector] bFieldExpansionDeformed
+        bFieldExpansionDeformed = []
+        # CylindricalVector bField
+        for bField in bFieldExpansion:
+            # VectorIJK v
+            v = trans.mxv(
+                VectorIJK(bField.getCylindricalRadius(), bField.getLongitude(),
+                          bField.getHeight())
+            )
+            bFieldExpansionDeformed.append(
+                CylindricalVector(v.getI(), v.getJ(), v.getK())
+            )
+        return bFieldExpansionDeformed
 
     #   @Override
     #   public int getNumberOfBasisFunctions() {

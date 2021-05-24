@@ -7,7 +7,6 @@
 # import geomagmodel.ts07.coefficientreader.ThinCurrentSheetShieldingCoefficients;
 # import magmodel.core.math.bessel.BesselFunctionEvaluator;
 # import magmodel.core.math.expansions.Expansion1D;
-# import magmodel.core.math.expansions.Expansion1Ds;
 # import magmodel.core.math.expansions.Expansion2D;
 # import magmodel.core.math.expansions.Expansion2Ds;
 # import magmodel.core.modeling.equatorial.expansion.TailSheetCoefficients;
@@ -16,6 +15,7 @@
 from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
     ThinAsymmetricCurrentSheetBasisVectorShieldingField
 )
+from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
     ThinAsymmetricCurrentSheetBasisVectorField
 )
@@ -93,39 +93,46 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         return ShieldedThinCurrentSheetField(
             thinCurrentSheet, thinCurrentSheetShield, includeShield)
 
-    #   /**
-    #    * 
-    #    * @param position
-    #    * @return
-    #    */
-    #   public TailSheetExpansions evaluateExpansions(UnwritableVectorIJK position) {
+    def evaluateExpansions(self, position):
+        """evaluateExpansions
 
-    #     TailSheetExpansions equatorialExpansions = thinCurrentSheet.evaluateExpansions(position);
+        param UnwritableVectorIJK position
+        return TailSheetExpansions
+        """
 
-    #     // Calculate the field expansions
-    #     Expansion1D<UnwritableVectorIJK> tailSheetSymmetricValues =
-    #         equatorialExpansions.getTailSheetSymmetricValues();
-    #     Expansion2D<UnwritableVectorIJK> tailSheetOddValues =
-    #         equatorialExpansions.getTailSheetOddValues();
-    #     Expansion2D<UnwritableVectorIJK> tailSheetEvenValues =
-    #         equatorialExpansions.getTailSheetEvenValues();
+        # TailSheetExpansions equatorialExpansions
+        equatorialExpansions = (
+            self.thinCurrentSheet.evaluateExpansions(position)
+        )
 
-    #     // This is the most expensive lines of the module, If you don't need the
-    #     // shielding, it should NOT be computed.
-    #     // These three lines account for for over 90% of the model evaluation
-    #     if (includeShield) {
+        # Calculate the field expansions
+        # Expansion1D<UnwritableVectorIJK> tailSheetSymmetricValues
+        tailSheetSymmetricValues = (
+            equatorialExpansions.getTailSheetSymmetricValues()
+        )
+        # Expansion2D<UnwritableVectorIJK> tailSheetOddValues,
+        # tailSheetEvenValues
+        tailSheetOddValues = equatorialExpansions.getTailSheetOddValues()
+        tailSheetEvenValues = equatorialExpansions.getTailSheetEvenValues()
 
-    #       TailSheetExpansions shield = thinCurrentSheetShield.evaluateExpansions(position);
-
-    #       Expansion1D<UnwritableVectorIJK> tailSheetSymmetricShieldValues =
-    #           shield.getTailSheetSymmetricValues();
-
-    #       Expansion2D<UnwritableVectorIJK> tailSheetOddShieldValues = shield.getTailSheetOddValues();
-
-    #       Expansion2D<UnwritableVectorIJK> tailSheetEvenShieldValues = shield.getTailSheetEvenValues();
-
-    #       tailSheetSymmetricValues =
-    #           Expansion1Ds.Vectors.add(tailSheetSymmetricValues, tailSheetSymmetricShieldValues);
+        # This is the most expensive lines of the module, If you don't need the
+        # shielding, it should NOT be computed. These three lines account for
+        # for over 90% of the model evaluation
+        if self.includeShield:
+            # TailSheetExpansions shield
+            shield = self.thinCurrentSheetShield.evaluateExpansions(position)
+            # Expansion1D<UnwritableVectorIJK> tailSheetSymmetricShieldValues
+            tailSheetSymmetricShieldValues = (
+                shield.getTailSheetSymmetricValues()
+            )
+            # Expansion2D<UnwritableVectorIJK> tailSheetOddShieldValues
+            tailSheetOddShieldValues = shield.getTailSheetOddValues()
+            # Expansion2D<UnwritableVectorIJK> tailSheetEvenShieldValues
+            tailSheetEvenShieldValues = shield.getTailSheetEvenValues()
+            tailSheetSymmetricValues = (
+                Expansion1Ds.Vectors.add(tailSheetSymmetricValues,
+                                         tailSheetSymmetricShieldValues)
+            )
     #       tailSheetOddValues = Expansion2Ds.Vectors.add(tailSheetOddValues, tailSheetOddShieldValues);
     #       tailSheetEvenValues =
     #           Expansion2Ds.Vectors.add(tailSheetEvenValues, tailSheetEvenShieldValues);

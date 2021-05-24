@@ -216,22 +216,22 @@ class UnwritableVectorIJK:
     #     """
     #     return pi/2 - self.getSeparation(normal)
 
-    # # @staticmethod
-    # def copyOf(vector):
-    #     """Makes an unwritable copy of the supplied vector.
+    @staticmethod
+    def copyOf(vector):
+        """Makes an unwritable copy of the supplied vector.
 
-    #     This method makes an unwritable copy only if necessary. It tries to
-    #     avoid making a copy wherever possible.
+        This method makes an unwritable copy only if necessary. It tries to
+        avoid making a copy wherever possible.
 
-    #     @param vector a vector to copy.
+        @param vector a vector to copy.
 
-    #     @return either a reference to vector (if vector is already only an
-    #     instance of {@link UnwritableVectorIJK}, otherwise an unwritable copy
-    #     of vector's contents
-    #     """
-    #     if isinstance(vector, UnwritableVectorIJK):
-    #         return vector
-    #     return UnwritableVectorIJK(vector)
+        @return either a reference to vector (if vector is already only an
+        instance of {@link UnwritableVectorIJK}, otherwise an unwritable copy
+        of vector's contents
+        """
+        if isinstance(vector, UnwritableVectorIJK):
+            return vector
+        return UnwritableVectorIJK(vector)
 
     # def hashCode(self) -> int:
     #     """Compute the hash code."""

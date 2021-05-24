@@ -24,14 +24,14 @@ class TailSheetExpansions:
         self.numAzimuthalExpansions = tailSheetOddValues.iSize()
         self.numRadialExpansions = tailSheetOddValues.jSize()
 
-    # def getTailSheetSymmetricValues(self):
-    #     return self.tailSheetSymmetricValues
+    def getTailSheetSymmetricValues(self):
+        return self.tailSheetSymmetricValues
 
-    # def getTailSheetOddValues(self):
-    #     return self.tailSheetOddValues
+    def getTailSheetOddValues(self):
+        return self.tailSheetOddValues
 
-    # def getTailSheetEvenValues(self):
-    #     return self.tailSheetEvenValues
+    def getTailSheetEvenValues(self):
+        return self.tailSheetEvenValues
 
     # def getAsTailSheetExpansions(
     #     self, expansion, numAzimuthalExpansions, numRadialExpansions

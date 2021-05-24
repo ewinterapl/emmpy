@@ -191,10 +191,7 @@ class CylindricalCoordsXAligned:
 
                 # evaluate the Cartesian field
                 # list
-                fieldCartExpansion = (
-                    CylindricalCoordsXAligned.cartesian.evaluateExpansion(
-                        locCart)
-                )
+                fieldCartExpansion = cartesian.evaluateExpansion(locCart)
                 fieldCylExpansion = []
                 # UnwritableVectorIJK fieldCart
                 for fieldCart in fieldCartExpansion:

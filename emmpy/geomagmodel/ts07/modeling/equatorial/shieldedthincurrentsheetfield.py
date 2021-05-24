@@ -8,30 +8,26 @@
 # import magmodel.core.math.bessel.BesselFunctionEvaluator;
 # import magmodel.core.math.expansions.Expansion1D;
 # import magmodel.core.math.expansions.Expansion2D;
-# import magmodel.core.math.expansions.Expansion2Ds;
 # import magmodel.core.modeling.equatorial.expansion.TailSheetCoefficients;
-# import magmodel.core.modeling.equatorial.expansion.TailSheetExpansions;
 
 from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
     ThinAsymmetricCurrentSheetBasisVectorShieldingField
 )
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
+from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
     ThinAsymmetricCurrentSheetBasisVectorField
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
+    TailSheetExpansions
+)
 
 
 class ShieldedThinCurrentSheetField(BasisVectorField):
     """author G.K.Stephens"""
-
-    #   private final ThinAsymmetricCurrentSheetBasisVectorField thinCurrentSheet;
-    #   private final ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield;
-    #   private final int numAzimuthalExpansions;
-    #   private final int numRadialExpansions;
-    #   private final boolean includeShield;
 
     def __init__(self, thinCurrentSheet, thinCurrentSheetShield,
         includeShield):
@@ -133,14 +129,15 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
                 Expansion1Ds.Vectors.add(tailSheetSymmetricValues,
                                          tailSheetSymmetricShieldValues)
             )
-    #       tailSheetOddValues = Expansion2Ds.Vectors.add(tailSheetOddValues, tailSheetOddShieldValues);
-    #       tailSheetEvenValues =
-    #           Expansion2Ds.Vectors.add(tailSheetEvenValues, tailSheetEvenShieldValues);
-    #     }
+            tailSheetOddValues = Expansion2Ds.Vectors.add(
+                tailSheetOddValues, tailSheetOddShieldValues
+            )
+            tailSheetEvenValues = Expansion2Ds.Vectors.add(
+                tailSheetEvenValues, tailSheetEvenShieldValues
+            )
 
-    #     return new TailSheetExpansions(tailSheetSymmetricValues, tailSheetOddValues,
-    #         tailSheetEvenValues);
-    #   }
+        return TailSheetExpansions(tailSheetSymmetricValues, tailSheetOddValues,
+                                   tailSheetEvenValues)
 
     #   @Override
     #   public ImmutableList<UnwritableVectorIJK> evaluateExpansion(UnwritableVectorIJK location) {

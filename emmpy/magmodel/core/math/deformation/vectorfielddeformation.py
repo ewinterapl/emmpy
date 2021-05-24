@@ -43,7 +43,8 @@ class VectorFieldDeformation(VectorField):
 
         return buffer.setTo(v.getI(), v.getJ(), v.getK())
 
-    def computeMatrix(self, deformed):
+    @staticmethod
+    def computeMatrix(deformed):
         """computeMatrix
 
         param deformed

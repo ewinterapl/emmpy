@@ -145,10 +145,18 @@ class VectorFields:
         vf = VectorField()
         # UnwritableVectorIJK location
         # VectorIJK buffer
-        vf.evaluate = (
-            lambda location, buffer:
-            field.evaluate(location, buffer).scale(scaleFactor)
-        )
+
+        def my_evaluate(*my_args):
+            if len(my_args) == 1:
+                (location,) = my_args
+                buffer = VectorIJK()
+                return field.evaluate(location, buffer)
+            elif len(my_args) == 2:
+                (location, buffer) = my_args
+                return field.evaluate(location, buffer).scale(scaleFactor)
+            else:
+                raise Exception
+        vf.evaluate = my_evaluate
         return vf
 
     @staticmethod

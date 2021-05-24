@@ -23,9 +23,13 @@ class BasisVectorFields:
     @staticmethod
     def asBasisField(field):
         bvf = BasisVectorField()
-        bvf.evaluateExpansion = (
-            lambda location: [field.evaluate(location)]
-        )
+        # bvf.evaluateExpansion = (
+        #     lambda location: [field.evaluate(location)]
+        # )
+
+        def my_evaluateExpansion(location):
+            return [field.evaluate(location)]
+        bvf.evaluateExpansion = my_evaluateExpansion
         bvf.getNumberOfBasisFunctions = lambda: 1
         return bvf
 

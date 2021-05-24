@@ -27,7 +27,7 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )
 # from emmpy.java.lang.double import Double
-# from emmpy.utilities.isrealnumber import isRealNumber
+from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableVectorIJK:

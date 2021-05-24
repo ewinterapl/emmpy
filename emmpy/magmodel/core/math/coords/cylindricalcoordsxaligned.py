@@ -202,13 +202,12 @@ class CylindricalCoordsXAligned:
                         CylindricalCoordsXAligned.convertFieldValue(
                             locCart, fieldCart))
                 return fieldCylExpansion
-            cylbvf = my_evaluateExpansion
+            cylbvf.evaluateExpansion = my_evaluateExpansion
 
             cylbvf.getNumberOfBasisFunctions = (
                 lambda: cartesian.getNumberOfBasisFunctions()
             )
             return cylbvf
-
         else:
             raise Exception
 

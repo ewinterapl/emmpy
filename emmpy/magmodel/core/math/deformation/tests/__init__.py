@@ -8,6 +8,7 @@ Modules
 -------
 test_BasisVectorFieldDeformation.py
 test_CylindricalBasisVectorFieldDeformation.py
+test_CylindricalFieldDeformation.py
 test_SphericalFieldDeformation.py
 test_VectorFieldDeformation.py
 """

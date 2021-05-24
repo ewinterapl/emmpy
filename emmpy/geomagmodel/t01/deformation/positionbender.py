@@ -6,15 +6,17 @@
 # import static crucible.core.math.CrucibleMath.sin;
 # import static crucible.core.math.CrucibleMath.sqrt;
 # import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
 # import magmodel.core.math.deformation.VectorFieldDeformation;
 # import magmodel.core.math.vectorfields.BasisVectorField;
 
-from math import sin
+from math import sin, sqrt
 
 from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
-    DifferentiableVectorField
+    DifferentiableVectorField, Results
+)
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
 )
 from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
     BasisVectorFieldDeformation
@@ -39,12 +41,11 @@ class PositionBender(DifferentiableVectorField):
     author G.K.Stephens
     """
 
-    # private final double sinTilt;
-    # private final double rh0;
-    # // Can be changed to "0" to avoid problems with simplex iterating to
-    # // non-real values.
-    # private final double rh2 = -5.2;
-    # private final double epsilon = 3;
+    # Can be changed to "0" to avoid problems with simplex iterating to
+    # non-real values.
+    # float rh2, epsilon
+    rh2 = -5.2
+    epsilon = 3
 
     def __init__(self, dipoleTilt, hingeDistance):
         """Constructor
@@ -139,81 +140,81 @@ class PositionBender(DifferentiableVectorField):
     #     return buffer.setTo(xS, yS, zS);
     # }
 
-    # @Override
-    # public Results differentiate(UnwritableVectorIJK location) {
+    def differentiate(self, location):
+        """differentiate
 
-    #     double x = location.getI();
-    #     double y = location.getJ();
-    #     double z = location.getK();
+        param UnwritableVectorIJK location
+        return Results
+        """
+        # float x, y, z, r2, r, z_r
+        x = location.getI()
+        y = location.getJ()
+        z = location.getK()
+        r2 = x*x + y*y + z*z
+        r = sqrt(r2)
+        z_r = z/r
 
-    #     double r2 = x * x + y * y + z * z;
-    #     double r = sqrt(r2);
-    #     double z_r = z / r;
+        # Allow the hinging distance to be a function of position,
+        # Tsy. 1998 eq. 12
+        # double rh, r_rh
+        rh = self.rh0 + PositionBender.rh2 * z_r*z_r
+        r_rh = r/rh
 
-    #     /*
-    #     * Allow the hinging distance to be a function of position, Tsy. 1998 eq. 12
-    #     */
-    #     double rh = rh0 + rh2 * z_r * z_r;
+        # eq. 10 Tsy. 1998, Q(r) = [1+ (r/RH)^ep ]^(-1/ep)
+        # float Q
+        Q = 1/pow(1 + pow(r_rh, PositionBender.epsilon), 1/PositionBender.epsilon)
 
-    #     // r/RH
-    #     double r_rh = r / rh;
+        # Now compute the cos and sin of the radial dependent tilt angle,
+        # this is Tsy. 1998 eq. 7
+        # float sinTiltS, cosTiltS
+        sinTiltS = self.sinTilt *Q
+        cosTiltS = sqrt(1 - sinTiltS*sinTiltS)
 
-    #     /*
-    #     * eq. 10 Tsy. 1998, Q(r) = [1+ (r/RH)^ep ]^(-1/ep)
-    #     */
-    #     double Q = 1 / pow(1 + pow(r_rh, epsilon), 1 / epsilon);
+        # The point deformation from eq. 7 in Tsy. 1998
+        # float xS, yS, zS
+        xS = x*cosTiltS - z*sinTiltS
+        yS = y
+        zS = x*sinTiltS + z*cosTiltS
 
-    #     /*
-    #     * Now compute the cos and sin of the radial dependent tilt angle, this is Tsy. 1998 eq. 7
-    #     */
-    #     double sinTiltS = sinTilt * Q;
-    #     double cosTiltS = sqrt(1 - sinTiltS * sinTiltS);
+        # The radial and height derivative of Rh
+        # float dRhDr, dRhDz
+        dRhDr = -2*PositionBender.rh2*z_r*z_r/r
+        dRhDz = 2*PositionBender.rh2*z_r/r
 
-    #     /*
-    #     * The point deformation from eq. 7 in Tsy. 1998
-    #     */
-    #     double xS = x * cosTiltS - z * sinTiltS;
-    #     double yS = y;
-    #     double zS = x * sinTiltS + z * cosTiltS;
+        # Now compute the x,y,z derivatives of Q, apply the chain rule
+        # fr is the first term dQ/dr
+        # float fr, dQdRh, dQdr, dQdx, dQdy, dQdz
+        fr = -pow(r_rh, PositionBender.epsilon - 1)*pow(Q, PositionBender.epsilon + 1)/rh
+        dQdRh = -r_rh*fr
+        dQdr = fr - fr*r_rh*dRhDr
+        dQdx = dQdr*x/r
+        dQdy = dQdr*y/r
+        dQdz = dQdr*z/r + dQdRh*dRhDz
 
-    #     /*
-    #     * The radial and height derivative of Rh
-    #     */
-    #     double dRhDr = -2. * rh2 * z_r * z_r / r;
-    #     double dRhDz = 2. * rh2 * z_r / r;
+        # store this ratio sinT/cosT*
+        # float sin_cos
+        sin_cos = self.sinTilt/cosTiltS
 
-    #     /*
-    #     * Now compute the x,y,z derivatives of Q, apply the chain rule
-    #     */
-    #     // fr is the first term dQ/dr
-    #     double fr = -pow(r_rh, epsilon - 1) * pow(Q, epsilon + 1) / rh;
-    #     double dQdRh = -r_rh * fr;
-    #     double dQdr = fr - fr * r_rh * dRhDr;
-    #     double dQdx = dQdr * x / r;
-    #     double dQdy = dQdr * y / r;
-    #     double dQdz = dQdr * z / r + dQdRh * dRhDz;
+        # float dXsdx, dXsdy, dXsdz, dYsdx, dYsdy, dYsdz, dZsdx, dZsdy, dZsdz
+        dXsDx = cosTiltS - zS * dQdx*sin_cos
+        dXsDy = -zS*dQdy*sin_cos
+        dXsDz = -sinTiltS - zS*dQdz*sin_cos
+        dYsDx = 0.0
+        dYsDy = 1.0
+        dYsDz = 0.0
+        dZsDx = sinTiltS + xS*dQdx*sin_cos
+        dZsDy = xS*dQdy*sin_cos
+        dZsDz = cosTiltS + xS*dQdz*sin_cos
 
-    #     // store this ratio sinT/cosT*
-    #     double sin_cos = sinTilt / cosTiltS;
+        # UnwritableVectorIJK f
+        f = UnwritableVectorIJK(xS, yS, zS)
 
-    #     double dXsDx = cosTiltS - zS * dQdx * sin_cos;
-    #     double dXsDy = -zS * dQdy * sin_cos;
-    #     double dXsDz = -sinTiltS - zS * dQdz * sin_cos;
+        # Results results`
+        results = Results(
+            f, dXsDx, dXsDy, dXsDz, dYsDx, dYsDy, dYsDz, dZsDx, dZsDy, dZsDz
+        )
 
-    #     double dYsDx = 0;
-    #     double dYsDy = 1;
-    #     double dYsDz = 0;
-
-    #     double dZsDx = sinTiltS + xS * dQdx * sin_cos;
-    #     double dZsDy = xS * dQdy * sin_cos;
-    #     double dZsDz = cosTiltS + xS * dQdz * sin_cos;
-
-    #     UnwritableVectorIJK f = new UnwritableVectorIJK(xS, yS, zS);
-
-    #     Results results = new Results(f, dXsDx, dXsDy, dXsDz, dYsDx, dYsDy, dYsDz, dZsDx, dZsDy, dZsDz);
-
-    #     return results;
-    # }
+        return results
 
     # @Override
     # public double differentiateFiDi(@SuppressWarnings("unused") UnwritableVectorIJK location) {

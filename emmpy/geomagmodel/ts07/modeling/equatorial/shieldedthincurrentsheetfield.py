@@ -139,10 +139,13 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         return TailSheetExpansions(tailSheetSymmetricValues, tailSheetOddValues,
                                    tailSheetEvenValues)
 
-    #   @Override
-    #   public ImmutableList<UnwritableVectorIJK> evaluateExpansion(UnwritableVectorIJK location) {
-    #     return evaluateExpansions(location).getExpansionsAsList();
-    #   }
+    def evaluateExpansion(self, location):
+        """evaluateExpansion
+
+        param UnwritableVectorIJK location
+        return [UnwritableVectorIJK] 
+        """
+        return self.evaluateExpansions(location).getExpansionsAsList()
 
     #   @Override
     #   public int getNumberOfBasisFunctions() {

@@ -170,15 +170,15 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     #     VectorIJK.add(perpField, parField, buffer)
     #     return buffer
 
-    # def evaluateExpansion(self, location):
-    #     perpFields = self.perpendicularField.evaluateExpansion(location)
-    #     parFields = self.parallelField.evaluateExpansion(location)
-    #     expansions = []
-    #     for f in perpFields:
-    #         expansions.append(f)
-    #     for f in parFields:
-    #         expansions.append(f)
-    #     return expansions
+    def evaluateExpansion(self, location):
+        perpFields = self.perpendicularField.evaluateExpansion(location)
+        parFields = self.parallelField.evaluateExpansion(location)
+        expansions = []
+        for f in perpFields:
+            expansions.append(f)
+        for f in parFields:
+            expansions.append(f)
+        return expansions
 
     # def getNumberOfBasisFunctions(self):
     #     return (self.perpendicularField.getNumberOfBasisFunctions()

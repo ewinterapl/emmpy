@@ -1,10 +1,10 @@
 """emmpy.magmodel.core.math.alternatecartesianharmonicfield"""
 
 
-# from math import exp, sqrt
+from math import exp, sqrt
 
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-# from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -79,45 +79,45 @@ class AlternateCartesianHarmonicField(BasisVectorField):
     #                 bz += aik*exp_*pk*sinYpi*cosZpk
     #     return buffer.setTo(-bx, -by, -bz)
 
-    # def evaluateExpansion2D(self, location):
-    #     """Returns the full expansion results."""
-    #     x = location.getI()
-    #     y = location.getJ()
-    #     z = location.getK()
-    #     expansions = []
-    #     for i in range(self.aikCoeffs.iSize()):
-    #         expansions.append([])
-    #         for j in range(self.aikCoeffs.jSize()):
-    #             expansions[i].append(None)
-    #     for i in range(self.firstI, self.lastI + 1):
-    #         pi = self.piCoeffs.getCoefficient(i)
-    #         sinYpi = self.trigParityI.evaluate(pi*y)
-    #         cosYpi = self.trigParityI.differentiate(pi*y)
-    #         for k in range(self.firstK, self.lastK + 1):
-    #             pk = self.pkCoeffs.getCoefficient(k)
-    #             sqrtP = sqrt(pi*pi + pk*pk)
-    #             exp_ = exp(x*sqrtP)
-    #             sinZpk = self.trigParityK.evaluate(pk*z)
-    #             cosZpk = self.trigParityK.differentiate(pk*z)
-    #             aik = self.aikCoeffs.getCoefficient(i, k)
-    #             if k == self.lastK:
-    #                 bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +
-    #                       sinZpk*pk*(x + 1.0/sqrtP)))
-    #                 by = -aik*exp_*pi*cosYpi*(z*cosZpk + x*pk*sinZpk/sqrtP)
-    #                 bz = (-aik*exp_*sinYpi*(cosZpk*(1.0 + x*pk*pk/sqrtP)
-    #                                         - z*pk*sinZpk))
-    #                 # scale the vector, the minus sign comes from the B=-dell U
-    #                 vect = VectorIJK(bx, by, bz)
-    #                 expansions[i - self.firstI][k - self.firstK] = vect
-    #             else:
-    #                 bx = -aik*exp_*sqrtP*sinYpi*sinZpk
-    #                 by = -aik*exp_*pi*cosYpi*sinZpk
-    #                 bz = -aik*exp_*pk*sinYpi*cosZpk
-    #                 # scale the vector, the minus sign comes from the B=-dell U
-    #                 vect = VectorIJK(bx, by, bz)
-    #                 expansions[i - self.firstI][k - self.firstK] = vect
-    #     return Expansion2Ds.createFromArray(expansions, self.firstI,
-    #                                         self.firstK)
+    def evaluateExpansion2D(self, location):
+        """Returns the full expansion results."""
+        x = location.getI()
+        y = location.getJ()
+        z = location.getK()
+        expansions = []
+        for i in range(self.aikCoeffs.iSize()):
+            expansions.append([])
+            for j in range(self.aikCoeffs.jSize()):
+                expansions[i].append(None)
+        for i in range(self.firstI, self.lastI + 1):
+            pi = self.piCoeffs.getCoefficient(i)
+            sinYpi = self.trigParityI.evaluate(pi*y)
+            cosYpi = self.trigParityI.differentiate(pi*y)
+            for k in range(self.firstK, self.lastK + 1):
+                pk = self.pkCoeffs.getCoefficient(k)
+                sqrtP = sqrt(pi*pi + pk*pk)
+                exp_ = exp(x*sqrtP)
+                sinZpk = self.trigParityK.evaluate(pk*z)
+                cosZpk = self.trigParityK.differentiate(pk*z)
+                aik = self.aikCoeffs.getCoefficient(i, k)
+                if k == self.lastK:
+                    bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +
+                          sinZpk*pk*(x + 1.0/sqrtP)))
+                    by = -aik*exp_*pi*cosYpi*(z*cosZpk + x*pk*sinZpk/sqrtP)
+                    bz = (-aik*exp_*sinYpi*(cosZpk*(1.0 + x*pk*pk/sqrtP)
+                                            - z*pk*sinZpk))
+                    # scale the vector, the minus sign comes from the B=-dell U
+                    vect = VectorIJK(bx, by, bz)
+                    expansions[i - self.firstI][k - self.firstK] = vect
+                else:
+                    bx = -aik*exp_*sqrtP*sinYpi*sinZpk
+                    by = -aik*exp_*pi*cosYpi*sinZpk
+                    bz = -aik*exp_*pk*sinYpi*cosZpk
+                    # scale the vector, the minus sign comes from the B=-dell U
+                    vect = VectorIJK(bx, by, bz)
+                    expansions[i - self.firstI][k - self.firstK] = vect
+        return Expansion2Ds.createFromArray(expansions, self.firstI,
+                                            self.firstK)
 
     # def getFistIexpansionNumber(self):
     #     return self.firstI
@@ -131,13 +131,13 @@ class AlternateCartesianHarmonicField(BasisVectorField):
     # def getLastKexpansionNumber(self):
     #     return self.lastK
 
-    # def evaluateExpansion(self, location):
-    #     functions = []
-    #     expansions = self.evaluateExpansion2D(location)
-    #     for i in range(self.firstI, self.lastI + 1):
-    #         for k in range(self.firstK, self.lastK + 1):
-    #             functions.append(expansions.getExpansion(i, k))
-    #     return functions
+    def evaluateExpansion(self, location):
+        functions = []
+        expansions = self.evaluateExpansion2D(location)
+        for i in range(self.firstI, self.lastI + 1):
+            for k in range(self.firstK, self.lastK + 1):
+                functions.append(expansions.getExpansion(i, k))
+        return functions
 
     # def getNumberOfBasisFunctions(self):
     #     return self.aikCoeffs.iSize()*self.aikCoeffs.jSize()

@@ -4,7 +4,6 @@
 # import static crucible.core.math.CrucibleMath.cos;
 # import static crucible.core.math.CrucibleMath.pow;
 # import static crucible.core.math.CrucibleMath.sin;
-# import crucible.core.math.coords.CylindricalVector;
 # import crucible.core.math.vectorfields.VectorField;
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;
 # import crucible.core.math.vectorspace.VectorIJK;
@@ -14,8 +13,11 @@
 # import magmodel.core.math.vectorfields.CylindricalBasisVectorField;
 # import magmodel.core.math.vectorfields.CylindricalVectorField;
 
-from math import sin
+from math import cos, sin
 
+from emmpy.crucible.core.math.coords.cylindricalvector import (
+    CylindricalVector
+)
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
@@ -23,7 +25,7 @@ from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation impor
     CylindricalBasisFieldDeformation
 )
 from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
-    DifferentiableCylindricalVectorField
+    DifferentiableCylindricalVectorField, Results
 )
 
 
@@ -163,52 +165,71 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     #     return new CylindricalVector(rho, F, x);
     #   }
 
-    #   /**
-    #    * Evaluates the twist and warp transformation of the polar angle, F(rho, phi, x) where (rho, phi,
-    #    * x) are the original undistorted coordinates (in modified cylindrical coordinates) and the
-    #    * partial derivatives of F with respect to these original coordinates
-    #    * 
-    #    */
-    #   @Override
-    #   public Results differentiate(CylindricalVector location) {
+    def differentiate(self, location):
+        """Evaluates the twist and warp transformation of the polar angle,
 
-    #     double x = location.getHeight();
+        F(rho, phi, x) where (rho, phi, x) are the original undistorted
+        coordinates (in modified cylindrical coordinates) and the partial
+        derivatives of F with respect to these original coordinates
 
-    #     double rho = location.getCylindricalRadius();
-    #     // TODO
-    #     if (rho == 0.0) {
-    #       rho = 1.0E-14;
-    #     }
-    #     double rho2 = rho * rho;
+        param CylindricalVector location
+        return Results
+        """
 
-    #     double phi = location.getLongitude();
-    #     double sinPhi = sin(phi);
-    #     double cosPhi = cos(phi);
+        # float x, rho, rho2, phi, sinPhi, cosPhi, rho4L4
+        x = location.getHeight()
+        rho = location.getCylindricalRadius()
+        # TODO
+        if rho == 0.0:
+            rho = 1.0E-14
+        rho2 = rho*rho
+        phi = location.getLongitude()
+        sinPhi = sin(phi)
+        cosPhi = cos(phi)
+        rho4L4 = (
+            rho/(rho2*rho2 + (TwistWarpFfunction.xL*TwistWarpFfunction.xL*
+                              TwistWarpFfunction.xL*TwistWarpFfunction.xL))
+        )
 
-    #     double rho4L4 = rho / (rho2 * rho2 + (xL * xL * xL * xL));
+        # Calculate F (the adjusted phi measurement) and its derivatives
+        # float F
+        F = (
+            phi + self.warpParam*rho2*rho4L4*cosPhi*self.sinDipoleTilt +
+            self.twistParam*x
+        )
 
-    #     // Calculate F (the adjusted phi measurement) and its derivatives
-    #     double F = phi + warpParam * rho2 * rho4L4 * cosPhi * sinDipoleTilt + twistParam * x;
+        # compute derivatives of F with respect to phi, rho, and x
+        # float dRho_dPhi, dRho_dRho, dRho_dx
+        dRho_dPhi = 0.0
+        dRho_dRho = 1.0
+        dRho_dx = 0.0
 
-    #     // compute derivatives of F with respect to phi, rho, and x
-    #     double dRho_dPhi = 0.0;
-    #     double dRho_dRho = 1.0;
-    #     double dRho_dx = 0.0;
+        # float dF_dPhi, dF_dRho, dF_dx
+        dF_dPhi = 1 - self.warpParam*rho2*rho4L4*sinPhi*self.sinDipoleTilt
+        dF_dRho = (
+            self.warpParam*rho4L4*rho4L4*
+            (3*TwistWarpFfunction.xL*TwistWarpFfunction.xL*
+             TwistWarpFfunction.xL*TwistWarpFfunction.xL - rho2*rho2) *
+            cosPhi*self.sinDipoleTilt
+        )
+        dF_dx = (
+            rho4L4*cosPhi*self.sinDipoleTilt *
+            (TwistWarpFfunction.dG_dx*rho2 - self.warpParam*rho*rho4L4*4 *
+             pow(TwistWarpFfunction.xL, 3)*TwistWarpFfunction.dxL_dx) +
+            self.twistParam
+        )
 
-    #     double dF_dPhi = 1 - warpParam * rho2 * rho4L4 * sinPhi * sinDipoleTilt;
-    #     double dF_dRho = warpParam * rho4L4 * rho4L4 * (3 * xL * xL * xL * xL - rho2 * rho2) * cosPhi
-    #         * sinDipoleTilt;
-    #     double dF_dx = rho4L4 * cosPhi * sinDipoleTilt
-    #         * (dG_dx * rho2 - warpParam * rho * rho4L4 * 4 * pow(xL, 3) * dxL_dx) + twistParam;
+        # float dx_dPhi, dx_dRho, dx_dx
+        dx_dPhi = 0.0
+        dx_dRho = 0.0
+        dx_dx = 1.0
 
-    #     double dx_dPhi = 0.0;
-    #     double dx_dRho = 0.0;
-    #     double dx_dx = 1.0;
+        # CylindricalVector deformed
+        deformed = CylindricalVector(rho, F, x)
 
-    #     CylindricalVector deformed = new CylindricalVector(rho, F, x);
-
-    #     return new Results(deformed, dRho_dRho, dRho_dPhi, dRho_dx, dF_dRho, dF_dPhi, dF_dx, dx_dRho,
-    #         dx_dPhi, dx_dx);
-    #   }
-
-    # }
+        return Results(
+            deformed,
+            dRho_dRho, dRho_dPhi, dRho_dx,
+            dF_dRho, dF_dPhi, dF_dx,
+            dx_dRho, dx_dPhi, dx_dx
+        )

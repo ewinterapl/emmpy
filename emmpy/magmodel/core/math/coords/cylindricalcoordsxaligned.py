@@ -134,7 +134,32 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertBasisField(*args):
-        if isinstance(args[0], BasisVectorField):
+        if isinstance(args[0], CylindricalBasisVectorField):
+            (cylField,) = args
+            # Converts a CylindricalBasisVectorField to a Cartesian
+            # BasisVectorField
+            # param cylField a CylindricalBasisVectorField
+            # return a newly constructed Cartesian BasisVectorField
+            bvf = BasisVectorField()
+            def my_evaluateExpansion(location):
+                # param UnwritableVectorIJK location
+                # return ImmutableList<UnwritableVectorIJK>
+                locCyl = CylindricalCoordsXAligned.convert(location)
+                fieldCylExpansion = cylField.evaluateExpansion(locCyl)
+                fieldExpansion = []
+                for fieldCyl in fieldCylExpansion:
+                    fieldExpansion.append(
+                        CylindricalCoordsXAligned.convertFieldValue(
+                            locCyl, fieldCyl
+                        )
+                )
+                return fieldExpansion
+            bvf.evaluateExpansion = my_evaluateExpansion
+            bvf.getNumberOfBasisFunctions = (
+                lambda: cylField.getNumberOfBasisFunctions()
+            )
+            return bvf
+        elif isinstance(args[0], BasisVectorField):
             (cartesian,) = args
             # Converts a Cartesian BasisVectorField to a CylindricalBasisVectorField
             # param cartesian a Cartesian BasisVectorField
@@ -184,31 +209,6 @@ class CylindricalCoordsXAligned:
             )
             return cylbvf
 
-        elif isinstance(args[0], CylindricalBasisVectorField):
-            (cylField,) = args
-            # Converts a CylindricalBasisVectorField to a Cartesian
-            # BasisVectorField
-            # param cylField a CylindricalBasisVectorField
-            # return a newly constructed Cartesian BasisVectorField
-            bvf = BasisVectorField()
-            def my_evaluateExpansion(location):
-                # param UnwritableVectorIJK location
-                # return ImmutableList<UnwritableVectorIJK>
-                locCyl = CylindricalCoordsXAligned.convert(location)
-                fieldCylExpansion = cylField.evaluateExpansion(locCyl)
-                fieldExpansion = []
-                for fieldCyl in fieldCylExpansion:
-                    fieldExpansion.append(
-                        CylindricalCoordsXAligned.convertFieldValue(
-                            locCyl, fieldCyl
-                        )
-                )
-                return fieldExpansion
-            bvf.evaluateExpansion = my_evaluateExpansion
-            bvf.getNumberOfBasisFunctions = (
-                lambda: cylField.getNumberOfBasisFunctions()
-            )
-            return bvf
         else:
             raise Exception
 

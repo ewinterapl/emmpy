@@ -14,6 +14,8 @@
 # import magmodel.core.math.expansions.Expansion2Ds;
 # import magmodel.core.modeling.equatorial.expansion.TailSheetExpansions;
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -42,13 +44,36 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
     #     return evaluateExpansions(location).getExpansionsAsList();
     #   }
 
-    #   public TailSheetExpansions evaluateExpansions(UnwritableVectorIJK location) {
-    #     UnwritableVectorIJK[] symmetricExpansions = new UnwritableVectorIJK[numRadialExpansions];
-    #     UnwritableVectorIJK[][] oddExpansions =
-    #         new UnwritableVectorIJK[numAzimuthalExpansions][numRadialExpansions];
-    #     UnwritableVectorIJK[][] evenExpansions =
-    #         new UnwritableVectorIJK[numAzimuthalExpansions][numRadialExpansions];
-    #     // n is the radial expansion number
+    def evaluateExpansions(self, location):
+        """evaluateExpansions
+
+        param UnwritableVectorIJK location
+        return TailSheetExpansions
+        """
+        # [UnwritableVectorIJK] symmetricExpansions
+        symmetricExpansions = [None]*self.numRadialExpansions
+        # [[UnwritableVectorIJK]] oddExpansions, evenExpansions
+        oddExpansions = []
+        evenExpansions = []
+        for i in range(self.numAzimuthalExpansions):
+            oddExpansions.append([None])
+            evenExpansions.append([None])
+            for j in range(self.numRadialExpansions):
+                oddExpansions[i].append(None)
+                evenExpansions[i].append(None)
+
+        # n is the radial expansion number
+        for n in range(self.numRadialExpansions + 1):
+            # CoefficientExpansion2D tailExpansion
+            tailExpansion = (
+                self.coeffs.getSymmetricTailExpansion().getExpansion(n)
+            )
+            waveNumberExpansion = (
+                self.coeffs.getSymmetricTailWaveExpansion().getExpansion(n)
+            )
+            buffer = VectorIJK()
+            chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,
+                                           bessel, TrigParity.ODD)
     #     for (int n = 1; n <= numRadialExpansions; n++) {
     #       CoefficientExpansion2D tailExpansion = coeffs.getSymmetricTailExpansion().getExpansion(n);
     #       CoefficientExpansion1D waveNumberExpansion =
@@ -59,6 +84,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
     #       symmetricExpansions[n - 1] =
     #           new UnwritableVectorIJK(buffer.getI(), buffer.getJ(), buffer.getK());
     #     }
+
     #     // n is the radial expansion number
     #     // m is the azimuthal expansion number
     #     double negateConst = 1.0;

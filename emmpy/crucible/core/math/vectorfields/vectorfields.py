@@ -150,12 +150,11 @@ class VectorFields:
             if len(my_args) == 1:
                 (location,) = my_args
                 buffer = VectorIJK()
-                return field.evaluate(location, buffer)
             elif len(my_args) == 2:
                 (location, buffer) = my_args
-                return field.evaluate(location, buffer).scale(scaleFactor)
             else:
                 raise Exception
+            return field.evaluate(location, buffer).scale(scaleFactor)
         vf.evaluate = my_evaluate
         return vf
 

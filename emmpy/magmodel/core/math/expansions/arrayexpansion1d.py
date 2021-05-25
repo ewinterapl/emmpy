@@ -15,11 +15,11 @@ class ArrayExpansion1D(Expansion1D):
             firstRadialExpansionNumber + len(array) - 1
         )
 
-    # def getLowerBoundIndex(self):
-    #     return self.firstRadialExpansionNumber
+    def getLowerBoundIndex(self):
+        return self.firstRadialExpansionNumber
 
-    # def getUpperBoundIndex(self):
-    #     return self.lastRadialExpansionNumber
+    def getUpperBoundIndex(self):
+        return self.lastRadialExpansionNumber
 
     def getExpansion(self, radialExpansion):
         return self.array[radialExpansion - self.firstRadialExpansionNumber]

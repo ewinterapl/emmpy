@@ -1,9 +1,6 @@
 """emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients"""
 
 
-# from emmpy.com.google.common.base.preconditions import Preconditions
-
-
 class ThinCurrentSheetShieldingCoefficients:
     """This class stores the static coefficients for the TS07D model. These
     are available on the model webpage at
@@ -32,11 +29,11 @@ class ThinCurrentSheetShieldingCoefficients:
         self.evenTailExpansion = evenTailExpansion
         self.evenTailWaveExpansion = evenTailWaveExpansion
 
-    # def getSymmetricTailExpansion(self):
-    #     return self.symmetricTailExpansion
+    def getSymmetricTailExpansion(self):
+        return self.symmetricTailExpansion
 
-    # def getSymmetricTailWaveExpansion(self):
-    #     return self.symmetricTailWaveExpansion
+    def getSymmetricTailWaveExpansion(self):
+        return self.symmetricTailWaveExpansion
 
     # def getOddTailExpansion(self):
     #     return self.oddTailExpansion

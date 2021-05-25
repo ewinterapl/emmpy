@@ -7,6 +7,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
 )
@@ -14,9 +15,7 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses impo
     CurrentSheetHalfThicknesses
 )
 from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
-# from emmpy.magmodel.core.math.bessel.albertbesselfunctionevaluator import (
-#     AlbertBesselFunctionEvaluator
-# )
+
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )

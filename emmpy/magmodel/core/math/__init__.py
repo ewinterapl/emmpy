@@ -6,6 +6,7 @@ Modules
 -------
 alternatecartesianharmonicfield.py
 cartesianharmonicfield.py
+cylindricalharmonicfield.py
 perpendicularandparallelcartesianharmonicfield.py
 trigparity.py
 

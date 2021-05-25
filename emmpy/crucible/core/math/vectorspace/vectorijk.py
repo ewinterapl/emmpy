@@ -740,26 +740,26 @@ class VectorIJK(UnwritableVectorIJK):
     #     else:
     #         raise Exception
 
-    # @staticmethod
-    # def add(*args):
-    #     """Add a vector to another.
-    #     @param a a vector
-    #     @param b another vector
-    #     @return a new <code>VectorIJK</code> which now contains (a + b)
-    #     @see VectorIJK#add(UnwritableVectorIJK, UnwritableVectorIJK,
-    #     VectorIJK)
-    #     """
-    #     if len(args) == 2:
-    #         (a, b) = args
-    #         return VectorIJK.add(a, b, VectorIJK())
-    #     elif len(args) == 3:
-    #         (a, b, buffer) = args
-    #         buffer.i = a.i + b.i
-    #         buffer.j = a.j + b.j
-    #         buffer.k = a.k + b.k
-    #         return buffer
-    #     else:
-    #         raise Exception
+    @staticmethod
+    def add(*args):
+        """Add a vector to another.
+        @param a a vector
+        @param b another vector
+        @return a new <code>VectorIJK</code> which now contains (a + b)
+        @see VectorIJK#add(UnwritableVectorIJK, UnwritableVectorIJK,
+        VectorIJK)
+        """
+        if len(args) == 2:
+            (a, b) = args
+            return VectorIJK.add(a, b, VectorIJK())
+        elif len(args) == 3:
+            (a, b, buffer) = args
+            buffer.i = a.i + b.i
+            buffer.j = a.j + b.j
+            buffer.k = a.k + b.k
+            return buffer
+        else:
+            raise Exception
 
     # @staticmethod
     # def addAll(*args):

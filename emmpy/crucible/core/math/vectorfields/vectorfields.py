@@ -75,13 +75,16 @@ class VectorFields:
         sum (a + b)
         """
         vf = VectorField()
-        vf.evaluate = (
+
+        def my_evaluate(location, buffer):
             # UnwritableVectorIJK location
             # VectorIJK buffer
             # Returns VectorIJK
-            lambda location, buffer:
-            VectorIJK.add(a.evaluate(location), b.evaluate(location), buffer)
-        )
+            # VectorIJK va, vb
+            va = a.evaluate(location)
+            vb = b.evaluate(location)
+            VectorIJK.add(va, vb, buffer)
+        vf.evaluate = my_evaluate
         return vf
 
     @staticmethod

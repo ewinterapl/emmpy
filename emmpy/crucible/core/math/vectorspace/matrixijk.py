@@ -953,15 +953,15 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param v the vector
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK)
-            (m, v) = args
-            return UnwritableMatrixIJK.mxv(m, v, VectorIJK())
-        elif len(args) == 3:
-            # @param m the matrix
-            # @param v the vector
-            # @param buffer the buffer to receive the product, m*v.
-            # @return a reference to buffer for convenience.
-            # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK, VectorIJK)
-            (m, v, buffer) = args
-            return UnwritableMatrixIJK.mxv(m, v, buffer)
+            (v, buffer) = args
+            return UnwritableMatrixIJK.mxv(self, v, buffer)
+        # elif len(args) == 3:
+        #     # @param m the matrix
+        #     # @param v the vector
+        #     # @param buffer the buffer to receive the product, m*v.
+        #     # @return a reference to buffer for convenience.
+        #     # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK, VectorIJK)
+        #     (m, v, buffer) = args
+        #     return UnwritableMatrixIJK.mxv(m, v, buffer)
         else:
             raise Exception

@@ -35,17 +35,17 @@ class ThinCurrentSheetShieldingCoefficients:
     def getSymmetricTailWaveExpansion(self):
         return self.symmetricTailWaveExpansion
 
-    # def getOddTailExpansion(self):
-    #     return self.oddTailExpansion
+    def getOddTailExpansion(self):
+        return self.oddTailExpansion
 
-    # def getOddTailWaveExpansion(self):
-    #     return self.oddTailWaveExpansion
+    def getOddTailWaveExpansion(self):
+        return self.oddTailWaveExpansion
 
-    # def getEvenTailExpansion(self):
-    #     return self.evenTailExpansion
+    def getEvenTailExpansion(self):
+        return self.evenTailExpansion
 
-    # def getEvenTailWaveExpansion(self):
-    #     return self.evenTailWaveExpansion
+    def getEvenTailWaveExpansion(self):
+        return self.evenTailWaveExpansion
 
     def getNumRadialExpansions(self):
         return self.numRadialExpansions

@@ -2,12 +2,16 @@
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
 )
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder import (
     FieldAlignedCurrentShiedingBuilder
 )
+
 from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -149,19 +153,26 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
     # #     return basisCoefficients;
     # #   }
 
-    # #   @Override
-    # #   public ImmutableList<UnwritableVectorIJK> evaluateExpansion(UnwritableVectorIJK location) {
 
-    # #     ImmutableList.Builder<UnwritableVectorIJK> values = ImmutableList.builder();
+    def evaluateExpansion(self, location):
+        """evaluateExpansion
 
-    # #     int count = 0;
-    # #     for (VectorField basisFunction : basisFunctions) {
-    # #       double coeff = basisCoefficients.get(count++);
-    # #       values.add(new UnwritableVectorIJK(coeff, basisFunction.evaluate(location)));
-    # #     }
-
-    # #     return values.build();
-    # #   }
+        param UnwritableVectorIJK location
+        return ImmutableList<UnwritableVectorIJK>
+        """
+        # [UnwritableVectorIJK] values
+        values = []
+        # int count
+        count = 0
+        # VectorField basisFunction
+        for basisFunction in self.basisFunctions:
+            # float coeff
+            coeff = self.basisCoefficients.get(count)
+            count += 1
+            values.append(
+                UnwritableVectorIJK(coeff, basisFunction.evaluate(location))
+            )
+        return values
 
     # #   @Override
     # #   public int getNumberOfBasisFunctions() {

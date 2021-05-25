@@ -175,8 +175,8 @@ class Ts07EquatorialMagneticFieldBuilder:
                 # includes the dynamical pressure
                 # BasisVectorField
                 equatorialField = BasisVectorFields.expandCoefficients2(
-                    scaledBentWarpedField, coeffs, pdynCoeffs)
+                    scaledBentWarpedField, coeffs, [pdynCoeffs])
 
-                equatorialFields[currSheetIndex] = equatorialField;
+                equatorialFields[currSheetIndex] = equatorialField
 
             return BasisVectorFields.concatAll(equatorialFields)

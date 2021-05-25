@@ -198,7 +198,7 @@ class BasisVectorFields:
 
         param BasisVectorField field
         param CoefficientExpansion1D coeffs
-        param CoefficientExpansion1D moreCoeffs
+        param [CoefficientExpansion1D] moreCoeffs
         return BasisVectorField
         """
         bvf = BasisVectorField()

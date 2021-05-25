@@ -233,7 +233,7 @@ class BasisVectorFields:
                         )
                     )
                     expansionIndex += 1
-            return scaledExpansions.build()
+            return scaledExpansions
         bvf.evaluateExpansion = my_evaluateExpansion
 
         return bvf

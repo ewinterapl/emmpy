@@ -943,10 +943,12 @@ class MatrixIJK(UnwritableMatrixIJK):
             (m, v, buffer) = args
             return UnwritableMatrixIJK.mtxv(m, v, buffer)
 
-    @staticmethod
-    def mxv(*args):
+    def mxv(self, *args):
         """Compute the product of a matrix with a vector."""
-        if len(args) == 2:
+        if len(args) == 1:
+            (v,) = args
+            return UnwritableMatrixIJK.mxv(self, v)
+        elif len(args) == 2:
             # @param m the matrix
             # @param v the vector
             # @return a new <code>VectorIJK</code> containing the result.
@@ -961,3 +963,5 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK, VectorIJK)
             (m, v, buffer) = args
             return UnwritableMatrixIJK.mxv(m, v, buffer)
+        else:
+            raise Exception

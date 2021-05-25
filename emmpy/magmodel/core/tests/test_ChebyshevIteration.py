@@ -4,7 +4,9 @@ from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test_evaluateTrigExpansions(self):
+        pass
 
 
 if __name__ == '__main__':

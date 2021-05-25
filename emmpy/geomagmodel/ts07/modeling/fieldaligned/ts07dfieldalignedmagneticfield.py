@@ -167,7 +167,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         # VectorField basisFunction
         for basisFunction in self.basisFunctions:
             # float coeff
-            coeff = self.basisCoefficients.get(count)
+            coeff = self.basisCoefficients[count]
             count += 1
             values.append(
                 UnwritableVectorIJK(coeff, basisFunction.evaluate(location))

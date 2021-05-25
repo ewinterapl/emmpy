@@ -115,7 +115,7 @@ class CylindricalHarmonicField(BasisVectorField):
             # Calculate Bessel terms and their derivatives
             # [float] jns, jnsDer
             jns = []
-            for i in range(self.lastM):
+            for i in range(self.lastM + 1):
                 jns.append(jv(i, rhoK))
             jnsDer = [None]*len(jns)
             for m in range(1, self.lastM + 1):

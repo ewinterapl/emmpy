@@ -83,32 +83,32 @@ class TailSheetExpansions:
     #         Expansion2Ds.createFromArray(evenExpansions, 1, 1)
     #     )
 
-    # def getExpansionsAsList(self):
-    #     basisFunctions = []
+    def getExpansionsAsList(self):
+        basisFunctions = []
 
-    #     # n is the radial expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
-    #         basisFunctions.append(
-    #             self.tailSheetSymmetricValues.getExpansion(n)
-    #         )
+        # n is the radial expansion number
+        for n in range(1, self.numRadialExpansions + 1):
+            basisFunctions.append(
+                self.tailSheetSymmetricValues.getExpansion(n)
+            )
 
-    #     # n is the radial expansion number
-    #     # m is the azimuthal expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
-    #         for m in range(1, self.numAzimuthalExpansions + 1):
-    #             basisFunctions.append(
-    #                 self.tailSheetOddValues.getExpansion(m, n)
-    #             )
+        # n is the radial expansion number
+        # m is the azimuthal expansion number
+        for n in range(1, self.numRadialExpansions + 1):
+            for m in range(1, self.numAzimuthalExpansions + 1):
+                basisFunctions.append(
+                    self.tailSheetOddValues.getExpansion(m, n)
+                )
 
-    #     # n is the radial expansion number
-    #     # m is the azimuthal expansion number
-    #     for n in range(1, self.numRadialExpansions + 1):
-    #         for m in range(1, self.numAzimuthalExpansions + 1):
-    #             basisFunctions.append(
-    #                 self.tailSheetEvenValues.getExpansion(m, n)
-    #             )
+        # n is the radial expansion number
+        # m is the azimuthal expansion number
+        for n in range(1, self.numRadialExpansions + 1):
+            for m in range(1, self.numAzimuthalExpansions + 1):
+                basisFunctions.append(
+                    self.tailSheetEvenValues.getExpansion(m, n)
+                )
 
-    #     return basisFunctions
+        return basisFunctions
 
     def sum(self):
         bxSum = 0.0

@@ -15,8 +15,8 @@ class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
         self.array = array
         self.firstExpansionNumber = firstExpansionNumber
 
-    # def getLowerBoundIndex(self):
-    #     return self.firstExpansionNumber
+    def getLowerBoundIndex(self):
+        return self.firstExpansionNumber
 
     # def getUpperBoundIndex(self):
     #     lastExpansionNumber = self.firstExpansionNumber + len(self.array) - 1

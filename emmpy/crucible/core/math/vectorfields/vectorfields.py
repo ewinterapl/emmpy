@@ -172,12 +172,16 @@ class VectorFields:
         vector (location*scaleFactor)
         """
         vf = VectorField()
-        # UnwritableVectorIJK location
-        # VectorIJK buffer
-        vf.evaluate = (
-            lambda location, buffer:
-            field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)
-        )
+
+        def my_evaluate(location, buffer):
+            # UnwritableVectorIJK location
+            # VectorIJK buffer
+            # Create a scaled location first.
+            uvijk = UnwritableVectorIJK(scaleFactor, location)
+            field.evaluate(uvijk, buffer)
+            return buffer
+        vf.evaluate = my_evaluate
+
         return vf
 
     # @staticmethod

@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.vectorijk"""
+"""emmpy.crucible.core.math.vectorspace.vectorijk."""
 
 
 from math import cos, sin
@@ -20,8 +20,7 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class VectorIJK(UnwritableVectorIJK):
-    """Writable subclass of the unwritable 3D vector parent completing the
-    implementation of the weak immutability design pattern.
+    """Writable subclass of UnwritableVectorIJK.
 
     This class contains the mutator methods necessary to set or alter the
     internals of the parent classes fields.
@@ -51,6 +50,7 @@ class VectorIJK(UnwritableVectorIJK):
     MINUS_K = UnwritableVectorIJK(0, 0, -1)
 
     def __init__(self, *args):
+        """Create a VectorIJK."""
         if len(args) == 0:
             # Construct a vector with an initial value of
             # VectorIJK.ZERO
@@ -107,21 +107,18 @@ class VectorIJK(UnwritableVectorIJK):
             raise Exception
 
     def createUnitized(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create a unitized copy of the vector."""
         return VectorIJK(self).unitize()
 
     def createNegated(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create a negated copy of the vector."""
         return VectorIJK(self).negate()
 
-    def createScaled(self, scale: float):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+    def createScaled(self, scale):
+        """Create a scaled copy of the vector."""
         return VectorIJK(self).scale(scale)
 
-    def scale(self, _scale: float):
+    def scale(self, _scale):
         """Scale the vector.
 
         param scale the scale factor to apply.
@@ -171,29 +168,29 @@ class VectorIJK(UnwritableVectorIJK):
         self.k = 0.0
         return self
 
-    def setI(self, i: float):
-        """Sets the ith component of the vector.
+    def setI(self, i):
+        """Set the ith component of the vector.
 
         @param i the ith component
         """
         self.i = i
 
-    def setJ(self, j: float):
-        """Sets the jth component of the vector.
+    def setJ(self, j):
+        """Set the jth component of the vector.
 
         @param j the jth component
         """
         self.j = j
 
-    def setK(self, k: float):
-        """Sets the kth component of the vector.
+    def setK(self, k):
+        """Set the kth component of the vector.
 
         @param k the kth component
         """
         self.k = k
 
-    def set(self, index: int, value: float):
-        """Sets the specified component of the vector to a supplied value.
+    def set(self, index, value):
+        """Set the specified component of the vector to a supplied value.
 
         @param index the index of the component to set. 0 = ith, 1 = jth,
         2 = kth.
@@ -222,14 +219,12 @@ class VectorIJK(UnwritableVectorIJK):
                 self.i = vector.i
                 self.j = vector.j
                 self.k = vector.k
-                # return self
             elif isinstance(args[0], list):
                 # Sets the basic components of a vector copying the values from
                 # the supplied array.
                 # @param data the array of doubles to copy.
                 # @return a reference to the instance
                 (data,) = args
-                # return self.setTo(data[0], data[1], data[2])
                 self.setTo(data[0], data[1], data[2])
             else:
                 raise Exception
@@ -244,7 +239,6 @@ class VectorIJK(UnwritableVectorIJK):
                 self.i = scale*vector.i
                 self.j = scale*vector.j
                 self.k = scale*vector.k
-                # return self
             elif isinstance(args[0], int) and isinstance(args[1], list):
                 #  Sets the basic components of a vector copying the values
                 # from an array at the offset location.
@@ -252,7 +246,6 @@ class VectorIJK(UnwritableVectorIJK):
                 # @param data array of doubles to copy into vector
                 # @return a reference to the instance
                 (offset, data) = args
-                # return self.setTo(data[offset], data[offset + 1], data[offset + 2])
                 self.setTo(data[offset], data[offset + 1], data[offset + 2])
         elif len(args) == 3:
             (i, j, k) = args
@@ -263,13 +256,13 @@ class VectorIJK(UnwritableVectorIJK):
             self.i = i
             self.j = j
             self.k = k
-            # return self
         else:
             raise Exception
         return self
 
     def setToUnitized(self, vector):
-        """Sets the vector content to the a unit length version of another.
+        """Set the vector to the unit-length version of another.
+
         @param vector the vector whose contents are to be unitized and stored
         in the instance
         @return a reference to the instance
@@ -280,7 +273,8 @@ class VectorIJK(UnwritableVectorIJK):
         return self.unitize()
 
     def setToNegated(self, vector):
-        """Sets the vector content to a negated version of another.
+        """Set the vector content to the negated version of another.
+
         @param vector the vector whose contents are to be negated and stored in
         the instance
         @return a reference to the instance
@@ -309,7 +303,7 @@ class VectorIJK(UnwritableVectorIJK):
                 # UnwritableVectorIJK, double, VectorIJK)
                 (vector, axis, angle) = args
                 # return VectorIJK.rotate(vector, axis, angle, VectorIJK())
-                return VectorIJK.rotate(vector, axis, angle, VectorIJK())
+                v = VectorIJK.rotate(vector, axis, angle, VectorIJK())
         elif len(args) == 4:
             if (
                 isinstance(args[0], UnwritableVectorIJK) and
@@ -384,14 +378,14 @@ class VectorIJK(UnwritableVectorIJK):
                 buffer.j = pj + cos(angle)*vj + sin(angle)*buffer.j
                 buffer.k = pk + cos(angle)*vk + sin(angle)*buffer.k
 
-                return buffer
+                v = buffer
         else:
             raise Exception
+        return v
 
     @staticmethod
     def planeProject(*args):
-        """Compute the projection of one vector onto the plane normal to
-        another.
+        """Compute the projection of one vector onto a plane.
 
         Algebraicly, this routine effectively computes:
 
@@ -414,7 +408,7 @@ class VectorIJK(UnwritableVectorIJK):
         """
         if len(args) == 2:
             (vector, normal) = args
-            return VectorIJK.planeProject(vector, normal, VectorIJK())
+            v = VectorIJK.planeProject(vector, normal, VectorIJK())
         elif len(args) == 3:
             # @param vector the vector to project
             # @param normal the normal to the plane to project vector onto
@@ -454,9 +448,10 @@ class VectorIJK(UnwritableVectorIJK):
 
             # Rescale the result.
             buffer.scale(maxVector)
-            return buffer
+            v = buffer
         else:
             raise Exception
+        return v
 
     @staticmethod
     def project(*args):
@@ -679,6 +674,7 @@ class VectorIJK(UnwritableVectorIJK):
     @staticmethod
     def cross(*args):
         """Compute the cross product of a and b.
+
         @param a the left hand vector to cross
         @param b the right hand vector to cross
         @return a new <code>VectorIJK</code> which now contains (a x b)
@@ -702,8 +698,7 @@ class VectorIJK(UnwritableVectorIJK):
 
     @staticmethod
     def pointwiseMultiply(*args):
-        """Create the Pointwise (aka Hadamard aka Schur) product of two vectors
-        by multiplying their corresponding components
+        """Create the Pointwise (aka Hadamard, Schur) product of two vectors.
 
         @param a a vector
         @param b another vector
@@ -726,6 +721,7 @@ class VectorIJK(UnwritableVectorIJK):
     @staticmethod
     def subtract(*args):
         """Subtract one vector from another.
+
         @param a the minuend
         @param b the subtrahend
         @return a new <code>VectorIJK</code> which now contains (a - b)
@@ -747,6 +743,7 @@ class VectorIJK(UnwritableVectorIJK):
     @staticmethod
     def add(*args):
         """Add a vector to another.
+
         @param a a vector
         @param b another vector
         @return a new <code>VectorIJK</code> which now contains (a + b)
@@ -767,7 +764,8 @@ class VectorIJK(UnwritableVectorIJK):
 
     @staticmethod
     def addAll(*args):
-        """Adds all the vectors in an {@link Iterable} of vectors.
+        """Add all the vectors in an list of vectors.
+
         @param vectors an {@link Iterable} of vectors to be added
         @param buffer the buffer to receive the results of the addition
         @return a reference to buffer for convenience which now contains
@@ -791,8 +789,7 @@ class VectorIJK(UnwritableVectorIJK):
 
     @staticmethod
     def addRSS(*args):
-        """Performs a component wise root sum square of two vectors (add in
-        quadrature).
+        """Compute the component-wise root sum square of two vectors.
 
         @param a a vector
         @param b another vector

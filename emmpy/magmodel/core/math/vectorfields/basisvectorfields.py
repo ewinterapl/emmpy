@@ -5,9 +5,9 @@
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
-# from emmpy.crucible.core.math.vectorspace.vectorijk import (
-#     VectorIJK
-# )
+from emmpy.crucible.core.math.vectorspace.vectorijk import (
+    VectorIJK
+)
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -240,7 +240,15 @@ class BasisVectorFields:
         """Rotates"""
         bvf = BasisVectorField()
 
-        def my_evaluate(location, buffer):
+        # def my_evaluate(location, buffer):
+        def my_evaluate(*myargs):
+            if len(myargs) == 1:
+                (location,) = myargs
+                buffer = VectorIJK()
+            elif len(myargs) == 2:
+                (location, buffer) = myargs
+            else:
+                raise Exception
             # rotate the location
             rotated = matrix.mxv(location)
             # evaluate using the rotated vector

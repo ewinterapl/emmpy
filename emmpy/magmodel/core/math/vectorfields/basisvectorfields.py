@@ -242,7 +242,7 @@ class BasisVectorFields:
 
         def my_evaluate(location, buffer):
             # rotate the location
-            rotated = matrix.NDmxv(location)
+            rotated = matrix.mxv(location)
             # evaluate using the rotated vector
             field.evaluate(rotated, buffer)
             # rotate the field value back

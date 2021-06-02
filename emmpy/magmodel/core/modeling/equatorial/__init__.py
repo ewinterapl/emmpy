@@ -6,7 +6,6 @@ hierarchy.
 
 Modules
 -------
-currentsheethalfthicknesses.py
 
 Packages
 --------

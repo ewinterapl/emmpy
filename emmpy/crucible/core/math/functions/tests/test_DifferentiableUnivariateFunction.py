@@ -8,8 +8,7 @@ from emmpy.crucible.core.math.functions.differentiableunivariatefunction import 
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        with self.assertRaises(Exception):
-            DifferentiableUnivariateFunction()
+        self.assertIsNotNone(DifferentiableUnivariateFunction)
 
     def test_differentiate(self):
         with self.assertRaises(Exception):

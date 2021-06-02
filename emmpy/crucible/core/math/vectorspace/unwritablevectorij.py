@@ -1,20 +1,20 @@
 """emmpy.crucible.core.math.vectorspace.unwritablevectorij"""
 
 
-# from math import asin, pi
+from math import asin, pi
 
-# from emmpy.com.google.common.base.preconditions import Preconditions
-# from emmpy.crucible.core.exceptions.bugexception import BugException
-# from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
-#     CrucibleRuntimeException
-# )
-# from emmpy.crucible.core.math.vectorspace.internaloperations import (
-#     computeNorm
-# )
-# from emmpy.java.lang.double import Double
-# from emmpy.java.lang.unsupportedoperationexception import (
-#     UnsupportedOperationException
-# )
+from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.crucible.core.exceptions.bugexception import BugException
+from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
+    CrucibleRuntimeException
+)
+from emmpy.crucible.core.math.vectorspace.internaloperations import (
+    computeNorm
+)
+from emmpy.java.lang.double import Double
+from emmpy.java.lang.unsupportedoperationexception import (
+    UnsupportedOperationException
+)
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -45,185 +45,182 @@ class UnwritableVectorIJ:
 
     def __init__(self, *args):
         if len(args) == 1:
-            raise Exception
-    #         if isinstance(args[0], list):
-    #             # Constructs a vector from the first two elements of an array
-    #             # of doubles.
-    #             (data,) = args
-    #             self.__init__(data[0], data[1])
-    #         elif isinstance(args[0], UnwritableVectorIJ):
-    #             # Copy constructor, creates a vector by copying the values of a
-    #             # pre-existing one.
-    #             (vector,) = args
-    #             self.__init__(vector.i, vector.j)
-    #         else:
-    #             raise CrucibleRuntimeException
+            if isinstance(args[0], list):
+                # Constructs a vector from the first two elements of an array
+                # of doubles.
+                (data,) = args
+                self.__init__(data[0], data[1])
+            elif isinstance(args[0], UnwritableVectorIJ):
+                # Copy constructor, creates a vector by copying the values of a
+                # pre-existing one.
+                (vector,) = args
+                self.__init__(vector.i, vector.j)
+            else:
+                raise CrucibleRuntimeException
         elif len(args) == 2:
             if isRealNumber(args[0]) and isRealNumber(args[1]):
                 # Basic 2-element constructor
                 (i, j) = args
-    #             # The ith component of the vector, synonymous with the X-axis.
-    #             self.i = i
-    #             # The jth component of the vector, synonymous with the Y-axis.
-    #             self.j = j
+                # The ith component of the vector, synonymous with the X-axis.
+                self.i = i
+                # The jth component of the vector, synonymous with the Y-axis.
+                self.j = j
             elif isinstance(args[0], int) and isinstance(args[1], list):
-                raise Exception
-    #             # Constructs a vector from the two elements of an array of
-    #             # double starting with the offset index.
-    #             (offset, data) = args
-    #             self.__init__(data[offset], data[offset + 1])
+                # Constructs a vector from the two elements of an array of
+                # double starting with the offset index.
+                (offset, data) = args
+                self.__init__(data[offset], data[offset + 1])
             elif (isRealNumber(args[0]) and
                   isinstance(args[1], UnwritableVectorIJ)):
-                  raise Exception
-    #             # Scaling constructor, creates a new vector by applying a
-    #             # scalar multiple to the components of a pre-existing vector.
-    #             (scale, vector) = args
-    #             self.__init__(scale*vector.i, scale*vector.j)
+                # Scaling constructor, creates a new vector by applying a
+                # scalar multiple to the components of a pre-existing vector.
+                (scale, vector) = args
+                self.__init__(scale*vector.i, scale*vector.j)
             else:
                 raise CrucibleRuntimeException
         else:
             raise CrucibleRuntimeException
 
-    # def createUnitized(self):
-    #     """Creates a new, unit length copy of the existing vector.
+    def createUnitized(self):
+        """Creates a new, unit length copy of the existing vector.
 
-    #     This code is just a convenience method that implements:
-    #     new UnwritableVectorIJK(1.0/this.getLength(), this)
-    #     in a safe manner.
+        This code is just a convenience method that implements:
+        new UnwritableVectorIJK(1.0/this.getLength(), this)
+        in a safe manner.
 
-    #     @return a vector of unit length in the direction of the instance
-    #     @throws UnsupportedOperationException if the instance vector has zero
-    #     length.
-    #     """
-    #     norm = self.getLength()
-    #     if norm > 0.0:
-    #         return UnwritableVectorIJ(1.0/norm, self)
-    #     raise UnsupportedOperationException(
-    #         "Unable to unitize. Supplied vector has zero length.")
+        @return a vector of unit length in the direction of the instance
+        @throws UnsupportedOperationException if the instance vector has zero
+        length.
+        """
+        norm = self.getLength()
+        if norm > 0.0:
+            return UnwritableVectorIJ(1.0/norm, self)
+        raise UnsupportedOperationException(
+            "Unable to unitize. Supplied vector has zero length.")
 
-    # def createNegated(self):
-    #     """Creates a new, negated copy of an the existing vector.
+    def createNegated(self):
+        """Creates a new, negated copy of an the existing vector.
 
-    #     Convenience method for: new UnwritableVectorIJK(-1.0, this).
+        Convenience method for: new UnwritableVectorIJK(-1.0, this).
 
-    #     @return the negated vector, -this.
-    #     """
-    #     return UnwritableVectorIJ(-1, self)
+        @return the negated vector, -this.
+        """
+        return UnwritableVectorIJ(-1, self)
 
-    # def getI(self) -> float:
-    #     """Gets the ith component.
+    def getI(self) -> float:
+        """Gets the ith component.
 
-    #     @return the ith component.
-    #     """
-    #     return self.i
+        @return the ith component.
+        """
+        return self.i
 
-    # def getJ(self) -> float:
-    #     """Gets the jth component.
+    def getJ(self) -> float:
+        """Gets the jth component.
 
-    #     @return the jth component.
-    #     """
-    #     return self.j
+        @return the jth component.
+        """
+        return self.j
 
-    # def get(self, index: int) -> float:
-    #     """Get the specified component of the vector.
+    def get(self, index: int) -> float:
+        """Get the specified component of the vector.
 
-    #     @param index the index of the component to retrieve. 0 = ith, 1 = jth.
-    #     @return the value from the requested component
-    #     @throws IndexOutOfBoundsException if an invalid index, outside the
-    #     range [0,1], is specified.
-    #     """
-    #     Preconditions.checkElementIndex(index, 2, "component")
-    #     if index == 0:
-    #         return self.i
-    #     elif index == 1:
-    #         return self.j
-    #     else:
-    #         raise BugException
+        @param index the index of the component to retrieve. 0 = ith, 1 = jth.
+        @return the value from the requested component
+        @throws IndexOutOfBoundsException if an invalid index, outside the
+        range [0,1], is specified.
+        """
+        Preconditions.checkElementIndex(index, 2, "component")
+        if index == 0:
+            return self.i
+        elif index == 1:
+            return self.j
+        else:
+            raise BugException
 
-    # def getLength(self) -> float:
-    #     """Computes the standard L-2 norm, or length, of the vector.
+    def getLength(self) -> float:
+        """Computes the standard L-2 norm, or length, of the vector.
 
-    #      @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
-    #      """
-    #     return computeNorm(self.i, self.j)
+         @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
+         """
+        return computeNorm(self.i, self.j)
 
-    # def getDot(self, vector) -> float:
-    #     """Compute the dot product of this instance with another vector.
+    def getDot(self, vector) -> float:
+        """Compute the dot product of this instance with another vector.
 
-    #     @param vector the vector to dot against the instance.
-    #     @return i*vector.i + j*vector.j + k*vector.k
-    #     """
-    #     return self.i*vector.i + self.j*vector.j
+        @param vector the vector to dot against the instance.
+        @return i*vector.i + j*vector.j + k*vector.k
+        """
+        return self.i*vector.i + self.j*vector.j
 
-    # def getSeparation(self, vector) -> float:
-    #     """Compute the angular separation in radians between this instance and
-    #     another vector.
+    def getSeparation(self, vector) -> float:
+        """Compute the angular separation in radians between this instance and
+        another vector.
 
-    #     @param vector
-    #     @return the angular separation between vector and this instance in
-    #     radians.
-    #     @throws UnsupportedOperationException if either this instance or the
-    #     supplied vector are {@link VectorIJ#ZERO}
-    #     """
-    #     thisNorm = self.getLength()
-    #     vectorNorm = vector.getLength()
-    #     if thisNorm == 0.0:
-    #         raise UnsupportedOperationException(
-    #             "Unable to compute angular separation. " +
-    #             "This vector is the zero vector.")
-    #     elif (vectorNorm == 0.0):
-    #         raise UnsupportedOperationException(
-    #             "Unable to compute angular separation. " +
-    #             "The argument supplied is the zero vector.")
-    #     dotProduct = self.getDot(vector)
-    #     if dotProduct > 0:
-    #         x = self.i/thisNorm - vector.i/vectorNorm
-    #         y = self.j/thisNorm - vector.j/vectorNorm
-    #         return 2.0*asin(0.5*computeNorm(x, y))
-    #     elif dotProduct < 0:
-    #         x = self.i/thisNorm + vector.i/vectorNorm
-    #         y = self.j/thisNorm + vector.j/vectorNorm
-    #         return pi - 2*asin(0.5*computeNorm(x, y))
-    #     return pi/2
+        @param vector
+        @return the angular separation between vector and this instance in
+        radians.
+        @throws UnsupportedOperationException if either this instance or the
+        supplied vector are {@link VectorIJ#ZERO}
+        """
+        thisNorm = self.getLength()
+        vectorNorm = vector.getLength()
+        if thisNorm == 0.0:
+            raise UnsupportedOperationException(
+                "Unable to compute angular separation. " +
+                "This vector is the zero vector.")
+        elif (vectorNorm == 0.0):
+            raise UnsupportedOperationException(
+                "Unable to compute angular separation. " +
+                "The argument supplied is the zero vector.")
+        dotProduct = self.getDot(vector)
+        if dotProduct > 0:
+            x = self.i/thisNorm - vector.i/vectorNorm
+            y = self.j/thisNorm - vector.j/vectorNorm
+            return 2.0*asin(0.5*computeNorm(x, y))
+        elif dotProduct < 0:
+            x = self.i/thisNorm + vector.i/vectorNorm
+            y = self.j/thisNorm + vector.j/vectorNorm
+            return pi - 2*asin(0.5*computeNorm(x, y))
+        return pi/2
 
-    # @staticmethod
-    # def copyOf(vector):
-    #     """Makes an unwritable copy of the supplied vector.
+    @staticmethod
+    def copyOf(vector):
+        """Makes an unwritable copy of the supplied vector.
 
-    #     This method makes an unwritable copy only if necessary. It tries to
-    #     avoid making a copy wherever possible.
+        This method makes an unwritable copy only if necessary. It tries to
+        avoid making a copy wherever possible.
 
-    #     @param vector a vector to copy.
-    #     @return either a reference to vector (if vector is already only an
-    #     instance of {@link UnwritableVectorIJ}, otherwise an unwritable copy
-    #     of vector's contents
-    #     """
-    #     if isinstance(vector, UnwritableVectorIJ):
-    #         return vector
-    #     return UnwritableVectorIJ(vector)
+        @param vector a vector to copy.
+        @return either a reference to vector (if vector is already only an
+        instance of {@link UnwritableVectorIJ}, otherwise an unwritable copy
+        of vector's contents
+        """
+        if isinstance(vector, UnwritableVectorIJ):
+            return vector
+        return UnwritableVectorIJ(vector)
 
-    # def hashCode(self) -> int:
-    #     prime = 31
-    #     result = 1
-    #     temp = Double.doubleToLongBits(self.i)
-    #     result = prime*result + temp ^ (temp >> 32)
-    #     temp = Double.doubleToLongBits(self.j)
-    #     result = prime*result + temp ^ (temp >> 32)
-    #     return result
+    def hashCode(self) -> int:
+        prime = 31
+        result = 1
+        temp = Double.doubleToLongBits(self.i)
+        result = prime*result + temp ^ (temp >> 32)
+        temp = Double.doubleToLongBits(self.j)
+        result = prime*result + temp ^ (temp >> 32)
+        return result
 
-    # def equals(self, obj) -> bool:
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if not isinstance(obj, UnwritableVectorIJ):
-    #         return False
-    #     other = obj
-    #     if Double.doubleToLongBits(self.i) != Double.doubleToLongBits(other.i):
-    #         return False
-    #     if Double.doubleToLongBits(self.j) != Double.doubleToLongBits(other.j):
-    #         return False
-    #     return True
+    def equals(self, obj) -> bool:
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if not isinstance(obj, UnwritableVectorIJ):
+            return False
+        other = obj
+        if Double.doubleToLongBits(self.i) != Double.doubleToLongBits(other.i):
+            return False
+        if Double.doubleToLongBits(self.j) != Double.doubleToLongBits(other.j):
+            return False
+        return True
 
-    # def toString(self) -> str:
-    #     return "[%s,%s]" % (self.i, self.j)
+    def toString(self) -> str:
+        return "[%s,%s]" % (self.i, self.j)

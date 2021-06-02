@@ -7,17 +7,16 @@ class FacRegion:
 
     author G.K.Stephens
     """
-    pass
 
     REGION_1 = 1
     REGION_2 = 2
 
-    # def __init__(self, number):
-    #     """Constructor"""
-    #     self.number = number
+    def __init__(self, number):
+        """Constructor"""
+        self.number = number
 
-    # def getAsInt(self):
-    #     """@return an int associated with the FAC configuration
-    #     (1 = region-1, 2 = region-2)
-    #     """
-    #     return self.number
+    def getAsInt(self):
+        """@return an int associated with the FAC configuration
+        (1 = region-1, 2 = region-2)
+        """
+        return self.number

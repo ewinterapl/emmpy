@@ -1,7 +1,7 @@
 import unittest
 
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.coords.cylindrivcalvectorfieldvalue import (
+from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )
 

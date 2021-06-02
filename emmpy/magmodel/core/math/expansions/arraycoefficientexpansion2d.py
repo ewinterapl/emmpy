@@ -1,12 +1,12 @@
 """emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d"""
 
 
-# from emmpy.com.google.common.base.preconditions import Preconditions
-# from emmpy.java.util.arrays import Arrays
+from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.java.util.arrays import Arrays
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
-# from emmpy.utilities.isragged import isRagged
+from emmpy.utilities.isragged import isRagged
 
 
 class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
@@ -47,35 +47,35 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
                      [radialExpansion - self.jLowerBoundIndex]
         )
 
-    # def toString(self):
-    #     return (
-    #         "ArrayCoefficientExpansion2D [data=%s, getILowerBoundIndex()=%s, "
-    #         "getIUpperBoundIndex()=%s, getJLowerBoundIndex()=%s, "
-    #         "getJUpperBoundIndex()=%s]" %
-    #         (self.data, self.getILowerBoundIndex(), self.getIUpperBoundIndex(),
-    #          self.getJLowerBoundIndex(), self.getJUpperBoundIndex())
-    #     )
+    def toString(self):
+        return (
+            "ArrayCoefficientExpansion2D [data=%s, getILowerBoundIndex()=%s, "
+            "getIUpperBoundIndex()=%s, getJLowerBoundIndex()=%s, "
+            "getJUpperBoundIndex()=%s]" %
+            (self.data, self.getILowerBoundIndex(), self.getIUpperBoundIndex(),
+             self.getJLowerBoundIndex(), self.getJUpperBoundIndex())
+        )
 
-    # def hashCode(self):
-    #     prime = 31
-    #     result = 1
-    #     result = prime*result + Arrays.deepHashCode(self.data)
-    #     result = prime*result + self.iLowerBoundIndex
-    #     result = prime*result + self.jLowerBoundIndex
-    #     return result
+    def hashCode(self):
+        prime = 31
+        result = 1
+        result = prime*result + Arrays.deepHashCode(self.data)
+        result = prime*result + self.iLowerBoundIndex
+        result = prime*result + self.jLowerBoundIndex
+        return result
 
-    # def equals(self, obj):
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if self.__class__ != obj.__class__:
-    #         return False
-    #     other = obj
-    #     if not self.data == other.data:
-    #         return False
-    #     if self.iLowerBoundIndex != other.iLowerBoundIndex:
-    #         return False
-    #     if self.jLowerBoundIndex != other.jLowerBoundIndex:
-    #         return False
-    #     return True
+    def equals(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.__class__ != obj.__class__:
+            return False
+        other = obj
+        if not self.data == other.data:
+            return False
+        if self.iLowerBoundIndex != other.iLowerBoundIndex:
+            return False
+        if self.jLowerBoundIndex != other.jLowerBoundIndex:
+            return False
+        return True

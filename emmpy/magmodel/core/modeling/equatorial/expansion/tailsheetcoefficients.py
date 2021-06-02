@@ -137,60 +137,60 @@ class TailSheetCoefficients:
         return (self.numRadialExpansions +
                 2*(self.numAzimuthalExpansions*self.numRadialExpansions))
 
-    # def toString(self):
-    #     return ("TailSheetCoefficients [tailSheetSymmetricValues=%s"
-    #             ", tailSheetOddValues=%s, tailSheetEvenValues=%s"
-    #             ", numAzimuthalExpansions=%s, numRadialExpansions=%s]" %
-    #             (self.tailSheetSymmetricValues,
-    #              self.tailSheetOddValues,
-    #              self.tailSheetEvenValues,
-    #              self.numAzimuthalExpansions, self.numRadialExpansions))
+    def toString(self):
+        return ("TailSheetCoefficients [tailSheetSymmetricValues=%s"
+                ", tailSheetOddValues=%s, tailSheetEvenValues=%s"
+                ", numAzimuthalExpansions=%s, numRadialExpansions=%s]" %
+                (self.tailSheetSymmetricValues,
+                 self.tailSheetOddValues,
+                 self.tailSheetEvenValues,
+                 self.numAzimuthalExpansions, self.numRadialExpansions))
 
-    # def hashCode(self):
-    #     prime = 31
-    #     result = 1
-    #     result = prime*result + self.numAzimuthalExpansions
-    #     result = prime*result + self.numRadialExpansions
-    #     result = prime*result
-    #     if self.tailSheetEvenValues:
-    #         result += self.tailSheetEvenValues.hashCode()
-    #     result = prime*result
-    #     if self.tailSheetOddValues:
-    #         result += self.tailSheetOddValues.hashCode()
-    #     result = prime*result
-    #     if self.tailSheetSymmetricValues:
-    #         result += self.tailSheetSymmetricValues.hashCode()
-    #     return result
+    def hashCode(self):
+        prime = 31
+        result = 1
+        result = prime*result + self.numAzimuthalExpansions
+        result = prime*result + self.numRadialExpansions
+        result = prime*result
+        if self.tailSheetEvenValues:
+            result += self.tailSheetEvenValues.hashCode()
+        result = prime*result
+        if self.tailSheetOddValues:
+            result += self.tailSheetOddValues.hashCode()
+        result = prime*result
+        if self.tailSheetSymmetricValues:
+            result += self.tailSheetSymmetricValues.hashCode()
+        return result
 
-    # def equals(self, obj):
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if self.__class__ != obj.__class__:
-    #         return False
-    #     other = obj
-    #     if self.numAzimuthalExpansions != other.numAzimuthalExpansions:
-    #         return False
-    #     if self.numRadialExpansions != other.numRadialExpansions:
-    #         return False
+    def equals(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.__class__ != obj.__class__:
+            return False
+        other = obj
+        if self.numAzimuthalExpansions != other.numAzimuthalExpansions:
+            return False
+        if self.numRadialExpansions != other.numRadialExpansions:
+            return False
 
-    #     if self.tailSheetEvenValues is None:
-    #         if other.tailSheetEvenValues:
-    #             return False
-    #     elif not self.tailSheetEvenValues.equals(other.tailSheetEvenValues):
-    #         return False
+        if self.tailSheetEvenValues is None:
+            if other.tailSheetEvenValues:
+                return False
+        elif not self.tailSheetEvenValues.equals(other.tailSheetEvenValues):
+            return False
 
-    #     if self.tailSheetOddValues is None:
-    #         if other.tailSheetOddValues:
-    #             return False
-    #     elif not self.tailSheetOddValues.equals(other.tailSheetOddValues):
-    #         return False
-    #     if self.tailSheetSymmetricValues is None:
-    #         if other.tailSheetSymmetricValues:
-    #             return False
-    #     elif not self.tailSheetSymmetricValues.equals(
-    #         other.tailSheetSymmetricValues
-    #         ):
-    #         return False
-    #     return True
+        if self.tailSheetOddValues is None:
+            if other.tailSheetOddValues:
+                return False
+        elif not self.tailSheetOddValues.equals(other.tailSheetOddValues):
+            return False
+        if self.tailSheetSymmetricValues is None:
+            if other.tailSheetSymmetricValues:
+                return False
+        elif not self.tailSheetSymmetricValues.equals(
+            other.tailSheetSymmetricValues
+            ):
+            return False
+        return True

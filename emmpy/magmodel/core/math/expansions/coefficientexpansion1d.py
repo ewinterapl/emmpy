@@ -12,19 +12,19 @@ class CoefficientExpansion1D:
     author G.K.Stephens
     """
 
-    # def toArray(self):
-    #     """@return a newly constructed double array containing the elements of
-    #     the expansion"""
-    #     size = self.size()
-    #     anArray = [None]*size
-    #     for i in range(size):
-    #         anArray[i] = self.getCoefficient(i + self.getLowerBoundIndex())
-    #     return anArray
+    def toArray(self):
+        """@return a newly constructed double array containing the elements of
+        the expansion"""
+        size = self.size()
+        anArray = [None]*size
+        for i in range(size):
+            anArray[i] = self.getCoefficient(i + self.getLowerBoundIndex())
+        return anArray
 
-    # def size(self):
-    #     """@return the number of elements of the expansion"""
-    #     size = self.getUpperBoundIndex() - self.getLowerBoundIndex() + 1
-    #     return size
+    def size(self):
+        """@return the number of elements of the expansion"""
+        size = self.getUpperBoundIndex() - self.getLowerBoundIndex() + 1
+        return size
 
     def getLowerBoundIndex(self):
         """return the lower bound index of the expansion (L)"""

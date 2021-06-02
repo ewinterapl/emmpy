@@ -36,17 +36,17 @@ class Ts07EquatorialLinearCoefficients:
             numRadialExpansions
         )
 
-    # def getNumAzimuthalExpansions(self):
-    #     return self.numAzimuthalExpansions
+    def getNumAzimuthalExpansions(self):
+        return self.numAzimuthalExpansions
 
-    # def getNumRadialExpansions(self):
-    #     return self.numRadialExpansions
+    def getNumRadialExpansions(self):
+        return self.numRadialExpansions
 
     def getCoeffs(self):
         return self.coeffs
 
-    # def getPdynDependentCoeffs(self):
-    #     return self.pdynDependentCoeffs
+    def getPdynDependentCoeffs(self):
+        return self.pdynDependentCoeffs
 
     def getPdynScaledCoeffs(self, dynamicPressure):
         pDyn0 = 2.0
@@ -65,47 +65,47 @@ class Ts07EquatorialLinearCoefficients:
             symPdynDependent, aOddPdynDependent, aEvenPdynDependent
         )
 
-    # def toString(self):
-    #     return (
-    #         "Ts07EquatorialLinearCoefficients [coeffs=%s, "
-    #         "pdynDependentCoeffs=%s, numAzimuthalExpansions=%s, "
-    #         "numRadialExpansions=%s]" %
-    #         (self.coeffs.toString(), self.pdynDependentCoeffs.toString(),
-    #          self.numAzimuthalExpansions, self.numRadialExpansions)
-    #     )
+    def toString(self):
+        return (
+            "Ts07EquatorialLinearCoefficients [coeffs=%s, "
+            "pdynDependentCoeffs=%s, numAzimuthalExpansions=%s, "
+            "numRadialExpansions=%s]" %
+            (self.coeffs.toString(), self.pdynDependentCoeffs.toString(),
+             self.numAzimuthalExpansions, self.numRadialExpansions)
+        )
 
-    # def hashCode(self):
-    #     prime = 31
-    #     result = 1
-    #     result = prime*result
-    #     if self.coeffs:
-    #         result += self.coeffs.hashCode()
-    #     result = prime*result + self.numAzimuthalExpansions
-    #     result = prime*result + self.numRadialExpansions
-    #     if self.pdynDependentCoeffs:
-    #         result += self.pdynDependentCoeffs.hashCode()
-    #     return result
+    def hashCode(self):
+        prime = 31
+        result = 1
+        result = prime*result
+        if self.coeffs:
+            result += self.coeffs.hashCode()
+        result = prime*result + self.numAzimuthalExpansions
+        result = prime*result + self.numRadialExpansions
+        if self.pdynDependentCoeffs:
+            result += self.pdynDependentCoeffs.hashCode()
+        return result
 
-    # def equals(self, obj):
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if self.__class__ != obj.__class__:
-    #         return False
-    #     other = obj
-    #     if self.coeffs is None:
-    #         if other.coeffs is not None:
-    #             return False
-    #     elif not self.coeffs.equals(other.coeffs):
-    #         return False
-    #     if self.numAzimuthalExpansions != other.numAzimuthalExpansions:
-    #         return False
-    #     if self.numRadialExpansions != other.numRadialExpansions:
-    #         return False
-    #     if self.pdynDependentCoeffs is None:
-    #         if other.pdynDependentCoeffs is not None:
-    #             return False
-    #     elif not self.pdynDependentCoeffs.equals(other.pdynDependentCoeffs):
-    #         return False
-    #     return True
+    def equals(self, obj):
+        if self is obj:
+            return True
+        if obj is None:
+            return False
+        if self.__class__ != obj.__class__:
+            return False
+        other = obj
+        if self.coeffs is None:
+            if other.coeffs is not None:
+                return False
+        elif not self.coeffs.equals(other.coeffs):
+            return False
+        if self.numAzimuthalExpansions != other.numAzimuthalExpansions:
+            return False
+        if self.numRadialExpansions != other.numRadialExpansions:
+            return False
+        if self.pdynDependentCoeffs is None:
+            if other.pdynDependentCoeffs is not None:
+                return False
+        elif not self.pdynDependentCoeffs.equals(other.pdynDependentCoeffs):
+            return False
+        return True

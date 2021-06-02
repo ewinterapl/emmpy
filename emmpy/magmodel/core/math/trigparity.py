@@ -31,12 +31,12 @@ class TrigParity(DifferentiableUnivariateFunction):
     ODD.evaluate = lambda t: sin(t)
     ODD.differentiate = lambda t: cos(t)
 
-    # def __init__(self, function):
-    #     """Constructor"""
-    #     self.function = function
+    def __init__(self, function):
+        """Constructor"""
+        self.function = function
 
-    # def evaluate(self, t):
-    #     return self.function.evaluate(t)
+    def evaluate(self, t):
+        return self.function.evaluate(t)
 
-    # def differentiate(self, t):
-    #     return self.function.differentiate(t)
+    def differentiate(self, t):
+        return self.function.differentiate(t)

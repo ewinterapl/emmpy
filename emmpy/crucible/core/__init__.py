@@ -4,13 +4,10 @@ Python port of Java classes from the
 crucible.core
 hierarchy.
 
+Modules
+-------
+
 Packages
 --------
-collections
-designpatterns
-exceptions
 math
-rotations
-time
-units
 """

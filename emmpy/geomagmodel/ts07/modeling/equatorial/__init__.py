@@ -7,11 +7,7 @@ hierarchy.
 Modules
 -------
 currentsheethalfthicknesses.py
-shieldedthincurrentsheetfield.py
-thinasymmetriccurrentsheetbasisvectorshieldingfield.py
-ts07equatorialmagneticfieldbuilder.py
 
 Packages
 --------
-tests
 """

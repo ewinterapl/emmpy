@@ -1,6 +1,8 @@
 """emmpy.crucible.core.math
 
-Python port of Java classes from the crucible.core.math hierarchy.
+Python port of Java classes from the
+crucible.core.math
+hierarchy.
 
 From the original package-info.java:
 
@@ -12,16 +14,8 @@ From the original package-info.java:
 
 Modules
 -------
-cruciblemath.py
-statistics.py
 
 Packages
 --------
-coords
-functions
-intervals
-modeling
-tests
-vectorfields
 vectorspace
 """

@@ -6,13 +6,7 @@ hierarchy.
 
 Modules
 -------
-internaloperations.py
-malformedrotationexception.py
-unwritablevectorij.py
-unwritablevectorijk.py
-vectorijk.py
 
 Packages
 --------
-tests
 """

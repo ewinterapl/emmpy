@@ -1,6 +1,8 @@
 """emmpy.com
 
-Python port of Java classes from the com hierarchy.
+Python port of Java classes from the
+com
+hierarchy.
 
 Packages
 --------

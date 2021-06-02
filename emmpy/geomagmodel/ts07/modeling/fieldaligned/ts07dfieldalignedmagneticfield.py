@@ -96,7 +96,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                 basisFunctionsBuilder.append(
                     VectorFields.scale(VectorFields.add(field, shieldingField), 1.0/amp))
             else:
-                basisFunctionsBuilder.append(self.scale(field, 1.0/amp))
+                basisFunctionsBuilder.append(VectorFields.scale(field, 1.0/amp))
 
         self.internalFields = internalFieldsBuilder
         self.shieldingFields = shieldingFieldsBuilder
@@ -169,22 +169,28 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             # float coeff
             coeff = self.basisCoefficients[count]
             count += 1
-            values.append(
-                UnwritableVectorIJK(coeff, basisFunction.evaluate(location))
-            )
+            bfe = basisFunction.evaluate(location)
+            v = UnwritableVectorIJK(coeff, bfe)
+            values.append(v)
         return values
 
-    # #   @Override
-    # #   public int getNumberOfBasisFunctions() {
-    # #     return basisFunctions.size();
-    # #   }
+    def getNumberOfBasisFunctions(self):
+        """Get the number of basis functions.
 
-    # #   public ImmutableList<VectorField> getInternalFields() {
-    # #     return internalFields;
-    # #   }
+        return int
+        """
+        return self.basisFunctions.size()
 
-    # #   public ImmutableList<VectorField> getShieldingFields() {
-    # #     return shieldingFields;
-    # #   }
+    def getInternalFields(self):
+        """Return the list of internal fields.
 
-    # # }
+        return [VectorField]
+        """
+        return self.internalFields
+
+    def getShieldingFields(self):
+        """Return the list of shielding fields.
+
+        return [VectorField]
+        """
+        return self.shieldingFields

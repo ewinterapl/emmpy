@@ -19,5 +19,13 @@ class DifferentiableScalarFieldIJ(
     """
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE."""
-        raise Exception
+        """Build a DifferentiableScalarFieldIJ object.
+        
+        INTERFACE - BUT MAY BE INSTANTIATED.
+        
+        This constructor does a pass instead of raise an Exception since this
+        class is instantiated in some other classes, such as
+        CurrentSheetHalfThicknesses.
+        """
+        pass
+

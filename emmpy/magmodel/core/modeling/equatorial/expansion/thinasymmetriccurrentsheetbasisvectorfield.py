@@ -78,18 +78,13 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         """This guy recalculates everything"""
 
         # Preallocate the arrays of vectors for the expansions.
-        zeros = [0, 0, 0]
-        symmetricExpansions = [
-            UnwritableVectorIJK(zeros) for i in range(self.numRadialExpansions)
-        ]
+        symmetricExpansions = [None for i in range(self.numRadialExpansions)]
         oddExpansions = (
-            [[UnwritableVectorIJK(zeros)
-              for j in range(self.numRadialExpansions)]
+            [[None for j in range(self.numRadialExpansions)]
              for i in range(self.numAzimuthalExpansions)]
         )
         evenExpansions = (
-            [[UnwritableVectorIJK(zeros)
-              for j in range(self.numRadialExpansions)]
+            [[None for j in range(self.numRadialExpansions)]
              for i in range(self.numAzimuthalExpansions)]
         )
 

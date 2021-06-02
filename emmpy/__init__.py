@@ -9,5 +9,5 @@ crucible
 geomagmodel
 java
 magmodel
-templates
+utilities
 """

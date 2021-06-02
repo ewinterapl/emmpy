@@ -160,7 +160,6 @@ class VectorFields:
             fe = field.evaluate(location, buffer)
             sfe = fe.scale(scaleFactor)
             return sfe
-            # return field.evaluate(location, buffer).scale(scaleFactor)
         vf.evaluate = my_evaluate
         return vf
 

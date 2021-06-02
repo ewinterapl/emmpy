@@ -6,7 +6,9 @@ from emmpy.magmodel.core.modeling.equatorial.currentsheethalfthicknesses import 
 
 
 class TestBuilder(unittest.TestCase):
-    pass
+
+    def test_createConstant(self):
+        pass
 
 
 if __name__ == '__main__':

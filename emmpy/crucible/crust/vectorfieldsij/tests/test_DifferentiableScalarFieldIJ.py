@@ -8,7 +8,8 @@ from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        self.assertIsNotNone(DifferentiableScalarFieldIJ())
+        with self.assertRaises(Exception):
+            DifferentiableScalarFieldIJ()
 
 
 if __name__ == '__main__':

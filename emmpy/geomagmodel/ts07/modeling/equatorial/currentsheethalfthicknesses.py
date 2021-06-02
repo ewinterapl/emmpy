@@ -12,27 +12,22 @@ class CurrentSheetHalfThicknesses:
     author G.K.Stephens
     """
 
-    # def __init__(self):
-    #     """Constructor
-
-    #     no need to construct
-    #     """
-    #     pass
-
     @staticmethod
     def createConstant(currentSheetHalfThickness):
         """Returns a constant current sheet half thickness
 
-        param currentSheetHalfThickness the current sheet half thickness
-        (in R_E)
-        return a newly created DifferentiableScalarFieldIJ representing the
-        current sheet thickness
+        param (float) currentSheetHalfThickness the current sheet half
+        thickness (in R_E)
+        return (DifferentiableScalarFieldIJ) a newly created
+        DifferentiableScalarFieldIJ representing the current sheet thickness
         """
         dsfij = DifferentiableScalarFieldIJ()
         # These lambdas are not bound methods.
-        dsfij.differentiateFDi = lambda my_location: 0
-        dsfij.differentiateFDj = lambda my_location: 0
-        dsfij.evaluate = lambda my_location: currentSheetHalfThickness
+        # UnwritableVectorIJ location
+        # These methods all return float.
+        dsfij.differentiateFDi = lambda location: 0
+        dsfij.differentiateFDj = lambda location: 0
+        dsfij.evaluate = lambda location: currentSheetHalfThickness
         return dsfij
 
     #   /**

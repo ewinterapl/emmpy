@@ -10,4 +10,5 @@ Modules
 Packages
 --------
 core
+crust
 """

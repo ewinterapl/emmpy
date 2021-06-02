@@ -9,7 +9,7 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         with self.assertRaises(Exception):
-            ScalarFieldIJSpatialDerivative()
+            ScalarFieldIJSpatialDerivative(None)
 
     def test_differentiateFDi(self):
         with self.assertRaises(Exception):

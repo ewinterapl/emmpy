@@ -1,19 +1,17 @@
-"""emmpy.java.lang.double
-"""
+"""emmpy.java.lang.double"""
 
 
 import math
 import struct
 import sys
 
-from emmpy.java.lang.object import Object
 
-
-class Double(Object):
+class Double:
     MAX_VALUE = sys.float_info.max
     POSITIVE_INFINITY = math.inf
 
-    def doubleToLongBits(x: float) -> int:
+    @staticmethod
+    def doubleToLongBits(x):
         """Convert a float to the corresponding IEEE 754 bit pattern.
 
         NOTE: This Python version gives the same results as the Java '>>>'

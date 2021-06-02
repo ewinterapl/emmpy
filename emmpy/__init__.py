@@ -9,4 +9,6 @@ modelrunapp.py
 Packages
 --------
 crucible
+geomagmodel
+utilities
 """

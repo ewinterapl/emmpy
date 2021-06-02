@@ -6,7 +6,11 @@ hierarchy.
 
 Modules
 -------
+internaloperations.py
+malformedrotationexception.py
+unwritablevectorijk.py
 
 Packages
 --------
+tests
 """

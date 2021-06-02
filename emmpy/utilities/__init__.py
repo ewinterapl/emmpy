@@ -4,8 +4,7 @@ Utility functions for emmpy code.
 
 Modules
 -------
-isragged.py
-isrealnumber.py
+doubletolongbits.py
 
 Packages
 --------

@@ -8,7 +8,8 @@ Modules
 -------
 test_InternalOperations.py
 test_MalformedRotationException.py
-test_UnwritableVectorIJ.py
 test_UnwritableVectorIJK.py
-test_VectorIJK.py
+
+Packages
+--------
 """

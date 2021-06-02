@@ -1,9 +1,6 @@
-"""emmpy.geomagmodel.ts07.modeling.equatorial.ts07equtorialmagneticfieldbuilder"""
+"""emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder"""
 
 
-from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
-    DifferentiableScalarFieldIJ
-)
 from emmpy.geomagmodel.t01.deformation.positionbender import (
     PositionBender
 )
@@ -40,31 +37,31 @@ class Ts07EquatorialMagneticFieldBuilder:
         self.includeShield = True
         self.withTA15deformation = 0
 
-    # def withAlbertBessel(self):
-    #     """Use Jay Albert's faster Bessel function evaluator.
+    def withAlbertBessel(self):
+        """Use Jay Albert's faster Bessel function evaluator.
 
-    #     By default, the Bessel function evaluator will be Tsyganenko's, if this
-    #     is set, Jay Albert's Bessel function evaluator will be used instead.
-    #     Jay Albert's implementation is about 4 times faster, although it gives
-    #     slightly different, but negligible, differences.
+        By default, the Bessel function evaluator will be Tsyganenko's, if this
+        is set, Jay Albert's Bessel function evaluator will be used instead.
+        Jay Albert's implementation is about 4 times faster, although it gives
+        slightly different, but negligible, differences.
 
-    #     @return this builder object
-    #     """
-    #     # self.bessel = AlbertBesselFunctionEvaluator(14)
-    #     return self
+        @return this builder object
+        """
+        # self.bessel = AlbertBesselFunctionEvaluator(14)
+        return self
 
-    # def set_withTA15deformation(self, bzIMF):
-    #     """Use the TA15 bending and warping deformation instead of the T01
-    #     bending and warping deformation.
+    def set_withTA15deformation(self, bzIMF):
+        """Use the TA15 bending and warping deformation instead of the T01
+        bending and warping deformation.
 
-    #     By default, the model uses the T01 bending and warping deformation.
+        By default, the model uses the T01 bending and warping deformation.
 
-    #     @param bzIMF the z-component of the IMF (interplanetary magnetic field)
-    #     averaged over the previous 30 minutes
-    #     @return this builder object
-    #     """
-    #     self.withTA15deformation = bzIMF
-    #     return self
+        @param bzIMF the z-component of the IMF (interplanetary magnetic field)
+        averaged over the previous 30 minutes
+        @return this builder object
+        """
+        self.withTA15deformation = bzIMF
+        return self
 
     def withEquatorialShielding(self):
         """Turn on equatorial shielding.
@@ -127,15 +124,15 @@ class Ts07EquatorialMagneticFieldBuilder:
             bentWarpedField = thinCurrentSheet
             if self.withTA15deformation:
                 raise Exception
-    #     #         // warp the shielded thin current sheet
-    #     #         BasisVectorField warpedField = DeformationII.deformBasisField(dipoleTiltAngle,
-    #     #             hingeDistance, warpingParam, twistParam, thinCurrentSheet);
+        #         // warp the shielded thin current sheet
+        #         BasisVectorField warpedField = DeformationII.deformBasisField(dipoleTiltAngle,
+        #             hingeDistance, warpingParam, twistParam, thinCurrentSheet);
 
-    #     #         double bzIMF = withTA15deformation.getAsDouble();
+        #         double bzIMF = withTA15deformation.getAsDouble();
 
-    #     #         // now apply the bending deformation to the warped field
-    #     #         bentWarpedField =
-    #     #             DeformationI.deformBasisField(dipoleTiltAngle, hingeDistance, bzIMF, warpedField);
+        #         // now apply the bending deformation to the warped field
+        #         bentWarpedField =
+        #             DeformationI.deformBasisField(dipoleTiltAngle, hingeDistance, bzIMF, warpedField);
             else:
                 # the T01 deformation (standard for TS07D)
 
@@ -166,10 +163,6 @@ class Ts07EquatorialMagneticFieldBuilder:
                 # TailSheetCoefficients pdsc
                 pdsc = linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure)
                 pdynCoeffs = pdsc.getAsSingleExpansion()
-                # pdynCoeffs = (
-                #     linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure).
-                #     getAsSingleExpansion()
-                # )
 
                 # Finally, expand the coefficients by including a term that
                 # includes the dynamical pressure

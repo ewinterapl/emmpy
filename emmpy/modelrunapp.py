@@ -1,4 +1,4 @@
-"""Direct Python port of ModelRunApp.java"""
+"""Direct Python port of ModelRunApp.java."""
 
 
 import sys
@@ -6,7 +6,6 @@ import sys
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
@@ -25,6 +24,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 
 
 def ModelRunApp():
+    """Run the models."""
     print("Starting ModelRunApp()")
     # runThinSheet() produces identical results in Java and Python.
     # runThinSheet()
@@ -33,7 +33,7 @@ def ModelRunApp():
 
 
 def runThinSheet():
-    """Builds and runs the thin sheet model"""
+    """Build and run the thin sheet model."""
     print("Starting runThinSheet()")
 
     # use a resolution of (M,N)=(4,5)
@@ -74,14 +74,14 @@ def runThinSheet():
 
 
 def runTs07D():
-    """Builds and runs the TS07D model"""
+    """Build and run the TS07D model."""
     print("Starting runTs07D()")
 
     # use a coeffs file from the March 2015 St. Patty's Day storm
     coeffsFile = "/Users/winteel1/mag/2015_076_16_20.par"
 
     # read the coeffs/parameters from the file
-    # Returns a 
+    # Returns a
     # emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients.TS07DVariableCoefficients
     coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
 

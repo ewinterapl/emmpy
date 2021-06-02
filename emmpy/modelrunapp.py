@@ -97,7 +97,7 @@ def runTs07D():
     # Python and Java identical to this point.
 
     # optional setting to use Jay Albert's Bessel function evaluator
-    # modelBuilder.withAlbertBessel()
+    modelBuilder.withAlbertBessel()
 
     # now construct the TS07D model
     # Returns a

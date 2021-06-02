@@ -1,14 +1,14 @@
 """emmpy.geomagmodel.ts07.ts07dmodelbuilder"""
 
 
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-# from emmpy.com.google.common.base.preconditions import Preconditions
-# from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
-#     ThinCurrentSheetShieldingCoefficients
-# )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
-#     TS07DVariableCoefficientsUtils
-# )
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.com.google.common.base.preconditions import Preconditions
+from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
+    ThinCurrentSheetShieldingCoefficients
+)
+from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
+    TS07DVariableCoefficientsUtils
+)
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory import (
     TS07DStaticCoefficientsFactory
 )
@@ -24,6 +24,7 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuild
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
     Ts07DFieldAlignedMagneticField
 )
+from emmpy.geomagmodel.t96magnetopause import T96Magnetopause
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
@@ -68,11 +69,11 @@ class TS07DModelBuilder:
 
         # by default, we will be consistent with the original FORTRAN code and
         # will not check the magnetopause boundary
-        self.withMagnetopause = False
+        self._withMagnetopause = False
 
         self.twistParameterSet = None
         self.twistParameter = None
-        self.withTA15deformation = None
+        self._withTA15deformation = None
 
     @staticmethod
     def create(*args):
@@ -92,242 +93,241 @@ class TS07DModelBuilder:
             return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure,
                                      variableCoefficients)
         elif len(args) == 5:
-            raise Exception
-    #         (dipoleTiltAngle, dynamicPressure, variableCoefficientsFile,
-    #          numAzimuthalExpansions, numRadialExpansions,
-    #          facConfiguration) = args
-    #         # Creates a new Builder that can be used to construct the TS07D
-    #         # model with a different equatorial resolution than M=4, N=5.
-    #         # param dipoleTiltAngle the dipole tilt angle in radians
-    #         # param dynamicPressure the dynamic pressure of the solar wind
-    #         # param variableCoefficients the set of coefficients for the model
-    #         # param numAzimuthalExpansions the number of equatorial azimuthal
-    #         # expansions (M)
-    #         # param numRadialExpansions the number of equatorial radial
-    #         # expansions (N)
+            (dipoleTiltAngle, dynamicPressure, variableCoefficientsFile,
+             numAzimuthalExpansions, numRadialExpansions,
+             facConfiguration) = args
+            # Creates a new Builder that can be used to construct the TS07D
+            # model with a different equatorial resolution than M=4, N=5.
+            # param dipoleTiltAngle the dipole tilt angle in radians
+            # param dynamicPressure the dynamic pressure of the solar wind
+            # param variableCoefficients the set of coefficients for the model
+            # param numAzimuthalExpansions the number of equatorial azimuthal
+            # expansions (M)
+            # param numRadialExpansions the number of equatorial radial
+            # expansions (N)
 
-    #         # this will throw a runtime exception if the input number of
-    #         # expansions doesn't match the size of the file
-    #         coeffs = TS07DVariableCoefficientsUtils.create(
-    #             variableCoefficientsFile, numAzimuthalExpansions,
-    #             numRadialExpansions, facConfiguration)
-    #         return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure, coeffs)
+            # this will throw a runtime exception if the input number of
+            # expansions doesn't match the size of the file
+            coeffs = TS07DVariableCoefficientsUtils.create(
+                variableCoefficientsFile, numAzimuthalExpansions,
+                numRadialExpansions, facConfiguration)
+            return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure, coeffs)
         else:
             raise Exception
 
-    # @staticmethod
-    # def createStandardResolution(dipoleTiltAngle, dynamicPressure,
-    #                              variableCoefficientsFile, facConfiguration):
-    #     numAzimuthalExpansions = 4
-    #     numRadialExpansions = 5
+    @staticmethod
+    def createStandardResolution(dipoleTiltAngle, dynamicPressure,
+                                 variableCoefficientsFile, facConfiguration):
+        numAzimuthalExpansions = 4
+        numRadialExpansions = 5
 
-    #     # this will throw a runtime exception if the input number of expansions
-    #     # doesn't match the size of the file
-    #     coeffs = TS07DVariableCoefficientsUtils.create(
-    #         variableCoefficientsFile, numAzimuthalExpansions,
-    #         numRadialExpansions, facConfiguration)
-    #     return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure, coeffs)
+        # this will throw a runtime exception if the input number of expansions
+        # doesn't match the size of the file
+        coeffs = TS07DVariableCoefficientsUtils.create(
+            variableCoefficientsFile, numAzimuthalExpansions,
+            numRadialExpansions, facConfiguration)
+        return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure, coeffs)
 
-    # def withDipoleTiltAngleValue(self, dipoleTiltAngle):
-    #     """Replaces the initial dipole tilt angle with the supplied value.
+    def withDipoleTiltAngleValue(self, dipoleTiltAngle):
+        """Replaces the initial dipole tilt angle with the supplied value.
 
-    #     param dipoleTiltAngle a new dipole tilt angle to use when building
-    #     the model
+        param dipoleTiltAngle a new dipole tilt angle to use when building
+        the model
 
-    #     return this builder object
-    #     """
-    #     self.dipoleTiltAngle = dipoleTiltAngle
-    #     return self
+        return this builder object
+        """
+        self.dipoleTiltAngle = dipoleTiltAngle
+        return self
 
-    # def withDynamicPressureValue(self, dynamicPressure):
-    #     """Replaces the initial dynamic pressure with the supplied value.
+    def withDynamicPressureValue(self, dynamicPressure):
+        """Replaces the initial dynamic pressure with the supplied value.
 
-    #     param dynamicPressure a new dynamic pressure to use when building the
-    #     model
+        param dynamicPressure a new dynamic pressure to use when building the
+        model
 
-    #     return this builder object
-    #     """
-    #     self.dynamicPressure = dynamicPressure
-    #     return self
+        return this builder object
+        """
+        self.dynamicPressure = dynamicPressure
+        return self
 
-    # def withVariableCoefficientValues(self, variableCoefficients):
-    #     """Replaces the initial set of variable coefficients with the supplied
-    #     set.
+    def withVariableCoefficientValues(self, variableCoefficients):
+        """Replaces the initial set of variable coefficients with the supplied
+        set.
 
-    #     NOTE, this will not override the value of the twist angle if the
-    #     withTwistParameter(double)} was called.
+        NOTE, this will not override the value of the twist angle if the
+        withTwistParameter(double)} was called.
 
-    #     param TS07DVariableCoefficients a new set of variable coefficients to
-    #     use when building the model
+        param TS07DVariableCoefficients a new set of variable coefficients to
+        use when building the model
 
-    #     preturn this builder object
-    #     """
-    #     self.variableCoefficients = variableCoefficients
-    #     return self
+        preturn this builder object
+        """
+        self.variableCoefficients = variableCoefficients
+        return self
 
-    # def withEquatorialShielding(self):
-    #     """By default, the equatorial shielding fields are evaluated, so if you
-    #     haven't previously turned them off, you won't need to call this.
+    def withEquatorialShielding(self):
+        """By default, the equatorial shielding fields are evaluated, so if you
+        haven't previously turned them off, you won't need to call this.
 
-    #     return this builder object
-    #     """
-    #     self.includeEquatorialShielding = True
-    #     return self
+        return this builder object
+        """
+        self.includeEquatorialShielding = True
+        return self
 
-    # def withoutEquatorialShielding(self):
-    #     """By default, the equatorial shielding fields are evaluated.
+    def withoutEquatorialShielding(self):
+        """By default, the equatorial shielding fields are evaluated.
 
-    #     Evaluating the shielding of the equatorial fields, is about 90% of the
-    #     computation time required of the model. Since they are not needed in
-    #     all applications, like computing the current density inside the
-    #     magnetopause, the option to turn them off can significantly speed up
-    #     the code.
+        Evaluating the shielding of the equatorial fields, is about 90% of the
+        computation time required of the model. Since they are not needed in
+        all applications, like computing the current density inside the
+        magnetopause, the option to turn them off can significantly speed up
+        the code.
 
-    #     return this builder object
-    #     """
-    #     self.includeEquatorialShielding = False
-    #     return self
+        return this builder object
+        """
+        self.includeEquatorialShielding = False
+        return self
 
-    # def withAlbertBessel(self):
-    #     """Use Jay Albert's faster Bessel function evaluator.
+    def withAlbertBessel(self):
+        """Use Jay Albert's faster Bessel function evaluator.
 
-    #     By default, the Bessel function evaluator will be Tsyganenko's, if this
-    #     is set, Jay Albert's Bessel function evaluator will be used instead.
-    #     Jay Albert's implementation is about 4 times faster, although it gives
-    #     slightly different, but negligible, differences.
+        By default, the Bessel function evaluator will be Tsyganenko's, if this
+        is set, Jay Albert's Bessel function evaluator will be used instead.
+        Jay Albert's implementation is about 4 times faster, although it gives
+        slightly different, but negligible, differences.
 
-    #     return this builder object
-    #     """
-    #     self.withAlbertBesselFunction = True
-    #     return self
+        return this builder object
+        """
+        self.withAlbertBesselFunction = True
+        return self
 
-    # def withoutAlbertBessel(self):
-    #     """Use Tsyganenko's default Bessel function evaluator.
+    def withoutAlbertBessel(self):
+        """Use Tsyganenko's default Bessel function evaluator.
 
-    #     By default, the Bessel function evaluator will be Tsyganenko's, if this
-    #     is set, Jay Albert's Bessel function evaluator will be used instead.
-    #     Jay Albert's implementation is about 4 times faster, although it gives
-    #     slightly different, but negligible, differences.
+        By default, the Bessel function evaluator will be Tsyganenko's, if this
+        is set, Jay Albert's Bessel function evaluator will be used instead.
+        Jay Albert's implementation is about 4 times faster, although it gives
+        slightly different, but negligible, differences.
 
-    #     return this builder object
-    #     """
-    #     self.withAlbertBesselFunction = False
-    #     return self
+        return this builder object
+        """
+        self.withAlbertBesselFunction = False
+        return self
 
-    # def withTA15deformation(self, bzIMF):
-    #     """Use the TA15 bending and warping deformation instead of the T01
-    #     bending and warping deformation for the equatorial field,
+    def withTA15deformation(self, bzIMF):
+        """Use the TA15 bending and warping deformation instead of the T01
+        bending and warping deformation for the equatorial field,
 
-    #     By default, the model uses the T01 bending and warping deformation.
+        By default, the model uses the T01 bending and warping deformation.
 
-    #     param bzIMF the z-component of the IMF (interplanetary magnetic field)
-    #     averaged over the previous 30 minutes
-    #     return this builder object
-    #     """
-    #     self.withTA15deformation = bzIMF
-    #     return self
+        param bzIMF the z-component of the IMF (interplanetary magnetic field)
+        averaged over the previous 30 minutes
+        return this builder object
+        """
+        self._withTA15deformation = bzIMF
+        return self
 
-    # def withOriginalStaticCoefficients(self):
-    #     """Use the original set of static coefficients, this is the default
-    #     set, so if you haven't changed them overridden them with another
-    #     method, it is unnecessary to call this method.
+    def withOriginalStaticCoefficients(self):
+        """Use the original set of static coefficients, this is the default
+        set, so if you haven't changed them overridden them with another
+        method, it is unnecessary to call this method.
 
-    #     This set has resolution up to M=6, N=8, so if you want higher
-    #     resolution than this, you must use a different set of coefficients.
+        This set has resolution up to M=6, N=8, so if you want higher
+        resolution than this, you must use a different set of coefficients.
 
-    #     return this builder object
-    #     """
-    #     self.staticCoefficients = (
-    #         TS07DStaticCoefficientsFactory.create(
-    #             TS07DStaticCoefficientsFactory.
-    #             retrieveOriginalBuiltInCoefficientsPath())
-    #     )
-    #     return self
+        return this builder object
+        """
+        self.staticCoefficients = (
+            TS07DStaticCoefficientsFactory.create(
+                TS07DStaticCoefficientsFactory.
+                retrieveOriginalBuiltInCoefficientsPath())
+        )
+        return self
 
-    # def withNewStaticCoefficients(self):
-    #     """This is an advanced user setting and most users should never call
-    #     this method.
+    def withNewStaticCoefficients(self):
+        """This is an advanced user setting and most users should never call
+        this method.
 
-    #     Uses a precomputed set of static coefficients that were recomputed by
-    #     Grant to have up to M=20, N=20 resolution.
+        Uses a precomputed set of static coefficients that were recomputed by
+        Grant to have up to M=20, N=20 resolution.
 
-    #     return this builder object
-    #     """
-    #     numAzimuthalExpansions = (
-    #         self.variableCoefficients.getEquatorialCoefficients().
-    #         getLinearCoeffs().get(0).getNumAzimuthalExpansions()
-    #     )
-    #     numRadialExpansions = (
-    #         self.variableCoefficients.getEquatorialCoefficients().
-    #         getLinearCoeffs().get(0).getNumRadialExpansions()
-    #     )
-    #     self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
-    #         TS07DStaticCoefficientsFactory.
-    #         retrieveNewBuiltInCoefficientsPath(),
-    #         numAzimuthalExpansions, numRadialExpansions)
-    #     return self
+        return this builder object
+        """
+        numAzimuthalExpansions = (
+            self.variableCoefficients.getEquatorialCoefficients().
+            getLinearCoeffs().get(0).getNumAzimuthalExpansions()
+        )
+        numRadialExpansions = (
+            self.variableCoefficients.getEquatorialCoefficients().
+            getLinearCoeffs().get(0).getNumRadialExpansions()
+        )
+        self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
+            TS07DStaticCoefficientsFactory.
+            retrieveNewBuiltInCoefficientsPath(),
+            numAzimuthalExpansions, numRadialExpansions)
+        return self
 
-    # def withStaticCoefficients(self, *args):
-    #     if isinstance(args[0], str):
-    #         (staticCoefficientsDirectory,) = args
-    #         # By default, the static coefficients are the original set of
-    #         # coefficients.
-    #         # This method allows you to set your own set of static
-    #         # coefficients.
-    #         # param staticCoefficientsDirectory
-    #         # return this builder object
-    #         self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
-    #             staticCoefficientsDirectory)
-    #         return self
-    #     elif isinstance(args[0], ThinCurrentSheetShieldingCoefficients):
-    #         (staticCoefficients,) = args
-    #         # By default, the static coefficients are the original set of
-    #         # coefficients. This method allows you to set your own set of
-    #         # static coefficients.
-    #         # param staticCoefficientsDirectory
-    #         # return this builder object
-    #         self.staticCoefficients = staticCoefficients
-    #         return self
-    #     else:
-    #         raise Exception
+    def withStaticCoefficients(self, *args):
+        if isinstance(args[0], str):
+            (staticCoefficientsDirectory,) = args
+            # By default, the static coefficients are the original set of
+            # coefficients.
+            # This method allows you to set your own set of static
+            # coefficients.
+            # param staticCoefficientsDirectory
+            # return this builder object
+            self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
+                staticCoefficientsDirectory)
+            return self
+        elif isinstance(args[0], ThinCurrentSheetShieldingCoefficients):
+            (staticCoefficients,) = args
+            # By default, the static coefficients are the original set of
+            # coefficients. This method allows you to set your own set of
+            # static coefficients.
+            # param staticCoefficientsDirectory
+            # return this builder object
+            self.staticCoefficients = staticCoefficients
+            return self
+        else:
+            raise Exception
 
-    # def withTailLength(self, tailLength):
-    #     """This is an advanced user setting and most users should never call
-    #     this method.
+    def withTailLength(self, tailLength):
+        """This is an advanced user setting and most users should never call
+        this method.
 
-    #     By default, the tail length is 20.0, note, the static coefficients and
-    #     the variable coefficients should have been fit with a model that
-    #     matches the incoming tail length.
+        By default, the tail length is 20.0, note, the static coefficients and
+        the variable coefficients should have been fit with a model that
+        matches the incoming tail length.
 
-    #     param tailLength
-    #     return this builder object
-    #     """
-    #     self.tailLength = tailLength
-    #     return self
+        param tailLength
+        return this builder object
+        """
+        self.tailLength = tailLength
+        return self
 
-    # def withTwistParameter(self, twistParameter):
-    #     """Sets the twist parameter to the supplied value.
+    def withTwistParameter(self, twistParameter):
+        """Sets the twist parameter to the supplied value.
 
-    #     If this method has been called, the supplied value will OVERRIDE the
-    #     value of the twist parameter that is contained in the supplied set of
-    #     TS07DVariableCoefficients, even if the
-    #     withVariableCoefficientValues(TS07DVariableCoefficients)}was called
-    #     afterwards.
+        If this method has been called, the supplied value will OVERRIDE the
+        value of the twist parameter that is contained in the supplied set of
+        TS07DVariableCoefficients, even if the
+        withVariableCoefficientValues(TS07DVariableCoefficients)}was called
+        afterwards.
 
-    #     param twistParameter
-    #     return this builder object
-    #     """
-    #     self.twistParameter = twistParameter
-    #     self.twistParameterSet = True
-    #     return self
+        param twistParameter
+        return this builder object
+        """
+        self.twistParameter = twistParameter
+        self.twistParameterSet = True
+        return self
 
-    # def withNonLinearParameters(self, parameters):
-    #     self.parameters = parameters
-    #     return self
+    def withNonLinearParameters(self, parameters):
+        self.parameters = parameters
+        return self
 
-    # def withMagnetopause(self):
-    #     self.withMagnetopause = True
-    #     return self
+    def withMagnetopause(self):
+        self._withMagnetopause = True
+        return self
 
     def build(self):
 
@@ -426,9 +426,9 @@ class TS07DModelBuilder:
 
         # If true, the equatorial fields are deformed using the TA15 instead
         # of the T01 deformation
-        if self.withTA15deformation is not None:
+        if self._withTA15deformation is not None:
             equatorialFieldBuilder.withTA15deformation(
-                self.withTA15deformation
+                self._withTA15deformation
             )
 
         # The field aligned current
@@ -445,14 +445,12 @@ class TS07DModelBuilder:
             [dipoleShieldingField, emf,
              fieldAlignedField])
 
-        if self.withMagnetopause:
+        if self._withMagnetopause:
             if self.dipoleTiltAngle == 0:
-                raise Exception
-    #             magnetopause = T96Magnetopause.createTS07(self.dynamicPressure)
+                magnetopause = T96Magnetopause.createTS07(self.dynamicPressure)
             else:
-                raise Exception
-    #             magnetopause = T96Magnetopause.createBentTS07(
-    #                 self.dynamicPressure, self.dipoleTiltAngle, hingeDistance)
-    #         return BasisVectorFields.filter(
-    #             totalExternalField, magnetopause, VectorIJK.ZERO)
+                magnetopause = T96Magnetopause.createBentTS07(
+                    self.dynamicPressure, self.dipoleTiltAngle, hingeDistance)
+            return BasisVectorFields.filter(
+                totalExternalField, magnetopause, VectorIJK.ZERO)
         return totalExternalField

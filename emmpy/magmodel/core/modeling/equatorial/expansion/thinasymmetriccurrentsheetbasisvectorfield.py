@@ -87,14 +87,6 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             for j in range(self.numRadialExpansions):
                 oddExpansions[i].append(None)
                 evenExpansions[i].append(None)
-        # oddExpansions = (
-        #     [[None for j in range(self.numRadialExpansions)]
-        #      for i in range(self.numAzimuthalExpansions)]
-        # )
-        # evenExpansions = (
-        #     [[None for j in range(self.numRadialExpansions)]
-        #      for i in range(self.numAzimuthalExpansions)]
-        # )
 
         # n is the radial expansion number
         for n in range(1, self.numRadialExpansions + 1):

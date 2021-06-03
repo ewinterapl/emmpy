@@ -13,6 +13,13 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
+from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
+    SphericalFieldDeformation
+)
+from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
+    SphericalVectorField
+)
+
 
 class VectorFields:
     """static convenience methods for creating vector fields
@@ -160,7 +167,10 @@ class VectorFields:
                 (location, buffer) = my_args
             else:
                 raise Exception
-            fe = field.evaluate(location, buffer)
+            if isinstance(field, SphericalFieldDeformation):
+                fe = SphericalVectorField.evaluate(field, location, buffer)
+            else:
+                fe = field.evaluate(location, buffer)
             sfe = fe.scale(scaleFactor)
             return sfe
         vf.evaluate = my_evaluate

@@ -64,8 +64,8 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         oddExpansions = []
         evenExpansions = []
         for i in range(self.numAzimuthalExpansions):
-            oddExpansions.append([None])
-            evenExpansions.append([None])
+            oddExpansions.append([])
+            evenExpansions.append([])
             for j in range(self.numRadialExpansions):
                 oddExpansions[i].append(None)
                 evenExpansions[i].append(None)

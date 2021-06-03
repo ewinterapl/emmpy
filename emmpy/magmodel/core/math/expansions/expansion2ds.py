@@ -63,11 +63,11 @@ class Expansion2Ds:
             lastRadialExpansion = a.getJUpperBoundIndex()
             # [[UnwritableVectorIJK]] array
             array = []
-            for i in range(lastRadialExpansion - firstRadialExpansion + 1):
-                array.append([UnwritableVectorIJK(0, 0, 0)])
-                for j in range(lastAzimuthalExpansion -
-                               firstAzimuthalExpansion + 1):
-                    array[i].append(UnwritableVectorIJK(0, 0, 0))
+            for i in range(lastAzimuthalExpansion - firstAzimuthalExpansion + 1):
+                array.append([])
+                for j in range(lastRadialExpansion -
+                               firstRadialExpansion + 1):
+                    array[i].append(None)
             e2d = Expansion2D()
             e2d.getILowerBoundIndex = lambda: firstAzimuthalExpansion
             e2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansion

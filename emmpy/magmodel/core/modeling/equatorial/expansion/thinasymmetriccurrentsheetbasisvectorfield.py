@@ -71,22 +71,30 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         buffer = VectorIJK()
         return buffer.setTo(self.evaluateExpansions(location).sum())
 
-    # def evaluateExpansion(self, location):
-    #     return self.evaluateExpansions(location).getExpansionsAsList()
+    def evaluateExpansion(self, location):
+        return self.evaluateExpansions(location).getExpansionsAsList()
 
     def evaluateExpansions(self, location):
         """This guy recalculates everything"""
 
         # Preallocate the arrays of vectors for the expansions.
         symmetricExpansions = [None for i in range(self.numRadialExpansions)]
-        oddExpansions = (
-            [[None for j in range(self.numRadialExpansions)]
-             for i in range(self.numAzimuthalExpansions)]
-        )
-        evenExpansions = (
-            [[None for j in range(self.numRadialExpansions)]
-             for i in range(self.numAzimuthalExpansions)]
-        )
+        oddExpansions = []
+        evenExpansions = []
+        for i in range(self.numAzimuthalExpansions):
+            oddExpansions.append([])
+            evenExpansions.append([])
+            for j in range(self.numRadialExpansions):
+                oddExpansions[i].append(None)
+                evenExpansions[i].append(None)
+        # oddExpansions = (
+        #     [[None for j in range(self.numRadialExpansions)]
+        #      for i in range(self.numAzimuthalExpansions)]
+        # )
+        # evenExpansions = (
+        #     [[None for j in range(self.numRadialExpansions)]
+        #      for i in range(self.numAzimuthalExpansions)]
+        # )
 
         # n is the radial expansion number
         for n in range(1, self.numRadialExpansions + 1):
@@ -141,8 +149,8 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     def getNumRadialExpansions(self):
         return self.numRadialExpansions
 
-    # def getNumberOfBasisFunctions(self):
-    #     return (
-    #         self.numRadialExpansions +
-    #         2*self.numRadialExpansions*self.numAzimuthalExpansions
-    #     )
+    def getNumberOfBasisFunctions(self):
+        return (
+            self.numRadialExpansions +
+            2*self.numRadialExpansions*self.numAzimuthalExpansions
+        )

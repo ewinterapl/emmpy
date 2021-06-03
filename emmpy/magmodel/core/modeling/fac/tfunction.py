@@ -135,5 +135,5 @@ class TFunction(DifferentiableUnivariateFunction):
         return (
             -self.mode*self.constFactor *
             (self.tan2mp1HalfThetaPos - self.tan2mp1HalfThetaNeg) /
-            (sin(theta)*self.tanMhalfTheta*self.twoMplus1)
+            (sin(theta)*tanMhalfTheta*self.twoMplus1)
         )

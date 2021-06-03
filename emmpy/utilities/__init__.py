@@ -2,8 +2,8 @@
 
 Modules
 -------
-isragged.py
-isrealnumber.py
+isragged
+isrealnumber
 
 Packages
 --------

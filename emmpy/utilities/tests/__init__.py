@@ -2,8 +2,8 @@
 
 Modules
 -------
-test_isragged.py
-test_isrealnumber.py
+test_isragged
+test_isrealnumber
 
 Packages
 --------

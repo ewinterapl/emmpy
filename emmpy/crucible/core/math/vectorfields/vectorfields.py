@@ -83,7 +83,8 @@ class VectorFields:
             # VectorIJK va, vb
             va = a.evaluate(location, VectorIJK())
             vb = b.evaluate(location, VectorIJK())
-            VectorIJK.add(va, vb, buffer)
+            v = VectorIJK.add(va, vb, buffer)
+            return v
         vf.evaluate = my_evaluate
         return vf
 

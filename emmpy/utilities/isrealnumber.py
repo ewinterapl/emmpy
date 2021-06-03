@@ -1,9 +1,8 @@
-"""emmpy.utilities.isrealnumber"""
+"""The isRealNumber() function detects real numbers."""
 
 
 def isRealNumber(x):
-    """If the argument is a real number (int or float), return True. If not,
-    return False."""
-    if isinstance(x, int) or isinstance(x, float):
+    """If x is a real number, return True. If not, return False."""
+    if isinstance(x, (float, int)):
         return True
     return False

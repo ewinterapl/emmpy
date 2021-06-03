@@ -1,9 +1,10 @@
-"""emmpy.utilities.tests
-
-Tests for utility functions for emmpy code.
+"""Tests for utility functions for emmpy code.
 
 Modules
 -------
-test_isRagged.py
-test_isRealNumber.py
+test_isragged.py
+test_isrealnumber.py
+
+Packages
+--------
 """

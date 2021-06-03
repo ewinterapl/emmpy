@@ -5,6 +5,7 @@ from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
 )
@@ -129,30 +130,40 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             dipoleTiltAngle, dynamicPressure, region1KappaScaling,
             region2KappaScaling, options, includeShielding)
 
-    # #   @Override
-    # #   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
+    def evaluate(self, location, buffer):
+        """Evaluate the field.
 
-    # #     // evaluate the FAC internal fields
-    # #     UnwritableVectorIJK internal = internalField.evaluate(location);
-    # #     UnwritableVectorIJK shield = new UnwritableVectorIJK(0, 0, 0);
+        param UnwritableVectorIJK location
+        param VectorIJK buffer
+        return VectorIJK
+        """
 
-    # #     // if shielding fields are turned on, evaluate those
-    # #     if (includeShielding) {
-    # #       shield = shieldingField.evaluate(location);
-    # #     }
+        # evaluate the FAC internal fields
+        # UnwritableVectorIJK internal, shield
+        internal = self.internalField.evaluate(location)
+        shield = UnwritableVectorIJK(0, 0, 0)
 
-    # #     // add the internal+shielding
-    # #     return VectorIJK.addAll(Lists.newArrayList(internal, shield), buffer);
-    # #   }
+        # if shielding fields are turned on, evaluate those
+        if self.includeShielding:
+            shield = self.shieldingField.evaluate(location)
 
-    # #   public ImmutableList<VectorField> getBasisFunctions() {
-    # #     return basisFunctions;
-    # #   }
+        # add the internal+shielding
+        v = VectorIJK.addAll([internal, shield], buffer)
+        return v
 
-    # #   public ImmutableList<Double> getBasisCoefficients() {
-    # #     return basisCoefficients;
-    # #   }
+    def getBasisFunctions(self):
+        """Return the list of basis functions.
 
+        return [VectorField]
+        """
+        return self.basisFunctions
+
+    def getBasisCoefficients(self):
+        """Return the list of basis coefficients
+
+        return [float]
+        """
+        return self.basisCoefficients
 
     def evaluateExpansion(self, location):
         """evaluateExpansion

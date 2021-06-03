@@ -1,14 +1,15 @@
-"""emmpy
-
-EMpirical Magnetic modelling in PYthon
+"""EMMPY: EMpirical Magnetic modelling in PYthon.
 
 Modules
 -------
-modelrunapp.py
+modelrunapp
 
 Packages
 --------
+com
 crucible
 geomagmodel
+java
+magmodel
 utilities
 """

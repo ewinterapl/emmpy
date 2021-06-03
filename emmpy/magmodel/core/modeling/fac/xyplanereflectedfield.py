@@ -39,7 +39,7 @@ class XYPlaneReflectedField(VectorField):
         reflectedLocation = UnwritableVectorIJK(
             location.getI(), location.getJ(), -location.getK()
         )
-        delgate.evaluate(reflectedLocation, buffer)
+        self.delgate.evaluate(reflectedLocation, buffer)
         # double bz
         bz = buffer.getK()
         buffer.setK(-bz)

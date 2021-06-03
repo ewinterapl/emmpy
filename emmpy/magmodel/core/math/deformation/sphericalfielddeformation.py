@@ -28,11 +28,10 @@ class SphericalFieldDeformation(SphericalVectorField):
         # DifferentiableSphericalVectorField coordDeformation
         self.coordDeformation = coordDeformation
 
-    def evaluate(self, originalCoordinate, buffer):
+    def evaluate(self, originalCoordinate):
         """evaluate
 
         param SphericalVector originalCoordinate
-        param buffer (ignored, this is a hack)
         return SphericalVector
         """
 

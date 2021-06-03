@@ -1,11 +1,6 @@
 """emmpy.magmodel.core.math.expansions.expansion1ds"""
 
 
-# from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-#     CoefficientExpansion1D
-# )
-# from emmpy.utilities.isrealnumber import isRealNumber
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
@@ -129,12 +124,6 @@ class Expansion1Ds:
                 # param Expansion1D<UnwritableVectorIJK> a
                 # param CoefficientExpansion1D scaleFactors
                 # return Expansion1D<UnwritableVectorIJK>
-                Preconditions.checkArgument(
-                    a.getLowerBoundIndex() == scaleFactors.getLowerBoundIndex()
-                )
-                Preconditions.checkArgument(
-                    a.getUpperBoundIndex() == scaleFactors.getUpperBoundIndex()
-                )
                 e1d =  Expansion1D()
                 e1d.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
                 e1d.getUpperBoundIndex = lambda: a.getUpperBoundIndex()

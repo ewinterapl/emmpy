@@ -3,7 +3,6 @@
 
 from math import sqrt
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )
@@ -763,9 +762,6 @@ class MatrixIJ(UnwritableMatrixIJ):
         """
 
         # THIS CODE DOES NOT CREATE A DIAGONAL MATRIX!
-        Preconditions.checkArgument(
-            symmetricMatrix.isSymmetric(),
-            "Only able to diagonlize symmetric matrices")
 
         # Is the matrix already diagonal? If so, then don't do any heavy
         # lifting.
@@ -847,9 +843,6 @@ class MatrixIJ(UnwritableMatrixIJ):
         @throws IllegalArgumentException if a and b are both 0.0, or if
         the roots are complex.
         """
-        Preconditions.checkArgument(
-            a != 0.0 or b != 0.0,
-            "Both the linear and quadratic degree coefficients are zero.")
         scale = max(abs(a), max(abs(b), abs(c)))
 
         # If the coefficients can be scaled without zeroing any of them out,
@@ -866,9 +859,6 @@ class MatrixIJ(UnwritableMatrixIJ):
         # equation that needs factoring.
         if a != 0.0:
             discriminant = b*b - 4*a*c
-            # Verify that the discriminant is positive or zero.
-            Preconditions.checkArgument(discriminant >= 0.0,
-                                        "Roots are not real.")
             # Take advantage of the fact that c/a is the product of the roots
             # to improve the accuracy of the root having the smaller magnitude.
             # Compute the larger root first and then divide by c/a by it to

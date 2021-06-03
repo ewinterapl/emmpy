@@ -2,7 +2,6 @@
 """
 
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.java.lang.double import Double
 from emmpy.utilities.isrealnumber import isRealNumber
 
@@ -24,8 +23,7 @@ class Ts07EquatorialVariableCoefficients:
             self.hingeDist = hingeDist
             self.warpingParam = warpingParam
             self.twistParam = twistParam
-            self.equatorialLinearCoeffs = Preconditions.checkNotNull(
-                equatorialLinearCoeffs)
+            self.equatorialLinearCoeffs = equatorialLinearCoeffs
         elif isinstance(currThicks, list):
             # param currThicks
             # param hingeDist

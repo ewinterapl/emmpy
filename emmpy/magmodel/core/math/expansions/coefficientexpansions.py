@@ -3,7 +3,6 @@
 
 from math import floor
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -221,10 +220,6 @@ class CoefficientExpansions:
         # Replace the getCoefficient() method with a method that always returns
         # the sum, as a closure.
         if isinstance(a, CoefficientExpansion1D):
-            Preconditions.checkArgument(a.getLowerBoundIndex() ==
-                                        b.getLowerBoundIndex())
-            Preconditions.checkArgument(a.getUpperBoundIndex() ==
-                                        b.getUpperBoundIndex())
             firstExpansion = a.getLowerBoundIndex()
             lastExpansion = a.getUpperBoundIndex()
             n = lastExpansion - firstExpansion + 1
@@ -239,14 +234,6 @@ class CoefficientExpansions:
             )
             return v
         elif isinstance(a, CoefficientExpansion2D):
-            Preconditions.checkArgument(a.getILowerBoundIndex() ==
-                                        b.getILowerBoundIndex())
-            Preconditions.checkArgument(a.getIUpperBoundIndex() ==
-                                        b.getIUpperBoundIndex())
-            Preconditions.checkArgument(a.getJLowerBoundIndex() ==
-                                        b.getJLowerBoundIndex())
-            Preconditions.checkArgument(a.getJUpperBoundIndex() ==
-                                        b.getJUpperBoundIndex())
             firstAzimuthalExpansion = a.getILowerBoundIndex()
             lastAzimuthalExpansion = a.getIUpperBoundIndex()
             firstRadialExpansion = a.getJLowerBoundIndex()

@@ -1,7 +1,6 @@
 """emmpy.crucible.core.math.coords.abstractvectorfieldvalue"""
 
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.coords.vectorfieldvalue import VectorFieldValue
 
 
@@ -14,8 +13,8 @@ class AbstractVectorFieldValue(VectorFieldValue):
         @param position the position of one object relative to another.
         @param value the time derivative of the supplied position.
         """
-        self.position = Preconditions.checkNotNull(position)
-        self.value = Preconditions.checkNotNull(value)
+        self.position = position
+        self.value = value
 
     def getPosition(self):
         return self.position

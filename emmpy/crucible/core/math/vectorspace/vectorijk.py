@@ -3,7 +3,6 @@
 
 from math import cos, sin
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
@@ -198,7 +197,6 @@ class VectorIJK(UnwritableVectorIJK):
         @throws IllegalArgumentException if an invalid index, outside the range
         [0,2], is specified.
         """
-        Preconditions.checkElementIndex(index, 3, "element")
         if index == 0:
             self.i = value
         elif index == 1:
@@ -418,11 +416,6 @@ class VectorIJK(UnwritableVectorIJK):
             # @throws IllegalArgumentException if normal is equal to
             # {@link VectorIJK#ZERO}
             (vector, normal, buffer) = args
-            # If the supplied normal vector is the zero vector, generate the
-            # necessary exception.
-            Preconditions.checkArgument(not normal.equals(VectorIJK.ZERO),
-                                        "Normal must not be the zero vector.")
-
             maxVector = absMaxComponent(vector.i, vector.j, vector.k)
 
             # Check to see if maxVector is zero length. If it is, populate

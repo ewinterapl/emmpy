@@ -1,7 +1,6 @@
 """emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d"""
 
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.java.util.arrays import Arrays
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
     CoefficientExpansion1D

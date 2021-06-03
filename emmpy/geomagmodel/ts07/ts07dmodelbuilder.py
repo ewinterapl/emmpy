@@ -2,7 +2,6 @@
 
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )

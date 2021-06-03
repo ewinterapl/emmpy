@@ -1,7 +1,6 @@
 """emmpy.crucible.core.math.coords.abstractcoordconverterij"""
 
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.coords.coordconverterij import CoordConverterIJ
 
 
@@ -34,4 +33,4 @@ class AbstractCoordConverterIJ(CoordConverterIJ):
         class to be thread safe. Implementations contained in this package are
         assumed to be thread safe.
         """
-        self.jacobian = Preconditions.checkNotNull(jacobian)
+        self.jacobian = jacobian

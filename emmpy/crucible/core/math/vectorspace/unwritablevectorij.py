@@ -3,7 +3,6 @@
 
 from math import asin, pi
 
-from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
@@ -129,7 +128,6 @@ class UnwritableVectorIJ:
         @throws IndexOutOfBoundsException if an invalid index, outside the
         range [0,1], is specified.
         """
-        Preconditions.checkElementIndex(index, 2, "component")
         if index == 0:
             return self.i
         elif index == 1:

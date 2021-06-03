@@ -125,7 +125,7 @@ class Ffunction(ScalarField):
             )
             dF_dy = (
                 Ffunction.beta*self.dipoleTilt*fm1*y /
-                Ffunction.hingeDistance*r*dQr
+                (Ffunction.hingeDistance*r*dQr)
             )
             return FDerivatives(phiStretched, dF_dPhi, dF_dRho, dF_dy)
         elif isinstance(location, UnwritableVectorIJK):

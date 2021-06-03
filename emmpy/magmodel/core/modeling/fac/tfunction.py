@@ -123,12 +123,12 @@ class TFunction(DifferentiableUnivariateFunction):
             # Tsy 2002-1 Eqn 17, however it is algebraically equivalent.
             return (
                 0.5*self.mode*self.constFactor *
-                (1 + self.tanHalfTheta*self.tanHalfTheta) *
-                (self.tanMhalfTheta/self.tanHalfTheta *
-                (self.tanHalfThetaPos - self.tanHalfTheta) -
+                (1 + tanHalfTheta*tanHalfTheta) *
+                (tanMhalfTheta/tanHalfTheta *
+                (self.tanHalfThetaPos - tanHalfTheta) -
                 1/self.twoMplus1 *
-                (self.tanMhalfTheta - self.tan2mp1HalfThetaNeg /
-                    (self.tanMhalfTheta*self.tanHalfTheta)))
+                (tanMhalfTheta - self.tan2mp1HalfThetaNeg /
+                    (tanMhalfTheta*tanHalfTheta)))
             )
 
         # Third piecewise condition: theta >= theta+

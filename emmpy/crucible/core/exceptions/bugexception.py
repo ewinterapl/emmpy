@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.exceptions.bugexception
+"""Bug exception for crucible code.
 
 Runtime exception generated as a result of something failing that should
 never fail.
@@ -18,4 +18,4 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 
 
 class BugException(CrucibleRuntimeException):
-    pass
+    """Bug exception for crucible code."""

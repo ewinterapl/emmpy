@@ -1,7 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder"""
 
 
-from emmpy.crucible.core.designpatterns.builder import Builder
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
     BirkelandDeformationFunction
@@ -78,7 +77,7 @@ D = [
 ]
 
 
-class FieldAlignedCurrentBuilder(Builder):
+class FieldAlignedCurrentBuilder:
     """A builder that builds Field Aligned current modules.
 
     Note: this only includes the internal field and NOT the shielding field.

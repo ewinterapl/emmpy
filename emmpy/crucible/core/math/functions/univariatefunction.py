@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.functions.univariatefunction
+"""A single-variabe function.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -12,14 +12,14 @@ class UnivariateFunction:
     """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTANTIATE.
         """
         raise Exception
 
     def evaluate(self, t):
-        """Evaluates the function at the specified value.
+        """Evaluate the function at the specified value.
 
         INTERFACE - DO NOT INVOKE
 

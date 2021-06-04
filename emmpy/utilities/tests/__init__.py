@@ -2,9 +2,9 @@
 
 Modules
 -------
-test_doubletolongbits
-test_isragged
-test_isrealnumber
+test_doubletolongbits.py
+test_isragged.py
+test_isrealnumber.py
 
 Packages
 --------

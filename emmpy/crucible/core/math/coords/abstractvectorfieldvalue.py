@@ -1,14 +1,14 @@
-"""emmpy.crucible.core.math.coords.abstractvectorfieldvalue"""
+"""Base class for vector field values."""
 
 
 from emmpy.crucible.core.math.coords.vectorfieldvalue import VectorFieldValue
 
 
 class AbstractVectorFieldValue(VectorFieldValue):
-    """AbstractVectorFieldValue"""
+    """Base class for vector field values."""
 
     def __init__(self, position, value):
-        """Creates a state.
+        """Create a state.
 
         @param position the position of one object relative to another.
         @param value the time derivative of the supplied position.
@@ -17,19 +17,19 @@ class AbstractVectorFieldValue(VectorFieldValue):
         self.value = value
 
     def getPosition(self):
+        """Return the position."""
         return self.position
 
     def getValue(self):
+        """Return the value."""
         return self.value
 
     def toString(self):
+        """Convert the object to a string."""
         return "[position=%s, value=%s]" % (self.position, self.value)
 
     def hashCode(self):
-        """@see java.lang.Object#hashCode()
-
-        (non-Javadoc)
-        """
+        """Compute the object hash code."""
         prime = 31
         result = 1
         result = prime*result
@@ -41,10 +41,7 @@ class AbstractVectorFieldValue(VectorFieldValue):
         return result
 
     def equals(self, obj):
-        """@see java.lang.Object#equals(java.lang.Object)
-
-        (non-Javadoc)
-        """
+        """Check the object for equality with another object."""
         if self is obj:
             return True
         if obj is None:

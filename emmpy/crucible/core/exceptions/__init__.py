@@ -1,6 +1,4 @@
-"""emmpy.crucible.core.exceptions
-
-Python port of Java classes from the crucible.core.exceptions hierarchy.
+"""Python port of Java classes from the crucible.core.exceptions hierarchy.
 
 From the original package-info.java:
 
@@ -24,6 +22,8 @@ Modules
 bugexception.py
 crucibleexception.py
 crucibleruntimeexception.py
-functionevaluationexception.py
-runtimeinterruptedexception.py
+
+Packages
+--------
+tests
 """

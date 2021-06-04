@@ -1,6 +1,4 @@
-"""emmpy.crucible.core.math.coords
-
-Python port of Java classes from the crucible.core.math.coords hierarchy.
+"""Python port of Java classes from the crucible.core.math.coords hierarchy.
 
 From the original package-info.java:
 
@@ -107,7 +105,6 @@ cartesianvectorfieldvalue.py
 coordconverter.py
 coordconverterij.py
 coordconverters.py
-coordutilities.py
 cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py

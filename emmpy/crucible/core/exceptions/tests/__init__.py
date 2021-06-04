@@ -1,13 +1,11 @@
-"""emmpy.crucible.core.exceptions.tests
-
-Tests for Python port of Java classes from the crucible.core.exceptions
-hierarchy.
+"""Tests for Python port of Java classes from the crucible.core.exceptions hierarchy.
 
 Modules
 -------
 test_BugException.py
 test_CrucibleException.py
 test_CrucibleRuntimeException.py
-test_FunctionEvaluationException.py
-test_RuntimeInterruptedException.py
+
+Packages
+--------
 """

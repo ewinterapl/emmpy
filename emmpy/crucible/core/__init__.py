@@ -1,4 +1,4 @@
-"""emmpy.crucible.core
+"""Python port of Java classes from the crucible.core hierarchy.
 
 Python port of Java classes from the
 crucible.core
@@ -9,5 +9,8 @@ Modules
 
 Packages
 --------
+exceptions
 math
+rotations
+units
 """

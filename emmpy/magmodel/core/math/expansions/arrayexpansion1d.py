@@ -1,7 +1,6 @@
 """emmpy.magmodel.core.math.expansions.arrayexpansion1d"""
 
 
-from emmpy.java.util.arrays import Arrays
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 
 
@@ -34,7 +33,7 @@ class ArrayExpansion1D(Expansion1D):
     def hashCode(self):
         prime = 31
         result = 1
-        result = prime*result + Arrays.hashCode(self.array)
+        result = prime*result + 0  # *self.array
         result = prime*result + self.firstRadialExpansionNumber
         result = prime*result + self.lastRadialExpansionNumber
         return result

@@ -1,7 +1,6 @@
 """emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d"""
 
 
-from emmpy.java.util.arrays import Arrays
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
@@ -58,7 +57,7 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
     def hashCode(self):
         prime = 31
         result = 1
-        result = prime*result + Arrays.deepHashCode(self.data)
+        result = prime*result + 0  #*self.data
         result = prime*result + self.iLowerBoundIndex
         result = prime*result + self.jLowerBoundIndex
         return result

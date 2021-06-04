@@ -1,6 +1,4 @@
-"""emmpy.magmodel.core.math.expansions
-
-Python port of Java classes from the magmodel.core.math.expansions hierarchy.
+"""Python port of Java classes from the magmodel.core.math.expansions hierarchy.
 
 This package lays defines commonly used interfaces and utility classes for
 describing the mathematical expansions that are frequently used in formulating

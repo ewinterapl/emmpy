@@ -1,7 +1,4 @@
-"""emmpy.magmodel.core.math.expansions.tests
-
-Tests for Python port of Java classes from the magmodel.core.math.expansions
-hierarchy.
+"""Tests for Python port of Java classes from the magmodel.core.math.expansions hierarchy.
 
 Modules
 -------
@@ -17,4 +14,7 @@ test_Expansion1Ds.py
 test_Expansion2D.py
 test_Expansion2Ds.py
 test_ListExpansion1D.py
+
+Packages
+--------
 """

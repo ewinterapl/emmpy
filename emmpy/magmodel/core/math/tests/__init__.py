@@ -1,8 +1,4 @@
-"""emmpy.magmodel.core.math.tests
-
-Tests for Python port of Java classes from the
-magmodel.core.math
-hierarchy.
+"""Tests for Python port of Java classes from the magmodel.core.math hierarchy.
 
 Modules
 -------
@@ -11,4 +7,7 @@ test_CartesianHarmonicField.py
 test_CylindricalHarmonicField.py
 test_PerpendicularAndParallelCartesianHarmonicField.py
 test_TrigParity.py
+
+Packages
+--------
 """

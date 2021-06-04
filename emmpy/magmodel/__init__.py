@@ -1,6 +1,7 @@
-"""emmpy.magmodel
+"""Python port of Java classes from the magmodel hierarchy.
 
-Python port of Java classes from the magmodel hierarchy.
+Modules
+-------
 
 Packages
 --------

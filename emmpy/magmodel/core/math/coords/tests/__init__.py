@@ -1,11 +1,9 @@
-"""emmpy.magmodel.core.math.coords.vectorfields.tests
-
-Tests for Python port of Java classes from the
-magmodel.core.math.coords.vectorfields
-hierarchy.
+"""Tests for Python port of Java classes from the magmodel.core.math.coords hierarchy.
 
 Modules
 -------
-test_BasisVectorField.py
-test_CylindricalVectorField.py
+test_CylindricalCoordsXAligned.py
+
+Packages
+--------
 """

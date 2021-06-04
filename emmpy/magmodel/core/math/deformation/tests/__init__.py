@@ -1,8 +1,4 @@
-"""emmpy.magmodel.core.math.deformation.tests
-
-Tests for Python port of Java classes from the
-magmodel.core.math.deformation
-hierarchy.
+"""Tests for Python port of Java classes from the magmodel.core.math.deformation hierarchy.
 
 Modules
 -------
@@ -11,4 +7,7 @@ test_CylindricalBasisVectorFieldDeformation.py
 test_CylindricalFieldDeformation.py
 test_SphericalFieldDeformation.py
 test_VectorFieldDeformation.py
+
+Packages
+--------
 """

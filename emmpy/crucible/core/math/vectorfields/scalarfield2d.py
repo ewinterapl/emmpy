@@ -1,15 +1,14 @@
-"""emmpy.crucible.core.math.vectorfields.scalarfield2d"""
+"""A 2-D scalar field."""
 
 
 class ScalarField2D:
-    """Represents a 2 dimensional scalar field, which maps a VectorIJ to a
-    scalar (double).
+    """A 2-D scalar field.
 
     @author G.K.Stephens
     """
 
     def __init__(self, location):
-        """Interface - do not instantiate."""
+        """Build a new object."""
         raise Exception
 
     def evaluate(self, location):

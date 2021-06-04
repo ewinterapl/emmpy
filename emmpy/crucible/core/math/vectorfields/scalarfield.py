@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorfields.scalarfield
+"""A 3-D scalar field.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -6,18 +6,17 @@ methods will raise exceptions if invoked.
 
 
 class ScalarField:
-    """Represents a 3 dimensional scalar field, which maps a VectorIJK to a
-    scalar (double).
+    """A 3-D scalar field.
 
     @author G.K.Stephens
     """
 
     def __init__(self, location):
-        """INTERFACE - DO NOT INSTANTIATE"""
+        """Build a new object."""
         raise Exception
 
     def evaluate(self, location):
-        """Evaluate the field at the given position, and return a scalar value
+        """Evaluate the field at a position.
 
         INTERFACE - DO NOT INVOKE.
 

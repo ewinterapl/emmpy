@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorfields.differentiablevectorfield
+"""A differentiable 3-D vector field.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -8,17 +8,15 @@ methods will raise exceptions if invoked.
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
-
 class Results:
-    """Represents the 9 spatial derivatives of a VectorField in
-    Cartesian coordinates.
+    """Value and derivatives of a differentiable 3-D vector field.
 
     author G.K.Stephens
     """
 
     def __init__(self, f, dFxDx, dFxDy, dFxDz, dFyDx, dFyDy, dFyDz, dFzDx,
-                    dFzDy, dFzDz):
-        """Constructor"""
+                 dFzDy, dFzDz):
+        """Build a new object."""
         self.f = f
         self.dFxDx = dFxDx
         self.dFxDy = dFxDy
@@ -31,105 +29,94 @@ class Results:
         self.dFzDz = dFzDz
 
     def getF(self):
-        """return the value of the UnwritableVectorIJK evaluated at the
-        supplied location"""
+        """Return the field value at a location."""
         return self.f
 
     def getdFxDx(self):
-        """return the partial derivative of the x-component of the field
-        with respect to x evaluated at the supplied location"""
+        """Return dFx/dx at the supplied location."""
         return self.dFxDx
 
     def getdFxDy(self):
-        """return the partial derivative of the x-component of the field
-        with respect to y evaluated at the supplied location"""
+        """Return dFx/dy at the supplied location."""
         return self.dFxDy
 
     def getdFxDz(self):
-        """return the partial derivative of the x-component of the field
-        with respect to z evaluated at the supplied location"""
+        """Return dFx/dz at the supplied location."""
         return self.dFxDz
 
     def getdFyDx(self):
-        """return the partial derivative of the y-component of the field
-        with respect to x evaluated at the supplied location"""
+        """Return dFy/dx at the supplied location."""
         return self.dFyDx
 
     def getdFyDy(self):
-        """return the partial derivative of the y-component of the field
-        with respect to y evaluated at the supplied location"""
+        """Return dFy/dy at the supplied location."""
         return self.dFyDy
 
     def getdFyDz(self):
-        """return the partial derivative of the y-component of the field
-        with respect to z evaluated at the supplied location"""
+        """Return dFy/dz at the supplied location."""
         return self.dFyDz
 
     def getdFzDx(self):
-        """return the partial derivative of the z-component of the field
-        with respect to x evaluated at the supplied location"""
+        """Return dFz/dx at the supplied location."""
         return self.dFzDx
 
     def getdFzDy(self):
-        """return the partial derivative of the z-component of the field
-        with respect to y evaluated at the supplied location"""
+        """Return dFz/dy at the supplied location."""
         return self.dFzDy
 
     def getdFzDz(self):
-        """return the partial derivative of the z-component of the field
-        with respect to z evaluated at the supplied location"""
+        """Return dFz/dz at the supplied location."""
         return self.dFzDz
 
 
 class DifferentiableVectorField(VectorField):
-    """Extends a VectorField by adding the 9 spatial derivatives of a in
-    Cartesian coordinates.
+    """A differentiable 3-D vector field.
 
     author G.K.Stephens
     """
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE"""
+        """Build a new object."""
         raise Exception
 
     def differentiateFiDi(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFi/dxi."""
         raise Exception
 
     def differentiateFjDi(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFj/dxi."""
         raise Exception
 
     def differentiateFkDi(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFk/dxi."""
         raise Exception
 
     def differentiateFiDj(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFi/dxj."""
         raise Exception
 
     def differentiateFjDj(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFj/dxj."""
         raise Exception
 
     def differentiateFkDj(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFk/dxj."""
         raise Exception
 
     def differentiateFiDk(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFi/dxk."""
         raise Exception
 
     def differentiateFjDk(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFj/dxk."""
         raise Exception
 
     def differentiateFkDk(self, location):
-        """INTERFACE - DO NOT INVOKE"""
+        """Compute dFk/dxk."""
         raise Exception
 
     def differentiate(self, location):
-        """INTERFACE - DO NOT INVOKE
+        """Compute the field and derivatives at a location.
 
         Evaluate the field and the spatial derivatives at the given position
         in Cartesian coordinates

@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorfields.vectorfield
+"""A 3-D vector field.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -9,19 +9,17 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class VectorField:
-    """Represents a 3 dimensional vector field, which maps a VectorIJK to
-    another VectorIJK.
+    """A 3-D vector field.
 
     author vandejd1
     author G.K.Stephens
     """
-    pass
 
     def __init__(self):
-        pass
+        """Build a new object."""
 
     def evaluate(self, *args):
-        """Evaluate the field at the given position
+        """Evaluate the field at the given position.
 
         INTERFACE - DO NOT INVOKE
 

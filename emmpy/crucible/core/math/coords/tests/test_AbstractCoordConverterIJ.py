@@ -8,9 +8,7 @@ from emmpy.crucible.core.math.coords.abstractcoordconverterij import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        AbstractCoordConverterIJ([])
-        with self.assertRaises(Exception):
-            AbstractCoordConverterIJ(None)
+        pass
 
 
 if __name__ == '__main__':

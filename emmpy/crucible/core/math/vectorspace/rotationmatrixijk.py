@@ -14,7 +14,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
 from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
     UnwritableRotationMatrixIJK
 )
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 
 
 class RotationMatrixIJK(UnwritableRotationMatrixIJK):
@@ -371,7 +370,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                     UnwritableRotationMatrixIJK.NORM_TOLERANCE,
                     UnwritableRotationMatrixIJK.DETERMINANT_TOLERANCE)
             except MalformedRotationException as e:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Matrix components do not describe a rotation.", e)
             self.ii = ii
             self.ji = ji
@@ -573,7 +572,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         # Check the determinant of source to see that it is at least
         # postiive.
         if source.getDeterminant() <= 0:
-            raise IllegalArgumentException(
+            raise Exception(
                 "Source has a determinant that is not "
                 "strictly positive.  Unable to sharpen source into "
                 " a rotation matrix.")

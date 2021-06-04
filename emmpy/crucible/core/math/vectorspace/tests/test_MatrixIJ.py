@@ -6,7 +6,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -198,11 +197,11 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.ji, 2)
         self.assertAlmostEqual(m.ij, 3)
         self.assertAlmostEqual(m.jj, 4)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(0, 2, -1)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(1, 2, -1)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(2, 0, -1)
 
     def test_setIthColumn(self):
@@ -229,7 +228,7 @@ class TestBuilder(unittest.TestCase):
         m.setColumn(1, v)
         self.assertAlmostEqual(m.ij, 3)
         self.assertAlmostEqual(m.jj, 4)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.setColumn(2, v)
 
     def test_setTo(self):
@@ -325,10 +324,10 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m4.ji, 2)
         self.assertAlmostEqual(m4.ij, 3)
         self.assertAlmostEqual(m4.jj, 4)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m6 = MatrixIJ(0, 0, 0, 0)
             m5.setToInverse(m6)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m6 = MatrixIJ(0, 0, 0, 0)
             m5.setToInverse(m6, 1e-4)
 

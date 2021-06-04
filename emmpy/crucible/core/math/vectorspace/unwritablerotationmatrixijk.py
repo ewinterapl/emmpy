@@ -11,7 +11,6 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
 )
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 
 
 class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
@@ -191,7 +190,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
             try:
                 UnwritableRotationMatrixIJK.checkRotation(self)
             except MalformedRotationException as e:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Matrix components do not describe a rotation.", e)
 
     def createSharpened(self):

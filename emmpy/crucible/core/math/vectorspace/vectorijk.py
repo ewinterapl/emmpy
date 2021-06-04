@@ -11,7 +11,6 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -484,7 +483,7 @@ class VectorIJK(UnwritableVectorIJK):
             maxOnto = absMaxComponent(
                 onto.i, onto.j, onto.k)
             if maxOnto == 0:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to project vector onto the zero vector.")
             if maxVector == 0:
                 buffer.clear()
@@ -650,7 +649,7 @@ class VectorIJK(UnwritableVectorIJK):
             amax = absMaxComponent(a.i, a.j, a.k)
             bmax = absMaxComponent(b.i, b.j, b.k)
             if amax == 0.0 or bmax == 0.0:
-                raise IllegalArgumentException(
+                raise Exception(
                     "At least one input vector is of zero length. Unable to "
                     "unitize resultant cross product."
                 )

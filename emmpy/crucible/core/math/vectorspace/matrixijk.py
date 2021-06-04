@@ -17,7 +17,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -339,7 +338,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             elif column == 2:
                 self.ik = value
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to set element (%s, %s). Column index invalid." %
                     (row, column))
         elif row == 1:
@@ -350,7 +349,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             elif column == 2:
                 self.jk = value
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to set element (%s, %s). Column index invalid." %
                     (row, column))
         elif row == 2:
@@ -361,11 +360,11 @@ class MatrixIJK(UnwritableMatrixIJK):
             elif column == 2:
                 self.kk = value
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to set element (%s, %s). Column index invalid." %
                     (row, column))
         else:
-            raise IllegalArgumentException(
+            raise Exception(
                 "Unable to set element (%s, %s). Column index invalid." %
                 (row, column))
 
@@ -415,7 +414,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         elif columnIndex == 2:
             self.setKthColumn(column)
         else:
-            raise IllegalArgumentException(
+            raise Exception(
                 "Unable to set column. Index: %s is invalid." % columnIndex)
 
     def setTo(self, *args):
@@ -562,7 +561,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             (matrix,) = args
             det = matrix.getDeterminant()
             if abs(det) < UnwritableMatrixIJK.DETERMINANT_TOLERANCE:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             self.setTo(matrix)
             self.invert()
@@ -578,7 +577,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             (matrix, tolerance) = args
             det = matrix.getDeterminant()
             if abs(det) < tolerance:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             self.setTo(matrix)
             self.invert(tolerance)

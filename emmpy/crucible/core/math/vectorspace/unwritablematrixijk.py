@@ -12,7 +12,6 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.utilities.doubletolongbits import doubleToLongBits
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -377,7 +376,7 @@ class UnwritableMatrixIJK:
             elif column == 2:
                 return self.ik
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to retrieve element (%s,%s). Column index invalid."
                     % (row, column))
         elif row == 1:
@@ -388,7 +387,7 @@ class UnwritableMatrixIJK:
             elif column == 2:
                 return self.jk
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to retrieve element (%s,%s). Column index invalid."
                     % (row, column))
         elif row == 2:
@@ -399,11 +398,11 @@ class UnwritableMatrixIJK:
             elif column == 2:
                 return self.kk
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to retrieve element (%s,%s). Column index invalid."
                     % (row, column))
         else:
-            raise IllegalArgumentException(
+            raise Exception(
                 "Unable to retrieve element (%s,%s). Column index invalid."
                 % (row, column))
 
@@ -475,7 +474,7 @@ class UnwritableMatrixIJK:
             elif columnIndex == 2:
                 return self.getKthColumn(buffer)
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to retrieve column. Index: %s is invalid." %
                     columnIndex)
         else:

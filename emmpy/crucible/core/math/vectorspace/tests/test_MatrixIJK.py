@@ -6,7 +6,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -325,13 +324,13 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.ik, 7)
         self.assertAlmostEqual(m.jk, 8)
         self.assertAlmostEqual(m.kk, 9)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(0, 3, 0)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(1, 3, 0)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(2, 3, 0)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.set(3, 0, 0)
 
     def test_setIthColumn(self):
@@ -373,7 +372,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.ik, 1)
         self.assertAlmostEqual(m.jk, 2)
         self.assertAlmostEqual(m.kk, 3)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.setColumn(3, v)
 
     def test_setTo(self):

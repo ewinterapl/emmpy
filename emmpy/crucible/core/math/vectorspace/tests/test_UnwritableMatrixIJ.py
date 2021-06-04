@@ -8,9 +8,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
-from emmpy.java.lang.illegalargumentexception import (
-    IllegalArgumentException
-)
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -133,11 +130,11 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.get(1, 0), 2)
         self.assertAlmostEqual(m.get(0, 1), 3)
         self.assertAlmostEqual(m.get(1, 1), 4)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.get(0, 2)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.get(1, 2)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.get(2, 0)
 
     def test_getIthColumn(self):
@@ -165,7 +162,7 @@ class TestBuilder(unittest.TestCase):
         v2 = m.getColumn(1, v)
         self.assertAlmostEqual(v2.i, 3)
         self.assertAlmostEqual(v2.j, 4)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             m.getColumn(2, v)
 
     def test_getDeterminant(self):

@@ -7,7 +7,6 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -196,7 +195,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIs(vij5, vij4)
         self.assertAlmostEqual(vij4.i, 0)
         self.assertAlmostEqual(vij4.j, 1)
-        with self.assertRaises(IllegalArgumentException):
+        with self.assertRaises(Exception):
             VectorIJ.project(vij1, vij0)
         with self.assertRaises(BugException):
             VectorIJ.project(None)

@@ -10,7 +10,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
     UnwritableMatrixIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -280,7 +279,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             elif column == 1:
                 self.ij = value
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to set element (%s, %s). Column index invalid." %
                     (row, column))
         elif row == 1:
@@ -289,11 +288,11 @@ class MatrixIJ(UnwritableMatrixIJ):
             elif column == 1:
                 self.jj = value
             else:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Unable to set element (%s, %s). Column index invalid." %
                     (row, column))
         else:
-            raise IllegalArgumentException(
+            raise Exception(
                     "Unable to set element (%s, %s). Row index invalid." %
                     (row, column))
 
@@ -329,7 +328,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         elif columnIndex == 1:
             self.setJthColumn(column)
         else:
-            raise IllegalArgumentException(
+            raise Exception(
                 "Unable to set column. Index: %s is invalid." % columnIndex)
 
     def setTo(self, *args):
@@ -458,7 +457,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             (matrix,) = args
             det = matrix.getDeterminant()
             if abs(det) < UnwritableMatrixIJ.DETERMINANT_TOLERANCE:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             self.setTo(matrix)
             self.invert()
@@ -474,7 +473,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             (matrix, tolerance) = args
             det = matrix.getDeterminant()
             if abs(det) < tolerance:
-                raise IllegalArgumentException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             self.setTo(matrix)
             self.invert(tolerance)

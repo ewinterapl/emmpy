@@ -17,9 +17,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class MatrixIJK(UnwritableMatrixIJK):
@@ -189,7 +186,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             (tolerance,) = args
             det = self.getDeterminant()
             if abs(det) < tolerance:
-                raise UnsupportedOperationException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             cii = (self.jj*self.kk - self.kj*self.jk)/det
             cij = -(self.ij*self.kk - self.kj*self.ik)/det
@@ -215,7 +212,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.transpose()
         length = computeNorm(self.ii, self.ij, self.ik)
         if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         self.ii /= length
@@ -226,7 +223,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.ik /= length
         length = computeNorm(self.ji, self.jj, self.jk)
         if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "jth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         self.ji /= length
@@ -237,7 +234,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.jk /= length
         length = computeNorm(self.ki, self.kj, self.kk)
         if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "kth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         self.ki /= length

@@ -12,9 +12,6 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.utilities.doubletolongbits import doubleToLongBits
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class UnwritableMatrixIJK:
@@ -224,7 +221,7 @@ class UnwritableMatrixIJK:
             (tolerance,) = args
             det = self.getDeterminant()
             if abs(det) < tolerance:
-                raise UnsupportedOperationException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             return UnwritableMatrixIJK(
                 (self.jj*self.kk - self.kj*self.jk)/det,
@@ -258,7 +255,7 @@ class UnwritableMatrixIJK:
 
         length = computeNorm(matrix.ii, matrix.ij, matrix.ik)
         if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         matrix.ii /= length
@@ -271,7 +268,7 @@ class UnwritableMatrixIJK:
         length = computeNorm(
             matrix.ji, matrix.jj, matrix.jk)
         if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "jth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         matrix.ji /= length
@@ -284,7 +281,7 @@ class UnwritableMatrixIJK:
         length = computeNorm(
             matrix.ki, matrix.kj, matrix.kk)
         if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "kth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         matrix.ki /= length

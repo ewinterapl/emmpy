@@ -13,9 +13,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -121,7 +118,7 @@ class VectorIJ(UnwritableVectorIJ):
         """
         norm = computeNorm(self.i, self.j)
         if norm == 0.0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "Unable to unitize vector. Instance is zero length.")
         self.i /= norm
         self.j /= norm

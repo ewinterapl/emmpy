@@ -3,9 +3,6 @@
 
 from math import cos, sin
 
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
@@ -75,7 +72,7 @@ class CylindricalToCartesianJacobian(Transformation):
         """Return the inverse transformation."""
         try:
             return self.getTransformation(coordPosition, buffer).invort()
-        except UnsupportedOperationException as e:
+        except Exception as e:
             raise PointOnAxisException(e)
 
     def mxv(self, *args):

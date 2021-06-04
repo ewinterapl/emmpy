@@ -3,9 +3,6 @@
 
 from math import floor
 
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
@@ -294,7 +291,7 @@ class CoefficientExpansions:
         # inside a lambda.
         v.getCoefficient = (
             lambda iIndex, jIndex:
-            (_ for _ in ()).throw(UnsupportedOperationException())
+            (_ for _ in ()).throw(Exception())
         )
 
         # Return the wrapper object.

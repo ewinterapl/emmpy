@@ -7,9 +7,6 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class TestBuilder(unittest.TestCase):
@@ -70,7 +67,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(vij.i, 1/sqrt(5))
         self.assertAlmostEqual(vij.j, 2/sqrt(5))
         vij = VectorIJ(0, 0)
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             vij.unitize()
 
     def test_negate(self):

@@ -2,9 +2,6 @@ from math import pi, sqrt
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class TestBuilder(unittest.TestCase):
@@ -83,7 +80,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.j, 2/sqrt(14))
         self.assertAlmostEqual(v.k, 3/sqrt(14))
         v = VectorIJK(0, 0, 0)
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             v.unitize()
 
     def test_negate(self):

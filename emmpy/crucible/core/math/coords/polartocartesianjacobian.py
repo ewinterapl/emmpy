@@ -14,9 +14,6 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.coords.transformationij import TransformationIJ
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class PolarToCartesianJacobian(TransformationIJ):
@@ -36,7 +33,7 @@ class PolarToCartesianJacobian(TransformationIJ):
     def getInverseTransformation(self, coordPosition, buffer):
         try:
             return self.getTransformation(coordPosition, buffer).invort()
-        except UnsupportedOperationException as e:
+        except Exception as e:
             raise PointOnAxisException(e)
 
     def mxv(self, *args):

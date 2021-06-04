@@ -1,8 +1,5 @@
 import unittest
 
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
@@ -160,7 +157,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_createNullExpansion(self):
         e = CoefficientExpansions.createNullExpansion(1, 1, 3)
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             e.getCoefficient(1, 1)
 
     def test_convertTo1D(self):

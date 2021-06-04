@@ -11,9 +11,6 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
     ArrayExpansion2D
 )
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
@@ -33,7 +30,7 @@ class Expansion2Ds:
         e2d.getIUpperBoundIndex = firstAzimuthalExpansionNumber - 1
 
         def my_getExpansion():
-            raise UnsupportedOperationException
+            raise Exception
         e2d.getExpansion = my_getExpansion
         return e2d
 

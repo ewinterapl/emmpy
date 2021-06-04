@@ -8,9 +8,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
     UnwritableVectorIJ
 )
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class TestBuilder(unittest.TestCase):
@@ -93,7 +90,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.ji, 1)
         self.assertAlmostEqual(m2.ij, 1.5)
         self.assertAlmostEqual(m2.jj, -0.5)
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             m = UnwritableMatrixIJ(0, 0, 1, 1)
             m.createInverse()
 
@@ -104,7 +101,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.ji, 0.12)
         self.assertAlmostEqual(m2.ij, 0.4)
         self.assertAlmostEqual(m2.jj, 0.16)
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             m = UnwritableMatrixIJ(0, 0, 1, 1)
             m.createInvorted()
 

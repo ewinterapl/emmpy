@@ -11,9 +11,6 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )
 from emmpy.utilities.doubletolongbits import doubleToLongBits
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -94,7 +91,7 @@ class UnwritableVectorIJ:
         norm = self.getLength()
         if norm > 0.0:
             return UnwritableVectorIJ(1.0/norm, self)
-        raise UnsupportedOperationException(
+        raise Exception(
             "Unable to unitize. Supplied vector has zero length.")
 
     def createNegated(self):
@@ -163,11 +160,11 @@ class UnwritableVectorIJ:
         thisNorm = self.getLength()
         vectorNorm = vector.getLength()
         if thisNorm == 0.0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "Unable to compute angular separation. " +
                 "This vector is the zero vector.")
         elif (vectorNorm == 0.0):
-            raise UnsupportedOperationException(
+            raise Exception(
                 "Unable to compute angular separation. " +
                 "The argument supplied is the zero vector.")
         dotProduct = self.getDot(vector)

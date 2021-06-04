@@ -12,9 +12,6 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.utilities.doubletolongbits import doubleToLongBits
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -173,7 +170,7 @@ class UnwritableMatrixIJ:
             (tolerance,) = args
             det = self.getDeterminant()
             if abs(det) < tolerance:
-                raise UnsupportedOperationException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             return UnwritableMatrixIJ(self.jj/det, -self.ji/det,
                                       -self.ij/det, self.ii/det)
@@ -200,7 +197,7 @@ class UnwritableMatrixIJ:
         matrix = self.createTranspose()
         length = computeNorm(matrix.ii, matrix.ij)
         if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "ith column of matrix has length %s, for which there is no "
                 "inverse." % length)
         matrix.ii /= length
@@ -209,7 +206,7 @@ class UnwritableMatrixIJ:
         matrix.ij /= length
         length = computeNorm(matrix.ji, matrix.jj)
         if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "jth column of matrix has length, " + length +
                 ", for which there is no inverse.")
         matrix.ji /= length

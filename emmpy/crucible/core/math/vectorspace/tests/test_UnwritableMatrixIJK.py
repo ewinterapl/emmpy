@@ -8,9 +8,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class TestBuilder(unittest.TestCase):
@@ -156,7 +153,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, -1)
         self.assertAlmostEqual(m2.ik, 1.4)
         self.assertAlmostEqual(m2.kk, 0.2)
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             m = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
             m.createInverse()
 
@@ -180,7 +177,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.ik, sin(1))
         self.assertAlmostEqual(m2.jk, 0)
         self.assertAlmostEqual(m2.kk, cos(1))
-        with self.assertRaises(UnsupportedOperationException):
+        with self.assertRaises(Exception):
             m = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
             m.createInvorted()
 

@@ -10,9 +10,6 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
     UnwritableMatrixIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -180,7 +177,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             (tolerance,) = args
             det = self.getDeterminant()
             if abs(det) < tolerance:
-                raise UnsupportedOperationException(
+                raise Exception(
                     "Matrix nearly singular, unable to invert.")
             cii = self.jj/det
             cij = -self.ij/det
@@ -202,7 +199,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
         length = computeNorm(self.ii, self.ij)
         if length*UnwritableMatrixIJ.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         self.ii /= length
@@ -212,7 +209,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
         length = computeNorm(self.ji, self.jj)
         if length*MatrixIJ.INVORSION_BOUND < 1 or length == 0:
-            raise UnsupportedOperationException(
+            raise Exception(
                 "jth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
         self.ji /= length

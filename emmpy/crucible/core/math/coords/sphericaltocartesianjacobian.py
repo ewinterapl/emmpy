@@ -11,9 +11,6 @@ from emmpy.crucible.core.math.coords.sphericalvector import (
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.java.lang.unsupportedoperationexception import (
-    UnsupportedOperationException
-)
 
 
 class SphericalToCartesianJacobian(Transformation):
@@ -64,7 +61,7 @@ class SphericalToCartesianJacobian(Transformation):
     def getInverseTransformation(self, coordPosition, buffer):
         try:
             return self.getTransformation(coordPosition, buffer).invort()
-        except UnsupportedOperationException as e:
+        except Exception as e:
             raise PointOnAxisException(e)
 
     def mxv(self, *args):

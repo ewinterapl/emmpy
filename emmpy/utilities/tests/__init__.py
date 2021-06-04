@@ -2,6 +2,7 @@
 
 Modules
 -------
+test_doubletolongbits
 test_isragged
 test_isrealnumber
 

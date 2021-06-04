@@ -2,6 +2,7 @@
 
 Modules
 -------
+doubletolongbits
 isragged
 isrealnumber
 

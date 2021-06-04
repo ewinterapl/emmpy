@@ -1,6 +1,7 @@
 """emmpy.crucible.core.math.vectorspace.unwritablematrixijk"""
 
 
+import sys
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     checkRotation,
     computeDeterminant,
@@ -10,7 +11,7 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 from emmpy.java.lang.illegalargumentexception import IllegalArgumentException
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
@@ -69,7 +70,7 @@ class UnwritableMatrixIJK:
     # The bound defining the boundary length at which the invort procedure
     # works with double precision. Note: this is necessary because larger
     # negative exponents are captured by 64 IEEE doubles than positive ones.
-    INVORSION_BOUND = Double.MAX_VALUE
+    INVORSION_BOUND = sys.float_info.max
 
     def __init__(self, *args):
         """Constructor"""
@@ -590,23 +591,23 @@ class UnwritableMatrixIJK:
         """Compute the hash code."""
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(self.ii)
+        temp = doubleToLongBits(self.ii)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.ij)
+        temp = doubleToLongBits(self.ij)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.ik)
+        temp = doubleToLongBits(self.ik)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.ji)
+        temp = doubleToLongBits(self.ji)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.jj)
+        temp = doubleToLongBits(self.jj)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.jk)
+        temp = doubleToLongBits(self.jk)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.ki)
+        temp = doubleToLongBits(self.ki)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.kj)
+        temp = doubleToLongBits(self.kj)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.kk)
+        temp = doubleToLongBits(self.kk)
         result = prime*result + temp ^ (temp >> 32)
         return result
 
@@ -619,32 +620,32 @@ class UnwritableMatrixIJK:
         if not isinstance(obj, UnwritableMatrixIJK):
             return False
         other = obj
-        if (Double.doubleToLongBits(self.ii) !=
-            Double.doubleToLongBits(other.ii)):
+        if (doubleToLongBits(self.ii) !=
+            doubleToLongBits(other.ii)):
             return False
-        if (Double.doubleToLongBits(self.ij) !=
-            Double.doubleToLongBits(other.ij)):
+        if (doubleToLongBits(self.ij) !=
+            doubleToLongBits(other.ij)):
             return False
-        if (Double.doubleToLongBits(self.ik) !=
-            Double.doubleToLongBits(other.ik)):
+        if (doubleToLongBits(self.ik) !=
+            doubleToLongBits(other.ik)):
             return False
-        if (Double.doubleToLongBits(self.ji) !=
-            Double.doubleToLongBits(other.ji)):
+        if (doubleToLongBits(self.ji) !=
+            doubleToLongBits(other.ji)):
             return False
-        if (Double.doubleToLongBits(self.jj) !=
-            Double.doubleToLongBits(other.jj)):
+        if (doubleToLongBits(self.jj) !=
+            doubleToLongBits(other.jj)):
             return False
-        if (Double.doubleToLongBits(self.jk) !=
-            Double.doubleToLongBits(other.jk)):
+        if (doubleToLongBits(self.jk) !=
+            doubleToLongBits(other.jk)):
             return False
-        if (Double.doubleToLongBits(self.ki) !=
-            Double.doubleToLongBits(other.ki)):
+        if (doubleToLongBits(self.ki) !=
+            doubleToLongBits(other.ki)):
             return False
-        if (Double.doubleToLongBits(self.kj) !=
-            Double.doubleToLongBits(other.kj)):
+        if (doubleToLongBits(self.kj) !=
+            doubleToLongBits(other.kj)):
             return False
-        if (Double.doubleToLongBits(self.kk) !=
-            Double.doubleToLongBits(other.kk)):
+        if (doubleToLongBits(self.kk) !=
+            doubleToLongBits(other.kk)):
             return False
         return True
 

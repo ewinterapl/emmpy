@@ -1,7 +1,7 @@
 """emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients"""
 
 
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class Ts07FacVariableCoefficients:
@@ -45,9 +45,9 @@ class Ts07FacVariableCoefficients:
     #     result = prime*result
     #     if self.facConfigurations:
     #         result += self.facConfigurations.hashCode()
-    #     temp = Double.doubleToLongBits(self.region1KappaScaling)
+    #     temp = doubleToLongBits(self.region1KappaScaling)
     #     result = prime*result + temp ^ (temp >> 32)
-    #     temp = Double.doubleToLongBits(self.region2KappaScaling)
+    #     temp = doubleToLongBits(self.region2KappaScaling)
     #     result = prime*result + temp ^ (temp >> 32)
     #     return result
 
@@ -64,10 +64,10 @@ class Ts07FacVariableCoefficients:
     #             return False
     #     elif not self.facConfigurations.equals(other.facConfigurations):
     #         return False
-    #     if (Double.doubleToLongBits(self.region1KappaScaling) !=
-    #         Double.doubleToLongBits(other.region1KappaScaling)):
+    #     if (doubleToLongBits(self.region1KappaScaling) !=
+    #         doubleToLongBits(other.region1KappaScaling)):
     #         return False
-    #     if (Double.doubleToLongBits(self.region2KappaScaling) !=
-    #         Double.doubleToLongBits(other.region2KappaScaling)):
+    #     if (doubleToLongBits(self.region2KappaScaling) !=
+    #         doubleToLongBits(other.region2KappaScaling)):
     #         return False
     #     return True

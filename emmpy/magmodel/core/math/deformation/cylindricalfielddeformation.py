@@ -1,7 +1,7 @@
 """emmpy.magmodel.core.math.deformation.cylindricalfielddeformation"""
 
 
-
+import sys
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
@@ -11,7 +11,7 @@ from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield 
 )
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class CylindricalFieldDeformation(CylindricalVectorField):
@@ -108,13 +108,13 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         # TODO ugh, what do I do here
         if hp == 0:
             trr = (1*hzDef/(1*hz))*(dFpDp*dFzDz - dFpDz*dFzDp)
-            trp = Double.MAX_VALUE*(dFrDz*dFzDp - dFrDp*dFzDz)
+            trp = sys.float_info.max*(dFrDz*dFzDp - dFrDp*dFzDz)
             trz = (hrDef*1/(1*hz))*(dFrDp*dFpDz - dFrDz*dFpDp)
             tpr = (hpDef*hzDef/(hr*hz))*(dFpDz*dFzDr - dFpDr*dFzDz)
             tpp = (hrDef*hzDef/(hr*hz))*(dFrDr*dFzDz - dFrDz*dFzDr)
             tpz = (hrDef*hpDef/(hr*hz))*(dFrDz*dFpDr - dFrDr*dFpDz)
             tzr = (1*hzDef/(hr*1))*(dFpDr*dFzDp - dFpDp*dFzDr)
-            tzp = Double.MAX_VALUE*(dFrDp*dFzDr - dFrDr*dFzDp)
+            tzp = sys.float_info.max*(dFrDp*dFzDr - dFrDr*dFzDp)
             tzz = (hrDef*1/(hr*1))*(dFrDr*dFpDp - dFrDp*dFpDr)
             trans = MatrixIJK(trr, tpr, tzr, trp, tpp, tzp, trz, tpz, tzz)
 

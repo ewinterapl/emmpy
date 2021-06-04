@@ -2,7 +2,7 @@
 """
 
 
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -95,11 +95,11 @@ class Ts07EquatorialVariableCoefficients:
         if self.equatorialLinearCoeffs:
             # result += self.equatorialLinearCoeffs.hashCode()
             result += len(self.equatorialLinearCoeffs)  # HACK
-        temp = Double.doubleToLongBits(self.hingeDist)
+        temp = doubleToLongBits(self.hingeDist)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.twistParam)
+        temp = doubleToLongBits(self.twistParam)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.warpingParam)
+        temp = doubleToLongBits(self.warpingParam)
         result = prime*result + temp ^ (temp >> 32)
         return result
 
@@ -121,13 +121,13 @@ class Ts07EquatorialVariableCoefficients:
                 return False
         elif self.equatorialLinearCoeffs != other.equatorialLinearCoeffs:
             return False
-        if (Double.doubleToLongBits(self.hingeDist) !=
-            Double.doubleToLongBits(other.hingeDist)):
+        if (doubleToLongBits(self.hingeDist) !=
+            doubleToLongBits(other.hingeDist)):
             return False
-        if (Double.doubleToLongBits(self.twistParam) !=
-            Double.doubleToLongBits(other.twistParam)):
+        if (doubleToLongBits(self.twistParam) !=
+            doubleToLongBits(other.twistParam)):
             return False
-        if (Double.doubleToLongBits(self.warpingParam) !=
-            Double.doubleToLongBits(other.warpingParam)):
+        if (doubleToLongBits(self.warpingParam) !=
+            doubleToLongBits(other.warpingParam)):
             return False
         return True

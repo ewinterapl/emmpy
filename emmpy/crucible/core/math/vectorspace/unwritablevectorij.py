@@ -10,7 +10,7 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 from emmpy.java.lang.unsupportedoperationexception import (
     UnsupportedOperationException
 )
@@ -200,9 +200,9 @@ class UnwritableVectorIJ:
     def hashCode(self) -> int:
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(self.i)
+        temp = doubleToLongBits(self.i)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.j)
+        temp = doubleToLongBits(self.j)
         result = prime*result + temp ^ (temp >> 32)
         return result
 
@@ -214,9 +214,9 @@ class UnwritableVectorIJ:
         if not isinstance(obj, UnwritableVectorIJ):
             return False
         other = obj
-        if Double.doubleToLongBits(self.i) != Double.doubleToLongBits(other.i):
+        if doubleToLongBits(self.i) != doubleToLongBits(other.i):
             return False
-        if Double.doubleToLongBits(self.j) != Double.doubleToLongBits(other.j):
+        if doubleToLongBits(self.j) != doubleToLongBits(other.j):
             return False
         return True
 

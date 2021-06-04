@@ -27,7 +27,7 @@ from math import asin, pi
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -233,11 +233,11 @@ class UnwritableVectorIJK:
         """Compute the hash code."""
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(self.i)
+        temp = doubleToLongBits(self.i)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.j)
+        temp = doubleToLongBits(self.j)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.k)
+        temp = doubleToLongBits(self.k)
         result = prime*result + temp ^ (temp >> 32)
         return result
 

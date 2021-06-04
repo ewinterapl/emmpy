@@ -15,7 +15,7 @@ from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
 )
 from emmpy.crucible.core.rotations.quaternion import Quaternion
 from emmpy.crucible.core.rotations.rotation import Rotation
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class AxisAndAngle(Rotation):
@@ -217,7 +217,7 @@ class AxisAndAngle(Rotation):
     def hashCode(self):
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(self.angle)
+        temp = doubleToLongBits(self.angle)
         result = prime*result + temp ^ (temp >> 32)
         result = prime*result
         if self.axis is not None:
@@ -242,8 +242,8 @@ class AxisAndAngle(Rotation):
         if not isinstance(obj, AxisAndAngle):
             return False
         other = obj
-        if (Double.doubleToLongBits(self.angle) !=
-            Double.doubleToLongBits(other.angle)):
+        if (doubleToLongBits(self.angle) !=
+            doubleToLongBits(other.angle)):
             return False
         if self.axis is None:
             if other.axis is not None:

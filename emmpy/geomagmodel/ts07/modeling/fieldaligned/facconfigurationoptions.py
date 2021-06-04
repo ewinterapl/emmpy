@@ -1,7 +1,7 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions"""
 
 
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class FacConfigurationOptions:
@@ -74,9 +74,9 @@ class FacConfigurationOptions:
     def hashCode(self):
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(self.amplitudeScaling)
+        temp = doubleToLongBits(self.amplitudeScaling)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.deltaTheta)
+        temp = doubleToLongBits(self.deltaTheta)
         result = prime*result + temp ^ (temp >> 32)
         result = prime*result + self.mode
         result = prime*result
@@ -92,7 +92,7 @@ class FacConfigurationOptions:
             result += 1231
         else:
             result += 1237
-        temp = Double.doubleToLongBits(self.theta0)
+        temp = doubleToLongBits(self.theta0)
         result = prime*result + temp ^ (temp >> 32)
         # NEED THIS
         # result = prime*result + ((trigParity == null) ?
@@ -107,11 +107,11 @@ class FacConfigurationOptions:
         if self.__class__ != obj.__class__:
             return False
         other = obj
-        if (Double.doubleToLongBits(self.amplitudeScaling) !=
-            Double.doubleToLongBits(other.amplitudeScaling)):
+        if (doubleToLongBits(self.amplitudeScaling) !=
+            doubleToLongBits(other.amplitudeScaling)):
             return False
-        if (Double.doubleToLongBits(self.deltaTheta) !=
-            Double.doubleToLongBits(other.deltaTheta)):
+        if (doubleToLongBits(self.deltaTheta) !=
+            doubleToLongBits(other.deltaTheta)):
             return False
         if self.mode != other.mode:
             return False
@@ -121,8 +121,8 @@ class FacConfigurationOptions:
             return False
         if self.smoothed != other.smoothed:
             return False
-        if (Double.doubleToLongBits(self.theta0) !=
-            Double.doubleToLongBits(other.theta0)):
+        if (doubleToLongBits(self.theta0) !=
+            doubleToLongBits(other.theta0)):
             return False
         if self.trigParity != other.trigParity:
             return False

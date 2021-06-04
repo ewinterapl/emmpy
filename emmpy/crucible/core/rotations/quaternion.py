@@ -10,7 +10,7 @@ from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK
 )
 from emmpy.crucible.core.rotations.rotation import Rotation
-from emmpy.java.lang.double import Double
+from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class Quaternion(Rotation):
@@ -704,13 +704,13 @@ class Quaternion(Rotation):
     def hashCode(self):
         prime = 31
         result = 1
-        temp = Double.doubleToLongBits(self.q0)
+        temp = doubleToLongBits(self.q0)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.q1)
+        temp = doubleToLongBits(self.q1)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.q2)
+        temp = doubleToLongBits(self.q2)
         result = prime*result + temp ^ (temp >> 32)
-        temp = Double.doubleToLongBits(self.q3)
+        temp = doubleToLongBits(self.q3)
         result = prime*result + temp ^ (temp >> 32)
         return result
 
@@ -732,17 +732,17 @@ class Quaternion(Rotation):
         if not isinstance(obj, Quaternion):
             return False
         other = obj
-        if (Double.doubleToLongBits(self.q0) !=
-            Double.doubleToLongBits(other.q0)):
+        if (doubleToLongBits(self.q0) !=
+            doubleToLongBits(other.q0)):
             return False
-        if (Double.doubleToLongBits(self.q1) !=
-            Double.doubleToLongBits(other.q1)):
+        if (doubleToLongBits(self.q1) !=
+            doubleToLongBits(other.q1)):
             return False
-        if (Double.doubleToLongBits(self.q2) !=
-            Double.doubleToLongBits(other.q2)):
+        if (doubleToLongBits(self.q2) !=
+            doubleToLongBits(other.q2)):
             return False
-        if (Double.doubleToLongBits(self.q3) !=
-            Double.doubleToLongBits(other.q3)):
+        if (doubleToLongBits(self.q3) !=
+            doubleToLongBits(other.q3)):
             return False
         return True
 

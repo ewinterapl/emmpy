@@ -1,8 +1,7 @@
-"""emmpy.crucible.crust
+"""Python port of Java classes from the crucible.crust hierarchy.
 
-Python port of Java classes from the
-crucible.crust
-hierarchy.
+Modules
+-------
 
 Packages
 --------

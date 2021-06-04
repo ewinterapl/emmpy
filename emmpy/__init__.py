@@ -2,14 +2,12 @@
 
 Modules
 -------
-modelrunapp
+modelrunapp.py
 
 Packages
 --------
-com
 crucible
 geomagmodel
-java
 magmodel
 utilities
 """

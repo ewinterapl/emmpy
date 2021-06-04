@@ -1,8 +1,4 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned
-
-Python port of Java classes from the
-geomagmodel.ts07.modeling.fieldaligned
-hierarchy.
+"""Python port of Java classes from the geomagmodel.ts07.modeling.fieldaligned hierarchy.
 
 Modules
 -------
@@ -14,5 +10,9 @@ fieldalignedcurrentshiedingbuilder.py
 scaledfield.py
 smoothedconicalcurrentmagneticfield.py
 stretchedfield.py
-ts07dfieldaligned,agneticfield.py
+ts07dfieldalignedmagneticfield.py
+
+Packages
+--------
+tests
 """

@@ -1,8 +1,4 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned.tests
-
-Tests for Python port of Java classes from the
-geomagmodel.ts07.modeling.fieldaligned
-hierarchy.
+"""Tests for Python port of Java classes from the geomagmodel.ts07.modeling.fieldaligned hierarchy.
 
 Modules
 -------
@@ -15,4 +11,7 @@ test_ScaledField.py
 test_SmoothedConicalCurrentMagneticField.py
 test_StretchedField.py
 test_Ts07DFieldAlignedMagneticField.py
+
+Packages
+--------
 """

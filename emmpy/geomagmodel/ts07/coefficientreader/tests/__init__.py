@@ -1,7 +1,4 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.tests
-
-Tests for Python port of Java classes from the
-geomagmodel.ts07.coefficientreader hierarchy.
+"""Tests for Python port of Java classes from the geomagmodel.ts07.coefficientreader hierarchy.
 
 Modules
 -------
@@ -16,4 +13,7 @@ test_Ts07EquatorialLinearCoefficients.py
 test_Ts07EquatorialVariableCoefficients.py
 test_Ts07FacVariableCoefficients.py
 test_Ts07NonLinearParameters.py
+
+Packages
+--------
 """

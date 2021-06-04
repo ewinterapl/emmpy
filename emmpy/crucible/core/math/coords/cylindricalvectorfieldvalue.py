@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue"""
+"""A container class for a cylindrical coordinate and vector field value."""
 
 
 from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
@@ -7,13 +7,13 @@ from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
 
 
 class CylindricalVectorFieldValue(AbstractVectorFieldValue):
-    """A container class for a cylindrical coordinate and vector field value
+    """A container class for a cylindrical coordinate and vector field value.
 
     @author G.K.Stephens
     """
 
     def __init__(self, position, value):
-        """Constructor
+        """Build a new object.
 
         @param position a cylindrical coordinate
         @param value a cylindrical vector field value at that coordinate

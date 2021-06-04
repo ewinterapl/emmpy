@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian"""
+"""Jacobian matrix for the cylindrical-to-cartesian transformation."""
 
 
 from math import cos, sin
@@ -15,14 +15,13 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class CylindricalToCartesianJacobian(Transformation):
-    """CylindricalToCartesianJacobian"""
+    """Jacobian matrix for the cylindrical-to-cartesian transformation."""
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Build a new object."""
 
     def getTransformation(self, coordPosition, buffer):
-        """return
+        """Return the transformation matrix.
 
         .-                                  -.
         |  dx/dr     dx/dlong       dx/dz    |
@@ -40,7 +39,6 @@ class CylindricalToCartesianJacobian(Transformation):
         |     0           0           1      |
         `-                                  -'
         """
-
         # from SPICE's routine in drdcyl.f
         # JACOBI (DX,DR) = DCOS( LONG )
         # JACOBI (DY,DR) = DSIN( LONG )
@@ -76,7 +74,7 @@ class CylindricalToCartesianJacobian(Transformation):
             raise PointOnAxisException(e)
 
     def mxv(self, *args):
-        """mxv"""
+        """Multiply a velocity by the jacobian."""
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordVelocity) = args
             return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())

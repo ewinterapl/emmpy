@@ -1,6 +1,5 @@
-"""emmpy.crucible.core.math.coords.cartesianvectorfieldvalue"""
+"""Class to represent a Cartesian vector field value."""
 
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
 
 from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
     AbstractVectorFieldValue
@@ -11,14 +10,13 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class CartesianVectorFieldValue(AbstractVectorFieldValue):
-    """A container class for a Cartesian coordinate and vector field value at
-    that coordinate.
+    """A Cartesian coordinate and vector field value at that coordinate.
 
-    @author G.K.Stephens
+    author G.K.Stephens
     """
 
     def __init__(self, position, value):
-        """Constructor
+        """Build a new object.
 
         @param position a Cartesian coordinate
         @param value a Cartesian vector field value at that coordinate

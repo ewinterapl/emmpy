@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.coordconverters"""
+"""Useful coordinate conversions."""
 
 
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
@@ -34,9 +34,9 @@ from emmpy.crucible.core.math.coords.sphericalvector import (
 
 
 class CoordConverters:
-    """CoordConverters
+    """Useful coordinate conversions.
 
-    @author G.K.Stephens
+    author G.K.Stephens
     """
 
     cylindricalCoordConverter = CylindricalCoordConverter()
@@ -46,12 +46,11 @@ class CoordConverters:
     sphericalCoordConverter = SphericalCoordConverter()
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Build a new object."""
 
     @staticmethod
     def convertToCylindrical(cartesian):
-        """Converts a Cartesian position to cylindrical position.
+        """Convert a Cartesian position to cylindrical position.
 
         @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
         position.
@@ -65,7 +64,7 @@ class CoordConverters:
 
     @staticmethod
     def convertToLatitudinal(cartesian):
-        """Converts from Cartesian coordinates to Latitudinal coordinates
+        """Convert from Cartesian coordinates to Latitudinal coordinates.
 
         @param cartesian
         @param LatitudinalBuffer
@@ -77,7 +76,7 @@ class CoordConverters:
 
     @staticmethod
     def convertToPolar(cartesian):
-        """Converts a Cartesian position to polar position.
+        """Convert a Cartesian position to polar position.
 
         @param cartesian A {@link UnwritableVectorIJ} holding the Cartesian
         position.
@@ -89,7 +88,7 @@ class CoordConverters:
 
     @staticmethod
     def convertToRaDec(cartesian):
-        """Converts from Cartesian coordinates to RaDec coordinates
+        """Convert from Cartesian coordinates to RaDec coordinates.
 
         @param cartesian
         @param RaDecBuffer
@@ -99,7 +98,7 @@ class CoordConverters:
 
     @staticmethod
     def convertToSpherical(cartesian):
-        """Converts a Cartesian position to spherical position.
+        """Convert a Cartesian position to spherical position.
 
         @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
         position.

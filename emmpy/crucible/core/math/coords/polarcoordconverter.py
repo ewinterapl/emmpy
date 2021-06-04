@@ -1,13 +1,6 @@
-"""emmpy.crucible.core.math.coords.polarcoordconverter"""
+"""Convert between polar and Cartesian coordinates."""
 
 
-# import static crucible.core.math.CrucibleMath.abs;
-# import static crucible.core.math.CrucibleMath.atan2;
-# import static crucible.core.math.CrucibleMath.cos;
-# import static crucible.core.math.CrucibleMath.max;
-# import static crucible.core.math.CrucibleMath.sin;
-# import static crucible.core.math.CrucibleMath.sqrt;
-# import crucible.core.math.vectorspace.UnwritableVectorIJ;
 from math import atan2, cos, sin, sqrt
 
 from emmpy.crucible.core.math.coords.abstractcoordconverterij import (
@@ -23,15 +16,18 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 
 
 class PolarCoordConverter(AbstractCoordConverterIJ):
+    """Convert between polar and Cartesian coordinates."""
 
     JACOBIAN = PolarToCartesianJacobian()
 
     def __init__(self):
-        """Constructor"""
+        """Build a new object."""
         AbstractCoordConverterIJ.__init__(self, PolarCoordConverter.JACOBIAN)
 
     def toCoordinate(self, cartesian):
-        """From the SPICE routine recsph.f, here is an algorithm for converting
+        """Convert rectangular to polar coordinates.
+
+        From the SPICE routine recsph.f, here is an algorithm for converting
         to polar polar coordinates from rectangular coordiantes:
 
         C Store rectangular coordinates in temporary variables
@@ -65,8 +61,10 @@ class PolarCoordConverter(AbstractCoordConverterIJ):
         return PolarVector(radius, angle)
 
     def toCartesian(self, coordinate):
-        """from the SPICE routine sphrec.f, here is a formula for converting from polar
-        coordinates to rectangular coordinates:
+        """Convert polar to rectangular coordinates.
+
+        From the SPICE routine sphrec.f, here is a formula for converting
+        from polar coordinates to rectangular coordinates:
 
         X = R * DCOS(LONG) * DSIN(COLAT)
         Y = R * DSIN(LONG) * * DSIN(COLAT)

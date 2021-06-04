@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.pointonaxisexception"""
+"""Exception for point-on-axis conditions."""
 
 
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
@@ -7,10 +7,10 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 
 
 class PointOnAxisException(CrucibleRuntimeException):
-    """PointOnAxisException"""
+    """Exception for point-on-axis conditions."""
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             pass
         elif len(args) == 1:

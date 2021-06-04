@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.sphericalvector"""
+"""A spherical vector."""
 
 
 from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
@@ -11,22 +11,23 @@ class SphericalVector(AbstractVector):
     """
 
     def __init__(self, radius, colatInRadians, longInRadians):
-        """Constructor"""
+        """Build a new object."""
         AbstractVector.__init__(self, radius, colatInRadians, longInRadians)
 
     def getRadius(self):
-        """@return the radius"""
+        """Return the radius."""
         return AbstractVector.getI(self)
 
     def getColatitude(self):
-        """@return the colatitude"""
+        """Return the colatitude."""
         return AbstractVector.getJ(self)
 
     def getLongitude(self):
-        """@return the longitude"""
+        """Return the longitude."""
         return AbstractVector.getK(self)
 
     def toString(self):
+        """Convert the object to a string."""
         return (
             "SphericalVector [radius: %s, colatitude: %s, longitude: %s]" %
             (self.getRadius(), self.getColatitude(), self.getLongitude())

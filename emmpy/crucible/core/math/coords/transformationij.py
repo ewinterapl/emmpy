@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.transformationij
+"""Base class for 2-D coordinate transformations.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -37,7 +37,7 @@ class TransformationIJ(AbstractVectorIJ):
         raise Exception
 
     def getTransformation(self, coordPosition, buffer):
-        """Gets the Jacobian from the Coordinate system to Cartesian
+        """Get the Jacobian from the Coordinate system to Cartesian.
 
         INTERFACE - DO NOT INVOKE.
 
@@ -51,8 +51,7 @@ class TransformationIJ(AbstractVectorIJ):
         raise Exception
 
     def getInverseTransformation(self, coordPosition, buffer):
-        """Returns the Jacobian from Cartesian to the specified Coordinate
-        system.
+        """Return Jacobian for Cartesian to the specified Coordinate system.
 
         INTERFACE - DO NOT INVOKE.
 
@@ -69,7 +68,7 @@ class TransformationIJ(AbstractVectorIJ):
         raise Exception
 
     def mxv(self, *args):
-        """INTERFACE - DO NOT INVOKE
+        """INTERFACE - DO NOT INVOKE.
 
         Arguments can be:
         (jacobian, coordVelocity)

@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.abstractvector
+"""Base class for vectors.
 
 This abstract class is meant to assist implementors of new coordinate types.
 """
@@ -10,8 +10,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class AbstractVector():
-    """This abstract class is meant to assist implementors of new coordinate
-    types.
+    """Abstract class to assist implementors of new coordinate types.
 
     The unwritable coordinate should extend this guy. It is also meant to help
     ensure that the outlines for all coordinates are consistent. This was also
@@ -33,7 +32,7 @@ class AbstractVector():
     """
 
     def __init__(self, i: float, j: float, k: float):
-        """Constructs a coordinate from the three basic components."""
+        """Construct a coordinate from the three basic components."""
         self.ijkCoordinate = UnwritableVectorIJK(i, j, k)
 
     # These six methods should be wrapped in new methods with the appropriate
@@ -42,27 +41,26 @@ class AbstractVector():
     # be wrapped.
 
     def getI(self) -> float:
-        """THIS METHOD SHOULD NOT BE PUBLIC."""
+        """Get the I coordinate."""
         return self.ijkCoordinate.getI()
 
     def getJ(self) -> float:
-        """THIS METHOD SHOULD NOT BE PUBLIC."""
+        """Get the J coordinate."""
         return self.ijkCoordinate.getJ()
 
     def getK(self) -> float:
-        """THIS METHOD SHOULD NOT BE PUBLIC."""
+        """Get the K coordinate."""
         return self.ijkCoordinate.getK()
 
     def getVectorIJK(self) -> UnwritableVectorIJK:
-        """THIS METHOD SHOULD NOT BE PUBLIC.
+        """Get the IJK coordinates.
 
         This method should never have its visibility upgraded.
         """
         return self.ijkCoordinate
 
     def hashCode(self) -> int:
-        """THIS METHOD SHOULD NOT BE PUBLIC.
-        (non-Javadoc)
+        """Compute the object hash code.
 
         @see java.lang.Object#hashCode()
         """
@@ -73,9 +71,8 @@ class AbstractVector():
             result += self.ijkCoordinate.hashCode()
         return result
 
-    def equals(self, obj: object) -> bool:
-        """THIS METHOD SHOULD NOT BE PUBLIC.
-        (non-Javadoc)
+    def equals(self, obj):
+        """Check the object for equality with another object.
 
         @see java.lang.Object#equals(java.lang.Object)
         """
@@ -94,4 +91,5 @@ class AbstractVector():
         return True
 
     def toString(self):
+        """Convert the object to a string."""
         raise Exception

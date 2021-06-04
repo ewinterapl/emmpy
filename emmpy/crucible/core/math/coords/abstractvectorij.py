@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.abstractvectorij"""
+"""Abstract base class for 2-D vectors."""
 
 
 from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
@@ -7,10 +7,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
 
 
 class AbstractVectorIJ:
-    """AbstractVectorIJ
+    """Abstract class to assist implementors of new 2-D coordinate types.
 
-    This abstract class is meant to assist implementors of new coordinate
-    types. The unwritable coordinate should extend this guy. It is also meant
+    The unwritable coordinate should extend this guy. It is also meant
     to help ensure that the outlines for all coordinates are consistent. This
     was also done, since the Jacobian classes require interaction with the
     Coordinates as VectorIJs, specifically for calling mxv on a coordinate.
@@ -30,7 +29,7 @@ class AbstractVectorIJ:
     """
 
     def __init__(self, i, j):
-        """Constructs a coordinate from the three basic components."""
+        """Construct a coordinate from the three basic components."""
         self.ijCoordinate = UnwritableVectorIJ(i, j)
 
     # These six methods should be wrapped in new methods with the appropriate
@@ -39,25 +38,19 @@ class AbstractVectorIJ:
     # be wrapped.
 
     def getI(self):
-        """THIS METHOD SHOULD NOT BE PUBLIC"""
+        """Return the I coordinate."""
         return self.ijCoordinate.getI()
 
     def getJ(self):
-        """THIS METHOD SHOULD NOT BE PUBLIC"""
+        """Return the J coordinate."""
         return self.ijCoordinate.getJ()
 
     def getVectorIJ(self):
-        """THIS METHOD SHOULD NOT BE PUBLIC
-
-        This method should never have its visibility upgraded.
-        """
+        """Return the IJ coordinates."""
         return self.ijCoordinate
 
     def hashCode(self):
-        """(non-Javadoc)
-
-        @see java.lang.Object#hashCode()
-        """
+        """Compute the object hash code."""
         prime = 31
         result = 1
         result = prime*result
@@ -66,10 +59,7 @@ class AbstractVectorIJ:
         return result
 
     def equals(self, obj):
-        """(non-Javadoc)
-
-        @see java.lang.Object#equals(java.lang.Object)
-        """
+        """Check the object for equality with another object."""
         if self is obj:
             return True
         if obj is None:
@@ -84,5 +74,6 @@ class AbstractVectorIJ:
             return False
         return True
 
-        def toString(self):
-            raise Exception
+    def toString(self):
+        """Convert the object to a string."""
+        raise Exception

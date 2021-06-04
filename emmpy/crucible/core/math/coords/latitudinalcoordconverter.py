@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.latitudinalcoordconverter"""
+"""Convert between latitudinal and cartesian coordinates."""
 
 
 from math import atan2, cos, sin, sqrt
@@ -18,11 +18,12 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class LatitudinalCoordConverter(AbstractCoordConverter):
+    """Convert between latitudinal and cartesian coordinates."""
 
     JACOBIAN = LatitudinalToCartesianJacobian()
 
     def __init__(self):
-        """Constructor"""
+        """Build a new object."""
         AbstractCoordConverter.__init__(
             self, LatitudinalCoordConverter.JACOBIAN
         )

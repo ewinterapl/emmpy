@@ -1,7 +1,5 @@
-"""emmpy.crucible.core.math.coords.radeccoordconverter.py"""
+"""Convert between Ra/Dec and Cartesian coordinates."""
 
-# import static crucible.core.units.FundamentalPhysicalConstants.TWOPI;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
 from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
@@ -16,14 +14,15 @@ from emmpy.crucible.core.units.fundamentalphysicalconstants import (
 
 
 class RaDecCoordConverter(CoordConverter):
+    """Convert between Ra/Dec and Cartesian coordinates."""
 
     LAT_CONVERTER = LatitudinalCoordConverter()
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Build a new object."""
 
     def toCoordinate(self, cartesian):
+        """Convert Cartesian to Ra/Dec coordinates."""
         workCoord = RaDecCoordConverter.LAT_CONVERTER.toCoordinate(cartesian)
         r = workCoord.getRadius()
         lat = workCoord.getLatitude()
@@ -33,6 +32,7 @@ class RaDecCoordConverter(CoordConverter):
         return RaDecVector(r, lon, lat)
 
     def toCartesian(self, coordinate):
+        """Convert Ra/Dec to Cartesian coordinates."""
         workCoord = LatitudinalVector(
             coordinate.getRadius(), coordinate.getDeclination(),
             coordinate.getRightAscension()

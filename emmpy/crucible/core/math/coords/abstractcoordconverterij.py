@@ -1,12 +1,11 @@
-"""emmpy.crucible.core.math.coords.abstractcoordconverterij"""
+"""Base class for 2-D coordinate converters."""
 
 
 from emmpy.crucible.core.math.coords.coordconverterij import CoordConverterIJ
 
 
 class AbstractCoordConverterIJ(CoordConverterIJ):
-    """This is a helper class intended to encapsulate the two state methods on
-    the {@link CoordConverter} interface.
+    """Encapsulate the two state methods on the CoordConverterIJ interface.
 
     Since these methods are really just leveraging a {@link Transformation},
     they need not be reimplimented every time.
@@ -27,7 +26,7 @@ class AbstractCoordConverterIJ(CoordConverterIJ):
     """
 
     def __init__(self, jacobian):
-        """Constructor
+        """Build a new AbstractCoordConverterIJ object.
 
         @param jacobian the incoming Jacobian must be thread safe for this
         class to be thread safe. Implementations contained in this package are

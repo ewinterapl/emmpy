@@ -1,7 +1,4 @@
-"""emmpy.crucible.core.math.coords.sphericalvectorfieldvalue
-
-A container class for a spherical coordinate and vector field value at that
-coordinate.
+"""Spherical coordinate and vector field value at that coordinate.
 
 @author G.K.Stephens
 """
@@ -13,10 +10,10 @@ from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
 
 
 class SphericalVectorFieldValue(AbstractVectorFieldValue):
-    """SphericalVectorFieldValue"""
+    """Spherical coordinate and vector field value at that coordinate."""
 
     def __init__(self, position, value):
-        """Constructor
+        """Build a new object.
 
         @param position a spherical coordinate
         @param value a spherical vector field value at coordinate

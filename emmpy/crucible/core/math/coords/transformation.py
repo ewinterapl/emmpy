@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.transformation
+"""Base class for coordinate transformations.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -9,7 +9,7 @@ from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
 
 
 class Transformation(AbstractVector):
-    """Transformation
+    """Base class for coordinate transformations.
 
     This interface assists with the manipulation of Jacobians. A Jacobian is
     the matrix of all first order partial derivatives of a vector with respect
@@ -38,7 +38,7 @@ class Transformation(AbstractVector):
         raise Exception
 
     def getTransformation(self, coordPosition, buffer):
-        """Gets the Jacobian from the Coordinate system to Cartesian
+        """Get the Jacobian from the Coordinate system to Cartesian.
 
         INTERFACE - DO NOT INVOKE.
 
@@ -52,8 +52,7 @@ class Transformation(AbstractVector):
         raise Exception
 
     def getInverseTransformation(self, coordPosition, buffer):
-        """Returns the Jacobian from Cartesian to the specified Coordinate
-        system.
+        """Return the Jacobian from Cartesian to the Coordinate system.
 
         INTERFACE - DO NOT INVOKE.
 
@@ -69,12 +68,12 @@ class Transformation(AbstractVector):
         """
         raise Exception
 
-        def mxv(self, *args):
-            """INTERFACE - DO NOT INVOKE.
+    def mxv(self, *args):
+        """INTERFACE - DO NOT INVOKE.
 
-            Arguments can be:
-            (UnwritableMatrixIJK jacobian, C coordVelocity)
-            (UnwritableMatrixIJK inverseTransformation,
-             UnwritableVectorIJK cartVelocity)
-            """
-            raise Exception
+        Arguments can be:
+        (UnwritableMatrixIJK jacobian, C coordVelocity)
+        (UnwritableMatrixIJK inverseTransformation,
+            UnwritableVectorIJK cartVelocity)
+        """
+        raise Exception

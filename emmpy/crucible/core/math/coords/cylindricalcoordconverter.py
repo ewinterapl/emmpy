@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.cylindricalcoordconverter.py"""
+"""Convert to and from cylindrical coordinates."""
 
 
 from math import atan2, cos, sin, sqrt
@@ -19,12 +19,12 @@ from emmpy.crucible.core.units.fundamentalphysicalconstants import (
 
 
 class CylindricalCoordConverter(AbstractCoordConverter):
-    """CylindricalCoordConverter"""
+    """Convert to and from cylindrical coordinates."""
 
     JACOBIAN = CylindricalToCartesianJacobian()
 
     def __init__(self):
-        """Constructor"""
+        """Build a new object."""
         AbstractCoordConverter.__init__(
             self, CylindricalCoordConverter.JACOBIAN
         )
@@ -40,7 +40,6 @@ class CylindricalCoordConverter(AbstractCoordConverter):
         LONG = DATAN2 (Y,X) END IF
         IF ( LONG .LT. 0.D0) THEN LONG = LONG + TWOPI() END IF
         """
-
         # Use temporary variables for computing R.
         big = max(abs(cartesian.getI()), abs(cartesian.getJ()))
 

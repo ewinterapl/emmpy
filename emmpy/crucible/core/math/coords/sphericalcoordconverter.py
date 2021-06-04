@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.sphericalcoordconverter"""
+"""Convert between spherical and Cartesian coordinates."""
 
 
 from math import atan2, cos, sin, sqrt
@@ -16,15 +16,18 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class SphericalCoordConverter(AbstractCoordConverter):
+    """Convert between spherical and Cartesian coordinates."""
 
     JACOBIAN = SphericalToCartesianJacobian()
 
     def __init__(self):
-        """Constructor"""
+        """Build a new object."""
         AbstractCoordConverter.__init__(self, SphericalCoordConverter.JACOBIAN)
 
     def toCoordinate(self, cartesian):
-        """From the SPICE routine recsph.f,
+        """Convert Cartesian to spherical coordinates.
+
+        From the SPICE routine recsph.f,
 
         here is an algorithm for converting to spherical polar coordinates from
         rectangular coordiantes:
@@ -77,7 +80,9 @@ class SphericalCoordConverter(AbstractCoordConverter):
         return SphericalVector(radius, colatitude, longitude)
 
     def toCartesian(self, coordinate):
-        """from the SPICE routine sphrec.f, here is a formula for converting
+        """Convert spherical to Cartesian coordinates.
+
+        From the SPICE routine sphrec.f, here is a formula for converting
         from spherical polar coordinates to rectangular coordinates:
 
         X = R*DCOS(LONG)*DSIN(COLAT)

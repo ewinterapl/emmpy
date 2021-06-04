@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.coordconverterij
+"""2-D coordinate converter interface class.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -6,8 +6,7 @@ methods will raise exceptions if invoked.
 
 
 class CoordConverterIJ():
-    """An interface which allows for the conversion between different
-    coordinate systems to Cartesian.
+    """An interface for conversion between different coordinate systems.
 
     The four methods allow you to convert positions and states from Cartesian
     to the coordinate system and back. It is templated on the Unwritable and
@@ -24,7 +23,7 @@ class CoordConverterIJ():
         raise Exception
 
     def toCoordinate(self, cartesian):
-        """Converts a Cartesian position to another coordinate system position.
+        """Convert a Cartesian position to another coordinate system position.
 
         INTERFACE - DO NOT INVOKE.
 
@@ -37,7 +36,7 @@ class CoordConverterIJ():
         raise Exception
 
     def toCartesian(self, coordinate):
-        """Converts a coordinate system position to a Cartesian position.
+        """Convert a coordinate system position to a Cartesian position.
 
         INTERFACE - DO NOT INVOKE.
 

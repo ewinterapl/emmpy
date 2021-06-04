@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.sphericaltocartesianjacobian"""
+"""Jacobian for spherical to Cartesian transformations."""
 
 
 from math import cos, sin
@@ -14,13 +14,15 @@ from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
 class SphericalToCartesianJacobian(Transformation):
+    """Jacobian for spherical to Cartesian transformations."""
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Build a new object."""
 
     def getTransformation(self, coordPosition, buffer):
-        """from SPICE's routine in drdsph.f:
+        """Get the transformation matrix.
+
+        from SPICE's routine in drdsph.f:
 
         CCOLAT = DCOS(COLAT)
         SCOLAT = DSIN(COLAT)
@@ -59,12 +61,14 @@ class SphericalToCartesianJacobian(Transformation):
         )
 
     def getInverseTransformation(self, coordPosition, buffer):
+        """Get the inverse transformation matrix."""
         try:
             return self.getTransformation(coordPosition, buffer).invort()
         except Exception as e:
             raise PointOnAxisException(e)
 
     def mxv(self, *args):
+        """Multiply a vector by the Jacobian matrix."""
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
             return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())

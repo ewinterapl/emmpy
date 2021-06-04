@@ -1,11 +1,6 @@
-"""emmpy.crucible.core.math.coords.polartocartesianjacobian"""
+"""Jacobian for polar-Cartesian conversions."""
 
 
-# import static crucible.core.math.CrucibleMath.cos;
-# import static crucible.core.math.CrucibleMath.sin;
-# import crucible.core.math.vectorspace.MatrixIJ;
-# import crucible.core.math.vectorspace.UnwritableMatrixIJ;
-# import crucible.core.math.vectorspace.UnwritableVectorIJ;
 from math import cos, sin
 
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
@@ -17,13 +12,13 @@ from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
 
 
 class PolarToCartesianJacobian(TransformationIJ):
+    """Jacobian for polar-Cartesian conversions."""
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Jacobian for polar-Cartesian conversions."""
 
     def getTransformation(self, coordPosition, buffer):
-        """getTransformation"""
+        """Return the transformation matrix."""
         r = coordPosition.getRadius()
         angle = coordPosition.getAngle()
         cosAngle = cos(angle)
@@ -31,12 +26,14 @@ class PolarToCartesianJacobian(TransformationIJ):
         return buffer.setTo(cosAngle, sinAngle, -r*sinAngle, r*cosAngle)
 
     def getInverseTransformation(self, coordPosition, buffer):
+        """Return the inverse transformation matrix."""
         try:
             return self.getTransformation(coordPosition, buffer).invort()
         except Exception as e:
             raise PointOnAxisException(e)
 
     def mxv(self, *args):
+        """Multiply a vector by the Jacobian."""
         if isinstance(args[1], PolarVector):
             (jacobian, coordVelocity) = args
             return MatrixIJ.mxv(jacobian, coordVelocity.getVectorIJ())

@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.polarvector"""
+"""Polar vectors."""
 
 
 from emmpy.crucible.core.math.coords.abstractvectorij import AbstractVectorIJ
@@ -11,18 +11,19 @@ class PolarVector(AbstractVectorIJ):
     """
 
     def __init__(self, radius, angle):
-        """Constructor"""
+        """Polar vectors."""
         AbstractVectorIJ.__init__(self, radius, angle)
 
     def getRadius(self):
-        """@return the radius"""
+        """Return the radius."""
         return AbstractVectorIJ.getI(self)
 
     def getAngle(self):
-        """@return the angle"""
+        """Return the angle."""
         return AbstractVectorIJ.getJ(self)
 
     def toString(self):
+        """Convert the object to a string."""
         return (
             "PolarVector [radius: %s, angle: %s]" %
             (self.getRadius(), self.getAngle())

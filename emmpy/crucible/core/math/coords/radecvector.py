@@ -1,4 +1,4 @@
-"""emmpy.package crucible.core.math.coords.radecvector"""
+"""A vector in Ra/Dec coordinates."""
 
 
 from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
@@ -11,22 +11,23 @@ class RaDecVector(AbstractVector):
     """
 
     def __init__(self, radius, raRadians, decRadians):
-        """Constructor"""
+        """Build a new object."""
         AbstractVector.__init__(self, radius, raRadians, decRadians)
 
     def getRadius(self):
-        """@return the radius"""
+        """Return the radius."""
         return AbstractVector.getI(self)
 
     def getRightAscension(self):
-        """@return the right ascension"""
+        """Return the right ascension."""
         return AbstractVector.getJ(self)
 
     def getDeclination(self):
-        """@return the declination"""
+        """Return the declination."""
         return AbstractVector.getK(self)
 
     def toString(self):
+        """Convert the object to a string."""
         return (
             "RaDecVector [radius: %s, rightAscension: %s, declination: %s]" %
             (self.getRadius(), self.getRightAscension(), self.getDeclination())

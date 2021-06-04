@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.cylindricalvector"""
+"""Represenation of a vector in cylindrical coordinates."""
 
 
 from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
@@ -11,22 +11,23 @@ class CylindricalVector(AbstractVector):
     """
 
     def __init__(self, cylindricalRadius, longInRadians, height):
-        """Constructor"""
+        """Build a new object."""
         AbstractVector.__init__(self, cylindricalRadius, longInRadians, height)
 
     def getCylindricalRadius(self):
-        """return the cylindrical radius (often denoted as r)"""
+        """Return the cylindrical radius (often denoted as r)."""
         return AbstractVector.getI(self)
 
     def getLongitude(self):
-        """return the longitude"""
+        """Return the longitude."""
         return AbstractVector.getJ(self)
 
     def getHeight(self):
-        """return the height (often denoted as z)"""
+        """Return the height (often denoted as z)."""
         return AbstractVector.getK(self)
 
     def toString(self):
+        """Convert the object to a string."""
         return (
             "CylindricalVector [cylindricalRadius: %s, longitude: %s, "
             "height: %s]"

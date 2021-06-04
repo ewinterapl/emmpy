@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.vectorfieldvalue
+"""A vector location and field value there.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -6,7 +6,7 @@ methods will raise exceptions if invoked.
 
 
 class VectorFieldValue:
-    """VectorFieldValue"""
+    """A vector location and field value there."""
 
     def __init__(self):
         """INTERFACE - DO NOT INSTANTIATE."""
@@ -22,7 +22,7 @@ class VectorFieldValue:
         raise Exception
 
     def getValue(self):
-        """The value associated with that position.
+        """Get the value associated with that position.
 
         INTERFACE - DO NOT INVOKE.
 

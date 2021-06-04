@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.coordconverter
+"""Interface class for coordinate converters.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -6,8 +6,7 @@ methods will raise exceptions if invoked.
 
 
 class CoordConverter:
-    """An interface which allows for the conversion between different
-    coordinate systems to Cartesian.
+    """An interface for conversion between different coordinate systems.
 
     The four methods allow you to convert positions and states from Cartesian
     to the coordinate system and back. It is templated on the Unwritable and

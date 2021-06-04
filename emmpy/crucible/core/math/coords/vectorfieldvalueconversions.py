@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.coords.vectorfieldvalueconversions"""
+"""Useful vector field value conversions."""
 
 
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
@@ -31,7 +31,9 @@ from emmpy.crucible.core.math.vectorspace.matrixijk import (
 
 
 class VectorFieldValueConversions:
-    """This class provides conversions from Cartesian coordinates and vector
+    """Useful vector field value conversions.
+
+    This class provides conversions from Cartesian coordinates and vector
     field values to cylindrical and spherical coordinates and vector field
     values, and vice versa.
 
@@ -42,11 +44,11 @@ class VectorFieldValueConversions:
     SPHERICAL = SphericalToCartesianBasisTransformation()
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Build a new object."""
 
     @staticmethod
     def convertToCylindrical(*args):
+        """Convert a Cartesian vector to cylindrical coordinates."""
         if len(args) == 1:
             # Converts a Cartesian coordinate and vector field value at that
             # coordinate to a cylindrical coordinate and vector field value
@@ -86,6 +88,7 @@ class VectorFieldValueConversions:
 
     @staticmethod
     def convertToSpherical(*args):
+        """Convert Cartesian to spherical coordinates."""
         if len(args) == 1:
             # Converts a Cartesian coordinate and vector field value at that
             # coordinate to a spherical coordinate and vector field value
@@ -127,6 +130,7 @@ class VectorFieldValueConversions:
 
     @staticmethod
     def convert(*args):
+        """Convert between Cartesian, cylindrical, and spherical."""
         if len(args) == 1:
             if isinstance(args[0], CylindricalVectorFieldValue):
                 # Converts a cylindrical coordinate and vector field value at

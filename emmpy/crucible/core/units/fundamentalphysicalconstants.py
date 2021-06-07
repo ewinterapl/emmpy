@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.units.fundamentalphysicalconstants
+"""Numerical values for mathematical and physical constants.
 
 Author : vandejd1
 Created :Feb 9, 2009
@@ -34,6 +34,7 @@ from math import pi
 
 
 class FundamentalPhysicalConstants:
+    """Numerical values for mathematical and physical constants."""
 
     # units: J/ ( mol * K )
     # copied from NIST: http://physics.nist.gov/cuu/Constants/
@@ -108,37 +109,30 @@ class FundamentalPhysicalConstants:
 
     HALFPI = pi/2
 
-    @classmethod
-    def instance(cls):
-        if not hasattr(cls, '_instance') or cls._instance is None:
-            cls._instance = cls.__new__(cls)
-        return cls._instance
-
-    @classmethod
-    def getInstance(cls):
-        # <ADDED_BY_ERIC_WINTER>
-        if not hasattr(cls, '_instance') or cls._instance is None:
-            cls._instance = cls.__new__(cls)
-        # </ADDED_BY_ERIC_WINTER>
-        return cls._instance
-
     def __init__(self):
+        """Build a new obejct."""
         raise RuntimeError('Call instance() instead')
 
     def getAUinKm(self):
+        """Return the length of an astronomical unit in kilometers."""
         return self.AU_IN_METERS / 1000.0
 
     def getSpeedOfLightInKmPerSec(self):
+        """Return the speed of light in kilometers per second."""
         return self.SPEED_OF_LIGHT_IN_VACUUM_M_per_SEC / 1000.0
 
     def getElectronMassInU(self):
+        """Get the electron mass in atomic mass units."""
         return self.ELECTRON_MASS_AMU
 
     def getAMUInKg(self):
+        """Get the mass of an atomic mass unit in kilograms."""
         return self.ATOMIC_MASS_UNIT_KG
 
     def getMolarGasConstantR(self):
+        """Get the value of the molar gas constant."""
         return self.MOLAR_GAS_CONST_R
 
     def getAvagadrosNumber(self):
+        """Get the value of Avogadro's number."""
         return self.AVAGADROs_NUMBER_NA

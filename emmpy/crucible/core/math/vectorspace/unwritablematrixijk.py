@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.unwritablematrixijk"""
+"""An unwritable 3-D matrix."""
 
 
 import sys
@@ -15,7 +15,9 @@ from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class UnwritableMatrixIJK:
-    """A weakly immutable 3-dimensional matrix designed to properly support
+    """An unwritable 3-D matrix.
+
+    A weakly immutable 3-dimensional matrix designed to properly support
     several writable subclasses.
 
     Note: Subclass implementers, you should only use the protected fields in
@@ -69,7 +71,7 @@ class UnwritableMatrixIJK:
     INVORSION_BOUND = sys.float_info.max
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Protected, no argument, no initialization constructor for
             # subclasses to utilize.
@@ -182,7 +184,7 @@ class UnwritableMatrixIJK:
             raise Exception
 
     def createTranspose(self):
-        """Creates a new, transposed copy of the existing matrix.
+        """Create a new, transposed copy of the existing matrix.
 
         @return the transpose of the instance
         """
@@ -192,8 +194,7 @@ class UnwritableMatrixIJK:
             self.ki, self.kj, self.kk)
 
     def createUnitizedColumns(self):
-        """Creates a new matrix whose columns are unitized versions of the
-        columns of this matrix.
+        """Create a copy with unitized columns.
 
         @return the unitized column version of this matrix
         @throws UnsupportedOperationException if any of the columns are of
@@ -205,7 +206,7 @@ class UnwritableMatrixIJK:
             VectorIJK(self.ik, self.jk, self.kk).unitize())  # third column
 
     def createInverse(self, *args):
-        """Creates a new, inverted copy of the existing matrix if possible."""
+        """Create a new, inverted copy of the existing matrix if possible."""
         if len(args) == 0:
             # @return the multiplicative inverse of the instance
             # @throws UnsupportedOperationException if the instance matrix has
@@ -235,8 +236,7 @@ class UnwritableMatrixIJK:
                 (self.ii*self.jj - self.ji*self.ij)/det)
 
     def createInvorted(self):
-        """Creates a new, inverted copy of the existing matrix with orthogonal
-        columns.
+        """Create a new, invorted copy of the existing matrix.
 
         If this method is invoked on matrices whose columns are not orthogonal,
         the resultant matrix is likely not the inverse sought. Use the more
@@ -248,7 +248,6 @@ class UnwritableMatrixIJK:
         columns are zero or too small to properly invert multiplicatively in
         the space available to double precision.
         """
-
         # First create the transpose, then all that's left is to scale the rows
         # appropriately.
         matrix = self.createTranspose()
@@ -294,70 +293,70 @@ class UnwritableMatrixIJK:
         return matrix
 
     def getII(self):
-        """Gets the ith row, ith column component.
+        """Get the ith row, ith column component.
 
         @return the ith row, ith column value
         """
         return self.ii
 
     def getJI(self):
-        """Gets the jth row, ith column component.
+        """Get the jth row, ith column component.
 
         @return the jth row, ith column value
         """
         return self.ji
 
     def getKI(self):
-        """Gets the kth row, ith column component.
+        """Get the kth row, ith column component.
 
         @return the kth row, ith column value
         """
         return self.ki
 
     def getIJ(self):
-        """Gets the ith row, jth column component.
+        """Get the ith row, jth column component.
 
         @return the ith row, jth column value
         """
         return self.ij
 
     def getJJ(self):
-        """Gets the jth row, jth column component.
+        """Get the jth row, jth column component.
 
         @return the jth row, jth column value
         """
         return self.jj
 
     def getKJ(self):
-        """Gets the kth row, jth column component.
+        """Get the kth row, jth column component.
 
         @return the kth row, jth column value
         """
         return self.kj
 
     def getIK(self):
-        """Gets the ith row, kth column component.
+        """Get the ith row, kth column component.
 
         @return the ith row, kth column value
         """
         return self.ik
 
     def getJK(self):
-        """Gets the jth row, kth column value.
+        """Get the jth row, kth column value.
 
         @return the jth row, kth column value.
         """
         return self.jk
 
     def getKK(self):
-        """Gets the kth row, kth column component.
+        """Get the kth row, kth column component.
 
         @return kth row, kth column value
         """
         return self.kk
 
     def get(self, row, column):
-        """Gets the component from the specified row and column.
+        """Get the component from the specified row and column.
 
         @param row a row index in [0,2].
         @param column a column index in [0,2]
@@ -404,7 +403,7 @@ class UnwritableMatrixIJK:
                 % (row, column))
 
     def getIthColumn(self, *args):
-        """Copies the ith column components into the supplied vector."""
+        """Copy the ith column components into the supplied vector."""
         if len(args) == 0:
             # @return ith column vector
             return self.getIthColumn(VectorIJK())
@@ -418,7 +417,7 @@ class UnwritableMatrixIJK:
             return buffer
 
     def getJthColumn(self, *args):
-        """Copies the jth column components into the supplied vector."""
+        """Copy the jth column components into the supplied vector."""
         if len(args) == 0:
             # @return jth column vector
             return self.getJthColumn(VectorIJK())
@@ -432,7 +431,7 @@ class UnwritableMatrixIJK:
             return buffer
 
     def getKthColumn(self, *args):
-        """Copies the kth column components into the supplied vector."""
+        """Copy the kth column components into the supplied vector."""
         if len(args) == 0:
             # @return kth column vector
             return self.getKthColumn(VectorIJK())
@@ -446,7 +445,7 @@ class UnwritableMatrixIJK:
             return buffer
 
     def getColumn(self, *args):
-        """Copies the desired column components into the supplied vector."""
+        """Copy the desired column components into the supplied vector."""
         if len(args) == 1:
             # Extracts the desired column components as a vector.
             # @param columnIndex index of the column contents to extract. Must
@@ -478,7 +477,7 @@ class UnwritableMatrixIJK:
             raise Exception
 
     def getDeterminant(self):
-        """Computes the determinant of the matrix.
+        """Compute the determinant of the matrix.
 
         @return the determinant of the instance
         """
@@ -488,14 +487,17 @@ class UnwritableMatrixIJK:
             self.ik, self.jk, self.kk)
 
     def getTrace(self):
-        """Computes the trace of the matrix.
+        """Compute the trace of the matrix.
 
         @return the trace of the instance
         """
         return self.ii + self.jj + self.kk
 
     def isRotation(self, *args):
-        """Do the components of the instance represent a rotation?"""
+        """Check if this is a rotation matrix.
+
+        Do the components of the instance represent a rotation?
+        """
         if len(args) == 0:
             # Subject to the default norm {@link #NORM_TOLERANCE} and
             # determinant {@value #DETERMINANT_TOLERANCE} tolerances.
@@ -523,7 +525,6 @@ class UnwritableMatrixIJK:
 
     def mxv(self, *args):
         """Compute the product of this matrix with a vector."""
-
         if len(args) == 1:
             # @param v the vector
             # @return a new <code>VectorIJK</code> containing the result.
@@ -568,7 +569,7 @@ class UnwritableMatrixIJK:
 
     @staticmethod
     def copyOf(matrix):
-        """Makes an unwritable copy of the supplied matrix.
+        """Make an unwritable copy of the supplied matrix.
 
         This method makes an unwritable copy only if necessary. It tries to
         avoid making a copy wherever possible.
@@ -646,6 +647,7 @@ class UnwritableMatrixIJK:
         return True
 
     def toString(self):
+        """Convert the object to a string."""
         return ("[%s,%s,%s;%s,%s,%s;%s,%s,%s]" %
                 (self.ii, self.ji, self.ki,
                  self.ij, self.jj, self.kj,

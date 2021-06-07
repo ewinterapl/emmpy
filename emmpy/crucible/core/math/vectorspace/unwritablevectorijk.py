@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.unwritablevectorijk
+"""An unwritable 3-D vector.
 
 A weakly immutable 3-dimensional vector designed to properly support a writable
 subclass.

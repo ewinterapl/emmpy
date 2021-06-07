@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.unwritablevectorij"""
+"""An unwritable 2-D vector."""
 
 
 from math import asin, pi
@@ -15,7 +15,9 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableVectorIJ:
-    """A weakly immutable 2-dimensional vector designed to properly support a
+    """An unwritable 2-D vector.
+
+    A weakly immutable 2-dimensional vector designed to properly support a
     writable subclass.
 
     Note: Subclass implementers, you should only use the protected fields in
@@ -40,6 +42,7 @@ class UnwritableVectorIJ:
     """
 
     def __init__(self, *args):
+        """Build a new object."""
         if len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a vector from the first two elements of an array
@@ -78,7 +81,7 @@ class UnwritableVectorIJ:
             raise CrucibleRuntimeException
 
     def createUnitized(self):
-        """Creates a new, unit length copy of the existing vector.
+        """Create a new, unit length copy of the existing vector.
 
         This code is just a convenience method that implements:
         new UnwritableVectorIJK(1.0/this.getLength(), this)
@@ -95,7 +98,7 @@ class UnwritableVectorIJ:
             "Unable to unitize. Supplied vector has zero length.")
 
     def createNegated(self):
-        """Creates a new, negated copy of an the existing vector.
+        """Create a new, negated copy of an the existing vector.
 
         Convenience method for: new UnwritableVectorIJK(-1.0, this).
 
@@ -104,14 +107,14 @@ class UnwritableVectorIJ:
         return UnwritableVectorIJ(-1, self)
 
     def getI(self) -> float:
-        """Gets the ith component.
+        """Get the ith component.
 
         @return the ith component.
         """
         return self.i
 
     def getJ(self) -> float:
-        """Gets the jth component.
+        """Get the jth component.
 
         @return the jth component.
         """
@@ -133,10 +136,10 @@ class UnwritableVectorIJ:
             raise BugException
 
     def getLength(self) -> float:
-        """Computes the standard L-2 norm, or length, of the vector.
+        """Compute the standard L-2 norm, or length, of the vector.
 
-         @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
-         """
+        @return (i*i + j*j + k*k)^(1/2) without danger of overflow.
+        """
         return computeNorm(self.i, self.j)
 
     def getDot(self, vector) -> float:
@@ -148,8 +151,7 @@ class UnwritableVectorIJ:
         return self.i*vector.i + self.j*vector.j
 
     def getSeparation(self, vector) -> float:
-        """Compute the angular separation in radians between this instance and
-        another vector.
+        """Compute the angular separation between this and another vector.
 
         @param vector
         @return the angular separation between vector and this instance in
@@ -180,7 +182,7 @@ class UnwritableVectorIJ:
 
     @staticmethod
     def copyOf(vector):
-        """Makes an unwritable copy of the supplied vector.
+        """Make an unwritable copy of the supplied vector.
 
         This method makes an unwritable copy only if necessary. It tries to
         avoid making a copy wherever possible.
@@ -195,6 +197,7 @@ class UnwritableVectorIJ:
         return UnwritableVectorIJ(vector)
 
     def hashCode(self) -> int:
+        """Compute the object hash code."""
         prime = 31
         result = 1
         temp = doubleToLongBits(self.i)
@@ -204,6 +207,7 @@ class UnwritableVectorIJ:
         return result
 
     def equals(self, obj) -> bool:
+        """Check for equality with another object."""
         if self is obj:
             return True
         if obj is None:
@@ -218,4 +222,5 @@ class UnwritableVectorIJ:
         return True
 
     def toString(self) -> str:
+        """Convert the object to a string."""
         return "[%s,%s]" % (self.i, self.j)

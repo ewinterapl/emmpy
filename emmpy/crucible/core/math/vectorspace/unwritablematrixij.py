@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.unwritablematrixij"""
+"""An unwritable 2-D matrix."""
 
 
 import sys
@@ -16,7 +16,9 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class UnwritableMatrixIJ:
-    """A weakly immutable 2-dimensional matrix designed to properly support
+    """An unwritable 2-D matrix.
+
+    A weakly immutable 2-dimensional matrix designed to properly support
     several writable subclasses.
 
     Note: Subclass implementers, you should only use the protected fields in
@@ -69,8 +71,7 @@ class UnwritableMatrixIJ:
     INVORSION_BOUND = sys.float_info.max
 
     def __init__(self, *args):
-        """Constructor"""
-        pass
+        """Build a new object."""
         if len(args) == 0:
             # Protected, no argument, no initialization constructor for
             # subclasses to utilize.
@@ -136,15 +137,14 @@ class UnwritableMatrixIJ:
             raise Exception
 
     def createTranspose(self):
-        """Creates a new, transposed copy of the existing matrix.
+        """Create a new, transposed copy of the existing matrix.
 
         @return the transpose of the instance
         """
         return UnwritableMatrixIJ(self.ii, self.ij, self.ji, self.jj)
 
     def createUnitizedColumns(self):
-        """Creates a new matrix whose columns are unitized versions of the
-        columns of this matrix.
+        """Create a copy with columns are unitized columns.
 
         @return the unitized column version of this matrix
 
@@ -156,7 +156,7 @@ class UnwritableMatrixIJ:
             VectorIJ(self.ij, self.jj).unitize())
 
     def createInverse(self, *args):
-        """Creates a new, inverted copy of the existing matrix if possible.
+        """Create a new, inverted copy of the existing matrix if possible.
 
         @param tolerance the absolute value of the determinant of the instance
         must be greater than this for inversion to proceed
@@ -172,12 +172,11 @@ class UnwritableMatrixIJ:
             if abs(det) < tolerance:
                 raise Exception(
                     "Matrix nearly singular, unable to invert.")
-            return UnwritableMatrixIJ(self.jj/det, -self.ji/det,
-                                      -self.ij/det, self.ii/det)
+            return UnwritableMatrixIJ(self.jj/det, -(self.ji/det),
+                                      -(self.ij/det), self.ii/det)
 
     def createInvorted(self):
-        """Creates a new, inverted copy of the existing matrix with orthogonal
-        columns.
+        """Create an invorted copy of the existing matrix.
 
         If this method is invoked on matrices whose columns are not orthogonal,
         the resultant matrix is likely not the inverse sought. Use the more
@@ -191,7 +190,6 @@ class UnwritableMatrixIJ:
         columns are zero or too small to properly invert multiplicatively in
         the space available to double precision.
         """
-
         # First create the transpose, then all that's left is to scale the
         # rows appropriately.
         matrix = self.createTranspose()
@@ -216,23 +214,23 @@ class UnwritableMatrixIJ:
         return matrix
 
     def getII(self):
-        """Gets the ith row, ith column component."""
+        """Get the ith row, ith column component."""
         return self.ii
 
     def getJI(self):
-        """Gets the jth row, ith column component."""
+        """Get the jth row, ith column component."""
         return self.ji
 
     def getIJ(self):
-        """Gets the ith row, jth column component."""
+        """Get the ith row, jth column component."""
         return self.ij
 
     def getJJ(self):
-        """Gets the jth row, jth column component."""
+        """Get the jth row, jth column component."""
         return self.jj
 
     def get(self, row, column):
-        """Gets the component from the specified row and column.
+        """Get the component from the specified row and column.
 
         @param row a row index in [0,2].
         @param column a column index in [0,2]
@@ -267,7 +265,7 @@ class UnwritableMatrixIJ:
                 (row, column))
 
     def getIthColumn(self, buffer):
-        """Copies the ith column components into the supplied vector.
+        """Copy the ith column components into the supplied vector.
 
         @param buffer the vector to receive the components
         @return a reference to buffer for convenience
@@ -277,7 +275,7 @@ class UnwritableMatrixIJ:
         return buffer
 
     def getJthColumn(self, buffer):
-        """Copies the jth column components into the supplied vector.
+        """Copy the jth column components into the supplied vector.
 
         @param buffer the vector to receive the components
         @return a reference to buffer for convenience
@@ -287,7 +285,7 @@ class UnwritableMatrixIJ:
         return buffer
 
     def getColumn(self, columnIndex, buffer):
-        """Copies the desired column components into the supplied vector.
+        """Copy the desired column components into the supplied vector.
 
         @param columnIndex index of the column contents to copy. Must be in
         [0,2]
@@ -307,21 +305,23 @@ class UnwritableMatrixIJ:
             )
 
     def getDeterminant(self):
-        """Computes the determinant of the matrix.
+        """Compute the determinant of the matrix.
 
         @return the determinant of the instance
         """
         return computeDeterminant(self.ii, self.ji, self.ij, self.jj)
 
     def getTrace(self):
-        """Computes the trace of the matrix.
+        """Compute the trace of the matrix.
 
         @return the trace of the instance
         """
         return self.ii + self.jj
 
     def isRotation(self, *args):
-        """Do the components of the instance represent a rotation subject to
+        """Check if this is a rotation matrix.
+
+        Do the components of the instance represent a rotation subject to
         the default norm {@link #NORM_TOLERANCE} and determinant
         {@value #DETERMINANT_TOLERANCE} tolerances.
 
@@ -346,7 +346,7 @@ class UnwritableMatrixIJ:
             return False
 
     def isSymmetric(self):
-        """Are the components of the instance symmetric?
+        """Check if this matrix is symmetric.
 
         @return true if this.ji == this.ij, false otherwise.
         """
@@ -395,7 +395,7 @@ class UnwritableMatrixIJ:
 
     @staticmethod
     def copyOf(matrix):
-        """Makes an unwritable copy of the supplied matrix.
+        """Make an unwritable copy of the supplied matrix.
 
         This method makes an unwritable copy only if necessary. It tries to
         avoid making a copy wherever possible.
@@ -426,6 +426,7 @@ class UnwritableMatrixIJ:
         return result
 
     def equals(self, obj):
+        """Check for equality with another matrix."""
         if self == obj:
             return True
         if obj is None:
@@ -448,4 +449,5 @@ class UnwritableMatrixIJ:
         return True
 
     def toString(self):
+        """Convert the object to a string."""
         return "[%s,%s;%s,%s]" % (self.ii, self.ji, self.ij, self.jj)

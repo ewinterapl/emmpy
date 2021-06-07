@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.rotationmatrixijk"""
+"""A 3-D rotation matrix."""
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
@@ -17,7 +17,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
 
 
 class RotationMatrixIJK(UnwritableRotationMatrixIJK):
-    """A writable subclass of the unwritable 3D rotation matrix parent
+    """A 3-D rotation matrix.
+
+    A writable subclass of the unwritable 3D rotation matrix parent
     completing another link the weak-immutability design pattern.
 
     This class contains the mutator methods necessary to set or alter the
@@ -44,7 +46,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
     IDENTITY = UnwritableRotationMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Creates a rotation matrix and sets it to the identity.
             UnwritableRotationMatrixIJK.__init__(self,
@@ -162,21 +164,27 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                 self, ii, ji, ki, ij, jj, kj, ik, jk, kk)
 
     def createSharpened(self):
-        """Note: this method is overridden to return an instance of the
+        """Create a "sharpened" copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
         writable rotation subclass, rather than either of the two unwritable
         parents.
         """
         return RotationMatrixIJK(self).sharpen()
 
     def createTranspose(self):
-        """Note: this method is overridden to return an instance of the
+        """Create a transposed copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
         writable rotation subclass, rather than either of the two unwritable
         parents.
         """
         return RotationMatrixIJK(self).transpose()
 
     def createInverse(self, *args):
-        """Note: this method is overridden to return an instance of the
+        """Create an inverted copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
         writable rotation subclass, rather than either of the two unwritable
         parents.
         """
@@ -190,7 +198,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             return self.createTranspose()
 
     def sharpen(self):
-        """Sharpens the contents of the rotation matrix in place.
+        """Sharpen the contents of the rotation matrix in place.
 
         Sharpening is a process that starts with a rotation matrix and modifies
         its contents to bring it as close to a rotation as possible given the
@@ -202,7 +210,6 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
 
         @return a reference to the instance for convenience.
         """
-
         # Normalize the first column vector of the matrix.
         norm = computeNorm(self.ii, self.ji, self.ki)
         self.ii /= norm
@@ -384,8 +391,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             return self
 
     def setToSharpened(self, matrix):
-        """Sets the contents of this matrix to a sharpened version of a
-        supplied rotation matrix.
+        """Set this matrix to a sharpened version of a rotation matrix.
 
         @param matrix a rotation matrix to sharpen
         @return a reference to the instance, with the contents set to
@@ -399,8 +405,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             return self.sharpen()
 
     def setToTranspose(self, matrix):
-        """Sets the contents of this matrix to the transpose of a supplied
-        rotation matrix.
+        """Set this matrix to the transpose of a rotation matrix.
 
         @param matrix a rotation matrix to transpose
         @return a reference to the instance, with the contents set to the
@@ -415,8 +420,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
 
     @staticmethod
     def mxmt(*args):
-        """Compute the product of a rotation matrix with the transpose of
-        another rotation matrix."""
+        """Compute the product of the matrix with the transpose of another."""
         if len(args) == 2:
             # @param a the left hand rotation matrix
             # @param b the right hand rotation matrix to transpose, then
@@ -456,8 +460,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
 
     @staticmethod
     def mtxm(*args):
-        """Compute the product of a transpose of a rotation matrix with another
-        rotation matrix."""
+        """Compute the product of the transpose of a rotation with another."""
         if len(args) == 2:
             # @param a the left hand rotation matrix to transpose, then
             # multiply
@@ -534,23 +537,11 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
 
     @staticmethod
     def static_createSharpened(ii, ji, ki, ij, jj, kj, ik, jk, kk):
-        """Creates a sharpened matrix from the supplied inputs without
-        performing any checks on the inputs.
+        """Create a sharpened matrix from the supplied inputs.
 
-        @param ii
-        @param ji
-        @param ki
-        @param ij
-        @param jj
-        @param kj
-        @param ik
-        @param jk
-        @param kk
-        @return
         @throws IllegalArgumentException if, after sharpening, the resultant
         matrix is still not a rotation.
         """
-
         # This is necessary to be able to leave the variable names as
         # would be expected on this class, since they are shadowed by
         # the fields on the anonymous inner class used to subvert the

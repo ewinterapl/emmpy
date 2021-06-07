@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.vectorij"""
+"""A 2-D vector."""
 
 
 from emmpy.crucible.core.exceptions.bugexception import BugException
@@ -17,7 +17,9 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class VectorIJ(UnwritableVectorIJ):
-    """Writable subclass of the unwritable 2D vector parent completing the
+    """A 2-D vector.
+
+    Writable subclass of the unwritable 2D vector parent completing the
     implementation of the weak immutability design pattern.
 
     This class contains the mutator methods necessary to set or alter the
@@ -47,7 +49,7 @@ class VectorIJ(UnwritableVectorIJ):
     MINUS_J = UnwritableVectorIJ(0, -1)
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Construct a vector with an initial value of 0.
             UnwritableVectorIJ.__init__(self, 0.0, 0.0)
@@ -87,14 +89,19 @@ class VectorIJ(UnwritableVectorIJ):
             raise CrucibleRuntimeException
 
     def createUnitized(self):
-        """Note: this method is overridden to return an instance of the
+        """Create a unitized copy of the vector.
+
+        Note: this method is overridden to return an instance of the
         writable subclass rather than the unwritable parent.
         """
         return VectorIJ(self).unitize()
 
     def createNegated(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create a negated copy of the vector.
+
+        Note: this method is overridden to return an instance of the
+        writable subclass rather than the unwritable parent.
+        """
         return VectorIJ(self).negate()
 
     def scale(self, scale: float):
@@ -144,21 +151,21 @@ class VectorIJ(UnwritableVectorIJ):
         return self
 
     def setI(self, i: float):
-        """Sets the ith component of the vector.
+        """Set the ith component of the vector.
 
         @param i the ith component
         """
         self.i = i
 
     def setJ(self, j: float):
-        """Sets the jth component of the vector.
+        """Set the jth component of the vector.
 
         @param j the jth component
         """
         self.j = j
 
     def set(self, index: int, value: float):
-        """Sets the specified component of the vector to a supplied value.
+        """Set the specified component of the vector to a supplied value.
 
         @param index the index of the component to set. 0 = ith, 1 = jth.
         @param value the value with which to replace the specified component
@@ -211,7 +218,7 @@ class VectorIJ(UnwritableVectorIJ):
             raise CrucibleRuntimeException
 
     def setToUnitized(self, vector):
-        """Sets the vector content to the a unit length version of another.
+        """Set the vector content to the a unit length version of another.
 
         @param vector the vector whose contents are to be unitized and stored
         in the instance
@@ -224,7 +231,7 @@ class VectorIJ(UnwritableVectorIJ):
         return self
 
     def setToNegated(self, vector):
-        """Sets the vector content to a negated version of another.
+        """Set the vector content to a negated version of another.
 
         @param vector the vector whose contents are to be negated and stored
         in the instance
@@ -234,9 +241,7 @@ class VectorIJ(UnwritableVectorIJ):
         return self.negate()
 
     def asVectorIJK(self, *args):
-        """Wraps this vector as a new {@link VectorIJK}. K is zero.
-        @return a new {@link VectorIJK}
-        """
+        """Convert this 2-D vector to a 3-D vector."""
         if len(args) == 0:
             return self.asVectorIJK(VectorIJK())
         elif len(args) == 1:
@@ -250,10 +255,9 @@ class VectorIJ(UnwritableVectorIJ):
 
     @staticmethod
     def lineProject(*args):
-        """Compute the projection of one vector onto the line normal to
-        another.
+        """Compute the projection of one vector onto the normal to another.
 
-        Algebraicly, this routine effectively computes:
+        Algebraically, this routine effectively computes:
 
                                    <vector, to> * to
                           vector - -----------------
@@ -515,7 +519,7 @@ class VectorIJ(UnwritableVectorIJ):
 
     @staticmethod
     def addAll(*args):
-        """Adds all the vectors in an {@link Iterable} of vectors.
+        """Add all the vectors in an {@link Iterable} of vectors.
 
         @param vectors an {@link Iterable} of vectors to be added
         @param buffer the buffer to receive the results of the addition
@@ -539,8 +543,7 @@ class VectorIJ(UnwritableVectorIJ):
 
     @staticmethod
     def addRSS(*args):
-        """Performs a component wise root sum square of two vectors (add in
-        quadrature).
+        """Perform a component wise root sum square of two vectors.
 
         @param a a vector
         @param b another vector

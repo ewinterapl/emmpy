@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.matrixijk
+"""A writable 3-D matrix.
 
 A writable subclass of the unwritable 3D matrix parent completing one link in
 the weak-immutability design pattern.
@@ -20,6 +20,7 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class MatrixIJK(UnwritableMatrixIJK):
+    """A writable 3-D matrix."""
 
     # The matrix whose components are all zero.
     ZEROS = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -31,7 +32,7 @@ class MatrixIJK(UnwritableMatrixIJK):
     IDENTITY = UnwritableMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Construct a matrix with an initial value of {@link #IDENTITY}.
             UnwritableMatrixIJK.__init__(self, MatrixIJK.IDENTITY)
@@ -108,18 +109,27 @@ class MatrixIJK(UnwritableMatrixIJK):
             raise Exception
 
     def createTranspose(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create a transposed copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
+        writable subclass rather than the unwritable parent.
+        """
         return MatrixIJK(self).transpose()
 
     def createUnitizedColumns(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create a copy of the matrix with unitized columns.
+
+        Note: this method is overridden to return an instance of the
+        writable subclass rather than the unwritable parent.
+        """
         return MatrixIJK(self).unitizeColumns()
 
     def createInverse(self, *args):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create an inverted copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
+        writable subclass rather than the unwritable parent.
+        """
         if len(args) == 0:
             return MatrixIJK(self).invert()
         elif len(args) == 1:
@@ -129,8 +139,11 @@ class MatrixIJK(UnwritableMatrixIJK):
             return MatrixIJK(self).invert(tolerance)
 
     def createInvorted(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Create an invorted copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
+        writable subclass rather than the unwritable parent.
+        """
         return MatrixIJK(self).invort()
 
     def transpose(self):
@@ -151,8 +164,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         return self
 
     def unitizeColumns(self):
-        """Modifies the elements of this matrix so that each column in the
-        matrix becomes a unit vector
+        """Convert each column to a unit vector.
 
         @return a reference to the instance for convenience
         @throws UnsupportedOperationException if any of the columns are of
@@ -283,43 +295,43 @@ class MatrixIJK(UnwritableMatrixIJK):
             return self
 
     def setII(self, ii):
-        """Sets the ith row, ith column component."""
+        """Set the ith row, ith column component."""
         self.ii = ii
 
     def setJI(self, ji):
-        """Sets the jth row, ith column component."""
+        """Set the jth row, ith column component."""
         self.ji = ji
 
     def setKI(self, ki):
-        """Sets the kth row, ith column component."""
+        """Set the kth row, ith column component."""
         self.ki = ki
 
     def setIJ(self, ij):
-        """Sets the ith row, jth column component."""
+        """Set the ith row, jth column component."""
         self.ij = ij
 
     def setJJ(self, jj):
-        """Sets the jth row, jth column component."""
+        """Set the jth row, jth column component."""
         self.jj = jj
 
     def setKJ(self, kj):
-        """Sets the kth row, jth column component."""
+        """Set the kth row, jth column component."""
         self.kj = kj
 
     def setIK(self, ik):
-        """Sets the ith row, kth column component."""
+        """Set the ith row, kth column component."""
         self.ik = ik
 
     def setJK(self, jk):
-        """Sets the jth row, kth column component."""
+        """Set the jth row, kth column component."""
         self.jk = jk
 
     def setKK(self, kk):
-        """Sets the kth row, kth column component."""
+        """Set the kth row, kth column component."""
         self.kk = kk
 
     def set(self, row, column, value):
-        """Sets the component for the specified row and column.
+        """Set the component for the specified row and column.
 
         @param row a row index in [0,2].
         @param column a column index in [0,2]
@@ -366,7 +378,7 @@ class MatrixIJK(UnwritableMatrixIJK):
                 (row, column))
 
     def setIthColumn(self, column):
-        """Sets the ith column to the supplied vector.
+        """Set the ith column to the supplied vector.
 
         @param column the vector whose components are to replace the ith column
         of this matrix
@@ -376,7 +388,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.ki = column.k
 
     def setJthColumn(self, column):
-        """Sets the jth column to the supplied vector.
+        """Set the jth column to the supplied vector.
 
         @param column the vector whose components are to replace the jth column
         of this matrix
@@ -386,7 +398,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.kj = column.k
 
     def setKthColumn(self, column):
-        """Sets the kth column to the supplied vector.
+        """Set the kth column to the supplied vector.
 
         @param column the vector whose components are to replace the kth column
         of this matrix
@@ -396,7 +408,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.kk = column.k
 
     def setColumn(self, columnIndex, column):
-        """Sets the column at a specified index to the supplied vector.
+        """Set the column at a specified index to the supplied vector.
 
         @param columnIndex a column index in [0,2].
         @param column the vector whose components are to replace the specified
@@ -527,7 +539,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             raise Exception
 
     def setToTranspose(self, matrix):
-        """Sets this matrix components to the transpose of the supplied matrix.
+        """Set the matrix components to the transpose of the supplied matrix.
 
         @param matrix the matrix whose transpose is to be copied into the
         instance
@@ -538,8 +550,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         return self
 
     def setToUnitizedColumns(self, matrix):
-        """Modifies the elements of this matrix so that each column in the
-        matrix becomes a unit vector
+        """Set to the unitized columns of a matrix.
 
         @return a reference to the instance for convenience
         @throws UnsupportedOperationException if any of the columns are of
@@ -548,7 +559,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         return self.setTo(matrix).unitizeColumns()
 
     def setToInverse(self, *args):
-        """Sets the matrix components to the inverse of the supplied matrix."""
+        """Set the matrix components to the inverse of the supplied matrix."""
         if len(args) == 1:
             # @param matrix the matrix to invert
             # @return a reference to the instance containing the inverse of
@@ -581,8 +592,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             return self
 
     def setToInvorted(self, matrix):
-        """Sets the instance to the inverse of the supplied matrix, assuming
-        this matrix has columns that are orthogonal.
+        """Set to the invorse of the specified matrix.
 
         @param matrix a matrix to invert, with orthogonal columns.
         @return a reference to the instance for convenience
@@ -594,9 +604,7 @@ class MatrixIJK(UnwritableMatrixIJK):
 
     @staticmethod
     def mxmt(*args):
-        """Compute the product of a matrix with the transpose of another
-        matrix.
-        """
+        """Compute the product of a matrix with the transpose of another."""
         if len(args) == 2:
             # @param a the left hand matrix
             # @param b the right hand matrix to transpose, then multiply
@@ -633,8 +641,7 @@ class MatrixIJK(UnwritableMatrixIJK):
 
     @staticmethod
     def mtxm(*args):
-        """Compute the product of a transpose of a matrix with another
-        matrix."""
+        """Compute the product of a transpose of a matrix with another."""
         if len(args) == 2:
             # @param a the left hand matrix to transpose, then multiply
             # @param b the right hand matrix
@@ -708,8 +715,7 @@ class MatrixIJK(UnwritableMatrixIJK):
 
     @staticmethod
     def mxmtadd(*args):
-        """Compute the sum of a pair of matrices multipled with another matrix
-        transposed"""
+        """Compute the sum of 2 matrices multipled with another transposed."""
         if len(args) == 4:
             # @param a left hand matrix in the first product
             # @param b right hand matrix to transpose in the first product
@@ -761,8 +767,7 @@ class MatrixIJK(UnwritableMatrixIJK):
 
     @staticmethod
     def mtxmadd(*args):
-        """Compute the sum of a pair of matrix transposes multipled with
-        another matrix"""
+        """Compute the sum of 2 matrix transposes multipled with another."""
         if len(args) == 4:
             # @param a left hand matrix to transpose in the first product
             # @param b right hand matrix in the first product

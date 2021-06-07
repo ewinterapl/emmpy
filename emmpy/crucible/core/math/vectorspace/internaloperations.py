@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.internaloperations
+"""Utility methods for other vectorspace classes.
 
 Module providing various static methods that support the implementation
 of methods of the various other classes provided in this package.
@@ -22,8 +22,8 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 
 
 def absMaxComponent(*args) -> float:
-    """Computes the absolute value of the largest, magnitude, component of
-    a vector expressed in three individual components.
+    """Compute the absolute value of the largest component .
+
     @param i the ith component
     @param j the jth component
     @param k the kth component
@@ -36,8 +36,7 @@ def absMaxComponent(*args) -> float:
 
 
 def computeNorm(*args) -> float:
-    """Method that computes the norm of a vector expressed as two or three
-    separate components.
+    """Compute the norm of a vector.
 
     This method is marked with package access to allow other classes in the
     vector arithmetic toolkit to utilize it.
@@ -49,32 +48,31 @@ def computeNorm(*args) -> float:
     """
     if len(args) == 2:
         (i, j) = args
-        max = absMaxComponent(i, j)
+        _max = absMaxComponent(i, j)
         # If max is 0, then vector is clearly the zero vector.
-        if max == 0.0:
+        if _max == 0.0:
             return 0.0
-        i /= max
-        j /= max
+        i /= _max
+        j /= _max
         # Since we're trying to avoid overflow in the square root:
-        return max*sqrt(i*i + j*j)
+        return _max*sqrt(i*i + j*j)
     elif len(args) == 3:
         (i, j, k) = args
-        max = absMaxComponent(i, j, k)
+        _max = absMaxComponent(i, j, k)
         # If max is 0, then vector is clearly the zero vector.
-        if max == 0.0:
+        if _max == 0.0:
             return 0.0
-        i /= max
-        j /= max
-        k /= max
+        i /= _max
+        j /= _max
+        k /= _max
         # Since we're trying to avoid overflow in the square root:
-        return max*sqrt(i*i + j*j + k*k)
+        return _max*sqrt(i*i + j*j + k*k)
     else:
         raise Exception
 
 
 def checkRotation(*args) -> None:
-    """Determine if the components of a three by three matrix constitute a
-    rotation.
+    """Determine if a 3x3 matrix is a rotation.
 
     @param ii ith row, ith column element
     @param ji jth row, ith column element
@@ -139,8 +137,7 @@ def checkRotation(*args) -> None:
 
 
 def computeDeterminant(*args) -> float:
-    """Computes the determinant of a 2x2 or 3x3 matrix described by the
-    supplied components.
+    """Compute the determinant of a matrix.
 
     @param ii ith row, ith column element
     @param ji jth row, ith column element

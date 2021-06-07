@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.vectorijk."""
+"""A 3-D vector."""
 
 
 from math import cos, sin
@@ -15,7 +15,9 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class VectorIJK(UnwritableVectorIJK):
-    """Writable subclass of UnwritableVectorIJK.
+    """A 3-D vector.
+
+    Writable subclass of UnwritableVectorIJK.
 
     This class contains the mutator methods necessary to set or alter the
     internals of the parent classes fields.

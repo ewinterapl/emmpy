@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.matrixij"""
+"""A writable 2-D matrix."""
 
 
 from math import sqrt
@@ -14,8 +14,7 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class MatrixIJ(UnwritableMatrixIJ):
-    """A writable subclass of the unwritable 3D matrix parent completing one
-    link in the weak-immutability design pattern.
+    """A writable 2-D matrix..
 
     This class contains the mutator methods necessary to set or alter the
     internals of the parent classes fields.
@@ -33,7 +32,7 @@ class MatrixIJ(UnwritableMatrixIJ):
     IDENTITY = UnwritableMatrixIJ(1, 0, 0, 1)
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Construct a matrix with an initial value of {@link #IDENTITY}.
             UnwritableMatrixIJ.__init__(self, self.IDENTITY)
@@ -105,17 +104,15 @@ class MatrixIJ(UnwritableMatrixIJ):
             raise Exception
 
     def createTranspose(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Return a transposed copy of the matrix."""
         return MatrixIJ(self).transpose()
 
     def createUnitizedColumns(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Return a unitized copy of the matrix."""
         return MatrixIJ(self).unitizeColumns()
 
     def createInverse(self, *args):
-        """Create a new inverse matrix"""
+        """Return an inverted copy of the matrix."""
         if len(args) == 0:
             # Note: this method is overridden to return an instance of the
             # writable subclass rather than the unwritable parent.
@@ -127,12 +124,11 @@ class MatrixIJ(UnwritableMatrixIJ):
             return MatrixIJ(self).invert(tolerance)
 
     def createInvorted(self):
-        """Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent."""
+        """Return an invorted copy of the matrix."""
         return MatrixIJ(self).invort()
 
     def transpose(self):
-        """Transpose the matrix.
+        """Transpose the matrix in-place.
 
         @return a reference to the instance for convenience, which now
         contains the transpose
@@ -143,8 +139,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         return self
 
     def unitizeColumns(self):
-        """Modifies the elements of this matrix so that each column in the
-        matrix becomes a unit vector
+        """Unitize the matrix columns in-place.
 
         @return a reference to the instance for convenience
         @throws UnsupportedOperationException if any of the columns are of
@@ -155,7 +150,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         return self
 
     def invert(self, *args):
-        """Invert the matrix."""
+        """Invert the matrix in-place."""
         if len(args) == 0:
             # Invert the matrix if the determinant is not within the default
             # tolerance of zero.
@@ -180,8 +175,8 @@ class MatrixIJ(UnwritableMatrixIJ):
                 raise Exception(
                     "Matrix nearly singular, unable to invert.")
             cii = self.jj/det
-            cij = -self.ij/det
-            cji = -self.ji/det
+            cij = -(self.ij/det)
+            cji = -(self.ji/det)
             cjj = self.ii/det
             return self.setTo(cii, cji, cij, cjj)
 
@@ -220,8 +215,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         return self
 
     def scale(self, *args):
-        """Scales each component of the matrix by the supplied factor."""
-
+        """Scale each component of the matrix by the supplied factor."""
         if len(args) == 1:
             # @param scale the scale factor to apply
             # @return a reference to the instance which now contains the scaled
@@ -246,23 +240,23 @@ class MatrixIJ(UnwritableMatrixIJ):
             return self
 
     def setII(self, ii):
-        """Sets the ith row, ith column component."""
+        """Set the ith row, ith column component."""
         self.ii = ii
 
     def setJI(self, ji):
-        """Sets the jth row, ith column component."""
+        """Set the jth row, ith column component."""
         self.ji = ji
 
     def setIJ(self, ij):
-        """Sets the ith row, jth column component."""
+        """Set the ith row, jth column component."""
         self.ij = ij
 
     def setJJ(self, jj):
-        """Sets the jth row, jth column component."""
+        """Set the jth row, jth column component."""
         self.jj = jj
 
     def set(self, row, column, value):
-        """Sets the component for the specified row and column.
+        """Set the component for the specified row and column.
 
         @param row a row index in [0,1].
         @param column a column index in [0,1]
@@ -294,7 +288,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                     (row, column))
 
     def setIthColumn(self, column):
-        """Sets the ith column to the supplied vector.
+        """Set the ith column to the supplied vector.
 
         @param column the vector whose components are to replace the ith column
         of this matrix
@@ -303,7 +297,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         self.ji = column.j
 
     def setJthColumn(self, column):
-        """Sets the jth column to the supplied vector.
+        """Set the jth column to the supplied vector.
 
         @param column the vector whose components are to replace the jth column
         of this matrix
@@ -312,7 +306,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         self.jj = column.j
 
     def setColumn(self, columnIndex, column):
-        """Sets the column at a specified index to the supplied vector.
+        """Set the column at a specified index to the supplied vector.
 
         @param columnIndex a column index in [0,1].
         @param column the vector whose components are to replace the specified
@@ -329,8 +323,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 "Unable to set column. Index: %s is invalid." % columnIndex)
 
     def setTo(self, *args):
-        """Sets the components of this matrix to the supplied components"""
-
+        """Set the components of this matrix to the supplied components."""
         if len(args) == 1:
             if isinstance(args[0], list):
                 # Sets the contents of this matrix to the upper 2x2 block of a
@@ -423,7 +416,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             raise Exception
 
     def setToTranspose(self, matrix):
-        """Sets this matrix components to the transpose of the supplied matrix.
+        """Set this matrix components to the transpose of the supplied matrix.
 
         @param matrix the matrix whose transpose is to be copied into the
         instance
@@ -434,8 +427,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         return self
 
     def setToUnitizedColumns(self, matrix):
-        """Modifies the elements of this matrix so that each column in the
-        matrix becomes a unit vector
+        """Convert each column to a unit vector.
 
         @return a reference to the instance for convenience
         @throws UnsupportedOperationException if any of the columns are of
@@ -444,7 +436,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         return self.setTo(matrix).unitizeColumns()
 
     def setToInverse(self, *args):
-        """Sets the matrix components to the inverse of the supplied matrix."""
+        """Set the matrix components to the inverse of the supplied matrix."""
         if len(args) == 1:
             # @param matrix the matrix to invert
             # @return a reference to the instance containing the inverse of
@@ -477,8 +469,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             return self
 
     def setToInvorted(self, matrix):
-        """Sets the instance to the inverse of the supplied matrix, assuming
-        this matrix has columns that are orthogonal.
+        """Set the instance to the inverse of the supplied orthogonal matrix.
 
         @param matrix a matrix to invert, with orthogonal columns.
         @return a reference to the instance for convenience
@@ -490,8 +481,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     @staticmethod
     def mxmt(*args):
-        """Compute the product of a matrix with the transpose of another
-        matrix."""
+        """Compute the product of a matrix with the transpose of another."""
         if len(args) == 2:
             # @param a the left hand matrix
             # @param b the right hand matrix to transpose, then multiply
@@ -518,8 +508,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     @staticmethod
     def mtxm(*args):
-        """Compute the product of a transpose of a matrix with another
-        matrix."""
+        """Compute the product of a transpose of a matrix with another."""
         if len(args) == 2:
             # @param a the left hand matrix to transpose, then multiply
             # @param b the right hand matrix
@@ -575,8 +564,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     @staticmethod
     def mxmtadd(*args):
-        """Compute the sum of a pair of matrices multipled with another matrix
-        transposed"""
+        """Compute sum of 2 matrices multipled with a matrix transposed."""
         if len(args) == 4:
             # @param a left hand matrix in the first product
             # @param b right hand matrix to transpose in the first product
@@ -613,8 +601,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     @staticmethod
     def mtxmadd(*args):
-        """Compute the sum of a pair of matrix transposes multipled with
-        another matrix"""
+        """Compute sum of 2 matrix transposes multipled with a matrix."""
         if len(args) == 4:
             # @param a left hand matrix to transpose in the first product
             # @param b right hand matrix in the first product
@@ -730,7 +717,7 @@ class MatrixIJ(UnwritableMatrixIJ):
     @staticmethod
     def diagonalizeSymmetricMatrix(symmetricMatrix, eigenvalueBuffer,
                                    eigenvectorBuffer):
-        """Diagonalizes a symmetric matrix.
+        """Diagonalize a symmetric matrix.
 
         NOTE: DOES NOT DIAGONALIZE symmetricMatrix. IT RETURNS THE
         EIGENVECTOR MATRIX THAT WOULD DIAGONALIZE IT.
@@ -756,7 +743,6 @@ class MatrixIJ(UnwritableMatrixIJ):
         @throws IllegalArgumentException if symmetricMatrix is not symmetric,
         i.e. symmetricMatrix.isSymmetric() is false.
         """
-
         # THIS CODE DOES NOT CREATE A DIAGONAL MATRIX!
 
         # Is the matrix already diagonal? If so, then don't do any heavy
@@ -824,7 +810,7 @@ class MatrixIJ(UnwritableMatrixIJ):
 
     @staticmethod
     def solveQuadratic(a: float, b: float, c: float, buffer):
-        """Solves a quadratic equation of the form:
+        """Solves a quadratic equation.
 
              2
         a * x  + b * x + c = 0

@@ -1,14 +1,14 @@
-"""emmpy.crucible.core.math.vectorspace.malformedrotationexception"""
+"""Exception to use for a malformed rotation matrix."""
 
 
 class MalformedRotationException(Exception):
-    """Simple exception that indicates the specification of a rotation matrix
-    is invalid.
+    """Exception for the specification of an invalod rotation matrix.
 
     @author F.S.Turner
     """
 
     def __init__(self, *args):
+        """Build the object."""
         if len(args) == 0:
             pass
         elif len(args) == 1:

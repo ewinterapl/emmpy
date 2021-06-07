@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk"""
+"""An unwritable 3-D rotation matrix."""
 
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
@@ -14,7 +14,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
 
 
 class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
-    """A weakly immutable extension of the unwritable matrix class designed to
+    """An unwritable 3-D rotation matrix.
+
+    A weakly immutable extension of the unwritable matrix class designed to
     add rotation matrix specific functionality.
 
     Note: The constructors of this class that take arguments that may specify
@@ -44,8 +46,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
 
     @staticmethod
     def checkRotation(matrix):
-        """Method that validate supplied input content is sufficiently close
-        to a rotation matrix.
+        """Check that a matrix is a rotation matrix.
 
         @param matrix the matrix content from the parent class to validate
         @throws MalformedRotationException if either the columns of the
@@ -61,7 +62,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
             UnwritableMatrixIJK.DETERMINANT_TOLERANCE)
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Protected no argument, no operation constructor for subclasses to
             # utilize.
@@ -194,7 +195,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
                     "Matrix components do not describe a rotation.", e)
 
     def createSharpened(self):
-        """Creates a new, sharpened copy of the existing rotation matrix.
+        """Create a new, sharpened copy of the existing rotation matrix.
 
         Sharpening is a process that starts with a rotation matrix and modifies
         its contents to bring it as close to a rotation as possible given the
@@ -239,7 +240,9 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
         return result
 
     def createTranspose(self):
-        """Note: this method is overridden to return an instance of the
+        """Create a transposed copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
         unwritable rotation subclass rather than the unwritable plain matrix
         parent.
         """
@@ -248,7 +251,9 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
                                            self.ki, self.kj, self.kk)
 
     def createInverse(self, *args):
-        """Note: this method is overridden to return an instance of the
+        """Create an inverted copy of the matrix.
+
+        Note: this method is overridden to return an instance of the
         unwritable rotation subclass rather than the unwritable plain matrix
         parent.
 
@@ -263,7 +268,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
 
     @staticmethod
     def copyOf(matrix):
-        """Makes an unwritable copy of the supplied rotation matrix.
+        """Make an unwritable copy of the supplied rotation matrix.
 
         This method makes an unwritable copy only if necessary. It tries to
         avoid making a copy wherever possible.

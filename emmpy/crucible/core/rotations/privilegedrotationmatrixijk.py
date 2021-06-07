@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.rotations.privilegedrotationmatrixijk"""
+"""A rotation matrix without consistency checks."""
 
 
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
@@ -7,7 +7,9 @@ from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
 
 
 class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
-    """This extension of RotationMatrixIJK exists to allow code in this package
+    """A rotation matrix without consistency checks.
+
+    This extension of RotationMatrixIJK exists to allow code in this package
     that is constructing rotation matrices that are valid to bypass the
     checking inherent in the
     RotationMatrixIJK.setTo(double, double, double, double, double, double,
@@ -39,10 +41,10 @@ class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
     """
 
     def __init__(self):
-        """Constructor"""
-        pass
+        """Build a new object."""
 
     def setToWithoutCheck(self, *args):
+        """Set the matrix without checks."""
         if len(args) == 1:
             # RotationMatrixIJK#setTo(double[][])
             (data,) = args

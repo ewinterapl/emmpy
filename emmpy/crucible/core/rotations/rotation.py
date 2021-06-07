@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.rotations.rotation"""
+"""A minimal rotation interface."""
 
 
 from emmpy.crucible.core.rotations.unwritablerotation import (
@@ -7,13 +7,15 @@ from emmpy.crucible.core.rotations.unwritablerotation import (
 
 
 class Rotation(UnwritableRotation):
-    """Interface describing the two, minimal methods to implement a rotation.
+    """A minimal rotation interface.
+
+    Interface describing the two, minimal methods to implement a rotation.
 
     author F.S.Turner
     """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTANTIATE
         """

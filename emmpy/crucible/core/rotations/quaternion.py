@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.rotations.quaternion"""
+"""A unit-length, 3-D quaternion."""
 
 
 from math import acos, cos, sin, sqrt
@@ -14,7 +14,9 @@ from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class Quaternion(Rotation):
-    """Implementation of a rotational quaternion and the corresponding
+    """A unit-length, 3-D quaternion.
+
+    Implementation of a rotational quaternion and the corresponding
     arithmetic algorithms.
 
     Note: this is not a general implementation of a quaternion, this class is
@@ -112,7 +114,7 @@ class Quaternion(Rotation):
     """
 
     def __init__(self, *args):
-        """Constructor"""
+        """Build a new object."""
         if len(args) == 0:
             # Construct an identity quaternion.
             self.q0 = 1.0
@@ -242,8 +244,7 @@ class Quaternion(Rotation):
 
     @staticmethod
     def computeNorm(q0, q1, q2, q3):
-        """Computes the norm of four quaternion components in an overflow safe
-        way.
+        """Compute the norm of quaternion components in an overflow safe way.
 
         param q0 the scalar component
         param q1 the ith component
@@ -291,7 +292,6 @@ class Quaternion(Rotation):
         may be regarded as the rotational axis.
         return a reference to the input vector, axis for convenience.
         """
-
         # The vector components {q1, q2, q3} store the rotation axis, but have
         # been scaled by the sine of half the rotation angle. Just inject the
         # vector components into a vector and normalize to restore the unit
@@ -318,7 +318,6 @@ class Quaternion(Rotation):
         return the rotation angle, specified in radians. The angle returned is
         bounded between [0, Pi].
         """
-
         # The leading component of the quaternion is the cosine of half the
         # rotation angle. However, we need to account for the fact that a
         # quaternion and it's negative encode the same rotation. Return the
@@ -338,7 +337,6 @@ class Quaternion(Rotation):
         rotation matrix world, it is the same as an inverse or transpose.
         return a reference to the quaternion for convenience.
         """
-
         # Just negate the vector components.
         self.q1 = -self.q1
         self.q2 = -self.q2
@@ -357,6 +355,7 @@ class Quaternion(Rotation):
         return self
 
     def setTo(self, *args):
+        """Set the quaternion components."""
         if len(args) == 1:
             if isinstance(args[0], Quaternion):
                 # Copy the contents of one quaternion to another.
@@ -454,19 +453,19 @@ class Quaternion(Rotation):
                 # cc4 + s114 + s224 + s334
                 # you get four. Thus at least one of the terms is greater
                 # than 1.
-                if 1.0 <= cc4:
+                if cc4 >= 1.0:
                     c = sqrt(cc4*0.25)
                     factor = 1.0/(c*4.0)
                     s1 = (matrix.getKJ() - matrix.getJK())*factor
                     s2 = (matrix.getIK() - matrix.getKI())*factor
                     s3 = (matrix.getJI() - matrix.getIJ())*factor
-                elif 1.0 <= s114:
+                elif s114 >= 1.0:
                     s1 = sqrt(s114*0.25)
                     factor = 1.0/(s1*4.0)
                     c = (matrix.getKJ() - matrix.getJK())*factor
                     s2 = (matrix.getIJ() + matrix.getJI())*factor
                     s3 = (matrix.getIK() + matrix.getKI())*factor
-                elif 1.0 <= s224:
+                elif s224 >= 1.0:
                     s2 = sqrt(s224*0.25)
                     factor = 1.0/(s2*4.0)
                     c = (matrix.getIK() - matrix.getKI())*factor
@@ -554,7 +553,7 @@ class Quaternion(Rotation):
             raise Exception
 
     def getRotation(self, buffer):
-        """Get the rotation matrix
+        """Get the rotation matrix.
 
         If a quaternion, Q, satisfies the equality:
 
@@ -678,7 +677,7 @@ class Quaternion(Rotation):
         # Sharpen the computation by effectively converting this quaternion to
         # a unit quaternion if it is not already one.
         l2 = self.q0*self.q0 + q1s + q2s + q3s
-        if l2 != 1.0 and l2 != 0.0:
+        if l2 not in (0.0, 1.0):
             sharpen = 1.0/l2
             q01 = q01*sharpen
             q02 = q02*sharpen
@@ -702,6 +701,7 @@ class Quaternion(Rotation):
         return buffer
 
     def hashCode(self):
+        """Compute the object hash code."""
         prime = 31
         result = 1
         temp = doubleToLongBits(self.q0)
@@ -715,7 +715,7 @@ class Quaternion(Rotation):
         return result
 
     def equals(self, obj):
-        """Equality test
+        """Check for equality with another object.
 
         Note: this considers the equality of the components only in the
         comparison. It is possible that the components, while different capture
@@ -747,4 +747,5 @@ class Quaternion(Rotation):
         return True
 
     def toString(self):
+        """Convert the object to a string."""
         return "[%s %s %s %s]" % (self.q0, self.q1, self.q2, self.q3)

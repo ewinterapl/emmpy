@@ -1,4 +1,4 @@
-"""emmpy.crucible.core.rotations.axisandangle"""
+"""A rotation axis and angle."""
 
 
 from math import atan2, pi
@@ -19,7 +19,9 @@ from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class AxisAndAngle(Rotation):
-    """Implementation of a rotation axis and angle and the corresponding
+    """A rotation axis and angle.
+
+    Implementation of a rotation axis and angle and the corresponding
     arithmetic algorithms.
 
     This class can be thought of as capturing the NAIF routines RAXISA and
@@ -32,9 +34,7 @@ class AxisAndAngle(Rotation):
     """
 
     def __init__(self, *args):
-        """Constructor
-
-        """
+        """Build a new object."""
         if len(args) == 0:
             # Create the default axis and angle rotation representation, a
             # rotation of zero radians about K.
@@ -119,7 +119,7 @@ class AxisAndAngle(Rotation):
         param axis the non-zero length axis of rotation.
         throws UnsupportedOperationException if axis has length zero.
         """
-        self.axis.setTo(self.axis).unitize()
+        self.axis.setTo(axis).unitize()
 
     def setAngle(self, angle):
         """Set the rotation angle.
@@ -129,6 +129,7 @@ class AxisAndAngle(Rotation):
         self.angle = angle
 
     def setTo(self, *args):
+        """Set the axis and angle."""
         if len(args) == 1:
             if isinstance(args[0], AxisAndAngle):
                 (axisAndAngle,) = args
@@ -203,6 +204,7 @@ class AxisAndAngle(Rotation):
             raise Exception
 
     def getRotation(self, buffer):
+        """Get the rotation matrix."""
         if self.angle == 0.0:
             buffer.setTo(RotationMatrixIJK.IDENTITY)
             return buffer
@@ -215,6 +217,7 @@ class AxisAndAngle(Rotation):
         return buffer
 
     def hashCode(self):
+        """Compute the object hash code."""
         prime = 31
         result = 1
         temp = doubleToLongBits(self.angle)
@@ -225,7 +228,7 @@ class AxisAndAngle(Rotation):
         return result
 
     def equals(self, obj):
-        """Equality test
+        """Check for equality with another object.
 
         Note: this considers the equality of the axis and angle only in the
         comparison. It is possible that these fields, while different capture
@@ -242,8 +245,7 @@ class AxisAndAngle(Rotation):
         if not isinstance(obj, AxisAndAngle):
             return False
         other = obj
-        if (doubleToLongBits(self.angle) !=
-            doubleToLongBits(other.angle)):
+        if (doubleToLongBits(self.angle) != doubleToLongBits(other.angle)):
             return False
         if self.axis is None:
             if other.axis is not None:
@@ -253,4 +255,5 @@ class AxisAndAngle(Rotation):
         return True
 
     def toString(self):
+        """Convert the object to a string."""
         return "[%s, %s]" % (self.angle, self.axis.toString())

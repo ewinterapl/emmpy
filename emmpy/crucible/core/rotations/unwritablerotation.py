@@ -1,14 +1,16 @@
-"""emmpy.crucible.core.rotations.unwritablerotation"""
+"""An unwritable rotation interface class."""
 
 
 class UnwritableRotation:
-    """Interface encapsulating rotation matrix retrieval from another class.
+    """An unwritable rotation interface class.
+
+    Interface encapsulating rotation matrix retrieval from another class.
 
     author F.S.Turner
     """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTANTIATE
         """

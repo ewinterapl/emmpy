@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.deformation.basisvectorfielddeformation"""
+"""Deformation for a basis vector field."""
 
 
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
@@ -14,15 +14,15 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 
 
 class BasisVectorFieldDeformation(BasisVectorField):
-    """BasisVectorFieldDeformation"""
+    """Deformation for a basis vector field."""
 
     def __init__(self, originalField, coordDeformation):
-        """Constructor"""
+        """Build a new object."""
         self.originalField = originalField
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate, buffer):
-        """evaluate"""
+        """Evaluate the basis vector field deformation."""
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         trans = VectorFieldDeformation.computeMatrix(deformed)   # STATIC?
         bField = self.originalField.evaluate(deformed.getF())
@@ -30,7 +30,7 @@ class BasisVectorFieldDeformation(BasisVectorField):
         return buffer.setTo(v.getI(), v.getJ(), v.getK())
 
     def evaluateExpansion(self, originalCoordinate):
-        """evaluateExpansion"""
+        """Evaluate the expansion at the specified location."""
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         trans = VectorFieldDeformation.computeMatrix(deformed)
         bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
@@ -45,4 +45,5 @@ class BasisVectorFieldDeformation(BasisVectorField):
         return bFieldExpansionDeformed
 
     def getNumberOfBasisFunctions(self):
+        """Return the number of basis functions."""
         return self.originalField.getNumberOfBasisFunctions()

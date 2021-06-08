@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.deformation.vectorfielddeformation"""
+"""Deformation for a vector field."""
 
 # import crucible.core.math.vectorfields.DifferentiableVectorField;
 # import crucible.core.math.vectorfields.VectorField;
@@ -12,13 +12,13 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class VectorFieldDeformation(VectorField):
-    """TODO please comment
+    """Deformation for a vector field.
 
     author G.K.Stephens
     """
 
     def __init__(self, originalField, coordDeformation):
-        """Constructor.
+        """Build a new object.
 
         param originalField
         param coordDeformation
@@ -27,8 +27,7 @@ class VectorFieldDeformation(VectorField):
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate, buffer):
-        """evaluate"""
-
+        """Evaluate the field."""
         # compute the derivatives at the given location
         deformed = self.coordDeformation.differentiate(originalCoordinate)
 
@@ -45,7 +44,7 @@ class VectorFieldDeformation(VectorField):
 
     @staticmethod
     def computeMatrix(deformed):
-        """computeMatrix
+        """Compute the matrix.
 
         param deformed
         return

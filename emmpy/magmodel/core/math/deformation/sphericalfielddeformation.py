@@ -1,13 +1,10 @@
-"""emmpy.magmodel.core.math.deformation.sphericalfielddeformation"""
+"""Deformation for a spherical field."""
 
 
 from math import sin
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
-from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
-    Results
-)
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
@@ -15,10 +12,13 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class SphericalFieldDeformation(SphericalVectorField):
-    """author G.K.Stephens"""
+    """Deformation for a spherical field.
+
+    author G.K.Stephens
+    """
 
     def __init__(self, originalField, coordDeformation):
-        """Constructor
+        """Build a new object.
 
         param SphericalVectorField originalField
         param DifferentiableSphericalVectorField coordDeformation
@@ -29,12 +29,11 @@ class SphericalFieldDeformation(SphericalVectorField):
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate):
-        """evaluate
+        """Evaluate the field.
 
         param SphericalVector originalCoordinate
         return SphericalVector
         """
-
         # compute the derivatives at the given location
         # Results deformed
         deformed = self.coordDeformation.differentiate(originalCoordinate)
@@ -51,20 +50,19 @@ class SphericalFieldDeformation(SphericalVectorField):
         # VectorIJK v
         v = trans.mxv(
             VectorIJK(bField.getRadius(), bField.getColatitude(),
-            bField.getLongitude())
+                      bField.getLongitude())
         )
 
         return SphericalVector(v.getI(), v.getJ(), v.getK())
 
     @staticmethod
     def computeMatrix(deformed, originalCoordinate):
-        """computeMatrix
+        """Compute the deformation matrix.
 
         param Results deformed
         param SphericalVector originalCoordinate
         return MatrixIJK
         """
-
         # float r, theta, hr, ht, hp, hrDef, htDef, hpDef
         r = originalCoordinate.getRadius()
         theta = originalCoordinate.getColatitude()

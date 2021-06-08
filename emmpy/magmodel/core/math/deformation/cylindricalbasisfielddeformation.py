@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation"""
+"""Deformation of a cylindrical basis vector field."""
 
 
 # import com.google.common.collect.ImmutableList;
@@ -17,13 +17,16 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
 
 
 class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
-    """author G.K.Stephens"""
+    """Deformation of a cylindrical basis vector field.
+
+    author G.K.Stephens
+    """
 
     # private final CylindricalBasisVectorField originalField;
     # private final DifferentiableCylindricalVectorField coordDeformation;
 
     def __init__(self, originalField, coordDeformation):
-        """Constructor.
+        """Build a new object.
 
         param CylindricalBasisVectorField originalField
         param DifferentiableCylindricalVectorField coordDeformation
@@ -32,12 +35,11 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
         self.coordDeformation = coordDeformation
 
     def evaluateExpansion(self, originalCoordinate):
-        """evaluateExpansion
+        """Evaluate the expansion.
 
         param CylindricalVector originalCoordinate
         return [CylindricalVector]
         """
-
         # DifferentiableCylindricalVectorField.Results deformed
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         # UnwritableMatrixIJK trans

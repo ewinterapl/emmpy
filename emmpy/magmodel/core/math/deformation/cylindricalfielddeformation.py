@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.deformation.cylindricalfielddeformation"""
+"""Deformation for a cylindrical field."""
 
 
 import sys
@@ -6,19 +6,18 @@ from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
 )
-from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
-    Results
-)
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
 class CylindricalFieldDeformation(CylindricalVectorField):
-    """author G.K.Stephens"""
+    """Deformation for a cylindrical field.
+
+    author G.K.Stephens
+    """
 
     def __init__(self, originalField, coordDeformation):
-        """Constructor
+        """Build a new object.
 
         param CylindricalVectorField originalField
         param DifferentiableCylindricalVectorField coordDeformation
@@ -27,12 +26,11 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate):
-        """evaluate
+        """Evaluate the field.
 
         param CylindricalVector originalCoordinate
         return CylindricalVector
         """
-
         # compute the derivatives at the given location
         # DifferentiableCylindricalVectorField.Results deformed
         deformed = self.coordDeformation.differentiate(originalCoordinate)
@@ -56,13 +54,12 @@ class CylindricalFieldDeformation(CylindricalVectorField):
 
     @staticmethod
     def computeMatrix(deformed, originalCoordinate):
-        """computeMatrix
+        """Compute the deformation matrix.
 
         param DifferentiableCylindricalVectorField.Results deformed
         param CylindricalVector originalCoordinate
         return MatrixIJK
         """
-
         # float r, hr, hp, hz, hrDef, hpDef, hzDef
         r = originalCoordinate.getCylindricalRadius()
         hr = 1.0

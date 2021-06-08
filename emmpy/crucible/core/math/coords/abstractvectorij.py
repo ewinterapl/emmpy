@@ -52,32 +52,3 @@ class AbstractVectorIJ:
     def getVectorIJ(self):
         """Return the IJ coordinate."""
         return self.ijCoordinate
-
-    # def hashCode(self):
-    #     """Compute the object hash code."""
-    #     prime = 31
-    #     result = 1
-    #     result = prime*result
-    #     if self.ijCoordinate:
-    #         result += self.ijCoordinate.hashCode()
-    #     return result
-
-    # def equals(self, obj):
-    #     """Check the object for equality with another object."""
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if self.__class__ != obj.__class__:
-    #         return False
-    #     other = obj
-    #     if self.ijCoordinate is None:
-    #         if other.ijCoordinate is not None:
-    #             return False
-    #     elif not self.ijCoordinate.equals(other.ijCoordinate):
-    #         return False
-    #     return True
-
-    # def toString(self):
-    #     """Convert the object to a string."""
-    #     raise Exception

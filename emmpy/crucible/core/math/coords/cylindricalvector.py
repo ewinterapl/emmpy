@@ -26,15 +26,6 @@ class CylindricalVector(AbstractVector):
         """Return the height (often denoted as z)."""
         return AbstractVector.getK(self)
 
-    # def toString(self):
-    #     """Convert the object to a string."""
-    #     return (
-    #         "CylindricalVector [cylindricalRadius: %s, longitude: %s, "
-    #         "height: %s]"
-    #         % (self.getCylindricalRadius(), self.getLongitude(),
-    #            self.getHeight())
-    #     )
-
 
 # The ZERO vector.
 ZERO = CylindricalVector(0, 0, 0)

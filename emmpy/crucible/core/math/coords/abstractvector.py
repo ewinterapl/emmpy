@@ -58,38 +58,3 @@ class AbstractVector:
         This method should never have its visibility upgraded.
         """
         return self.ijkCoordinate
-
-    # def hashCode(self) -> int:
-    #     """Compute the object hash code.
-
-    #     @see java.lang.Object#hashCode()
-    #     """
-    #     prime = 31
-    #     result = 1
-    #     result = prime*result
-    #     if self.ijkCoordinate:
-    #         result += self.ijkCoordinate.hashCode()
-    #     return result
-
-    # def equals(self, obj):
-    #     """Check the object for equality with another object.
-
-    #     @see java.lang.Object#equals(java.lang.Object)
-    #     """
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if not isinstance(self, obj.__class__):
-    #         return False
-    #     other = obj
-    #     if self.ijkCoordinate is None:
-    #         if other.ijkCoordinate is not None:
-    #             return False
-    #     elif not self.ijkCoordinate.equals(other.ijkCoordinate):
-    #         return False
-    #     return True
-
-    # def toString(self):
-    #     """Convert the object to a string."""
-    #     raise Exception

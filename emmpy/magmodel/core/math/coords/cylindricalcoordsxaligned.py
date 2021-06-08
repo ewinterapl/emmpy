@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned"""
+"""Cylindrical coordinates aligned along the X-axis."""
 
 
 from math import atan2, cos, sin, sqrt
@@ -41,11 +41,13 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
 #         # convert the field to cylindrical
 #         return self.ccxa.convertFieldValue(locCart, fieldCart)
 
+
 class CylindricalCoordsXAligned:
-    """CylindricalCoordsXAligned"""
+    """Cylindrical coordinates aligned along the X-axis."""
 
     @staticmethod
     def convert(*args):
+        """Convert between Cartesian and X-aligned cylindrical coordinates."""
         if isinstance(args[0], UnwritableVectorIJK):
             (cartesian,) = args
             # Converts a Cartesian coordinate to cylindrical coordinate
@@ -90,6 +92,7 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertFieldValue(*args):
+        """Convert field values between Cartesian and X-aligned cylindrical."""
         if (isinstance(args[0], UnwritableVectorIJK) and
             isinstance(args[1], UnwritableVectorIJK)):
             # Converts a Cartesian vector field value to a cylindrical vector
@@ -134,6 +137,7 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertBasisField(*args):
+        """Convert a basis field between Cartesian and X-aligned cylindrical."""
         if isinstance(args[0], CylindricalBasisVectorField):
             (cylField,) = args
             # Converts a CylindricalBasisVectorField to a Cartesian
@@ -141,6 +145,7 @@ class CylindricalCoordsXAligned:
             # param cylField a CylindricalBasisVectorField
             # return a newly constructed Cartesian BasisVectorField
             bvf = BasisVectorField()
+
             def my_evaluateExpansion(location):
                 # param UnwritableVectorIJK location
                 # return ImmutableList<UnwritableVectorIJK>
@@ -152,7 +157,7 @@ class CylindricalCoordsXAligned:
                         CylindricalCoordsXAligned.convertFieldValue(
                             locCyl, fieldCyl
                         )
-                )
+                    )
                 return fieldExpansion
             bvf.evaluateExpansion = my_evaluateExpansion
             bvf.getNumberOfBasisFunctions = (
@@ -161,7 +166,8 @@ class CylindricalCoordsXAligned:
             return bvf
         elif isinstance(args[0], BasisVectorField):
             (cartesian,) = args
-            # Converts a Cartesian BasisVectorField to a CylindricalBasisVectorField
+            # Converts a Cartesian BasisVectorField to a
+            # CylindricalBasisVectorField
             # param cartesian a Cartesian BasisVectorField
             # return a newly constructed CylindricalBasisVectorField
             cylbvf = CylindricalBasisVectorField()
@@ -200,7 +206,6 @@ class CylindricalCoordsXAligned:
                             locCart, fieldCart))
                 return fieldCylExpansion
             cylbvf.evaluateExpansion = my_evaluateExpansion
-
             cylbvf.getNumberOfBasisFunctions = (
                 lambda: cartesian.getNumberOfBasisFunctions()
             )
@@ -210,7 +215,7 @@ class CylindricalCoordsXAligned:
 
     @staticmethod
     def convertField(cartesian):
-        """Converts a Cartesian VectorField to a CylindricalVectorField
+        """Convert a Cartesian VectorField to a CylindricalVectorField.
 
         param cartesian a Cartesian VectorField
         return a newly constructed CylindricalVectorField
@@ -219,6 +224,7 @@ class CylindricalCoordsXAligned:
         # CylindricalVectorField has a default method that evaluates the
         # Cartesian field, we must override that method here because otherwise
         # the conversion will go through the standard +Z  aligned conversion
+
         def my_evaluate(*args):
             if len(args) == 1:
                 (location,) = args
@@ -238,7 +244,7 @@ class CylindricalCoordsXAligned:
         return cvf
 
     def evaluateExpansion(self, location):
-        pass
+        """Evaluate the expansion."""
         #       @Override
         #       public ImmutableList<CylindricalVector> evaluateExpansion(CylindricalVector location) {
 
@@ -275,7 +281,7 @@ class CylindricalCoordsXAligned:
         #       }
 
     def getNumberOfBasisFunctions(self):
-        pass
+        """Return the number of basis functions."""
         #       @Override
         #       public int getNumberOfBasisFunctions() {
         #         return cartesian.getNumberOfBasisFunctions();
@@ -294,9 +300,8 @@ class CylindricalCoordsXAligned:
 
         #   }
 
-
     def evaluate(self, location):
-        pass
+        """Evaluate the field at a location."""
         #       @Override
         #       public CylindricalVector evaluate(CylindricalVector location) {
 

@@ -70,39 +70,6 @@ class TestBuilder(unittest.TestCase):
         )
         self.assertFalse(fco.isShielded())
 
-    def test_toString(self):
-        # UNABLE TO TEST SINCE SOME SUBOBJECTS DO NOT HAVE toString().
-        pass
-        # fco = FacConfigurationOptions(
-        #     0.1, FacRegion.REGION_1, 2, TrigParity.EVEN, 4.4, 5.5, True,False
-        # )
-        # self.assertEqual(
-        #     fco.toString(),
-        #     "FacConfigurationOptions [amplitudeScaling=0.1, region=1,mode=2,"
-        #     " trigParity=3, theta0=4, deltaTheta=5.0, smoothed=True, "
-        #     "shielded=False]"
-        # )
-
-    def test_hashCode(self):
-        fco = FacConfigurationOptions(
-            0.1, FacRegion.REGION_1, 2, TrigParity.EVEN, 4.4, 5.5, True, False
-        )
-        # TEMPORARY - NEED trigParity.hashCode()
-        self.assertEqual(fco.hashCode(), 951262734975931584)
-
-    def test_equals(self):
-        fco1 = FacConfigurationOptions(
-            0.1, FacRegion.REGION_1, 2, TrigParity.EVEN, 4.4, 5.5, True, False
-        )
-        fco2 = FacConfigurationOptions(
-            0.1, FacRegion.REGION_1, 2, TrigParity.EVEN, 4.4, 5.5, True, False
-        )
-        fco3 = FacConfigurationOptions(
-            0.2, FacRegion.REGION_1, 2, TrigParity.EVEN, 4.4, 5.5, True, False
-        )
-        self.assertTrue(fco1.equals(fco2))
-        self.assertFalse(fco1.equals(fco3))
-
 
 if __name__ == '__main__':
     unittest.main()

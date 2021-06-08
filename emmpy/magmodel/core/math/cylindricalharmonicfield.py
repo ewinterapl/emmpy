@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.cylindricalharmonicfield"""
+"""A harmonic field in cylindrical coordinates."""
 
 
 from math import cosh, sinh
@@ -15,7 +15,9 @@ from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 
 
 class CylindricalHarmonicField(BasisVectorField):
-    """A vector field that is associated with the scalar potential solution of
+    """A harmonic field in cylindrical coordinates.
+
+    A vector field that is associated with the scalar potential solution of
     Laplace's equation in Cylindrical coordinates.
 
     Uses a Fourier-Bessel expansion representation, e.q. from TS07 eq. 20:
@@ -41,7 +43,7 @@ class CylindricalHarmonicField(BasisVectorField):
 
     def __init__(self, coefficientsExpansion, waveNumberExpansion, bessel,
                  trigParity):
-        """Constructs a shielding Fourier-Bessel expansion of the form:
+        """Construct a shielding Fourier-Bessel expansion.
 
         <p>
         <img src="doc-files/cylindricalHarmonicSol2.png" />
@@ -70,7 +72,7 @@ class CylindricalHarmonicField(BasisVectorField):
         self.trigParity = trigParity
 
     def evaluateExpansion2D(self, location):
-        """Returns the full expansion results.
+        """Return the full expansion results.
 
         param UnwritableVectorIJK location
         return Expansion2D<UnwritableVectorIJK>
@@ -149,39 +151,39 @@ class CylindricalHarmonicField(BasisVectorField):
         )
 
     def getFirstAzimuthalExpansionNumber(self):
-        """return int"""
+        """Return the first azimuthal expansion number."""
         return self.firstM
 
     def getLastAzimuthalExpansionNumber(self):
-        """return int"""
+        """Return the last azimuthal expansion number."""
         return self.lastM
 
     def getFirstRadialExpansionNumber(self):
-        """return int"""
+        """Return the first radial expansion number."""
         return self.firstN
 
     def getLastRadialExpansionNumber(self):
-        """return int"""
+        """Return the last radial expansion number."""
         return self.lastN
 
     def getTrigParity(self):
-        """return TrigParity"""
+        """Return the trig parity."""
         return self.trigParity
 
     def getBessel(self):
-        """return BesselFunctionEvaluator"""
+        """Return the Bessel function evaluator."""
         return self.bessel
 
     def getCoefficients(self):
-        """return CoefficientExpansion2D"""
+        """Return the array of coefficients."""
         return self.coefficientsExpansion
 
     def getWaveNumberExpansion(self):
-        """return CoefficientExpansion1D"""
+        """Return the number of wave expansions."""
         return self.waveNumberExpansion
 
     def evaluateExpansion(self, location):
-        """evaluateExpansion
+        """Evaluate the expansion at a location.
 
         param UnwritableVectorIJK location
         return ImmutableList<UnwritableVectorIJK>
@@ -194,7 +196,7 @@ class CylindricalHarmonicField(BasisVectorField):
         return functions
 
     def getNumberOfBasisFunctions(self):
-        """return int"""
+        """Return the number of basis functions."""
         return (
             self.coefficientsExpansion.iSize() *
             self.coefficientsExpansion.jSize()

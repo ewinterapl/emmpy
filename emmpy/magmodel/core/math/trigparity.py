@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.trigparity"""
+"""Trigonometric parity (sine and cosine)."""
 
 
 from math import cos, sin
@@ -9,7 +9,9 @@ from emmpy.crucible.core.math.functions.differentiableunivariatefunction import 
 
 
 class TrigParity(DifferentiableUnivariateFunction):
-    """A representation of the odd and even parity that exists between the sine
+    """Trigonometric parity (sine and cosine).
+
+    A representation of the odd and even parity that exists between the sine
     and cosine function. This type of parity often arises in Fourier series and
     boundary value problems. Solutions to boundary problems are often linear
     combinations of sines and cosines.
@@ -19,7 +21,6 @@ class TrigParity(DifferentiableUnivariateFunction):
 
     author G.K.Stephens
     """
-    pass
 
     # the even trigonometric parity, the cosine function
     EVEN = DifferentiableUnivariateFunction()
@@ -32,11 +33,13 @@ class TrigParity(DifferentiableUnivariateFunction):
     ODD.differentiate = lambda t: cos(t)
 
     def __init__(self, function):
-        """Constructor"""
+        """Build a new object."""
         self.function = function
 
     def evaluate(self, t):
+        """Evaluate the function."""
         return self.function.evaluate(t)
 
     def differentiate(self, t):
+        """Evaluate the function derivative."""
         return self.function.differentiate(t)

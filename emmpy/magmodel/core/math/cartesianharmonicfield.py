@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.cartesianharmonicfield"""
+"""A harmonic field in Cartesian coordinates."""
 
 
 from math import exp, sqrt
@@ -11,7 +11,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 
 
 class CartesianHarmonicField(BasisVectorField):
-    """A vector field that is associated with the scalar potential solution of
+    """A harmonic field in Cartesian coordinates.
+
+    A vector field that is associated with the scalar potential solution of
     Laplace's equation in Cartesian coordinates, where the potential
     exponentially decays as X goes to negative infinity, and the Y and Z
     coordinates are functions of sines or cosines.
@@ -30,7 +32,7 @@ class CartesianHarmonicField(BasisVectorField):
 
     def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
                  trigParityK):
-        """Constructor
+        """Build a new object.
 
         param pkCoeffs an expansion containing the nonlinear set of
         coefficients p_k
@@ -54,6 +56,7 @@ class CartesianHarmonicField(BasisVectorField):
         self.lastK = aikCoeffs.getJUpperBoundIndex()
 
     def evaluate(self, location, buffer):
+        """Evaluate the field."""
         x = location.getI()
         y = location.getJ()
         z = location.getK()
@@ -81,7 +84,7 @@ class CartesianHarmonicField(BasisVectorField):
         return buffer.setTo(-bx, -by, -bz)
 
     def evaluateExpansion2D(self, location):
-        """Returns the full expansion results."""
+        """Return the full expansion results."""
         x = location.getI()
         y = location.getJ()
         z = location.getK()
@@ -111,18 +114,23 @@ class CartesianHarmonicField(BasisVectorField):
                                             self.firstK)
 
     def getFistIexpansionNumber(self):
+        """Get the first dimension lowest index."""
         return self.firstI
 
     def getLastIexpansionNumber(self):
+        """Get the first dimension highest index."""
         return self.lastI
 
     def getFistKexpansionNumber(self):
+        """Get the second dimension first index."""
         return self.firstK
 
     def getLastKexpansionNumber(self):
+        """Get the second dimension last index."""
         return self.lastK
 
     def evaluateExpansion(self, location):
+        """Evaluate the expansion at a location."""
         functions = []
         expansions = self.evaluateExpansion2D(location)
         for i in range(self.firstI, self.lastI + 1):
@@ -131,4 +139,5 @@ class CartesianHarmonicField(BasisVectorField):
         return functions
 
     def getNumberOfBasisFunctions(self):
+        """Return the number of basis functions."""
         return self.aikCoeffs.iSize()*self.aikCoeffs.jSize()

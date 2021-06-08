@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield"""
+"""Linear combination of perpendicular and parallel Cartesian harmonic fields."""
 
 
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
@@ -23,7 +23,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
 
 
 class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
-    """Represents the linear combination of a perpendicular and parallel
+    """Linear combination of perpendicular and parallel Cartesian fields.
+
+    Represents the linear combination of a perpendicular and parallel
     Cartesian harmonic vector field.
 
     This is often useful because a VectorField can be decomposed into the sum
@@ -38,8 +40,8 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     """
 
     def __init__(self, perpendicularField, parallelField):
-        """Constructor
-        
+        """Build a new object.
+
         param BasisVectorField perpendicularField
         param BasisVectorField parallelField
         """
@@ -75,8 +77,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         trigParityI, perpendicularTiltAngle, p, r, perpCoeffs,
         parallelTiltAngle, q, s, parrCoeffs
     ):
-        """Creates a PerpendicularAndParallelCartesianHarmonicField where each
-        field is rotated by an arbitrary angle about the y-axis
+        """Create a field rotated about the y-axis.
 
         Described in detail in the appendix of Tsyganenko [1998].
 
@@ -101,7 +102,6 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         return a newly constructed
         PerpendicularAndParallelCartesianHarmonicField
         """
-
         # construct the unrotated fields
         # BasisVectorField perpField, paraField
         perpField = CartesianHarmonicField(
@@ -137,8 +137,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         trigParityI, perpendicularTiltAngle, p,
         r, perpCoeffs, parallelTiltAngle, q, s, parrCoeffs
     ):
-        """Creates a PerpendicularAndParallelCartesianHarmonicField where each
-        field is rotated by an arbitrary angle about the y-axis
+        """Create a field rotated by an arbitrary angle about the y-axis.
 
         Described in detail in the appendix of Tsyganenko [1998].
 
@@ -163,7 +162,6 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         return a newly constructed
         PerpendicularAndParallelCartesianHarmonicField
         """
-
         # construct the unrotated fields
         # BasisVectorField perpField, paraField
         perpField = AlternateCartesianHarmonicField(
@@ -195,7 +193,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         return papchf
 
     def evaluate(self, location, buffer):
-        """evaluate
+        """Evaluate the field.
 
         param UnwritableVectorIJK location
         param VectorIJK buffer
@@ -208,6 +206,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         return buffer
 
     def evaluateExpansion(self, location):
+        """Evaluate the expansion."""
         perpFields = self.perpendicularField.evaluateExpansion(location)
         parFields = self.parallelField.evaluateExpansion(location)
         expansions = []

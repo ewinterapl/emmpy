@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.alternatecartesianharmonicfield"""
+"""A specialized version of a Cartesian harmonic field."""
 
 
 from math import exp, sqrt
@@ -11,7 +11,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 
 
 class AlternateCartesianHarmonicField(BasisVectorField):
-    """This class is very similar to CartesianHarmonicField which represents
+    """A specialized version of a Cartesian harmonic field.
+
+    This class is very similar to CartesianHarmonicField which represents
     scalar potential solution of Laplace's equation in Cartesian coordinate.
 
     The difference is that the last K expansion is the 'derivative' term of the
@@ -34,7 +36,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
 
     def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
                  trigParityK):
-        """Constructor"""
+        """Build a new object."""
         self.piCoeffs = piCoeffs
         self.pkCoeffs = pkCoeffs
         self.aikCoeffs = aikCoeffs
@@ -80,7 +82,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
     #     return buffer.setTo(-bx, -by, -bz)
 
     def evaluateExpansion2D(self, location):
-        """Returns the full expansion results."""
+        """Return the full expansion results."""
         x = location.getI()
         y = location.getJ()
         z = location.getK()
@@ -132,6 +134,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
     #     return self.lastK
 
     def evaluateExpansion(self, location):
+        """Evaluate the expansion."""
         functions = []
         expansions = self.evaluateExpansion2D(location)
         for i in range(self.firstI, self.lastI + 1):

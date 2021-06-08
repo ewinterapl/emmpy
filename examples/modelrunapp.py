@@ -66,7 +66,7 @@ def runThinSheet():
 
     # evaluate the magnetic field
     bVect = model.evaluate(pos)
-    print(bVect.toString())
+    print(bVect)
 
     print("Ending runThinSheet()")
 
@@ -108,7 +108,7 @@ def runTs07D():
     # evaluate the magnetic field
     # Returns an UnwritableVectorIJK.
     bVect = model.evaluate(pos)
-    print(bVect.toString())
+    print(bVect)
 
     print("Ending runTs07D()")
 

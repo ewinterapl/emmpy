@@ -4,9 +4,6 @@
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
-    UnwritableMatrixIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
     ArrayExpansion2D

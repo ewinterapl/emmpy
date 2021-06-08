@@ -1,12 +1,14 @@
-"""emmpy.magmodel.core.math.expansions.arrayexpansion1d"""
+"""A 1-D array of expansion values."""
 
 
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 
 
 class ArrayExpansion1D(Expansion1D):
+    """A 1-D array of expansion values."""
 
     def __init__(self, array, firstRadialExpansionNumber):
+        """Build a new object."""
         self.array = array
         self.firstRadialExpansionNumber = firstRadialExpansionNumber
         self.lastRadialExpansionNumber = (
@@ -14,15 +16,19 @@ class ArrayExpansion1D(Expansion1D):
         )
 
     def getLowerBoundIndex(self):
+        """Return the lowest index."""
         return self.firstRadialExpansionNumber
 
     def getUpperBoundIndex(self):
+        """Returnn the highest index."""
         return self.lastRadialExpansionNumber
 
     def getExpansion(self, radialExpansion):
+        """Return the specified expansion."""
         return self.array[radialExpansion - self.firstRadialExpansionNumber]
 
     def toString(self):
+        """Convert the object to a string."""
         return (
             "ArraySymmetricScalarCylindricalExpansion [array=%s"
             ", firstRadialExpansionNumber=%s, lastRadialExpansionNumber=%s]" %
@@ -31,6 +37,7 @@ class ArrayExpansion1D(Expansion1D):
         )
 
     def hashCode(self):
+        """Compute the object hash code."""
         prime = 31
         result = 1
         result = prime*result + 0  # *self.array
@@ -39,6 +46,7 @@ class ArrayExpansion1D(Expansion1D):
         return result
 
     def equals(self, obj):
+        """Check for equality with another object."""
         if self is obj:
             return True
         if obj is None:

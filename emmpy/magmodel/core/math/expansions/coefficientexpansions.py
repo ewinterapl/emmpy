@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.expansions.coefficientexpansions"""
+"""Utility functions for coefficient expansions."""
 
 
 from math import floor
@@ -18,11 +18,11 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
 
 
 class CoefficientExpansions:
+    """Utility functions for coefficient expansions."""
 
     @staticmethod
     def createExpansionFromArray(*args):
-        """Wraps an array and returns a view of the array as a
-        CoefficientExpansion1D."""
+        """Return a view of the array as a CoefficientExpansion1D."""
         if len(args) == 2:
             # param data the array that backs the CoefficientExpansion1D
             # param firstExpansionNumber the first index to be used in the
@@ -47,10 +47,10 @@ class CoefficientExpansions:
 
     @staticmethod
     def invert(p):
-        """Returns an inverted view of the supplied expansion coefficients.
+        """Return an inverted view of the supplied expansion coefficients.
 
         p[i] = 1/p[i]
-        
+
         param p the set of coefficients p<sub>i</sub> to invert
         return the inverted set of coefficients p'<sub>i</sub>
         """
@@ -63,6 +63,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def negate(a):
+        """Return a negated view of the expansion."""
         v = None
         if isinstance(a, CoefficientExpansion1D):
             v = CoefficientExpansion1D()
@@ -88,6 +89,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def createUnity(*args):
+        """Create an expansion of unit coefficients."""
         if len(args) == 2:
             (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
             # int firstRadialExpansionNumber, lastRadialExpansionNumber
@@ -117,7 +119,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def scale(a, scaleFactor):
-
+        """Scale the expansion."""
         # Create a view object to wrap the expansion.
         # Replace the getCoefficient() method with a method that always returns
         # the scaled value, as a closure.
@@ -151,7 +153,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def createConstant(*args):
-        """createConstant
+        """Create a constant expansion.
 
         @param firstRadialExpansionNumber
         @param lastRadialExpansionNumber
@@ -211,6 +213,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def add(a, b):
+        """Add 2 expansions."""
         # Make sure the expansions are compatible.
         # Create a dummy expansion of the appropriate size.
         # Create a view object to wrap the expansion.
@@ -235,8 +238,6 @@ class CoefficientExpansions:
             lastAzimuthalExpansion = a.getIUpperBoundIndex()
             firstRadialExpansion = a.getJLowerBoundIndex()
             lastRadialExpansion = a.getJUpperBoundIndex()
-            na = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
-            nr = lastRadialExpansion - firstRadialExpansion + 1
             ce2d = CoefficientExpansion2D()
             ce2d.getILowerBoundIndex = lambda: firstAzimuthalExpansion
             ce2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansion
@@ -255,7 +256,7 @@ class CoefficientExpansions:
     def createNullExpansion(
         firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
         lastRadialExpansionNumber):
-        """createNullExpansion
+        """Create an uninitialized expansion.
 
         NOTE: THE JAVA SOURCE FOR THIS METHOD IS INCORRECT, BUT REPRODUCED
         IN PYTHON BELOW.
@@ -265,7 +266,6 @@ class CoefficientExpansions:
         @param firstRadialExpansionNumber
         @return
         """
-
         # Create a dummy expansion of the appropriate size.
         nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
         na = abs(firstAzimuthalExpansionNumber)
@@ -280,7 +280,7 @@ class CoefficientExpansions:
         # Create a view object to wrap the expansion.
         v = CoefficientExpansion2D()
         v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-        v.getIUpperBoundIndex = lambda: p.firstAzimuthalExpansionNumber - 1
+        v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex() - 1
         v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
         v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
         v.iSize = lambda: p.iSize()
@@ -299,8 +299,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def convertTo1D(data, lowerBoundIndex):
-        """Converts the supplied 2D coefficient expansion by converting it to a
-        1D coefficient expansion.
+        """Convert a 2D coefficient expansion to a 1D coefficient expansion.
 
         The fast index is the second index.
 
@@ -332,8 +331,7 @@ class CoefficientExpansions:
     def convertTo2D(
         data, iLowerBoundIndex, iUpperBoundIndex, jLowerBoundIndex,
         jUpperBoundIndex):
-        """Converts the supplied 1D coefficient expansion by converting it to a
-        2D coefficient expansion.
+        """Convert a 1D coefficient expansion to a 2D coefficient expansion.
 
         The fast index is the second index.
 
@@ -346,7 +344,6 @@ class CoefficientExpansions:
         @param jLowerBoundIndex
         @return
         """
-
         # Create a 2-D wrapper for the 1-D expansion.
         v = CoefficientExpansion2D()
 
@@ -369,8 +366,7 @@ class CoefficientExpansions:
 
     @staticmethod
     def concat(a, b):
-        """Wraps two {@link CoefficientExpansion1D}s by concatenating them
-        together.
+        """Wrap 2 CoefficientExpansion1D by concatenating them.
 
         @param a
         @param b

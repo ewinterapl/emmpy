@@ -1,8 +1,10 @@
-"""emmpy.magmodel.core.math.expansions.coefficientexpansion1d"""
+"""A 1-D array of expansion coefficients."""
 
 
 class CoefficientExpansion1D:
-    """An interface representing a series expansion of coefficients (scalars
+    """A 1-D array of expansion coefficients.
+
+    An interface representing a series expansion of coefficients (scalars
     i.e. doubles), that starts at a lower bound index (L) and ends at an upper
     bound index (U).
 
@@ -13,8 +15,7 @@ class CoefficientExpansion1D:
     """
 
     def toArray(self):
-        """@return a newly constructed double array containing the elements of
-        the expansion"""
+        """Create a list containing the elements of the expansion."""
         size = self.size()
         anArray = [None]*size
         for i in range(size):
@@ -22,20 +23,20 @@ class CoefficientExpansion1D:
         return anArray
 
     def size(self):
-        """@return the number of elements of the expansion"""
+        """Return the number of elements of the expansion."""
         size = self.getUpperBoundIndex() - self.getLowerBoundIndex() + 1
         return size
 
     def getLowerBoundIndex(self):
-        """return the lower bound index of the expansion (L)"""
+        """Return the lower bound index of the expansion (L)."""
         raise Exception
 
     def getUpperBoundIndex(self):
-        """return the upper bound index of the expansion (U)"""
+        """Return the upper bound index of the expansion (U)."""
         raise Exception
 
     def getCoefficient(self, index):
-        """gets ith coefficient for the expansion T_i
+        """Return the ith coefficient for the expansion T_i.
 
         param index the index i
         return the ith coefficient for the expansion corresponding to the

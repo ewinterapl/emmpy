@@ -1,8 +1,10 @@
-"""emmpy.magmodel.core.math.expansions.expansion2d"""
+"""Interface for a 2-D expansion."""
 
 
 class Expansion2D:
-    """An interface representing an arbitrary two dimensional series
+    """Interface for a 2-D expansion.
+
+    An interface representing an arbitrary two dimensional series
     expansion, that starts at a lower bound index (L) and ends at an upper
     bound index (U), where T is any Object.
 
@@ -14,33 +16,32 @@ class Expansion2D:
     param <T> some arbitrary object that is represented in the expansion
     (common examples would include math objects like Vectors VectorIJK)
     """
-    pass
 
     def iSize(self):
-        """return the number of elements of the expansion"""
+        """Return count of elements in the 1st dimension of the expansion."""
         size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
         return size
 
     def jSize(self):
-        """return the number of elements of the expansion"""
+        """Return count of elements in the 2nd dimension of the expansion."""
         size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
         return size
 
     def getILowerBoundIndex(self):
-        """return the lower bound index of the expansion (L)"""
+        """Return the lowest index along the 1st dimension."""
         raise Exception
 
     def getIUpperBoundIndex(self):
-        """return the upper bound index of the expansion (U<sub>i</sub>)"""
+        """Return the highest index along the 1st dimension."""
         raise Exception
 
-    # def getJLowerBoundIndex(self):
-    #     """@return the lower bound index of the expansion (L<sub>j</sub>)"""
-    #     raise Exception
+    def getJLowerBoundIndex(self):
+        """@return the lower bound index of the expansion (L<sub>j</sub>)"""
+        raise Exception
 
-    # def getJUpperBoundIndex(self):
-    #     """@return the upper bound index of the expansion (U<sub>j</sub>)"""
-    #     raise Exception
+    def getJUpperBoundIndex(self):
+        """@return the upper bound index of the expansion (U<sub>j</sub>)"""
+        raise Exception
 
     # def getExpansion(self, mIndex, nIndex):
     #     """gets i-jth coefficient for the expansion T<sub>ij</sub> in &#8721;

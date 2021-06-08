@@ -1,8 +1,10 @@
-"""emmpy.magmodel.core.math.expansions.expansion1d"""
+"""Interface for a 1-D expansion."""
 
 
 class Expansion1D:
-    """An interface representing an arbitrary series expansion, that starts at
+    """Interface for a 1-D expansion.
+
+    An interface representing an arbitrary series expansion, that starts at
     a lower bound index (L) and ends at an upper bound index (U), where T is
     any Object.
 
@@ -14,7 +16,6 @@ class Expansion1D:
     param <T> some arbitrary object that is represented in the expansion
     (common examples would include math objects like Vectors VectorIJK
     """
-    pass
 
     # def size(self):
     #     """@return the number of elements of the expansion"""

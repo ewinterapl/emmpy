@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.expansions.expansion1ds"""
+"""Utility functions for 1-D expansions."""
 
 
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
@@ -16,10 +16,11 @@ from emmpy.magmodel.core.math.expansions.listexpansion1d import ListExpansion1D
 
 
 class Expansion1Ds:
+    """Utility functions for 1-D expansions."""
 
     @staticmethod
     def createFromList(aList, firstRadialExpansionNumber):
-        """createFromList
+        """Create an expansion from a list.
 
         param list aList
         param int firstRadialExpansionNumber
@@ -29,7 +30,7 @@ class Expansion1Ds:
 
     @staticmethod
     def createFromArray(array, firstRadialExpansionNumber):
-        """createFromArray
+        """Create an expansion from an array.
 
         param list array
         param int firstRadialExpansionNumber
@@ -38,22 +39,21 @@ class Expansion1Ds:
         return ArrayExpansion1D(array, firstRadialExpansionNumber)
 
     class Vectors:
-        """Vectors
+        """Internal class for vectors.
 
         author stephgk1
         """
 
         @staticmethod
         def createConstant(firstRadialExpansionNumber, lastRadialExpansionNumber,
-                        constant):
-            """createConstant
+                           constant):
+            """Create an array of constant vectors.
 
             param int firstRadialExpansionNumber
             param int lastRadialExpansionNumber
             param UnwritableVectorIJK constant
             return Expansion1D<UnwritableVectorIJK>
             """
-
             # UnwritableVectorIJK constantCopy
             constantCopy = UnwritableVectorIJK.copyOf(constant)
 
@@ -66,13 +66,12 @@ class Expansion1Ds:
 
         @staticmethod
         def add(a, b):
-            """add
+            """Add 2 1-D expansions.
 
             param Expansion1D<UnwritableVectorIJK> a
             param Expansion1D<UnwritableVectorIJK> b
             return Expansion1D<UnwritableVectorIJK>
             """
-
             # int firstExpansion, lastExpansion
             firstExpansion = a.getLowerBoundIndex()
             lastExpansion = a.getUpperBoundIndex()
@@ -103,14 +102,14 @@ class Expansion1Ds:
 
         @staticmethod
         def scale(*args):
-            """scale"""
+            """Scale a 1-D expansion."""
             if isinstance(args[1], float):
                 (a, scaleFactor) = args
                 # param Expansion1D<UnwritableVectorIJK> a
                 # param float scaleFactor
                 # return Expansion1D<UnwritableVectorIJK>
                 # Expansion1D e1d
-                e1d =  Expansion1D()
+                e1d = Expansion1D()
                 e1d.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
                 e1d.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
                 e1d.getExpansion = (
@@ -124,7 +123,7 @@ class Expansion1Ds:
                 # param Expansion1D<UnwritableVectorIJK> a
                 # param CoefficientExpansion1D scaleFactors
                 # return Expansion1D<UnwritableVectorIJK>
-                e1d =  Expansion1D()
+                e1d = Expansion1D()
                 e1d.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
                 e1d.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
 
@@ -132,7 +131,7 @@ class Expansion1Ds:
                     # float scaleFactor
                     scaleFactor = scaleFactors.getCoefficient(radialExpansion)
                     return UnwritableVectorIJK(scaleFactor,
-                                            a.getExpansion(radialExpansion))
+                                               a.getExpansion(radialExpansion))
                 e1d.getExpansion = my_getExpansion
                 return e1d
             else:
@@ -140,12 +139,11 @@ class Expansion1Ds:
 
         @staticmethod
         def computeSum(a):
-            """computeSum
+            """Compute the sum of a 1-D expansion.
 
             param Expansion1D<UnwritableVectorIJK> a
             return UnwritableVectorIJK
             """
-
             # float bx, by, bz
             bx = 0.0
             by = 0.0

@@ -1,8 +1,10 @@
-"""emmpy.magmodel.core.math.expansions.coefficientexpansion2d"""
+"""A 2-D array of expansion coefficients."""
 
 
 class CoefficientExpansion2D:
-    """An interface representing a two dimensional series expansion of
+    """A 2-D array of expansion coefficients.
+
+    An interface representing a two dimensional series expansion of
     coefficients (scalars i.e. doubles), that starts at a lower bound index
     (L) and ends at an upper bound index (U).
 
@@ -11,7 +13,6 @@ class CoefficientExpansion2D:
 
     @author G.K.Stephens
     """
-    pass
 
     # def toArray(self):
     #     """@return a newly constructed double array containing the elements of
@@ -28,33 +29,33 @@ class CoefficientExpansion2D:
     #     return anArray
 
     def iSize(self):
-        """return the number of elements of the expansion"""
+        """Return the element count in the 1st dimension of the expansion."""
         size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
         return size
 
     def jSize(self):
-        """return the number of elements of the expansion"""
+        """Return the element count in the 2nd dimension of the expansion."""
         size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
         return size
 
     def getILowerBoundIndex(self):
-        """return the lower bound index of the expansion (L_i)"""
+        """Return the lowest index of the 1st dimension of the expansion."""
         raise Exception
 
     def getIUpperBoundIndex(self):
-        """return the upper bound index of the expansion (U_i)"""
+        """Return the highest index of the 1st dimension of the expansion."""
         raise Exception
 
     def getJLowerBoundIndex(self):
-        """return the lower bound index of the expansion (L<sub>j</sub>)"""
+        """Return the lowest index of the 2nd dimension of the expansion."""
         raise Exception
 
     def getJUpperBoundIndex(self):
-        """return the upper bound index of the expansion (U<sub>j</sub>)"""
+        """Return the lowest index of the 2nd dimension of the expansion."""
         raise Exception
 
     def getCoefficient(self, iIndex, jIndex):
-        """gets i-jth coefficient for the expansion T_ij
+        """Return i-jth coefficient for the expansion T_ij.
 
         param iIndex the index i
         param jIndex the index j

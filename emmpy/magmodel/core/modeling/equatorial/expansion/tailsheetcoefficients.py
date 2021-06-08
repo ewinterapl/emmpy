@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients"""
+"""Tail sheet coefficients for an equatorial expansion."""
 
 
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
@@ -7,7 +7,9 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
 
 
 class TailSheetCoefficients:
-    """This is a container class for the coefficients used for the
+    """Tail sheet coefficients for an equatorial expansion.
+
+    This is a container class for the coefficients used for the
     ThinAsymmetricCurrentSheetBasisVectorField class.
 
     That is, this class holds the symmetric a_n^s, odd a_mn^o>, and even
@@ -18,7 +20,7 @@ class TailSheetCoefficients:
 
     def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
                  tailSheetEvenValues):
-        """Constructor"""
+        """Build a new object."""
         self.tailSheetSymmetricValues = tailSheetSymmetricValues
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
@@ -27,8 +29,7 @@ class TailSheetCoefficients:
 
     @staticmethod
     def createUnity(numAzimuthalExpansions, numRadialExpansions):
-        """Creates a TailSheetCoefficientswhere all the coefficients have been
-        set to 1"""
+        """Create a coefficient set of all 1s."""
         return TailSheetCoefficients(
             CoefficientExpansions.createUnity(1, numRadialExpansions),
             CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
@@ -39,14 +40,13 @@ class TailSheetCoefficients:
 
     @staticmethod
     def createFromArray(array, numAzimuthalExpansions, numRadialExpansions):
-        """Creates a {@link TailSheetCoefficients} from a double array.
+        """Create a TailSheetCoefficients from a double array.
 
         @param array
         @param numAzimuthalExpansions
         @param numRadialExpansions
         @retuxrn
         """
-
         sym = [None]*numRadialExpansions
         odd = []
         even = []
@@ -89,20 +89,19 @@ class TailSheetCoefficients:
             CoefficientExpansions.createExpansionFromArray(even, 1, 1))
 
     def getTailSheetSymmetricValues(self):
-        """return the symmetric coefficients a_n^s"""
+        """Return the symmetric coefficients a_n^s."""
         return self.tailSheetSymmetricValues
 
     def getTailSheetOddValues(self):
-        """return the odd coefficients a_mn^o"""
+        """Return the odd coefficients a_mn^o."""
         return self.tailSheetOddValues
 
     def getTailSheetEvenValues(self):
-        """return the even coefficients a_n^e"""
+        """Return the even coefficients a_n^e."""
         return self.tailSheetEvenValues
 
     def getAsSingleExpansion(self):
-        """return the TailSheetCoefficients expressed as a single
-        CoefficientExpansion1D expansion"""
+        """Return the coefficients as a single 1D expansion."""
         firstM = 1
         lastM = self.numAzimuthalExpansions
         firstN = 1
@@ -128,16 +127,20 @@ class TailSheetCoefficients:
         return CoefficientExpansions.createExpansionFromArray(coeffs, 1)
 
     def getNumAzimuthalExpansions(self):
+        """Return the number of azimuthal expansions."""
         return self.numAzimuthalExpansions
 
     def getNumRadialExpansions(self):
+        """Return the number of radial expansions."""
         return self.numRadialExpansions
 
     def getNumberOfExpansions(self):
+        """Return the total number of expansions."""
         return (self.numRadialExpansions +
                 2*(self.numAzimuthalExpansions*self.numRadialExpansions))
 
     def toString(self):
+        """Convert the object to a string."""
         return ("TailSheetCoefficients [tailSheetSymmetricValues=%s"
                 ", tailSheetOddValues=%s, tailSheetEvenValues=%s"
                 ", numAzimuthalExpansions=%s, numRadialExpansions=%s]" %
@@ -147,6 +150,7 @@ class TailSheetCoefficients:
                  self.numAzimuthalExpansions, self.numRadialExpansions))
 
     def hashCode(self):
+        """Compute the object hash code."""
         prime = 31
         result = 1
         result = prime*result + self.numAzimuthalExpansions
@@ -163,6 +167,7 @@ class TailSheetCoefficients:
         return result
 
     def equals(self, obj):
+        """Check for equality with another object."""
         if self is obj:
             return True
         if obj is None:

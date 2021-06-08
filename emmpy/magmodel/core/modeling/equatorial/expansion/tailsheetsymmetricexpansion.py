@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion"""
+"""Symmetric tail current sheet expansion."""
 
 
 from math import exp, sqrt
@@ -13,7 +13,9 @@ from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
 class TailSheetSymmetricExpansion(VectorField):
-    """This is the symmetric (axissymmetric) part of the expansion of the
+    """Symmetric tail current sheet expansion.
+
+    This is the symmetric (axisymmetric) part of the expansion of the
     solution of the magnetic field from a thin current sheet along the z=0
     plane, from Tsyganenko and Sitnov 2007, eq. 15.
 
@@ -23,7 +25,7 @@ class TailSheetSymmetricExpansion(VectorField):
     """
 
     def __init__(self, waveNumber, currentSheetHalfThickness, bessel):
-        """Constructor
+        """Build a new object.
 
         param waveNumber the wave number of this expansion
         param currentSheetHalfThickness a 2D scalar field representing the
@@ -35,6 +37,7 @@ class TailSheetSymmetricExpansion(VectorField):
         self.bessel = bessel
 
     def evaluate(self, *args):
+        """Evaluate the expansion."""
         if len(args) == 1:
             (location,) = args
             buffer = VectorIJK()
@@ -50,8 +53,10 @@ class TailSheetSymmetricExpansion(VectorField):
             thick = self.currentSheetHalfThickness.evaluate(locationIJ)
 
             # now get the current sheet half thickness derivatives
-            dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
-            dThickdy = self.currentSheetHalfThickness.differentiateFDj(locationIJ)
+            dThickdx = self.currentSheetHalfThickness.differentiateFDi(
+                locationIJ)
+            dThickdy = self.currentSheetHalfThickness.differentiateFDj(
+                locationIJ)
 
             # convert to polar
             rho = sqrt(x*x + y*y)
@@ -68,8 +73,8 @@ class TailSheetSymmetricExpansion(VectorField):
             kn = self.waveNumber
 
             # evaluate the Bessel function
-            j0 = sps.j0(kn*rho)
-            j1 = sps.j1(kn*rho)
+            j0 = sps.jv(0, kn*rho)
+            j1 = sps.jv(1, kn*rho)
 
             ex = exp(-kn*zDist)
             bx = kn*z*j1*cosPhi*ex/zDist

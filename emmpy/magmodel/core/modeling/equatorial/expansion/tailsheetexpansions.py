@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions"""
+"""Expansions for a thin current sheet."""
 
 
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
@@ -9,7 +9,9 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class TailSheetExpansions:
-    """A container for the Basis functions expansion of a thin current sheet,
+    """Expansions for a thin current sheet.
+
+    A container for the Basis functions expansion of a thin current sheet,
     i.e. it represents the individual basis functions in the following
     summation:
 
@@ -18,6 +20,7 @@ class TailSheetExpansions:
 
     def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
                  tailSheetEvenValues):
+        """Build a new object."""
         self.tailSheetSymmetricValues = tailSheetSymmetricValues
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
@@ -25,12 +28,15 @@ class TailSheetExpansions:
         self.numRadialExpansions = tailSheetOddValues.jSize()
 
     def getTailSheetSymmetricValues(self):
+        """Return the symmetric expansion values."""
         return self.tailSheetSymmetricValues
 
     def getTailSheetOddValues(self):
+        """Return the odd expansion values."""
         return self.tailSheetOddValues
 
     def getTailSheetEvenValues(self):
+        """Return the even expansion values."""
         return self.tailSheetEvenValues
 
     # def getAsTailSheetExpansions(
@@ -84,6 +90,7 @@ class TailSheetExpansions:
     #     )
 
     def getExpansionsAsList(self):
+        """Return the basis functions in a list."""
         basisFunctions = []
 
         # n is the radial expansion number
@@ -111,6 +118,7 @@ class TailSheetExpansions:
         return basisFunctions
 
     def sum(self):
+        """Compute the sum of the expansion."""
         bxSum = 0.0
         bySum = 0.0
         bzSum = 0.0

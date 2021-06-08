@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield"""
+"""Basis vector field for a thin asymmetric current sheet."""
 
 
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
@@ -6,9 +6,6 @@ from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
-)
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
@@ -26,7 +23,9 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansi
 
 
 class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
-    """This module described the tail fields as stated in Tsyganenko and Sitnov
+    """Basis vector field for a thin asymmetric current sheet.
+
+    This module described the tail fields as stated in Tsyganenko and Sitnov
     2007
 
     "Magnetospheric configurations from a high-resolution data-based magnetic
@@ -39,6 +38,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     """
 
     def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
+        """Build a new object."""
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
         self.numRadialExpansions = coeffs.getNumRadialExpansions()
@@ -51,7 +51,9 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         tailLength, currentSheetHalfThickness, numAzimuthalExpansions,
         numRadialExpansions, bessel
     ):
-        """Creates a ThinAsymmetricCurrentSheetBasisVectorField where all
+        """Create a field where all coefficients are unity.
+
+        Creates a ThinAsymmetricCurrentSheetBasisVectorField where all
         the coefficients have been set to 1.
 
         param tailLength
@@ -68,15 +70,16 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             tailLength, currentSheetHalfThickness, coeffs, bessel)
 
     def evaluate(self, location):
+        """Evaluate the field."""
         buffer = VectorIJK()
         return buffer.setTo(self.evaluateExpansions(location).sum())
 
     def evaluateExpansion(self, location):
+        """Evaluate the expansion."""
         return self.evaluateExpansions(location).getExpansionsAsList()
 
     def evaluateExpansions(self, location):
-        """This guy recalculates everything"""
-
+        """Recalculate everything."""
         # Preallocate the arrays of vectors for the expansions.
         symmetricExpansions = [None for i in range(self.numRadialExpansions)]
         oddExpansions = []
@@ -136,12 +139,15 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         )
 
     def getNumAzimuthalExpansions(self):
+        """Return the number of azimuthal expansions."""
         return self.numAzimuthalExpansions
 
     def getNumRadialExpansions(self):
+        """Return the number of radial expansions."""
         return self.numRadialExpansions
 
     def getNumberOfBasisFunctions(self):
+        """Return the number of basis functions."""
         return (
             self.numRadialExpansions +
             2*self.numRadialExpansions*self.numAzimuthalExpansions

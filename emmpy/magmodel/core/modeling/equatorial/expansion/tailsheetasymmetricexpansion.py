@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion"""
+"""Asymmetric expansion for a tail current sheet."""
 
 
 from math import atan2, exp, sqrt
@@ -13,7 +13,9 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TailSheetAsymmetricExpansion(VectorField):
-    """This is the odd and even type azimuthal symmetry part of the expansion
+    """Asymmetric expansion for a tail current sheet.
+
+    This is the odd and even type azimuthal symmetry part of the expansion
     of the solution of the magnetic field from a thin current sheet along the
     z=0 plane, from Tsyganenko and Sitnov 2007, eq. 16 and 17.
 
@@ -23,11 +25,10 @@ class TailSheetAsymmetricExpansion(VectorField):
 
     author G.K.Stephens
     """
-    pass
 
     def __init__(self, waveNumber, azimuthalExpansionNumber, trigParity,
                  currentSheetHalfThickness, bessel):
-        """Constructor
+        """Build a new object.
 
         param waveNumber the wave number of this expansion
         param azimuthalExpansionNumber the azimuthal expansion number
@@ -43,6 +44,7 @@ class TailSheetAsymmetricExpansion(VectorField):
         self.bessel = bessel
 
     def evaluate(self, *args):
+        """Evaluate the expansion."""
         if len(args) == 1:
             (location,) = args
             buffer = VectorIJK([0, 0, 0])
@@ -59,8 +61,10 @@ class TailSheetAsymmetricExpansion(VectorField):
             thick = self.currentSheetHalfThickness.evaluate(locationIJ)
 
             # now get the current sheet half thickness derivatives
-            dThickdx = self.currentSheetHalfThickness.differentiateFDi(locationIJ)
-            dThickdy = self.currentSheetHalfThickness.differentiateFDj(locationIJ)
+            dThickdx = self.currentSheetHalfThickness.differentiateFDi(
+                locationIJ)
+            dThickdy = self.currentSheetHalfThickness.differentiateFDj(
+                locationIJ)
 
             # convert to polar
             rho = sqrt(x*x + y*y)
@@ -100,11 +104,13 @@ class TailSheetAsymmetricExpansion(VectorField):
             bZ = kn*jK*ex*(cosMPhi - kn*thick*dThickdPhi*sinMPhi/(m*zDist))
 
             # Convert from cylindrical coordinates to GSM
-            buffer.setTo(bRho*cosPhi - bPhi*sinPhi, bRho*sinPhi + bPhi*cosPhi, bZ)
+            buffer.setTo(
+                bRho*cosPhi - bPhi*sinPhi, bRho*sinPhi + bPhi*cosPhi, bZ)
 
-            # TODO for what ever reason, in the code the vectors are scaled by the
-            # azimuthal expansion number divided by the wave number, this is not in
-            # the paper, this is okay, as this will just rescale the scaling coeffs
+            # TODO for what ever reason, in the code the vectors are scaled by
+            # the azimuthal expansion number divided by the wave number, this
+            # is not in the paper, this is okay, as this will just rescale the
+            # scaling coeffs.
             return buffer.scale(-m/kn)
         else:
             raise Exception

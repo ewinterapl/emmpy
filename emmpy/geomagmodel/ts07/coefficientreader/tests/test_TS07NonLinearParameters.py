@@ -34,15 +34,6 @@ class TestBuilder(unittest.TestCase):
     def test_asArray(self):
         pass
 
-    def test_toString(self):
-        pass
-
-    def test_hashCode(self):
-        pass
-
-    def test_equals(self):
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -88,27 +88,27 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(uv1.i, uv2.i)
         self.assertAlmostEqual(uv1.j, uv2.j)
 
-    def test_hashCode(self):
-        uv = UnwritableVectorIJ(1.0, 1.0)
-        self.assertEqual(uv.hashCode(), 34091303873)
+    # def test_hashCode(self):
+    #     uv = UnwritableVectorIJ(1.0, 1.0)
+    #     self.assertEqual(uv.hashCode(), 34091303873)
 
-    def test_equals(self):
-        uv1 = UnwritableVectorIJ(1.0, 2.0)
-        self.assertTrue(uv1.equals(uv1))
-        self.assertFalse(uv1.equals(None))
-        self.assertFalse(uv1.equals(CrucibleRuntimeException))
-        uv3 = UnwritableVectorIJ(1.0, 3.0)
-        self.assertFalse(uv1.equals(uv3))
-        uv3 = UnwritableVectorIJ(3.0, 2.0)
-        self.assertFalse(uv1.equals(uv3))
-        uv3 = UnwritableVectorIJ(1.0, 3.0)
-        self.assertFalse(uv1.equals(uv3))
-        uv4 = UnwritableVectorIJ(1.0, 2.0)
-        self.assertTrue(uv1.equals(uv4))
+    # def test_equals(self):
+    #     uv1 = UnwritableVectorIJ(1.0, 2.0)
+    #     self.assertTrue(uv1.equals(uv1))
+    #     self.assertFalse(uv1.equals(None))
+    #     self.assertFalse(uv1.equals(CrucibleRuntimeException))
+    #     uv3 = UnwritableVectorIJ(1.0, 3.0)
+    #     self.assertFalse(uv1.equals(uv3))
+    #     uv3 = UnwritableVectorIJ(3.0, 2.0)
+    #     self.assertFalse(uv1.equals(uv3))
+    #     uv3 = UnwritableVectorIJ(1.0, 3.0)
+    #     self.assertFalse(uv1.equals(uv3))
+    #     uv4 = UnwritableVectorIJ(1.0, 2.0)
+    #     self.assertTrue(uv1.equals(uv4))
 
-    def test_toString(self):
-        uv = UnwritableVectorIJ(1.1, 2.2)
-        self.assertEqual(uv.toString(), "[1.1,2.2]")
+    # def test_toString(self):
+    #     uv = UnwritableVectorIJ(1.1, 2.2)
+    #     self.assertEqual(uv.toString(), "[1.1,2.2]")
 
 
 if __name__ == '__main__':

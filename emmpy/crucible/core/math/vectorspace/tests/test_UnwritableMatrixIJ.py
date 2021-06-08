@@ -216,29 +216,29 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.get(0, 1), 3)
         self.assertAlmostEqual(m2.get(1, 1), 4)
 
-    def test_hashCode(self):
-        m = UnwritableMatrixIJ(1, 2, 3, 4)
-        self.assertEqual(m.hashCode(), 1017055385278623)
+    # def test_hashCode(self):
+    #     m = UnwritableMatrixIJ(1, 2, 3, 4)
+    #     self.assertEqual(m.hashCode(), 1017055385278623)
 
-    def test_equals(self):
-        m1 = UnwritableMatrixIJ(1, 2, 3, 4)
-        self.assertTrue(m1.equals(m1))
-        self.assertFalse(m1.equals(None))
-        self.assertFalse(m1.equals([1, 2, 3, 4]))
-        m2 = UnwritableMatrixIJ(0, 2, 3, 4)
-        self.assertFalse(m1.equals(m2))
-        m2 = UnwritableMatrixIJ(0, 2, 3, 4)
-        self.assertFalse(m1.equals(m2))
-        m2 = UnwritableMatrixIJ(1, 0, 3, 4)
-        self.assertFalse(m1.equals(m2))
-        m2 = UnwritableMatrixIJ(1, 2, 0, 4)
-        self.assertFalse(m1.equals(m2))
-        m2 = UnwritableMatrixIJ(1, 2, 3, 4)
-        self.assertTrue(m1.equals(m2))
+    # def test_equals(self):
+    #     m1 = UnwritableMatrixIJ(1, 2, 3, 4)
+    #     self.assertTrue(m1.equals(m1))
+    #     self.assertFalse(m1.equals(None))
+    #     self.assertFalse(m1.equals([1, 2, 3, 4]))
+    #     m2 = UnwritableMatrixIJ(0, 2, 3, 4)
+    #     self.assertFalse(m1.equals(m2))
+    #     m2 = UnwritableMatrixIJ(0, 2, 3, 4)
+    #     self.assertFalse(m1.equals(m2))
+    #     m2 = UnwritableMatrixIJ(1, 0, 3, 4)
+    #     self.assertFalse(m1.equals(m2))
+    #     m2 = UnwritableMatrixIJ(1, 2, 0, 4)
+    #     self.assertFalse(m1.equals(m2))
+    #     m2 = UnwritableMatrixIJ(1, 2, 3, 4)
+    #     self.assertTrue(m1.equals(m2))
 
-    def test_toString(self):
-        m = UnwritableMatrixIJ(1.1, 2.2, 3.3, 4.4)
-        self.assertEqual(m.toString(), "[1.1,2.2;3.3,4.4]")
+    # def test_toString(self):
+    #     m = UnwritableMatrixIJ(1.1, 2.2, 3.3, 4.4)
+    #     self.assertEqual(m.toString(), "[1.1,2.2;3.3,4.4]")
 
 
 if __name__ == '__main__':

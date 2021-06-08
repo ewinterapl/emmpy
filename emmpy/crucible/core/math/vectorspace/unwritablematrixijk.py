@@ -584,71 +584,71 @@ class UnwritableMatrixIJK:
             return matrix
         return UnwritableMatrixIJK(matrix)
 
-    def hashCode(self):
-        """Compute the hash code."""
-        prime = 31
-        result = 1
-        temp = doubleToLongBits(self.ii)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.ij)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.ik)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.ji)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.jj)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.jk)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.ki)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.kj)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.kk)
-        result = prime*result + temp ^ (temp >> 32)
-        return result
+    # def hashCode(self):
+    #     """Compute the hash code."""
+    #     prime = 31
+    #     result = 1
+    #     temp = doubleToLongBits(self.ii)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.ij)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.ik)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.ji)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.jj)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.jk)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.ki)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.kj)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.kk)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     return result
 
-    def equals(self, obj):
-        """Test for equality."""
-        if self is obj:
-            return True
-        if obj is None:
-            return False
-        if not isinstance(obj, UnwritableMatrixIJK):
-            return False
-        other = obj
-        if (doubleToLongBits(self.ii) !=
-            doubleToLongBits(other.ii)):
-            return False
-        if (doubleToLongBits(self.ij) !=
-            doubleToLongBits(other.ij)):
-            return False
-        if (doubleToLongBits(self.ik) !=
-            doubleToLongBits(other.ik)):
-            return False
-        if (doubleToLongBits(self.ji) !=
-            doubleToLongBits(other.ji)):
-            return False
-        if (doubleToLongBits(self.jj) !=
-            doubleToLongBits(other.jj)):
-            return False
-        if (doubleToLongBits(self.jk) !=
-            doubleToLongBits(other.jk)):
-            return False
-        if (doubleToLongBits(self.ki) !=
-            doubleToLongBits(other.ki)):
-            return False
-        if (doubleToLongBits(self.kj) !=
-            doubleToLongBits(other.kj)):
-            return False
-        if (doubleToLongBits(self.kk) !=
-            doubleToLongBits(other.kk)):
-            return False
-        return True
+    # def equals(self, obj):
+    #     """Test for equality."""
+    #     if self is obj:
+    #         return True
+    #     if obj is None:
+    #         return False
+    #     if not isinstance(obj, UnwritableMatrixIJK):
+    #         return False
+    #     other = obj
+    #     if (doubleToLongBits(self.ii) !=
+    #         doubleToLongBits(other.ii)):
+    #         return False
+    #     if (doubleToLongBits(self.ij) !=
+    #         doubleToLongBits(other.ij)):
+    #         return False
+    #     if (doubleToLongBits(self.ik) !=
+    #         doubleToLongBits(other.ik)):
+    #         return False
+    #     if (doubleToLongBits(self.ji) !=
+    #         doubleToLongBits(other.ji)):
+    #         return False
+    #     if (doubleToLongBits(self.jj) !=
+    #         doubleToLongBits(other.jj)):
+    #         return False
+    #     if (doubleToLongBits(self.jk) !=
+    #         doubleToLongBits(other.jk)):
+    #         return False
+    #     if (doubleToLongBits(self.ki) !=
+    #         doubleToLongBits(other.ki)):
+    #         return False
+    #     if (doubleToLongBits(self.kj) !=
+    #         doubleToLongBits(other.kj)):
+    #         return False
+    #     if (doubleToLongBits(self.kk) !=
+    #         doubleToLongBits(other.kk)):
+    #         return False
+    #     return True
 
-    def toString(self):
-        """Convert the object to a string."""
-        return ("[%s,%s,%s;%s,%s,%s;%s,%s,%s]" %
-                (self.ii, self.ji, self.ki,
-                 self.ij, self.jj, self.kj,
-                 self.ik, self.jk, self.kk))
+    # def toString(self):
+    #     """Convert the object to a string."""
+    #     return ("[%s,%s,%s;%s,%s,%s;%s,%s,%s]" %
+    #             (self.ii, self.ji, self.ki,
+    #              self.ij, self.jj, self.kj,
+    #              self.ik, self.jk, self.kk))

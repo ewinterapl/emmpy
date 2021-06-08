@@ -410,44 +410,44 @@ class UnwritableMatrixIJ:
             return matrix
         return UnwritableMatrixIJ(matrix)
 
-    def hashCode(self):
-        """Compute and return hash code."""
-        prime = 31
-        result = 1
-        temp = doubleToLongBits(self.ii)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.ij)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.ji)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.jj)
-        result = prime*result + temp ^ (temp >> 32)
-        result = prime*result + temp ^ (temp >> 32)
-        return result
+    # def hashCode(self):
+    #     """Compute and return hash code."""
+    #     prime = 31
+    #     result = 1
+    #     temp = doubleToLongBits(self.ii)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.ij)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.ji)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.jj)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     return result
 
-    def equals(self, obj):
-        """Check for equality with another matrix."""
-        if self == obj:
-            return True
-        if obj is None:
-            return False
-        if not isinstance(obj, UnwritableMatrixIJ):
-            return False
-        other = obj
-        if (doubleToLongBits(self.ii) !=
-            doubleToLongBits(other.ii)):
-            return False
-        if (doubleToLongBits(self.ij) !=
-            doubleToLongBits(other.ij)):
-            return False
-        if (doubleToLongBits(self.ji) !=
-            doubleToLongBits(other.ji)):
-            return False
-        if (doubleToLongBits(self.jj) !=
-            doubleToLongBits(other.jj)):
-            return False
-        return True
+    # def equals(self, obj):
+    #     """Check for equality with another matrix."""
+    #     if self == obj:
+    #         return True
+    #     if obj is None:
+    #         return False
+    #     if not isinstance(obj, UnwritableMatrixIJ):
+    #         return False
+    #     other = obj
+    #     if (doubleToLongBits(self.ii) !=
+    #         doubleToLongBits(other.ii)):
+    #         return False
+    #     if (doubleToLongBits(self.ij) !=
+    #         doubleToLongBits(other.ij)):
+    #         return False
+    #     if (doubleToLongBits(self.ji) !=
+    #         doubleToLongBits(other.ji)):
+    #         return False
+    #     if (doubleToLongBits(self.jj) !=
+    #         doubleToLongBits(other.jj)):
+    #         return False
+    #     return True
 
-    def toString(self):
-        """Convert the object to a string."""
-        return "[%s,%s;%s,%s]" % (self.ii, self.ji, self.ij, self.jj)
+    # def toString(self):
+    #     """Convert the object to a string."""
+    #     return "[%s,%s;%s,%s]" % (self.ii, self.ji, self.ij, self.jj)

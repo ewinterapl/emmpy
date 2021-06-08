@@ -229,34 +229,34 @@ class UnwritableVectorIJK:
             return vector
         return UnwritableVectorIJK(vector)
 
-    def hashCode(self):
-        """Compute the hash code."""
-        prime = 31
-        result = 1
-        temp = doubleToLongBits(self.i)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.j)
-        result = prime*result + temp ^ (temp >> 32)
-        temp = doubleToLongBits(self.k)
-        result = prime*result + temp ^ (temp >> 32)
-        return result
+    # def hashCode(self):
+    #     """Compute the hash code."""
+    #     prime = 31
+    #     result = 1
+    #     temp = doubleToLongBits(self.i)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.j)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     temp = doubleToLongBits(self.k)
+    #     result = prime*result + temp ^ (temp >> 32)
+    #     return result
 
-    def equals(self, obj):
-        """Check for equality with another UnwritableVectorIJK."""
-        if self is obj:
-            return True
-        if obj is None:
-            return False
-        if not isinstance(obj, UnwritableVectorIJK):
-            return False
-        if self.i != obj.i:
-            return False
-        if self.j != obj.j:
-            return False
-        if self.k != obj.k:
-            return False
-        return True
+    # def equals(self, obj):
+    #     """Check for equality with another UnwritableVectorIJK."""
+    #     if self is obj:
+    #         return True
+    #     if obj is None:
+    #         return False
+    #     if not isinstance(obj, UnwritableVectorIJK):
+    #         return False
+    #     if self.i != obj.i:
+    #         return False
+    #     if self.j != obj.j:
+    #         return False
+    #     if self.k != obj.k:
+    #         return False
+    #     return True
 
-    def toString(self):
-        """Create a string from the object."""
-        return "[%s,%s,%s]" % (self.i, self.j, self.k)
+    # def toString(self):
+    #     """Create a string from the object."""
+    #     return "[%s,%s,%s]" % (self.i, self.j, self.k)

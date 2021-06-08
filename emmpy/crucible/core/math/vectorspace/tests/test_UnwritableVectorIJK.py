@@ -140,30 +140,30 @@ class TestBuilder(unittest.TestCase):
         v2 = UnwritableVectorIJK.copyOf(v)
         self.assertEqual(v, v2)
 
-    def test_hashCode(self):
-        """Test hashCode()."""
-        v = UnwritableVectorIJK(1, 1, 1)
-        self.assertEqual(v.hashCode(), 1057895773279)
+    # def test_hashCode(self):
+    #     """Test hashCode()."""
+    #     v = UnwritableVectorIJK(1, 1, 1)
+    #     self.assertEqual(v.hashCode(), 1057895773279)
 
-    def test_equals(self):
-        """Test equals()."""
-        v1 = UnwritableVectorIJK(1.1, 2.2, 3.3)
-        self.assertTrue(v1.equals(v1))
-        self.assertFalse(v1.equals(None))
-        self.assertFalse(v1.equals([1.1, 2.2, 3.3]))
-        v2 = UnwritableVectorIJK(1, 2.2, 3.3)
-        self.assertFalse(v1.equals(v2))
-        v2 = UnwritableVectorIJK(1.1, 2, 3.3)
-        self.assertFalse(v1.equals(v2))
-        v2 = UnwritableVectorIJK(1.1, 2.2, 3)
-        self.assertFalse(v1.equals(v2))
-        v2 = UnwritableVectorIJK(1.1, 2.2, 3.3)
-        self.assertTrue(v1.equals(v2))
+    # def test_equals(self):
+    #     """Test equals()."""
+    #     v1 = UnwritableVectorIJK(1.1, 2.2, 3.3)
+    #     self.assertTrue(v1.equals(v1))
+    #     self.assertFalse(v1.equals(None))
+    #     self.assertFalse(v1.equals([1.1, 2.2, 3.3]))
+    #     v2 = UnwritableVectorIJK(1, 2.2, 3.3)
+    #     self.assertFalse(v1.equals(v2))
+    #     v2 = UnwritableVectorIJK(1.1, 2, 3.3)
+    #     self.assertFalse(v1.equals(v2))
+    #     v2 = UnwritableVectorIJK(1.1, 2.2, 3)
+    #     self.assertFalse(v1.equals(v2))
+    #     v2 = UnwritableVectorIJK(1.1, 2.2, 3.3)
+    #     self.assertTrue(v1.equals(v2))
 
-    def test_toString(self):
-        """Test toString()."""
-        v = UnwritableVectorIJK(1.1, 2.2, 3.3)
-        self.assertEqual(v.toString(), "[1.1,2.2,3.3]")
+    # def test_toString(self):
+    #     """Test toString()."""
+    #     v = UnwritableVectorIJK(1.1, 2.2, 3.3)
+    #     self.assertEqual(v.toString(), "[1.1,2.2,3.3]")
 
 
 if __name__ == '__main__':

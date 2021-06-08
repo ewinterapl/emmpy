@@ -228,3 +228,7 @@ class UnwritableVectorIJK:
         if isinstance(vector, UnwritableVectorIJK):
             return vector
         return UnwritableVectorIJK(vector)
+
+    def __repr__(self):
+        """Create a string representation of the object."""
+        return "[%s,%s,%s]" % (self.i, self.j, self.k)

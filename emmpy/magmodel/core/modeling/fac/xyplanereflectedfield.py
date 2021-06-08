@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.fac.xyplanereflectedfield"""
+"""Reflect a field about the XY plane."""
 
 
 # import crucible.core.math.vectorspace.VectorIJK;
@@ -10,7 +10,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
 
 
 class XYPlaneReflectedField(VectorField):
-    """The reflection of the input field about the X-Y plane.
+    """Reflect a field about the XY plane.
 
     From T02: "The contribution from the southern currents (symmetric to the
     northern ones for TILT = 0) can be readily represented by rotating the
@@ -21,7 +21,7 @@ class XYPlaneReflectedField(VectorField):
     """
 
     def __init__(self, delgate):
-        """Constructor
+        """Build a new object.
 
         param VectorField delgate
         """
@@ -29,7 +29,7 @@ class XYPlaneReflectedField(VectorField):
         self.delgate = delgate
 
     def evaluate(self, location, buffer):
-        """evaluate
+        """Evaluate the field.
 
         param UnwritableVectorIJK location
         param VectorIJK buffer

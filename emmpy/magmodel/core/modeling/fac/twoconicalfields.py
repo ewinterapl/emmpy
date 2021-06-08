@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.fac.twoconicalfields"""
+"""Magnetic field from 2 conical current sheets."""
 
 
 # import static crucible.core.math.vectorfields.VectorFields.negate;
@@ -13,9 +13,11 @@ from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
 
 
 class TwoConicalFields(VectorField):
-    """Represents the magnetic field of two deformed azimuthal harmonic of a
+    """Magnetic field from 2 conical current sheets.
+
+    Represents the magnetic field of two deformed azimuthal harmonic of a
     finite thickness conical current sheet
-    
+
     As described in "A model of the near magnetosphere with a dawn-dusk
     asymmetry 1. Mathematical structure" by N. A. Tsyganenko. See eq. (20).
     The cones' axis is the +/-Z axis.
@@ -28,7 +30,7 @@ class TwoConicalFields(VectorField):
     """
 
     def __init__(self, field):
-        """Constructor
+        """Build a new object.
 
         param VectorField field
         """
@@ -38,7 +40,7 @@ class TwoConicalFields(VectorField):
         )
 
     def evaluate(self, location, buffer):
-        """evaluate
+        """Evaluate the field.
 
         param UnwritableVectorIJK location
         param VectorIJK buffer

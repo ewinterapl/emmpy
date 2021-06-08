@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.modeling.fac.tfunction"""
+"""A modeling function for Birkeland currents."""
 
 
 # import static crucible.core.math.CrucibleMath.cos;
@@ -14,18 +14,20 @@ from emmpy.crucible.core.math.functions.differentiableunivariatefunction import 
 
 
 class TFunction(DifferentiableUnivariateFunction):
-    """Represents the function given in "Methods for quantitative modeling of
+    """A modeling function for Birkeland currents.
+
+    Represents the function given in "Methods for quantitative modeling of
     the magnetic field from Birkeland currents" by N. A. Tsyganenko.
-    
+
     See eq. (14). The cone's axis is the +Z axis.
-    see href="http://www.sciencedirect.com/science/article/pii/003206339190058I"
+    see http://www.sciencedirect.com/science/article/pii/003206339190058I
     (Tsyganenko, 1990)
 
     author G.K.Stephens
     """
 
     def __init__(self, thetaNeg, thetaPos, mode):
-        """Constructor
+        """Build a new object.
 
         param double thetaNeg
         param double thetaPos
@@ -45,15 +47,19 @@ class TFunction(DifferentiableUnivariateFunction):
         # double tanMhalfThetaPos
         tanMhalfThetaPos = pow(self.tanHalfThetaPos, mode)
         # double tan2mp1HalfThetaNeg
-        self.tan2mp1HalfThetaNeg = tanMhalfThetaNeg*tanMhalfThetaNeg*self.tanHalfThetaNeg
+        self.tan2mp1HalfThetaNeg = (
+            tanMhalfThetaNeg*tanMhalfThetaNeg*self.tanHalfThetaNeg
+        )
         # double tan2mp1HalfThetaPos;
-        self.tan2mp1HalfThetaPos = tanMhalfThetaPos*tanMhalfThetaPos*self.tanHalfThetaPos
+        self.tan2mp1HalfThetaPos = (
+            tanMhalfThetaPos*tanMhalfThetaPos*self.tanHalfThetaPos
+        )
         # double constFactor
         self.constFactor = 1./(self.tanHalfThetaPos - self.tanHalfThetaNeg)
 
     @staticmethod
     def createFromDelta(theta0, deltaTheta, mode):
-        """createFromDelta
+        """Create the function using a current sheet half thickness.
 
         param double theta0 a polar angle (colatitude) that is the center of
         the conical current sheet
@@ -68,7 +74,7 @@ class TFunction(DifferentiableUnivariateFunction):
         return TFunction(thetaNeg, thetaPos, mode)
 
     def evaluate(self, theta):
-        """evaluate
+        """Evaluate the function.
 
         param double theta
         return double
@@ -95,11 +101,14 @@ class TFunction(DifferentiableUnivariateFunction):
             )
 
         # Third piecewise condition: theta >= theta+
-        return self.constFactor*(self.tan2mp1HalfThetaPos -
-            self.tan2mp1HalfThetaNeg)/(tanMhalfTheta*self.twoMplus1)
+        return (
+            self.constFactor*(self.tan2mp1HalfThetaPos -
+                              self.tan2mp1HalfThetaNeg) /
+            (tanMhalfTheta*self.twoMplus1)
+        )
 
     def differentiate(self, theta):
-        """differentiate
+        """Differentiate the function.
 
         param double theta
         return double
@@ -125,10 +134,12 @@ class TFunction(DifferentiableUnivariateFunction):
                 0.5*self.mode*self.constFactor *
                 (1 + tanHalfTheta*tanHalfTheta) *
                 (tanMhalfTheta/tanHalfTheta *
-                (self.tanHalfThetaPos - tanHalfTheta) -
-                1/self.twoMplus1 *
-                (tanMhalfTheta - self.tan2mp1HalfThetaNeg /
-                    (tanMhalfTheta*tanHalfTheta)))
+                 (self.tanHalfThetaPos - tanHalfTheta) -
+                 1/self.twoMplus1*(
+                     tanMhalfTheta - self.tan2mp1HalfThetaNeg /
+                     (tanMhalfTheta*tanHalfTheta)
+                 )
+                )
             )
 
         # Third piecewise condition: theta >= theta+

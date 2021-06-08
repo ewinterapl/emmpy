@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.t01.deformation.twistwarpffunction"""
+"""A polar angle transformation for twisting and warping."""
 
 
 # import static crucible.core.math.CrucibleMath.cos;
@@ -30,11 +30,13 @@ from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield 
 
 
 class TwistWarpFfunction(DifferentiableCylindricalVectorField):
-    """Defines a transformation that deforms the polar angle to introduce a
+    """A polar angle transformation for twisting and warping.
+
+    Defines a transformation that deforms the polar angle to introduce a
     twisting of the tail current sheet and a tilt warping in the Y-Z plane and
     its partial derivatives with respect to the original coordinates
     cylindrical coordinates.
-    
+
     From Tsgyanenko 1998, Modeling of twisted/warped magnetospheric
     configurations using the general deformation method, eq. 14.
     where in this implementation, L(X) is just a constant L=20.0, and
@@ -51,7 +53,9 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     dxL_dx = 0
 
     def __init__(self, warpParam, twistParam, dipoleTilt):
-        """Constructs the following function (from Tsyganenko 1998 eq. 14) and
+        """Build a new object.
+
+        Constructs the following function (from Tsyganenko 1998 eq. 14) and
         its derivatives:
 
         where in this implementation, L(X) is just a constant L=20.0, and
@@ -96,7 +100,7 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
 
     @staticmethod
     def deformBasisField(dipoleTilt, warpParam, twistParam, undeformedField):
-        """deformBasisField
+        """Deform the basis field.
 
         param double dipoleTilt
         param double warpParam
@@ -104,7 +108,6 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         param BasisVectorField undeformedField
         return BasisVectorField
         """
-
         # Convert the supplied undeformed field to cylindrical coordinates
         # CylindricalBasisVectorField
         undeformedFieldCyl = CylindricalCoordsXAligned.convertBasisField(
@@ -166,7 +169,7 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
     #   }
 
     def differentiate(self, location):
-        """Evaluates the twist and warp transformation of the polar angle,
+        """Evaluate the twist and warp transformation of the polar angle.
 
         F(rho, phi, x) where (rho, phi, x) are the original undistorted
         coordinates (in modified cylindrical coordinates) and the partial
@@ -175,7 +178,6 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         param CylindricalVector location
         return Results
         """
-
         # float x, rho, rho2, phi, sinPhi, cosPhi, rho4L4
         x = location.getHeight()
         rho = location.getCylindricalRadius()
@@ -187,7 +189,7 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         sinPhi = sin(phi)
         cosPhi = cos(phi)
         rho4L4 = (
-            rho/(rho2*rho2 + (TwistWarpFfunction.xL*TwistWarpFfunction.xL*
+            rho/(rho2*rho2 + (TwistWarpFfunction.xL*TwistWarpFfunction.xL *
                               TwistWarpFfunction.xL*TwistWarpFfunction.xL))
         )
 
@@ -207,8 +209,8 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         # float dF_dPhi, dF_dRho, dF_dx
         dF_dPhi = 1 - self.warpParam*rho2*rho4L4*sinPhi*self.sinDipoleTilt
         dF_dRho = (
-            self.warpParam*rho4L4*rho4L4*
-            (3*TwistWarpFfunction.xL*TwistWarpFfunction.xL*
+            self.warpParam*rho4L4*rho4L4 *
+            (3*TwistWarpFfunction.xL*TwistWarpFfunction.xL *
              TwistWarpFfunction.xL*TwistWarpFfunction.xL - rho2*rho2) *
             cosPhi*self.sinDipoleTilt
         )

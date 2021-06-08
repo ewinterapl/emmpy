@@ -1,4 +1,4 @@
-"""emmpy.geomgmodel.t01.deformation.positionbender"""
+"""Deformation in the X-Z plane related to the dipole tilt."""
 
 
 # import static com.google.common.base.Preconditions.checkArgument;
@@ -24,7 +24,9 @@ from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
 
 
 class PositionBender(DifferentiableVectorField):
-    """From Tsyganeneko's code, an implementation of Tsyganenko [1998]
+    """Deformation in the X-Z plane related to the dipole tilt.
+
+    From Tsyganeneko's code, an implementation of Tsyganenko [1998]
     section 3, "deformation in the X-Z plane related to the dipole tilt"
 
     Computes:
@@ -34,8 +36,8 @@ class PositionBender(DifferentiableVectorField):
     where
     sin&#936;* = R<sub>H</sub>sin&#936;/(R<sub>H</sub><sup>3</sup>+r<sup>3</sup>)<sup>1/3</sup >
     R<sub>H</sub> =  R<sub>H0</sub> +  R<sub>H2</sub> Z<sup>2</sup>/r<sup>2</sup>
-    This is similar to the FORTRAN subroutine: 
-         SUBROUTINE DEFORMED (PS,X,Y,Z,BX,BY,BZ) 
+    This is similar to the FORTRAN subroutine:
+         SUBROUTINE DEFORMED (PS,X,Y,Z,BX,BY,BZ)
     see ./doc-files/tsy1998Math.docx
 
     author G.K.Stephens
@@ -48,7 +50,7 @@ class PositionBender(DifferentiableVectorField):
     epsilon = 3
 
     def __init__(self, dipoleTilt, hingeDistance):
-        """Constructor
+        """Build a new object.
 
         param double dipoleTilt
         param double hingeDistance R_H0, must be greater than or equal to the
@@ -58,7 +60,7 @@ class PositionBender(DifferentiableVectorField):
         self.rh0 = hingeDistance
 
     # /**
-    # * 
+    # *
     # * @param dipoleTilt
     # * @param hingeDistance
     # * @param undeformedField
@@ -75,14 +77,13 @@ class PositionBender(DifferentiableVectorField):
 
     @staticmethod
     def deformBasisField(dipoleTilt, hingeDistance, undeformedField):
-        """deformBasisField
+        """Deform the basis field.
 
         param double dipoleTilt
         param double hingeDistance
         param BasisVectorField undeformedField
         return BasisVectorField
         """
-
         # Construct the deformation
         deformation = PositionBender(dipoleTilt, hingeDistance)
 
@@ -94,9 +95,9 @@ class PositionBender(DifferentiableVectorField):
 
     # /**
     # * Bend the position vector to account for the bending of the tail field in the X-Z GSM plane.
-    # * 
+    # *
     # * Derivation: Tsyganenko 2002-1 Eqn 13
-    # * 
+    # *
     # * @param position
     # * @param buffer
     # */
@@ -141,7 +142,7 @@ class PositionBender(DifferentiableVectorField):
     # }
 
     def differentiate(self, location):
-        """differentiate
+        """Differentiate the field at the given location.
 
         param UnwritableVectorIJK location
         return Results
@@ -167,7 +168,7 @@ class PositionBender(DifferentiableVectorField):
         # Now compute the cos and sin of the radial dependent tilt angle,
         # this is Tsy. 1998 eq. 7
         # float sinTiltS, cosTiltS
-        sinTiltS = self.sinTilt *Q
+        sinTiltS = self.sinTilt*Q
         cosTiltS = sqrt(1 - sinTiltS*sinTiltS)
 
         # The point deformation from eq. 7 in Tsy. 1998

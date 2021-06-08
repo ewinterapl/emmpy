@@ -195,32 +195,3 @@ class UnwritableVectorIJ:
         if isinstance(vector, UnwritableVectorIJ):
             return vector
         return UnwritableVectorIJ(vector)
-
-    # def hashCode(self) -> int:
-    #     """Compute the object hash code."""
-    #     prime = 31
-    #     result = 1
-    #     temp = doubleToLongBits(self.i)
-    #     result = prime*result + temp ^ (temp >> 32)
-    #     temp = doubleToLongBits(self.j)
-    #     result = prime*result + temp ^ (temp >> 32)
-    #     return result
-
-    # def equals(self, obj) -> bool:
-    #     """Check for equality with another object."""
-    #     if self is obj:
-    #         return True
-    #     if obj is None:
-    #         return False
-    #     if not isinstance(obj, UnwritableVectorIJ):
-    #         return False
-    #     other = obj
-    #     if doubleToLongBits(self.i) != doubleToLongBits(other.i):
-    #         return False
-    #     if doubleToLongBits(self.j) != doubleToLongBits(other.j):
-    #         return False
-    #     return True
-
-    # def toString(self) -> str:
-    #     """Convert the object to a string."""
-    #     return "[%s,%s]" % (self.i, self.j)

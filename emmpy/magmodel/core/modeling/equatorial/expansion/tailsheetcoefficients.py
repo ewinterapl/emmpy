@@ -183,19 +183,19 @@ class TailSheetCoefficients:
         if self.tailSheetEvenValues is None:
             if other.tailSheetEvenValues:
                 return False
-        elif not self.tailSheetEvenValues.equals(other.tailSheetEvenValues):
-            return False
+        # elif not self.tailSheetEvenValues.equals(other.tailSheetEvenValues):
+        #     return False
 
         if self.tailSheetOddValues is None:
             if other.tailSheetOddValues:
                 return False
-        elif not self.tailSheetOddValues.equals(other.tailSheetOddValues):
-            return False
+        # elif not self.tailSheetOddValues.equals(other.tailSheetOddValues):
+        #     return False
         if self.tailSheetSymmetricValues is None:
             if other.tailSheetSymmetricValues:
                 return False
-        elif not self.tailSheetSymmetricValues.equals(
-            other.tailSheetSymmetricValues
-            ):
-            return False
+        # elif not self.tailSheetSymmetricValues.equals(
+        #     other.tailSheetSymmetricValues
+        #     ):
+        #     return False
         return True

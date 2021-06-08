@@ -29,33 +29,3 @@ class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
     def getCoefficient(self, index):
         """Return a coeeficient at the index."""
         return self.array[index - self.firstExpansionNumber]
-
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "ArrayCoefficientExpansion1D [array=%s, getLowerBoundIndex()=%s, "
-            "getUpperBoundIndex()=%s]" %
-            (self.array, self.getLowerBoundIndex(), self.getUpperBoundIndex()))
-
-    def hashCode(self):
-        """Compute the object hash code."""
-        prime = 31
-        result = 1
-        result = prime*result + 0  # *self.array
-        result = prime*result + self.firstExpansionNumber
-        return result
-
-    def equals(self, obj):
-        """Check for equality with another object."""
-        if self is obj:
-            return True
-        if obj is None:
-            return False
-        if self.__class__ != obj.__class__:
-            return False
-        other = obj
-        if self.array != other.array:
-            return False
-        if self.firstExpansionNumber != other.firstExpansionNumber:
-            return False
-        return True

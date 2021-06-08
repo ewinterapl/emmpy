@@ -25,24 +25,6 @@ class TestBuilder(unittest.TestCase):
         e = ArrayExpansion1D([0, 1, 2], 1)
         self.assertEqual(e.getExpansion(1), 0)
 
-    def test_toString(self):
-        e = ArrayExpansion1D([0, 1, 2], 1)
-        self.assertEqual(
-            e.toString(),
-            "ArraySymmetricScalarCylindricalExpansion [array=[0, 1, 2]"
-            ", firstRadialExpansionNumber=1, lastRadialExpansionNumber=3]")
-
-    def test_hashCode(self):
-        e = ArrayExpansion1D([0, 1, 2], 1)
-        self.assertEqual(e.hashCode(), 29825)
-
-    def test_equals(self):
-        e1 = ArrayExpansion1D([0, 1, 2], 1)
-        e2 = ArrayExpansion1D([0, 1, 2], 1)
-        self.assertTrue(e1.equals(e2))
-        e3 = ArrayExpansion1D([0, 1, 2], 0)
-        self.assertFalse(e1.equals(e3))
-
 
 if __name__ == '__main__':
     unittest.main()

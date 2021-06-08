@@ -51,39 +51,3 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
             self.data[azimuthalExpansion - self.iLowerBoundIndex]
                      [radialExpansion - self.jLowerBoundIndex]
         )
-
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "ArrayCoefficientExpansion2D [data=%s, getILowerBoundIndex()=%s, "
-            "getIUpperBoundIndex()=%s, getJLowerBoundIndex()=%s, "
-            "getJUpperBoundIndex()=%s]" %
-            (self.data, self.getILowerBoundIndex(), self.getIUpperBoundIndex(),
-             self.getJLowerBoundIndex(), self.getJUpperBoundIndex())
-        )
-
-    def hashCode(self):
-        """Compute the object hash code."""
-        prime = 31
-        result = 1
-        result = prime*result + 0  # * self.data
-        result = prime*result + self.iLowerBoundIndex
-        result = prime*result + self.jLowerBoundIndex
-        return result
-
-    def equals(self, obj):
-        """Check for equality with another object."""
-        if self is obj:
-            return True
-        if obj is None:
-            return False
-        if self.__class__ != obj.__class__:
-            return False
-        other = obj
-        if not self.data == other.data:
-            return False
-        if self.iLowerBoundIndex != other.iLowerBoundIndex:
-            return False
-        if self.jLowerBoundIndex != other.jLowerBoundIndex:
-            return False
-        return True

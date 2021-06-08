@@ -1,14 +1,8 @@
-"""Bug exception for crucible code.
+"""Bug exception for Crucible code.
 
-Runtime exception generated as a result of something failing that should
-never fail.
+Exception generated as a result of something failing that should never fail.
 
-Prototypical example would be invoking the string constructor:
-new String(new byte[] {32, 32}, "ISO-8859-1")
-the constructor may throw an exception due to an unsupported character
-encoding, but this should never happen in practice.
-
-@author F.S.Turner
+author F.S.Turner
 """
 
 
@@ -18,4 +12,4 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
 
 
 class BugException(CrucibleRuntimeException):
-    """Bug exception for crucible code."""
+    """Bug exception for Crucible code."""

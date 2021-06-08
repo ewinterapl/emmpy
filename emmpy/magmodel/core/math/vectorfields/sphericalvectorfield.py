@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.vectorfields.sphericalvectorfield"""
+"""A vector field in spherical coordinates."""
 
 
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
@@ -24,7 +24,9 @@ from emmpy.magmodel.core.math.vectorfields.sphericalscalarfield import (
 
 
 class SphericalVectorField(VectorField):
-    """Represents a VectorField in spherical coordinates and provides the
+    """A vector field in spherical coordinates.
+
+    Represents a VectorField in spherical coordinates and provides the
     conversion from a SphericalVector field to a Cartesian vector field.
 
     where r is the radius, &#952; is the co-latitude angle, and &#966; is the
@@ -37,7 +39,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def negate(vectorField):
-        """negate
+        """Negate a vector field.
 
         param SphericalVectorField vectorField
         return SphericalVectorField
@@ -58,19 +60,22 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def extractRadial(vectorField):
-        """extractRadial
+        """Return the radial component of the field.
 
         param SphericalVectorField vectorField
         return SphericalScalarField
         """
         ssf = SphericalScalarField()
         # SphericalVector posSph
-        ssf.evaluateScalar = lambda posSph: vectorField.evaluate(posSph).getRadius()
+        ssf.evaluateScalar = (
+            lambda posSph:
+            vectorField.evaluate(posSph).getRadius()
+        )
         return ssf
 
     @staticmethod
     def createRadialField():
-        """createRadialField
+        """Create a unit vector in the radial direction.
 
         return SphericalVectorField
         """
@@ -81,7 +86,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def createColatitudinalField():
-        """createColatitudinalField
+        """Create a unit vector in the latitudinal direction.
 
         return SphericalVectorField
         """
@@ -92,7 +97,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def createAzimuthalField():
-        """createAzimuthalField
+        """Create a unit vector in the azimuthal direction.
 
         return SphericalVectorField
         """
@@ -103,8 +108,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def scale(field, scaleFactor):
-        """Creates a spherical vector field by scaling the output of the
-        supplied spherical vector field.
+        """Scale a spherical vector field.
 
         The location is not scaled.
 
@@ -131,8 +135,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def add(a, b):
-        """Creates a spherical vector field by adding the two supplied
-        spherical vector fields.
+        """Add 2 spherical vector fields.
 
         param SphericalVectorField a a spherical vector field
         param SphericalVectorField b another spherical vector field
@@ -158,8 +161,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def addAll(fields):
-        """Creates a spherical vector field by adding all the supplied
-        spherical vector fields.
+        """Add a lost of spherical vector fields.
 
         param list of SphericalVectorField fields a varargs of spherical vector
         fields
@@ -186,7 +188,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def asSpherical(field):
-        """asSpherical
+        """Convert a Cartesian field to spherical coordinates.
 
         param VectorField field
         return SphericalVectorField
@@ -237,10 +239,9 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def extractFr(field):
-        """Creates a ScalarField from the radial component of the supplied
-        spherical vector field
+        """Create a ScalarField from the radial components.
 
-        param SphericalVectorField field 
+        param SphericalVectorField field
         return ScalarField a newly created capturing the radial component of
         the spherical vector field
         """
@@ -254,8 +255,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def extractFtheta(field):
-        """Creates a ScalarField from the colatitudinal component of the
-        supplied spherical vector field
+        """Create a ScalarField from the colatitudinal component.
 
         param SphericalVectorField field
         @return ScalarField a newly created capturing the colatitudinal
@@ -271,8 +271,7 @@ class SphericalVectorField(VectorField):
 
     @staticmethod
     def extractFphi(field):
-        """Creates a ScalarField from the longitudinal component of the
-        supplied spherical vector field
+        """Create a ScalarField from the longitudinal component.
 
         param SphericalVectorField field
         return ScalarField a newly created capturing the longitudinal component
@@ -287,6 +286,7 @@ class SphericalVectorField(VectorField):
         return sf
 
     def evaluate(self, *args):
+        """Evaluate the field."""
         if len(args) == 1:
             (location,) = args
             assert(isinstance(location, SphericalVector))
@@ -316,7 +316,9 @@ class SphericalVectorField(VectorField):
 
             # convert the vector field value back to Cartesian
             # UnwritableVectorIJK valueSphere
-            valueSphere = VectorFieldValueConversions.convert(sphere).getValue()
+            valueSphere = (
+                VectorFieldValueConversions.convert(sphere).getValue()
+            )
 
             # return the value
             return buffer.setTo(valueSphere)

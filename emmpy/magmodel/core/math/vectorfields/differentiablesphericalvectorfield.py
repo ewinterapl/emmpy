@@ -1,4 +1,4 @@
-"""emmp.magmodel.core.math.vectorfields.differentiablesphericalvectorfield"""
+"""A differentiable vector field in spherical coordinates."""
 
 
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
@@ -7,8 +7,7 @@ from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
 
 
 class Results:
-    """Represents the 9 spatial derivatives of a VectorField in spherical
-    coordinates.
+    """The 9 spatial derivatives of a VectorField in spherical coordinates.
 
     where r is the radius, &#952; is the co-latitude angle, and &#966; is the
     longitude (or aziumuth) angle
@@ -18,7 +17,7 @@ class Results:
 
     def __init__(self, f, dFrDr, dFrDt, dFrDp, dFtDr, dFtDt, dFtDp, dFpDr,
                  dFpDt, dFpDp):
-        """Constructor
+        """Build a new object.
 
         param SphericalVector f
         param double dFrDr
@@ -53,98 +52,62 @@ class Results:
         self.dFpDp = dFpDp
 
     def getF(self):
-        """return the value of the SphericalVectorField evaluated at the
-        supplied location
+        """Return the field value.
 
         return SphericalVector
         """
         return self.f
 
     def getdFrDr(self):
-        """return the partial derivative of the radial component of the field
-        with respect to the radius evaluated at the supplied location
-
-        return double
-        """
+        """Return dFr/dr."""
         return self.dFrDr
 
     def getdFrDt(self):
-        """return the partial derivative of the radial component of the field
-        with respect to the co-latitude evaluated at the supplied location
-
-        return double
-        """
+        """Return dFr/dt."""
         return self.dFrDt
 
     def getdFrDp(self):
-        """return the partial derivative of the radial component of the field
-        with respect to the longitude evaluated at the supplied location
-
-        return double
-        """
+        """Return dFr/dp."""
         return self.dFrDp
 
     def getdFtDr(self):
-        """return the partial derivative of the co-latitude component of the
-        field with respect to the radius evaluated at the supplied location
-
-        return double
-        """
+        """Return dFt/dr."""
         return self.dFtDr
 
     def getdFtDt(self):
-        """return the partial derivative of the co-latitude component of the
-        field with respect to the co-latitude evaluated at the supplied
-        location
-
-        return double
-        """
+        """Return dFt/dt."""
         return self.dFtDt
 
     def getdFtDp(self):
-        """return the partial derivative of the co-latitude component of the
-        field with respect to the longitude evaluated at the supplied location
-
-        return double
-        """
+        """Return dFt/dp."""
         return self.dFtDp
 
     def getdFpDr(self):
-        """return the partial derivative of the longitude component of the
-        field with respect to the radius evaluated at the supplied location
-
-        return double
-        """
+        """Return dFp/dr."""
         return self.dFpDr
 
     def getdFpDt(self):
-        """return the partial derivative of the longitude component of the
-        field with respect to the co-latitude evaluated at the supplied
-        location
-
-        return double
-        """
+        """Return dFp/dt."""
         return self.dFpDt
 
     def getdFpDp(self):
-        """return the partial derivative of the longitude component of the
-        field with respect to the longitude evaluated at the supplied location
-
-        return double
-        """
+        """Return dFp/dp."""
         return self.dFpDp
 
     def toString(self):
-      return (
-          "Results [f=%s, dFrDr=%s, dFrDt=%s, dFrDp=%s, dFtDr=%s, dFtDt=%s, "
-          "dFtDp=%s, dFpDr=%s, dFpDt=%s, dFpDp=%s]" %
-          (self.f, self.dFrDr, self.dFrDt, self.dFrDp, self.dFtDr, self.dFtDt,
-           self.dFtDp, self.dFpDr, self.dFpDt, self.dFpDp)
-      )
+        """Convert the object to a string."""
+        return (
+            "Results [f=%s, dFrDr=%s, dFrDt=%s, dFrDp=%s, dFtDr=%s, dFtDt=%s, "
+            "dFtDp=%s, dFpDr=%s, dFpDt=%s, dFpDp=%s]" %
+            (self.f, self.dFrDr, self.dFrDt, self.dFrDp, self.dFtDr,
+             self.dFtDt, self.dFtDp, self.dFpDr, self.dFpDt, self.dFpDp)
+        )
 
 
 class DifferentiableSphericalVectorField(SphericalVectorField):
-    """Represents the 9 spatial derivatives of a VectorField in spherical
+    """A differentiable vector field in spherical coordinates.
+
+    Represents the 9 spatial derivatives of a VectorField in spherical
     coordinates.
 
     where r is the radius, &#952; is the co-latitude angle, and &#966; is the
@@ -154,15 +117,14 @@ class DifferentiableSphericalVectorField(SphericalVectorField):
     """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTANTIATE
         """
         raise Exception
 
     def differentiate(self, location):
-        """Evaluate the field and the spatial derivatives at the given position
-        in spherical coordinates
+        """Evaluate the field and the derivatives at the given position.
 
         INTERFACE - DO NOT INVOKE
 
@@ -171,4 +133,3 @@ class DifferentiableSphericalVectorField(SphericalVectorField):
         function and the 9 spatial derivatives
         """
         raise Exception
-

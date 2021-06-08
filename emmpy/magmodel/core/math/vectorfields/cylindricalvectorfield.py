@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield
+"""A vector field in cylindrical coordinates.
 
 N.B. This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
@@ -20,15 +20,16 @@ methods will raise exceptions if invoked.
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
-class CylindricalVectorFieldView:
+# class CylindricalVectorFieldView:
 
-    def __init__(self, cvf):
-        self.cvf = cvf
+#     def __init__(self, cvf):
+#         self.cvf = cvf
 
 
 class CylindricalVectorField(VectorField):
-    # public interface CylindricalVectorField extends VectorField {
-    """Represents a {@link VectorField} in cylindrical coordinates and provides
+    """A vector field in cylindrical coordinates.
+
+    Represents a {@link VectorField} in cylindrical coordinates and provides
     the conversion from a {@link CylindricalVector} field to a Cartesian vector
     field.
 
@@ -44,7 +45,7 @@ class CylindricalVectorField(VectorField):
 
     @staticmethod
     def asCylindrical(field):
-        """asCylindrical"""
+        """Return the field in cylindrical coordinates."""
         if isinstance(field, CylindricalVectorField):
             return field
         else:

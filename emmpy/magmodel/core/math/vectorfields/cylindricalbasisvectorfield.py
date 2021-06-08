@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield"""
+"""A basis vector field in cylindrical coordinates."""
 
 
 # import static crucible.core.math.coords.CoordConverters.convertToCylindrical;
@@ -17,7 +17,9 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
 
 
 class CylindricalBasisVectorField(CylindricalVectorField):
-    """Represents a VectorField in cylindrical coordinates and provides the
+    """A basis vector field in cylindrical coordinates.
+
+    Represents a VectorField in cylindrical coordinates and provides the
     conversion from a CylindricalVector field to a Cartesian vector field.
 
     where r is the radius, &#952; is the co-latitude angle, and &#966; is the
@@ -27,11 +29,10 @@ class CylindricalBasisVectorField(CylindricalVectorField):
     """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTANTIATE
         """
-        pass
 
     #   @Override
     #   public default VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
@@ -48,7 +49,9 @@ class CylindricalBasisVectorField(CylindricalVectorField):
     #   }
 
     def evaluateExpansion(self, location):
-        """Evaluate the field expansion at the given position, and returns an
+        """Evaluate the expansion.
+
+        Evaluate the field expansion at the given position, and returns an
         ImmutableList  results of each individual field in the expansion in
         cylindrical coordinates
 

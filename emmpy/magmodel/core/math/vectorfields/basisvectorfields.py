@@ -1,7 +1,6 @@
-"""emmpy.magmodel.core.math.vectorfields.basisvectorfields"""
+"""Utility functions for basis vector fields."""
 
 
-# from emmpy.com.google.common.base.preconditions import Preconditions
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
@@ -14,7 +13,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 
 
 class BasisVectorFields:
-    """A class containing utility methods for manipulating BasisVectorField
+    """Utility functions for basis vector fields.
+
+    A class containing utility methods for manipulating BasisVectorField
     objects.
 
     author G.K.Stephens
@@ -22,6 +23,7 @@ class BasisVectorFields:
 
     @staticmethod
     def asBasisField(field):
+        """Create a BasisVectorField view of a vector field."""
         bvf = BasisVectorField()
 
         def my_evaluateExpansion(location):
@@ -32,8 +34,7 @@ class BasisVectorFields:
 
     @staticmethod
     def scaleLocation(field, scaleFactor):
-        """Creates a vector field by scaling the input location vector of the
-        supplied vector field.
+        """Create a vector field with a scaled location.
 
         param BasisVectorField field a vector field
         param float scaleFactor a value to scale the location vector
@@ -78,8 +79,7 @@ class BasisVectorFields:
 
     @staticmethod
     def concatAll(fields):
-        """Concatenates multiple BasisVectorFields into a single
-        BasisVectorField
+        """Concatenate multiple BasisVectorFields.
 
         Note, this is different from add(BasisVectorField, BasisVectorField)
 
@@ -104,7 +104,7 @@ class BasisVectorFields:
                                 for field in fields])
         )
 
-        def my_toString(my_self):
+        def my_toString():
             s = ""
             for field in fields:
                 s += field.toString()
@@ -189,7 +189,7 @@ class BasisVectorFields:
 
     @staticmethod
     def expandCoefficients2(field, coeffs, moreCoeffs):
-        """Expands the supplied BasisVectorField
+        """Expand the supplied BasisVectorField.
 
         Note: no checking is performed to ensure consistency
 
@@ -237,7 +237,7 @@ class BasisVectorFields:
 
     @staticmethod
     def rotate(field, matrix):
-        """Rotates"""
+        """Rotate the field."""
         bvf = BasisVectorField()
 
         # def my_evaluate(location, buffer):

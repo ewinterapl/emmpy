@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield"""
+"""A differentiable vector field in cylindrical coordinates."""
 
 
 # import crucible.core.math.coords.CylindricalVector;
@@ -10,8 +10,7 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
 
 
 class Results:
-    """Represents the 9 spatial derivatives of a VectorField in cylindrical
-    coordinates.
+    """The 9 spatial derivatives of a VectorField in cylindrical coordinates.
 
     where r is the radius, &#952; is the co-latitude angle, and &#966; is the
     longitude (or aziumuth) angle
@@ -32,7 +31,7 @@ class Results:
 
     def __init__(self, f, dFrDr, dFrDp, dFrDz, dFpDr, dFpDp, dFpDz, dFzDr,
                  dFzDp, dFzDz):
-        """Constructor
+        """Build a new object.
 
         param CylindricalVector f
         param double dFrDr
@@ -57,71 +56,53 @@ class Results:
         self.dFzDz = dFzDz
 
     def getF(self):
-        """return the value of the CylindricalVectorField evaluated at the
-        supplied location
+        """Return the field value at the supplied location.
 
         return CylindricalVector f
         """
         return self.f
 
     def getdFrDr(self):
-        """return the partial derivative of the radial component of the field
-        with respect to the radius evaluated at the supplied location as a
-        double"""
+        """Return dFr/dr."""
         return self.dFrDr
 
     def getdFrDp(self):
-        """return the partial derivative of the radial component of the field
-        with respect to the longitude evaluated at the supplied location as a
-        double"""
+        """Return dFr/dp."""
         return self.dFrDp
 
     def getdFrDz(self):
-        """return the partial derivative of the radial component of the field
-        with respect to the height evaluated at the supplied location as a
-        double"""
+        """Return dFr/dz."""
         return self.dFrDz
 
     def getdFpDr(self):
-        """return the partial derivative of the longitude component of the
-        field with respect to the radius evaluated at the supplied location
-        as a double"""
+        """Return dFp/dr."""
         return self.dFpDr
 
     def getdFpDp(self):
-        """return the partial derivative of the longitude component of the
-        field with respect to the longitude evaluated at the supplied location
-        as a double
-        """
+        """Return dFp/dp."""
         return self.dFpDp
 
     def getdFpDz(self):
-        """return the partial derivative of the longitude component of the
-        field with respect to the height evaluated at the supplied location
-        as a double"""
+        """Return dFp/dz."""
         return self.dFpDz
 
     def getdFzDr(self):
-        """return the partial derivative of the height component of the field
-        with respect to the radius evaluated at the supplied location as a
-        double"""
+        """Return dFz/dr."""
         return self.dFzDr
 
     def getdFzDp(self):
-        """return the partial derivative of the height component of the field
-        with respect to the longitude evaluated at the supplied location as a
-        double"""
+        """Return dFz/dp."""
         return self.dFzDp
 
     def getdFzDz(self):
-        """return the partial derivative of the height component of the field
-        with respect to the height evaluated at the supplied location as a
-        double"""
+        """Return dFz/dz."""
         return self.dFzDz
 
 
 class DifferentiableCylindricalVectorField(CylindricalVectorField):
-    """Represents the 9 spatial derivatives of a VectorField in cylindrical
+    """A differentiable vector field in cylindrical coordinates.
+
+    Represents the 9 spatial derivatives of a VectorField in cylindrical
     coordinates.
 
     where r is the radius, &#952; is the co-latitude angle, and &#966; is the
@@ -131,15 +112,14 @@ class DifferentiableCylindricalVectorField(CylindricalVectorField):
     """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTANTIATE
         """
         raise Exception
 
     def differentiate(self, location):
-        """Evaluate the field and the spatial derivatives at the given position
-        in cylindrical coordinates
+        """Evaluate the field and derivatives at the given position.
 
         INTERFACE - DO NOT INVOKE
 
@@ -148,4 +128,3 @@ class DifferentiableCylindricalVectorField(CylindricalVectorField):
         function and the 9 spatial derivatives
         """
         raise Exception
-

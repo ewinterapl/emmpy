@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.math.vectorfields.sphericalscalarfield"""
+"""A scalar field in spherical coordinates."""
 
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
@@ -6,22 +6,24 @@ from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 
 
 class SphericalScalarField(ScalarField):
-    """author G.K.Stephens"""
+    """A scalar field in spherical coordinates.
+
+    author G.K.Stephens
+    """
 
     def __init__(self):
-        """Constructor
+        """Build a new object.
 
         INTERFACE - DO NOT INSTNTIATE
         """
         raise Exception
 
     def evaluate(self, location):
-        """evaluate
+        """Evaluate the scalar field at a Cartesian location.
 
         param UnwritableVectorIJK location
         return double
         """
-
         # convert the Cartesian position to spherical
         # SphericalVector locSphere
         locSphere = CoordConverters.convertToSpherical(location)
@@ -32,7 +34,7 @@ class SphericalScalarField(ScalarField):
         return fieldValue
 
     def evaluateScalar(self, posSph):
-        """evaluateScalar
+        """Evaluate the scalar field at a spherical location.
 
         INTERFACE - DO NOT INVOKE
 

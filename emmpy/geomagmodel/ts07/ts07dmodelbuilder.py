@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.ts07.ts07dmodelbuilder"""
+"""Build the TS07D model."""
 
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -30,7 +30,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
 
 
 class TS07DModelBuilder:
-    """A Builder class that can be used to build the TS07D empirical magnetic
+    """Build the TS07D model.
+
+    A Builder class that can be used to build the TS07D empirical magnetic
     field model.
 
     This builder lets you customize your creation of the TS07D model. Some of
@@ -42,8 +44,7 @@ class TS07DModelBuilder:
     """
 
     def __init__(self, dipoleTiltAngle, dynamicPressure, variableCoefficients):
-        """Constructor, this is package private as this should be constructed
-        using the create methods"""
+        """Build a new object."""
         self.dipoleTiltAngle = dipoleTiltAngle
         self.dynamicPressure = dynamicPressure
         self.variableCoefficients = variableCoefficients
@@ -76,8 +77,7 @@ class TS07DModelBuilder:
 
     @staticmethod
     def create(*args):
-        """Creates a new Builder that can be used to construct the TS07D
-        model."""
+        """Create a new Builder that can construct the TS07D model."""
         if len(args) == 3:
             (dipoleTiltAngle, dynamicPressure, variableCoefficients) = args
             # This set of inputs (dipole tilt, dynamic pressure, and
@@ -117,6 +117,7 @@ class TS07DModelBuilder:
     @staticmethod
     def createStandardResolution(dipoleTiltAngle, dynamicPressure,
                                  variableCoefficientsFile, facConfiguration):
+        """Create a new model builder with standard resolution."""
         numAzimuthalExpansions = 4
         numRadialExpansions = 5
 
@@ -128,7 +129,7 @@ class TS07DModelBuilder:
         return TS07DModelBuilder(dipoleTiltAngle, dynamicPressure, coeffs)
 
     def withDipoleTiltAngleValue(self, dipoleTiltAngle):
-        """Replaces the initial dipole tilt angle with the supplied value.
+        """Replace the initial dipole tilt angle with the supplied value.
 
         param dipoleTiltAngle a new dipole tilt angle to use when building
         the model
@@ -139,7 +140,7 @@ class TS07DModelBuilder:
         return self
 
     def withDynamicPressureValue(self, dynamicPressure):
-        """Replaces the initial dynamic pressure with the supplied value.
+        """Replace the initial dynamic pressure with the supplied value.
 
         param dynamicPressure a new dynamic pressure to use when building the
         model
@@ -150,8 +151,7 @@ class TS07DModelBuilder:
         return self
 
     def withVariableCoefficientValues(self, variableCoefficients):
-        """Replaces the initial set of variable coefficients with the supplied
-        set.
+        """Replace the initial set of variable coefficients with a new set.
 
         NOTE, this will not override the value of the twist angle if the
         withTwistParameter(double)} was called.
@@ -165,7 +165,9 @@ class TS07DModelBuilder:
         return self
 
     def withEquatorialShielding(self):
-        """By default, the equatorial shielding fields are evaluated, so if you
+        """Set the equatorial shielding field flag.
+
+        By default, the equatorial shielding fields are evaluated, so if you
         haven't previously turned them off, you won't need to call this.
 
         return this builder object
@@ -214,7 +216,9 @@ class TS07DModelBuilder:
         return self
 
     def withTA15deformation(self, bzIMF):
-        """Use the TA15 bending and warping deformation instead of the T01
+        """Set the z-component of the IMF.
+
+        Use the TA15 bending and warping deformation instead of the T01
         bending and warping deformation for the equatorial field,
 
         By default, the model uses the T01 bending and warping deformation.
@@ -227,7 +231,9 @@ class TS07DModelBuilder:
         return self
 
     def withOriginalStaticCoefficients(self):
-        """Use the original set of static coefficients, this is the default
+        """Return to the original set of static coefficients.
+
+        Use the original set of static coefficients, this is the default
         set, so if you haven't changed them overridden them with another
         method, it is unnecessary to call this method.
 
@@ -244,7 +250,9 @@ class TS07DModelBuilder:
         return self
 
     def withNewStaticCoefficients(self):
-        """This is an advanced user setting and most users should never call
+        """Use a new set of static coefficients.
+
+        This is an advanced user setting and most users should never call
         this method.
 
         Uses a precomputed set of static coefficients that were recomputed by
@@ -261,12 +269,12 @@ class TS07DModelBuilder:
             getLinearCoeffs().get(0).getNumRadialExpansions()
         )
         self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
-            TS07DStaticCoefficientsFactory.
-            retrieveNewBuiltInCoefficientsPath(),
+            TS07DStaticCoefficientsFactory.retrieveNewBuiltInCoefficientsPath(),
             numAzimuthalExpansions, numRadialExpansions)
         return self
 
     def withStaticCoefficients(self, *args):
+        """Assign a new set of static coefficients."""
         if isinstance(args[0], str):
             (staticCoefficientsDirectory,) = args
             # By default, the static coefficients are the original set of
@@ -291,7 +299,9 @@ class TS07DModelBuilder:
             raise Exception
 
     def withTailLength(self, tailLength):
-        """This is an advanced user setting and most users should never call
+        """Set the length of the geomagnetic tail.
+
+        This is an advanced user setting and most users should never call
         this method.
 
         By default, the tail length is 20.0, note, the static coefficients and
@@ -305,7 +315,7 @@ class TS07DModelBuilder:
         return self
 
     def withTwistParameter(self, twistParameter):
-        """Sets the twist parameter to the supplied value.
+        """Set the twist parameter to the supplied value.
 
         If this method has been called, the supplied value will OVERRIDE the
         value of the twist parameter that is contained in the supplied set of
@@ -321,15 +331,17 @@ class TS07DModelBuilder:
         return self
 
     def withNonLinearParameters(self, parameters):
+        """Specify a new set of non-linear parameters."""
         self.parameters = parameters
         return self
 
     def withMagnetopause(self):
+        """Set the magnetopause flag."""
         self._withMagnetopause = True
         return self
 
     def build(self):
-
+        """Build a new dipole shielding field."""
         # construct the dipole shielding field
         dipoleShieldingField = (
             BasisVectorFields.asBasisField(
@@ -378,10 +390,10 @@ class TS07DModelBuilder:
             self.variableCoefficients.getNonLinearParameters().
             getCurrentSheetThicknesses()
         )
-        numCurrSheets = (
-            len(self.variableCoefficients.getNonLinearParameters().
-                getCurrentSheetThicknesses())
-        )
+        # numCurrSheets = (
+        #     len(self.variableCoefficients.getNonLinearParameters().
+        #         getCurrentSheetThicknesses())
+        # )
 
         # The parameters have been updated
         if self.parameters is not None:

@@ -1,4 +1,7 @@
-"""emmpy.geomagmodel.t96magnetopause"""
+from os import stat
+
+
+"""The T96 magnetopause model."""
 
 
 # import static crucible.core.math.CrucibleMath.atan2;
@@ -14,13 +17,16 @@
 # import crucible.crust.surfaces.NoIntersectionException;
 # import crucible.crust.surfaces.Surface;
 # import crucible.crust.surfaces.Surfaces;
-# import geomagmodel.t01.deformation.PositionBender;
 # import geomagmodel.ta15.modeling.deformation.DeformationI;
 # import magmodel.core.NewtonRaphsonInverseIJK;
 
+from emmpy.geomagmodel.t01.deformation.positionbender import PositionBender
+
 
 class T96Magnetopause:
-    """From Tsy. 1995
+    """The T96 magnetopause model.
+
+    From Tsy. 1995
 
     X = x0 - a(1 - s*t)
     Y = a(s0^2 - 1)^.5 * (1 - t^2)^.5 * cos(phi)
@@ -28,7 +34,6 @@ class T96Magnetopause:
 
     author stephgk1
     """
-    pass
 
     # private static double averagePressure = 2.0;
     # private final double scaledA0;
@@ -50,28 +55,34 @@ class T96Magnetopause:
     #     return new T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex);
     #   }
 
-    #   public static T96Magnetopause createTS07(double dynamicPressure) {
-    #     // values listed in
-    #     // not sure where these values came from, perhaps TS05?
-    #     double A0 = 34.586;
-    #     double sigma0 = 1.1960;
-    #     double X00 = 3.4397;
-    #     // the value from TS05 according to the Fortran source
-    #     double scalingPowerIndex = 0.155;
-    #     return new T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex);
-    #   }
+    @staticmethod
+    def createTS07(dynamicPressure):
+        """Create a T96 magnetopause.
 
-    #   /**
-    #    * Creates the bent version of the TS07 magnetopause.
-    #    * 
-    #    * @param dynamicPressure
-    #    * @param dipoleTiltAngle
-    #    * @param hingeDistance
-    #    * @return
-    #    */
-    #   public static Predicate<UnwritableVectorIJK> createBentTS07(double dynamicPressure,
-    #       double dipoleTiltAngle, double hingeDistance) {
-    #     PositionBender bender = new PositionBender(-dipoleTiltAngle, hingeDistance);
+        param float dynamicPressure
+        return T96Magnetopause
+        """
+        # not sure where these values came from, perhaps TS05?
+        A0 = 34.586
+        sigma0 = 1.1960
+        X00 = 3.4397
+
+        # the value from TS05 according to the Fortran source
+        scalingPowerIndex = 0.155
+
+        return T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
+
+    @staticmethod
+    def createBentTS07(dynamicPressure, dipoleTiltAngle, hingeDistance):
+        """Create the bent version of the TS07 magnetopause.
+
+        param float dynamicPressure
+        param float dipoleTiltAngle
+        param float hingeDistance
+        return Function of UnwritableVectorIJK
+        """
+        raise Exception
+        # bender = PositionBender(-dipoleTiltAngle, hingeDistance)
     #     final NewtonRaphsonInverseIJK inverseBender =
     #         new NewtonRaphsonInverseIJK(VectorFields.quadraticApproximation(bender, .1, .1, .1));
     #     // values listed in
@@ -93,7 +104,7 @@ class T96Magnetopause:
 
     #   /**
     #    * Creates the bent version of the TS07 magnetopause.
-    #    * 
+    #    *
     #    * @param dynamicPressure
     #    * @param dipoleTiltAngle
     #    * @param hingeDistance
@@ -122,7 +133,7 @@ class T96Magnetopause:
     #   }
 
     #   /**
-    #    * 
+    #    *
     #    * @param dynamicPressure
     #    * @param a0
     #    * @param sigma0
@@ -183,9 +194,9 @@ class T96Magnetopause:
     #   DEFINE SOLAR WIND DYNAMIC PRESSURE (NANOPASCALS, ASSUMING 4% OF ALPHA-PARTICLES),
     #    IF NOT EXPLICITLY SPECIFIED IN THE INPUT:
     #            * </pre>
-    #    * 
+    #    *
     #    * @param positionGSM
-    #    * 
+    #    *
     #    * @return
     #    */
     #   public MagnetopauseOutput evaluate(UnwritableVectorIJK positionGSM) {

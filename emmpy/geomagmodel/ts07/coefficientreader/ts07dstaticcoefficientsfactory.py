@@ -208,27 +208,29 @@ class TS07DStaticCoefficientsFactory:
             Expansion2Ds.createFromArray(waveExpansions, 1, 1)
         )
 
-    # @staticmethod
-    # def retrieveNewBuiltInCoefficientsPath():
-    #     """this method handles the details of grabbing the static coefficients
-    #     that are in the source code"""
-    #     raise Exception
-    #     # public static Path retrieveNewBuiltInCoefficientsPath() {
-    #     #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n40_m8/");
-    #     #     if (url == null) {
-    #     #     String me = ThinCurrentSheetShieldingCoefficients.class.getPackage().getName().replace(".", "/")
-    #     #         + "/staticcoefficients/coeffs_n40_m8/";
-    #     #     String jar = ThinCurrentSheetShieldingCoefficients.class.getProtectionDomain().getCodeSource().getLocation()
-    #     #         .getPath();
-    #     #     String urlString = "jar:file:" + jar + "!/" + me;
-    #     #     try {
-    #     #         url = new URL(urlString);
-    #     #     } catch (Exception e) {
-    #     #         throw new RuntimeException(e);
-    #     #     }
-    #     #     }
-    #     #     return RetrievePathFromUrl.retrieve(url);
-    #     # }
+    @staticmethod
+    def retrieveNewBuiltInCoefficientsPath():
+        """Retrieve static coefficients from the source code.
+
+        this method handles the details of grabbing the static coefficients
+        that are in the source code"""
+        raise Exception
+        # public static Path retrieveNewBuiltInCoefficientsPath() {
+        #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n40_m8/");
+        #     if (url == null) {
+        #     String me = ThinCurrentSheetShieldingCoefficients.class.getPackage().getName().replace(".", "/")
+        #         + "/staticcoefficients/coeffs_n40_m8/";
+        #     String jar = ThinCurrentSheetShieldingCoefficients.class.getProtectionDomain().getCodeSource().getLocation()
+        #         .getPath();
+        #     String urlString = "jar:file:" + jar + "!/" + me;
+        #     try {
+        #         url = new URL(urlString);
+        #     } catch (Exception e) {
+        #         throw new RuntimeException(e);
+        #     }
+        #     }
+        #     return RetrievePathFromUrl.retrieve(url);
+        # }
 
     @staticmethod
     def retrieveOriginalBuiltInCoefficientsPath():

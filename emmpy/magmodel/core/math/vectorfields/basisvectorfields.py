@@ -274,21 +274,21 @@ class BasisVectorFields:
 
         return bvf
 
-    # @staticmethod
-    # def filter(field, retainIfTrue, fillValue):
-    #     """Creates a new basis vector field by filtering the supplied basis
-    #     vector field using the supplied Predicate.
+    @staticmethod
+    def filter(field, retainIfTrue, fillValue):
+        """Create a new basis vector field by filtering.
 
-    #     If true, the value of the supplied field is returned, if false, the
-    #     supplied fill value is returned.
+        If true, the value of the supplied field is returned, if false, the
+        supplied fill value is returned.
 
-    #     @param field a basis vector field to be filtered
-    #     @param retainIfTrue a Predicate to be used as a filter when false is
-    #     returned
-    #     @param fillValue the value to return if the filter returns false
-    #     @return a newly created basis vector field that is a filtered view of
-    #     the supplied field
-    #     """
+        @param field a basis vector field to be filtered
+        @param retainIfTrue a Predicate to be used as a filter when false is
+        returned
+        @param fillValue the value to return if the filter returns false
+        @return a newly created basis vector field that is a filtered view of
+        the supplied field
+        """
+        raise Exception
     #     bvf = BasisVectorField()
 
     #     def my_evaluateExpansion(my_self, location):

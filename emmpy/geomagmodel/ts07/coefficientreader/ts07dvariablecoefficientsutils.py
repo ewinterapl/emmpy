@@ -1,10 +1,7 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils"""
+"""Time-dependent (variable) coefficients for the TS07D model."""
 
 
-# import os
 import re
-
-# from emmpy.crucible.core.time.utcepoch import UTCEpoch
 
 from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions import (
     DefaultFacConfigurationOptions
@@ -21,18 +18,15 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
     Ts07FacVariableCoefficients
 )
-# from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
-#     Ts07NonLinearParameters
-# )
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
-# from emmpy.magmodel.core.math.trigparity import TrigParity
-# from emmpy.java.lang.runtimeexception import RuntimeException
 
 
 class TS07DVariableCoefficientsUtils:
-    """A utility class for constructing and manipulating
+    """Time-dependent (variable) coefficients for the TS07D model.
+
+    A utility class for constructing and manipulating
     TS07DVariableCoefficients, and allows for reading and writing the
     coefficients to a file.
 
@@ -41,7 +35,10 @@ class TS07DVariableCoefficientsUtils:
     """
 
     def __init__(self):
-        """DO NOT INSTANTIATE"""
+        """Build a new object.
+
+        DO NOT INSTANTIATE.
+        """
         raise Exception
 
     # @staticmethod
@@ -68,6 +65,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def create(*args):
+        """Create a new set of variable coefficients."""
         if len(args) == 1:
             (variableCoefficientsFile,) = args
             # Constructs the TS07D set of coefficients from the ASCII file
@@ -336,7 +334,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def readDynamicPressure(variableCoefficientsFile):
-        """Parses the dynamic pressure from the variable coefficients file.
+        """Parse the dynamic pressure from the variable coefficients file.
 
         param variableCoefficientsFile an ASCII file containing a list of the
         coefficients
@@ -351,7 +349,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def readDipoleTiltAngle(variableCoefficientsFile):
-        """Parses the dipole tilt angle from the variable coefficients file.
+        """Parse the dipole tilt angle from the variable coefficients file.
 
         param variableCoefficientsFile an ASCII file containing a list of the
         coefficients
@@ -366,8 +364,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def readCurrentSheetNumber(variableCoefficientsFile):
-        """Parses the number of current sheets from the variable coefficients
-        file.
+        """Parse the number of current sheets from the 0coefficients file.
 
         param variableCoefficientsFile an ASCII file containing a list of the
         coefficients
@@ -381,8 +378,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def readAzimuthalExpansionNumber(variableCoefficientsFile):
-        """Parses the azimuthal expansion number from the variable coefficients
-        file.
+        """Parse the azimuthal expansion number from the coefficients file.
 
         param variableCoefficientsFile an ASCII file containing a list of the
         coefficients
@@ -398,8 +394,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def readRadialExpansionNumber(variableCoefficientsFile):
-        """Parses the radial expansion number from the variable coefficients
-        file.
+        """Parse the radial expansion number from the coefficients file.
 
         param variableCoefficientsFile an ASCII file containing a list of
         the coefficients
@@ -415,8 +410,7 @@ class TS07DVariableCoefficientsUtils:
 
     @staticmethod
     def readFACConfiguration(variableCoefficientsFile):
-        """Parses the FAC configuration number from the variable coefficients
-        file.
+        """Parse the FAC configuration number from the coefficients file.
 
         param variableCoefficientsFile an ASCII file containing a list of the
         coefficients
@@ -440,7 +434,7 @@ class TS07DVariableCoefficientsUtils:
             return DefaultFacConfigurationOptions(
                 DefaultFacConfigurationOptions.FAC16)
         else:
-            raise RuntimeException(
+            raise Exception(
                 "Invalid number of FACs to construct a "
                 "DefaultFacConfiguration"
             )
@@ -450,8 +444,7 @@ class TS07DVariableCoefficientsUtils:
         coeffs, numCurrentSheets, numAzimuthalExpansions, numRadialExpansions,
         facConfiguration
     ):
-        """Constructs a newly constructed Ts07FacVariableCoefficients from an
-        array of doubles.
+        """Create a new Ts07FacVariableCoefficients from an array.
 
         A double array is the data structured used in the Fortran version of
         the code.
@@ -463,7 +456,6 @@ class TS07DVariableCoefficientsUtils:
         current system
         return a newly constructed {@link TS07DVariableCoefficients}
         """
-
         # the number of asymmetric expansions is simply the n*m
         numAsymmetricExpansions = numRadialExpansions*numAzimuthalExpansions
 
@@ -474,10 +466,10 @@ class TS07DVariableCoefficientsUtils:
         numExpansions = numHalfExpansions*2*numCurrentSheets
 
         # 2*halfExpansions + 11 other coefficients
-        totalNumberOfCoefficients = (
-            numExpansions + 1 + numCurrentSheets + 5 +
-            facConfiguration.getNumberOfFields()
-        )
+        # totalNumberOfCoefficients = (
+        #     numExpansions + 1 + numCurrentSheets + 5 +
+        #     facConfiguration.getNumberOfFields()
+        # )
 
         # Parse file data into proper variables. This too will need to be
         # changed if different coefficient formats are use.

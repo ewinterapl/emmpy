@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.ts07dstaticcoefficientsfactory"""
+"""Create a set of TS07D static coefficients."""
 
 
 import os
@@ -14,35 +14,49 @@ from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 
 
 class SymmetricCylindricalExpansionPair:
-    """author stephgk1"""
+    """Create a set of TS07D static coefficients.
+
+    author stephgk1
+    """
 
     def __init__(self, tailExpansion, waveExpansion):
+        """Build a new object."""
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
     def getTailExpansion(self):
+        """Return the tail expansion."""
         return self.tailExpansion
 
     def getWaveExpansion(self):
+        """Return the wave expansion."""
         return self.waveExpansion
 
 
 class AsymmetricCylindricalExpansionPair:
-    """author stephgk1"""
+    """Wrapper for a pair of asymmetric cylindrical expansions.
+
+    author stephgk1
+    """
 
     def __init__(self, tailExpansion, waveExpansion):
+        """Build a new object."""
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
     def getTailExpansion(self):
+        """Return the tail expansion."""
         return self.tailExpansion
 
     def getWaveExpansion(self):
+        """Return the wave expnsion."""
         return self.waveExpansion
 
 
 class TS07DStaticCoefficientsFactory:
-    """Use this class to construct ThinCurrentSheetShieldingCoefficients from
+    """Build shielding coefficients from a directory of files.
+
+    Use this class to construct ThinCurrentSheetShieldingCoefficients from
     the directory where the coefficients are located.
 
     The coefficients must be in the format as located at the model webpage:
@@ -51,14 +65,10 @@ class TS07DStaticCoefficientsFactory:
     author Nicholas Sharp
     author G.K.Stephens
     """
-    pass
-
-    # def __init__(self):
-    #     """Private constructor"""
-    #     pass
 
     @staticmethod
     def create(*args):
+        """Create a new set of static coefficients."""
         if len(args) == 1:
             (staticCoeffDirectory,) = args
             # Parses the static coefficients needed for the TS07D model from
@@ -107,7 +117,7 @@ class TS07DStaticCoefficientsFactory:
 
     @staticmethod
     def readTailS(staticCoeffDirectory, numRadialExpansions):
-        """Reads in the Tail shielding coefficients from file
+        """Read in tail shielding coefficients from a file.
 
         param staticCoeffDirectory
         return the coefficients
@@ -153,7 +163,7 @@ class TS07DStaticCoefficientsFactory:
     @staticmethod
     def readTail(staticCoeffDirectory, numAzimuthalExpansions,
                  numRadialExpansions, fileName):
-        """Reads in the Tail coefficients from file"""
+        """Read in the tail coefficients from a file."""
         numShieldAzimuthalExpansions = 15
         numShieldRadialExpansions = 5
         expansions = []
@@ -222,7 +232,9 @@ class TS07DStaticCoefficientsFactory:
 
     @staticmethod
     def retrieveOriginalBuiltInCoefficientsPath():
-        """this method handles the details of grabbing the static coefficients
+        """Fetch the static coefficients that are in the source code.
+
+        this method handles the details of grabbing the static coefficients
         that are in the source code
 
         THIS IS A QUICK HACK FOR TESTING

@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients"""
+"""Equatorial linear coefficients for the TS07 model."""
 
 
 from math import sqrt
@@ -12,10 +12,14 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 
 
 class Ts07EquatorialLinearCoefficients:
-    """author G.K.Stephens"""
+    """Equatorial linear coefficients for the TS07 model.
+
+    author G.K.Stephens
+    """
 
     def __init__(self, coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
                  numRadialExpansions):
+        """Build a new object."""
         self.coeffs = coeffs
         self.pdynDependentCoeffs = pdynDependentCoeffs
         self.numAzimuthalExpansions = numAzimuthalExpansions
@@ -26,7 +30,7 @@ class Ts07EquatorialLinearCoefficients:
         sym,
         symPdynDependent, aOdd, aOddPdynDependent, aEven,
         aEvenPdynDependent, numAzimuthalExpansions, numRadialExpansions):
-        pass
+        """Create a new object."""
         coeffs = TailSheetCoefficients(sym, aOdd, aEven)
         pdynDependentCoeffs = TailSheetCoefficients(
             symPdynDependent, aOddPdynDependent, aEvenPdynDependent
@@ -37,18 +41,23 @@ class Ts07EquatorialLinearCoefficients:
         )
 
     def getNumAzimuthalExpansions(self):
+        """Return the number of azimuthal expansions."""
         return self.numAzimuthalExpansions
 
     def getNumRadialExpansions(self):
+        """Return the number of radial expansions."""
         return self.numRadialExpansions
 
     def getCoeffs(self):
+        """Return the coefficients."""
         return self.coeffs
 
     def getPdynDependentCoeffs(self):
+        """Return the coefficients dependent on the dynamic pressure."""
         return self.pdynDependentCoeffs
 
     def getPdynScaledCoeffs(self, dynamicPressure):
+        """Return the coefficients scaled by the dynamic pressure."""
         pDyn0 = 2.0
         pDynNormalized = sqrt(dynamicPressure/pDyn0) - 1
         symPdynDependent = CoefficientExpansions.scale(
@@ -66,6 +75,7 @@ class Ts07EquatorialLinearCoefficients:
         )
 
     def toString(self):
+        """Convert the object to a string."""
         return (
             "Ts07EquatorialLinearCoefficients [coeffs=%s, "
             "pdynDependentCoeffs=%s, numAzimuthalExpansions=%s, "
@@ -75,6 +85,7 @@ class Ts07EquatorialLinearCoefficients:
         )
 
     def hashCode(self):
+        """Compute the object hash code."""
         prime = 31
         result = 1
         result = prime*result
@@ -87,6 +98,7 @@ class Ts07EquatorialLinearCoefficients:
         return result
 
     def equals(self, obj):
+        """Check for equality with another object."""
         if self is obj:
             return True
         if obj is None:

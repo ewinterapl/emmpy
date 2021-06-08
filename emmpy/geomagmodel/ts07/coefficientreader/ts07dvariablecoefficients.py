@@ -1,14 +1,15 @@
-"""emmpy.geomagmodel.ts07.coefficientreaderts07dvariablecoefficients"""
+"""Time-variable coefficients for the TS07D geomagnetic field model."""
 
 
-# from emmpy.java.lang.double import Double
 from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
     Ts07NonLinearParameters
 )
 
 
 class TS07DVariableCoefficients:
-    """A container class that groups together the time-dependent coefficients
+    """Time-variable coefficients for the TS07D geomagnetic field model.
+
+    A container class that groups together the time-dependent coefficients
     and parameters needed to construct the TS07D geomagnetic field model and
     derivative models.
 
@@ -19,7 +20,7 @@ class TS07DVariableCoefficients:
     """
 
     def __init__(self, cfAmplitude, equatorialCoeffs, facCoeffs):
-        """Constructor
+        """Build a new object.
 
         Constructor is package private, should be constructed using the
         TS07DVariableCoefficientsUtils class.
@@ -44,20 +45,19 @@ class TS07DVariableCoefficients:
         )
 
     def getEquatorialCoefficients(self):
-        """return the linear and non-linear equatorial parameters"""
+        """Return the equatorial coefficients."""
         return self.equatorialCoeffs
 
     def getDipoleShieldingAmplitude(self):
-        """return the amplitude of the dipole shielding field"""
+        """Return the amplitude of the dipole shielding field."""
         return self.cfAmplitude
 
     def getFacCoefficients(self):
-        """return the field-aligned current linear and non-linear
-        parameters"""
+        """Return the field-aligned current parameters."""
         return self.facCoeffs
 
     def getNonLinearParameters(self):
-        """return all the non-linear parameters in the TS07D model"""
+        """Return all the non-linear parameters in the TS07D model."""
         return self.nonLinearParameters
 
     # def getTotalNumberOfParameters(self):

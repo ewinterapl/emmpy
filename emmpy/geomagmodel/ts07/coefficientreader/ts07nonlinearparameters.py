@@ -1,11 +1,13 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters"""
+"""Non-linear parameters for the TS07 geomagnetic field model."""
 
 
 # from emmpy.java.lang.double import Double
 
 
 class Ts07NonLinearParameters:
-    """A container class for all the non-linear parameters of the TS07D model,
+    """Non-linear parameters for the TS07 geomagnetic field model.
+
+    A container class for all the non-linear parameters of the TS07D model,
     current sheet thicknesses, hinge distance, warping parameter, region-1 FAC
     scaling, region-2 FAC scaling, and the twisting parameter.
 
@@ -16,7 +18,7 @@ class Ts07NonLinearParameters:
         self, facRegion1Kappa, facRegion2Kappa, currThicks, hingeDist,
         warpParam, twistFact
     ):
-        """Constructor"""
+        """Build a new object."""
         self.facRegion1Kappa = facRegion1Kappa
         self.facRegion2Kappa = facRegion2Kappa
         self.currThicks = currThicks
@@ -31,6 +33,7 @@ class Ts07NonLinearParameters:
     #     return self.facRegion2Kappa
 
     def getCurrentSheetThicknesses(self):
+        """Return the current sheet thicknesses."""
         return self.currThicks
 
     # def getHingeDist(self):

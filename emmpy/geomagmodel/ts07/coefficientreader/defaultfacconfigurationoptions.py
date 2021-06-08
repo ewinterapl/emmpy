@@ -1,4 +1,4 @@
-"""emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions"""
+"""Default configuration options for field-aligned currents."""
 
 
 from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
@@ -14,12 +14,15 @@ from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
 class DefaultFacConfigurationOptions(FacConfiguration):
-    """author G.K.Stephens"""
+    """Default configuration options for field-aligned currents.
+
+    author G.K.Stephens
+    """
 
     TS07D = 4
-    # FAC6 = 6
-    # FAC12 = 12
-    # FAC16 = 16
+    FAC6 = 6
+    FAC12 = 12
+    FAC16 = 16
 
     r1_m1_theta0 = 0.7113544659
     r1_m2_theta0 = 0.5567714182
@@ -30,10 +33,11 @@ class DefaultFacConfigurationOptions(FacConfiguration):
     shielded = True
 
     def __init__(self, numberOfFields):
-        """Constructor"""
+        """Build a new object."""
         self.numberOfFields = numberOfFields
 
     def createFromCoeffs(self, coeffs):
+        """Create the options from a set of coefficients."""
         if self.numberOfFields == DefaultFacConfigurationOptions.TS07D:
             return DefaultFacConfigurationOptions.getTs07(coeffs)
         elif self.numberOfFields == DefaultFacConfigurationOptions.FAC6:
@@ -49,11 +53,12 @@ class DefaultFacConfigurationOptions(FacConfiguration):
             raise Exception
 
     def getNumberOfFields(self):
+        """Get the number of fields."""
         return self.numberOfFields
 
     @staticmethod
     def getTs07(coeffs):
-        """The TS07 Field Aligned currents"""
+        """Get the TS07 field-aligned currents."""
         smoothed = False
         count = 0
 

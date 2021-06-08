@@ -1,16 +1,24 @@
-"""emmpy.package geomagmodel.ts07.coefficientreader.facconfiguration"""
+"""Interface for field-aligned current options."""
 
 
 class FacConfiguration:
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE"""
+        """Interface for field-aligned current options.
+
+        INTERFACE - DO NOT INSTANTIATE.
+        """
         raise Exception
 
     def createFromCoeffs(self, coeffs):
-        """INTERFACE - DO NOT INVOKE"""
+        """Create the object from a set of coefficients.
+
+        INTERFACE - DO NOT INVOKE."""
         raise Exception
 
     def getNumberOfFields(self):
-        """INTERFACE - DO NOT INVOKE"""
+        """Get the number of fields.
+
+        INTERFACE - DO NOT INVOKE.
+        """
         raise Exception

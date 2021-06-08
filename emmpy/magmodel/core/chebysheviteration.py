@@ -1,4 +1,4 @@
-"""emmpy.magmodel.core.chebysheviteration"""
+"""The Chebyshev iteration algorithm."""
 
 
 from math import cos, sin
@@ -7,9 +7,11 @@ from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
 class ChebyshevIteration:
-    """Implements Chebyshev's iterative algorithm for fast computation of sines
+    """The Chebyshev iteration algorithm.
+
+    Implements Chebyshev's iterative algorithm for fast computation of sines
     and cosines.
-    
+
     This is particularly useful for quickly computing an expansion of sines
     and/or cosines, as the number of trig evaluations is minimal.
 
@@ -18,6 +20,7 @@ class ChebyshevIteration:
 
     @staticmethod
     def evaluateTrigExpansions(*args):
+        """Evaluate the trigonometric expansions."""
         if len(args) == 3:
             (phi, sinMphi, cosMphi) = args
             # This method uses the Chebyshev iterative method, to evaluate
@@ -82,10 +85,12 @@ class ChebyshevIteration:
             # return None
             if trigParity is TrigParity.ODD:
                 # fill the expansion with f=sin(m*phi) and df=cos(m*phi)
-                ChebyshevIteration.evaluateTrigExpansions(phi, trigMphi, dTrigMphi)
+                ChebyshevIteration.evaluateTrigExpansions(
+                    phi, trigMphi, dTrigMphi)
             else:
                 # fill the expansion with f=cos(m*phi) and df=-sin(m*phi)
-                ChebyshevIteration.evaluateTrigExpansions(phi, dTrigMphi, trigMphi)
+                ChebyshevIteration.evaluateTrigExpansions(
+                    phi, dTrigMphi, trigMphi)
                 for i in range(len(dTrigMphi)):
                     dTrigMphi[i] = -dTrigMphi[i]
         else:

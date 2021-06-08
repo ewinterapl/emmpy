@@ -5,7 +5,7 @@ methods will raise exceptions if invoked.
 """
 
 
-class CoordConverterIJ():
+class CoordConverterIJ:
     """An interface for conversion between different coordinate systems.
 
     The four methods allow you to convert positions and states from Cartesian

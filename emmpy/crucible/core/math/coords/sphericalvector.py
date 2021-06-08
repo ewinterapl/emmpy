@@ -26,12 +26,12 @@ class SphericalVector(AbstractVector):
         """Return the longitude."""
         return AbstractVector.getK(self)
 
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "SphericalVector [radius: %s, colatitude: %s, longitude: %s]" %
-            (self.getRadius(), self.getColatitude(), self.getLongitude())
-        )
+    # def toString(self):
+    #     """Convert the object to a string."""
+    #     return (
+    #         "SphericalVector [radius: %s, colatitude: %s, longitude: %s]" %
+    #         (self.getRadius(), self.getColatitude(), self.getLongitude())
+    #     )
 
 
 # The ZERO vector.

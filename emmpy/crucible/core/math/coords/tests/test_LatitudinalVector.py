@@ -23,13 +23,6 @@ class TestBuilder(unittest.TestCase):
         lv = LatitudinalVector(0.0, 0.1, 0.2)
         self.assertAlmostEqual(lv.getLongitude(), 0.2)
 
-    def test_toString(self):
-        lv = LatitudinalVector(0.0, 0.1, 0.2)
-        self.assertEqual(
-            lv.toString(),
-            "LatitudinalVector [radius: 0.0, latitude: 0.1, longitude: 0.2]"
-        )
-
 
 if __name__ == '__main__':
     unittest.main()

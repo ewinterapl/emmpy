@@ -17,12 +17,6 @@ class TestBuilder(unittest.TestCase):
         pv = PolarVector(0.0, 0.1)
         self.assertAlmostEqual(pv.getAngle(), 0.1)
 
-    def test_toString(self):
-        pv = PolarVector(0.0, 0.1)
-        self.assertEqual(
-            pv.toString(), "PolarVector [radius: 0.0, angle: 0.1]"
-        )
-
 
 if __name__ == '__main__':
     unittest.main()

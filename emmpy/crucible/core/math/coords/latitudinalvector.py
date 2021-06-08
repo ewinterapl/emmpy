@@ -27,12 +27,12 @@ class LatitudinalVector(AbstractVector):
         """Return the longitude."""
         return AbstractVector.getK(self)
 
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "LatitudinalVector [radius: %s, latitude: %s, longitude: %s]" %
-            (self.getRadius(), self.getLatitude(), self.getLongitude())
-        )
+    # def toString(self):
+    #     """Convert the object to a string."""
+    #     return (
+    #         "LatitudinalVector [radius: %s, latitude: %s, longitude: %s]" %
+    #         (self.getRadius(), self.getLatitude(), self.getLongitude())
+    #     )
 
 
 # The ZERO vector.

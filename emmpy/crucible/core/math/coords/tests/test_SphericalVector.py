@@ -21,13 +21,6 @@ class TestBuilder(unittest.TestCase):
         sv = SphericalVector(0.1, 0.2, 0.3)
         self.assertAlmostEqual(sv.getLongitude(), 0.3)
 
-    def test_toString(self):
-        sv = SphericalVector(0.1, 0.2, 0.3)
-        self.assertEqual(
-            sv.toString(),
-            "SphericalVector [radius: 0.1, colatitude: 0.2, longitude: 0.3]"
-        )
-
 
 if __name__ == '__main__':
     unittest.main()

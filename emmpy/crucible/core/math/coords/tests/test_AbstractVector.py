@@ -32,24 +32,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(vijk.getJ(), 1.2)
         self.assertAlmostEqual(vijk.getK(), 2.3)
 
-    def test_hashCode(self):
-        av = AbstractVector(0.1, 1.2, 2.3)
-        self.assertEqual(av.hashCode(), 1030548492004)
-
-    def test_equals(self):
-        av1 = AbstractVector(0.1, 1.2, 2.3)
-        av2 = AbstractVector(0.1, 1.2, 2.3)
-        av3 = AbstractVector(0.2, 1.2, 2.3)
-        self.assertTrue(av1.equals(av1))
-        self.assertFalse(av1.equals(None))
-        self.assertFalse(av1.equals([0.1, 1.2, 2.3]))
-        self.assertTrue(av1.equals(av2))
-        self.assertFalse(av1.equals(av3))
-
-    def test_toString(self):
-        with self.assertRaises(Exception):
-            AbstractVector.toString(None)
-
 
 if __name__ == '__main__':
     unittest.main()

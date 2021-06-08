@@ -21,13 +21,6 @@ class TestBuilder(unittest.TestCase):
         rdv = RaDecVector(0.1, 0.2, 0.3)
         self.assertAlmostEqual(rdv.getDeclination(), 0.3)
 
-    def test_toString(self):
-        rdv = RaDecVector(0.1, 0.2, 0.3)
-        self.assertEqual(
-            rdv.toString(),
-            "RaDecVector [radius: 0.1, rightAscension: 0.2, declination: 0.3]"
-        )
-
 
 if __name__ == '__main__':
     unittest.main()

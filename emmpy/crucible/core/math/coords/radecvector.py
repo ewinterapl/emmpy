@@ -26,12 +26,12 @@ class RaDecVector(AbstractVector):
         """Return the declination."""
         return AbstractVector.getK(self)
 
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "RaDecVector [radius: %s, rightAscension: %s, declination: %s]" %
-            (self.getRadius(), self.getRightAscension(), self.getDeclination())
-        )
+    # def toString(self):
+    #     """Convert the object to a string."""
+    #     return (
+    #         "RaDecVector [radius: %s, rightAscension: %s, declination: %s]" %
+    #         (self.getRadius(), self.getRightAscension(), self.getDeclination())
+    #     )
 
 
 # The ZERO vector.

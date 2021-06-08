@@ -22,12 +22,12 @@ class PolarVector(AbstractVectorIJ):
         """Return the angle."""
         return AbstractVectorIJ.getJ(self)
 
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "PolarVector [radius: %s, angle: %s]" %
-            (self.getRadius(), self.getAngle())
-        )
+    # def toString(self):
+    #     """Convert the object to a string."""
+    #     return (
+    #         "PolarVector [radius: %s, angle: %s]" %
+    #         (self.getRadius(), self.getAngle())
+    #     )
 
 
 ZERO = PolarVector(0, 0)

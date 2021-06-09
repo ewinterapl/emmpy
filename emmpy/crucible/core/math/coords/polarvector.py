@@ -16,11 +16,11 @@ class PolarVector(AbstractVectorIJ):
 
     def getRadius(self):
         """Return the radius."""
-        return AbstractVectorIJ.getI(self)
+        return self.getI()
 
     def getAngle(self):
         """Return the angle."""
-        return AbstractVectorIJ.getJ(self)
+        return self.getJ()
 
 
 # The null vector in polar coordinates.

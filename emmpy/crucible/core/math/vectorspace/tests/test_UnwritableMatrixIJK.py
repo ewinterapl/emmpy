@@ -367,40 +367,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, 8)
         self.assertAlmostEqual(m2.kk, 9)
 
-    # def test_hashCode(self):
-    #     m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    #     self.assertEqual(m.hashCode(), 939400226682508505375)
-
-    # def test_equals(self):
-    #     m1 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    #     self.assertTrue(m1.equals(m1))
-    #     self.assertFalse(m1.equals(None))
-    #     self.assertFalse(m1.equals([]))
-    #     self.assertTrue(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(0, 2, 3, 4, 5, 6, 7, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 0, 3, 4, 5, 6, 7, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 0, 4, 5, 6, 7, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 0, 5, 6, 7, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 4, 0, 6, 7, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 0, 7, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 0, 8, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 0, 9)
-    #     self.assertFalse(m1.equals(m2))
-    #     m2 = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 0)
-    #     self.assertFalse(m1.equals(m2))
-
-    # def test_toString(self):
-    #     m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-    #     self.assertEqual(m.toString(), "[1,2,3;4,5,6;7,8,9]")
-
 
 if __name__ == '__main__':
     unittest.main()

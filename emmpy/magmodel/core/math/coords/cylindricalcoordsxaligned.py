@@ -1,14 +1,11 @@
 """Cylindrical coordinates aligned along the X-axis."""
 
 
-from math import atan2, cos, sin, sqrt
+from math import atan2, cos, pi, sin, sqrt
 
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
-)
-from emmpy.crucible.core.units.fundamentalphysicalconstants import (
-    FundamentalPhysicalConstants
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -74,7 +71,7 @@ class CylindricalCoordsXAligned:
                 cylindricalRadius = big*sqrt(y*y + z*z)
                 longitude = atan2(z, y)
             if longitude < 0:
-                longitude += FundamentalPhysicalConstants.TWOPI
+                longitude += 2*pi
             return CylindricalVector(cylindricalRadius, longitude, height)
         elif isinstance(args[0], CylindricalVector):
             (cyl,) = args

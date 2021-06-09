@@ -30,15 +30,15 @@ class AbstractVectorIJ:
 
     def __init__(self, i, j):
         """Construct a coordinate from the two basic components.
-        
+
         param (float) i
         param (float) j
         """
         self.ijCoordinate = UnwritableVectorIJ(i, j)
 
-    # These six methods should be wrapped in new methods with the appropriate
+    # These methods should be wrapped in new methods with the appropriate
     # names. The getters in the unwritable and the setters in the writable.
-    # These six methods should never have there visibility upgraded, but should
+    # These methods should never have there visibility upgraded, but should
     # be wrapped.
 
     def getI(self):

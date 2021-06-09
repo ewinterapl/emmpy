@@ -1,13 +1,13 @@
 """Basis vector field for a thin asymmetric current sheet."""
 
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
     TailSheetAsymmetricExpansion
 )
@@ -20,6 +20,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions impor
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
+from emmpy.utilities.nones import nones
 
 
 class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
@@ -81,16 +82,11 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     def evaluateExpansions(self, location):
         """Recalculate everything."""
         # Preallocate the arrays of vectors for the expansions.
-        symmetricExpansions = [None for i in range(self.numRadialExpansions)]
-        oddExpansions = []
-        evenExpansions = []
-        for i in range(self.numAzimuthalExpansions):
-            oddExpansions.append([])
-            evenExpansions.append([])
-            for j in range(self.numRadialExpansions):
-                oddExpansions[i].append(None)
-                evenExpansions[i].append(None)
-
+        symmetricExpansions = nones((self.numRadialExpansions,))
+        oddExpansions = nones((self.numAzimuthalExpansions,
+                               self.numRadialExpansions))
+        evenExpansions = nones((self.numAzimuthalExpansions,
+                                self.numRadialExpansions))
         # n is the radial expansion number
         for n in range(1, self.numRadialExpansions + 1):
 

@@ -1,6 +1,9 @@
 """A 1-D array of expansion coefficients."""
 
 
+from emmpy.utilities.nones import nones
+
+
 class CoefficientExpansion1D:
     """A 1-D array of expansion coefficients.
 
@@ -17,7 +20,7 @@ class CoefficientExpansion1D:
     def toArray(self):
         """Create a list containing the elements of the expansion."""
         size = self.size()
-        anArray = [None]*size
+        anArray = nones((size,))
         for i in range(size):
             anArray[i] = self.getCoefficient(i + self.getLowerBoundIndex())
         return anArray

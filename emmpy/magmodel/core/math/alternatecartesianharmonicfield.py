@@ -8,6 +8,7 @@ from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.utilities.nones import nones
 
 
 class AlternateCartesianHarmonicField(BasisVectorField):
@@ -86,11 +87,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         x = location.getI()
         y = location.getJ()
         z = location.getK()
-        expansions = []
-        for i in range(self.aikCoeffs.iSize()):
-            expansions.append([])
-            for j in range(self.aikCoeffs.jSize()):
-                expansions[i].append(None)
+        expansions = nones((self.aikCoeffs.iSize(), self.aikCoeffs.jSize()))
         for i in range(self.firstI, self.lastI + 1):
             pi = self.piCoeffs.getCoefficient(i)
             sinYpi = self.trigParityI.evaluate(pi*y)

@@ -8,11 +8,11 @@
 # import magmodel.core.math.expansions.CoefficientExpansion1D;
 # import magmodel.core.math.expansions.CoefficientExpansion2D;
 
+from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
@@ -25,6 +25,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
+from emmpy.utilities.nones import nones
 
 
 class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
@@ -59,17 +60,12 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         return TailSheetExpansions
         """
         # [UnwritableVectorIJK] symmetricExpansions
-        symmetricExpansions = [None]*self.numRadialExpansions
+        symmetricExpansions = nones((self.numRadialExpansions,))
         # [[UnwritableVectorIJK]] oddExpansions, evenExpansions
-        oddExpansions = []
-        evenExpansions = []
-        for i in range(self.numAzimuthalExpansions):
-            oddExpansions.append([])
-            evenExpansions.append([])
-            for j in range(self.numRadialExpansions):
-                oddExpansions[i].append(None)
-                evenExpansions[i].append(None)
-
+        oddExpansions = nones((self.numAzimuthalExpansions,
+                               self.numRadialExpansions))
+        evenExpansions = nones((self.numAzimuthalExpansions,
+                                self.numRadialExpansions))
         # n is the radial expansion number
         for n in range(1, self.numRadialExpansions + 1):
             # CoefficientExpansion2D tailExpansion

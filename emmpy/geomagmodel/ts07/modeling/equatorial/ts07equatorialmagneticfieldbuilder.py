@@ -16,6 +16,7 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield im
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
+from emmpy.utilities.nones import nones
 
 
 class Ts07EquatorialMagneticFieldBuilder:
@@ -97,7 +98,7 @@ class Ts07EquatorialMagneticFieldBuilder:
         warpingParam = self.coeffs.getWarpingParam()
         twistParam = self.coeffs.getTwistParam()
         # [BasisVectorField] equatorialFields
-        equatorialFields = [None]*numCurrSheets
+        equatorialFields = nones((numCurrSheets,))
 
         # loop through each of the current sheets
         for currSheetIndex in range(numCurrSheets):

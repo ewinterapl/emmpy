@@ -4,6 +4,7 @@
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
+from emmpy.utilities.nones import nones
 
 
 class TailSheetCoefficients:
@@ -47,13 +48,8 @@ class TailSheetCoefficients:
         @param numRadialExpansions
         @retuxrn
         """
-        sym = [None]*numRadialExpansions
-        odd = []
-        even = []
-        for i in range(numAzimuthalExpansions):
-            odd.append([None]*numRadialExpansions)
-            even.append([None]*numRadialExpansions)
-
+        sym = nones((numRadialExpansions,))
+        odd = nones((numAzimuthalExpansions, numRadialExpansions))
         # n is the radial expansion number
         count = 0
         for n in range(1, numRadialExpansions + 1):
@@ -106,7 +102,7 @@ class TailSheetCoefficients:
         lastM = self.numAzimuthalExpansions
         firstN = 1
         lastN = self.numRadialExpansions
-        coeffs = [None]*self.getNumberOfExpansions()
+        coeffs = nones((self.getNumberOfExpansions(),))
         count = 0
 
         # the pressure independent terms

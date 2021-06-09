@@ -13,6 +13,7 @@ from emmpy.magmodel.core.math.expansions.arrayexpansion1d import (
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import CoefficientExpansion1D
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 from emmpy.magmodel.core.math.expansions.listexpansion1d import ListExpansion1D
+from emmpy.utilities.nones import nones
 
 
 class Expansion1Ds:
@@ -77,7 +78,7 @@ class Expansion1Ds:
             lastExpansion = a.getUpperBoundIndex()
 
             # [UnwritableVectorIJK] array
-            array = [None]*(lastExpansion - firstExpansion + 1)
+            array = nones((lastExpansion - firstExpansion + 1,))
 
             e1d = Expansion1D()
             e1d.getLowerBoundIndex = lambda: firstExpansion

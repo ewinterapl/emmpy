@@ -13,6 +13,7 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
 )
 from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
 from emmpy.utilities.isrealnumber import isRealNumber
+from emmpy.utilities.nones import nones
 
 
 class Expansion2Ds:
@@ -56,12 +57,15 @@ class Expansion2Ds:
             firstRadialExpansion = a.getJLowerBoundIndex()
             lastRadialExpansion = a.getJUpperBoundIndex()
             # [[UnwritableVectorIJK]] array
-            array = []
-            for i in range(lastAzimuthalExpansion - firstAzimuthalExpansion + 1):
-                array.append([])
-                for j in range(lastRadialExpansion -
-                               firstRadialExpansion + 1):
-                    array[i].append(None)
+            # array = []
+            # for i in range(lastAzimuthalExpansion - firstAzimuthalExpansion + 1):
+            #     array.append([])
+            #     for j in range(lastRadialExpansion -
+            #                    firstRadialExpansion + 1):
+            #         array[i].append(None)
+            array = nones(
+                (lastAzimuthalExpansion - firstAzimuthalExpansion + 1,
+                 lastRadialExpansion - firstRadialExpansion + 1))
             e2d = Expansion2D()
             e2d.getILowerBoundIndex = lambda: firstAzimuthalExpansion
             e2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansion

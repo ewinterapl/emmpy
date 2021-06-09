@@ -11,6 +11,7 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
 )
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.utilities.nones import nones
 
 
 class SymmetricCylindricalExpansionPair:
@@ -124,17 +125,14 @@ class TS07DStaticCoefficientsFactory:
         """
         numShieldAzimuthalExpansions = 15
         numShieldRadialExpansions = 5
-        expansions = [None]*numRadialExpansions
-        waveExpansions = [None]*numRadialExpansions
+        expansions = nones((numRadialExpansions,))
+        waveExpansions = nones((numRadialExpansions,))
         for i in range(1, numRadialExpansions + 1):
             fileName = "tailamebhr_%02d.par" % i
             inFile = os.path.join(staticCoeffDirectory, fileName)
-            values = []
-            for ii in range(numShieldAzimuthalExpansions):
-                values.append([])
-                for jj in range(numShieldRadialExpansions):
-                    values[ii].append(None)
-            waveNumberValues = [None]*numShieldRadialExpansions
+            values = nones((numShieldAzimuthalExpansions,
+                            numShieldRadialExpansions))
+            waveNumberValues = nones((numShieldRadialExpansions,))
             with open(inFile) as f:
                 for l in range(numShieldAzimuthalExpansions):
                     for k in range(1, numShieldRadialExpansions + 1):
@@ -166,31 +164,22 @@ class TS07DStaticCoefficientsFactory:
         """Read in the tail coefficients from a file."""
         numShieldAzimuthalExpansions = 15
         numShieldRadialExpansions = 5
-        expansions = []
-        waveExpansions = []
-        for i in range(numAzimuthalExpansions):
-            expansions.append([])
-            waveExpansions.append([])
-            for j in range(numRadialExpansions):
-                expansions[i].append(None)
-                waveExpansions[i].append(None)
+        expansions = nones((numAzimuthalExpansions, numRadialExpansions))
+        waveExpansions = nones((numAzimuthalExpansions, numRadialExpansions))
         for n in range(1, numRadialExpansions + 1):
             for m in range(1, numAzimuthalExpansions + 1):
                 inFile = os.path.join(staticCoeffDirectory,
                                       fileName + "%02d_%02d.par" % (n, m))
                 with open(inFile) as f:
-                    values = []
-                    for i in range(numShieldAzimuthalExpansions):
-                        values.append([])
-                        for j in range(numShieldRadialExpansions):
-                            values[i].append(None)
+                    values = nones((numShieldAzimuthalExpansions,
+                                    numShieldRadialExpansions))
                     for l in range(numShieldAzimuthalExpansions):
                         for k in range(1, numShieldRadialExpansions + 1):
                             # IS THIS RIGHT? ASSUMES 1 VALUE PER LINE.
                             line = f.readline()
                             val = float(line.split()[0])
                             values[l][k - 1] = val
-                    waveNumberValues = [None]*numShieldRadialExpansions
+                    waveNumberValues = nones((numShieldRadialExpansions,))
                     for k in range(1, numShieldRadialExpansions + 1):
                         line = f.readline()
                         val = float(line.split()[0])

@@ -15,6 +15,7 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
+from emmpy.utilities.nones import nones
 
 
 class CoefficientExpansions:
@@ -167,7 +168,7 @@ class CoefficientExpansions:
             # Create a dummy expansion of the appropriate size.
             n = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
             p = ArrayCoefficientExpansion1D(
-                [None]*n, firstRadialExpansionNumber
+                nones((n,)), firstRadialExpansionNumber
             )
             v = CoefficientExpansion1D()
             v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
@@ -184,9 +185,7 @@ class CoefficientExpansions:
                 lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber
                 + 1
             )
-            arr = []
-            for i in range(na):
-                arr.append([None]*nr)
+            arr = nones((na, nr))
             p = ArrayCoefficientExpansion2D(
                 arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
             )
@@ -223,7 +222,7 @@ class CoefficientExpansions:
             firstExpansion = a.getLowerBoundIndex()
             lastExpansion = a.getUpperBoundIndex()
             n = lastExpansion - firstExpansion + 1
-            p = ArrayCoefficientExpansion1D([None]*n, firstExpansion)
+            p = ArrayCoefficientExpansion1D(nones((n,)), firstExpansion)
             v = CoefficientExpansion1D()
             v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
             v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
@@ -269,9 +268,7 @@ class CoefficientExpansions:
         # Create a dummy expansion of the appropriate size.
         nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
         na = abs(firstAzimuthalExpansionNumber)
-        arr = []
-        for i in range(na):
-            arr.append([None]*nr)
+        arr = nones((na, nr))
         p = ArrayCoefficientExpansion2D(
             arr, firstAzimuthalExpansionNumber,
             firstRadialExpansionNumber

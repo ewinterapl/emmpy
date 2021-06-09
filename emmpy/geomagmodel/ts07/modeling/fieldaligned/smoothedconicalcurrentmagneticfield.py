@@ -1,8 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.smoothedconicalcurrentmagneticfield"""
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import UnwritableVectorIJK
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
@@ -12,12 +10,17 @@ from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
 from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
+from emmpy.utilities.nones import nones
 
 
 class SmoothedConicalCurrentMagneticField(SphericalVectorField):
@@ -35,7 +38,7 @@ class SmoothedConicalCurrentMagneticField(SphericalVectorField):
         # int numShifts
         numShifts = 5
         # list of VectorField
-        shiftedFields = [None]*numShifts
+        shiftedFields = nones((numShifts,))
         for i in range(numShifts):
             # double shiftedTheta0
             shiftedTheta0 = theta0 - 2.0*shiftDistance + i*shiftDistance

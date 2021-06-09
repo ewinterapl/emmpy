@@ -5,13 +5,14 @@ from math import cosh, sinh
 
 from scipy.special import jv
 
-from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
+from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.utilities.nones import nones
 
 
 class CylindricalHarmonicField(BasisVectorField):
@@ -78,11 +79,8 @@ class CylindricalHarmonicField(BasisVectorField):
         return Expansion2D<UnwritableVectorIJK>
         """
         # UnwritableVectorIJK[][] expansions
-        expansions = []
-        for i in range(self.coefficientsExpansion.iSize()):
-            expansions.append([])
-            for j in range(self.coefficientsExpansion.jSize()):
-                expansions[i].append(None)
+        expansions = nones((self.coefficientsExpansion.iSize(),
+                            self.coefficientsExpansion.jSize()))
         # float x, y
         x = location.getI()
         y = location.getJ()
@@ -96,8 +94,8 @@ class CylindricalHarmonicField(BasisVectorField):
         # Precompute the sin(m*phi) and cos(m*phi), this greatly speeds up the
         # code.
         # float[] sinMphis, cosMphis
-        sinMphis = [None]*(self.lastM + 1)
-        cosMphis = [None]*(self.lastM + 1)
+        sinMphis = nones((self.lastM + 1,))
+        cosMphis = nones((self.lastM + 1,))
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
         for n in range(self.firstN, self.lastN + 1):
@@ -119,7 +117,7 @@ class CylindricalHarmonicField(BasisVectorField):
             jns = []
             for i in range(self.lastM + 1):
                 jns.append(jv(i, rhoK))
-            jnsDer = [None]*len(jns)
+            jnsDer = nones((len(jns),))
             for m in range(1, self.lastM + 1):
                 jnsDer[m] = jns[m - 1] - m*jns[m]*rhoKInv
             jnsDer[0] = -jns[1]

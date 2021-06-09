@@ -3,14 +3,15 @@
 
 from math import cos, sin
 
+from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
-from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
+from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.utilities.nones import nones
 
 
 class FieldAlignedCurrentShiedingBuilder:
@@ -222,14 +223,8 @@ class FieldAlignedCurrentShiedingBuilder:
         # float dynamicPressureScalingFactor
         dynamicPressureScalingFactor = pow(self.dynamicPressure/2, 0.155)
         # float[][] aPerpenValues, aParallValues
-        aPerpenValues = []
-        aParallValues = []
-        for i in range(3):
-            aPerpenValues.append([])
-            aParallValues.append([])
-            for j in range(3):
-                aPerpenValues[i].append(None)
-                aParallValues[i].append(None)
+        aPerpenValues = nones((3, 3))
+        aParallValues = nones((3, 3))
         # double xScale
         xScale = (
             self.kappa -

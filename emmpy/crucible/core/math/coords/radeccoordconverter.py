@@ -8,9 +8,6 @@ from emmpy.crucible.core.math.coords.latitudinalvector import (
     LatitudinalVector
 )
 from emmpy.crucible.core.math.coords.radecvector import RaDecVector
-from emmpy.crucible.core.units.fundamentalphysicalconstants import (
-    FundamentalPhysicalConstants
-)
 
 
 class RaDecCoordConverter(CoordConverter):
@@ -28,7 +25,7 @@ class RaDecCoordConverter(CoordConverter):
         lat = workCoord.getLatitude()
         lon = workCoord.getLongitude()
         if lon < 0.0:
-            lon += FundamentalPhysicalConstants.TWOPI
+            lon += 2*pi
         return RaDecVector(r, lon, lat)
 
     def toCartesian(self, coordinate):

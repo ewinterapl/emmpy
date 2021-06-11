@@ -1,7 +1,7 @@
 """Convert to and from cylindrical coordinates."""
 
 
-from math import atan2, cos, sin, sqrt
+from math import atan2, cos, pi, sin, sqrt
 
 from emmpy.crucible.core.math.coords.abstractcoordconverter import (
     AbstractCoordConverter
@@ -12,9 +12,6 @@ from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
-)
-from emmpy.crucible.core.units.fundamentalphysicalconstants import (
-    FundamentalPhysicalConstants
 )
 
 
@@ -56,7 +53,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
             cylindricalRadius = big*sqrt(x*x + y*y)
             longitude = atan2(y, x)
         if longitude < 0.0:
-            longitude += FundamentalPhysicalConstants.TWOPI
+            longitude += 2*pi
 
         return CylindricalVector(cylindricalRadius, longitude, height)
 

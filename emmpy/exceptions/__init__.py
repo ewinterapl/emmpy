@@ -3,6 +3,7 @@
 Modules
 -------
 abstractclassexception.py
+abstractmethodexception.py
 emmpyexception.py
 
 Packages

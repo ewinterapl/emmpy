@@ -6,9 +6,7 @@ author Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
-from emmpy.exceptions.abstractclassexception import (
-    AbstractClassException
-)
+from emmpy.exceptions.abstractclassexception import AbstractClassException
 
 
 class TestBuilder(unittest.TestCase):

@@ -6,7 +6,7 @@ author F.S.Turner
 """
 
 
-from emmpy.crucible.core.exceptions.crucibleexception import CrucibleException
+from emmpy.crucible.core.exceptions.CrucibleException import CrucibleException
 
 
 class CrucibleRuntimeException(CrucibleException):

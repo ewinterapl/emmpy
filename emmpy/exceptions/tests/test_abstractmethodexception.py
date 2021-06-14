@@ -14,7 +14,7 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ function."""
-        default_message = 'Do not invoke an abstract method!'
+        default_message = AbstractMethodxception._default_message
         message = 'Uh-oh!'
         # Test simple object creation, with and without messages.
         e = AbstractMethodxception()

@@ -1,4 +1,9 @@
-"""Tests for the vector module."""
+"""Tests for the vector module.
+
+Authors
+-------
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 import unittest
 

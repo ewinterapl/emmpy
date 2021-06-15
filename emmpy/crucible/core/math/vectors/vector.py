@@ -1,4 +1,9 @@
-"""Abstract base class for n-dimensional vectors."""
+"""Abstract base class for n-dimensional vectors.
+
+Authors
+-------
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 import numpy as np
@@ -19,8 +24,6 @@ class Vector(np.ndarray):
     (other than numpy), fewer classes will need to be changed. This
     approach also allows all of the numpy.ndarray methods to be available
     to subclasses of Vector.
-
-    author Eric Winter (eric.winter@jhuapl.edu)
     """
 
     def __new__(cls, *args, **kargs):

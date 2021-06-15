@@ -1,4 +1,9 @@
-"""Tests for the vector2d module."""
+"""Tests for the vector2d module.
+
+Authors
+-------
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 import unittest
@@ -13,6 +18,7 @@ class TestBuilder(unittest.TestCase):
         """Test the __new__ method."""
         (x, y) = (1.1, 2.2)
         v = Vector2D(x, y)
+        self.assertIsInstance(v, Vector2D)
         self.assertEqual(v.shape, (2,))
         self.assertAlmostEqual(v[0], x)
         self.assertAlmostEqual(v[1], y)

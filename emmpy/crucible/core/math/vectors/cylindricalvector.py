@@ -85,3 +85,34 @@ class CylindricalVector(Vector3D):
             return self[2]
         else:
             raise AttributeError
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are
+
+        rho : float
+            Value of radius coordinate (unspecified units).
+        phi : float
+            Value of azimuthal angle (radians).
+        z : float
+            Value of the axial position (unspecified units).
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AttributeError
+            If an illegal attribute name is specified.
+        """
+        if name == 'rho':
+            self[0] = value
+        elif name == 'phi':
+            self[1] = value
+        elif name == 'z':
+            self[2] = value
+        else:
+            raise AttributeError

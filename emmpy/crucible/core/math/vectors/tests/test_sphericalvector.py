@@ -33,6 +33,19 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(AttributeError):
             v.bad
 
+    def test___setattr__(self):
+        """Test the __setattr__ method."""
+        v = SphericalVector(0, 0, 0)
+        (r, theta, phi) = (1.1, 2.2, 3.3)
+        v.r = r
+        self.assertAlmostEqual(v.r, r)
+        v.theta = theta
+        self.assertAlmostEqual(v.theta, theta)
+        v.phi = phi
+        self.assertAlmostEqual(v.phi, phi)
+        with self.assertRaises(AttributeError):
+            v.bad = 0
+
 
 if __name__ == '__main__':
     unittest.main()

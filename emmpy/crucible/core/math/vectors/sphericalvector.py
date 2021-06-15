@@ -85,3 +85,34 @@ class SphericalVector(Vector3D):
             return self[2]
         else:
             raise AttributeError
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are
+
+        r : float
+            Value of radius coordinate (unspecified units).
+        theta : float
+            Value of the polar angle (radians).
+        phi : float
+            Value of azimuthal angle (radians).
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AttributeError
+            If an illegal attribute name is specified.
+        """
+        if name == 'r':
+            self[0] = value
+        elif name == 'theta':
+            self[1] = value
+        elif name == 'phi':
+            self[2] = value
+        else:
+            raise AttributeError

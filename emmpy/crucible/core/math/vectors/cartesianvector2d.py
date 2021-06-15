@@ -71,3 +71,30 @@ class CartesianVector2D(Vector2D):
             return self[1]
         else:
             raise AttributeError
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are
+
+        x : float
+            First vector element.
+        y : float
+            Second vector element.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AttributeError
+            If an illegal attribute name is specified.
+        """
+        if name == 'x':
+            self[0] = value
+        elif name == 'y':
+            self[1] = value
+        else:
+            raise AttributeError

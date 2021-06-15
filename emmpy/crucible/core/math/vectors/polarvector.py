@@ -76,3 +76,30 @@ class PolarVector(Vector2D):
             return self[1]
         else:
             raise AttributeError
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are
+
+        r : float
+            Value of radius coordinate (unspecified units).
+        phi : float
+            Value of angle coordinate (radians).
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AttributeError
+            If an illegal attribute name is specified.
+        """
+        if name == 'r':
+            self[0] = value
+        elif name == 'phi':
+            self[1] = value
+        else:
+            raise AttributeError

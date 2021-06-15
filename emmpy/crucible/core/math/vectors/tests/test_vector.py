@@ -14,7 +14,7 @@ class TestBuilder(unittest.TestCase):
     """Tests for the vector module."""
 
     def test___new__(self):
-        """Test the __init__ method."""
+        """Test the __new__ method."""
         # Constructor must not be invoked directly.
         with self.assertRaises(TypeError):
             Vector()

@@ -19,7 +19,6 @@ class TestBuilder(unittest.TestCase):
         (x, y) = (1.1, 2.2)
         v = Vector2D(x, y)
         self.assertIsInstance(v, Vector2D)
-        self.assertEqual(v.shape, (2,))
         self.assertAlmostEqual(v[0], x)
         self.assertAlmostEqual(v[1], y)
 

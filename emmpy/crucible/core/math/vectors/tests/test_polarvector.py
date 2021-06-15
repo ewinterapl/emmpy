@@ -28,6 +28,8 @@ class TestBuilder(unittest.TestCase):
         v = PolarVector(r, phi)
         self.assertAlmostEqual(v.r, r)
         self.assertAlmostEqual(v.phi, phi)
+        with self.assertRaises(AttributeError):
+            v.bad
 
 
 if __name__ == '__main__':

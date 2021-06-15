@@ -31,7 +31,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.x, x)
         self.assertAlmostEqual(v.y, y)
         with self.assertRaises(AttributeError):
-            v.z
+            v.bad
 
 
 if __name__ == '__main__':

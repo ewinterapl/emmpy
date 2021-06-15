@@ -1,4 +1,4 @@
-"""Tests for the spherical module.
+"""Tests for the sphericalvector module.
 
 Authors
 -------
@@ -30,6 +30,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.r, r)
         self.assertAlmostEqual(v.theta, theta)
         self.assertAlmostEqual(v.phi, phi)
+        with self.assertRaises(AttributeError):
+            v.bad
 
 
 if __name__ == '__main__':

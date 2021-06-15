@@ -3,6 +3,7 @@
 Modules
 -------
 cartesianvector2d.py
+cylindricalvector
 polarvector.py
 sphericalvector.py
 vector.py

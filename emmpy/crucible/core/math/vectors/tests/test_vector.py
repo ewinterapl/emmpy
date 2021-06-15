@@ -3,15 +3,15 @@
 import unittest
 
 from emmpy.crucible.core.math.vectors.vector import Vector
-from emmpy.exceptions.abstractclassexception import AbstractClassException
 
 
 class TestBuilder(unittest.TestCase):
     """Tests for the vector module."""
 
-    def test___init__(self):
+    def test___new__(self):
         """Test the __init__ method."""
-        with self.assertRaises(AbstractClassException):
+        # Constructor must not be invoked directly.
+        with self.assertRaises(TypeError):
             Vector()
 
 

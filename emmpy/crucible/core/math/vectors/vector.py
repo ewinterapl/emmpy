@@ -1,23 +1,48 @@
 """Abstract base class for n-dimensional vectors."""
 
 
-from emmpy.exceptions.abstractclassexception import AbstractClassException
+import numpy as np
 
 
-class Vector:
+class Vector(np.ndarray):
     """Abstract base class for n-dimensional vectors.
 
-    This class must be subclassed to be used.
+    This class is the base class for all vector classes in all
+    coordinate systems.
 
-    This class is like a Java interface - it specifies all of the methods that
-    must be defined in a subclass. But since the entire class is abstract
-    (must be subclassed), the constructor __init__() will raise
-    AbstractClassException if invoked, and all other methods will raise
-    AbstractMethodException if invoked.
+    This abstract class must not be instantiated directly. Doing so will
+    usually raise an Exception of some type.
+
+    This class is derived from the numpy.ndarray class, to allow a single
+    entry point for Numpy code to be used in the vector classes.
+    Therefore, if we decide to use a new representation for vectors
+    (other than numpy), fewer classes will need to be changed. This
+    approach also allows all of the numpy.ndarray methods to be available
+    to subclasses of Vector.
 
     author Eric Winter (eric.winter@jhuapl.edu)
     """
 
-    def __init__(self):
-        """Initialize a new Vector object."""
-        raise AbstractClassException
+    def __new__(cls, *args, **kargs):
+        """Create a new Vector object.
+
+        Allocate a new Vector object by allocating a new ndarray
+        on which the Vector will expand.
+
+        Note that this method should only be called from the __new__()
+        method of subclasses.
+
+        Parameters
+        ----------
+        args : Tuple of objects
+            Positional arguments.
+        kargs : Dictionary of str->object pairs
+            Keyword arguments.
+
+        Returns
+        -------
+        v : Vector
+            The newly-created object.
+        """
+        v = np.ndarray.__new__(cls, *args, **kargs)
+        return v

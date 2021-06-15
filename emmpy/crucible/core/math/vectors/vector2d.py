@@ -3,8 +3,6 @@
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectors.vector import Vector
-
 
 class Vector2D(np.ndarray):
     """Generic class for 2-dimensional vectors.
@@ -13,15 +11,19 @@ class Vector2D(np.ndarray):
     system information is assumed. The x and y attribute names were chosen
     for convenience.
 
-    Since this class inherits from `ndarray`, all of the functionality of
+    Since this class inherits from ndarray, all of the functionality of
     Numpy is immediately available.
 
     Attributes
     ----------
-    v : `ndarray`
-        A 2-element `ndarray` containing the 2 vector elements.
+    x : float
+        First vector element.
+    y : float
+        Second vector element.
 
-    author Eric Winter (eric.winter@jhuapl.edu)
+    Authors
+    -------
+    Eric Winter (eric.winter@jhuapl.edu)
 
     """
 
@@ -43,4 +45,30 @@ class Vector2D(np.ndarray):
         self : `Vector2D`
             The newly-created object.
         """
-        return np.array((x, y))
+        v = np.ndarray.__new__(cls, shape=(2,))
+        v[0] = x
+        v[1] = y
+        return v
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are
+
+        x : float
+            First vector element.
+        y : float
+            Second vector element.
+
+        Returns
+        -------
+        self[0|1] : float
+            Value of specified attribute (`x` or `y`).
+        """
+        if name == 'x':
+            return self[0]
+        elif name == 'y':
+            return self[1]
+        else:
+            raise AttributeError

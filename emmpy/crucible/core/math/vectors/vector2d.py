@@ -28,10 +28,10 @@ class Vector2D(np.ndarray):
     """
 
     def __new__(cls, x, y):
-        """Create a new `Vector2D` object.
+        """Create a new Vector2D object.
 
-        Allocate a new `Vector2D` object by allocating a new `ndarray`
-        on which the `Vector2D` will expand.
+        Allocate a new Vector2D object by allocating a new ndarray
+        on which the Vector2D will expand.
 
         Parameters
         ----------
@@ -42,7 +42,7 @@ class Vector2D(np.ndarray):
 
         Returns
         -------
-        self : `Vector2D`
+        v : Vector2D
             The newly-created object.
         """
         v = np.ndarray.__new__(cls, shape=(2,))
@@ -64,7 +64,7 @@ class Vector2D(np.ndarray):
         Returns
         -------
         self[0|1] : float
-            Value of specified attribute (`x` or `y`).
+            Value of specified attribute (x or y).
         """
         if name == 'x':
             return self[0]

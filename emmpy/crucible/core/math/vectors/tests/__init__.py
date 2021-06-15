@@ -6,6 +6,7 @@ test_cartesianvector2d.py
 test_polarvector.py
 test_vector.py
 test_vector2d.py
+test_vector3d.py
 
 Packages
 --------

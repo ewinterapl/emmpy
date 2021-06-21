@@ -6,7 +6,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectors.matrix import Matrix
+from emmpy.crucible.core.math.tensors.matrix import Matrix
 
 
 class Matrix3D(Matrix):

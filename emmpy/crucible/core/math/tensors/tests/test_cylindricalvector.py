@@ -8,7 +8,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
-from emmpy.crucible.core.math.vectors.cylindricalvector import (
+from emmpy.crucible.core.math.tensors.cylindricalvector import (
     CylindricalVector
 )
 

@@ -8,7 +8,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
-from emmpy.crucible.core.math.vectors.cartesianvector2d import (
+from emmpy.crucible.core.math.tensors.cartesianvector2d import (
     CartesianVector2D
 )
 

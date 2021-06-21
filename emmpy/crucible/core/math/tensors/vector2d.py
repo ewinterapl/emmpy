@@ -6,7 +6,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectors.vector import Vector
+from emmpy.crucible.core.math.tensors.vector import Vector
 
 
 class Vector2D(Vector):

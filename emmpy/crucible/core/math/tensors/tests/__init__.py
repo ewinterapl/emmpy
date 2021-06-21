@@ -1,4 +1,4 @@
-"""Tests for modules in the vector package.
+"""Tests for modules in the tensors package.
 
 Modules
 -------

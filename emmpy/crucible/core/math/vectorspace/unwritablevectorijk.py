@@ -28,7 +28,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import asin, pi
 
 from emmpy.crucible.core.exceptions.bugexception import BugException
-from emmpy.crucible.core.math.vectors.vector3d import Vector3D
+from emmpy.crucible.core.math.tensors.vector3d import Vector3D
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeNorm
 )

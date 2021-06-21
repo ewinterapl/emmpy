@@ -8,7 +8,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
-from emmpy.crucible.core.math.vectors.matrix3d import Matrix3D
+from emmpy.crucible.core.math.tensors.matrix3d import Matrix3D
 
 
 class TestBuilder(unittest.TestCase):

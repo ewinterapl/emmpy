@@ -31,6 +31,30 @@ class VectorIJK(UnwritableVectorIJK):
     internals of the parent class fields.
     """
 
+
+    # Useful vector constants.
+
+    # The ZERO vector.
+    ZERO = UnwritableVectorIJK(0, 0, 0)
+
+    # The I basis vector: (1,0,0).
+    I = UnwritableVectorIJK(1, 0, 0)
+
+    # The J basis vector: (0,1,0).
+    J = UnwritableVectorIJK(0, 1, 0)
+
+    # The K basis vector: (0,0,1).
+    K = UnwritableVectorIJK(0, 0, 1)
+
+    # The negative of the I basis vector: (-1,0,0).
+    MINUS_I = UnwritableVectorIJK(-1, 0, 0)
+
+    # The negative of the J basis vector: (0,-1,0).
+    MINUS_J = UnwritableVectorIJK(0, -1, 0)
+
+    # The negative of the K basis vector: (0,0,-1).
+    MINUS_K = UnwritableVectorIJK(0, 0, -1)
+
     def __new__(cls, *args):
         """Create a new VectorIJK object.
 
@@ -871,27 +895,3 @@ class VectorIJK(UnwritableVectorIJK):
         k = computeNorm(a.k, b.k)
         buffer.setTo(i, j, k)
         return buffer
-
-
-# Useful vector constants.
-
-# The ZERO vector.
-ZERO = UnwritableVectorIJK(0, 0, 0)
-
-# The I basis vector: (1,0,0).
-I = UnwritableVectorIJK(1, 0, 0)
-
-# The J basis vector: (0,1,0).
-J = UnwritableVectorIJK(0, 1, 0)
-
-# The K basis vector: (0,0,1).
-K = UnwritableVectorIJK(0, 0, 1)
-
-# The negative of the I basis vector: (-1,0,0).
-MINUS_I = UnwritableVectorIJK(-1, 0, 0)
-
-# The negative of the J basis vector: (0,-1,0).
-MINUS_J = UnwritableVectorIJK(0, -1, 0)
-
-# The negative of the K basis vector: (0,0,-1).
-MINUS_K = UnwritableVectorIJK(0, 0, -1)

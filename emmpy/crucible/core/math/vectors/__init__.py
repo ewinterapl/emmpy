@@ -4,6 +4,7 @@ Modules
 -------
 cartesianvector2d.py
 cylindricalvector
+matrix.py
 polarvector.py
 sphericalvector.py
 vector.py

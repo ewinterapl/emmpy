@@ -6,6 +6,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
 from emmpy.crucible.core.math.tensors.matrix import Matrix
 
 
@@ -39,14 +41,6 @@ class Matrix3D(Matrix):
         """
         if len(args) != 9:
             raise ValueError('Exactly 9 numeric arguments are required!')
-        m = Matrix.__new__(cls, shape=(3,3))
-        m[0, 0] = args[0]
-        m[1, 0] = args[1]
-        m[2, 0] = args[2]
-        m[0, 1] = args[3]
-        m[1, 1] = args[4]
-        m[2, 1] = args[5]
-        m[0, 2] = args[6]
-        m[1, 2] = args[7]
-        m[2, 2] = args[8]
+        m = Matrix.__new__(cls, shape=(3, 3))
+        m[:] = np.array(args).reshape((3, 3)).T
         return m

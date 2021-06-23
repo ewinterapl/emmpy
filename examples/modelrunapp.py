@@ -76,7 +76,7 @@ def runTs07D():
     print("Starting runTs07D()")
 
     # use a coeffs file from the March 2015 St. Patty's Day storm
-    coeffsFile = "2015_076_16_20.par"
+    coeffsFile = "/Users/winteel1/emmpy/examples/2015_076_16_20.par"
 
     # read the coeffs/parameters from the file
     # Returns a

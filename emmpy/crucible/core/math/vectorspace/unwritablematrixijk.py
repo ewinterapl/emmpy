@@ -1,571 +1,635 @@
-"""An unwritable 3-D matrix."""
+"""An unwritable 3-D (3x3) matrix.
+
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-import sys
+import numpy as np
+
+from emmpy.crucible.core.math.tensors.matrix3d import Matrix3D
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    checkRotation,
-    computeDeterminant,
-    computeNorm
+    checkRotation
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
+from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
+    UnwritableVectorIJK
+)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.utilities.doubletolongbits import doubleToLongBits
 
 
-class UnwritableMatrixIJK:
+# Map matrix component names to indices.
+components = {'ii': (0, 0), 'ji': (1, 0), 'ki': (2, 0),
+              'ij': (0, 1), 'jj': (1, 1), 'kj': (2, 1),
+              'ik': (0, 2), 'jk': (1, 2), 'kk': (2, 2)}
+
+
+class UnwritableMatrixIJK(Matrix3D):
     """An unwritable 3-D matrix.
 
-    A weakly immutable 3-dimensional matrix designed to properly support
-    several writable subclasses.
+    A 3-dimensional matrix designed to properly support several
+    subclasses.
 
-    Note: Subclass implementers, you should only use the protected fields in
-    this class to store the contents of the matrix components, otherwise all
-    of the methods here and in the operations class may break.
+    Note: Subclass implementers, you should only use the protected fields
+    in this class to store the contents of the matrix components,
+    otherwise all of the methods here and in the operations class may
+    break.
 
-    The basic data fields on this class are marked as protected to allow direct
-    access to them through subclassing. This will get around any performance
-    issues that one may have in utilizing this matrix arithmetic toolkit due to
-    the enforcement of access to the component values through accessor methods.
-
-    Note, the equals and hashcode implementations in this class support proper
-    comparisons between subclasses of this class and this class. The reason
-    this works is because by design the only member variables of this class
-    live in the parent class. If one subclasses this class and defines
-    additional members then this will most certainly break the implementation
-    presented here.
-
-    The protected fields in this matrix are arranged in the following manner:
+    The fields in this matrix are arranged in the following manner:
 
     | ii ij ik |
     | ji jj jk |
     | ki kj kk |
 
-    The class prefers column ordering, so when working with vectors and this
-    class they are to be considered "column" vectors.
-
-    @author F.S.Turner
+    The class prefers column ordering, so when working with vectors and
+    this class they are to be considered "column" vectors.
     """
-
-    # Default tolerance for determining if a matrix is invertible. The
-    # determinant must be greater than this tolerance:
-    # {@value #INVERSION_TOLERANCE}
-    INVERSION_TOLERANCE = 1E-16
 
     # One of the two default tolerances that control how close to a rotation
     # a rotation matrix must be. This value determines how far off unity the
-    # norm of the column vectors of a matrix must be. Currently it is set to:
-    # {@value #NORM_TOLERANCE}
+    # norm of the column vectors of a matrix must be.
     NORM_TOLERANCE = 1E-4
 
     # The other of the two default tolerances that control how close to a
     # rotation a rotation matrix must be. This value determines how far off
-    # unity the determinant of the matrix must be. Currently it is set to:
-    # {@value #DETERMINANT_TOLERANCE}
+    # unity the determinant of the matrix must be.
     DETERMINANT_TOLERANCE = 1E-4
 
-    # The bound defining the boundary length at which the invort procedure
-    # works with double precision. Note: this is necessary because larger
-    # negative exponents are captured by 64 IEEE doubles than positive ones.
-    INVORSION_BOUND = sys.float_info.max
+    def __new__(cls, *args):
+        """Create a new UnwritableMatrixIJK object.
 
-    def __init__(self, *args):
-        """Build a new object."""
+        Allocate a new UnwritableMatrixIJK object by allocating a new
+        Matrix3D object on which the UnwritableMatrixIJK will expand.
+
+        Parameters
+        ----------
+        data : 3x3 (or larger) list of list of float.
+            Values to use to initialize the matrix.
+        OR
+        matrix : UnwritableMatrixIJK
+            The matrix whose contents are to be copied.
+        OR
+        scale : float
+            The scale factor to apply.
+        matrix : UnwritableMatrix3D
+            The matrix whose components are to be scaled and copied.
+        OR
+        ithColumn, jthColumn, kthColumn - UnwritableVectorIJK
+            Vectors to use as the columns of the matrix.
+        OR
+        scaleI, scaleJ, scaleK : float
+            Scale factors to apply to the first, second, third columns
+            of the supplied matrix.
+        matrix : UnwritableMatrixIJK
+            The matrix whose columns are to be scaled.
+        OR
+        scaleI : float
+            The scale factor to apply to the ith column.
+        ithColumn : UnwritableVectorIJK
+            The vector containing the ith column.
+        scaleJ : float
+            The scale factor to apply to the jth column.
+        jthColumn : UnwritableVectorIJK
+            The vector containing the jth column.
+        scaleK : float
+            The scale factor to apply to the kth column.
+        kthColumn : float
+            The vector containing the kth column.
+        OR
+        ii : float
+            ith row, ith column element
+        ji : float
+            jth row, ith column element
+        ki : float
+            kth row, ith column element
+        ij : float
+            ith row, jth column element
+        jj : float
+            jth row, jth column element
+        kj : float
+            kth row, jth column element
+        ik : float
+            ith row, kth column element
+        jk : float
+            jth row, kth column element
+        kk : float
+            kth row, kth column element
+
+        Returns
+        -------
+        m : UnwritableMatrixIJK
+            The newly-created object.
+
+        Raises
+        ------
+        ValueError
+            If invalid arguments are provided.
+        """
+        # Create the empty 3x3 matrix for initialization.
+        nones = [None]*9
+        m = Matrix3D.__new__(cls, *nones)
+
+        # Initialize based on the arguments.
         if len(args) == 0:
-            # Protected, no argument, no initialization constructor for
-            # subclasses to utilize.
-            self.ii = None
-            self.ij = None
-            self.ik = None
-            self.ji = None
-            self.jj = None
-            self.jk = None
-            self.ki = None
-            self.kj = None
-            self.kk = None
+            pass
         elif len(args) == 1:
             if isinstance(args[0], list):
-                # Constructs a matrix from the upper three by three block of a
-                # two dimensional array of doubles.
+                # Construct a matrix from the upper 3x3 block of a 2D
+                # array of floats.
                 # The values from the data array are copied into the matrix as
                 # follows:
                 # | data[0][0] data[0][1] data[0][2] |
                 # | data[1][0] data[1][1] data[1][2] |
                 # | data[2][0] data[2][1] data[2][2] |
-                # @param data the array of doubles
-                # @throws IndexOutOfBoundsException if the supplied data array
-                # does not contain at least three arrays of arrays of length
-                # three or greater.
                 (data,) = args
-                self.__init__(data[0][0], data[1][0], data[2][0],
-                              data[0][1], data[1][1], data[2][1],
-                              data[0][2], data[1][2], data[2][2])
-            else:
-                # Copy constructor, creates a matrix by copying the values of a
-                # pre-existing one.
-                # @param matrix the matrix whose contents are to be copied.
+                m[:] = np.array(data)[:3, :3]
+            elif isinstance(args[0], UnwritableMatrixIJK):
+                # Copy constructor.
                 (matrix,) = args
-                self.__init__(matrix.ii, matrix.ji, matrix.ki,
-                              matrix.ij, matrix.jj, matrix.kj,
-                              matrix.ik, matrix.jk, matrix.kk)
+                m[:] = matrix
+            else:
+                raise ValueError('Bad arguments for method!')
         elif len(args) == 2:
-            # Scaling constructor, creates a new matrix by applying a
+            # Scaling constructor. Creates a new matrix by applying a
             # scalar multiple to the components of a pre-existing matrix.
-            # @param scale the scale factor to apply
-            # @param matrix the matrix whose components are to be scaled
-            # and copied
             (scale, matrix) = args
-            self.__init__(
-                scale*matrix.ii, scale*matrix.ji, scale*matrix.ki,
-                scale*matrix.ij, scale*matrix.jj, scale*matrix.kj,
-                scale*matrix.ik, scale*matrix.jk, scale*matrix.kk)
+            a = np.array(matrix)
+            m[:] = scale*a
         elif len(args) == 3:
             # Column vector constructor, creates a new matrix by populating
             # the columns of the matrix with the supplied vectors.
-            # @param ithColumn the vector containing the ith column
-            # @param jthColumn the vector containing the jth column
-            # @param kthColumn the vector containing the kth column
             (ithColumn, jthColumn, kthColumn) = args
-            self.__init__(ithColumn.i, ithColumn.j, ithColumn.k,
-                          jthColumn.i, jthColumn.j, jthColumn.k,
-                          kthColumn.i, kthColumn.j, kthColumn.k)
+            m[:, 0] = ithColumn
+            m[:, 1] = jthColumn
+            m[:, 2] = kthColumn
         elif len(args) == 4:
             # Column scaling constructor, creates a new matrix by applying
             # scalar multiples to the columns of a pre-existing matrix.
-            # @param scaleI scale factor to apply to the ith column
-            # @param scaleJ scale factor to apply to the jth column
-            # @param scaleK scale factor to apply to the kth column
-            # @param matrix the matrix whose components are to be scaled
             # and copied
             (scaleI, scaleJ, scaleK, matrix) = args
-            self.__init__(
-                scaleI*matrix.ii, scaleI*matrix.ji, scaleI*matrix.ki,
-                scaleJ*matrix.ij, scaleJ*matrix.jj, scaleJ*matrix.kj,
-                scaleK*matrix.ik, scaleK*matrix.jk, scaleK*matrix.kk)
+            m[:, 0] = scaleI*matrix[:, 0]
+            m[:, 1] = scaleJ*matrix[:, 1]
+            m[:, 2] = scaleK*matrix[:, 2]
         elif len(args) == 6:
             # Scaled column vector constructor, creates a new matrix by
             # populating the columns of the matrix with scaled versions of
             # the supplied vectors
-            # @param scaleI the scale factor to apply to the ith column
-            # @param ithColumn the vector containing the ith column
-            # @param scaleJ the scale factor to apply to the jth column
-            # @param jthColumn the vector containing the jth column
-            # @param scaleK the scale factor to apply to the kth column
-            # @param kthColumn the vector containing the kth column
             (scaleI, ithColumn, scaleJ, jthColumn, scaleK,
                 kthColumn) = args
-            self.__init__(
-                scaleI*ithColumn.i, scaleI*ithColumn.j, scaleI*ithColumn.k,
-                scaleJ*jthColumn.i, scaleJ*jthColumn.j, scaleJ*jthColumn.k,
-                scaleK*kthColumn.i, scaleK*kthColumn.j, scaleK*kthColumn.k)
+            m[:, 0] = scaleI*ithColumn
+            m[:, 1] = scaleJ*jthColumn
+            m[:, 2] = scaleK*kthColumn
         elif len(args) == 9:
             # Constructs a matrix from the nine basic components.
-            # @param ii ith row, ith column element
-            # @param ji jth row, ith column element
-            # @param ki kth row, ith column element
-            # @param ij ith row, jth column element
-            # @param jj jth row, jth column element
-            # @param kj kth row, jth column element
-            # @param ik ith row, kth column element
-            # @param jk jth row, kth column element
-            # @param kk kth row, kth column element
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            self.ii = ii
-            self.ji = ji
-            self.ki = ki
-            self.ij = ij
-            self.jj = jj
-            self.kj = kj
-            self.ik = ik
-            self.jk = jk
-            self.kk = kk
+            data = np.array(
+                [ii, ji, ki, ij, jj, kj, ik, jk, kk]).reshape((3, 3)).T
+            m[:] = data
         else:
-            raise Exception
+            raise ValueError('Bad arguments for method!')
+
+        # Return the new matrix.
+        return m
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in
+        the commponents dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to get.
+
+        Returns
+        -------
+        self[(row, col)] : float
+            Value of specified attribute (matrix element at name,
+            which maps to (row, col).
+
+        Raises
+        ------
+        AttributeError
+            If an illegal attribute name is specified.
+        """
+        return self[components[name]]
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in
+        the components dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to set.
+        value : int or float
+            Value for attribute to set
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AttributeError
+            If an illegal attribute name is specified.
+        """
+        self[components[name]] = value
 
     def createTranspose(self):
         """Create a new, transposed copy of the existing matrix.
 
-        @return the transpose of the instance
+        Transpose a copy of the matrix.
+
+        Returns
+        -------
+        m : UnwritableMatrixIJK
+            The transpose of the matrix.
         """
-        return UnwritableMatrixIJK(
-            self.ii, self.ij, self.ik,
-            self.ji, self.jj, self.jk,
-            self.ki, self.kj, self.kk)
+        m = UnwritableMatrixIJK(self.T)
+        return m
 
     def createUnitizedColumns(self):
-        """Create a copy with unitized columns.
+        """Create a copy of the matrix with unitized columns.
 
-        @return the unitized column version of this matrix
-        @throws UnsupportedOperationException if any of the columns are of
-        length zero
+        Unitize each column of the copy independently.
+
+        Returns
+        -------
+        m : UnwritableMatrixIJK
+            The unitized column version of this matrix
         """
-        return UnwritableMatrixIJK(
-            VectorIJK(self.ii, self.ji, self.ki).unitize(),  # first column
-            VectorIJK(self.ij, self.jj, self.kj).unitize(),  # second column
-            VectorIJK(self.ik, self.jk, self.kk).unitize())  # third column
+        vi = UnwritableVectorIJK(self[:, 0].tolist())
+        vj = UnwritableVectorIJK(self[:, 1].tolist())
+        vk = UnwritableVectorIJK(self[:, 2].tolist())
+        viu = vi.createUnitized()
+        vju = vj.createUnitized()
+        vku = vk.createUnitized()
+        m = UnwritableMatrixIJK(viu, vju, vku)
+        return m
 
     def createInverse(self, *args):
-        """Create a new, inverted copy of the existing matrix if possible."""
-        if len(args) == 0:
-            # @return the multiplicative inverse of the instance
-            # @throws UnsupportedOperationException if the instance matrix has
-            # a determinant within {@value #INVERSION_TOLERANCE} of 0.0
-            return self.createInverse(UnwritableMatrixIJK.INVERSION_TOLERANCE)
-        elif len(args) == 1:
-            # Creates a new, inverted copy of the existing matrix.
-            # @param tolerance the absolute value of the determinant of the
-            # instance must be greater than this for inversion to proceed
-            # @return the multiplicative inverse of the instance
-            # @throws UnsupportedOperationException if the instance matrix has
-            # a determinant within tolerance of 0.0
-            (tolerance,) = args
-            det = self.getDeterminant()
-            if abs(det) < tolerance:
-                raise Exception(
-                    "Matrix nearly singular, unable to invert.")
-            return UnwritableMatrixIJK(
-                (self.jj*self.kk - self.kj*self.jk)/det,
-                -(self.ji*self.kk - self.ki*self.jk)/det,
-                (self.ji*self.kj - self.ki*self.jj)/det,
-                -(self.ij*self.kk - self.kj*self.ik)/det,
-                (self.ii*self.kk - self.ki*self.ik)/det,
-                -(self.ii*self.kj - self.ki*self.ij)/det,
-                (self.ij*self.jk - self.jj*self.ik)/det,
-                -(self.ii*self.jk - self.ji*self.ik)/det,
-                (self.ii*self.jj - self.ji*self.ij)/det)
+        """Create an inverted copy of the matrix.
+
+        Compute the matrix inverse.
+
+        Parameters
+        ----------
+        tolerance : float (optional, ignored)
+            Inversion tolerance.
+
+        Returns
+        -------
+        m : UnwritableMatrixIJK
+            Inverse of the matrix.
+        """
+        m = np.linalg.inv(self)
+        return m
 
     def createInvorted(self):
-        """Create a new, invorted copy of the existing matrix.
+        """Compute the inverse of an orthogonal matrix.
 
         If this method is invoked on matrices whose columns are not orthogonal,
         the resultant matrix is likely not the inverse sought. Use the more
-        general {@link UnwritableMatrixIJK#createInverse()} method instead.
+        general createInverse() method instead.
 
-        @return a newly created matrix, that is the inverse of this matrix if
-        it meets the orthogonality condition
-        @throws UnsupportedOperationException if the lengths of any of the
-        columns are zero or too small to properly invert multiplicatively in
-        the space available to double precision.
+        Returns
+        -------
+        m : UnwritableMatrixIJK
+            The inverse of this matrix if it is orthogonal.
+
+        Raises
+        ------
+        BugException
+            If this matrix is not orthogonal.
         """
         # First create the transpose, then all that's left is to scale the rows
         # appropriately.
-        matrix = self.createTranspose()
-
-        length = computeNorm(matrix.ii, matrix.ij, matrix.ik)
-        if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise Exception(
-                "ith column of matrix has length, %s, for which there is no "
-                "inverse." % length)
-        matrix.ii /= length
-        matrix.ii /= length
-        matrix.ij /= length
-        matrix.ij /= length
-        matrix.ik /= length
-        matrix.ik /= length
-
-        length = computeNorm(
-            matrix.ji, matrix.jj, matrix.jk)
-        if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise Exception(
-                "jth column of matrix has length, %s, for which there is no "
-                "inverse." % length)
-        matrix.ji /= length
-        matrix.ji /= length
-        matrix.jj /= length
-        matrix.jj /= length
-        matrix.jk /= length
-        matrix.jk /= length
-
-        length = computeNorm(
-            matrix.ki, matrix.kj, matrix.kk)
-        if length*self.INVORSION_BOUND < 1 or length == 0:
-            raise Exception(
-                "kth column of matrix has length, %s, for which there is no "
-                "inverse." % length)
-        matrix.ki /= length
-        matrix.ki /= length
-        matrix.kj /= length
-        matrix.kj /= length
-        matrix.kk /= length
-        matrix.kk /= length
-
+        matrix = self.createInverse()
         return matrix
 
     def getII(self):
         """Get the ith row, ith column component.
 
-        @return the ith row, ith column value
+        Returns
+        -------
+        self[0, 0] : float
+            The ith row, ith column value.
         """
-        return self.ii
+        return self[0, 0]
 
     def getJI(self):
         """Get the jth row, ith column component.
 
-        @return the jth row, ith column value
+        Returns
+        -------
+        self[1, 0] : float
+            The jth row, ith column value.
         """
-        return self.ji
+        return self[1, 0]
 
     def getKI(self):
-        """Get the kth row, ith column component.
+        """Get the Kth row, ith column component.
 
-        @return the kth row, ith column value
+        Returns
+        -------
+        self[2, 0] : float
+            The kth row, ith column value.
         """
-        return self.ki
+        return self[2, 0]
 
     def getIJ(self):
         """Get the ith row, jth column component.
 
-        @return the ith row, jth column value
+        Returns
+        -------
+        self[0, 1] : float
+            The ith row, jth column value.
         """
-        return self.ij
+        return self[0, 1]
 
     def getJJ(self):
         """Get the jth row, jth column component.
 
-        @return the jth row, jth column value
+        Returns
+        -------
+        self[1, 1] : float
+            The jth row, jth column value.
         """
-        return self.jj
+        return self[1, 1]
 
     def getKJ(self):
         """Get the kth row, jth column component.
 
-        @return the kth row, jth column value
+        Returns
+        -------
+        self[2, 1] : float
+            The kth row, jth column value.
         """
-        return self.kj
+        return self[2, 1]
 
     def getIK(self):
         """Get the ith row, kth column component.
 
-        @return the ith row, kth column value
+        Returns
+        -------
+        self[0, 2] : float
+            The ith row, kth column value.
         """
-        return self.ik
+        return self[0, 2]
 
     def getJK(self):
-        """Get the jth row, kth column value.
+        """Get the jth row, kth column component.
 
-        @return the jth row, kth column value.
+        Returns
+        -------
+        self[1, 2] : float
+            The jth row, kth column value.
         """
-        return self.jk
+        return self[1, 2]
 
     def getKK(self):
         """Get the kth row, kth column component.
 
-        @return kth row, kth column value
+        Returns
+        -------
+        self[2, 2] : float
+            The kth row, kth column value.
         """
-        return self.kk
+        return self[2, 2]
 
     def get(self, row, column):
         """Get the component from the specified row and column.
 
-        @param row a row index in [0,2].
-        @param column a column index in [0,2]
-        @return the desired matrix component value
-        @throws IllegalArgumentException if either the supplied row or column
-        index are outside their acceptable ranges of [0,2].
+        Parameters
+        ----------
+        row : int
+            Row of element to return (0|1|2).
+        column : int
+            Column of element to return (0|1|2).
+
+        Returns
+        -------
+        self[row, column] : float
+            The value of the element at [row, column].
         """
-        if row == 0:
-            if column == 0:
-                return self.ii
-            elif column == 1:
-                return self.ij
-            elif column == 2:
-                return self.ik
-            else:
-                raise Exception(
-                    "Unable to retrieve element (%s,%s). Column index invalid."
-                    % (row, column))
-        elif row == 1:
-            if column == 0:
-                return self.ji
-            elif column == 1:
-                return self.jj
-            elif column == 2:
-                return self.jk
-            else:
-                raise Exception(
-                    "Unable to retrieve element (%s,%s). Column index invalid."
-                    % (row, column))
-        elif row == 2:
-            if column == 0:
-                return self.ki
-            elif column == 1:
-                return self.kj
-            elif column == 2:
-                return self.kk
-            else:
-                raise Exception(
-                    "Unable to retrieve element (%s,%s). Column index invalid."
-                    % (row, column))
-        else:
-            raise Exception(
-                "Unable to retrieve element (%s,%s). Column index invalid."
-                % (row, column))
+        return self[row][column]
 
     def getIthColumn(self, *args):
-        """Copy the ith column components into the supplied vector."""
+        """Copy the ith column components into the supplied vector.
+
+        Copy the contents of column i into a vector and return it. If no
+        buffer is provided to hold the results, a new vector is created.
+
+        Parameters
+        ----------
+        *args : tuple of object
+            Parameters for polymorphic method
+        buffer : VectorIJK (optional)
+            Buffer to hold result.
+        """
         if len(args) == 0:
-            # @return ith column vector
-            return self.getIthColumn(VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 1:
-            # @param buffer the vector to receive the components
-            # @return a reference to buffer for convenience
             (buffer,) = args
-            buffer.i = self.ii
-            buffer.j = self.ji
-            buffer.k = self.ki
-            return buffer
+        else:
+            raise ValueError('Invalid parameters for method!')
+        buffer[:] = self[:, 0]
+        return buffer
 
     def getJthColumn(self, *args):
-        """Copy the jth column components into the supplied vector."""
+        """Copy the jth column components into the supplied vector.
+
+        Copy the contents of column j into a vector and return it. If no
+        buffer is provided to hold the results, a new vector is created.
+
+        Parameters
+        ----------
+        *args : tuple of object
+            Parameters for polymorphic method
+        buffer : VectorIJK (optional)
+            Buffer to hold result.
+        """
         if len(args) == 0:
-            # @return jth column vector
-            return self.getJthColumn(VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 1:
-            # @param buffer the vector to receive the components
-            # @return a reference to buffer for convenience
             (buffer,) = args
-            buffer.i = self.ij
-            buffer.j = self.jj
-            buffer.k = self.kj
-            return buffer
+        else:
+            raise ValueError('Invalid parameters for method!')
+        buffer[:] = self[:, 1]
+        return buffer
 
     def getKthColumn(self, *args):
-        """Copy the kth column components into the supplied vector."""
+        """Copy the kth column components into the supplied vector.
+
+        Copy the contents of column k into a vector and return it. If no
+        buffer is provided to hold the results, a new vector is created.
+
+        Parameters
+        ----------
+        *args : tuple of object
+            Parameters for polymorphic method
+        buffer : VectorIJK (optional)
+            Buffer to hold result.
+        """
         if len(args) == 0:
-            # @return kth column vector
-            return self.getKthColumn(VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 1:
-            # @param buffer the vector to receive the components
-            # @return a reference to buffer for convenience
             (buffer,) = args
-            buffer.i = self.ik
-            buffer.j = self.jk
-            buffer.k = self.kk
-            return buffer
+        else:
+            raise ValueError('Invalid parameters for method!')
+        buffer[:] = self[:, 2]
+        return buffer
 
     def getColumn(self, *args):
-        """Copy the desired column components into the supplied vector."""
+        """Copy the specified column components into the supplied vector.
+
+        Copy the contents of the specified column into a vector and return
+        it. If no buffer is provided to hold the results, a new vector is
+        created.
+
+        Parameters
+        ----------
+        *args : tuple of object
+            Parameters for polymorphic method
+        columnIndex : int
+            Index of column to retrieve (0|1|2).
+        buffer : VectorIJK (optional)
+            Buffer to hold result.
+        """
         if len(args) == 1:
-            # Extracts the desired column components as a vector.
-            # @param columnIndex index of the column contents to extract. Must
-            # be in [0,2]
-            # @return desired column vector
-            # @throws IllegalArgumentException if the supplied columnIndex lies
-            # outside the acceptable range
             (columnIndex,) = args
-            return self.getColumn(columnIndex, VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 2:
-            # @param columnIndex index of the column contents to copy. Must be
-            # in [0,2]
-            # @param buffer the vector to receive the components
-            # @return a reference to buffer for convenience
-            # @throws IllegalArgumentException if the supplied columnIndex lies
-            # outside the acceptable range
             (columnIndex, buffer) = args
-            if columnIndex == 0:
-                return self.getIthColumn(buffer)
-            elif columnIndex == 1:
-                return self.getJthColumn(buffer)
-            elif columnIndex == 2:
-                return self.getKthColumn(buffer)
-            else:
-                raise Exception(
-                    "Unable to retrieve column. Index: %s is invalid." %
-                    columnIndex)
         else:
-            raise Exception
+            raise ValueError('Invalid parameters for method!')
+        buffer[:] = self[:, columnIndex]
+        return buffer
 
     def getDeterminant(self):
         """Compute the determinant of the matrix.
 
-        @return the determinant of the instance
+        Compute the determinant of the matrix.
+
+        Returns
+        -------
+        det : float
+            The determinant of the instance.
         """
-        return computeDeterminant(
-            self.ii, self.ji, self.ki,
-            self.ij, self.jj, self.kj,
-            self.ik, self.jk, self.kk)
+        det = np.linalg.det(self)
+        return det
 
     def getTrace(self):
         """Compute the trace of the matrix.
 
-        @return the trace of the instance
+        Compute the trace of the matrix.
+
+        Returns
+        -------
+        trace : float
+            The trace of the instance.
         """
-        return self.ii + self.jj + self.kk
+        trace = self.trace()
+        return trace
 
     def isRotation(self, *args):
         """Check if this is a rotation matrix.
 
-        Do the components of the instance represent a rotation?
+        Do the components of the instance represent a rotation? Default
+        tolerance value for normality and zero determinant are used if
+        not provided.
+
+        Parameters
+        ----------
+        *args : tuple of object.
+            Arguments for polymorphic method.
+        normTolerance : float (optional)
+            Tolerance for vector normal relative to unity.
+        determinantTolerance : float (optional)
+            Tolerance for matrix determinant relative to unity.
+
+        Returns
+        -------
+        isRotation : bool
+            True if matrix represents a rotation, otherwise False.
         """
         if len(args) == 0:
-            # Subject to the default norm {@link #NORM_TOLERANCE} and
-            # determinant {@value #DETERMINANT_TOLERANCE} tolerances.
-            # @return true if the matrix components capture a rotation, false
-            # otherwise
-            return self.isRotation(self.NORM_TOLERANCE,
-                                   self.DETERMINANT_TOLERANCE)
+            normTolerance = UnwritableMatrixIJK.NORM_TOLERANCE
+            determinantTolerance = UnwritableMatrixIJK.DETERMINANT_TOLERANCE
         elif len(args) == 2:
-            #  @param normTolerance specifies how far off unity the norms of
-            # the column vectors are allowed to be
-            # @param determinantTolerance specifies how far off unity the
-            # determinant of the instance is allowed to be
-            # @return true if the matrix components capture a rotation, false
-            # otherwise
             (normTolerance, determinantTolerance) = args
-            try:
-                checkRotation(
-                    self.ii, self.ji, self.ki,
-                    self.ij, self.jj, self.kj,
-                    self.ik, self.jk, self.kk,
-                    normTolerance, determinantTolerance)
-                return True
-            except MalformedRotationException:
-                return False
+        else:
+            raise ValueError('Invalid parameters for method!')
+        isRotation = False
+        try:
+            checkRotation(
+                self[0, 0], self[1, 0], self[2, 0],
+                self[0, 1], self[1, 1], self[2, 1],
+                self[0, 2], self[1, 2], self[2, 2],
+                normTolerance, determinantTolerance)
+            isRotation = True
+        except MalformedRotationException:
+            pass
+        return isRotation
 
     def mxv(self, *args):
-        """Compute the product of this matrix with a vector."""
+        """Compute the product of this matrix with a vector.
+
+        Multiply a vector by this matrix, and return the vector result.
+
+        Parameters
+        ----------
+        *args : tuple of object
+            Parameters for polymorphic method.
+        v : UnwritableVectorIJK
+            Vector to multiply by this matrix.
+        buffer : VectorIJK (optional)
+            Buffer to hold the result.
+        """
         if len(args) == 1:
-            # @param v the vector
-            # @return a new <code>VectorIJK</code> containing the result.
-            # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK, VectorIJK)
             (v,) = args
-            return self.mxv(v, VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 2:
-            # Compute the product of this matrix with a vector.
-            # @param v the vector
-            # @param buffer the buffer to receive the product, m*v.
-            # @return a reference to buffer for convenience.
             (v, buffer) = args
-            i = self.ii*v.i + self.ij*v.j + self.ik*v.k
-            j = self.ji*v.i + self.jj*v.j + self.jk*v.k
-            buffer.k = self.ki*v.i + self.kj*v.j + self.kk*v.k
-            buffer.i = i
-            buffer.j = j
-            return buffer
         else:
-            raise Exception
+            raise ValueError('Invalid parameters for method!')
+        buffer[:] = np.dot(self, v)
+        return buffer
 
     def mtxv(self, *args):
-        """Compute the product of the transpose of a matrix with a vector."""
+        """Compute the product of this matrix transpose with a vector.
+
+        Multiply a vector by the transpose of this matrix, and return the
+        vector result.
+
+        Parameters
+        ----------
+        *args : tuple of object
+            Parameters for polymorphic method.
+        v : UnwritableVectorIJK
+            Vector to multiply by the transpose of this matrix.
+        buffer : VectorIJK (optional)
+            Buffer to hold the result.
+        """
         if len(args) == 1:
-            # @param v the vector
-            # @return a new <code>VectorIJK</code> containing the result.
-            # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK, VectorIJK)
             (v,) = args
-            return self.mtxv(v, VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 2:
-            # Compute the product of the transpose of a matrix with a vector.
-            # @param v the vector
-            # @param buffer the buffer to receive the product, transpose(m)*v
-            # @return a reference to buffer for convenience.
             (v, buffer) = args
-            i = self.ii*v.i + self.ji*v.j + self.ki*v.k
-            j = self.ij*v.i + self.jj*v.j + self.kj*v.k
-            buffer.k = self.ik*v.i + self.jk*v.j + self.kk*v.k
-            buffer.i = i
-            buffer.j = j
-            return buffer
+        else:
+            raise ValueError('Invalid parameters for method!')
+        buffer[:] = np.dot(self.T, v)
+        return buffer
 
     @staticmethod
     def copyOf(matrix):
@@ -574,12 +638,20 @@ class UnwritableMatrixIJK:
         This method makes an unwritable copy only if necessary. It tries to
         avoid making a copy wherever possible.
 
-        @param matrix a matrix to copy.
-        @return either a reference to matrix (if matrix is already only an
-        instance of
-        {@link UnwritableMatrixIJK}, otherwise an unwritable copy of matrix's
-        contents
+        Parameters
+        ----------
+        matrix : UnwritableMatrixIJK
+            A matrix to copy.
+
+        Returns
+        -------
+        buffer : UnwritableMatrixIJK
+            Either a reference to matrix (if matrix is already an instance
+            of UnwritableMatrixIJK, otherwise an unwritable copy of matrix's
+            contents
         """
         if isinstance(matrix, UnwritableMatrixIJK):
-            return matrix
-        return UnwritableMatrixIJK(matrix)
+            buffer = matrix
+        else:
+            buffer = UnwritableMatrixIJK(matrix)
+        return buffer

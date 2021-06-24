@@ -1,6 +1,8 @@
 """Direct Python port of ModelRunApp.java."""
 
 
+import sys
+
 from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
     UnwritableVectorIJK
 )
@@ -21,12 +23,12 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 )
 
 
-def ModelRunApp():
+def ModelRunApp(coeffsFile):
     """Run the models."""
     print("Starting ModelRunApp()")
     # runThinSheet() produces identical results in Java and Python.
     runThinSheet()
-    runTs07D()
+    runTs07D(coeffsFile)
     print("Ending ModelRunApp()")
 
 
@@ -71,12 +73,9 @@ def runThinSheet():
     print("Ending runThinSheet()")
 
 
-def runTs07D():
+def runTs07D(coeffsFile):
     """Build and run the TS07D model."""
-    print("Starting runTs07D()")
-
-    # use a coeffs file from the March 2015 St. Patty's Day storm
-    coeffsFile = "/Users/winteel1/emmpy/examples/2015_076_16_20.par"
+    print("Starting runTs07D() with %s." % coeffsFile )
 
     # read the coeffs/parameters from the file
     # Returns a
@@ -115,5 +114,6 @@ def runTs07D():
 
 if __name__ == "__main__":
     print("Starting main()")
-    ModelRunApp()
+    coeffsFile  = sys.argv[1]
+    ModelRunApp(coeffsFile )
     print("Ending main()")

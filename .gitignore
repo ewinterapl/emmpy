@@ -130,6 +130,7 @@ dmypy.json
 
 # No VS code files
 .vscode/
+settings.json
 
 # Mac miscellanea
 .DS_Store

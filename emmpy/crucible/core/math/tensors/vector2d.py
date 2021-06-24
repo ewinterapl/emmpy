@@ -14,6 +14,8 @@ class Vector2D(Vector):
 
     This class implements a generic 2-dimensional vector. No coordinate
     system information is assumed.
+
+    This object may be directly used as a Numpy array.
     """
 
     def __new__(cls, *args):
@@ -24,7 +26,7 @@ class Vector2D(Vector):
 
         Parameters
         ----------
-        args : Tuple of 2 floats
+        args : tuple of 2 float
             First and second vector elements.
 
         Returns
@@ -35,11 +37,14 @@ class Vector2D(Vector):
         Raises
         ------
         ValueError
-            If other than 2 arguments are provided.
+            If incorrect arguments are provided.
         """
-        if len(args) != 2:
-            raise ValueError('Exactly 2 numeric arguments are required!')
+        if len(args) == 0:
+            data = (None, None)
+        elif len(args) == 2:
+            data = args
+        else:
+            raise ValueError('Exactly 0 or 2 numeric arguments are required!')
         v = Vector.__new__(cls, shape=(2,))
-        v[0] = args[0]
-        v[1] = args[1]
+        v[:] = data[:]
         return v

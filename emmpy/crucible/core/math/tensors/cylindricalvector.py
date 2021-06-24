@@ -9,11 +9,17 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.tensors.vector3d import Vector3D
 
 
+# Map vector component names to indices.
+components = {'rho': 0, 'phi': 1, 'z': 2}
+
+
 class CylindricalVector(Vector3D):
     """A 3-dimensional vector in cylindrical (rho, phi, z) coordinates.
 
     This class implements a 3-dimensional vector in cylindrical
     (rho, phi, z) coordinates.
+
+    This class may be used directly as a Numpy array.
 
     Attributes
     ----------
@@ -31,7 +37,7 @@ class CylindricalVector(Vector3D):
     https://en.wikipedia.org/wiki/ISO_31-11
     """
 
-    def __new__(cls, rho, phi, z):
+    def __new__(cls, rho=None, phi=None, z=None):
         """Create a new CylindricalVector object.
 
         Allocate a new CylindricalVector object by allocating a Vector3D
@@ -39,11 +45,11 @@ class CylindricalVector(Vector3D):
 
         Parameters
         ----------
-        rho : float
+        rho : float (optional)
             Value of radius coordinate (unspecified units).
-        phi : float
+        phi : float (optional)
             Value of azimuthal angle (radians).
-        z : float
+        z : float (optional)
             Value of the axial position (unspecified units).
 
         Returns
@@ -58,61 +64,25 @@ class CylindricalVector(Vector3D):
         """Return the value of a computed attribute.
 
         Return the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        rho : float
-            Value of radius coordinate (unspecified units).
-        phi : float
-            Value of azimuthal angle (radians).
-        z : float
-            Value of the axial position (unspecified units).
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
         self[0|1|2] : float
             Value of specified attribute (rho, phi, or z).
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
-        if name == 'rho':
-            return self[0]
-        elif name == 'phi':
-            return self[1]
-        elif name == 'z':
-            return self[2]
-        else:
-            raise AttributeError
+        return self[components[name]]
 
     def __setattr__(self, name, value):
         """Set the value of a computed attribute.
 
         Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        rho : float
-            Value of radius coordinate (unspecified units).
-        phi : float
-            Value of azimuthal angle (radians).
-        z : float
-            Value of the axial position (unspecified units).
-
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+    
         Returns
         -------
         None
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
-        if name == 'rho':
-            self[0] = value
-        elif name == 'phi':
-            self[1] = value
-        elif name == 'z':
-            self[2] = value
-        else:
-            raise AttributeError
+        self[components[name]] = value

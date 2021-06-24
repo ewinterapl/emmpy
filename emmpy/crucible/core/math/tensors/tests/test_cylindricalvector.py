@@ -8,6 +8,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
+import numpy as np
+
 from emmpy.crucible.core.math.tensors.cylindricalvector import (
     CylindricalVector
 )
@@ -18,6 +20,12 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
+        # 0-argument form.
+        v = CylindricalVector()
+        self.assertIsInstance(v, CylindricalVector)
+        for i in range(3):
+            self.assertTrue(np.isnan(v[i]))
+        # 3-argument form.
         (rho, phi, z) = (1.1, 2.2, 3.3)
         v = CylindricalVector(rho, phi, z)
         self.assertIsInstance(v, CylindricalVector)
@@ -32,7 +40,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.rho, rho)
         self.assertAlmostEqual(v.phi, phi)
         self.assertAlmostEqual(v.z, z)
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(KeyError):
             v.bad
 
     def test___setattr__(self):
@@ -45,7 +53,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.phi, phi)
         v.z = z
         self.assertAlmostEqual(v.z, z)
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(KeyError):
             v.bad = 0
 
 

@@ -43,7 +43,7 @@ class TestBuilder(unittest.TestCase):
 
     def test___setattr__(self):
         """Test the __setattr__ method."""
-        v = CartesianVector2D(0, 0)
+        v = CartesianVector2D()
         (x, y) = (1.1, 2.2)
         v.x = x
         self.assertAlmostEqual(v.x, x)

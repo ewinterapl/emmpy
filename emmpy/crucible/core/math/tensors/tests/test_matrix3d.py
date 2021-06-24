@@ -8,6 +8,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
+import numpy as np
+
 from emmpy.crucible.core.math.tensors.matrix3d import Matrix3D
 
 
@@ -16,6 +18,13 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
+        # 0-argument form
+        m = Matrix3D()
+        self.assertIsInstance(m, Matrix3D)
+        for i in range(3):
+            for j in  range(3):
+                self.assertTrue(np.isnan(m[i, j]))
+        # 9-argument form
         (xx, yx, zx, xy, yy, zy, xz, yz, zz) = (
             1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
         m = Matrix3D(xx, yx, zx, xy, yy, zy, xz, yz, zz)

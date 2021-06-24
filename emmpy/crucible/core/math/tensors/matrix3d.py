@@ -16,6 +16,8 @@ class Matrix3D(Matrix):
 
     This class implements a generic 3-dimensional matrix. No coordinate
     system information is assumed.
+
+    This object may be directly used as a Numpy array.
     """
 
     def __new__(cls, *args):
@@ -26,8 +28,8 @@ class Matrix3D(Matrix):
 
         Parameters
         ----------
-        args : Tuple of 9 floats
-            Matrix elements in row-major order (ii, ji, ki, ij, ...).
+        args : tuple of 9 float (optional)
+            Matrix elements in column-major order (ii, ji, ki, ij, ...).
 
         Returns
         -------
@@ -37,10 +39,14 @@ class Matrix3D(Matrix):
         Raises
         ------
         ValueError
-            If other than 9 arguments are provided.
+            If incorrect arguments are provided.
         """
-        if len(args) != 9:
-            raise ValueError('Exactly 9 numeric arguments are required!')
+        if len(args) == 0:
+            data = [None]*9
+        elif len(args) == 9:
+            data = args
+        else:
+            raise ValueError('Exactly 0 or 9 numeric arguments are required!')
         m = Matrix.__new__(cls, shape=(3, 3))
-        m[:] = np.array(args).reshape((3, 3)).T
+        m[:] = np.array(data).reshape((3, 3)).T
         return m

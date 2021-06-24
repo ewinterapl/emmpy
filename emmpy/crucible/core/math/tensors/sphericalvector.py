@@ -9,11 +9,17 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.tensors.vector3d import Vector3D
 
 
+# Map vector component names to indices.
+components = {'r': 0, 'theta': 1, 'phi': 2}
+
+
 class SphericalVector(Vector3D):
     """A 3-dimensional vector in spherical (r, theta, phi) coordinates.
 
     This class implements a 3-dimensional vector in spherical
     (r, theta, phi) coordinates.
+
+    This class may be used directly as a Numpy array.
 
     Attributes
     ----------
@@ -31,7 +37,7 @@ class SphericalVector(Vector3D):
     https://en.wikipedia.org/wiki/ISO_31-11
     """
 
-    def __new__(cls, r, theta, phi):
+    def __new__(cls, r=None, theta=None, phi=None):
         """Create a new SphericalVector object.
 
         Allocate a new SphericalVector object by allocating a Vector3D
@@ -39,11 +45,11 @@ class SphericalVector(Vector3D):
 
         Parameters
         ----------
-        r : float
+        r : float (optional)
             Value of radius coordinate (unspecified units).
-        theta : float
+        theta : float (optional)
             Value of the polar angle (radians).
-        phi : float
+        phi : float (optional)
             Value of azimuthal angle (radians).
 
         Returns
@@ -58,61 +64,25 @@ class SphericalVector(Vector3D):
         """Return the value of a computed attribute.
 
         Return the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        r : float
-            Value of radius coordinate (unspecified units).
-        theta : float
-            Value of the polar angle (radians).
-        phi : float
-            Value of azimuthal angle (radians).
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
         self[0|1|2] : float
             Value of specified attribute (r, theta, or phi).
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
-        if name == 'r':
-            return self[0]
-        elif name == 'theta':
-            return self[1]
-        elif name == 'phi':
-            return self[2]
-        else:
-            raise AttributeError
+        return self[components[name]]
 
     def __setattr__(self, name, value):
         """Set the value of a computed attribute.
 
         Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        r : float
-            Value of radius coordinate (unspecified units).
-        theta : float
-            Value of the polar angle (radians).
-        phi : float
-            Value of azimuthal angle (radians).
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
         None
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
-        if name == 'r':
-            self[0] = value
-        elif name == 'theta':
-            self[1] = value
-        elif name == 'phi':
-            self[2] = value
-        else:
-            raise AttributeError
+        self[components[name]] = value

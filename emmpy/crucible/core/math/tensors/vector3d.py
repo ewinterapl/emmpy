@@ -37,7 +37,7 @@ class Vector3D(Vector):
         Raises
         ------
         ValueError
-            If other than 0 or 3 arguments are provided.
+            If incorrect arguments are provided.
         """
         if len(args) == 0:
             data = (None, None, None)

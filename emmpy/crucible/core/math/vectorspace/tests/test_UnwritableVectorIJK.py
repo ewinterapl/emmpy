@@ -95,19 +95,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             bad = v.bad
 
-    def test___setattr__(self):
-        """Test the __setattr__ method."""
-        v = UnwritableVectorIJK(0, 0, 0)
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v.i = i
-        self.assertAlmostEqual(v.i, i)
-        v.j = j
-        self.assertAlmostEqual(v.j, j)
-        v.k = k
-        self.assertAlmostEqual(v.k, k)
-        with self.assertRaises(KeyError):
-            v.bad = 0
-
     def test_createUnitized(self):
         """Test the createUnitized method."""
         (i, j, k) = (1.1, 2.2, 3.3)

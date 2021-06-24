@@ -151,26 +151,6 @@ class UnwritableVectorIJK(Vector3D):
         """
         return self[components[name]]
 
-    def __setattr__(self, name, value):
-        """Set the value of a computed attribute.
-
-        Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are listed in the
-        components dictionary.
-
-        Parameters
-        ----------
-        name : str
-            Name of attribute to set.
-        value : int or float
-            Value for attribute to set
-
-        Returns
-        -------
-        None
-        """
-        self[components[name]] = value
-
     def createUnitized(self):
         """Create a new, unit-length copy of the vector.
 

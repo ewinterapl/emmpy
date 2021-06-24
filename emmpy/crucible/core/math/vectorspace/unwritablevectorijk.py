@@ -1,4 +1,4 @@
-"""An unwritable 3-D vector.
+"""An unwritable 3-D vector in Cartesian (i, j, k) coordinates.
 
 A weakly immutable 3-dimensional vector designed to properly support a writable
 subclass.
@@ -40,7 +40,22 @@ components = {'i': 0, 'j': 1, 'k': 2}
 
 
 class UnwritableVectorIJK(Vector3D):
-    """UnwritableVectorIJK."""
+    """UnwritableVectorIJK.
+
+    This class implements a 3-dimensional vector in Cartesian (i, j, k)
+    coordinates, with many additional useful methods.
+
+    This class may be used directly as a Numpy array.
+
+    Attributes
+    ----------
+    i : float
+        Value of i-coordinate.
+    j : float
+        Value of j-coordinate.
+    k : float
+        Value of k-coordinate.
+    """
 
     def __new__(cls, *args):
         """Create a new UnwritableVectorIJK object.
@@ -50,8 +65,27 @@ class UnwritableVectorIJK(Vector3D):
 
         Parameters
         ----------
-        args : Tuple of arguments
+        args : tuple of object
             Arguments for polymorphic constructor.
+        SUCH AS:
+        ijk : list or tuple of float
+            Values for (i, j, k) coordinates.
+        OR
+        vector : UnwritableVectorIJK
+            Existing vector to copy.
+        OR
+        offset : int
+            Offset into data for assignment to vector elements.
+        data : list of >=3 float
+            Values to use for vector elements, starting at offset.
+        OR
+        scale : float
+            Scale factor for vector to copy.
+        vector : UnwritableVectorIJK
+            Existing vector to copy and scale.
+        OR
+        i, j, k : float
+            Values for vector elements.
 
         Returns
         -------
@@ -63,15 +97,18 @@ class UnwritableVectorIJK(Vector3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 1:
+        if len(args) == 0:
+            data = (None, None, None)
+            v = Vector3D.__new__(cls, *data)
+        elif len(args) == 1:
             if isinstance(args[0], (list, tuple)):
                 # List or tuple of 3 values for the components.
                 (ijk,) = args
                 v = Vector3D.__new__(cls, *ijk)
             elif isinstance(args[0], UnwritableVectorIJK):
                 # Copy an existing UnwritableVectorIJK.
-                (v2,) = args
-                v = Vector3D.__new__(cls, v2.i, v2.j, v2.k)
+                (vector,) = args
+                v = Vector3D.__new__(cls, *vector)
             else:
                 raise ValueError('Bad arguments for constructor!')
         elif len(args) == 2:
@@ -83,8 +120,8 @@ class UnwritableVectorIJK(Vector3D):
             elif (isRealNumber(args[0]) and
                   isinstance(args[1], UnwritableVectorIJK)):
                 # Scale factor and UnwritableVectorIJK to scale.
-                (scale, v2) = args
-                v = Vector3D.__new__(cls, scale*v2.i, scale*v2.j, scale*v2.k)
+                (scale, vector) = args
+                v = Vector3D.__new__(cls, scale*vector.i, scale*vector.j, scale*vector.k)
             else:
                 raise ValueError('Bad arguments for constructor!')
         elif len(args) == 3:
@@ -99,14 +136,8 @@ class UnwritableVectorIJK(Vector3D):
         """Return the value of a computed attribute.
 
         Return the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        i : float
-            First vector element.
-        j : float
-            Second vector element.
-        k : float
-            Third vector element.
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Parameters
         ----------
@@ -117,11 +148,6 @@ class UnwritableVectorIJK(Vector3D):
         -------
         self[0|1|2] : float
             Value of specified attribute (i, j, or k).
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
         return self[components[name]]
 
@@ -129,14 +155,8 @@ class UnwritableVectorIJK(Vector3D):
         """Set the value of a computed attribute.
 
         Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        i : float
-            First vector element.
-        j : float
-            Second vector element.
-        k : float
-            Third vector element.
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Parameters
         ----------
@@ -148,11 +168,6 @@ class UnwritableVectorIJK(Vector3D):
         Returns
         -------
         None
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
         self[components[name]] = value
 
@@ -182,7 +197,8 @@ class UnwritableVectorIJK(Vector3D):
         v : UnwritableVectorIJK
             A negated copy of the vector.
         """
-        return UnwritableVectorIJK(-self.i, -self.j, -self.k)
+        v = UnwritableVectorIJK(-self.i, -self.j, -self.k)
+        return v
 
     def createScaled(self, scale):
         """Create a scaled copy of an the vector.
@@ -199,7 +215,8 @@ class UnwritableVectorIJK(Vector3D):
         v : UnwritableVectorIJK
             A scaled copy of the vector.
         """
-        return UnwritableVectorIJK(scale, self)
+        v = UnwritableVectorIJK(scale, self)
+        return v
 
     def getI(self):
         """Get the ith component.
@@ -336,7 +353,8 @@ class UnwritableVectorIJK(Vector3D):
             The angular separation between vector and the plane in
             radians.
         """
-        return pi/2 - self.getSeparation(normal)
+        angle = pi/2 - self.getSeparation(normal)
+        return angle
 
     @staticmethod
     def copyOf(vector):

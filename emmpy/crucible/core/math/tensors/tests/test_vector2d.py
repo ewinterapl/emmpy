@@ -21,8 +21,8 @@ class TestBuilder(unittest.TestCase):
         # 0-argument form.
         v = Vector2D()
         self.assertIsInstance(v, Vector2D)
-        self.assertTrue(np.isnan(v[0]))
-        self.assertTrue(np.isnan(v[1]))
+        for i in range(2):
+            self.assertTrue(np.isnan(v[i]))
         # 2-argument form.
         data = (1.1, 2.2)
         v = Vector2D(*data)

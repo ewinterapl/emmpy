@@ -9,6 +9,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.tensors.vector2d import Vector2D
 
 
+# Map vector component names to indices.
+components = {'x': 0, 'y': 1}
+
+
 class CartesianVector2D(Vector2D):
     """A 2-dimensional vector in Cartesian (x, y) coordinates.
 
@@ -48,12 +52,8 @@ class CartesianVector2D(Vector2D):
         """Return the value of a computed attribute.
 
         Return the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        x : float
-            First vector element.
-        y : float
-            Second vector element.
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
@@ -65,23 +65,14 @@ class CartesianVector2D(Vector2D):
         AttributeError
             If an illegal attribute name is specified.
         """
-        if name == 'x':
-            return self[0]
-        elif name == 'y':
-            return self[1]
-        else:
-            raise AttributeError
+        return self[components[name]]
 
     def __setattr__(self, name, value):
         """Set the value of a computed attribute.
 
         Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        x : float
-            First vector element.
-        y : float
-            Second vector element.
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
@@ -92,9 +83,4 @@ class CartesianVector2D(Vector2D):
         AttributeError
             If an illegal attribute name is specified.
         """
-        if name == 'x':
-            self[0] = value
-        elif name == 'y':
-            self[1] = value
-        else:
-            raise AttributeError
+        self[components[name]] = value

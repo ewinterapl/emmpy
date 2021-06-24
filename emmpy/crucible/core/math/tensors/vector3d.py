@@ -37,10 +37,12 @@ class Vector3D(Vector):
         ValueError
             If other than 3 arguments are provided.
         """
-        if len(args) != 3:
-            raise ValueError('Exactly 3 numeric arguments are required!')
+        if len(args) == 0:
+            data = (None, None, None)
+        elif len(args) == 3:
+            data = args
+        else:
+            raise ValueError('Exactly 0 or 3 numeric arguments are required!')
         v = Vector.__new__(cls, shape=(3,))
-        v[0] = args[0]
-        v[1] = args[1]
-        v[2] = args[2]
+        v[:] = data[:]
         return v

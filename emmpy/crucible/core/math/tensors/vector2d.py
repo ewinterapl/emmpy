@@ -26,7 +26,7 @@ class Vector2D(Vector):
 
         Parameters
         ----------
-        args : tuple of 2 float
+        args : tuple of 2 float (optional)
             First and second vector elements.
 
         Returns

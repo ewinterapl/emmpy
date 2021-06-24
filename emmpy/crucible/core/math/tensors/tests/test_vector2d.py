@@ -24,11 +24,16 @@ class TestBuilder(unittest.TestCase):
         self.assertTrue(np.isnan(v[0]))
         self.assertTrue(np.isnan(v[1]))
         # 2-argument form.
-        (x, y) = (1.1, 2.2)
-        v = Vector2D(x, y)
+        data = (1.1, 2.2)
+        v = Vector2D(*data)
         self.assertIsInstance(v, Vector2D)
-        self.assertAlmostEqual(v[0], x)
-        self.assertAlmostEqual(v[1], y)
+        for i in range(2):
+            self.assertAlmostEqual(v[i], data[i])
+        # Invalid forms.
+        with self.assertRaises(ValueError):
+            v = Vector2D(None)
+        with self.assertRaises(ValueError):
+            v = Vector2D(None, None, None)
 
 
 if __name__ == '__main__':

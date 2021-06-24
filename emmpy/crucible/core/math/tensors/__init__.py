@@ -3,6 +3,7 @@
 Modules
 -------
 cartesianvector2d.py
+cartesianvector3d.py
 cylindricalvector
 matrix.py
 matrix3d.py

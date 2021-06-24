@@ -29,18 +29,18 @@ class Vector(np.ndarray):
     def __new__(cls, *args, **kargs):
         """Create a new Vector object.
 
-        Allocate a new Vector object by allocating a new ndarray
-        on which the Vector will expand.
+        Allocate a new Vector object by allocating a new ndarray on which
+        the Vector will expand.
 
         Note that this method should only be called from the __new__()
         method of subclasses.
 
         Parameters
         ----------
-        args : Tuple of objects
-            Positional arguments.
-        kargs : Dictionary of str->object pairs
-            Keyword arguments.
+        args : tuple of object
+            Positional arguments for polymorphic method.
+        kargs : dict of str->object pairs
+            Keyword arguments for polymorphic method.
 
         Returns
         -------

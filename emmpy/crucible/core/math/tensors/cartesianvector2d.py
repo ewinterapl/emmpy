@@ -19,6 +19,8 @@ class CartesianVector2D(Vector2D):
     This class implements a 2-dimensional vector in Cartesian (x, y)
     coordinates.
 
+    This class may be used directly as a Numpy array.
+
     Attributes
     ----------
     x : float
@@ -27,7 +29,7 @@ class CartesianVector2D(Vector2D):
         Value of y-coordinate.
     """
 
-    def __new__(cls, x, y):
+    def __new__(cls, x=None, y=None):
         """Create a new CartesianVector2D object.
 
         Allocate a new CartesianVector2D object by allocating a Vector2D
@@ -35,9 +37,9 @@ class CartesianVector2D(Vector2D):
 
         Parameters
         ----------
-        x : float
+        x : float (optional)
             Value of x-coordinate.
-        y : float
+        y : float (optional)
             Value of y-coordinate.
 
         Returns
@@ -59,11 +61,6 @@ class CartesianVector2D(Vector2D):
         -------
         self[0|1] : float
             Value of specified attribute (x or y).
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
         return self[components[name]]
 
@@ -77,10 +74,5 @@ class CartesianVector2D(Vector2D):
         Returns
         -------
         None
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
         self[components[name]] = value

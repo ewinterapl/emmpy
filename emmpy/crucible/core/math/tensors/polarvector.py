@@ -9,11 +9,17 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.tensors.vector2d import Vector2D
 
 
+# Map vector component names to indices.
+components = {'r': 0, 'phi': 1}
+
+
 class PolarVector(Vector2D):
     """A 2-dimensional vector in polar (r, phi) coordinates.
 
     This class implements a 2-dimensional vector in polar (r, phi)
     coordinates.
+
+    This class may be used directly as a Numpy array.
 
     Attributes
     ----------
@@ -28,7 +34,7 @@ class PolarVector(Vector2D):
     https://en.wikipedia.org/wiki/ISO_31-11
     """
 
-    def __new__(cls, r, phi):
+    def __new__(cls, r=None, phi=None):
         """Create a new PolarVector object.
 
         Allocate a new PolarVector object by allocating a Vector2D
@@ -36,9 +42,9 @@ class PolarVector(Vector2D):
 
         Parameters
         ----------
-        r : float
+        r : float (optional)
             Value of radius coordinate (unspecified units).
-        phi : float
+        phi : float (optional)
             Value of angle coordinate (radians).
 
         Returns
@@ -53,53 +59,25 @@ class PolarVector(Vector2D):
         """Return the value of a computed attribute.
 
         Return the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        r : float
-            Value of radius coordinate (unspecified units).
-        phi : float
-            Value of angle coordinate (radians).
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
         self[0|1] : float
             Value of specified attribute (r or phi).
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
-        if name == 'r':
-            return self[0]
-        elif name == 'phi':
-            return self[1]
-        else:
-            raise AttributeError
+        return self[components[name]]
 
     def __setattr__(self, name, value):
         """Set the value of a computed attribute.
 
         Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are
-
-        r : float
-            Value of radius coordinate (unspecified units).
-        phi : float
-            Value of angle coordinate (radians).
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
 
         Returns
         -------
         None
-
-        Raises
-        ------
-        AttributeError
-            If an illegal attribute name is specified.
         """
-        if name == 'r':
-            self[0] = value
-        elif name == 'phi':
-            self[1] = value
-        else:
-            raise AttributeError
+        self[components[name]] = value

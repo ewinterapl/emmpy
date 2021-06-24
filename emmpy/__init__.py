@@ -7,6 +7,7 @@ modelrunapp.py
 Packages
 --------
 crucible
+exceptions
 geomagmodel
 magmodel
 utilities

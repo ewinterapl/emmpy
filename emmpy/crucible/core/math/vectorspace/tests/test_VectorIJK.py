@@ -3,6 +3,8 @@
 from math import pi, sqrt
 import unittest
 
+import numpy as np
+
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
@@ -15,9 +17,8 @@ class TestBuilder(unittest.TestCase):
         # 0-argument form.
         v1 = VectorIJK()
         self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1.i, 0)
-        self.assertAlmostEqual(v1.j, 0)
-        self.assertAlmostEqual(v1.k, 0)
+        for i in range(3):
+            self.assertTrue(np.isnan(v1[i]))
 
     def test_createUnitized(self):
         """Test the createUnitized method."""
@@ -25,31 +26,31 @@ class TestBuilder(unittest.TestCase):
         length = sqrt(i**2 + j**2 + k**2)
         v1 = VectorIJK(i, j, k)
         v2 = v1.createUnitized()
-        self.assertIsNot(v2, v1)
         self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, i/length)
-        self.assertAlmostEqual(v2.j, j/length)
-        self.assertAlmostEqual(v2.k, k/length)
+        self.assertAlmostEqual(v2.i, v1.i/length)
+        self.assertAlmostEqual(v2.j, v1.j/length)
+        self.assertAlmostEqual(v2.k, v1.k/length)
 
     def test_createNegated(self):
         """Test the createNegated method."""
         (i, j, k) = (1.1, 2.2, 3.3)
         v1 = VectorIJK(i, j, k)
         v2 = v1.createNegated()
-        self.assertIsNot(v2, v1)
-        self.assertAlmostEqual(v2.i, -i)
-        self.assertAlmostEqual(v2.j, -j)
-        self.assertAlmostEqual(v2.k, -k)
+        self.assertIsInstance(v2, VectorIJK)
+        self.assertAlmostEqual(v2.i, -v1.i)
+        self.assertAlmostEqual(v2.j, -v1.j)
+        self.assertAlmostEqual(v2.k, -v1.k)
 
     def test_createScaled(self):
         """Test the createScaled method."""
         (i, j, k) = (1.1, 2.2, 3.3)
         _scale = -2.2
         v1 = VectorIJK(i, j, k)
-        v2 = v1.scale(_scale)
-        self.assertAlmostEqual(v2.i, i*_scale)
-        self.assertAlmostEqual(v2.j, j*_scale)
-        self.assertAlmostEqual(v2.k, k*_scale)
+        v2 = v1.createScaled(_scale)
+        self.assertIsInstance(v2, VectorIJK)
+        self.assertAlmostEqual(v2.i, v1.i*_scale)
+        self.assertAlmostEqual(v2.j, v1.j*_scale)
+        self.assertAlmostEqual(v2.k, v1.k*_scale)
 
     def test_unitize(self):
         """Test the unitize method."""
@@ -58,12 +59,12 @@ class TestBuilder(unittest.TestCase):
         v1 = VectorIJK(i, j, k)
         v2 = v1.unitize()
         self.assertIs(v2, v1)
-        self.assertAlmostEqual(v1.i, i/length)
-        self.assertAlmostEqual(v1.j, j/length)
-        self.assertAlmostEqual(v1.k, k/length)
+        self.assertAlmostEqual(v2.i, i/length)
+        self.assertAlmostEqual(v2.j, j/length)
+        self.assertAlmostEqual(v2.k, k/length)
         v1 = VectorIJK(0, 0, 0)
         with self.assertRaises(BugException):
-            v1.unitize()
+            v2 = v1.unitize()
 
     def test_negate(self):
         """Test the negate method."""
@@ -82,9 +83,9 @@ class TestBuilder(unittest.TestCase):
         v1 = VectorIJK(i, j, k)
         v2 = v1.scale(_scale)
         self.assertIs(v2, v1)
-        self.assertAlmostEqual(v1.i, i*_scale)
-        self.assertAlmostEqual(v1.j, j*_scale)
-        self.assertAlmostEqual(v1.k, k*_scale)
+        self.assertAlmostEqual(v2.i, i*_scale)
+        self.assertAlmostEqual(v2.j, j*_scale)
+        self.assertAlmostEqual(v2.k, k*_scale)
 
     def test_clear(self):
         """Test the clear method."""
@@ -161,12 +162,12 @@ class TestBuilder(unittest.TestCase):
         # Scale another vector
         scale = -2.2
         v1 = VectorIJK()
-        v2 = VectorIJK([i, j, k])
+        v2 = VectorIJK(i, j, k)
         v3 = v1.setTo(scale, v2)
         self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, scale*i)
-        self.assertAlmostEqual(v3.j, scale*j)
-        self.assertAlmostEqual(v3.k, scale*k)
+        self.assertAlmostEqual(v3.i, scale*v2.i)
+        self.assertAlmostEqual(v3.j, scale*v2.j)
+        self.assertAlmostEqual(v3.k, scale*v2.k)
         # List and offset
         v1 = VectorIJK()
         data = [0, i, j, k]

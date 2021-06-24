@@ -1,4 +1,4 @@
-"""A 3-D vector.
+"""A 3-D vector in Cartesian (i, j, k) coordinates.
 
 Authors
 -------
@@ -23,14 +23,13 @@ from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class VectorIJK(UnwritableVectorIJK):
-    """A 3-D vector.
+    """A 3-D vector in Cartesian (i, j, k) coordinates.
 
     Writable subclass of UnwritableVectorIJK.
 
     This class contains the mutator methods necessary to set or alter the
     internals of the parent class fields.
     """
-
 
     # Useful vector constants.
 
@@ -63,7 +62,7 @@ class VectorIJK(UnwritableVectorIJK):
 
         Parameters
         ----------
-        args : Tuple of arguments
+        args : tuple of object
             Arguments for polymorphic constructor.
 
         Returns
@@ -71,9 +70,6 @@ class VectorIJK(UnwritableVectorIJK):
         v : VectorIJK
             The newly-created object.
         """
-        if len(args) == 0:
-            # Construct a vector with an initial value of 0.
-            args = (0, 0, 0)
         v = UnwritableVectorIJK.__new__(cls, *args)
         return v
 
@@ -87,8 +83,8 @@ class VectorIJK(UnwritableVectorIJK):
         v : VectorIJK
             A unitized copy of the current vector.
         """
-        v = VectorIJK(self)
-        v.unitize()
+        length = self.getLength()
+        v = VectorIJK(1/length, self)
         return v
 
     def createNegated(self):
@@ -101,8 +97,7 @@ class VectorIJK(UnwritableVectorIJK):
         v : VectorIJK
             A negated copy of the current vector.
         """
-        v = VectorIJK(self)
-        v.negate()
+        v = VectorIJK(-self.i, -self.j, -self.k)
         return v
 
     def createScaled(self, scale):
@@ -120,8 +115,7 @@ class VectorIJK(UnwritableVectorIJK):
         v : VectorIJK
             A scaled copy of the current vector.
         """
-        v = VectorIJK(self)
-        v.scale(scale)
+        v = VectorIJK(scale, self)
         return v
 
     def unitize(self):
@@ -177,7 +171,7 @@ class VectorIJK(UnwritableVectorIJK):
         return self
 
     def clear(self):
-        """Clear the vector in-place.
+        """Clear (set to zero) the vector in-place.
 
         Clear (set to 0) the vector in-place.
 

@@ -14,6 +14,8 @@ class Vector3D(Vector):
 
     This class implements a generic 3-dimensional vector. No coordinate
     system information is assumed.
+
+    This object may be directly used as a Numpy array.
     """
 
     def __new__(cls, *args):
@@ -24,7 +26,7 @@ class Vector3D(Vector):
 
         Parameters
         ----------
-        args : Tuple of 3 floats
+        args : tuple of 3 float (optional)
             First, second, and third vector elements.
 
         Returns
@@ -35,7 +37,7 @@ class Vector3D(Vector):
         Raises
         ------
         ValueError
-            If other than 3 arguments are provided.
+            If other than 0 or 3 arguments are provided.
         """
         if len(args) == 0:
             data = (None, None, None)

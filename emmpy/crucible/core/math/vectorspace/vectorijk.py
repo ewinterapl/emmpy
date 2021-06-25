@@ -980,16 +980,12 @@ class VectorIJK(Vector3D):
         """
         return VectorIJK(vector)
 
-    def __repr__(self):
-        """Create a string representation of the object."""
-        return "[%s,%s,%s]" % (self.i, self.j, self.k)
-
     def getLength(self):
         """Compute the standard L-2 norm, or length, of the vector.
 
         return float (i*i + j*j + k*k)^(1/2) without danger of overflow.
         """
-        return computeNorm(self.i, self.j, self.k)
+        return computeNorm(*self)
 
 # # The ZERO vector.
 # ZERO = UnwritableVectorIJK(0, 0, 0)

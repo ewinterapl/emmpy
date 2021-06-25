@@ -1,232 +1,187 @@
-"""Tests for the vectorijk module."""
-
-
 from math import pi, sqrt
 import unittest
 
-import numpy as np
-
-from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
-    """Build and run the tests."""
 
-    def test___new__(self):
-        """Test the __new__ method."""
-        # 0-argument form.
-        v1 = VectorIJK()
-        self.assertIsInstance(v1, VectorIJK)
-        for i in range(3):
-            self.assertTrue(np.isnan(v1[i]))
+    def test___init__(self):
+        # 0-argument form
+        v = VectorIJK()
+        self.assertAlmostEqual(v.i, 0)
+        self.assertAlmostEqual(v.j, 0)
+        self.assertAlmostEqual(v.k, 0)
+        # 1-argument forms
+        v = VectorIJK([1.1, 2.2, 3.3])
+        self.assertAlmostEqual(v.i, 1.1)
+        self.assertAlmostEqual(v.j, 2.2)
+        self.assertAlmostEqual(v.k, 3.3)
+        v2 = VectorIJK(v)
+        self.assertAlmostEqual(v2.i, 1.1)
+        self.assertAlmostEqual(v2.j, 2.2)
+        self.assertAlmostEqual(v2.k, 3.3)
+        v2 = VectorIJK(-2.0, v)
+        self.assertAlmostEqual(v2.i, -2.2)
+        self.assertAlmostEqual(v2.j, -4.4)
+        self.assertAlmostEqual(v2.k, -6.6)
+        # 2-argument forms
+        v = VectorIJK(1, [0.0, 1.1, 2.2, 3.3])
+        self.assertAlmostEqual(v.i, 1.1)
+        self.assertAlmostEqual(v.j, 2.2)
+        self.assertAlmostEqual(v.k, 3.3)
+        # 3-argument form
+        v = VectorIJK(1.1, 2.2, 3.3)
+        self.assertAlmostEqual(v.i, 1.1)
+        self.assertAlmostEqual(v.j, 2.2)
+        self.assertAlmostEqual(v.k, 3.3)
+        # Invalid forms
+        with self.assertRaises(Exception):
+            VectorIJK(0)
+        with self.assertRaises(Exception):
+            VectorIJK(0, 1)
+        with self.assertRaises(Exception):
+            VectorIJK(0, 1, 2, 3)
 
     def test_createUnitized(self):
-        """Test the createUnitized method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        length = sqrt(i**2 + j**2 + k**2)
-        v1 = VectorIJK(i, j, k)
+        v1 = VectorIJK(1, 2, 3)
         v2 = v1.createUnitized()
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, v1.i/length)
-        self.assertAlmostEqual(v2.j, v1.j/length)
-        self.assertAlmostEqual(v2.k, v1.k/length)
+        self.assertAlmostEqual(v2.i, 1/sqrt(14))
+        self.assertAlmostEqual(v2.j, 2/sqrt(14))
+        self.assertAlmostEqual(v2.k, 3/sqrt(14))
 
     def test_createNegated(self):
-        """Test the createNegated method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.createNegated()
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, -v1.i)
-        self.assertAlmostEqual(v2.j, -v1.j)
-        self.assertAlmostEqual(v2.k, -v1.k)
+        v1 = VectorIJK(1.1, 2.2, 3.3)
+        v2 = VectorIJK.createNegated(v1)
+        self.assertAlmostEqual(v2.i, -1.1)
+        self.assertAlmostEqual(v2.j, -2.2)
+        self.assertAlmostEqual(v2.k, -3.3)
 
     def test_createScaled(self):
-        """Test the createScaled method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        _scale = -2.2
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.createScaled(_scale)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, v1.i*_scale)
-        self.assertAlmostEqual(v2.j, v1.j*_scale)
-        self.assertAlmostEqual(v2.k, v1.k*_scale)
-
-    def test_unitize(self):
-        """Test the unitize method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        length = sqrt(i**2 + j**2 + k**2)
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.unitize()
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, i/length)
-        self.assertAlmostEqual(v2.j, j/length)
-        self.assertAlmostEqual(v2.k, k/length)
-        v1 = VectorIJK(0, 0, 0)
-        with self.assertRaises(BugException):
-            v2 = v1.unitize()
-
-    def test_negate(self):
-        """Test the negate method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.negate()
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, -i)
-        self.assertAlmostEqual(v2.j, -j)
-        self.assertAlmostEqual(v2.k, -k)
+        v1 = VectorIJK(1.1, 2.2, 3.3)
+        v2 = v1.createScaled(-2)
+        self.assertAlmostEqual(v2.i, -2.2)
+        self.assertAlmostEqual(v2.j, -4.4)
+        self.assertAlmostEqual(v2.k, -6.6)
 
     def test_scale(self):
-        """Test the scale method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        _scale = -2.2
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.scale(_scale)
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, i*_scale)
-        self.assertAlmostEqual(v2.j, j*_scale)
-        self.assertAlmostEqual(v2.k, k*_scale)
+        v = VectorIJK(1, 2, 3)
+        v2 = v.scale(-2)
+        self.assertIs(v2, v)
+        self.assertAlmostEqual(v.i, -2)
+        self.assertAlmostEqual(v.j, -4)
+        self.assertAlmostEqual(v.k, -6)
+
+    def test_unitize(self):
+        v = VectorIJK(1, 2, 3)
+        v2 = v.unitize()
+        self.assertIs(v2, v)
+        self.assertAlmostEqual(v.i, 1/sqrt(14))
+        self.assertAlmostEqual(v.j, 2/sqrt(14))
+        self.assertAlmostEqual(v.k, 3/sqrt(14))
+        v = VectorIJK(0, 0, 0)
+        with self.assertRaises(Exception):
+            v.unitize()
+
+    def test_negate(self):
+        v = VectorIJK(1, 2, 3)
+        v2 = v.negate()
+        self.assertIs(v2, v)
+        self.assertAlmostEqual(v.i, -1)
+        self.assertAlmostEqual(v.j, -2)
+        self.assertAlmostEqual(v.k, -3)
 
     def test_clear(self):
-        """Test the clear method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.clear()
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, 0)
-        self.assertAlmostEqual(v2.j, 0)
-        self.assertAlmostEqual(v2.k, 0)
+        v = VectorIJK(1, 2, 3)
+        v2 = v.clear()
+        self.assertIs(v2, v)
+        self.assertEqual(v.i, 0)
+        self.assertEqual(v.j, 0)
+        self.assertEqual(v.k, 0)
 
     def test_setI(self):
-        """Test the setI method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        value = 4.4
-        v1 = VectorIJK(i, j, k)
-        v1.setI(value)
-        self.assertAlmostEqual(v1.i, value)
+        v = VectorIJK(1.1, 2.2, 3.3)
+        v.setI(4.4)
+        self.assertAlmostEqual(v.i, 4.4)
 
     def test_setJ(self):
-        """Test the setJ method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        value = 4.4
-        v1 = VectorIJK(i, j, k)
-        v1.setJ(value)
-        self.assertAlmostEqual(v1.j, value)
+        v = VectorIJK(1.1, 2.2, 3.3)
+        v.setJ(4.4)
+        self.assertAlmostEqual(v.j, 4.4)
 
     def test_setK(self):
-        """Test the setK method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        value = 4.4
-        v1 = VectorIJK(i, j, k)
-        v1.setK(value)
-        self.assertAlmostEqual(v1.k, value)
+        v = VectorIJK(1.1, 2.2, 3.3)
+        v.setK(4.4)
+        self.assertAlmostEqual(v.k, 4.4)
 
     def test_set(self):
-        """Test the set method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        value = 4.4
-        v1 = VectorIJK(i, j, k)
-        for index in range(3):
-            v1.set(index, value)
-            self.assertAlmostEqual(v1[index], value)
-        with self.assertRaises(IndexError):
-            v1.set(3, value)
+        v = VectorIJK(1.1, 2.2, 3.3)
+        v.set(0, 4.4)
+        self.assertAlmostEqual(v.i, 4.4)
+        v.set(1, 5.5)
+        self.assertAlmostEqual(v.j, 5.5)
+        v.set(2, 6.6)
+        self.assertAlmostEqual(v.k, 6.6)
+        with self.assertRaises(Exception):
+            v.set(3, 7.7)
 
     def test_setTo(self):
-        """Test the setTo method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK()
-        v2 = VectorIJK(i, j, k)
         # 1-argument forms
-        # Copy from vector
-        v3 = v1.setTo(v2)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, v2.i)
-        self.assertAlmostEqual(v3.j, v2.j)
-        self.assertAlmostEqual(v3.k, v2.k)
-        # Copy from list
-        v1 = VectorIJK()
-        v3 = v1.setTo([i, j, k])
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
-        # Copy from tuple
-        v1 = VectorIJK()
-        v3 = v1.setTo((i, j, k))
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
+        v1 = VectorIJK(1.1, 2.2, 3.3)
+        v2 = VectorIJK()
+        v3 = v2.setTo(v1)
+        self.assertIs(v3, v2)
+        self.assertAlmostEqual(v2.i, 1.1)
+        self.assertAlmostEqual(v2.j, 2.2)
+        self.assertAlmostEqual(v2.k, 3.3)
+        v3 = v2.setTo([5.5, 6.6, 7.7])
+        self.assertIs(v3, v2)
+        self.assertAlmostEqual(v2.i, 5.5)
+        self.assertAlmostEqual(v2.j, 6.6)
+        self.assertAlmostEqual(v2.k, 7.7)
         # 2-argument forms
-        # Scale another vector
-        scale = -2.2
-        v1 = VectorIJK()
-        v2 = VectorIJK(i, j, k)
-        v3 = v1.setTo(scale, v2)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, scale*v2.i)
-        self.assertAlmostEqual(v3.j, scale*v2.j)
-        self.assertAlmostEqual(v3.k, scale*v2.k)
-        # List and offset
-        v1 = VectorIJK()
-        data = [0, i, j, k]
-        v3 = v1.setTo(1, data)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
-        # Tuple and offset
-        v1 = VectorIJK()
-        data = (0, i, j, k)
-        v3 = v1.setTo(1, data)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
+        v3 = v2.setTo(-2, v1)
+        self.assertIs(v3, v2)
+        self.assertAlmostEqual(v2.i, -2.2)
+        self.assertAlmostEqual(v2.j, -4.4)
+        self.assertAlmostEqual(v2.k, -6.6)
+        v3 = v2.setTo(1, [1.11, 2.22, 3.33, 4.44])
+        self.assertIs(v3, v2)
+        self.assertAlmostEqual(v2.i, 2.22)
+        self.assertAlmostEqual(v2.j, 3.33)
+        self.assertAlmostEqual(v2.k, 4.44)
         # 3-argument forms
-        v1 = VectorIJK()
-        v3 = v1.setTo(i, j, k)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
+        v1 = VectorIJK(1.1, 2.2, 3.3)
+        v2 = VectorIJK(4.4, 5.5, 6.6)
+        v2.setTo(v1)
+        self.assertAlmostEqual(v2.i, 1.1)
+        self.assertAlmostEqual(v2.j, 2.2)
+        self.assertAlmostEqual(v2.k, 3.3)
         # Invalid forms
-        with self.assertRaises(ValueError):
+        with self.assertRaises(Exception):
             v2.setTo()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(Exception):
             v2.setTo(None)
-        with self.assertRaises(ValueError):
-            v2.setTo(None, None)
-        with self.assertRaises(ValueError):
-            v2.setTo(None, None, None, None)
 
     def test_setToUnitized(self):
-        """Test the setToUnitized method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        length = sqrt(i**2 + j**2 + k**2)
-        v1 = VectorIJK()
-        v2 = VectorIJK(i, j, k)
-        v3 = v1.setToUnitized(v2)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, v2.i/length)
-        self.assertAlmostEqual(v3.j, v2.j/length)
-        self.assertAlmostEqual(v3.k, v2.k/length)
+        v1 = VectorIJK(1, 1, 1)
+        v2 = VectorIJK(3, 4, 5)
+        v = v2.setToUnitized(v1)
+        self.assertIs(v, v2)
+        self.assertAlmostEqual(v2.i, 1/sqrt(3))
+        self.assertAlmostEqual(v2.j, 1/sqrt(3))
+        self.assertAlmostEqual(v2.k, 1/sqrt(3))
 
     def setToNegated(self):
-        """Test the setToNegated method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK()
-        v2 = VectorIJK(i, j, k)
-        v3 = v1.setToNegated(v2)
-        self.assertIs(v3, v1)
-        self.assertAlmostEqual(v3.i, -v2.i)
-        self.assertAlmostEqual(v3.j, -v2.j)
-        self.assertAlmostEqual(v3.k, -v2.k)
+        v1 = VectorIJK(1, 2, 3)
+        v2 = VectorIJK(4, 5, 6)
+        v = v2.setToNegated(v1)
+        self.assertIs(v, v2)
+        self.assertAlmostEqual(v2.i, -1)
+        self.assertAlmostEqual(v2.j, -2)
+        self.assertAlmostEqual(v2.k, -3)
 
     def test_rotate(self):
-        """Test the rotate method."""
         v1 = VectorIJK(1, 0, 0)
         z_axis = VectorIJK(0, 0, 1)
         angle = pi/2
@@ -240,18 +195,10 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.i, 0)
         self.assertAlmostEqual(v2.j, 1)
         self.assertAlmostEqual(v2.k, 0)
-        # Invalid forms.
-        with self.assertRaises(ValueError):
+        with self.assertRaises(Exception):
             VectorIJK.rotate()
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate(None)
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate(None, None)
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate(None, None, None, None, None)
 
     def test_planeProject(self):
-        """Test the planeProject method."""
         v1 = VectorIJK(1, 1, 1)
         v2 = VectorIJK(1, 0, 0)
         v3 = VectorIJK.planeProject(v1, v2)
@@ -268,31 +215,22 @@ class TestBuilder(unittest.TestCase):
             VectorIJK.planeProject()
 
     def test_project(self):
-        """Test the project method."""
         v1 = VectorIJK(1, 1, 1)
         v2 = VectorIJK(1, 0, 0)
-        # Create the rotated vector.
         v3 = VectorIJK.project(v1, v2)
         self.assertAlmostEqual(v3.i, 1)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
-        # Allocate the buffer, then rotate the vector.
         v4 = VectorIJK()
         v5 = VectorIJK.project(v1, v2, v4)
         self.assertIs(v5, v4)
         self.assertAlmostEqual(v5.i, 1)
         self.assertAlmostEqual(v5.j, 0)
         self.assertAlmostEqual(v5.k, 0)
-        # Invalid cases.
-        with self.assertRaises(Exception):
-            VectorIJK.project()
         with self.assertRaises(Exception):
             VectorIJK.project(None)
-        with self.assertRaises(Exception):
-            VectorIJK.project(None, None, None, None)
 
     def test_combine(self):
-        """Test the combine method."""
         v = VectorIJK()
         v0 = VectorIJK(0, 0, 0)
         v1 = VectorIJK(1, 2, 3)
@@ -377,11 +315,10 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(vc.j, 203)
         self.assertAlmostEqual(vc.k, 238)
         # Invalid forms
-        with self.assertRaises(ValueError):
+        with self.assertRaises(Exception):
             VectorIJK.combine()
 
     def test_uCross(self):
-        """Test the uCross method."""
         v = VectorIJK()
         v1 = VectorIJK(2, 0, 0)
         v2 = VectorIJK(0, 3, 0)
@@ -398,7 +335,6 @@ class TestBuilder(unittest.TestCase):
             VectorIJK.uCross()
 
     def test_cross(self):
-        """Test the cross method."""
         v = VectorIJK()
         v1 = VectorIJK(1, 0, 0)
         v2 = VectorIJK(0, 1, 0)
@@ -415,7 +351,6 @@ class TestBuilder(unittest.TestCase):
             VectorIJK.cross()
 
     def test_pointwiseMultiply(self):
-        """Test the pointwiseMultiply method."""
         v = VectorIJK()
         v1 = VectorIJK(1, 2, 3)
         v2 = VectorIJK(4, 5, 6)
@@ -432,55 +367,37 @@ class TestBuilder(unittest.TestCase):
             VectorIJK.pointwiseMultiply()
 
     def test_subtract(self):
-        """Test the subtract method."""
+        v = VectorIJK()
         v1 = VectorIJK(1, 1, 1)
         v2 = VectorIJK(1, 1, 0)
-        buffer = VectorIJK()
-        # Check without buffer.
         v3 = VectorIJK.subtract(v1, v2)
         self.assertAlmostEqual(v3.i, 0)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 1)
-        # Check with buffer.
-        v3 = VectorIJK.subtract(v1, v2, buffer)
-        self.assertIs(v3, buffer)
+        v3 = VectorIJK.subtract(v1, v2, v)
         self.assertAlmostEqual(v3.i, 0)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 1)
-        # Invalid cases.
         with self.assertRaises(Exception):
             VectorIJK.subtract()
-        with self.assertRaises(Exception):
-            VectorIJK.subtract(None)
-        with self.assertRaises(Exception):
-            VectorIJK.subtract(None, None, None, None)
 
     def test_add(self):
-        """Test the add method."""
+        v = VectorIJK()
         v1 = VectorIJK(1, 1, 1)
         v2 = VectorIJK(1, 1, 0)
-        buffer = VectorIJK()
-        # Check without buffer.
         v3 = VectorIJK.add(v1, v2)
         self.assertAlmostEqual(v3.i, 2)
         self.assertAlmostEqual(v3.j, 2)
         self.assertAlmostEqual(v3.k, 1)
-        # Check with buffer.
-        v3 = VectorIJK.add(v1, v2, buffer)
-        self.assertIs(v3, buffer)
+        v3 = VectorIJK.add(v1, v2, v)
+        self.assertIs(v3, v)
         self.assertAlmostEqual(v3.i, 2)
         self.assertAlmostEqual(v3.j, 2)
         self.assertAlmostEqual(v3.k, 1)
-        # Invalid cases.
         with self.assertRaises(Exception):
             VectorIJK.add()
-        with self.assertRaises(Exception):
-            VectorIJK.subtract(None)
-        with self.assertRaises(Exception):
-            VectorIJK.subtract(None, None, None, None)
 
     def test_addAll(self):
-        """Test the addAll method."""
         v = VectorIJK()
         v1 = VectorIJK(1, 2, 3)
         v2 = VectorIJK(3, 4, 5)
@@ -498,7 +415,6 @@ class TestBuilder(unittest.TestCase):
             VectorIJK.addAll()
 
     def test_addRSS(self):
-        """Test the addRSS method."""
         v = VectorIJK()
         v1 = VectorIJK(1, 2, 3)
         v2 = VectorIJK(3, 4, 5)

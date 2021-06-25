@@ -10,7 +10,7 @@ import numpy as np
 
 
 class Matrix(np.ndarray):
-    """Abstract base class for 2-dimensional, n-component matrices.
+    """Abstract base class for n-component matrices.
 
     This class is the base class for all matrix classes in all
     coordinate systems.
@@ -18,8 +18,8 @@ class Matrix(np.ndarray):
     This abstract class must not be instantiated directly. Doing so will
     usually raise an Exception of some type.
 
-    A matrix is defined as a two-dimensional tensor with n rows and n
-    columns. Indexing follows row-major ordering, i.e. matrix[i,j] is the
+    A matrix is defined as a rank 2 tensor with nrows rows and ncols
+    columns. Indexing follows [row, col] ordering, i.e. matrix[i, j] is the
     element in row i, column j.
 
     This class is derived from the numpy.ndarray class, to allow a single
@@ -41,9 +41,9 @@ class Matrix(np.ndarray):
 
         Parameters
         ----------
-        args : Tuple of objects
+        args : tuple of object
             Positional arguments.
-        kargs : Dictionary of str->object pairs
+        kargs : dict of str->object pairs
             Keyword arguments.
 
         Returns

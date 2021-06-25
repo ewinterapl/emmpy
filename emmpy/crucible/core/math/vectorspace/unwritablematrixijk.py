@@ -45,8 +45,29 @@ class UnwritableMatrixIJK(Matrix3D):
     | ji jj jk |
     | ki kj kk |
 
-    The class prefers column ordering, so when working with vectors and
+    The class assumes column ordering, so when working with vectors and
     this class they are to be considered "column" vectors.
+
+    Attributes
+    ----------
+    ii : float
+        ith row, ith column element
+    ji : float
+        jth row, ith column element
+    ki : float
+        kth row, ith column element
+    ij : float
+        ith row, jth column element
+    jj : float
+        jth row, jth column element
+    kj : float
+        kth row, jth column element
+    ik : float
+        ith row, kth column element
+    jk : float
+        jth row, kth column element
+    kk : float
+        kth row, kth column element
     """
 
     # One of the two default tolerances that control how close to a rotation

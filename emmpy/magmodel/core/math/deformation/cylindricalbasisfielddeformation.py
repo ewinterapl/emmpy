@@ -1,7 +1,7 @@
 """Deformation of a cylindrical basis vector field."""
 
 
-from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
     CylindricalFieldDeformation

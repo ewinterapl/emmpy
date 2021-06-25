@@ -2,9 +2,8 @@
 
 import math
 
-from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
-# import crucible.core.math.vectorfields.ScalarField;
 from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 
 

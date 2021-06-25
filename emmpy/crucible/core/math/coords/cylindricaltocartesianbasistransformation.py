@@ -2,7 +2,7 @@
 
 
 from math import cos, sin
-from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 

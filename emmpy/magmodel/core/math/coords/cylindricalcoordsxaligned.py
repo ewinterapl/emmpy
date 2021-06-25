@@ -3,7 +3,7 @@
 
 from math import atan2, cos, pi, sin, sqrt
 
-from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField

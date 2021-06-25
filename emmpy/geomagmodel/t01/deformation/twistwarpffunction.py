@@ -15,7 +15,7 @@
 
 from math import cos, sin
 
-from emmpy.crucible.core.math.tensors.cylindricalvector import (
+from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector
 )
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (

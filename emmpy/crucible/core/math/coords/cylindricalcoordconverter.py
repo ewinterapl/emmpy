@@ -9,7 +9,7 @@ from emmpy.crucible.core.math.coords.abstractcoordconverter import (
 from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
     CylindricalToCartesianJacobian
 )
-from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
 class CylindricalCoordConverter(AbstractCoordConverter):

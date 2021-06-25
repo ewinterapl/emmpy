@@ -2,7 +2,6 @@
 
 Modules
 -------
-cylindricalvector
 matrix.py
 matrix3d.py
 sphericalvector.py

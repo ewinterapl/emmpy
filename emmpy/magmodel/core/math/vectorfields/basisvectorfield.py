@@ -38,7 +38,7 @@ class BasisVectorField(VectorField):
         fy = 0.0
         fz = 0.0
         for basisVector in basisVectors:
-            fx += basisVector.getI()
-            fy += basisVector.getJ()
-            fz += basisVector.getK()
+            fx += basisVector.i
+            fy += basisVector.j
+            fz += basisVector.k
         return buffer.setTo(fx, fy, fz)

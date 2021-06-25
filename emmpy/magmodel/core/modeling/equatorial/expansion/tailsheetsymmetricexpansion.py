@@ -44,9 +44,9 @@ class TailSheetSymmetricExpansion(VectorField):
             return self.evaluate(location, buffer)
         elif len(args) == 2:
             (location, buffer) = args
-            x = location.getI()
-            y = location.getJ()
-            z = location.getK()
+            x = location.i
+            y = location.j
+            z = location.k
             locationIJ = UnwritableVectorIJ(x, y)
 
             # get the current sheet half thickness

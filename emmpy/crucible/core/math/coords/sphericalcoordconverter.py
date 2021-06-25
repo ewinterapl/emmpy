@@ -52,9 +52,9 @@ class SphericalCoordConverter(AbstractCoordConverter):
         RETURN
         END
         """
-        x = cartesian.getI()
-        y = cartesian.getJ()
-        z = cartesian.getK()
+        x = cartesian.i
+        y = cartesian.j
+        z = cartesian.k
         radius = 0
         colatitude = 0
         longitude = 0
@@ -65,8 +65,8 @@ class SphericalCoordConverter(AbstractCoordConverter):
             z /= big
             radius = big*sqrt(x*x + y*y + z*z)
             colatitude = atan2(sqrt(x*x + y*y), z)
-            x = cartesian.getI()
-            y = cartesian.getJ()
+            x = cartesian.i
+            y = cartesian.j
             if x == 0 and y == 0:
                 longitude = 0
             else:

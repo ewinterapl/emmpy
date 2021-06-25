@@ -52,9 +52,9 @@ class TailSheetAsymmetricExpansion(VectorField):
         elif len(args) == 2:
             (location, buffer) = args
             m = self.azimuthalExpansionNumber
-            x = location.getI()
-            y = location.getJ()
-            z = location.getK()
+            x = location.i
+            y = location.j
+            z = location.k
             locationIJ = UnwritableVectorIJ(x, y)
 
             # get the current sheet half thickness

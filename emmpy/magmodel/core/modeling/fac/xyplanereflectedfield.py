@@ -32,11 +32,9 @@ class XYPlaneReflectedField(VectorField):
         return VectorIJK
         """
         # UnwritableVectorIJK reflectedLocation
-        reflectedLocation = VectorIJK(
-            location.getI(), location.getJ(), -location.getK()
-        )
+        reflectedLocation = VectorIJK(location.i, location.j, -location.k)
         self.delgate.evaluate(reflectedLocation, buffer)
         # double bz
-        bz = buffer.getK()
+        bz = buffer.k
         buffer.setK(-bz)
         return buffer

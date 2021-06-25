@@ -84,9 +84,9 @@ class AlternateCartesianHarmonicField(BasisVectorField):
 
     def evaluateExpansion2D(self, location):
         """Return the full expansion results."""
-        x = location.getI()
-        y = location.getJ()
-        z = location.getK()
+        x = location.i
+        y = location.j
+        z = location.k
         expansions = nones((self.aikCoeffs.iSize(), self.aikCoeffs.jSize()))
         for i in range(self.firstI, self.lastI + 1):
             pi = self.piCoeffs.getCoefficient(i)

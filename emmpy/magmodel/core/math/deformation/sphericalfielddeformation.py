@@ -53,7 +53,7 @@ class SphericalFieldDeformation(SphericalVectorField):
                       bField.getLongitude())
         )
 
-        return SphericalVector(v.getI(), v.getJ(), v.getK())
+        return SphericalVector(v.i, v.j, v.k)
 
     @staticmethod
     def computeMatrix(deformed, originalCoordinate):

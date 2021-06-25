@@ -953,18 +953,6 @@ class VectorIJK(Vector3D):
         buffer.setTo(i, j, k)
         return buffer
 
-    def getI(self):
-        """Get the ith component (float)."""
-        return self.i
-
-    def getJ(self):
-        """Get the jth component (float)."""
-        return self.j
-
-    def getK(self):
-        """Get the kth component (float)."""
-        return self.k
-
     @staticmethod
     def copyOf(vector):
         """Make an unwritable copy of the supplied vector.

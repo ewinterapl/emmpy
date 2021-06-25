@@ -58,19 +58,19 @@ class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
             # UnwritableVectorIJK, UnwritableVectorIJK)
             (ithColumn, jthColumn, kthColumn) = args
             return self.setToWithoutCheck(
-                ithColumn.getI(), ithColumn.getJ(), ithColumn.getK(),
-                jthColumn.getI(), jthColumn.getJ(), jthColumn.getK(),
-                kthColumn.getI(), kthColumn.getJ(), kthColumn.getK())
+                ithColumn.i, ithColumn.j, ithColumn.k,
+                jthColumn.i, jthColumn.j, jthColumn.k,
+                kthColumn.i, kthColumn.j, kthColumn.k)
         elif len(args) == 6:
             # see RotationMatrixIJK.setTo(double, UnwritableVectorIJK,
             # double, UnwritableVectorIJK, double, UnwritableVectorIJK)
             (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
             return self.setToWithoutCheck(
-                scaleI*ithColumn.getI(), scaleI*ithColumn.getJ(),
-                scaleI*ithColumn.getK(),
-                scaleJ*jthColumn.getI(), scaleJ*jthColumn.getJ(),
-                scaleJ*jthColumn.getK(), scaleK*kthColumn.getI(),
-                scaleK*kthColumn.getJ(), scaleK*kthColumn.getK())
+                scaleI*ithColumn.i, scaleI*ithColumn.j,
+                scaleI*ithColumn.k,
+                scaleJ*jthColumn.i, scaleJ*jthColumn.j,
+                scaleJ*jthColumn.k, scaleK*kthColumn.i,
+                scaleK*kthColumn.j, scaleK*kthColumn.k)
         elif len(args) == 9:
             # see RotationMatrixIJK#setTo(double, double, double, double,
             # double, double, double, double, double)

@@ -10,9 +10,6 @@ from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
     CylindricalToCartesianJacobian
 )
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 
 
 class CylindricalCoordConverter(AbstractCoordConverter):

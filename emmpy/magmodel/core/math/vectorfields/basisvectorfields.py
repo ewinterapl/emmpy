@@ -1,9 +1,6 @@
 """Utility functions for basis vector fields."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import (
     VectorIJK
 )
@@ -44,11 +41,11 @@ class BasisVectorFields:
         bvf = BasisVectorField()
         bvf.evaluate = (
             lambda location, buffer:
-            field.evaluate(UnwritableVectorIJK(scaleFactor, location), buffer)
+            field.evaluate(VectorIJK(scaleFactor, location), buffer)
         )
         bvf.evaluateExpansion = (
             lambda location:
-            field.evaluateExpansion(UnwritableVectorIJK(scaleFactor, location))
+            field.evaluateExpansion(VectorIJK(scaleFactor, location))
         )
         bvf.getNumberOfBasisFunctions = (
             lambda: field.getNumberOfBasisFunctions()

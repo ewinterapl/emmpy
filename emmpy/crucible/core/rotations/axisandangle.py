@@ -3,7 +3,9 @@
 
 from math import atan2, pi
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import (
+    I, J, K, VectorIJK
+)
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
@@ -40,7 +42,7 @@ class AxisAndAngle(Rotation):
             # rotation of zero radians about K.
 
             # Axis of rotation, should always be a unit length vector.
-            self.axis = VectorIJK(VectorIJK.K)
+            self.axis = VectorIJK(K)
 
             # Angle of rotation, specified in radians.
             self.angle = 0.0
@@ -209,9 +211,9 @@ class AxisAndAngle(Rotation):
             buffer.setTo(RotationMatrixIJK.IDENTITY)
             return buffer
         assigner = PrivilegedRotationMatrixIJK()
-        vi = VectorIJK.rotate(VectorIJK.I, self.axis, self.angle)
-        vj = VectorIJK.rotate(VectorIJK.J, self.axis, self.angle)
-        vk = VectorIJK.rotate(VectorIJK.K, self.axis, self.angle)
+        vi = VectorIJK.rotate(I, self.axis, self.angle)
+        vj = VectorIJK.rotate(J, self.axis, self.angle)
+        vk = VectorIJK.rotate(K, self.axis, self.angle)
         assigner.setToWithoutCheck(vi, vj, vk)
         buffer.setTo(assigner)
         return buffer

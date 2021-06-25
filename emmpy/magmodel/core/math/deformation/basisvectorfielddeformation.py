@@ -1,9 +1,6 @@
 """Deformation for a basis vector field."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.vectorfielddeformation import (
     VectorFieldDeformation
@@ -40,7 +37,7 @@ class BasisVectorFieldDeformation(BasisVectorField):
                 VectorIJK(bField.getI(), bField.getJ(), bField.getK())
             )
             bFieldExpansionDeformed.append(
-                UnwritableVectorIJK(v.getI(), v.getJ(), v.getK())
+                VectorIJK(v.getI(), v.getJ(), v.getK())
             )
         return bFieldExpansionDeformed
 

@@ -1,9 +1,6 @@
 """emmpy.magmodel.core.math.expansions.expansion2ds"""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
     ArrayExpansion2D

@@ -22,27 +22,6 @@ class VectorIJK:
     author F.S.Turner
     """
 
-    # # The ZERO vector.
-    # ZERO = UnwritableVectorIJK(0, 0, 0)
-
-    # # The I basis vector: (1,0,0).
-    # I = UnwritableVectorIJK(1, 0, 0)
-
-    # # The J basis vector: (0,1,0).
-    # J = UnwritableVectorIJK(0, 1, 0)
-
-    # # The K basis vector: (0,0,1).
-    # K = UnwritableVectorIJK(0, 0, 1)
-
-    # # The negative of the I basis vector: (-1,0,0).
-    # MINUS_I = UnwritableVectorIJK(-1, 0, 0)
-
-    # # The negative of the J basis vector: (0,-1,0).
-    # MINUS_J = UnwritableVectorIJK(0, -1, 0)
-
-    # # The negative of the K basis vector: (0,0,-1).
-    # MINUS_K = UnwritableVectorIJK(0, 0, -1)
-
     def __init__(self, *args):
         """Create a VectorIJK."""
         if len(args) == 0:
@@ -815,3 +794,55 @@ class VectorIJK:
             return buffer.setTo(i, j, k)
         else:
             raise Exception
+
+    def getI(self):
+        """Get the ith component (float)."""
+        return self.i
+
+    def getJ(self):
+        """Get the jth component (float)."""
+        return self.j
+
+    def getK(self):
+        """Get the kth component (float)."""
+        return self.k
+
+    @staticmethod
+    def copyOf(vector):
+        """Make an unwritable copy of the supplied vector.
+
+        This method makes an unwritable copy only if necessary. It tries to
+        avoid making a copy wherever possible.
+
+        param UnwritableVectorIJK vector a vector to copy.
+
+        return UnwritableVectorIJK either a reference to vector (if vector is
+        already only an instance of UnwritableVectorIJK, otherwise an
+        unwritable copy of vector's contents
+        """
+        return VectorIJK(vector)
+
+    def __repr__(self):
+        """Create a string representation of the object."""
+        return "[%s,%s,%s]" % (self.i, self.j, self.k)
+
+# # The ZERO vector.
+# ZERO = UnwritableVectorIJK(0, 0, 0)
+
+# The I basis vector: (1,0,0).
+I = VectorIJK(1, 0, 0)
+
+# The J basis vector: (0,1,0).
+J = VectorIJK(0, 1, 0)
+
+# The K basis vector: (0,0,1).
+K = VectorIJK(0, 0, 1)
+
+# # The negative of the I basis vector: (-1,0,0).
+# MINUS_I = UnwritableVectorIJK(-1, 0, 0)
+
+# # The negative of the J basis vector: (0,-1,0).
+# MINUS_J = UnwritableVectorIJK(0, -1, 0)
+
+# # The negative of the K basis vector: (0,0,-1).
+# MINUS_K = UnwritableVectorIJK(0, 0, -1)

@@ -1,9 +1,7 @@
 """Expansions for a thin current sheet."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 # from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 
@@ -148,4 +146,4 @@ class TailSheetExpansions:
                 bySum += basisFunction.getJ()
                 bzSum += basisFunction.getK()
 
-        return UnwritableVectorIJK(bxSum, bySum, bzSum)
+        return VectorIJK(bxSum, bySum, bzSum)

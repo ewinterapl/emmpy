@@ -1,9 +1,6 @@
 """Utility functions for 1-D expansions."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import (
     VectorIJK
 )

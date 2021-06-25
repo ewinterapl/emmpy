@@ -4,9 +4,7 @@ This abstract class is meant to assist implementors of new coordinate types.
 """
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class AbstractVector:
@@ -37,7 +35,7 @@ class AbstractVector:
     def __init__(self, i: float, j: float, k: float):
         """Construct a coordinate from the three basic components."""
         # The knowledge that this guy exists should never escape the package.
-        self.ijkCoordinate = UnwritableVectorIJK(i, j, k)
+        self.ijkCoordinate = VectorIJK(i, j, k)
 
     # These six methods should be wrapped in new methods with the appropriate
     # names. The getters in the unwritable and the setters in the writable.
@@ -56,7 +54,7 @@ class AbstractVector:
         """Get the K coordinate."""
         return self.ijkCoordinate.getK()
 
-    def getVectorIJK(self) -> UnwritableVectorIJK:
+    def getVectorIJK(self):
         """Get the IJK coordinates.
 
         This method should never have its visibility upgraded.

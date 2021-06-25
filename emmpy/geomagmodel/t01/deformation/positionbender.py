@@ -15,9 +15,7 @@ from math import sin, sqrt
 from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
     DifferentiableVectorField, Results
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
     BasisVectorFieldDeformation
 )
@@ -208,7 +206,7 @@ class PositionBender(DifferentiableVectorField):
         dZsDz = cosTiltS + xS*dQdz*sin_cos
 
         # UnwritableVectorIJK f
-        f = UnwritableVectorIJK(xS, yS, zS)
+        f = VectorIJK(xS, yS, zS)
 
         # Results results`
         results = Results(

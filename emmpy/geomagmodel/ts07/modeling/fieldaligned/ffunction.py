@@ -11,9 +11,6 @@ import math
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 
 # import crucible.core.math.vectorfields.ScalarField;
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 
 

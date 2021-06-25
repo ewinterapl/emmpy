@@ -2,9 +2,6 @@
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
@@ -181,7 +178,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             coeff = self.basisCoefficients[count]
             count += 1
             bfe = basisFunction.evaluate(location)
-            v = UnwritableVectorIJK(coeff, bfe)
+            v = VectorIJK(coeff, bfe)
             values.append(v)
         return values
 

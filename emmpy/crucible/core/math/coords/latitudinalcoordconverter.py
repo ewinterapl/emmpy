@@ -12,9 +12,6 @@ from emmpy.crucible.core.math.coords.latitudinaltocartesianjacobian import (
 from emmpy.crucible.core.math.coords.latitudinalvector import (
     LatitudinalVector
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 
 
 class LatitudinalCoordConverter(AbstractCoordConverter):

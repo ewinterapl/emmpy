@@ -8,9 +8,6 @@ Copyright (C) 2012 The Johns Hopkins University Applied Physics Laboratory
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
@@ -188,7 +185,7 @@ class VectorFields:
             # UnwritableVectorIJK location
             # VectorIJK buffer
             # Create a scaled location first.
-            uvijk = UnwritableVectorIJK(scaleFactor, location)
+            uvijk = VectorIJK(scaleFactor, location)
             field.evaluate(uvijk, buffer)
             return buffer
         vf.evaluate = my_evaluate

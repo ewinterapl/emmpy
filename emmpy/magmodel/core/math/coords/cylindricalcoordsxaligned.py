@@ -4,9 +4,7 @@
 from math import atan2, cos, pi, sin, sqrt
 
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -45,7 +43,7 @@ class CylindricalCoordsXAligned:
     @staticmethod
     def convert(*args):
         """Convert between Cartesian and X-aligned cylindrical coordinates."""
-        if isinstance(args[0], UnwritableVectorIJK):
+        if isinstance(args[0], VectorIJK):
             (cartesian,) = args
             # Converts a Cartesian coordinate to cylindrical coordinate
             # @param cartesian a UnwritableVectorIJK holding the Cartesian
@@ -83,15 +81,15 @@ class CylindricalCoordsXAligned:
             rho = cyl.getCylindricalRadius()
             y = rho*cos(phi)
             z = rho*sin(phi)
-            return UnwritableVectorIJK(x, y, z)
+            return VectorIJK(x, y, z)
         else:
             raise Exception
 
     @staticmethod
     def convertFieldValue(*args):
         """Convert field values between Cartesian and X-aligned cylindrical."""
-        if (isinstance(args[0], UnwritableVectorIJK) and
-            isinstance(args[1], UnwritableVectorIJK)):
+        if (isinstance(args[0], VectorIJK) and
+            isinstance(args[1], VectorIJK)):
             # Converts a Cartesian vector field value to a cylindrical vector
             # field value
             # @param cartesian the Cartesian coordinate
@@ -128,7 +126,7 @@ class CylindricalCoordsXAligned:
             sinPhi = sin(phi)
             by = cosPhi*brho - sinPhi*bphi
             bz = sinPhi*brho + cosPhi*bphi
-            return UnwritableVectorIJK(bx, by, bz)
+            return VectorIJK(bx, by, bz)
         else:
             raise Exception
 

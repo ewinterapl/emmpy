@@ -9,9 +9,6 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 
 
 class CylindricalToCartesianJacobian(Transformation):

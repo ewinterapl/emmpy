@@ -10,7 +10,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.polarvector import PolarVector
+from emmpy.math.coordinates.polarvector import PolarVector
 
 
 class TestBuilder(unittest.TestCase):

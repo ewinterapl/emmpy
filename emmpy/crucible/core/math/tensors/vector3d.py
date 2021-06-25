@@ -18,7 +18,7 @@ class Vector3D(Vector):
     This object may be directly used as a Numpy array.
     """
 
-    def __new__(cls, *args, **kargs):
+    def __new__(cls, *args):
         """Create a new Vector3D object.
 
         Allocate a new Vector3D object by allocating a new Vector object
@@ -28,8 +28,6 @@ class Vector3D(Vector):
         ----------
         args : tuple of 3 float (optional)
             First, second, and third vector elements.
-        kargs : dict of str->object pairs
-            Keyword arguments for polymorphic method.
 
         Returns
         -------
@@ -47,6 +45,6 @@ class Vector3D(Vector):
             data = args
         else:
             raise ValueError('Exactly 0 or 3 numeric arguments are required!')
-        v = Vector.__new__(cls, shape=(3,), **kargs)
+        v = Vector.__new__(cls, shape=(3,))
         v[:] = data[:]
         return v

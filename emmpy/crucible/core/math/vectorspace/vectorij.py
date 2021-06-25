@@ -1,92 +1,177 @@
-"""A 2-D vector."""
+"""A 3-D vector in Cartesian (i, j, k) coordinates.
+
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
 )
+from emmpy.crucible.core.math.tensors.vector2d import Vector2D
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
-)
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class VectorIJ(UnwritableVectorIJ):
-    """A 2-D vector.
+# Map vector component names to indices.
+components = {'i': 0, 'j': 1}
 
-    Writable subclass of the unwritable 2D vector parent completing the
-    implementation of the weak immutability design pattern.
 
-    This class contains the mutator methods necessary to set or alter the
-    internals of the parent classes fields.
-
-    This was a simple copy and paste of the {@link VectorIJK} class. The cross
-    product methods return a {@link VectorIJK}.
-
-    TODO add rotation methods if when needed
-
-    @author G.K.Stephens copy and extension of F.S.Turner
+class VectorIJ(Vector2D):
+    """A 2-D vector in Cartesian (i, j, k) coordinates.
     """
 
-    # The ZERO vector.
-    ZERO = UnwritableVectorIJ(0, 0)
+    def __new__(cls, *args, **kargs):
+        """Create a new VectorIJ object.
 
-    # The I basis vector: (1,0).
-    I = UnwritableVectorIJ(1, 0)
+        Allocate a new VectorIJ object by allocating a new Vector2D
+        object on which the VectorIJ will expand.
 
-    # The J basis vector: (0,1).
-    J = UnwritableVectorIJ(0, 1)
+        Parameters
+        ----------
+        args : tuple of object
+            Arguments for polymorphic constructor.
+        kargs : dict of str->object pairs
+            Keyword arguments for polymorphic method.
+        ij : list or tuple of float
+            Values for (i, j) coordinates.
+        OR
+        vector : VectorIJ
+            Existing vector to copy.
+        OR
+        offset : int
+            Offset into data for assignment to vector elements.
+        data : list of >=2 float
+            Values to use for vector elements, starting at offset.
+        OR
+        scale : float
+            Scale factor for vector to copy.
+        vector : VectorIJ
+            Existing vector to copy and scale.
+        OR
+        i, j : float
+            Values for vector elements.
 
-    # The negative of the I basis vector: (-1,0).
-    MINUS_I = UnwritableVectorIJ(-1, 0)
+        Returns
+        -------
+        v : VectorIJ
+            The newly-created object.
 
-    # The negative of the J basis vector: (0,-1).
-    MINUS_J = UnwritableVectorIJ(0, -1)
-
-    def __init__(self, *args):
-        """Build a new object."""
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 0:
-            # Construct a vector with an initial value of 0.
-            UnwritableVectorIJ.__init__(self, 0.0, 0.0)
+            data = (None, None)
+            v = Vector2D.__new__(cls, *data, **kargs)
         elif len(args) == 1:
-            if isinstance(args[0], list):
-                # Constructs a vector from the first two elements of an array
-                # of doubles.
-                (data,) = args
-                UnwritableVectorIJ.__init__(self, data)
+            if isinstance(args[0], (list, tuple)):
+                # List or tuple of 3 values for the components.
+                (ij,) = args
+                v = Vector2D.__new__(cls, *ij, **kargs)
             elif isinstance(args[0], VectorIJ):
-                # Copy constructor, creates a vector by copying the values of
-                # a pre-exisiting one.
+                # Copy an existing VectorIJ.
                 (vector,) = args
-                UnwritableVectorIJ.__init__(self, vector)
+                v = Vector2D.__new__(cls, *vector, **kargs)
             else:
-                raise Exception
+                raise ValueError('Bad arguments for constructor!')
         elif len(args) == 2:
-            if isRealNumber(args[0]) and isRealNumber(args[1]):
-                # Constructs a vector from two basic components.
-                (i, j) = args
-                UnwritableVectorIJ.__init__(self, i, j)
-            elif isinstance(args[0], int) and isinstance(args[1], list):
-                # Constructs a vector from the two elements of an array of
-                # double starting with the offset index.
+            if isinstance(args[0], int) and isinstance(args[1], (list, tuple)):
+                # Offset and list or tuple of >= (2 + offset + 1) values.
                 (offset, data) = args
-                UnwritableVectorIJ.__init__(self, offset, data)
-            elif isRealNumber(args[0]) and isinstance(args[1], VectorIJ):
-                # Scaling constructor, creates a new vector by applying a
-                # scalar multiple to the components of a pre-existing vector.
-                # This results in (scale*vector) being stored in the newly
-                # constructed vector.
+                v = Vector2D.__new__(cls, data[offset], data[offset + 1],
+                                     **kargs)
+            elif (isRealNumber(args[0]) and isinstance(args[1], VectorIJ)):
+                # Scale factor and VectorIJ to scale.
                 (scale, vector) = args
-                UnwritableVectorIJ.__init__(self, scale, vector)
+                v = Vector2D.__new__(cls, scale*vector.i, scale*vector.j, **kargs)
             else:
-                raise Exception
+                # Scalar values (2) for the components.
+                (i, j) = args
+                v = Vector2D.__new__(cls, i, j, **kargs)
         else:
-            raise CrucibleRuntimeException
+            raise ValueError('Bad arguments for constructor!')
+        return v
+
+    # def __init__(self, *args):
+    #     """Build a new object."""
+    #     if len(args) == 0:
+    #         # Construct a vector with an initial value of 0.
+    #         UnwritableVectorIJ.__init__(self, 0.0, 0.0)
+    #     elif len(args) == 1:
+    #         if isinstance(args[0], list):
+    #             # Constructs a vector from the first two elements of an array
+    #             # of doubles.
+    #             (data,) = args
+    #             UnwritableVectorIJ.__init__(self, data)
+    #         elif isinstance(args[0], VectorIJ):
+    #             # Copy constructor, creates a vector by copying the values of
+    #             # a pre-exisiting one.
+    #             (vector,) = args
+    #             UnwritableVectorIJ.__init__(self, vector)
+    #         else:
+    #             raise Exception
+    #     elif len(args) == 2:
+    #         if isRealNumber(args[0]) and isRealNumber(args[1]):
+    #             # Constructs a vector from two basic components.
+    #             (i, j) = args
+    #             UnwritableVectorIJ.__init__(self, i, j)
+    #         elif isinstance(args[0], int) and isinstance(args[1], list):
+    #             # Constructs a vector from the two elements of an array of
+    #             # double starting with the offset index.
+    #             (offset, data) = args
+    #             UnwritableVectorIJ.__init__(self, offset, data)
+    #         elif isRealNumber(args[0]) and isinstance(args[1], VectorIJ):
+    #             # Scaling constructor, creates a new vector by applying a
+    #             # scalar multiple to the components of a pre-existing vector.
+    #             # This results in (scale*vector) being stored in the newly
+    #             # constructed vector.
+    #             (scale, vector) = args
+    #             UnwritableVectorIJ.__init__(self, scale, vector)
+    #         else:
+    #             raise Exception
+    #     else:
+    #         raise CrucibleRuntimeException
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to get.
+
+        Returns
+        -------
+        self[0|1] : float
+            Value of specified attribute (i or j).
+        """
+        return self[components[name]]
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Returns
+        -------
+        None
+        """
+        self[components[name]] = value
 
     def createUnitized(self):
         """Create a unitized copy of the vector.
@@ -437,9 +522,9 @@ class VectorIJ(UnwritableVectorIJ):
             ti = 0.0
             tj = 0.0
             tk = (a.i/amax)*(b.j/bmax) - (a.j/amax)*(b.i/bmax)
-            buffer.setI(ti)
-            buffer.setJ(tj)
-            buffer.setK(tk)
+            buffer.i = ti
+            buffer.j = tj
+            buffer.k = tk
             return buffer.unitize()
         else:
             raise Exception
@@ -564,3 +649,18 @@ class VectorIJ(UnwritableVectorIJ):
             return buffer.setTo(i, j)
         else:
             raise Exception
+
+# The ZERO vector.
+# ZERO = UnwritableVectorIJ(0, 0)
+
+# The I basis vector: (1,0).
+# I = UnwritableVectorIJ(1, 0)
+
+# The J basis vector: (0,1).
+# J = UnwritableVectorIJ(0, 1)
+
+# The negative of the I basis vector: (-1,0).
+# MINUS_I = UnwritableVectorIJ(-1, 0)
+
+# The negative of the J basis vector: (0,-1).
+# MINUS_J = UnwritableVectorIJ(0, -1)

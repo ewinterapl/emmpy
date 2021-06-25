@@ -54,7 +54,7 @@ class VectorIJK(UnwritableVectorIJK):
     # The negative of the K basis vector: (0,0,-1).
     MINUS_K = UnwritableVectorIJK(0, 0, -1)
 
-    def __new__(cls, *args):
+    def __new__(cls, *args, **kargs):
         """Create a new VectorIJK object.
 
         Allocate a new VectorIJK object by allocating a new
@@ -64,13 +64,15 @@ class VectorIJK(UnwritableVectorIJK):
         ----------
         args : tuple of object
             Arguments for polymorphic constructor.
+        kargs : dict of str->object pairs
+            Keyword arguments for polymorphic method.
 
         Returns
         -------
         v : VectorIJK
             The newly-created object.
         """
-        v = UnwritableVectorIJK.__new__(cls, *args)
+        v = UnwritableVectorIJK.__new__(cls, *args, **kargs)
         return v
 
     def createUnitized(self):

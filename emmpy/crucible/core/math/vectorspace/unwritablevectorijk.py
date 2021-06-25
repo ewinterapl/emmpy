@@ -57,7 +57,7 @@ class UnwritableVectorIJK(Vector3D):
         Value of k-coordinate.
     """
 
-    def __new__(cls, *args):
+    def __new__(cls, *args, **kargs):
         """Create a new UnwritableVectorIJK object.
 
         Allocate a new UnwritableVectorIJK object by allocating a new
@@ -67,7 +67,8 @@ class UnwritableVectorIJK(Vector3D):
         ----------
         args : tuple of object
             Arguments for polymorphic constructor.
-        SUCH AS:
+        kargs : dict of str->object pairs
+            Keyword arguments for polymorphic method.
         ijk : list or tuple of float
             Values for (i, j, k) coordinates.
         OR
@@ -99,16 +100,16 @@ class UnwritableVectorIJK(Vector3D):
         """
         if len(args) == 0:
             data = (None, None, None)
-            v = Vector3D.__new__(cls, *data)
+            v = Vector3D.__new__(cls, *data, **kargs)
         elif len(args) == 1:
             if isinstance(args[0], (list, tuple)):
                 # List or tuple of 3 values for the components.
                 (ijk,) = args
-                v = Vector3D.__new__(cls, *ijk)
+                v = Vector3D.__new__(cls, *ijk, **kargs)
             elif isinstance(args[0], UnwritableVectorIJK):
                 # Copy an existing UnwritableVectorIJK.
                 (vector,) = args
-                v = Vector3D.__new__(cls, *vector)
+                v = Vector3D.__new__(cls, *vector, **kargs)
             else:
                 raise ValueError('Bad arguments for constructor!')
         elif len(args) == 2:
@@ -116,18 +117,19 @@ class UnwritableVectorIJK(Vector3D):
                 # Offset and list or tuple of >= (3 + offset + 1) values.
                 (offset, data) = args
                 v = Vector3D.__new__(cls, data[offset], data[offset + 1],
-                                     data[offset + 2])
+                                     data[offset + 2], **kargs)
             elif (isRealNumber(args[0]) and
                   isinstance(args[1], UnwritableVectorIJK)):
                 # Scale factor and UnwritableVectorIJK to scale.
                 (scale, vector) = args
-                v = Vector3D.__new__(cls, scale*vector.i, scale*vector.j, scale*vector.k)
+                v = Vector3D.__new__(cls, scale*vector.i, scale*vector.j,
+                                     scale*vector.k, **kargs)
             else:
                 raise ValueError('Bad arguments for constructor!')
         elif len(args) == 3:
             # Scalar values (3) for the components.
             (i, j, k) = args
-            v = Vector3D.__new__(cls, i, j, k)
+            v = Vector3D.__new__(cls, i, j, k, **kargs)
         else:
             raise ValueError('Bad arguments for constructor!')
         return v

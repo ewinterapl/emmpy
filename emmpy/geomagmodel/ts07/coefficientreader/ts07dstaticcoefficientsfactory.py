@@ -230,12 +230,15 @@ class TS07DStaticCoefficientsFactory:
 
         THIS IS A QUICK HACK FOR TESTING
         """
-        return (
-            "/Users/winteel1/Library/Application Support/Code/User/"
-            "workspaceStorage/7d689292dbc4b95e32290e2fa94e6dcf/redhat.java/"
-            "jdt_ws/mag_e7ab7177/bin/geomagmodel/ts07/coefficientreader/"
-            "staticcoefficients/coeffs_n8_m6"
-        )
+        path = os.path.join(os.getenv('EMMPY_STATIC_COEFFICIENTS_PATH'),
+                            'coeffs_n8_m6')
+        return path
+        # return (
+        #     "/Users/winteel1/Library/Application Support/Code/User/"
+        #     "workspaceStorage/7d689292dbc4b95e32290e2fa94e6dcf/redhat.java/"
+        #     "jdt_ws/mag_e7ab7177/bin/geomagmodel/ts07/coefficientreader/"
+        #     "staticcoefficients/coeffs_n8_m6"
+        # )
         #   public static Path retrieveOriginalBuiltInCoefficientsPath() {
         #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n8_m6/");
         #     if (url == null) {

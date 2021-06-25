@@ -10,9 +10,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.cylindricalvector import (
-    CylindricalVector
-)
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
 class TestBuilder(unittest.TestCase):

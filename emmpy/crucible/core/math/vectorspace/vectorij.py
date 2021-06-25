@@ -1,4 +1,4 @@
-"""A 3-D vector in Cartesian (i, j, k) coordinates.
+"""A 2-D vector in Cartesian (i, j) coordinates.
 
 Authors
 -------
@@ -20,7 +20,7 @@ components = {'i': 0, 'j': 1}
 
 
 class VectorIJ(Vector2D):
-    """A 2-D vector in Cartesian (i, j, k) coordinates.
+    """A 2-D vector in Cartesian (i, j) coordinates.
     """
 
     def __new__(cls, *args, **kargs):

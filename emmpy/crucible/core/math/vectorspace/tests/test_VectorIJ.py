@@ -66,6 +66,26 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(ValueError):
             v1 = VectorIJ(0, i, j)
 
+    def test___getattr__(self):
+        """Test the __getattr__ method."""
+        (i, j) = (1.1, 2.2)
+        v = VectorIJ(i, j)
+        self.assertAlmostEqual(v.i, i)
+        self.assertAlmostEqual(v.j, j)
+        with self.assertRaises(KeyError):
+            bad = v.bad
+
+    def test___setattr__(self):
+        """Test the __setattr__ method."""
+        v = VectorIJ()
+        (i, j) = (1.1, 2.2)
+        v.i = i
+        self.assertAlmostEqual(v.i, i)
+        v.j = j
+        self.assertAlmostEqual(v.j, j)
+        with self.assertRaises(KeyError):
+            v.bad = 0
+
 
 if __name__ == '__main__':
     unittest.main()

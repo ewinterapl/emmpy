@@ -1,9 +1,7 @@
 """Abstract base class for 2-D vectors."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
+from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class AbstractVectorIJ:
@@ -34,7 +32,7 @@ class AbstractVectorIJ:
         param (float) i
         param (float) j
         """
-        self.ijCoordinate = UnwritableVectorIJ(i, j)
+        self.ijCoordinate = VectorIJ(i, j)
 
     # These methods should be wrapped in new methods with the appropriate
     # names. The getters in the unwritable and the setters in the writable.

@@ -6,9 +6,7 @@ from math import atan2, exp, sqrt
 from scipy.special import jv
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
+from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -55,7 +53,7 @@ class TailSheetAsymmetricExpansion(VectorField):
             x = location.i
             y = location.j
             z = location.k
-            locationIJ = UnwritableVectorIJ(x, y)
+            locationIJ = VectorIJ(x, y)
 
             # get the current sheet half thickness
             thick = self.currentSheetHalfThickness.evaluate(locationIJ)

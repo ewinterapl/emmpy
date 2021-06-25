@@ -10,9 +10,6 @@ from emmpy.crucible.core.math.coords.polartocartesianjacobian import (
     PolarToCartesianJacobian
 )
 from emmpy.crucible.core.math.coords.polarvector import PolarVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
 
 
 class PolarCoordConverter(AbstractCoordConverterIJ):

@@ -10,7 +10,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.vector2d import Vector2D
+from emmpy.math.vectors.vector2d import Vector2D
 
 
 class TestBuilder(unittest.TestCase):

@@ -7,7 +7,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
-from emmpy.crucible.core.math.tensors.vector import Vector
+from emmpy.math.vectors.vector import Vector
 
 
 class TestBuilder(unittest.TestCase):

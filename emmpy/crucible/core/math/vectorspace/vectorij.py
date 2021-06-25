@@ -7,7 +7,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.tensors.vector2d import Vector2D
+from emmpy.math.vectors.vector2d import Vector2D
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm

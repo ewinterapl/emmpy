@@ -6,7 +6,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.tensors.vector3d import Vector3D
+from emmpy.math.vectors.vector3d import Vector3D
 
 
 # Map vector component names to indices.

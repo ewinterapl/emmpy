@@ -9,6 +9,7 @@ Packages
 crucible
 exceptions
 geomagmodel
+math
 magmodel
 utilities
 """

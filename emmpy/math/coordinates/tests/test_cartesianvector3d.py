@@ -1,4 +1,4 @@
-"""Tests for the cartesianvector2d module.
+"""Tests for the cartesianvector3d module.
 
 Authors
 -------
@@ -10,45 +10,47 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.cartesianvector2d import (
-    CartesianVector2D
-)
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 
 
 class TestBuilder(unittest.TestCase):
-    """Tests for the cartesianvector2d module."""
+    """Tests for the cartesianvector3d module."""
 
     def test___new__(self):
         """Test the __new__ method."""
         # 0-argument form.
-        v = CartesianVector2D()
-        self.assertIsInstance(v, CartesianVector2D)
-        for i in range(2):
+        v = CartesianVector3D()
+        self.assertIsInstance(v, CartesianVector3D)
+        for i in range(3):
             self.assertTrue(np.isnan(v[i]))
-        # 2-argument form.
-        (x, y) = (1.1, 2.2)
-        v = CartesianVector2D(x, y)
-        self.assertIsInstance(v, CartesianVector2D)
+        # 3-argument form.
+        (x, y, z) = (1.1, 2.2, 3.3)
+        v = CartesianVector3D(x, y, z)
+        self.assertIsInstance(v, CartesianVector3D)
         self.assertAlmostEqual(v[0], x)
         self.assertAlmostEqual(v[1], y)
+        self.assertAlmostEqual(v[2], z)
 
     def test___getattr__(self):
         """Test the __getattr__ method."""
-        (x, y) = (1.1, 2.2)
-        v = CartesianVector2D(x, y)
+        (x, y, z) = (1.1, 2.2, 3.3)
+        v = CartesianVector3D(x, y, z)
         self.assertAlmostEqual(v.x, x)
         self.assertAlmostEqual(v.y, y)
+        self.assertAlmostEqual(v.z, z)
         with self.assertRaises(KeyError):
             v.bad
 
     def test___setattr__(self):
         """Test the __setattr__ method."""
-        v = CartesianVector2D()
-        (x, y) = (1.1, 2.2)
+        v = CartesianVector3D()
+        (x, y, z) = (1.1, 2.2, 3.3)
         v.x = x
         self.assertAlmostEqual(v.x, x)
         v.y = y
         self.assertAlmostEqual(v.y, y)
+        v.z = z
+        self.assertAlmostEqual(v.z, z)
         with self.assertRaises(KeyError):
             v.bad = 0
 

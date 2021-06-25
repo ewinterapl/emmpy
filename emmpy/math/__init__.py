@@ -5,5 +5,6 @@ Modules
 
 Packages
 --------
+coordinates
 vectors
 """

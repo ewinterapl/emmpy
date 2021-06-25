@@ -1,4 +1,4 @@
-"""A 3-dimensional vector in Cartesian (x, y, z) coordinates.
+"""A 2-dimensional vector in Cartesian (x, y) coordinates.
 
 Authors
 -------
@@ -6,17 +6,17 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.tensors.vector3d import Vector3D
+from emmpy.math.vectors.vector2d import Vector2D
 
 
 # Map vector component names to indices.
-components = {'x': 0, 'y': 1, 'z': 2}
+components = {'x': 0, 'y': 1}
 
 
-class CartesianVector3D(Vector3D):
-    """A 3-dimensional vector in Cartesian (x, y, z) coordinates.
+class CartesianVector2D(Vector2D):
+    """A 2-dimensional vector in Cartesian (x, y) coordinates.
 
-    This class implements a 3-dimensional vector in Cartesian (x, y, z)
+    This class implements a 2-dimensional vector in Cartesian (x, y)
     coordinates.
 
     This class may be used directly as a Numpy array.
@@ -27,14 +27,12 @@ class CartesianVector3D(Vector3D):
         Value of x-coordinate.
     y : float
         Value of y-coordinate.
-    z : float
-        Value of z-coordinate.
     """
 
-    def __new__(cls, x=None, y=None, z=None):
-        """Create a new CartesianVector3D object.
+    def __new__(cls, x=None, y=None):
+        """Create a new CartesianVector2D object.
 
-        Allocate a new CartesianVector3D object by allocating a Vector3D
+        Allocate a new CartesianVector2D object by allocating a Vector2D
         object which will be expanded upon.
 
         Parameters
@@ -43,15 +41,13 @@ class CartesianVector3D(Vector3D):
             Value of x-coordinate.
         y : float (optional)
             Value of y-coordinate.
-        y : float (optional)
-            Value of z-coordinate.
 
         Returns
         -------
-        v : CartesianVector3D
+        v : CartesianVector2D
             The newly-created object.
         """
-        v = Vector3D.__new__(cls, x, y, z)
+        v = Vector2D.__new__(cls, x, y)
         return v
 
     def __getattr__(self, name):
@@ -63,8 +59,8 @@ class CartesianVector3D(Vector3D):
 
         Returns
         -------
-        self[0|1|2] : float
-            Value of specified attribute (x, y, or z).
+        self[0|1] : float
+            Value of specified attribute (x or y).
         """
         return self[components[name]]
 

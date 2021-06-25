@@ -15,7 +15,7 @@
 
 from math import cos, sin
 
-from emmpy.crucible.core.math.coords.cylindricalvector import (
+from emmpy.crucible.core.math.tensors.cylindricalvector import (
     CylindricalVector
 )
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
@@ -179,13 +179,13 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         return Results
         """
         # float x, rho, rho2, phi, sinPhi, cosPhi, rho4L4
-        x = location.getHeight()
-        rho = location.getCylindricalRadius()
+        x = location.z
+        rho = location.rho
         # TODO
         if rho == 0.0:
             rho = 1.0E-14
         rho2 = rho*rho
-        phi = location.getLongitude()
+        phi = location.phi
         sinPhi = sin(phi)
         cosPhi = cos(phi)
         rho4L4 = (

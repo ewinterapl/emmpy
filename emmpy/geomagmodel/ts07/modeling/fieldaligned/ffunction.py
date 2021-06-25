@@ -1,14 +1,8 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.ffunction"""
 
-# import static crucible.core.math.CrucibleMath.atan2;
-# import static crucible.core.math.CrucibleMath.cos;
-# import static crucible.core.math.CrucibleMath.pow;
-# import static crucible.core.math.CrucibleMath.sin;
-# import static crucible.core.math.CrucibleMath.sqrt;
-
 import math
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
 
 # import crucible.core.math.vectorfields.ScalarField;
 from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
@@ -77,13 +71,13 @@ class Ffunction(ScalarField):
             # coordinates (in modified cylindrical coordinates) and the partial
             # derivatives of F with respect to these original coordinates.
             # param location the
-            y = location.getHeight()
+            y = location.z
 
             # convert to spherical and cylindrical
-            rho = location.getCylindricalRadius()
+            rho = location.rho
             rho2 = rho*rho
             r = math.sqrt(rho2 + y*y)
-            phi = location.getLongitude()
+            phi = location.phi
             sinPhi = math.sin(phi)
             cosPhi = math.cos(phi)
 

@@ -4,7 +4,7 @@
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import (
+from emmpy.crucible.core.math.tensors.cylindricalvector import (
     CylindricalVector
 )
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (

@@ -87,9 +87,9 @@ class CylindricalHarmonicField(BasisVectorField):
         # CylindricalVector cylindricalLocation
         cylindricalLocation = CoordConverters.convertToCylindrical(location)
         # float rho, phi, z
-        rho = cylindricalLocation.getCylindricalRadius()
-        phi = cylindricalLocation.getLongitude()
-        z = cylindricalLocation.getHeight()
+        rho = cylindricalLocation.rho
+        phi = cylindricalLocation.phi
+        z = cylindricalLocation.z
 
         # Precompute the sin(m*phi) and cos(m*phi), this greatly speeds up the
         # code.

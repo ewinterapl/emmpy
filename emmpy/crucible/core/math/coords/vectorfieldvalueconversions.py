@@ -10,7 +10,7 @@ from emmpy.crucible.core.math.coords.coordconverters import (
 from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
     CylindricalToCartesianBasisTransformation
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import (
+from emmpy.crucible.core.math.tensors.cylindricalvector import (
     CylindricalVector
 )
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (

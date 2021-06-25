@@ -2,7 +2,7 @@
 
 
 import sys
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
 )
@@ -61,12 +61,12 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         return MatrixIJK
         """
         # float r, hr, hp, hz, hrDef, hpDef, hzDef
-        r = originalCoordinate.getCylindricalRadius()
+        r = originalCoordinate.rho
         hr = 1.0
         hp = r
         hz = 1.0
         hrDef = 1.0
-        hpDef = deformed.getF().getCylindricalRadius()
+        hpDef = deformed.getF().rho
         hzDef = 1.0
 
         # float dFrDr, dFrDp, dFrDz

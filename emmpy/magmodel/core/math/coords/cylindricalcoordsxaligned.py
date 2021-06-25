@@ -3,7 +3,7 @@
 
 from math import atan2, cos, pi, sin, sqrt
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.crucible.core.math.tensors.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -76,9 +76,9 @@ class CylindricalCoordsXAligned:
             # Converts a cylindrical coordinate to Cartesian coordinate
             # @param cyl a CylindricalVector holding the cylindrical coordinate
             # @return a UnwritableVectorIJK holding the Cartesian coordinate
-            x = cyl.getHeight()
-            phi = cyl.getLongitude()
-            rho = cyl.getCylindricalRadius()
+            x = cyl.z
+            phi = cyl.phi
+            rho = cyl.rho
             y = rho*cos(phi)
             z = rho*sin(phi)
             return VectorIJK(x, y, z)
@@ -118,10 +118,10 @@ class CylindricalCoordsXAligned:
             # @param field the cylindrical field value at that coordinate
             # @return the Cartesian vector field value
             (pos, field) = args
-            phi = pos.getLongitude()
-            brho = field.getCylindricalRadius()
-            bphi = field.getLongitude()
-            bx = field.getHeight()
+            phi = pos.phi
+            brho = field.rho
+            bphi = field.phi
+            bx = field.z
             cosPhi = cos(phi)
             sinPhi = sin(phi)
             by = cosPhi*brho - sinPhi*bphi

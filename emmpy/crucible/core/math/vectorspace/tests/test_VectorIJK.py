@@ -1,47 +1,119 @@
 from math import pi, sqrt
 import unittest
 
+import numpy as np
+
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
 
-    def test___init__(self):
-        # 0-argument form
-        v = VectorIJK()
-        self.assertAlmostEqual(v.i, 0)
-        self.assertAlmostEqual(v.j, 0)
-        self.assertAlmostEqual(v.k, 0)
+    def test___new__(self):
+        """Test the __new__ method."""
+        # 0-argument form.
+        v1 = VectorIJK()
+        self.assertIsInstance(v1, VectorIJK)
+        for i in range(3):
+            self.assertTrue(np.isnan(v1[i]))
         # 1-argument forms
-        v = VectorIJK([1.1, 2.2, 3.3])
-        self.assertAlmostEqual(v.i, 1.1)
-        self.assertAlmostEqual(v.j, 2.2)
-        self.assertAlmostEqual(v.k, 3.3)
-        v2 = VectorIJK(v)
-        self.assertAlmostEqual(v2.i, 1.1)
-        self.assertAlmostEqual(v2.j, 2.2)
-        self.assertAlmostEqual(v2.k, 3.3)
-        v2 = VectorIJK(-2.0, v)
-        self.assertAlmostEqual(v2.i, -2.2)
-        self.assertAlmostEqual(v2.j, -4.4)
-        self.assertAlmostEqual(v2.k, -6.6)
+        (i, j, k) = (1.1, 2.2, 3.3)
+        # list
+        v1 = VectorIJK([i, j, k])
+        self.assertIsInstance(v1, VectorIJK)
+        self.assertAlmostEqual(v1[0], i)
+        self.assertAlmostEqual(v1[1], j)
+        self.assertAlmostEqual(v1[2], k)
+        # tuple
+        v1 = VectorIJK((i, j, k))
+        self.assertIsInstance(v1, VectorIJK)
+        self.assertAlmostEqual(v1[0], i)
+        self.assertAlmostEqual(v1[1], j)
+        self.assertAlmostEqual(v1[2], k)
+        # vector
+        v2 = VectorIJK(v1)
+        self.assertIsInstance(v2, VectorIJK)
+        self.assertAlmostEqual(v2[0], v1[0])
+        self.assertAlmostEqual(v2[1], v1[1])
+        self.assertAlmostEqual(v2[2], v1[2])
+        # invalid single argument
+        with self.assertRaises(ValueError):
+            VectorIJK(None)
+        with self.assertRaises(ValueError):
+            VectorIJK({'i': i, 'j': j, 'k': k})
         # 2-argument forms
-        v = VectorIJK(1, [0.0, 1.1, 2.2, 3.3])
-        self.assertAlmostEqual(v.i, 1.1)
-        self.assertAlmostEqual(v.j, 2.2)
-        self.assertAlmostEqual(v.k, 3.3)
+        # offset and list
+        v1 = VectorIJK(1, [0, i, j, k])
+        self.assertIsInstance(v1, VectorIJK)
+        self.assertAlmostEqual(v1[0], i)
+        self.assertAlmostEqual(v1[1], j)
+        self.assertAlmostEqual(v1[2], k)
+        # offset and tuple
+        v1 = VectorIJK(1, (0, i, j, k))
+        self.assertIsInstance(v1, VectorIJK)
+        self.assertAlmostEqual(v1[0], i)
+        self.assertAlmostEqual(v1[1], j)
+        self.assertAlmostEqual(v1[2], k)
+        # scale and vector
+        scale = -2.2
+        v2 = VectorIJK(scale, v1)
+        self.assertIsInstance(v2, VectorIJK)
+        self.assertAlmostEqual(v2[0], scale*v1[0])
+        self.assertAlmostEqual(v2[1], scale*v1[1])
+        self.assertAlmostEqual(v2[2], scale*v1[2])
+        # 2 bad args
+        with self.assertRaises(ValueError):
+            VectorIJK(None, None)
+        with self.assertRaises(ValueError):
+            VectorIJK(i, j)
         # 3-argument form
-        v = VectorIJK(1.1, 2.2, 3.3)
-        self.assertAlmostEqual(v.i, 1.1)
-        self.assertAlmostEqual(v.j, 2.2)
-        self.assertAlmostEqual(v.k, 3.3)
-        # Invalid forms
-        with self.assertRaises(Exception):
-            VectorIJK(0)
-        with self.assertRaises(Exception):
-            VectorIJK(0, 1)
-        with self.assertRaises(Exception):
-            VectorIJK(0, 1, 2, 3)
+        v1 = VectorIJK(i, j, k)
+        self.assertIsInstance(v1, VectorIJK)
+        self.assertAlmostEqual(v1[0], i)
+        self.assertAlmostEqual(v1[1], j)
+        self.assertAlmostEqual(v1[2], k)
+        # 3 bad args
+        with self.assertRaises(ValueError):
+            v1 = VectorIJK(None, [None], {'i': i})
+        # >= 4 args is invalid
+        with self.assertRaises(ValueError):
+            v1 = VectorIJK(0, i, j, k)
+
+    # def test___init__(self):
+    #     # 0-argument form
+    #     v = VectorIJK()
+    #     self.assertAlmostEqual(v.i, 0)
+    #     self.assertAlmostEqual(v.j, 0)
+    #     self.assertAlmostEqual(v.k, 0)
+    #     # 1-argument forms
+    #     v = VectorIJK([1.1, 2.2, 3.3])
+    #     self.assertAlmostEqual(v.i, 1.1)
+    #     self.assertAlmostEqual(v.j, 2.2)
+    #     self.assertAlmostEqual(v.k, 3.3)
+    #     v2 = VectorIJK(v)
+    #     self.assertAlmostEqual(v2.i, 1.1)
+    #     self.assertAlmostEqual(v2.j, 2.2)
+    #     self.assertAlmostEqual(v2.k, 3.3)
+    #     v2 = VectorIJK(-2.0, v)
+    #     self.assertAlmostEqual(v2.i, -2.2)
+    #     self.assertAlmostEqual(v2.j, -4.4)
+    #     self.assertAlmostEqual(v2.k, -6.6)
+    #     # 2-argument forms
+    #     v = VectorIJK(1, [0.0, 1.1, 2.2, 3.3])
+    #     self.assertAlmostEqual(v.i, 1.1)
+    #     self.assertAlmostEqual(v.j, 2.2)
+    #     self.assertAlmostEqual(v.k, 3.3)
+    #     # 3-argument form
+    #     v = VectorIJK(1.1, 2.2, 3.3)
+    #     self.assertAlmostEqual(v.i, 1.1)
+    #     self.assertAlmostEqual(v.j, 2.2)
+    #     self.assertAlmostEqual(v.k, 3.3)
+    #     # Invalid forms
+    #     with self.assertRaises(Exception):
+    #         VectorIJK(0)
+    #     with self.assertRaises(Exception):
+    #         VectorIJK(0, 1)
+    #     with self.assertRaises(Exception):
+    #         VectorIJK(0, 1, 2, 3)
 
     def test_createUnitized(self):
         v1 = VectorIJK(1, 2, 3)

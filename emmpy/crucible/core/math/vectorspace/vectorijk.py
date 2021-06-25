@@ -4,6 +4,7 @@
 from math import cos, sin
 
 from emmpy.crucible.core.exceptions.bugexception import BugException
+from emmpy.crucible.core.math.tensors.vector3d import Vector3D
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
@@ -11,7 +12,11 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class VectorIJK:
+# Map vector component names to indices.
+components = {'i': 0, 'j': 1, 'k': 2}
+
+
+class VectorIJK(Vector3D):
     """A 3-D vector.
 
     Writable subclass of UnwritableVectorIJK.
@@ -22,74 +27,114 @@ class VectorIJK:
     author F.S.Turner
     """
 
-    def __init__(self, *args):
-        """Create a VectorIJK."""
+    def __new__(cls, *args, **kargs):
+        """Create a new VectorIJK object.
+
+        Allocate a new VectorIJK object by allocating a new
+        Vector3D object on which the VectorIJK will expand.
+
+        Parameters
+        ----------
+        args : tuple of object
+            Arguments for polymorphic constructor.
+        kargs : dict of str->object pairs
+            Keyword arguments for polymorphic method.
+        ijk : list or tuple of float
+            Values for (i, j, k) coordinates.
+        OR
+        vector : VectorIJK
+            Existing vector to copy.
+        OR
+        offset : int
+            Offset into data for assignment to vector elements.
+        data : list of >=3 float
+            Values to use for vector elements, starting at offset.
+        OR
+        scale : float
+            Scale factor for vector to copy.
+        vector : VectorIJK
+            Existing vector to copy and scale.
+        OR
+        i, j, k : float
+            Values for vector elements.
+
+        Returns
+        -------
+        v : VectorIJK
+            The newly-created object.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 0:
-            # Construct a vector with an initial value of
-            # VectorIJK.ZERO
-            self.i = 0
-            self.j = 0
-            self.k = 0
+            data = (None, None, None)
+            v = Vector3D.__new__(cls, *data, **kargs)
         elif len(args) == 1:
-            if isinstance(args[0], list):
-                # Constructs a vector from the first three elements of an array
-                # of doubles.
-                # param data the array of doubles.
-                # throws IndexOutOfBoundsException if the supplied data array
-                # does not contain at least three elements
-                (data,) = args
-                self.i = data[0]
-                self.j = data[1]
-                self.k = data[2]
+            if isinstance(args[0], (list, tuple)):
+                # List or tuple of 3 values for the components.
+                (ijk,) = args
+                v = Vector3D.__new__(cls, *ijk, **kargs)
             elif isinstance(args[0], VectorIJK):
-                # Copy constructor, creates a vector by copying the values of
-                # a pre-exisiting one.
-                # @param vector the vector whose contents are to be copied
+                # Copy an existing UnwritableVectorIJK.
                 (vector,) = args
-                self.i = vector.i
-                self.j = vector.j
-                self.k = vector.k
+                v = Vector3D.__new__(cls, *vector, **kargs)
             else:
-                raise Exception
+                raise ValueError('Bad arguments for constructor!')
         elif len(args) == 2:
-            if isinstance(args[0], int) and isinstance(args[1], list):
-                # Constructs a vector from the three elements of an array of
-                # double starting with the offset index.
-                # @param offset index into the data array to copy into the ith
-                # component.
-                # @param data the array of doubles.
-                # @throws IndexOutOfBoundsException if the supplied data array
-                # does not contain three elements at indices offset through
-                # offset + 2
-                (index, data) = args
-                self.i = data[index]
-                self.j = data[index + 1]
-                self.k = data[index + 2]
+            if isinstance(args[0], int) and isinstance(args[1], (list, tuple)):
+                # Offset and list or tuple of >= (3 + offset + 1) values.
+                (offset, data) = args
+                v = Vector3D.__new__(cls, data[offset], data[offset + 1],
+                                     data[offset + 2], **kargs)
             elif (isRealNumber(args[0]) and
                   isinstance(args[1], VectorIJK)):
-                # Scaling constructor, creates a new vector by applying a
-                # scalar multiple to the components of a pre-existing vector.
-                # This results in (scale*vector) being stored in the newly
-                # constructed vector.
-                # @param scale the scale factor to apply
-                # @param vector the vector whose contents are to be scaled
+                # Scale factor and UnwritableVectorIJK to scale.
                 (scale, vector) = args
-                self.i = scale*vector.i
-                self.j = scale*vector.j
-                self.k = scale*vector.k
+                v = Vector3D.__new__(cls, scale*vector.i, scale*vector.j,
+                                     scale*vector.k, **kargs)
             else:
-                raise Exception
+                raise ValueError('Bad arguments for constructor!')
         elif len(args) == 3:
-            # Constructs a vector from three basic components
-            # @param i the ith component
-            # @param j the jth component
-            # @param k the kth component
+            # Scalar values (3) for the components.
             (i, j, k) = args
-            self.i = i
-            self.j = j
-            self.k = k
+            v = Vector3D.__new__(cls, i, j, k, **kargs)
         else:
-            raise Exception
+            raise ValueError('Bad arguments for constructor!')
+        return v
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to get.
+
+        Returns
+        -------
+        self[0|1|2] : float
+            Value of specified attribute (i, j, or k).
+        """
+        return self[components[name]]
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Returns
+        -------
+        None
+        """
+        self[components[name]] = value
 
     def createUnitized(self):
         """Create a unitized copy of the vector."""

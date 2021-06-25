@@ -5,7 +5,7 @@ from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )

@@ -19,7 +19,7 @@ from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
     SphericalToCartesianBasisTransformation
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
+from emmpy.crucible.core.math.tensors.sphericalvector import (
     SphericalVector
 )
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (

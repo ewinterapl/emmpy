@@ -54,9 +54,9 @@ class AbstractVector:
         """Get the K coordinate."""
         return self.ijkCoordinate.k
 
-    def getVectorIJK(self):
-        """Get the IJK coordinates.
+    # def getVectorIJK(self):
+    #     """Get the IJK coordinates.
 
-        This method should never have its visibility upgraded.
-        """
-        return self.ijkCoordinate
+    #     This method should never have its visibility upgraded.
+    #     """
+    #     return self.ijkCoordinate

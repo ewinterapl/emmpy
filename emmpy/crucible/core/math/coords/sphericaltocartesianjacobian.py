@@ -6,7 +6,7 @@ from math import cos, sin
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
+from emmpy.crucible.core.math.tensors.sphericalvector import (
     SphericalVector
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation

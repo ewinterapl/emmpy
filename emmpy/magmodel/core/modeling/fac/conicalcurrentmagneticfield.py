@@ -3,7 +3,7 @@
 
 from math import sin
 
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
 from emmpy.magmodel.core.modeling.fac.tfunction import TFunction
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
@@ -78,9 +78,9 @@ class ConicalCurrentMagneticField(SphericalVectorField):
         """
         # This is the curl of equation 16
         # float r, phi, theta, t, dt_dTheta, sinMphi, cosMphi, br, bTheta, bPhi
-        r = location.getRadius()
-        phi = location.getLongitude()
-        theta = location.getColatitude()
+        r = location.r
+        phi = location.phi
+        theta = location.theta
         t = self.tFunction.evaluate(theta)
         dt_dTheta = self.tFunction.differentiate(theta)
         # even or odd

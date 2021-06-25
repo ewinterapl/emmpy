@@ -3,9 +3,10 @@
 
 from math import cos, sin
 
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class SphericalToCartesianBasisTransformation(Transformation):
@@ -16,8 +17,8 @@ class SphericalToCartesianBasisTransformation(Transformation):
 
     def getTransformation(self, coordPosition, buffer):
         """Get the transformation matrix."""
-        colat = coordPosition.getColatitude()
-        lon = coordPosition.getLongitude()
+        colat = coordPosition.theta
+        lon = coordPosition.phi
         cosColat = cos(colat)
         sinColat = sin(colat)
         cosLong = cos(lon)
@@ -47,7 +48,8 @@ class SphericalToCartesianBasisTransformation(Transformation):
         """Multiply a vector by the transformation matrix."""
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            # return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            return MatrixIJK.mxv(jacobian, VectorIJK(*coordVelocity))
         else:
             (inverseJacobian, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)

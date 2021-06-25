@@ -9,7 +9,7 @@ from emmpy.crucible.core.math.coords.abstractcoordconverter import (
 from emmpy.crucible.core.math.coords.sphericaltocartesianjacobian import (
     SphericalToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -87,11 +87,11 @@ class SphericalCoordConverter(AbstractCoordConverter):
         Y = R*DSIN(LONG)*DSIN(COLAT)
         Z = R*DCOS(COLAT)
         """
-        r = coordinate.getRadius()
-        cosLong = cos(coordinate.getLongitude())
-        sinLong = sin(coordinate.getLongitude())
-        cosColat = cos(coordinate.getColatitude())
-        sinColat = sin(coordinate.getColatitude())
+        r = coordinate.r
+        cosLong = cos(coordinate.phi)
+        sinLong = sin(coordinate.phi)
+        cosColat = cos(coordinate.theta)
+        sinColat = sin(coordinate.theta)
         i = r * cosLong*sinColat
         j = r*sinLong*sinColat
         k = r*cosColat

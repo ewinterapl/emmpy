@@ -13,7 +13,7 @@ from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
 )
 from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.magmodel.core.math.vectorfields.sphericalscalarfield import (
     SphericalScalarField

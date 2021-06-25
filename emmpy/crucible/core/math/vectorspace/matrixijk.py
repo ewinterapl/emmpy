@@ -1,4 +1,4 @@
-"""A writable 3-D matrix.
+"""A writable 3-D matrix in Cartesian (i, j, k) coordinates.
 
 A writable subclass of the unwritable 3D matrix parent completing one link in
 the weak-immutability design pattern.
@@ -6,7 +6,10 @@ the weak-immutability design pattern.
 This class contains the mutator methods necessary to set or alter the
 internals of the parent classes fields.
 
-@author F.S.Turner
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
@@ -20,7 +23,13 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
 
 
 class MatrixIJK(UnwritableMatrixIJK):
-    """A writable 3-D matrix."""
+    """A writable 3-D matrix in Cartesian (i, j, k) coordinates.
+
+    Writable subclass of UnwritableMatrixIJK.
+
+    This class contains the mutator methods necessary to set or alter the
+    internals of the parent class fields.
+    """
 
     def __new__(cls, *args):
         """Create a new MatrixIJK object.
@@ -30,7 +39,7 @@ class MatrixIJK(UnwritableMatrixIJK):
 
         Parameters
         ----------
-        args : Tuple of arguments
+        args : uple of object
             Arguments for polymorphic constructor.
 
         Returns
@@ -38,9 +47,6 @@ class MatrixIJK(UnwritableMatrixIJK):
         m : MatrixIJK
             The newly-created object.
         """
-        if len(args) == 0:
-            # Construct a matrix with an initial value of all 0.
-            args = (0, 0, 0, 0, 0, 0, 0, 0, 0)
         m = UnwritableMatrixIJK.__new__(cls, *args)
         return m
 

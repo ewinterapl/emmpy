@@ -13,23 +13,23 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        # 0-argument form.
-        m1 = MatrixIJK()
-        self.assertIsInstance(m1, MatrixIJK)
-        for i in range(3):
-            for j in range(3):
-                self.assertAlmostEqual(m1[i, j], 0)
-        # 1-argument form
-        data = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-        m1 = MatrixIJK(data)
-        for i in range(3):
-            for j in range(3):
-                self.assertAlmostEqual(m1[i, j], data[i][j])
-        data = [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]
-        m1 = MatrixIJK(data)
-        for i in range(3):
-            for j in range(3):
-                self.assertAlmostEqual(m1[i, j], data[i][j])
+        # # 0-argument form.
+        # m1 = MatrixIJK()
+        # self.assertIsInstance(m1, MatrixIJK)
+        # for i in range(3):
+        #     for j in range(3):
+        #         self.assertAlmostEqual(m1[i, j], 0)
+        # # 1-argument form
+        # data = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+        # m1 = MatrixIJK(data)
+        # for i in range(3):
+        #     for j in range(3):
+        #         self.assertAlmostEqual(m1[i, j], data[i][j])
+        # data = [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]
+        # m1 = MatrixIJK(data)
+        # for i in range(3):
+        #     for j in range(3):
+        #         self.assertAlmostEqual(m1[i, j], data[i][j])
 
     # def test___init__(self):
     #     # 0 arguments - identity matrix

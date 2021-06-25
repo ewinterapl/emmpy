@@ -3,7 +3,7 @@
 
 from math import cos, sin, sqrt
 
-from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
     Results, DifferentiableSphericalVectorField
 )

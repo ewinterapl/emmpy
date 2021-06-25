@@ -6,6 +6,7 @@ cartesianvector2d.py
 cartesianvector3d.py
 cylindricalvector.py
 polarvector.py
+sphericalvector.py
 
 Packages
 --------

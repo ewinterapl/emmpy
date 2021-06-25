@@ -3,7 +3,7 @@
 
 from math import cos, sin
 
-from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK

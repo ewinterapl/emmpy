@@ -4,7 +4,6 @@ Modules
 -------
 matrix.py
 matrix3d.py
-sphericalvector.py
 
 Packages
 --------

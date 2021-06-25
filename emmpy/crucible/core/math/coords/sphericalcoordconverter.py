@@ -9,7 +9,7 @@ from emmpy.crucible.core.math.coords.abstractcoordconverter import (
 from emmpy.crucible.core.math.coords.sphericaltocartesianjacobian import (
     SphericalToCartesianJacobian
 )
-from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 

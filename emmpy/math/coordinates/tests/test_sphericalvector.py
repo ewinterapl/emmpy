@@ -10,7 +10,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class TestBuilder(unittest.TestCase):

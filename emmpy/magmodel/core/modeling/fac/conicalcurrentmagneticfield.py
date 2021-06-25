@@ -3,7 +3,7 @@
 
 from math import sin
 
-from emmpy.crucible.core.math.tensors.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.magmodel.core.modeling.fac.tfunction import TFunction
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField

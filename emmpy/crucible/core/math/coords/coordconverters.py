@@ -28,9 +28,7 @@ from emmpy.crucible.core.math.coords.radecvector import (
 from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
     SphericalCoordConverter
 )
-from emmpy.crucible.core.math.tensors.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class CoordConverters:

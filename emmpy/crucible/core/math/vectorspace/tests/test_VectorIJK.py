@@ -1,4 +1,5 @@
-"""Tests for VectorIJK."""
+"""Tests for the vectorijk module."""
+
 
 from math import pi, sqrt
 import unittest

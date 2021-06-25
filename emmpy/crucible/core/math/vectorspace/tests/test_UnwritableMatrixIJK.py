@@ -4,9 +4,6 @@ import unittest
 from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -60,9 +57,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, 15.4)
         self.assertAlmostEqual(m2.kk, 6.8)
         # 3-argument form
-        v1 = UnwritableVectorIJK(1.1, 2.2, 3.3)
-        v2 = UnwritableVectorIJK(4.4, 5.5, 6.6)
-        v3 = UnwritableVectorIJK(7.7, 8.8, 9.9)
+        v1 = VectorIJK(1.1, 2.2, 3.3)
+        v2 = VectorIJK(4.4, 5.5, 6.6)
+        v3 = VectorIJK(7.7, 8.8, 9.9)
         m = UnwritableMatrixIJK(v1, v2, v3)
         self.assertAlmostEqual(m.ii, 1.1)
         self.assertAlmostEqual(m.ji, 2.2)
@@ -85,9 +82,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, 26.4)
         self.assertAlmostEqual(m2.kk, 29.7)
         # 6-argument form
-        v1 = UnwritableVectorIJK(1, 2, 3)
-        v2 = UnwritableVectorIJK(4, 5, 6)
-        v3 = UnwritableVectorIJK(7, 8, 9)
+        v1 = VectorIJK(1, 2, 3)
+        v2 = VectorIJK(4, 5, 6)
+        v3 = VectorIJK(7, 8, 9)
         m = UnwritableMatrixIJK(-1, v1, 2, v2, 3, v3)
         self.assertAlmostEqual(m.ii, -1)
         self.assertAlmostEqual(m.ji, -2)
@@ -332,8 +329,8 @@ class TestBuilder(unittest.TestCase):
 
     def test_mxv(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v = UnwritableVectorIJK(1, 2, 3)
-        vb = UnwritableVectorIJK(0, 0, 0)
+        v = VectorIJK(1, 2, 3)
+        vb = VectorIJK(0, 0, 0)
         v2 = m.mxv(v)
         self.assertAlmostEqual(v2.i, 1*1 + 4*2 + 7*3)
         self.assertAlmostEqual(v2.j, 2*1 + 5*2 + 8*3)
@@ -346,8 +343,8 @@ class TestBuilder(unittest.TestCase):
 
     def test_mtxv(self):
         m = UnwritableMatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v = UnwritableVectorIJK(1, 2, 3)
-        vb = UnwritableVectorIJK(0, 0, 0)
+        v = VectorIJK(1, 2, 3)
+        vb = VectorIJK(0, 0, 0)
         v2 = m.mtxv(v, vb)
         self.assertIs(v2, vb)
         self.assertAlmostEqual(v2.i, 1*1 + 2*2 + 3*3)

@@ -5,9 +5,7 @@ from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
     UnwritableMatrixIJ
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
+from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class TestBuilder(unittest.TestCase):
@@ -36,8 +34,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.ji, 6.6)
         self.assertAlmostEqual(m2.ij, 4.4)
         self.assertAlmostEqual(m2.jj, 8.8)
-        v1 = UnwritableVectorIJ(1.1, 2.2)
-        v2 = UnwritableVectorIJ(3.3, 4.4)
+        v1 = VectorIJ(1.1, 2.2)
+        v2 = VectorIJ(3.3, 4.4)
         m = UnwritableMatrixIJ(v1, v2)
         self.assertAlmostEqual(m.ii, 1.1)
         self.assertAlmostEqual(m.ji, 2.2)
@@ -56,8 +54,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.ji, 2.2)
         self.assertAlmostEqual(m.ij, 3.3)
         self.assertAlmostEqual(m.jj, 4.4)
-        v1 = UnwritableVectorIJ(1.1, 2.2)
-        v2 = UnwritableVectorIJ(3.3, 4.4)
+        v1 = VectorIJ(1.1, 2.2)
+        v2 = VectorIJ(3.3, 4.4)
         m = UnwritableMatrixIJ(-1.0, v1, 2.0, v2)
         self.assertAlmostEqual(m.ii, -1.1)
         self.assertAlmostEqual(m.ji, -2.2)

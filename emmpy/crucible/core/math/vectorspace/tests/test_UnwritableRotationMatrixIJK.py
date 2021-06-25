@@ -11,9 +11,7 @@ from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
 from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
     UnwritableRotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -87,9 +85,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, 0)
         self.assertAlmostEqual(m2.kk, cos(a))
         # 3 args: all vectors
-        v1 = UnwritableVectorIJK(cos(a), 0, sin(a))
-        v2 = UnwritableVectorIJK(0, 1, 0)
-        v3 = UnwritableVectorIJK(-sin(a), 0, cos(a))
+        v1 = VectorIJK(cos(a), 0, sin(a))
+        v2 = VectorIJK(0, 1, 0)
+        v3 = VectorIJK(-sin(a), 0, cos(a))
         m = UnwritableRotationMatrixIJK(v1, v2, v3)
         self.assertAlmostEqual(m.ii, cos(a))
         self.assertAlmostEqual(m.ji, 0)
@@ -115,9 +113,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, 0)
         self.assertAlmostEqual(m2.kk, cos(a))
         # 6 args: 3 x (scale, vector)
-        v1 = UnwritableVectorIJK(cos(a)/2, 0, sin(a)/2)
-        v2 = UnwritableVectorIJK(0, 1/3, 0)
-        v3 = UnwritableVectorIJK(-sin(a)/4, 0, cos(a)/4)
+        v1 = VectorIJK(cos(a)/2, 0, sin(a)/2)
+        v2 = VectorIJK(0, 1/3, 0)
+        v3 = VectorIJK(-sin(a)/4, 0, cos(a)/4)
         m = UnwritableRotationMatrixIJK(2, v1, 3, v2, 4, v3)
         self.assertAlmostEqual(m.ii, cos(a))
         self.assertAlmostEqual(m.ji, 0)

@@ -2,9 +2,9 @@
 
 
 from math import cos, sin, sqrt
-import numpy as np
-
 import unittest
+
+import numpy as np
 
 from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
     UnwritableMatrixIJK

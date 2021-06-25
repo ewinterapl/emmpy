@@ -1,4 +1,4 @@
-"""Generic class for 3-dimensional (3x3) matrices.
+"""Generic class for 3-dimensional (3x3) square matrices.
 
 Authors
 -------
@@ -12,9 +12,9 @@ from emmpy.crucible.core.math.tensors.matrix import Matrix
 
 
 class Matrix3D(Matrix):
-    """Generic class for 3-dimensional (3x3) matrices.
+    """Generic class for 3-dimensional (3x3) square matrices.
 
-    This class implements a generic 3-dimensional matrix. No coordinate
+    This class implements a generic 3-dimensional square matrix. No coordinate
     system information is assumed.
 
     This object may be directly used as a Numpy array.

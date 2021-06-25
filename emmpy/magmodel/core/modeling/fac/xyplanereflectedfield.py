@@ -36,5 +36,5 @@ class XYPlaneReflectedField(VectorField):
         self.delgate.evaluate(reflectedLocation, buffer)
         # double bz
         bz = buffer.k
-        buffer.setK(-bz)
+        buffer.k = -bz
         return buffer

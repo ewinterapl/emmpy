@@ -1,4 +1,4 @@
-"""Python classes for standard tensor types.
+"""Python classes for standard matrix types.
 
 Modules
 -------

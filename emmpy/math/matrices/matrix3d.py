@@ -8,7 +8,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.matrix import Matrix
+from emmpy.math.matrices.matrix import Matrix
 
 
 class Matrix3D(Matrix):

@@ -10,7 +10,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.tensors.matrix3d import Matrix3D
+from emmpy.math.matrices.matrix3d import Matrix3D
 
 
 class TestBuilder(unittest.TestCase):

@@ -1,4 +1,4 @@
-"""Tests for modules in the tensors package.
+"""Tests for modules in the matrices package.
 
 Modules
 -------

@@ -17,7 +17,6 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
 )
-from emmpy.utilities.isrealnumber import isRealNumber
 
 
 # Map vector component names to indices.
@@ -37,18 +36,18 @@ class VectorIJK(Vector3D):
         ----------
         args : tuple of object
             Arguments for polymorphic constructor.
-        ijk : Iterable of 3 float
+        iter : Iterable of 3 float
             Values for (i, j, k) coordinates.
         OR
         offset : int
             Offset into data for assignment to vector elements.
-        data : Iterable of >=3 float
+        iter : Iterable of >=3 float
             Values to use for vector elements, starting at offset.
         OR
         scale : float
             Scale factor for vector to copy.
-        vector : np.ndarray
-            Existing vector to copy and scale.
+        iter : Iterable of 3 float
+            Vector components to copy and scale.
         OR
         i, j, k : float
             Values for vector elements.
@@ -67,21 +66,21 @@ class VectorIJK(Vector3D):
             data = (None, None, None)
         elif len(args) == 1:
             # Iterable of 3 values for the components.
-            (ijk,) = args
-            data = list(ijk)
+            (iter,) = args
+            data = list(iter)
         elif len(args) == 2:
             if isinstance(args[0], int):
                 # Offset and iterable of >= (3 + offset + 1) values.
-                (offset, data) = args
-                data = list(data[offset:offset + 3])
+                (offset, iter) = args
+                data = list(iter[offset:offset + 3])
             else:
                 # Scale factor and np.ndarray to scale.
-                (scale, vector) = args
-                data = scale*vector
+                (scale, iter) = args
+                data = [scale*iter[i] for i in range(3)]
         elif len(args) == 3:
             # Scalar values (3) for the components.
             (i, j, k) = args
-            data = i, j, k
+            data = (i, j, k)
         else:
             raise ValueError('Bad arguments for constructor!')
         v = Vector3D.__new__(cls, *data)
@@ -165,8 +164,8 @@ class VectorIJK(Vector3D):
         self : VectorIJK
             The current object (for convenience).
         """
-        norm = computeNorm(*self)
-        self[:] /= norm
+        length = np.linalg.norm(self)
+        self[:] /= length
         return self
 
     def negate(self):
@@ -191,7 +190,7 @@ class VectorIJK(Vector3D):
         ----------
         *args : Tuple of arguments.
             Arguments for polymorphic method.
-        vector : UnwritableVectorIJK
+        vector : VectorIJK
             Vector to copy to current vector
         OR
         data : list or tuple
@@ -199,7 +198,7 @@ class VectorIJK(Vector3D):
         OR
         scale : float
             Scale factor to apply to incoming vector
-        vector : UnwritableVectorIJK
+        vector : VectorIJK
             Vector to scale for current vector.
         OR
         offset : int
@@ -227,234 +226,219 @@ class VectorIJK(Vector3D):
         if len(args) == 1:
             # Copy the components from an iterable.
             (iterable,) = args
-            self[:] = list(iterable)[:]
+            data = list(iterable)[:]
         elif len(args) == 2:
             if isinstance(args[0], float):
                 # Set the vector components to a scaled iterable.
                 (scale, iterable) = args
-                data = np.array(list(iterable))
-                self[:] = scale*data[:]
+                data = [scale*iterable[i] for i in range(3)]
             else:
                 # Offset + iterable
-                (scale, iterable) = args
-                data = lis
-    #     elif len(args) == 3:
-    #         # Sets the three components of the vector.
-    #         data = args
-    #         self[:] = data[:]
+                (offset, iterable) = args
+                data = list(iterable[offset:offset + 3])
+        elif len(args) == 3:
+            # Sets the three components of the vector.
+            data = args
         else:
             raise ValueError('Bad arguments for method!')
+        self[:] = data[:]
         return self
 
-    # @staticmethod
-    # def rotate(*args):
-    #     """Rotate a copy of a vector.
+    @staticmethod
+    def project(*args):
+        """Compute the projection of one vector onto another.
 
-    #     Set the vector to a negated copy of another.
+        Compute the projection of the vector onto another.
 
-    #     Parameters
-    #     ----------
-    #     vector : UnwritableVectorIJK
-    #         Vector to rotate
-    #     axis : UnwritableVectorIJK
-    #         Veector defining the rotation axis.
-    #     angle : float
-    #         Rotation angle (radians).
-    #     buffer : VectorIJK (optional)
-    #         Buffer to receive the rotated vector.
+        Parameters
+        ----------
+        vector : VectorIJK
+            The vector to project.
+        onto : VectorIJK
+            The vector onto which the first vector will be projected.
+        buffer : VectorIJK (optional)
+            Buffer to receive the projected vector.
 
-    #     Returns
-    #     -------
-    #     v : VectorIJK
-    #         A rotated copy of the original vector.
+        Returns
+        -------
+        buffer : VectorIJK
+            The projected vector.
 
-    #     Raises
-    #     ------
-    #     ValueError
-    #         If incorrect arguments are provided.
+        Raises
+        ------
+        BugException
+            If the rotation axis is zero.
+        ValueError:
+            If incorrect arguments are provided.
 
-    #     Notes
-    #     -----
-    #     An example is perhaps the most straightforward means to explain
-    #     computation. Given an axis (0,0,1) and a rotation angle of pi/2,
-    #     this method does the following:
+        Notes
+        -----
+        Algebraically, this routine effectively computes:
 
-    #       vector         buffer
-    #     ( 1, 2, 3 )   ( -2, 1, 3 )
-    #     ( 1, 0, 0 )   ( 0, 1, 0 )
-    #     ( 0, 1, 0 )   ( -1, 0, 0 )
-    #     """
-    #     if len(args) == 3:
-    #         # Create the buffer, then rotate the vector.
-    #         (vector, axis, angle) = args
-    #         buffer = VectorIJK()
-    #     elif len(args) == 4:
-    #         (vector, axis, angle, buffer) = args
-    #     else:
-    #         raise ValueError('Bad arguments for method!')
+        <vector, onto> * onto
+        ---------------------
+             || onto ||
 
-    #     # Rotate one vector about another by a specified angle.
+        where <> denotes the standard scalar product and ||x|| the norm of x.
+        For numeric precision reasons the implementation may vary slightly
+        from the above prescription.
+        """
+        if len(args) == 2:
+            # Create a buffer, then perform the projection.
+            (vector, onto) = args
+            buffer = VectorIJK()
+        elif len(args) == 3:
+            (vector, onto, buffer) = args
+        else:
+            raise ValueError('Bad arguments for method!')
 
-    #     # There is one exceptional case, namely if we try to rotate
-    #     # about the zero vector. We can check this by using the project
-    #     # method, as it will throw the desired runtime exception. First
-    #     # cache the contents of vector and axis as input, since we do
-    #     # not know if buffer is equivalent to either of them.
-    #     # (vi, vj, vk) = vector[:]
-    #     v = np.array(vector[:])
-    #     # (ai, aj, ak) = axis[:]
-    #     a = np.array(axis[:])
+        # Scale and project the vector.
+        maxVector = absMaxComponent(*vector)
+        maxOnto = absMaxComponent(*onto)
+        if maxOnto == 0:
+            raise BugException("Unable to project vector onto zero vector.")
 
-    #     # At this point, we are going to build a basis that is
-    #     # convenient for computing the rotated vector. Start by
-    #     # projecting vector onto axis, one of the axes in our basis.
-    #     VectorIJK.project(vector, axis, buffer)
+        # If the vector to project is 0, so is the projection.
+        if maxVector == 0:
+            buffer[:] = (0, 0, 0)
+        else:
+            r = onto/maxOnto
+            t = vector/maxVector
+            scaleFactor = sum(t*r)*maxVector/sum(r*r)
+            buffer[:] = r[:]
+            buffer.scale(scaleFactor)
+        return buffer
 
-    #     # Normalize the rotation axis.
-    #     norm = computeNorm(*a)
-    #     a /= norm
+    @staticmethod
+    def rotate(*args):
+        """Rotate a copy of a vector.
 
-    #     # Store the contents of buffer as this is one of the
-    #     # components of our rotated vector in the new basis.
-    #     p = np.array(buffer[:])
+        Make a copy of the vector, and rotate the copy by the specified
+        angle around the specified axis vector.
 
-    #     # To determine one of the other vectors in the basis, simply
-    #     # subtract buffer from vector.
-    #     v -= buffer
+        Parameters
+        ----------
+        vector : VectorIJK
+            Vector to rotate
+        axis : VectorIJK
+            Veector defining the rotation axis.
+        angle : float
+            Rotation angle (radians).
+        buffer : VectorIJK (optional)
+            Buffer to receive the rotated vector.
 
-    #     # Now determine the third basis vector by computing the cross
-    #     # product of a unit vector in the direction of axis with
-    #     # buffer.
-    #     buffer[:] = np.cross(a, v)[:]
+        Returns
+        -------
+        v : VectorIJK
+            A rotated copy of the original vector.
 
-    #     # The desired vector projection against this new basis is:
-    #     # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
-    #     buffer[:] = p + cos(angle)*v + sin(angle)*buffer
-    #     v = buffer
-    #     return v
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
 
-    # @staticmethod
-    # def project(*args):
-    #     """Compute the projection of one vector onto another.
+        Notes
+        -----
+        An example is perhaps the most straightforward means to explain
+        computation. Given an axis (0,0,1) and a rotation angle of pi/2,
+        this method does the following:
 
-    #     Project one vector onto another.
+          vector         buffer
+        ( 1, 2, 3 )   ( -2, 1, 3 )
+        ( 1, 0, 0 )   ( 0, 1, 0 )
+        ( 0, 1, 0 )   ( -1, 0, 0 )
+        """
+        if len(args) == 3:
+            # Create the buffer, then rotate the vector.
+            (vector, axis, angle) = args
+            buffer = VectorIJK()
+        elif len(args) == 4:
+            (vector, axis, angle, buffer) = args
+        else:
+            raise ValueError('Bad arguments for method!')
 
-    #     Parameters
-    #     ----------
-    #     vector : UnwritableVectorIJK
-    #         The vector to project.
-    #     onto : UnwritableVectorIJK
-    #         The vector onto which the first vector will be projected.
-    #     buffer : VectorIJK (optional)
-    #         Buffer to receive the projected vector.
+        # Rotate one vector about another by a specified angle.
 
-    #     Returns
-    #     -------
-    #     buffer : VectorIJK
-    #         The projected vector.
+        # There is one exceptional case, namely if we try to rotate
+        # about the zero vector. We can check this by using the project
+        # method, as it will throw the desired runtime exception. First
+        # cache the contents of vector and axis as input, since we do
+        # not know if buffer is equivalent to either of them.
+        # (vi, vj, vk) = vector[:]
+        v = np.array(vector[:])
+        # (ai, aj, ak) = axis[:]
+        a = np.array(axis[:])
 
-    #     Raises
-    #     ------
-    #     BugException
-    #         If the rotation axis is zero.
-    #     ValueError:
-    #         If incorrect arguments are provided.
+        # At this point, we are going to build a basis that is
+        # convenient for computing the rotated vector. Start by
+        # projecting vector onto axis, one of the axes in our basis.
+        VectorIJK.project(vector, axis, buffer)
 
-    #     Notes
-    #     -----
-    #     Algebraically, this routine effectively computes:
+        # Normalize the rotation axis.
+        norm = computeNorm(*a)
+        a /= norm
 
-    #     <vector, onto> * onto
-    #     ---------------------
-    #          || onto ||
+        # Store the contents of buffer as this is one of the
+        # components of our rotated vector in the new basis.
+        p = np.array(buffer[:])
 
-    #     where <> denotes the standard scalar product and ||x|| the norm of x.
-    #     For numeric precision reasons the implementation may vary slightly
-    #     from the above prescription.
-    #     """
-    #     if len(args) == 2:
-    #         # Create a buffer, then perform the projection.
-    #         (vector, onto) = args
-    #         buffer = VectorIJK()
-    #         v = VectorIJK.project(vector, onto, buffer)
-    #     elif len(args) == 3:
-    #         # Project the first vector onto the second.
-    #         (vector, onto, buffer) = args
-    #         maxVector = absMaxComponent(*vector)
-    #         maxOnto = absMaxComponent(*onto)
-    #         if maxOnto == 0:
-    #             raise BugException(
-    #                 "Unable to project vector onto zero vector.")
-    #             # If the vector to project is 0, so is the projection.
-    #         if maxVector == 0:
-    #             buffer.clear()
-    #         else:
-    #             r = onto/maxOnto
-    #             t = vector/maxVector
-    #             scaleFactor = sum(t*r)*maxVector/sum(r*r)
-    #             buffer[:] = r[:]
-    #             buffer.scale(scaleFactor)
-    #         v = buffer
-    #     else:
-    #         raise ValueError('Bad arguments for method!')
-    #     return v
+        # To determine one of the other vectors in the basis, simply
+        # subtract buffer from vector.
+        v -= buffer
 
-    # @staticmethod
-    # def add(*args):
-    #     """Add one vector to another.
+        # Now determine the third basis vector by computing the cross
+        # product of a unit vector in the direction of axis with
+        # buffer.
+        buffer[:] = np.cross(a, v)[:]
 
-    #     Add the second vector from the first vector, returning the
-    #     sum as a new vector.
+        # The desired vector projection against this new basis is:
+        # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
+        buffer[:] = p + cos(angle)*v + sin(angle)*buffer
+        v = buffer
+        return v
 
-    #     Parameters
-    #     ----------
-    #     a : UnwritableVectorIJK
-    #         The first vector.
-    #     b : UnwritableVectorIJK
-    #         The second vector.
-    #     buffer : VectorIJK (optional)
-    #         Buffer to hold result.
+    @staticmethod
+    def add(*args):
+        """Add one vector to another.
 
-    #     Returns
-    #     -------
-    #     buffer : VectorIJK
-    #         Vector of the sum (a + b).
+        Add the second vector from the first vector, returning the
+        sum as a new vector.
 
-    #     Raises
-    #     ------
-    #     ValueError:
-    #         If incorrect arguments are provided.
-    #     """
-    #     if len(args) == 2:
-    #         (a, b) = args
-    #         buffer = VectorIJK()
-    #     elif len(args) == 3:
-    #         (a, b, buffer) = args
-    #     else:
-    #         raise ValueError('Bad arguments for method!')
-    #     buffer[:] = a[:] + b[:]
-    #     return buffer
+        Parameters
+        ----------
+        a : VectorIJK
+            The first vector.
+        b : VectorIJK
+            The second vector.
+        buffer : VectorIJK (optional)
+            Buffer to hold result.
 
-    # @staticmethod
-    # def copyOf(vector):
-    #     """Make an unwritable copy of the supplied vector.
+        Returns
+        -------
+        buffer : VectorIJK
+            Vector of the sum (a + b).
 
-    #     This method makes an unwritable copy only if necessary. It tries to
-    #     avoid making a copy wherever possible.
+        Raises
+        ------
+        ValueError:
+            If incorrect arguments are provided.
+        """
+        if len(args) == 2:
+            (a, b) = args
+            buffer = VectorIJK()
+        elif len(args) == 3:
+            (a, b, buffer) = args
+        else:
+            raise ValueError('Bad arguments for method!')
+        buffer[:] = a[:] + b[:]
+        return buffer
 
-    #     param UnwritableVectorIJK vector a vector to copy.
 
-    #     return UnwritableVectorIJK either a reference to vector (if vector is
-    #     already only an instance of UnwritableVectorIJK, otherwise an
-    #     unwritable copy of vector's contents
-    #     """
-    #     return VectorIJK(vector)
+# The I basis vector: (1,0,0).
+I = VectorIJK(1, 0, 0)
 
-# # The I basis vector: (1,0,0).
-# I = VectorIJK(1, 0, 0)
+# The J basis vector: (0,1,0).
+J = VectorIJK(0, 1, 0)
 
-# # The J basis vector: (0,1,0).
-# J = VectorIJK(0, 1, 0)
-
-# # The K basis vector: (0,0,1).
-# K = VectorIJK(0, 0, 1)
+# The K basis vector: (0,0,1).
+K = VectorIJK(0, 0, 1)

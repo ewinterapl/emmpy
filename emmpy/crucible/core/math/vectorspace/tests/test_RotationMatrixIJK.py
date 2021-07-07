@@ -1,475 +1,183 @@
+"""Tests for the rotationmatrixijk module."""
+
+
 from math import cos, sin
 import unittest
 
+import numpy as np
 
+from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
+    MalformedRotationException
+)
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
-    UnwritableMatrixIJK
-)
-from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
-    UnwritableRotationMatrixIJK
-)
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the rotationmatrixijk module."""
 
-    def test___init__(self):
+    def test___new__(self):
+        """Test the __new__ method."""
+        # 0-arg form - creates identity matrix.
+        m1 = RotationMatrixIJK()
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                if row == col:
+                    self.assertAlmostEqual(m1[row, col], 1)
+                else:
+                    self.assertAlmostEqual(m1[row, col], 0)
+        # 1 arg forms
+        # list of lists, use upper-left 3x3 block.
         a = 1
-        # 0 args
-        m = RotationMatrixIJK()
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, 0)
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, 0)
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, 1)
-        # 1 2-D list arg
-        m = RotationMatrixIJK([[cos(a), 0, -sin(a), 99],
-                               [0, 1, 0, 99],
-                               [sin(a), 0, cos(a), 99],
-                               [99, 99, 99, 99]])
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
-        # 1 RotationMatrixIJK arg
-        m2 = RotationMatrixIJK(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 1 UnwritbleMatrixIJK arg
-        a = 2
-        m = UnwritableMatrixIJK(cos(a), 0, sin(a),
-                                0, 1, 0,
-                                -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 2 args: scale and matrix
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK(1, m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 3 args: all vectors
-        v1 = UnwritableVectorIJK(cos(a), 0, sin(a))
-        v2 = UnwritableVectorIJK(0, 1, 0)
-        v3 = UnwritableVectorIJK(-sin(a), 0, cos(a))
-        m = RotationMatrixIJK(v1, v2, v3)
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
-        # 4 args: 3 scale factors, matrix
-        m = UnwritableMatrixIJK(cos(a)/2, 0, sin(a)/2,
-                                0, 1/3, 0,
-                                -sin(a)/4, 0, cos(a)/4)
-        m2 = RotationMatrixIJK(2, 3, 4, m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 6 args: 3 x (scale, vector)
-        v1 = UnwritableVectorIJK(cos(a)/2, 0, sin(a)/2)
-        v2 = UnwritableVectorIJK(0, 1/3, 0)
-        v3 = UnwritableVectorIJK(-sin(a)/4, 0, cos(a)/4)
-        m = RotationMatrixIJK(2, v1, 3, v2, 4, v3)
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
-        # 9 args
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
+        data1 = [[cos(a), 0, -sin(a), 4],
+                 [0, 1, 0, 7],
+                 [sin(a), 0, cos(a), 0],
+                 [4, 3, 2, 1]]
+        m1 = RotationMatrixIJK(data1)
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[col][row])
+        # tuple of tuples
+        data1 = ((cos(a), 0, -sin(a), 4),
+                 (0, 1, 0, 7),
+                 (sin(a), 0, cos(a), 0),
+                 (4, 3, 2, 1))
+        m1 = RotationMatrixIJK(data1)
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[col][row])
+        # list of tuples
+        data1 = [(cos(a), 0, -sin(a), 4),
+                 (0, 1, 0, 7),
+                 (sin(a), 0, cos(a), 0),
+                 (4, 3, 2, 1)]
+        m1 = RotationMatrixIJK(data1)
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[col][row])
+        # tuple of lists
+        data1 = ([cos(a), 0, -sin(a), 4],
+                 [0, 1, 0, 7],
+                 [sin(a), 0, cos(a), 0],
+                 [4, 3, 2, 1])
+        m1 = RotationMatrixIJK(data1)
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[col][row])
+        # Numpy array
+        a1 = np.array(data1).T
+        m2 = RotationMatrixIJK(m1)
+        self.assertIsInstance(m2, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], a1[row, col])
+        # 3 args - column vectors
+        v = [VectorIJK(data1[0][:3]),
+             VectorIJK(data1[1][:3]),
+             VectorIJK(data1[2][:3])]
+        m1 = RotationMatrixIJK(*v)
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], v[col][row])
+        # 9-arg form - all components
+        data1 = (cos(a), 0, sin(a),
+                 0, 1, 0,
+                 -sin(a), 0, cos(a))
+        m1 = RotationMatrixIJK(*data1)
+        self.assertIsInstance(m1, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[row + 3*col])
+        # Invalid forms.
+        for n in (1, 2, 4, 5, 6, 7, 10):
+            with self.assertRaises(ValueError):
+                args = [None]*n
+                m1 = RotationMatrixIJK(*args)
+        with self.assertRaises(MalformedRotationException):
+            args = (1, 0, sin(a),
+                    0, 1, 0,
+                    -sin(a), 0, cos(a))
+            m1 = RotationMatrixIJK(*args)
 
-    def test_createSharpened(self):
+    def test_isRotation(self):
+        """Test the isRotation method."""
+        # A rotation.
         a = 1
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        m2 = m.createSharpened()
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-
-    def test_createTranspose(self):
-        a = 1
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        m2 = m.createTranspose()
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, -sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-
-    def test_createInverse(self):
-        a = 1
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        m2 = m.createInverse()
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, -sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
+        data1 = (cos(a), 0, sin(a),
+                 0, 1, 0,
+                 -sin(a), 0, cos(a))
+        m1 = RotationMatrixIJK(*data1)
+        self.assertTrue(m1.isRotation())
+        # A non-rotation.
+        m1[0, 0] = 1
+        self.assertFalse(m1.isRotation())
 
     def test_sharpen(self):
+        """Test the sharpen method."""
         a = 1
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        m.sharpen()
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
+        data1 = ((cos(a), 0, -sin(a)),
+                 (0, 1, 0),
+                 (sin(a), 0, cos(a)))
+        m1 = RotationMatrixIJK(data1)
+        m1.sharpen()
+        self.assertTrue(m1.isRotation())
 
-    def test_transpose(self):
+    def test_createSharpened(self):
+        """Test the createSharpened method."""
         a = 1
-        m = RotationMatrixIJK(cos(a), 0, sin(a),
-                              0, 1, 0,
-                              -sin(a), 0, cos(a))
-        m.transpose()
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, -sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
+        data1 = ((cos(a), 0, -sin(a)),
+                 (0, 1, 0),
+                 (sin(a), 0, cos(a)))
+        m1 = RotationMatrixIJK(data1)
+        m2 = m1.createSharpened()
+        self.assertIsInstance(m2, RotationMatrixIJK)
+        self.assertTrue(m2.isRotation())
 
-    def test_setTo(self):
+    def test_createTranspose(self):
+        """Test the createTranspose method."""
         a = 1
-        # 1 2-D list arg
-        m = RotationMatrixIJK()
-        m.setTo([[cos(a), 0, -sin(a), 99],
-                 [0, 1, 0, 99],
-                 [sin(a), 0, cos(a), 99],
-                 [99, 99, 99, 99]])
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
-        # 1 RotationMatrixIJK arg
-        m2 = RotationMatrixIJK(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 1 UnwritbleRotationMatrixIJK arg
-        m = UnwritableRotationMatrixIJK(
-            cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 1 UnwritbleMatrixIJK arg
-        m = UnwritableMatrixIJK(
-            cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        # 3 args: all vectors
-        v1 = UnwritableVectorIJK(cos(a), 0, sin(a))
-        v2 = UnwritableVectorIJK(0, 1, 0)
-        v3 = UnwritableVectorIJK(-sin(a), 0, cos(a))
-        m = RotationMatrixIJK(v1, v2, v3)
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
-        # 6 args: 3 x (scale, vector)
-        v1 = UnwritableVectorIJK(cos(a)/2, 0, sin(a)/2)
-        v2 = UnwritableVectorIJK(0, 1/3, 0)
-        v3 = UnwritableVectorIJK(-sin(a)/4, 0, cos(a)/4)
-        m = RotationMatrixIJK(2, v1, 3, v2, 4, v3)
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
-        # 9 args
-        m = RotationMatrixIJK()
-        m.setTo(cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
-        self.assertAlmostEqual(m.ii, cos(a))
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, sin(a))
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, -sin(a))
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, cos(a))
+        data1 = ((cos(a), 0, -sin(a)),
+                 (0, 1, 0),
+                 (sin(a), 0, cos(a)))
+        m1 = RotationMatrixIJK(data1)
+        m2 = m1.createTranspose()
+        self.assertIsInstance(m2, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row][col], data1[row][col])
+
+    def test_createInverse(self):
+        """Test the createInverse"""
+        a = 1
+        data1 = ((cos(a), 0, -sin(a)),
+                 (0, 1, 0),
+                 (sin(a), 0, cos(a)))
+        m1 = RotationMatrixIJK(data1)
+        m2 = m1.createInverse()
+        self.assertIsInstance(m2, RotationMatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row][col], data1[row][col])
 
     def test_setToSharpened(self):
+        """Test the setToSharpened method."""
         a = 1
-        m = UnwritableRotationMatrixIJK(cos(a), 0, sin(a),
-                                        0, 1, 0,
-                                        -sin(a), 0, cos(a))
+        data1 = ((cos(a), 0, -sin(a)),
+                 (0, 1, 0),
+                 (sin(a), 0, cos(a)))
+        m1 = RotationMatrixIJK(data1)
         m2 = RotationMatrixIJK()
-        m2.setToSharpened(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        a = 2
-        m = UnwritableMatrixIJK(cos(a), 0, sin(a),
-                                0, 1, 0,
-                                -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK()
-        m2.setToSharpened(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-
-    def setToTransposed(self):
-        a = 1
-        m = UnwritableRotationMatrixIJK(cos(a), 0, sin(a),
-                                        0, 1, 0,
-                                        -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK()
-        m2.setToTranspose(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, -sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-        a = 2
-        m = UnwritableMatrixIJK(cos(a), 0, sin(a),
-                                0, 1, 0,
-                                -sin(a), 0, cos(a))
-        m2 = RotationMatrixIJK()
-        m2.setToTranspose(m)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, -sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
-
-    def test_mxmt(self):
-        a = 1
-        m1 = RotationMatrixIJK(cos(a), 0, sin(a),
-                               0, 1, 0,
-                               -sin(a), 0, cos(a))
-        b = 2
-        m2 = UnwritableRotationMatrixIJK(cos(b), 0, sin(b),
-                                         0, 1, 0,
-                                         -sin(b), 0, cos(b))
-        m3 = RotationMatrixIJK.mxmt(m1, m2)
-        # | cos(a) 0 -sin(a) | | cos(b) 0 -sin(b) |T
-        # |    0   1     0   |*|    0   1     0   | =
-        # | sin(a) 0  cos(a) | | sin(b) 0  cos(b) |
-        #
-        # | cos(a) 0 -sin(a) | | cos(b) 0  sin(b) |
-        # |    0   1     0   |*|    0   1     0   |
-        # | sin(a) 0  cos(a) | |-sin(b) 0  cos(b) |
-        self.assertAlmostEqual(m3.ii, cos(a)*cos(b) + sin(a)*sin(b))
-        self.assertAlmostEqual(m3.ji, 0)
-        self.assertAlmostEqual(m3.ki, sin(a)*cos(b) - cos(a)*sin(b))
-        self.assertAlmostEqual(m3.ij, 0)
-        self.assertAlmostEqual(m3.jj, 1)
-        self.assertAlmostEqual(m3.kj, 0)
-        self.assertAlmostEqual(m3.ik, cos(a)*sin(b) - sin(a)*cos(b))
-        self.assertAlmostEqual(m3.jk, 0)
-        self.assertAlmostEqual(m3.kk, sin(a)*sin(b) + cos(a)*cos(b))
-
-    def test_mtxm(self):
-        a = 1
-        m1 = RotationMatrixIJK(cos(a), 0, sin(a),
-                               0, 1, 0,
-                               -sin(a), 0, cos(a))
-        b = 2
-        m2 = UnwritableRotationMatrixIJK(cos(b), 0, sin(b),
-                                         0, 1, 0,
-                                         -sin(b), 0, cos(b))
-        m3 = RotationMatrixIJK.mtxm(m1, m2)
-        # | cos(a) 0 -sin(a) |T| cos(b) 0 -sin(b) |
-        # |    0   1     0   |*|    0   1     0   | =
-        # | sin(a) 0  cos(a) | | sin(b) 0  cos(b) |
-        #
-        # | cos(a) 0  sin(a) | | cos(b) 0 -sin(b) |
-        # |    0   1     0   |*|    0   1     0   |
-        # |-sin(a) 0  cos(a) | | sin(b) 0  cos(b) |
-        self.assertAlmostEqual(m3.ii, cos(a)*cos(b) + sin(a)*sin(b))
-        self.assertAlmostEqual(m3.ji, 0)
-        self.assertAlmostEqual(m3.ki, -sin(a)*cos(b) + cos(a)*sin(b))
-        self.assertAlmostEqual(m3.ij, 0)
-        self.assertAlmostEqual(m3.jj, 1)
-        self.assertAlmostEqual(m3.kj, 0)
-        self.assertAlmostEqual(m3.ik, -cos(a)*sin(b) + sin(a)*cos(b))
-        self.assertAlmostEqual(m3.jk, 0)
-        self.assertAlmostEqual(m3.kk, sin(a)*sin(b) + cos(a)*cos(b))
-
-    def test_mxm(self):
-        a = 1
-        m1 = RotationMatrixIJK(cos(a), 0, sin(a),
-                               0, 1, 0,
-                               -sin(a), 0, cos(a))
-        b = 2
-        m2 = UnwritableRotationMatrixIJK(cos(b), 0, sin(b),
-                                         0, 1, 0,
-                                         -sin(b), 0, cos(b))
-        m3 = RotationMatrixIJK.mxm(m1, m2)
-        # | cos(a) 0 -sin(a) | | cos(b) 0 -sin(b) |
-        # |    0   1     0   |*|    0   1     0   |
-        # | sin(a) 0  cos(a) | | sin(b) 0  cos(b) |
-        self.assertAlmostEqual(m3.ii, cos(a)*cos(b) - sin(a)*sin(b))
-        self.assertAlmostEqual(m3.ji, 0)
-        self.assertAlmostEqual(m3.ki, sin(a)*cos(b) + cos(a)*sin(b))
-        self.assertAlmostEqual(m3.ij, 0)
-        self.assertAlmostEqual(m3.jj, 1)
-        self.assertAlmostEqual(m3.kj, 0)
-        self.assertAlmostEqual(m3.ik, -cos(a)*sin(b) - sin(a)*cos(b))
-        self.assertAlmostEqual(m3.jk, 0)
-        self.assertAlmostEqual(m3.kk, -sin(a)*sin(b) + cos(a)*cos(b))
-
-    def test_static_createSharpened(self):
-        a = 1
-        m2 = RotationMatrixIJK.static_createSharpened(
-            cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ki, sin(a))
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 1)
-        self.assertAlmostEqual(m2.kj, 0)
-        self.assertAlmostEqual(m2.ik, -sin(a))
-        self.assertAlmostEqual(m2.jk, 0)
-        self.assertAlmostEqual(m2.kk, cos(a))
+        m3 = m2.setToSharpened(m1)
+        self.assertIs(m3, m2)
+        self.assertTrue(m3.isRotation())
 
 
 if __name__ == '__main__':

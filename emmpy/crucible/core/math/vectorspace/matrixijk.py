@@ -15,10 +15,10 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.matrices.matrix3d import Matrix3D
 
-# Map vector component names to indices.
-components = {'ii': (0, 0), 'ji': (1, 0), 'ki': (2, 0),
-              'ij': (0, 1), 'jj': (1, 1), 'kj': (2, 1),
-              'ik': (0, 2), 'jk': (1, 2), 'kk': (2, 2)}
+# Map matrix component names to indices.
+components = {'ii': (0, 0), 'ij': (0, 1), 'ik': (0, 2),
+              'ji': (1, 0), 'jj': (1, 1), 'jk': (1, 2),
+              'ki': (2, 0), 'kj': (2, 1), 'kk': (2, 2)}
 
 
 class MatrixIJK(Matrix3D):
@@ -29,22 +29,7 @@ class MatrixIJK(Matrix3D):
     ii ij ik
     ji jj jk
     ki kj kk
-
-    The primary difference between this class and a rank-2 Numpy array
-    is the flatten behavior:
-
-    MatrixIJK:   (ii, ji, ki, ij, jj, kj, ik, jk, kk)
-    Numpy Array: (ii, ij, ik, ji, jj, jk, ki, kj, kk)
     """
-
-    # # The matrix whose components are all zero.
-    # ZEROS = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-    # # The matrix whose components are all ones.
-    # ONES = UnwritableMatrixIJK(1, 1, 1, 1, 1, 1, 1, 1, 1)
-
-    # # The multiplicative identity.
-    # IDENTITY = UnwritableMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
 
     def __new__(cls, *args):
         """Create a new MatrixIJK object.
@@ -56,8 +41,8 @@ class MatrixIJK(Matrix3D):
         ----------
         args : tuple of object
             Arguments for polymorphic constructor.
-        data : list of list of float, or tuple or tuple of tuple of float
-            Values for matrix elements in column-major order. Array must
+        data : list or tuple of (list or tuple) of float
+            Values for matrix elements in row-major order. Array must
             be at least 3x3 in size.
         OR
         matrix : MatrixIJK
@@ -89,8 +74,8 @@ class MatrixIJK(Matrix3D):
         kthColumn : VectorIJK
             The vector containing the kth column.
         OR
-        ii, ji, ki, ij, jj, kj, ik, jk, kk : Float
-            Elements of new vector.
+        ii, ij, ik, ji, jj, jk, ki, kj, kk : float
+            Elements of new matrix in row-major order.
 
         Returns
         -------
@@ -112,41 +97,40 @@ class MatrixIJK(Matrix3D):
                 (data,) = args
                 data = data[0][:3] + data[1][:3] + data[2][:3]
             elif isinstance(args[0], np.ndarray):
-                # Initialize the matrix by copying the values from an
-                # existing 3x3 Numpy array.
+                # Initialize the matrix by copying the values from the
+                # upper 3x3 block of an existing Numpy array.
                 (matrix,) = args
-                data = matrix.T.flatten()
+                data = matrix[:3, :3].flatten()
             else:
-                raise ValueError('Bad arguments for constructor!')
+                raise ValueError
         elif len(args) == 2:
             # Create a new matrix by applying a scalar factor to the
             # components of an existing matrix.
             (scale, matrix) = args
-            data = matrix.T.flatten()*scale
+            data = matrix.flatten()*scale
         elif len(args) == 3:
             # Creates a new matrix by populating the columns of the matrix
             # with the supplied vectors.
             (ithColumn, jthColumn, kthColumn) = args
-            data = np.hstack([ithColumn, jthColumn, kthColumn])
+            data = np.vstack([ithColumn, jthColumn, kthColumn]).T.flatten()
         elif len(args) == 4:
             # Creates a new matrix by applying scalar multiples to each
             # column of an existing matrix.
             (scaleI, scaleJ, scaleK, matrix) = args
-            data = np.hstack((
-                scaleI*matrix[:, 0], scaleJ*matrix[:, 1], scaleK*matrix[:, 2]
-            ))
+            scales = (scaleI, scaleJ, scaleK)
+            data = (scales*matrix).flatten()
         elif len(args) == 6:
             # Creates a new matrix by populating the columns of the matrix
             # with scaled versions of the supplied vectors
             (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
-            data = np.hstack((scaleI*ithColumn, scaleJ*jthColumn,
-                              scaleK*kthColumn))
+            scales = (scaleI, scaleJ, scaleK)
+            matrix = np.vstack([ithColumn, jthColumn, kthColumn]).T
+            data = (scales*matrix).flatten()
         elif len(args) == 9:
             # Constructs a matrix from the nine basic components.
-            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            data = (ii, ji, ki, ij, jj, kj, ik, jk, kk)
+            data = args
         else:
-            raise ValueError('Bad arguments for constructor!')
+            raise ValueError
         m = Matrix3D.__new__(cls, *data)
         return m
 
@@ -489,10 +473,10 @@ class MatrixIJK(Matrix3D):
                             ).reshape((3, 3)).T
             self[:, :] = data[:, :]
         else:
-            raise ValueError('Bad arguments for method!')
+            raise ValueError
         return self
 
-    def transpose(self):
+    def transposeInPlace(self):
         """Transpose the matrix in-place.
 
         Transpose the matrix in-place.
@@ -502,7 +486,7 @@ class MatrixIJK(Matrix3D):
         self : MatrixIJK
             The matrix, transposed.
         """
-        self[:] = self.T[:]
+        self[:, :] = self.T[:, :]
         return self
 
     def unitizeColumns(self):
@@ -520,7 +504,7 @@ class MatrixIJK(Matrix3D):
             self[:, col] /= length
         return self
 
-    def invert(self, *args):
+    def invert(self):
         """Invert the matrix in-place.
 
         Invert the matrix in-place.
@@ -545,7 +529,7 @@ class MatrixIJK(Matrix3D):
         self : MatrixIJK
             The current object, for convenience.
         """
-        self.transpose()
+        self.transposeInPlace()
         for row in range(3):
             length = computeNorm(self[row, 0], self[row, 1], self[row, 2])
             self[row, :] /= length**2
@@ -587,7 +571,7 @@ class MatrixIJK(Matrix3D):
             self[:, 1] *= scaleJ
             self[:, 2] *= scaleK
         else:
-            raise ValueError('Bad arguments for method!')
+            raise ValueError
         return self
 
     def createTranspose(self):
@@ -601,7 +585,7 @@ class MatrixIJK(Matrix3D):
             The transpose of the matrix.
         """
         m = MatrixIJK(self)
-        m.transpose()
+        m.transposeInPlace()
         return m
 
     def createUnitizedColumns(self):
@@ -618,7 +602,7 @@ class MatrixIJK(Matrix3D):
         m.unitizeColumns()
         return m
 
-    def createInverse(self, *args):
+    def createInverse(self):
         """Create an inverted copy of the matrix.
 
         Create an inverted copy of the matrix.
@@ -662,7 +646,7 @@ class MatrixIJK(Matrix3D):
             The current object, for convenience.
         """
         self.setTo(matrix)
-        self.transpose()
+        self.transposeInPlace()
         return self
 
     def setToUnitizedColumns(self, matrix):
@@ -722,18 +706,15 @@ class MatrixIJK(Matrix3D):
         self.invort()
         return self
 
-    @staticmethod
-    def add(*args):
-        """Compute sum of two matrices.
+    def add(self, *args):
+        """Compute sum of this matrix with another.
 
-        Compute the sum of two matrices.
+        Compute the sum of this matrix with another.
 
         Parameters
         ----------
-        a : MatrixIJK
-            The first matrix.
-        b : MatrixIJK
-            The second matrix.
+        matrix : MatrixIJK
+            The matrix to add to this matrix.
         buffer : MatrixIJK (optional)
             Buffer to hold the matrix sum.
 
@@ -747,62 +728,56 @@ class MatrixIJK(Matrix3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (a, b) = args
+        if len(args) == 1:
+            (matrix,) = args
             buffer = MatrixIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
+        elif len(args) == 2:
+            (matrix, buffer) = args
         else:
-            raise ValueError('Bad arguments for method!')
-        buffer[:, :] = (a + b)[:, :]
+            raise ValueError
+        buffer[:, :] = (self + matrix)[:, :]
         return buffer
 
-    @staticmethod
-    def subtract(*args):
-        """Compute difference of two matrices.
+    def subtract(self, *args):
+        """Subtract a matrix from this matrix.
 
-        Compute the difference of two matrices.
+        Subtract a matrix from this matrix.
 
         Parameters
         ----------
-        a : MatrixIJK
-            The first matrix.
-        b : MatrixIJK
-            The second matrix.
+        matrix : MatrixIJK
+            The matrix to subtract.
         buffer : MatrixIJK (optional)
-            Buffer to hold the matrix sum.
+            Buffer to hold the matrix difference.
 
         Returns
         -------
         buffer : MatrixIJK
-            The matrix sum.
+            The matrix difference.
 
         Raises
         ------
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (a, b) = args
+        if len(args) == 1:
+            (matrix,) = args
             buffer = MatrixIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
+        elif len(args) == 2:
+            (matrix, buffer) = args
         else:
-            raise ValueError('Bad arguments for method!')
-        buffer[:, :] = (a - b)[:, :]
+            raise ValueError
+        buffer[:, :] = (self - matrix)[:, :]
         return buffer
 
-    @staticmethod
-    def mxm(*args):
-        """Compute the product of two matrices.
+    def mxm(self, *args):
+        """Compute the product of this matrix with another.
 
-        Compute the product of two matrices.
+        Compute the product of this matrix with another.
 
         Parameters
         ----------
-        a : MatrixIJK
-            The first matrix.
-        b : MatrixIJK
+        matrix : MatrixIJK
             The second matrix.
         buffer : MatrixIJK (optional)
             Buffer to hold the matrix product.
@@ -817,27 +792,24 @@ class MatrixIJK(Matrix3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (a, b) = args
+        if len(args) == 1:
+            (matrix,) = args
             buffer = MatrixIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
+        elif len(args) == 2:
+            (matrix, buffer) = args
         else:
-            raise ValueError('Bad arguments for method!')
-        buffer[:, :] = a.dot(b)[:, :]
+            raise ValueError
+        buffer[:, :] = self.dot(matrix)[:, :]
         return buffer
 
-    @staticmethod
-    def mxmt(*args):
-        """Compute the product of a matrix with the transpose of another.
+    def mxmt(self, *args):
+        """Compute the product of this matrix with the transpose of another.
 
-        Compute the product of a matrix with the transpose of another.
+        Compute the product of this matrix with the transpose of another.
 
         Parameters
         ----------
-        a : MatrixIJK
-            The first matrix.
-        b : MatrixIJK
+        matrix : MatrixIJK
             The second matrix.
         buffer : MatrixIJK (optional)
             Buffer to hold the matrix product.
@@ -852,27 +824,24 @@ class MatrixIJK(Matrix3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (a, b) = args
+        if len(args) == 1:
+            (matrix,) = args
             buffer = MatrixIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
+        elif len(args) == 2:
+            (matrix, buffer) = args
         else:
-            raise ValueError('Bad arguments for method!')
-        buffer[:, :] = a.dot(b.T)[:, :]
+            raise ValueError
+        buffer[:, :] = self.dot(matrix.T)[:, :]
         return buffer
 
-    @staticmethod
-    def mtxm(*args):
-        """Compute the product of a matrix transpose with another matrix.
+    def mtxm(self, *args):
+        """Compute the product of this transpose with another matrix.
 
-        Compute the product of a matrix transpose with another matrix.
+        Compute the product of this transpose with another matrix.
 
         Parameters
         ----------
-        a : MatrixIJK
-            The first matrix.
-        b : MatrixIJK
+        matrix : MatrixIJK
             The second matrix.
         buffer : MatrixIJK (optional)
             Buffer to hold the matrix product.
@@ -887,14 +856,14 @@ class MatrixIJK(Matrix3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (a, b) = args
+        if len(args) == 1:
+            (matrix,) = args
             buffer = MatrixIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
+        elif len(args) == 2:
+            (matrix, buffer) = args
         else:
-            raise ValueError('Bad arguments for method!')
-        buffer[:, :] = a.T.dot(b)[:, :]
+            raise ValueError
+        buffer[:, :] = self.T.dot(matrix)[:, :]
         return buffer
 
     @staticmethod
@@ -928,7 +897,7 @@ class MatrixIJK(Matrix3D):
         elif len(args) == 5:
             (a, b, c, d, buffer) = args
         else:
-            raise ValueError('Incorrect arguments for method!')
+            raise ValueError
         m1 = a.dot(b)
         m2 = c.dot(d)
         m3 = m1 + m2
@@ -967,7 +936,7 @@ class MatrixIJK(Matrix3D):
         elif len(args) == 5:
             (a, b, c, d, buffer) = args
         else:
-            raise ValueError('Incorrect arguments for method!')
+            raise ValueError
         m1 = a.dot(b.T)
         m2 = c.dot(d.T)
         m3 = m1 + m2
@@ -1006,24 +975,21 @@ class MatrixIJK(Matrix3D):
         elif len(args) == 5:
             (a, b, c, d, buffer) = args
         else:
-            raise ValueError('Incorrect arguments for method!')
+            raise ValueError
         m1 = a.T.dot(b)
         m2 = c.T.dot(d)
         m3 = m1 + m2
         buffer[:, :] = m3[:, :]
         return buffer
 
-    @staticmethod
-    def mxv(*args):
-        """Compute the product of a matrix with a vector.
+    def mxv(self, *args):
+        """Compute the product of this matrix with a vector.
 
-        Compute the product of a matrix with a vector.
+        Compute the product of this matrix with a vector.
 
         Parameters
         ----------
-        m : MatrixIJK
-            The matrix.
-        v : VectorIJK
+        vector : VectorIJK
             The vector.
         buffer : VectorIJK
             Buffer to hold the vector result.
@@ -1038,28 +1004,25 @@ class MatrixIJK(Matrix3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (m, v) = args
+        if len(args) == 1:
+            (vector,) = args
             buffer = VectorIJK()
-        elif len(args) == 3:
-            (m, v, buffer) = args
+        elif len(args) == 2:
+            (vector, buffer) = args
         else:
-            raise ValueError('Incorrect arguments for method!')
-        v2 = m.dot(v)
-        buffer[:] = v2[:]
+            raise ValueError
+        v = self.dot(vector)
+        buffer[:] = v[:]
         return buffer
 
-    @staticmethod
-    def mtxv(*args):
-        """Compute the product of a matrix transpose with a vector.
+    def mtxv(self, *args):
+        """Compute the product of this transpose with a vector.
 
-        Compute the product of a matrix transpose with a vector.
+        Compute the product of this transpose with a vector.
 
         Parameters
         ----------
-        m : MatrixIJK
-            The matrix.
-        v : VectorIJK
+        vector : VectorIJK
             The vector.
         buffer : VectorIJK
             Buffer to hold the vector result.
@@ -1074,13 +1037,13 @@ class MatrixIJK(Matrix3D):
         ValueError
             If incorrect arguments are provided.
         """
-        if len(args) == 2:
-            (m, v) = args
+        if len(args) == 1:
+            (vector,) = args
             buffer = VectorIJK()
-        elif len(args) == 3:
-            (m, v, buffer) = args
+        elif len(args) == 2:
+            (vector, buffer) = args
         else:
-            raise ValueError('Incorrect arguments for method!')
-        v2 = m.T.dot(v)
-        buffer[:] = v2[:]
+            raise ValueError
+        v = self.T.dot(vector)
+        buffer[:] = v[:]
         return buffer

@@ -6,7 +6,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import cos, pi, sin, sqrt
+from math import cos, pi, sin
 import unittest
 
 import numpy as np
@@ -20,39 +20,61 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        # 0 arguments - empty matrix
+        # 0 arguments - empty matrix.
         m1 = MatrixIJK()
         self.assertIsInstance(m1, MatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertTrue(np.isnan(m1[row, col]))
-        # 1 arg - list of lists, use upper-left 3x3 block.
-        data = [[1, 2, 3, 4],
-                [4, 5, 6, 7],
-                [7, 8, 9, 0],
-                [4, 3, 2, 1]]
-        m1 = MatrixIJK(data)
+        # 1 arg forms.
+        # list of lists, use upper-left 3x3 block.
+        data1 = [[0, 4, 8, 2],
+                 [1, 5, 9, 3],
+                 [2, 6, 0, 4],
+                 [3, 7, 1, 5]]
+        m1 = MatrixIJK(data1)
         self.assertIsInstance(m1, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data[col][row])
-        # 1 arg - tuple of tuples
-        data = ((1, 2, 3, 4),
-                (4, 5, 6, 7),
-                (7, 8, 9, 0),
-                (4, 3, 2, 1))
-        m1 = MatrixIJK(data)
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
+        # tuple of tuples, use upper-left 3x3 block.
+        data1 = ((0, 4, 8, 2),
+                 (1, 5, 9, 3),
+                 (2, 6, 0, 4),
+                 (3, 7, 1, 5))
+        m1 = MatrixIJK(data1)
         self.assertIsInstance(m1, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data[col][row])
-        # 1 arg - Numpy array
-        m2 = MatrixIJK(m1)
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
+        # list of tuples, use upper-left 3x3 block.
+        data1 = [(0, 4, 8, 2),
+                 (1, 5, 9, 3),
+                 (2, 6, 0, 4),
+                 (3, 7, 1, 5)]
+        m1 = MatrixIJK(data1)
+        self.assertIsInstance(m1, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
+        # tuple of lists, use upper-left 3x3 block.
+        data1 = ([0, 4, 8, 2],
+                 [1, 5, 9, 3],
+                 [2, 6, 0, 4],
+                 [3, 7, 1, 5])
+        m1 = MatrixIJK(data1)
+        self.assertIsInstance(m1, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
+        # Numpy array, use upper-left 3x3 block.
+        a1 = np.array(data1)
+        m2 = MatrixIJK(a1)
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], m1[row, col])
-        # 1 arg - copy
+                self.assertAlmostEqual(m2[row, col], a1[row, col])
+        # copy existing matrix
         m2 = MatrixIJK(m1)
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
@@ -66,69 +88,57 @@ class TestBuilder(unittest.TestCase):
             for col in range(3):
                 self.assertAlmostEqual(m2[row, col], scale*m1[row, col])
         # 3 args - column vectors
-        v1 = VectorIJK(data[0][:3])
-        v2 = VectorIJK(data[1][:3])
-        v3 = VectorIJK(data[2][:3])
-        m1 = MatrixIJK(v1, v2, v3)
+        v = []
+        for col in range(3):
+            data = [row[col] for row in data1[:3]]
+            v.append(VectorIJK(*data))
+        m1 = MatrixIJK(*v)
         self.assertIsInstance(m1, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data[col][row])
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
         # 4 args - 3 column scale factors and matrix
-        (scaleI, scaleJ, scaleK) = (-1.1, 2.2, 3.3)
-        scale = (-1.1, 2.2, 3.3)
-        m2 = MatrixIJK(scaleI, scaleJ, scaleK, m1)
+        scales = (-1.1, 2.2, 3.3)
+        m2 = MatrixIJK(*scales, m1)
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
-            self.assertAlmostEqual(m2[row, 0], scaleI*m1[row, 0])
-            self.assertAlmostEqual(m2[row, 1], scaleJ*m1[row, 1])
-            self.assertAlmostEqual(m2[row, 2], scaleK*m1[row, 2])
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scales[col]*m1[row, col])
         # 6 args - scale factors and columns
-        m2 = MatrixIJK(scaleI, v1, scaleJ, v2, scaleK, v3)
+        m2 = MatrixIJK(scales[0], v[0], scales[1], v[1], scales[2], v[2])
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
-            self.assertAlmostEqual(m2[row, 0], scaleI*v1[row])
-            self.assertAlmostEqual(m2[row, 1], scaleJ*v2[row])
-            self.assertAlmostEqual(m2[row, 2], scaleK*v3[row])
-        # 9 args - element values
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scales[col]*v[col][row])
+        # 9 args - element values in row-major order
         data = list(range(9))
         m2 = MatrixIJK(*data)
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                k = row + 3*col
+                k = row*3 + col
                 self.assertAlmostEqual(m2[row, col], k)
         # Invalid forms
-        with self.assertRaises(ValueError):
-            m1 = MatrixIJK(None)
-        with self.assertRaises(ValueError):
-            m1 = MatrixIJK(None, None, None, None, None)
-        with self.assertRaises(ValueError):
-            m1 = MatrixIJK(None, None, None, None, None, None, None)
-        with self.assertRaises(ValueError):
-            m1 = MatrixIJK(None, None, None, None, None, None, None, None)
-        with self.assertRaises(ValueError):
-            m1 = MatrixIJK(None, None, None, None, None, None, None, None,
-                           None, None)
-        with self.assertRaises(ValueError):
-            data = [1]*10
-            m1 = MatrixIJK(*data)
+        for n in (1, 5, 7, 8, 10):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m1 = MatrixIJK(*data)
 
     def test___getattr__(self):
         """Test the __getattr__ method."""
         data = [i*1.1 for i in range(9)]
         m = MatrixIJK(*data)
         self.assertAlmostEqual(m.ii, 0)
-        self.assertAlmostEqual(m.ji, 1.1)
-        self.assertAlmostEqual(m.ki, 2.2)
-        self.assertAlmostEqual(m.ij, 3.3)
+        self.assertAlmostEqual(m.ij, 1.1)
+        self.assertAlmostEqual(m.ik, 2.2)
+        self.assertAlmostEqual(m.ji, 3.3)
         self.assertAlmostEqual(m.jj, 4.4)
-        self.assertAlmostEqual(m.kj, 5.5)
-        self.assertAlmostEqual(m.ik, 6.6)
-        self.assertAlmostEqual(m.jk, 7.7)
+        self.assertAlmostEqual(m.jk, 5.5)
+        self.assertAlmostEqual(m.ki, 6.6)
+        self.assertAlmostEqual(m.kj, 7.7)
         self.assertAlmostEqual(m.kk, 8.8)
         with self.assertRaises(KeyError):
-            m.bad
+            data = m.bad
 
     def test___setattr__(self):
         """Test the __setattr__ method."""
@@ -136,20 +146,20 @@ class TestBuilder(unittest.TestCase):
         data = [i*1.1 for i in range(9)]
         m.ii = data[0]
         self.assertAlmostEqual(m.ii, data[0])
-        m.ji = data[1]
-        self.assertAlmostEqual(m.ji, data[1])
-        m.ki = data[2]
-        self.assertAlmostEqual(m.ki, data[2])
-        m.ij = data[3]
-        self.assertAlmostEqual(m.ij, data[3])
+        m.ij = data[1]
+        self.assertAlmostEqual(m.ij, data[1])
+        m.ik = data[2]
+        self.assertAlmostEqual(m.ik, data[2])
+        m.ji = data[3]
+        self.assertAlmostEqual(m.ji, data[3])
         m.jj = data[4]
         self.assertAlmostEqual(m.jj, data[4])
-        m.kj = data[5]
-        self.assertAlmostEqual(m.kj, data[5])
-        m.ik = data[6]
-        self.assertAlmostEqual(m.ik, data[6])
-        m.jk = data[7]
-        self.assertAlmostEqual(m.jk, data[7])
+        m.jk = data[5]
+        self.assertAlmostEqual(m.jk, data[5])
+        m.ki = data[6]
+        self.assertAlmostEqual(m.ki, data[6])
+        m.kj = data[7]
+        self.assertAlmostEqual(m.kj, data[7])
         m.kk = data[8]
         self.assertAlmostEqual(m.kk, data[8])
         with self.assertRaises(KeyError):
@@ -324,7 +334,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIs(m3, m2)
         for row in range(3):
             for col in range(3):
-                k = col*3 + row
+                k = row*3 + col
                 self.assertAlmostEqual(m3[row, col], scales[col]*k)
         # 6 arg forms
         # scaled column vectors
@@ -345,24 +355,17 @@ class TestBuilder(unittest.TestCase):
                 k = col*3 + row
                 self.assertAlmostEqual(m2[row, col], k)
         # Invalid forms
-        with self.assertRaises(ValueError):
-            m1.setTo()
-        with self.assertRaises(ValueError):
-            m1.setTo(None, None, None, None, None)
-        with self.assertRaises(ValueError):
-            m1.setTo(None, None, None, None, None, None, None)
-        with self.assertRaises(ValueError):
-            m1.setTo(None, None, None, None, None, None, None, None)
-        with self.assertRaises(ValueError):
-            m1.setTo(None, None, None, None, None, None, None, None, None,
-                     None)
+        for n in (0, 5, 7, 8, 10):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m1.setTo(*data)
 
-    def test_transpose(self):
+    def test_transposeInPlace(self):
         """Test the tranpose method."""
         data = list(range(9))
         m1 = MatrixIJK(*data)
         m1_orig = MatrixIJK(m1)
-        m2 = m1.transpose()
+        m2 = m1.transposeInPlace()
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
@@ -370,20 +373,16 @@ class TestBuilder(unittest.TestCase):
 
     def test_unitizeColumns(self):
         """Test the unitizeColumns method."""
-        data = list(range(9))
-        lengths = (
-            sqrt(sum([x**2 for x in data[:3]])),
-            sqrt(sum([x**2 for x in data[3:6]])),
-            sqrt(sum([x**2 for x in data[6:9]]))
-        )
-        m1 = MatrixIJK(*data)
-        m1_orig = MatrixIJK(m1)
+        data1 = list(range(9))
+        a1 = np.array(data1).reshape((3, 3))
+        lengths = np.linalg.norm(a1, axis=0)
+        a2 = a1/lengths
+        m1 = MatrixIJK(*data1)
         m2 = m1.unitizeColumns()
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col],
-                                       m1_orig[row, col]/lengths[col])
+                self.assertAlmostEqual(m2[row, col], a2[row, col])
 
     def test_invert(self):
         """Test the invert method."""
@@ -433,6 +432,11 @@ class TestBuilder(unittest.TestCase):
             for col in range(3):
                 self.assertAlmostEqual(m2[row, col],
                                        scales[col]*m1_orig[row, col])
+        # Invalid forms.
+        for n in (0, 2, 4):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m1.scale(*data)
 
     def test_createTranspose(self):
         """Test the createTranspose method."""
@@ -446,18 +450,16 @@ class TestBuilder(unittest.TestCase):
 
     def test_createUnitizedColumns(self):
         """Test the createUnitizedColumns method."""
-        data = list(range(9))
-        lengths = (
-            sqrt(sum([x**2 for x in data[:3]])),
-            sqrt(sum([x**2 for x in data[3:6]])),
-            sqrt(sum([x**2 for x in data[6:9]]))
-        )
-        m1 = MatrixIJK(*data)
+        data1 = list(range(9))
+        a1 = np.array(data1).reshape((3, 3))
+        lengths = np.linalg.norm(a1, axis=0)
+        a2 = a1/lengths
+        m1 = MatrixIJK(*data1)
         m2 = m1.createUnitizedColumns()
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], m1[row, col]/lengths[col])
+                self.assertAlmostEqual(m2[row, col], a2[row, col])
 
     def test_createInverse(self):
         """Test the createInverse method."""
@@ -497,19 +499,17 @@ class TestBuilder(unittest.TestCase):
 
     def test_setToUnitizedColumns(self):
         """Test the createUnitizedColumns method."""
-        data = list(range(9))
-        lengths = (
-            sqrt(sum([x**2 for x in data[:3]])),
-            sqrt(sum([x**2 for x in data[3:6]])),
-            sqrt(sum([x**2 for x in data[6:9]]))
-        )
-        m1 = MatrixIJK(*data)
+        data1 = list(range(9))
+        a1 = np.array(data1).reshape((3, 3))
+        lengths = np.linalg.norm(a1, axis=0)
+        a2 = a1/lengths
+        m1 = MatrixIJK(*data1)
         m2 = MatrixIJK()
         m3 = m2.setToUnitizedColumns(m1)
         self.assertIs(m3, m2)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m3[row, col], m1[row, col]/lengths[col])
+                self.assertAlmostEqual(m3[row, col], a2[row, col])
 
     def test_setToInverse(self):
         """Test the setToInverse method."""
@@ -546,21 +546,26 @@ class TestBuilder(unittest.TestCase):
         m1 = MatrixIJK(*data1)
         m2 = MatrixIJK(*data2)
         m3 = MatrixIJK(*data3)
-        # 2-arg form.
+        # 1-arg form.
         # No buffer.
-        m4 = MatrixIJK.add(m1, m2)
+        m4 = m1.add(m2)
         self.assertIsInstance(m4, MatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m4[row, col], m3[row, col])
-        # 3-arg form.
+        # 2-arg form.
         # Use buffer.
         m4 = MatrixIJK()
-        m5 = MatrixIJK.add(m1, m2, m4)
+        m5 = m1.add(m2, m4)
         self.assertIs(m5, m4)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m5[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            with self.assertRaises(ValueError):
+                data = [None]*n
+                m1.add(*data)
 
     def test_subtract(self):
         """Test the subtract method."""
@@ -570,25 +575,30 @@ class TestBuilder(unittest.TestCase):
         m1 = MatrixIJK(*data1)
         m2 = MatrixIJK(*data2)
         m3 = MatrixIJK(*data3)
-        # 2-arg form.
+        # 1-arg form.
         # No buffer.
-        m4 = MatrixIJK.subtract(m1, m2)
+        m4 = m1.subtract(m2)
         self.assertIsInstance(m4, MatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m4[row, col], m3[row, col])
-        # 3-arg form.
+        # 2-arg form.
         # Use buffer.
         m4 = MatrixIJK()
-        m5 = MatrixIJK.subtract(m1, m2, m4)
+        m5 = m1.subtract(m2, m4)
         self.assertIs(m5, m4)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m5[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            with self.assertRaises(ValueError):
+                data = [None]*n
+                m1.subtract(*data)
 
     def test_mxm(self):
         """Test the mxm method."""
-        data1 = list(range(1, 10))
+        data1 = list(range(9))
         data2 = list(reversed(data1))
         m1 = MatrixIJK(*data1)
         m2 = MatrixIJK(*data2)
@@ -598,68 +608,54 @@ class TestBuilder(unittest.TestCase):
                 for k in range(3):
                     p[row][col] += m1[row][k]*m2[k][col]
         m3 = MatrixIJK(p)
-        # 2-arg version
+        # 1-arg version
         # No buffer.
-        m4 = MatrixIJK.mxm(m1, m2)
+        m4 = m1.mxm(m2)
         self.assertIsInstance(m4, MatrixIJK)
-        # |1 4 7| |9 6 3|
-        # |2 5 8|*|8 5 2|
-        # |3 6 9| |7 4 1|
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m4[row, col], m3[row][col])
-        # 3-arg version.
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg version.
         # With buffer.
         m4 = MatrixIJK()
-        m5 = MatrixIJK.mxm(m1, m2, m4)
+        m5 = m1.mxm(m2, m4)
         self.assertIs(m5, m4)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m4[row, col], m3[row][col])
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
         # Invalid forms.
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt()
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt(None)
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt(None, None, None, None)
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m3 = m1.mxm(*data)
 
     def test_mxmt(self):
         """Test the mxmt method."""
-        data1 = list(range(1, 10))
+        data1 = list(range(9))
         data2 = list(reversed(data1))
         m1 = MatrixIJK(*data1)
         m2 = MatrixIJK(*data2)
-        mp = np.zeros((3, 3))
-        for row in range(3):
-            for col in range(3):
-                for k in range(3):
-                    mp[row][col] += m1[row][k]*m2[col][k]
-        # 2-arg version
+        m3 = m1.dot(m2.T)
+        # 1-arg version
         # No buffer.
-        m3 = MatrixIJK.mxmt(m1, m2)
-        self.assertIsInstance(m3, MatrixIJK)
-        # |1 4 7| |9 6 3|T   |1 4 7| |9 8 7|
-        # |2 5 8|*|8 5 2|  = |2 5 8|*|6 5 4|
-        # |3 6 9| |7 4 1|    |3 6 9| |3 2 1|
+        m4 = MatrixIJK.mxmt(m1, m2)
+        self.assertIsInstance(m4, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m3[row, col], mp[row][col])
-        # 3-arg version.
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg version.
         # With buffer.
         m4 = MatrixIJK()
-        m5 = MatrixIJK.mxmt(m1, m2, m4)
+        m5 = m1.mxmt(m2, m4)
         self.assertIs(m5, m4)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m5[row, col], mp[row][col])
+                self.assertAlmostEqual(m5[row, col], m3[row, col])
         # Invalid forms.
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt()
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt(None)
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt(None, None, None, None)
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m3 = m1.mxmt(*data)
 
     def test_mtxm(self):
         """Test the mtxm method."""
@@ -667,36 +663,27 @@ class TestBuilder(unittest.TestCase):
         data2 = list(reversed(data1))
         m1 = MatrixIJK(*data1)
         m2 = MatrixIJK(*data2)
-        mp = np.zeros((3, 3))
-        for row in range(3):
-            for col in range(3):
-                for k in range(3):
-                    mp[row][col] += m1[k][row]*m2[k][col]
-        # 2-arg form
+        m3 = m1.T.dot(m2)
+        # 1-arg form
         # No buffer.
-        m3 = MatrixIJK.mtxm(m1, m2)
-        self.assertIsInstance(m3, MatrixIJK)
-        # |1 4 7|T|9 6 3|    |1 2 3| |9 6 3|
-        # |2 5 8|*|8 5 2|  = |4 5 6|*|8 5 2|
-        # |3 6 9| |7 4 1|    |7 8 9| |7 4 1|
+        m4 = m1.mtxm(m2)
+        self.assertIsInstance(m4, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m3[row, col], mp[row][col])
-        # 3-arg form.
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg form.
         # Use buffer.
         m4 = MatrixIJK()
-        m5 = MatrixIJK.mtxm(m1, m2, m4)
+        m5 = m1.mtxm(m2, m4)
         self.assertIs(m5, m4)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m5[row, col], mp[row][col])
+                self.assertAlmostEqual(m5[row, col], m3[row, col])
         # Invalid forms.
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt()
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt(None)
-        with self.assertRaises(ValueError):
-            m3 = MatrixIJK.mxmt(None, None, None, None)
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m3 = m1.mtxm(*data)
 
     def test_mxmadd(self):
         """Test the mxmadd method."""
@@ -806,43 +793,53 @@ class TestBuilder(unittest.TestCase):
         """Test the mxv method."""
         data1 = list(range(9))
         data2 = list(range(3))
-        m = MatrixIJK(*data1)
+        m1 = MatrixIJK(*data1)
         v1 = VectorIJK(*data2)
-        v2 = m.dot(v1)
-        # 2-arg form.
+        v2 = m1.dot(v1)
+        # 1-arg form.
         # No buffer.
-        v3 = MatrixIJK.mxv(m, v1)
+        v3 = m1.mxv(v1)
         self.assertIsInstance(v3, VectorIJK)
         for row in range(3):
             self.assertAlmostEqual(v3[row], v2[row])
-        # 3-arg form.
+        # 2-arg form.
         # Use buffer.
         v3 = VectorIJK()
-        v4 = MatrixIJK.mxv(m, v1, v3)
+        v4 = m1.mxv(v1, v3)
         self.assertIs(v4, v3)
         for row in range(3):
             self.assertAlmostEqual(v4[row], v2[row])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                v2 = m1.mxv(*data)
 
     def test_mtxv(self):
         """Test the mtxv method."""
         data1 = list(range(9))
         data2 = list(range(3))
-        m = MatrixIJK(*data1)
+        m1 = MatrixIJK(*data1)
         v1 = VectorIJK(*data2)
-        v2 = m.T.dot(v1)
-        # 2-arg form.
+        v2 = m1.T.dot(v1)
+        # 1-arg form.
         # No buffer.
-        v3 = MatrixIJK.mtxv(m, v1)
+        v3 = m1.mtxv(v1)
         self.assertIsInstance(v3, VectorIJK)
         for row in range(3):
             self.assertAlmostEqual(v3[row], v2[row])
-        # 3-arg form.
+        # 2-arg form.
         # Use buffer.
         v3 = VectorIJK()
-        v4 = MatrixIJK.mtxv(m, v1, v3)
+        v4 = m1.mtxv(v1, v3)
         self.assertIs(v4, v3)
         for row in range(3):
             self.assertAlmostEqual(v4[row], v2[row])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                v2 = m1.mtxv(*data)
 
 
 if __name__ == '__main__':

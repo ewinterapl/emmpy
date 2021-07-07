@@ -32,61 +32,62 @@ class TestBuilder(unittest.TestCase):
         # 1 arg forms
         # list of lists, use upper-left 3x3 block.
         a = 1
-        data1 = [[cos(a), 0, -sin(a), 4],
+        data1 = [[cos(a), 0, sin(a), 4],
                  [0, 1, 0, 7],
-                 [sin(a), 0, cos(a), 0],
+                 [-sin(a), 0, cos(a), 0],
                  [4, 3, 2, 1]]
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[col][row])
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
         # tuple of tuples
-        data1 = ((cos(a), 0, -sin(a), 4),
+        data1 = ((cos(a), 0, sin(a), 4),
                  (0, 1, 0, 7),
-                 (sin(a), 0, cos(a), 0),
+                 (-sin(a), 0, cos(a), 0),
                  (4, 3, 2, 1))
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[col][row])
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
         # list of tuples
-        data1 = [(cos(a), 0, -sin(a), 4),
+        data1 = [(cos(a), 0, sin(a), 4),
                  (0, 1, 0, 7),
-                 (sin(a), 0, cos(a), 0),
+                 (-sin(a), 0, cos(a), 0),
                  (4, 3, 2, 1)]
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[col][row])
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
         # tuple of lists
-        data1 = ([cos(a), 0, -sin(a), 4],
+        data1 = ([cos(a), 0, sin(a), 4],
                  [0, 1, 0, 7],
-                 [sin(a), 0, cos(a), 0],
+                 [-sin(a), 0, cos(a), 0],
                  [4, 3, 2, 1])
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[col][row])
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
         # Numpy array
-        a1 = np.array(data1).T
+        a1 = np.array(data1)
         m2 = RotationMatrixIJK(m1)
         self.assertIsInstance(m2, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m2[row, col], a1[row, col])
         # 3 args - column vectors
-        v = [VectorIJK(data1[0][:3]),
-             VectorIJK(data1[1][:3]),
-             VectorIJK(data1[2][:3])]
+        v = []
+        for col in range(3):
+            data = [row[col] for row in data1[:3]]
+            v.append(VectorIJK(*data))
         m1 = RotationMatrixIJK(*v)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], v[col][row])
+                self.assertAlmostEqual(m1[row, col], data1[row][col])
         # 9-arg form - all components
         data1 = (cos(a), 0, sin(a),
                  0, 1, 0,
@@ -95,7 +96,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[row + 3*col])
+                self.assertAlmostEqual(m1[row, col], data1[row*3 + col])
         # Invalid forms.
         for n in (1, 2, 4, 5, 6, 7, 10):
             with self.assertRaises(ValueError):
@@ -123,9 +124,9 @@ class TestBuilder(unittest.TestCase):
     def test_sharpen(self):
         """Test the sharpen method."""
         a = 1
-        data1 = ((cos(a), 0, -sin(a)),
+        data1 = ((cos(a), 0, sin(a)),
                  (0, 1, 0),
-                 (sin(a), 0, cos(a)))
+                 (-sin(a), 0, cos(a)))
         m1 = RotationMatrixIJK(data1)
         m1.sharpen()
         self.assertTrue(m1.isRotation())
@@ -133,9 +134,9 @@ class TestBuilder(unittest.TestCase):
     def test_createSharpened(self):
         """Test the createSharpened method."""
         a = 1
-        data1 = ((cos(a), 0, -sin(a)),
+        data1 = ((cos(a), 0, sin(a)),
                  (0, 1, 0),
-                 (sin(a), 0, cos(a)))
+                 (-sin(a), 0, cos(a)))
         m1 = RotationMatrixIJK(data1)
         m2 = m1.createSharpened()
         self.assertIsInstance(m2, RotationMatrixIJK)
@@ -144,35 +145,35 @@ class TestBuilder(unittest.TestCase):
     def test_createTranspose(self):
         """Test the createTranspose method."""
         a = 1
-        data1 = ((cos(a), 0, -sin(a)),
+        data1 = ((cos(a), 0, sin(a)),
                  (0, 1, 0),
-                 (sin(a), 0, cos(a)))
+                 (-sin(a), 0, cos(a)))
         m1 = RotationMatrixIJK(data1)
         m2 = m1.createTranspose()
         self.assertIsInstance(m2, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row][col], data1[row][col])
+                self.assertAlmostEqual(m2[row][col], data1[col][row])
 
     def test_createInverse(self):
         """Test the createInverse"""
         a = 1
-        data1 = ((cos(a), 0, -sin(a)),
+        data1 = ((cos(a), 0, sin(a)),
                  (0, 1, 0),
-                 (sin(a), 0, cos(a)))
+                 (-sin(a), 0, cos(a)))
         m1 = RotationMatrixIJK(data1)
         m2 = m1.createInverse()
         self.assertIsInstance(m2, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row][col], data1[row][col])
+                self.assertAlmostEqual(m2[row][col], data1[col][row])
 
     def test_setToSharpened(self):
         """Test the setToSharpened method."""
         a = 1
-        data1 = ((cos(a), 0, -sin(a)),
+        data1 = ((cos(a), 0, sin(a)),
                  (0, 1, 0),
-                 (sin(a), 0, cos(a)))
+                 (-sin(a), 0, cos(a)))
         m1 = RotationMatrixIJK(data1)
         m2 = RotationMatrixIJK()
         m3 = m2.setToSharpened(m1)

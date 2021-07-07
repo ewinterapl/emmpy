@@ -46,7 +46,7 @@ class RotationMatrixIJK(MatrixIJK):
         args : tuple of object
             Arguments for polymorphic constructor.
         data : list or tuple of (list or tuple) of float
-            Values for matrix elements in column-major order. Array must
+            Values for matrix elements in row-major order. Array must
             be at least 3x3 in size.
         OR
         matrix : MatrixIJK
@@ -86,17 +86,16 @@ class RotationMatrixIJK(MatrixIJK):
             elif isinstance(args[0], np.ndarray):
                 # Copy the values from an existing 3x3 Numpy array.
                 (matrix,) = args
-                data = matrix.T.flatten()
+                data = matrix[:3, :3].flatten()
             else:
                 raise ValueError('Bad arguments for constructor!')
         elif len(args) == 3:
             # Set the columns using the supplied vectors.
             (ithColumn, jthColumn, kthColumn) = args
-            data = np.hstack([ithColumn, jthColumn, kthColumn])
+            data = np.vstack([ithColumn, jthColumn, kthColumn]).T.flatten()
         elif len(args) == 9:
             # Constructs a matrix from the nine basic components.
-            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            data = (ii, ji, ki, ij, jj, kj, ik, jk, kk)
+            data = args
         else:
             raise ValueError('Bad arguments for constructor!')
         m = MatrixIJK.__new__(cls, *data)
@@ -207,10 +206,10 @@ class RotationMatrixIJK(MatrixIJK):
             Transposed copy of matrix.
         """
         m = RotationMatrixIJK(self)
-        m.transpose()
+        m.transposeInPlace()
         return m
 
-    def createInverse(self, *args):
+    def createInverse(self):
         """Create an inverted copy of the matrix.
 
         Create an inverted copy of the matrix.

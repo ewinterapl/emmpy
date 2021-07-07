@@ -6,8 +6,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from numpy.core.getlimits import _register_known_types
-from emmpy.math.matrices.matrix3d import Matrix3D
 from math import cos, pi, sin, sqrt
 import unittest
 
@@ -18,6 +16,7 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the mtrixijk module."""
 
     def test___new__(self):
         """Test the __new__ method."""
@@ -355,7 +354,8 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(ValueError):
             m1.setTo(None, None, None, None, None, None, None, None)
         with self.assertRaises(ValueError):
-            m1.setTo(None, None, None, None, None, None, None, None, None, None)
+            m1.setTo(None, None, None, None, None, None, None, None, None,
+                     None)
 
     def test_transpose(self):
         """Test the tranpose method."""
@@ -382,7 +382,8 @@ class TestBuilder(unittest.TestCase):
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], m1_orig[row, col]/lengths[col])
+                self.assertAlmostEqual(m2[row, col],
+                                       m1_orig[row, col]/lengths[col])
 
     def test_invert(self):
         """Test the invert method."""
@@ -823,6 +824,7 @@ class TestBuilder(unittest.TestCase):
             self.assertAlmostEqual(v4[row], v2[row])
 
     def test_mtxv(self):
+        """Test the mtxv method."""
         data1 = list(range(9))
         data2 = list(range(3))
         m = MatrixIJK(*data1)

@@ -48,7 +48,7 @@ class MatrixIJK(Matrix3D):
 
     def __new__(cls, *args):
         """Create a new MatrixIJK object.
-        
+
         Allocate a new MatrixIJK object by allocating a new Matrix3D
         object on which the MatrixIJK will expand.
 
@@ -184,14 +184,14 @@ class MatrixIJK(Matrix3D):
 
     def setII(self, val):
         """Set the ith row, ith column component.
-        
+
         Set the (i, i) = (0, 0) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -200,14 +200,14 @@ class MatrixIJK(Matrix3D):
 
     def setJI(self, val):
         """Set the jth row, ith column component.
-        
+
         Set the (j, i) = (1, 0) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -216,14 +216,14 @@ class MatrixIJK(Matrix3D):
 
     def setKI(self, val):
         """Set the kth row, ith column component.
-        
+
         Set the (k, i) = (2, 0) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -232,14 +232,14 @@ class MatrixIJK(Matrix3D):
 
     def setIJ(self, val):
         """Set the ith row, jth column component.
-        
+
         Set the (i, j) = (0, 1) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -248,14 +248,14 @@ class MatrixIJK(Matrix3D):
 
     def setJJ(self, val):
         """Set the jth row, jth column component.
-        
+
         Set the (j, j) = (1, 1) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -264,14 +264,14 @@ class MatrixIJK(Matrix3D):
 
     def setKJ(self, val):
         """Set the kth row, jth column component.
-        
+
         Set the (k, j) = (2, 1) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -280,14 +280,14 @@ class MatrixIJK(Matrix3D):
 
     def setIK(self, val):
         """Set the ith row, kth column component.
-        
+
         Set the (i, k) = (0, 2) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -296,14 +296,14 @@ class MatrixIJK(Matrix3D):
 
     def setJK(self, val):
         """Set the jth row, kth column component.
-        
+
         Set the (j, k) = (1, 2) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -312,14 +312,14 @@ class MatrixIJK(Matrix3D):
 
     def setKK(self, val):
         """Set the kth row, kth column component.
-        
+
         Set the (k, k) = (2, 2) element of the matrix.
 
         Parameters
         ----------
         val : int or float
             Value to assign to the element.
-        
+
         Returns
         -------
         None
@@ -485,7 +485,8 @@ class MatrixIJK(Matrix3D):
         elif len(args) == 9:
             # Sets the components of this matrix to the supplied components
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            data = np.array((ii, ji, ki, ij, jj, kj, ik, jk, kk)).reshape((3, 3)).T
+            data = np.array((ii, ji, ki, ij, jj, kj, ik, jk, kk)
+                            ).reshape((3, 3)).T
             self[:, :] = data[:, :]
         else:
             raise ValueError('Bad arguments for method!')
@@ -552,7 +553,7 @@ class MatrixIJK(Matrix3D):
 
     def scale(self, *args):
         """Scale the matrix.
-        
+
         Scale the matrix in-place, either as a unit, or by column.
 
         Parameters
@@ -647,14 +648,14 @@ class MatrixIJK(Matrix3D):
 
     def setToTranspose(self, matrix):
         """Set this matrix to the transpose of another.
-        
+
         Set this matrix to the transpose of another.
-        
+
         Parameters
         ----------
         matrix : MatrixIJK
             Matrix to copy and transpose.
-        
+
         Returns
         -------
         self : MatrixIJK
@@ -666,14 +667,14 @@ class MatrixIJK(Matrix3D):
 
     def setToUnitizedColumns(self, matrix):
         """Set this matrix to the unitized columns of another.
-        
+
         Set this matrix to the unitized columns of another.
-        
+
         Parameters
         ----------
         matrix : MatrixIJK
             Matrix to copy and unitize.
-        
+
         Returns
         -------
         self : MatrixIJK
@@ -685,14 +686,14 @@ class MatrixIJK(Matrix3D):
 
     def setToInverse(self, matrix):
         """Set this matrix to the inverse of another.
-        
+
         Set this matrix to the inverse of another.
-        
+
         Parameters
         ----------
         matrix : MatrixIJK
             Matrix to copy and invert.
-        
+
         Returns
         -------
         self : MatrixIJK
@@ -706,7 +707,7 @@ class MatrixIJK(Matrix3D):
         """Set this matrix to the inverse of another, presumed orthogonal.
 
         Set this matrix to the inverse of another, presumed orthogonal.
-        
+
         Parameters
         ----------
         matrix : MatrixIJK
@@ -724,7 +725,7 @@ class MatrixIJK(Matrix3D):
     @staticmethod
     def add(*args):
         """Compute sum of two matrices.
-        
+
         Compute the sum of two matrices.
 
         Parameters
@@ -759,7 +760,7 @@ class MatrixIJK(Matrix3D):
     @staticmethod
     def subtract(*args):
         """Compute difference of two matrices.
-        
+
         Compute the difference of two matrices.
 
         Parameters
@@ -910,12 +911,12 @@ class MatrixIJK(Matrix3D):
             The second matrix pair.
         buffer : MatrixIJK (optional)
             Buffer to hold the sum.
-        
+
         Returns
         -------
         buffer : MatrixIJK
             The sum of the matrix products.
-        
+
         Raises
         ------
         ValueError:
@@ -936,9 +937,9 @@ class MatrixIJK(Matrix3D):
 
     @staticmethod
     def mxmtadd(*args):
-        """Compute the sum of the products of two pairs of matrices, latter transposed.
+        """Sum the products of two pairs of matrices, second transposed.
 
-        Compute the sum of the products of two pairs of matrices, latter
+        Compute the sum of the products of two pairs of matrices, second
         transposed.
 
         Parameters
@@ -949,12 +950,12 @@ class MatrixIJK(Matrix3D):
             The second matrix pair.
         buffer : MatrixIJK (optional)
             Buffer to hold the sum.
-        
+
         Returns
         -------
         buffer : MatrixIJK
             The sum of the matrix products.
-        
+
         Raises
         ------
         ValueError:
@@ -975,7 +976,7 @@ class MatrixIJK(Matrix3D):
 
     @staticmethod
     def mtxmadd(*args):
-        """Compute the sum of the products of two pairs of matrices, former transposed.
+        """Sum of the products of two pairs of matrices, first transposed.
 
         Compute the sum of the products of two pairs of matrices, former
         transposed.
@@ -988,12 +989,12 @@ class MatrixIJK(Matrix3D):
             The second matrix pair.
         buffer : MatrixIJK (optional)
             Buffer to hold the sum.
-        
+
         Returns
         -------
         buffer : MatrixIJK
             The sum of the matrix products.
-        
+
         Raises
         ------
         ValueError:
@@ -1026,12 +1027,12 @@ class MatrixIJK(Matrix3D):
             The vector.
         buffer : VectorIJK
             Buffer to hold the vector result.
-        
+
         Returns
         -------
         buffer : VectorIJK
             The vector result.
-        
+
         Raises
         ------
         ValueError
@@ -1062,12 +1063,12 @@ class MatrixIJK(Matrix3D):
             The vector.
         buffer : VectorIJK
             Buffer to hold the vector result.
-        
+
         Returns
         -------
         buffer : VectorIJK
             The vector result.
-        
+
         Raises
         ------
         ValueError

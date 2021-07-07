@@ -19,11 +19,12 @@ class Matrix(np.ndarray):
     usually raise an Exception of some type.
 
     A matrix is defined as a rank 2 square tensor with n rows and columns.
-    Indexing follows [row, col] ordering, i.e. matrix[i, j] is the
-    element in row i, column j.
+    Indexing follows the Numpy convention of [row, col] index ordering,
+    i.e. matrix[i, j] (also matrix[i][j]) is the element in row i,
+    column j.
 
-    This class is derived from the numpy.ndarray class, to allow a single
-    entry point for Numpy code to be used in the matrix classes.
+    This class is derived from the numpy.ndarray class, to allow a
+    standard entry point for Numpy code to be used in the matrix classes.
     Therefore, if we decide to use a new representation for matrices
     (other than numpy), fewer classes will need to be changed. This
     approach also allows all of the numpy.ndarray methods to be available

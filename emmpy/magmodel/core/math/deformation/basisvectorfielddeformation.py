@@ -1,6 +1,7 @@
 """Deformation for a basis vector field."""
 
 
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.vectorfielddeformation import (
     VectorFieldDeformation
@@ -33,7 +34,8 @@ class BasisVectorFieldDeformation(BasisVectorField):
         bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
         bFieldExpansionDeformed = []
         for bField in bFieldExpansion:
-            v = trans.mxv(VectorIJK(bField.i, bField.j, bField.k))
+            # v = trans.mxv(VectorIJK(bField.i, bField.j, bField.k))
+            v = MatrixIJK.mxv(trans, VectorIJK(bField.i, bField.j, bField.k))
             bFieldExpansionDeformed.append(VectorIJK(v.i, v.j, v.k))
         return bFieldExpansionDeformed
 

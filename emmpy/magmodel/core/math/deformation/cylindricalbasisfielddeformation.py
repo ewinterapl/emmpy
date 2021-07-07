@@ -2,6 +2,7 @@
 
 
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
     CylindricalFieldDeformation
@@ -48,7 +49,8 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
         # CylindricalVector bField
         for bField in bFieldExpansion:
             # VectorIJK v
-            v = trans.mxv(VectorIJK(bField.rho, bField.phi, bField.z))
+            # v = trans.mxv(VectorIJK(bField.rho, bField.phi, bField.z))
+            v = MatrixIJK.mxv(trans, VectorIJK(bField.rho, bField.phi, bField.z))
             bFieldExpansionDeformed.append(
                 CylindricalVector(v.i, v.j, v.k))
         return bFieldExpansionDeformed

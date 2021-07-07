@@ -48,7 +48,12 @@ class SphericalFieldDeformation(SphericalVectorField):
 
         # evaluate the deformed field
         # VectorIJK v
-        v = trans.mxv(
+        # v = trans.mxv(
+        #     VectorIJK(bField.r, bField.theta,
+        #               bField.phi)
+        # )
+        v = MatrixIJK.mxv(
+            trans,
             VectorIJK(bField.r, bField.theta,
                       bField.phi)
         )

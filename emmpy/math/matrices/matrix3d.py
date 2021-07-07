@@ -28,8 +28,8 @@ class Matrix3D(Matrix):
 
         Parameters
         ----------
-        args : tuple of 9 float (optional)
-            Matrix elements in column-major order (ii, ji, ki, ij, ...).
+        args : tuple of 9 float (optional, defaults None)
+            Matrix elements in row-major order (ii, ij, ik, ji, ...).
 
         Returns
         -------
@@ -46,7 +46,7 @@ class Matrix3D(Matrix):
         elif len(args) == 9:
             data = args
         else:
-            raise ValueError('Exactly 0 or 9 numeric arguments are required!')
+            raise ValueError
         m = Matrix.__new__(cls, shape=(3, 3))
-        m[:] = np.array(data).reshape((3, 3)).T
+        m[:, :] = np.array(data).reshape((3, 3))
         return m

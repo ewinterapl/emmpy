@@ -19,26 +19,24 @@ class TestBuilder(unittest.TestCase):
     def test___new__(self):
         """Test the __new__ method."""
         # 0-argument form
-        m = Matrix3D()
-        self.assertIsInstance(m, Matrix3D)
+        m1 = Matrix3D()
+        self.assertIsInstance(m1, Matrix3D)
         for i in range(3):
             for j in  range(3):
-                self.assertTrue(np.isnan(m[i, j]))
-        # 9-argument form
-        (xx, yx, zx, xy, yy, zy, xz, yz, zz) = (
-            1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9)
-        m = Matrix3D(xx, yx, zx, xy, yy, zy, xz, yz, zz)
-        self.assertIsInstance(m, Matrix3D)
-        self.assertAlmostEqual(m[0, 0], xx)
-        self.assertAlmostEqual(m[1, 0], yx)
-        self.assertAlmostEqual(m[2, 0], zx)
-        self.assertAlmostEqual(m[0, 1], xy)
-        self.assertAlmostEqual(m[1, 1], yy)
-        self.assertAlmostEqual(m[2, 1], zy)
-        self.assertAlmostEqual(m[0, 2], xz)
-        self.assertAlmostEqual(m[1, 2], yz)
-        self.assertAlmostEqual(m[2, 2], zz)
-
+                self.assertTrue(np.isnan(m1[i, j]))
+        # 9-argument form - individual components
+        data1 = [i*1.1 for i in range(9)]
+        a1 = np.array(data1).reshape((3, 3))
+        m1 = Matrix3D(*data1)
+        self.assertIsInstance(m1, Matrix3D)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m1[row, col], a1[row, col])
+        # Invalid forms.
+        for n in (1, 2, 3, 4, 5, 6, 7, 8, 10):
+            with self.assertRaises(ValueError):
+                data1 = [None]*n
+                m1 = Matrix3D(*data1)
 
 if __name__ == '__main__':
     unittest.main()

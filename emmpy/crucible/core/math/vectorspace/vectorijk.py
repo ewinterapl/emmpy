@@ -26,36 +26,28 @@ components = {'i': 0, 'j': 1, 'k': 2}
 class VectorIJK(Vector3D):
     """A 3-D vector in Cartesian (i, j, k) coordinates."""
 
-    def __new__(cls, *args):
-        """Create a new VectorIJK object.
+    def __init__(self, *args):
+        """Initialize a new VectorIJK object.
 
-        Allocate a new VectorIJK object by allocating a new Vector3D
-        object on which the VectorIJK will expand.
+        Initialize a new VectorIJK object.
 
         Parameters
         ----------
-        args : tuple of object
-            Arguments for polymorphic constructor.
         iter : Iterable of 3 float
             Values for (i, j, k) coordinates.
         OR
         offset : int
-            Offset into data for assignment to vector elements.
+            Offset into iter for assignment to vector elements.
         iter : Iterable of >=3 float
             Values to use for vector elements, starting at offset.
         OR
         scale : float
-            Scale factor for vector to copy.
+            Scale factor for components to copy.
         iter : Iterable of 3 float
             Vector components to copy and scale.
         OR
         i, j, k : float
             Values for vector elements.
-
-        Returns
-        -------
-        v : VectorIJK
-            The newly-created object.
 
         Raises
         ------
@@ -63,28 +55,25 @@ class VectorIJK(Vector3D):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = (None, None, None)
+            self[:] = (None, None, None)
         elif len(args) == 1:
             # Iterable of 3 values for the components.
             (iter,) = args
-            data = list(iter)
+            self[:] = list(iter)
         elif len(args) == 2:
             if isinstance(args[0], int):
                 # Offset and iterable of >= (3 + offset + 1) values.
                 (offset, iter) = args
-                data = list(iter[offset:offset + 3])
+                self[:] = list(iter[offset:offset + 3])
             else:
                 # Scale factor and np.ndarray to scale.
-                (scale, iter) = args
-                data = [scale*iter[i] for i in range(3)]
+                (scale, a) = args
+                self[:] = scale*a
         elif len(args) == 3:
             # Scalar values (3) for the components.
-            (i, j, k) = args
-            data = (i, j, k)
+            self[:] = args
         else:
-            raise ValueError('Bad arguments for constructor!')
-        v = Vector3D.__new__(cls, *data)
-        return v
+            raise ValueError
 
     def __getattr__(self, name):
         """Return the value of a computed attribute.
@@ -178,7 +167,7 @@ class VectorIJK(Vector3D):
         self : VectorIJK
             The current object (for convenience).
         """
-        self[:] = -self[:]
+        self[:] = -self
         return self
 
     def setTo(self, *args):
@@ -226,22 +215,21 @@ class VectorIJK(Vector3D):
         if len(args) == 1:
             # Copy the components from an iterable.
             (iterable,) = args
-            data = list(iterable)[:]
+            self[:] = list(iterable)
         elif len(args) == 2:
             if isinstance(args[0], float):
                 # Set the vector components to a scaled iterable.
                 (scale, iterable) = args
-                data = [scale*iterable[i] for i in range(3)]
+                self[:] = scale*np.array(iterable)
             else:
                 # Offset + iterable
                 (offset, iterable) = args
-                data = list(iterable[offset:offset + 3])
+                self[:] = list(iterable[offset:offset + 3])
         elif len(args) == 3:
             # Sets the three components of the vector.
-            data = args
+            self[:] = args
         else:
-            raise ValueError('Bad arguments for method!')
-        self[:] = data[:]
+            raise ValueError
         return self
 
     @staticmethod
@@ -305,7 +293,7 @@ class VectorIJK(Vector3D):
             r = onto/maxOnto
             t = vector/maxVector
             scaleFactor = sum(t*r)*maxVector/sum(r*r)
-            buffer[:] = r[:]
+            buffer[:] = r
             buffer.scale(scaleFactor)
         return buffer
 
@@ -364,10 +352,8 @@ class VectorIJK(Vector3D):
         # method, as it will throw the desired runtime exception. First
         # cache the contents of vector and axis as input, since we do
         # not know if buffer is equivalent to either of them.
-        # (vi, vj, vk) = vector[:]
-        v = np.array(vector[:])
-        # (ai, aj, ak) = axis[:]
-        a = np.array(axis[:])
+        v = np.array(vector)
+        a = np.array(axis)
 
         # At this point, we are going to build a basis that is
         # convenient for computing the rotated vector. Start by
@@ -380,7 +366,7 @@ class VectorIJK(Vector3D):
 
         # Store the contents of buffer as this is one of the
         # components of our rotated vector in the new basis.
-        p = np.array(buffer[:])
+        p = np.array(buffer)
 
         # To determine one of the other vectors in the basis, simply
         # subtract buffer from vector.
@@ -389,7 +375,7 @@ class VectorIJK(Vector3D):
         # Now determine the third basis vector by computing the cross
         # product of a unit vector in the direction of axis with
         # buffer.
-        buffer[:] = np.cross(a, v)[:]
+        buffer[:] = np.cross(a, v)
 
         # The desired vector projection against this new basis is:
         # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
@@ -430,7 +416,7 @@ class VectorIJK(Vector3D):
             (a, b, buffer) = args
         else:
             raise ValueError('Bad arguments for method!')
-        buffer[:] = a[:] + b[:]
+        buffer[:] = a + b
         return buffer
 
 

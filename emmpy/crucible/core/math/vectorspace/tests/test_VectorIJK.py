@@ -1,86 +1,89 @@
-from emmpy.crucible.core.exceptions.bugexception import BugException
+"""Tests for the vectorijk module."""
+
+
 from math import pi, sqrt
 import unittest
 import warnings
 
 import numpy as np
-from numpy.core.numerictypes import ScalarType
 
+from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK, I, J, K
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the vectorijk module."""
 
-    def test___new__(self):
-        """Test the __new__ method."""
+    def test___init__(self):
+        """Test the __init__ method."""
         # 0-argument form.
-        v1 = VectorIJK()
-        self.assertIsInstance(v1, VectorIJK)
-        for i in range(3):
-            self.assertTrue(np.isnan(v1[i]))
+        v = VectorIJK()
+        self.assertIsInstance(v, VectorIJK)
+        for x in v:
+            self.assertTrue(np.isnan(x))
         # 1-argument forms
         (i, j, k) = (1.1, 2.2, 3.3)
         # list
-        v1 = VectorIJK([i, j, k])
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        v = VectorIJK([i, j, k])
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # tuple
-        v1 = VectorIJK((i, j, k))
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        v = VectorIJK((i, j, k))
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # np.ndarray
-        a1 = np.array((i, j, k))
-        v1 = VectorIJK(a1)
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        a = np.array((i, j, k))
+        v = VectorIJK(a)
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # vector
-        v2 = VectorIJK(v1)
+        v2 = VectorIJK(v)
         self.assertIsInstance(v2, VectorIJK)
         self.assertAlmostEqual(v2[0], i)
         self.assertAlmostEqual(v2[1], j)
         self.assertAlmostEqual(v2[2], k)
         # 2-argument forms
         # offset and list
-        v1 = VectorIJK(1, [0, i, j, k])
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        v = VectorIJK(1, [0, i, j, k])
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # offset and tuple
-        v1 = VectorIJK(1, (0, i, j, k))
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        v = VectorIJK(1, (0, i, j, k))
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # offset and np.ndarray
-        a1 = np.array((0, i, j, k))
-        v1 = VectorIJK(1, a1)
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        a = np.array((0, i, j, k))
+        v = VectorIJK(1, a)
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # scale and vector
         scale = -2.2
-        v2 = VectorIJK(scale, v1)
+        v2 = VectorIJK(scale, v)
         self.assertIsInstance(v2, VectorIJK)
         self.assertAlmostEqual(v2[0], scale*i)
         self.assertAlmostEqual(v2[1], scale*j)
         self.assertAlmostEqual(v2[2], scale*k)
         # 3-argument form
-        v1 = VectorIJK(i, j, k)
-        self.assertIsInstance(v1, VectorIJK)
-        self.assertAlmostEqual(v1[0], i)
-        self.assertAlmostEqual(v1[1], j)
-        self.assertAlmostEqual(v1[2], k)
+        v = VectorIJK(i, j, k)
+        self.assertIsInstance(v, VectorIJK)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        self.assertAlmostEqual(v[2], k)
         # >= 4 args is invalid
         with self.assertRaises(ValueError):
-            v1 = VectorIJK(0, i, j, k)
+            v = VectorIJK(0, i, j, k)
 
     def test___getattr__(self):
         """Test the __getattr__ method."""
@@ -195,6 +198,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v3.i, scale*i)
         self.assertAlmostEqual(v3.j, scale*j)
         self.assertAlmostEqual(v3.k, scale*k)
+        # Offset + iterable
         v3 = v2.setTo(1, (0, i, j, k))
         self.assertIs(v3, v2)
         self.assertAlmostEqual(v3.i, i)
@@ -208,7 +212,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v3.j, j)
         self.assertAlmostEqual(v3.k, k)
         # Invalid forms
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             v2.setTo()
         with self.assertRaises(ValueError):
             v2.setTo(None, None, None, None)

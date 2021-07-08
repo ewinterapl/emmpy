@@ -58,10 +58,10 @@ class Vector2D(Vector):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = (None,)*2
+            data = (None,)*N
         elif len(args) == 1:
             (data,) = args
-        elif len(args) == 2:
+        elif len(args) == N:
             data = args
         else:
             raise ValueError

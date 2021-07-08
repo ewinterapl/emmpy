@@ -56,10 +56,10 @@ class Vector3D(Vector):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = (None,)*3
+            data = (None,)*N
         elif len(args) == 1:
             (data,) = args
-        elif len(args) == 3:
+        elif len(args) == N:
             data = args
         else:
             raise ValueError

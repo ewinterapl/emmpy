@@ -18,24 +18,46 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        # 0-argument form.
+        # 0-arg form - 3 elements, all nan
+        v = Vector3D.__new__(Vector3D)
+        self.assertIsInstance(v, Vector3D)
+        self.assertEqual(len(v), 3)
+        for x in v:
+            self.assertTrue(np.isnan(x))
+
+    def test___init__(self):
+        """Test the __init__ method."""
+        # 0-argument form - vector of nan.
         v = Vector3D()
         self.assertIsInstance(v, Vector3D)
-        for i in range(3):
-            self.assertTrue(np.isnan(v[i]))
-        # 3-argument form.
+        for x in v:
+            self.assertTrue(np.isnan(x))
+        # 1-argument forms
+        # list
+        data = [1.1, 2.2, 3.3]
+        v = Vector3D(data)
+        for i in range(len(v)):
+            self.assertAlmostEqual(v[i], data[i])
+        # tuple
         data = (1.1, 2.2, 3.3)
+        v = Vector3D(data)
+        for i in range(len(v)):
+            self.assertAlmostEqual(v[i], data[i])
+        # np.ndarray
+        a = np.array(data)
+        v = Vector3D(a)
+        for i in range(len(v)):
+            self.assertAlmostEqual(v[i], a[i])
+        # 3-argument form: 3 values for elements
         v = Vector3D(*data)
         self.assertIsInstance(v, Vector3D)
-        for i in range(3):
+        for i in range(len(v)):
             self.assertAlmostEqual(v[i], data[i])
         # Invalid forms.
-        with self.assertRaises(ValueError):
-            v = Vector3D(None)
-        with self.assertRaises(ValueError):
-            v = Vector3D(None, None)
-        with self.assertRaises(ValueError):
-            v = Vector3D(None, None, None, None)
+        for n in (2, 4):
+            args = [None]*n
+            with self.assertRaises(ValueError):
+                v = Vector3D(*args)
 
 
 if __name__ == '__main__':

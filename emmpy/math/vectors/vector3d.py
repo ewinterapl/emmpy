@@ -1,12 +1,21 @@
 """Generic class for 3-dimensional vectors.
 
+Note that we use __new__ in addition to __init__ to enforce the 2-element
+size of the vector.
+
 Authors
 -------
 Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
 from emmpy.math.vectors.vector import Vector
+
+
+# Number of elements in a 3-D vector.
+N = 3
 
 
 class Vector3D(Vector):
@@ -14,25 +23,34 @@ class Vector3D(Vector):
 
     This class implements a generic 3-dimensional vector. No coordinate
     system information is assumed.
-
-    This object may be directly used as a Numpy array.
     """
 
-    def __new__(cls, *args):
-        """Create a new Vector3D object.
+    def __new__(cls, *args, **kargs):
+        """Allocate a new Vector3D object.
 
-        Allocate a new Vector3D object by allocating a new Vector object
-        on which the Vector3D will expand.
-
-        Parameters
-        ----------
-        args : tuple of 3 float (optional)
-            First, second, and third vector elements.
+        Allocate a new Vector3D object by allocating a new 3-element
+        Vector object on which the Vector3D will expand.
 
         Returns
         -------
         v : Vector3D
             The newly-created object.
+        """
+        v = super().__new__(cls, length=N)
+        return v
+
+    def __init__(self, *args, **kargs):
+        """Initialize a new Vector3D object.
+
+        Initialize a new Vector3D object.
+
+        Parameters
+        ----------
+        data : array-like, optional, default (np.nan, np.nan, np.nan).
+            Values for 1st, 2nd, and 3rd elements.
+        OR
+        data[0], data[1], data[2] : float, optional.
+            Values for 1st, 2nd, and 3rd elements.
 
         Raises
         ------
@@ -40,11 +58,11 @@ class Vector3D(Vector):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = (None, None, None)
+            data = (np.nan, np.nan, np.nan)
+        elif len(args) == 1:
+            (data,) = args
         elif len(args) == 3:
             data = args
         else:
-            raise ValueError('Exactly 0 or 3 numeric arguments are required!')
-        v = Vector.__new__(cls, shape=(3,))
-        v[:] = data[:]
-        return v
+            raise ValueError
+        self[:] = data

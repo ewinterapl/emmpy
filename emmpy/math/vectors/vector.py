@@ -1,5 +1,8 @@
 """Abstract base class for n-dimensional vectors.
 
+Note that we use __new__ in addition to __init__ to enforce the specified
+size of the vector.
+
 Authors
 -------
 Eric Winter (eric.winter@jhuapl.edu)
@@ -26,7 +29,7 @@ class Vector(np.ndarray):
     to subclasses of Vector.
     """
 
-    def __new__(cls, *args, **kargs):
+    def __new__(cls, length, *args, **kargs):
         """Create a new Vector object.
 
         Allocate a new Vector object by allocating a new ndarray on which
@@ -35,17 +38,18 @@ class Vector(np.ndarray):
         Note that this method should only be called from the __new__()
         method of subclasses.
 
+        The initial contents of the Vector are nan.
+
         Parameters
         ----------
-        args : tuple of object
-            Positional arguments for polymorphic method.
-        kargs : dict of str->object pairs
-            Keyword arguments for polymorphic method.
+        length : integer
+            Number of elements in vector.
 
         Returns
         -------
         v : Vector
             The newly-created object.
         """
-        v = np.ndarray.__new__(cls, *args, **kargs)
+        v = super().__new__(cls, shape=(length,), dtype=float)
+        v[:] = np.nan  # This works if dtype is float, but not if int.
         return v

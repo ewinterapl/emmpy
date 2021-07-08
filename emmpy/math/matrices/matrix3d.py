@@ -48,7 +48,7 @@ class Matrix3D(SquareMatrix):
         data : array-like, optional, default all None.
             Values for array elements in array order.
         OR
-        data[:10] : float, optional.
+        data[:9] : float, optional.
             Values for array elements, in row-major order.
 
         Raises

@@ -38,7 +38,7 @@ class Vector(np.ndarray):
         Note that this method should only be called from the __new__()
         method of subclasses.
 
-        The initial contents of the Vector are nan.
+        The initial contents of the Vector are undefined.
 
         Parameters
         ----------
@@ -51,5 +51,4 @@ class Vector(np.ndarray):
             The newly-created object.
         """
         v = super().__new__(cls, shape=(length,), dtype=float)
-        v[:] = np.nan  # This works if dtype is float, but not if int.
         return v

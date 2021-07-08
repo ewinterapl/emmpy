@@ -7,8 +7,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
-import numpy as np
-
 from emmpy.math.vectors.vector import Vector
 
 
@@ -22,15 +20,13 @@ class TestBuilder(unittest.TestCase):
         # Use different sizes.
         for n in range(1, 11):
             # Positional form
-            v = Vector(n)
+            v = Vector.__new__(Vector, n)
             self.assertIsInstance(v, Vector)
-            self.assertTrue(len(v), n)
+            self.assertEqual(len(v), n)
             # Keyword form
             v = Vector(length=n)
             self.assertIsInstance(v, Vector)
             self.assertTrue(len(v), n)
-            for i in range(n):
-                self.assertTrue(np.isnan(v[i]))
         # Invalid forms.
         for n in (0, 2):
             with self.assertRaises(TypeError):

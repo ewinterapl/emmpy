@@ -66,9 +66,9 @@ class VectorIJK(Vector3D):
                 (offset, iter) = args
                 self[:] = list(iter[offset:offset + 3])
             else:
-                # Scale factor and np.ndarray to scale.
-                (scale, a) = args
-                self[:] = scale*a
+                # Scale factor and iterable to scale.
+                (scale, iter) = args
+                self[:] = scale*np.array(iter)
         elif len(args) == 3:
             # Scalar values (3) for the components.
             self[:] = args

@@ -44,7 +44,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v[2], k)
         # vector
         v2 = VectorIJK(v)
-        self.assertIsInstance(v2, VectorIJK)
+        self.assertIsInstance(v, VectorIJK)
         self.assertAlmostEqual(v2[0], i)
         self.assertAlmostEqual(v2[1], j)
         self.assertAlmostEqual(v2[2], k)

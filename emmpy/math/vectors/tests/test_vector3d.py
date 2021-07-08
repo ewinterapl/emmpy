@@ -18,12 +18,10 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        # 0-arg form - 3 elements, all nan
+        # 0-arg form - 3 elements
         v = Vector3D.__new__(Vector3D)
         self.assertIsInstance(v, Vector3D)
         self.assertEqual(len(v), 3)
-        for x in v:
-            self.assertTrue(np.isnan(x))
 
     def test___init__(self):
         """Test the __init__ method."""
@@ -55,7 +53,7 @@ class TestBuilder(unittest.TestCase):
             self.assertAlmostEqual(v[i], data[i])
         # Invalid forms.
         for n in (2, 4):
-            args = [None]*n
+            args = (None,)*n
             with self.assertRaises(ValueError):
                 v = Vector3D(*args)
 

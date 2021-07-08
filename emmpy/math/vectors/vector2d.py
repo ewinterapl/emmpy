@@ -9,8 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import numpy as np
-
 from emmpy.math.vectors.vector import Vector
 
 
@@ -31,6 +29,8 @@ class Vector2D(Vector):
         Allocate a new Vector2D object by allocating a new 2-element
         Vector object on which the Vector2D will expand.
 
+        The initial contents of the Vector are undefined.
+
         Returns
         -------
         v : Vector2D
@@ -46,7 +46,7 @@ class Vector2D(Vector):
 
         Parameters
         ----------
-        data : array-like, optional, default (np.nan, np.nan).
+        data : array-like, optional, default (None)*2.
             Values for 1st and 2nd elements.
         OR
         data[0], data[1] : float, optional.
@@ -58,7 +58,7 @@ class Vector2D(Vector):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = (np.nan, np.nan)
+            data = (None,)*2
         elif len(args) == 1:
             (data,) = args
         elif len(args) == 2:

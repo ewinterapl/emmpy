@@ -30,7 +30,7 @@ class TestBuilder(unittest.TestCase):
         # Invalid forms.
         for n in (0, 2):
             with self.assertRaises(TypeError):
-                args = [None]*n
+                args = (None,)*n
                 v = Vector(*args)
 
 

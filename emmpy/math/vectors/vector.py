@@ -18,7 +18,7 @@ class Vector(np.ndarray):
     This class is the base class for all vector classes in all
     coordinate systems.
 
-    This abstract class must not be instantiated directly. Doing so will
+    This abstract class should not be instantiated directly. Doing so will
     usually raise an Exception of some type.
 
     This class is derived from the numpy.ndarray class, to allow a single
@@ -30,13 +30,10 @@ class Vector(np.ndarray):
     """
 
     def __new__(cls, length, *args, **kargs):
-        """Create a new Vector object.
+        """Allocate a new Vector object.
 
-        Allocate a new Vector object by allocating a new ndarray on which
-        the Vector will expand.
-
-        Note that this method should only be called from the __new__()
-        method of subclasses.
+        Allocate a new Vector object by allocating a new np.ndarray on
+        which the Vector will expand.
 
         The initial contents of the Vector are undefined.
 

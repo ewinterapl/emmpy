@@ -1,6 +1,6 @@
 """Generic class for 3-dimensional vectors.
 
-Note that we use __new__ in addition to __init__ to enforce the 2-element
+Note that we use __new__ in addition to __init__ to enforce the 3-element
 size of the vector.
 
 Authors
@@ -8,8 +8,6 @@ Authors
 Eric Winter (eric.winter@jhuapl.edu)
 """
 
-
-import numpy as np
 
 from emmpy.math.vectors.vector import Vector
 
@@ -46,7 +44,7 @@ class Vector3D(Vector):
 
         Parameters
         ----------
-        data : array-like, optional, default (np.nan, np.nan, np.nan).
+        data : array-like, optional, default (None)*3.
             Values for 1st, 2nd, and 3rd elements.
         OR
         data[0], data[1], data[2] : float, optional.
@@ -58,7 +56,7 @@ class Vector3D(Vector):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = (np.nan, np.nan, np.nan)
+            data = (None,)*3
         elif len(args) == 1:
             (data,) = args
         elif len(args) == 3:

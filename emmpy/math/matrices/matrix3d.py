@@ -65,4 +65,3 @@ class Matrix3D(SquareMatrix):
         else:
             raise ValueError
         self[:, :] = data
-

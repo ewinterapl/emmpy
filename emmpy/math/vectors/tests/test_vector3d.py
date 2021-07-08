@@ -34,23 +34,23 @@ class TestBuilder(unittest.TestCase):
         # list
         data = [1.1, 2.2, 3.3]
         v = Vector3D(data)
-        for i in range(len(v)):
-            self.assertAlmostEqual(v[i], data[i])
+        for (x1, x2) in zip(v, data):
+            self.assertAlmostEqual(x1, x2)
         # tuple
         data = (1.1, 2.2, 3.3)
         v = Vector3D(data)
-        for i in range(len(v)):
-            self.assertAlmostEqual(v[i], data[i])
+        for (x1, x2) in zip(v, data):
+            self.assertAlmostEqual(x1, x2)
         # np.ndarray
         a = np.array(data)
         v = Vector3D(a)
-        for i in range(len(v)):
-            self.assertAlmostEqual(v[i], a[i])
+        for (x1, x2) in zip(v, a):
+            self.assertAlmostEqual(x1, x2)
         # 3-argument form: 3 values for elements
         v = Vector3D(*data)
         self.assertIsInstance(v, Vector3D)
-        for i in range(len(v)):
-            self.assertAlmostEqual(v[i], data[i])
+        for (x1, x2) in zip(v, data):
+            self.assertAlmostEqual(x1, x2)
         # Invalid forms.
         for n in (2, 4):
             args = (None,)*n

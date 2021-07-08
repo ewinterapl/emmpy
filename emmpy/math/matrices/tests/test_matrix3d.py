@@ -18,7 +18,7 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        # 0-argument form
+        # 0-arg form
         m1 = Matrix3D()
         self.assertIsInstance(m1, Matrix3D)
         for i in range(3):
@@ -33,7 +33,7 @@ class TestBuilder(unittest.TestCase):
             for col in range(3):
                 self.assertAlmostEqual(m1[row, col], a1[row, col])
         # Invalid forms.
-        for n in (1, 2, 3, 4, 5, 6, 7, 8, 10):
+        for n in (2, 3, 4, 5, 6, 7, 8, 10):
             with self.assertRaises(ValueError):
                 data1 = [None]*n
                 m1 = Matrix3D(*data1)

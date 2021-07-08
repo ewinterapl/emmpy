@@ -8,33 +8,46 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.math.matrices.matrix import Matrix
+from emmpy.math.matrices.squarematrix import SquareMatrix
 
 
-class Matrix3D(Matrix):
+# Number of elements in each dimension of a 3-D matrix.
+N = 3
+
+
+class Matrix3D(SquareMatrix):
     """Generic class for 3-dimensional (3x3) square matrices.
 
-    This class implements a generic 3-dimensional square matrix. No coordinate
-    system information is assumed.
-
-    This object may be directly used as a Numpy array.
+    This class implements a generic 3-dimensional square matrix. No
+    coordinate system information is assumed.
     """
 
-    def __new__(cls, *args):
-        """Create a new Matrix3D object.
+    def __new__(cls, *args, **kargs):
+        """Allocate a new Matrix3D object.
 
-        Allocate a new Matrix3D object by allocating a new Matrix object
-        on which the Matrix3D will expand.
-
-        Parameters
-        ----------
-        args : tuple of 9 float (optional, defaults None)
-            Matrix elements in row-major order (ii, ij, ik, ji, ...).
+        Allocate a new Matrix3D object by allocating a new 3x3
+        SquareMatrix object on which the Matrix3D will expand.
 
         Returns
         -------
         m : Matrix3D
             The newly-created object.
+        """
+        m = SquareMatrix.__new__(cls, length=N)
+        return m
+
+    def __init__(self, *args, **kargs):
+        """Initialize a new Matrix3D object.
+
+        Initialize a new Matrix3D object.
+
+        Parameters
+        ----------
+        data : array-like, optional, default all None.
+            Values for array elements in array order.
+        OR
+        data[:10] : float, optional.
+            Values for array elements, in row-major order.
 
         Raises
         ------
@@ -42,11 +55,12 @@ class Matrix3D(Matrix):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            data = [None]*9
-        elif len(args) == 9:
-            data = args
+            data = np.array((None,)*N*N).reshape((N, N))
+        elif len(args) == 1:
+            (data,) = args
+        elif len(args) == N*N:
+            data = np.array(args).reshape((N, N))
         else:
             raise ValueError
-        m = Matrix.__new__(cls, shape=(3, 3))
-        m[:, :] = np.array(data).reshape((3, 3))
-        return m
+        self[:, :] = data
+

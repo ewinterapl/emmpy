@@ -2,8 +2,8 @@
 
 Modules
 -------
-matrix.py
 matrix3d.py
+squarematrix.py
 
 Packages
 --------

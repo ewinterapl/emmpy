@@ -3,6 +3,7 @@
 Modules
 -------
 test_matrix.py
+test_matrix2d.py
 test_matrix3d.py
 test_squarematrix.py
 

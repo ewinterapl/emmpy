@@ -9,25 +9,16 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import numpy as np
+from emmpy.math.matrices.matrix import Matrix
 
 
-class SquareMatrix(np.ndarray):
+class SquareMatrix(Matrix):
     """Abstract base class for square matrices (rank 2 square tensors).
-
-    This class is the base class for all matrix classes in all
-    coordinate systems.
-
-    This abstract class should not be instantiated directly. Doing so will
-    usually raise an Exception of some type.
 
     A square matrix is defined as a rank 2 square tensor with an equal
     number of rows and columns. Indexing follows the Numpy row-major
     convention of [row, col] index ordering, i.e. matrix[i, j] (also
     matrix[i][j]) is the element in row i, column j.
-
-    This class is derived from the numpy.ndarray class. This allows all of
-    the numpy.ndarray methods to be available to subclasses of this class.
     """
 
     def __new__(cls, length, *args, **kargs):
@@ -48,5 +39,5 @@ class SquareMatrix(np.ndarray):
         m : SquareMatrix
             The newly-created object.
         """
-        m = super().__new__(cls, shape=(length, length), dtype=float)
+        m = super().__new__(cls, nrows=length, ncols=length, dtype=float)
         return m

@@ -28,6 +28,8 @@ class Matrix3D(SquareMatrix):
         Allocate a new Matrix3D object by allocating a new 3x3
         SquareMatrix object on which the Matrix3D will expand.
 
+        Initial contents are undefined.
+
         Returns
         -------
         m : Matrix3D

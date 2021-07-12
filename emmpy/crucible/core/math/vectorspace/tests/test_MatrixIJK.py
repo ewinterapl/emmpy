@@ -18,111 +18,238 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
     """Tests for the mtrixijk module."""
 
-    def test___new__(self):
+    def test___init__(self):
         """Test the __new__ method."""
-        # 0 arguments - empty matrix.
-        m1 = MatrixIJK()
-        self.assertIsInstance(m1, MatrixIJK)
+
+        # 0 arguments - empty matrix
+        m = MatrixIJK()
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertTrue(np.isnan(m1[row, col]))
-        # 1 arg forms.
-        # list of lists, use upper-left 3x3 block.
-        data1 = [[0, 4, 8, 2],
-                 [1, 5, 9, 3],
-                 [2, 6, 0, 4],
-                 [3, 7, 1, 5]]
-        m1 = MatrixIJK(data1)
-        self.assertIsInstance(m1, MatrixIJK)
+                self.assertTrue(np.isnan(m[row, col]))
+
+        # 1 arg forms: 3x3 array-like of float
+        # list of lists
+        data = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+        m = MatrixIJK(data)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[row][col])
-        # tuple of tuples, use upper-left 3x3 block.
-        data1 = ((0, 4, 8, 2),
-                 (1, 5, 9, 3),
-                 (2, 6, 0, 4),
-                 (3, 7, 1, 5))
-        m1 = MatrixIJK(data1)
-        self.assertIsInstance(m1, MatrixIJK)
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuple of tuples
+        data = ((0, 3, 6), (1, 4, 7), (2, 5, 8))
+        m = MatrixIJK(data)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[row][col])
-        # list of tuples, use upper-left 3x3 block.
-        data1 = [(0, 4, 8, 2),
-                 (1, 5, 9, 3),
-                 (2, 6, 0, 4),
-                 (3, 7, 1, 5)]
-        m1 = MatrixIJK(data1)
-        self.assertIsInstance(m1, MatrixIJK)
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # list of tuples
+        data = [(0, 3, 6), (1, 4, 7), (2, 5, 8)]
+        m = MatrixIJK(data)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[row][col])
-        # tuple of lists, use upper-left 3x3 block.
-        data1 = ([0, 4, 8, 2],
-                 [1, 5, 9, 3],
-                 [2, 6, 0, 4],
-                 [3, 7, 1, 5])
-        m1 = MatrixIJK(data1)
-        self.assertIsInstance(m1, MatrixIJK)
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuple of lists
+        data = ([0, 3, 6], [1, 4, 7], [2, 5, 8])
+        m = MatrixIJK(data)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[row][col])
-        # Numpy array, use upper-left 3x3 block.
-        a1 = np.array(data1)
-        m2 = MatrixIJK(a1)
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # np.array
+        a = np.array(data)
+        m = MatrixIJK(a)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # MatrixIJK
+        m2 = MatrixIJK(m)
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], a1[row, col])
-        # copy existing matrix
-        m2 = MatrixIJK(m1)
-        self.assertIsInstance(m2, MatrixIJK)
-        for row in range(3):
-            for col in range(3):
-                self.assertAlmostEqual(m2[row, col], m1[row, col])
-        # 2 args - scale factor and matrix
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+
+        # 2 arg forms - scale factor and 3x3 array-like
         scale = -2.2
-        m2 = MatrixIJK(scale, m1)
+        # Scale and list of lists
+        m = MatrixIJK(scale, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 3, 7), (1, 4, 7), (2, 5, 8))
+        m = MatrixIJK(scale, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 3, 7), (1, 4, 7), (2, 5, 8)]
+        m = MatrixIJK(scale, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 3, 6], [1, 4, 7], [2, 5, 8])
+        m = MatrixIJK(scale, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m = MatrixIJK(scale, a)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and MatrixIJK
+        m = MatrixIJK(data)
+        m2 = MatrixIJK(scale, m)
         self.assertIsInstance(m2, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], scale*m1[row, col])
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+
         # 3 args - column vectors
-        v = []
-        for col in range(3):
-            data = [row[col] for row in data1[:3]]
-            v.append(VectorIJK(*data))
-        m1 = MatrixIJK(*v)
-        self.assertIsInstance(m1, MatrixIJK)
+        # lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data],
+             [row[2] for row in data]]
+        m = MatrixIJK(*v)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m1[row, col], data1[row][col])
-        # 4 args - 3 column scale factors and matrix
-        scales = (-1.1, 2.2, 3.3)
-        m2 = MatrixIJK(*scales, m1)
-        self.assertIsInstance(m2, MatrixIJK)
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data]),
+             tuple([row[2] for row in data])]
+        m = MatrixIJK(*v)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], scales[col]*m1[row, col])
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # np.ndarrays
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data]),
+             np.array([row[2] for row in data])]
+        m = MatrixIJK(*v)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # VectorIJKs
+        v = [VectorIJK([row[0] for row in data]),
+             VectorIJK([row[1] for row in data]),
+             VectorIJK([row[2] for row in data])]
+        m = MatrixIJK(*v)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+
+        # 4 args - 3 column scale factors and array-like
+        scales = (-1.1, -2.2, -3.3)
+        # Scales and list of lists
+        data = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+        m = MatrixIJK(*scales, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # Scales and tuple of tuples
+        data = ((0, 3, 7), (1, 4, 7), (2, 5, 8))
+        m = MatrixIJK(scales, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # Scales and list of tuples
+        data = [(0, 3, 7), (1, 4, 7), (2, 5, 8)]
+        m = MatrixIJK(scales, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # Scales and tuple of lists
+        data = ([0, 3, 6], [1, 4, 7], [2, 5, 8])
+        m = MatrixIJK(scales, data)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m = MatrixIJK(scales, a)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # # Scale and MatrixIJK
+        m2 = MatrixIJK(data)
+        m = MatrixIJK(scales, m2)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+
         # 6 args - scale factors and columns
-        m2 = MatrixIJK(scales[0], v[0], scales[1], v[1], scales[2], v[2])
-        self.assertIsInstance(m2, MatrixIJK)
+        # lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data],
+             [row[2] for row in data]]
+        m = MatrixIJK(scales[0], v[0], scales[1], v[1], scales[2], v[2])
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], scales[col]*v[col][row])
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data]),
+             tuple([row[2] for row in data])]
+        m = MatrixIJK(scales[0], v[0], scales[1], v[1], scales[2], v[2])
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # np.ndarrays
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data]),
+             np.array([row[2] for row in data])]
+        m = MatrixIJK(scales[0], v[0], scales[1], v[1], scales[2], v[2])
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+        # VectorIJKs
+        v = [VectorIJK([row[0] for row in data]),
+             VectorIJK([row[1] for row in data]),
+             VectorIJK([row[2] for row in data])]
+        m = MatrixIJK(scales[0], v[0], scales[1], v[1], scales[2], v[2])
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m[row, col], scales[col]*data[row][col])
+
         # 9 args - element values in row-major order
         data = list(range(9))
-        m2 = MatrixIJK(*data)
-        self.assertIsInstance(m2, MatrixIJK)
+        m = MatrixIJK(*data)
+        self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
             for col in range(3):
                 k = row*3 + col
-                self.assertAlmostEqual(m2[row, col], k)
+                self.assertAlmostEqual(m[row, col], k)
+
         # Invalid forms
-        for n in (1, 5, 7, 8, 10):
-            data = [None]*n
+        for n in (5, 7, 8, 10):
+            args = (None,)*n
             with self.assertRaises(ValueError):
-                m1 = MatrixIJK(*data)
+                m1 = MatrixIJK(*args)
 
     def test___getattr__(self):
         """Test the __getattr__ method."""
@@ -230,28 +357,82 @@ class TestBuilder(unittest.TestCase):
 
     def test_setIthColumn(self):
         """Test the setIthColumn method."""
+        # list
         m = MatrixIJK()
         data = list(range(3))
-        v = VectorIJK(*data)
-        m.setIthColumn(v)
+        m.setIthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 0], data[row])
+        # tuple
+        m = MatrixIJK()
+        data = tuple(range(3))
+        m.setIthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 0], data[row])
+        # np.ndarray
+        m = MatrixIJK()
+        data = np.array(range(3))
+        m.setIthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 0], data[row])
+        # VectorIJK
+        m = MatrixIJK()
+        data = VectorIJK(list(range(3)))
+        m.setIthColumn(data)
         for row in range(3):
             self.assertAlmostEqual(m[row, 0], data[row])
 
     def test_setJthColumn(self):
         """Test the setJthColumn method."""
+        # list
         m = MatrixIJK()
         data = list(range(3))
-        v = VectorIJK(*data)
-        m.setJthColumn(v)
+        m.setJthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 1], data[row])
+        # tuple
+        m = MatrixIJK()
+        data = tuple(range(3))
+        m.setJthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 1], data[row])
+        # np.ndarray
+        m = MatrixIJK()
+        data = np.array(range(3))
+        m.setJthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 1], data[row])
+        # VectorIJK
+        m = MatrixIJK()
+        data = VectorIJK(list(range(3)))
+        m.setJthColumn(data)
         for row in range(3):
             self.assertAlmostEqual(m[row, 1], data[row])
 
     def test_setKthColumn(self):
         """Test the setKthColumn method."""
+        # list
         m = MatrixIJK()
         data = list(range(3))
-        v = VectorIJK(*data)
-        m.setKthColumn(v)
+        m.setKthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 2], data[row])
+        # tuple
+        m = MatrixIJK()
+        data = tuple(range(3))
+        m.setKthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 2], data[row])
+        # np.ndarray
+        m = MatrixIJK()
+        data = np.array(range(3))
+        m.setKthColumn(data)
+        for row in range(3):
+            self.assertAlmostEqual(m[row, 2], data[row])
+        # VectorIJK
+        m = MatrixIJK()
+        data = VectorIJK(list(range(3)))
+        m.setKthColumn(data)
         for row in range(3):
             self.assertAlmostEqual(m[row, 2], data[row])
 
@@ -297,63 +478,200 @@ class TestBuilder(unittest.TestCase):
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m2[row, col], data[row][col])
-        # matrix copy
+        # np.ndarray
+        data = ([0, 1, 2], [3, 4, 5], [6, 7, 8])
+        a = np.array(data)
+        m2 = m1.setTo(a)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # matrix
         m3 = MatrixIJK(data)
         m2 = m1.setTo(m3)
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], m3[row, col])
-        # 2-arg forms
-        # Scale a matrix
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # 2-arg forms: scale factor and array-like
         scale = -2.2
+        # Scale and list of lists.
+        data = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 1, 2), (3, 4, 5), (6, 7, 8))
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 1, 2), (3, 4, 5), (6, 7, 8)]
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 1, 2], [3, 4, 5], [6, 7, 8])
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m2 = m1.setTo(scale, a)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and matrix
+        m3 = MatrixIJK(data)
         m2 = m1.setTo(scale, m3)
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], scale*m3[row, col])
-        # 3-arg forms
-        # Column vectors
-        data = list(range(9))
-        v1 = VectorIJK(data[:3])
-        v2 = VectorIJK(data[3:6])
-        v3 = VectorIJK(data[6:9])
-        m1 = MatrixIJK()
-        m2 = m1.setTo(v1, v2, v3)
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+
+        # 3-arg forms: Column vectors
+        data = ([0, 3, 6], [1, 4, 7], [2, 5, 8])
+        # list of lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data],
+             [row[2] for row in data]]
+        m2 = m1.setTo(*v)
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
-                k = col*3 + row
-                self.assertAlmostEqual(m2[row, col], k)
-        # 4 arg forms
-        # scale a matrix by columns
-        m1 = MatrixIJK(*data)
-        scales = (1.1, 2.2, 3.3)
-        m2 = MatrixIJK()
-        m3 = m2.setTo(*scales, m1)
-        self.assertIs(m3, m2)
-        for row in range(3):
-            for col in range(3):
-                k = row*3 + col
-                self.assertAlmostEqual(m3[row, col], scales[col]*k)
-        # 6 arg forms
-        # scaled column vectors
-        m1 = MatrixIJK()
-        v = (v1, v2, v3)
-        m2 = m1.setTo(scales[0], v[0], scales[1], v[1], scales[2], v[2])
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # list of tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data]),
+             tuple([row[2] for row in data])]
+        m2 = m1.setTo(*v)
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
-                self.assertAlmostEqual(m2[row, col], scales[col]*v[col][row])
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # list of np.ndarray
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data]),
+             np.array([row[2] for row in data])]
+        m2 = m1.setTo(*v)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+
+        # 4 arg forms: scale an array-like by columns
+        scales = (-1.1, -2.2, -3.3)
+        # Scales and list of lists
+        data = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 1, 2), (3, 4, 5), (6, 7, 8))
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 1, 2), (3, 4, 5), (6, 7, 8)]
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 1, 2], [3, 4, 5], [6, 7, 8])
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m2 = m1.setTo(*scales, a)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and MatrixIJK
+        m3 = MatrixIJK(data)
+        m2 = m1.setTo(*scales, m3)
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # 6 arg forms: individually-scaled columns
+        s = (-1.1, -2.2, -3.3)
+        data = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+        # lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data],
+             [row[2] for row in data]]
+        m1 = MatrixIJK()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1], s[2], v[2])
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data]),
+             tuple([row[2] for row in data])]
+        m1 = MatrixIJK()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1], s[2], v[2])
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # np.ndarray
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data]),
+             np.array([row[2] for row in data])]
+        m1 = MatrixIJK()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1], s[2], v[2])
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # VectorIJK
+        v = [VectorIJK([row[0] for row in data]),
+             VectorIJK([row[1] for row in data]),
+             VectorIJK([row[2] for row in data])]
+        m1 = MatrixIJK()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1], s[2], v[2])
+        self.assertIs(m2, m1)
+        for row in range(3):
+            for col in range(3):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+
         # 9 arg forms
         # individual values
         m1 = MatrixIJK()
-        m2 = m1.setTo(*data)
+        m2 = m1.setTo(*(data[0] + data[1] + data[2]))
         self.assertIs(m2, m1)
         for row in range(3):
             for col in range(3):
                 k = col*3 + row
                 self.assertAlmostEqual(m2[row, col], k)
+
         # Invalid forms
         for n in (0, 5, 7, 8, 10):
             data = [None]*n
@@ -695,9 +1013,6 @@ class TestBuilder(unittest.TestCase):
         m2 = MatrixIJK(*data2)
         m3 = MatrixIJK(*data3)
         m4 = MatrixIJK(*data4)
-        #   |1 4 7| |2 5 8|   |4 7 1| |7 1 4|
-        #   |2 5 8|*|3 6 9| + |5 8 2|*|8 2 5|
-        #   |3 6 9| |4 7 1|   |6 9 3| |9 3 6|
         m5a = MatrixIJK.mxm(m1, m2)
         m5b = MatrixIJK.mxm(m3, m4)
         m5 = m5a + m5b
@@ -727,13 +1042,6 @@ class TestBuilder(unittest.TestCase):
         m2 = MatrixIJK(*data2)
         m3 = MatrixIJK(*data3)
         m4 = MatrixIJK(*data4)
-        #   |1 4 7| |2 5 8|T  |4 7 1| |7 1 4|T
-        #   |2 5 8|*|3 6 9| + |5 8 2|*|8 2 5|
-        #   |3 6 9| |4 7 1|   |6 9 3| |9 3 6|
-        #
-        #   |1 4 7| |2 3 4|   |4 7 1| |7 8 9|
-        #   |2 5 8|*|5 6 7| + |5 8 2|*|1 2 3|
-        #   |3 6 9| |8 9 1|   |6 9 3| |4 5 6|
         m5a = MatrixIJK.mxmt(m1, m2)
         m5b = MatrixIJK.mxmt(m3, m4)
         m5 = m5a + m5b
@@ -763,13 +1071,6 @@ class TestBuilder(unittest.TestCase):
         m2 = MatrixIJK(*data2)
         m3 = MatrixIJK(*data3)
         m4 = MatrixIJK(*data4)
-        #   |1 4 7|T|2 5 8|   |4 7 1|T|7 1 4|
-        #   |2 5 8|*|3 6 9| + |5 8 2|*|8 2 5|
-        #   |3 6 9| |4 7 1|   |6 9 3| |9 3 6|
-        #
-        #   |1 2 3| |2 5 8|   |4 5 6| |7 1 4|
-        #   |4 5 6|*|3 6 9| + |7 8 9|*|8 2 5|
-        #   |7 8 9| |4 7 1|   |1 2 3| |9 3 6|
         m5a = MatrixIJK.mtxm(m1, m2)
         m5b = MatrixIJK.mtxm(m3, m4)
         m5 = m5a + m5b

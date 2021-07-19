@@ -32,14 +32,13 @@ class MatrixIJK(Matrix3D):
     """
 
     def __init__(self, *args):
-        """Create a new MatrixIJK object.
+        """Initialize a new MatrixIJK object.
 
-        Allocate a new MatrixIJK object by allocating a new Matrix3D
-        object on which the MatrixIJK will expand.
+        Initialize a new MatrixIJK object.
 
         Parameters
         ----------
-        a : 3x3 array-like of float
+        a : 3x3 array-like of float, optional, default 3x3 None
             Values for matrix elements in row-major order.
         OR
         scale : float

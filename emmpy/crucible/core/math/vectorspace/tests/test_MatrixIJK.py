@@ -16,11 +16,10 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
-    """Tests for the mtrixijk module."""
+    """Tests for the matrixijk module."""
 
     def test___init__(self):
-        """Test the __new__ method."""
-
+        """Test the __init__ method."""
         # 0 arguments - empty matrix
         m = MatrixIJK()
         self.assertIsInstance(m, MatrixIJK)
@@ -74,6 +73,7 @@ class TestBuilder(unittest.TestCase):
         # 2 arg forms - scale factor and 3x3 array-like
         scale = -2.2
         # Scale and list of lists
+        data = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
         m = MatrixIJK(scale, data)
         self.assertIsInstance(m, MatrixIJK)
         for row in range(3):
@@ -249,7 +249,7 @@ class TestBuilder(unittest.TestCase):
         for n in (5, 7, 8, 10):
             args = (None,)*n
             with self.assertRaises(ValueError):
-                m1 = MatrixIJK(*args)
+                m = MatrixIJK(*args)
 
     def test___getattr__(self):
         """Test the __getattr__ method."""
@@ -679,7 +679,7 @@ class TestBuilder(unittest.TestCase):
                 m1.setTo(*data)
 
     def test_transposeInPlace(self):
-        """Test the tranpose method."""
+        """Test the tranposeInPlace method."""
         data = list(range(9))
         m1 = MatrixIJK(*data)
         m1_orig = MatrixIJK(m1)
@@ -851,7 +851,7 @@ class TestBuilder(unittest.TestCase):
         m1_inv = MatrixIJK(*data_inv)
         m2 = MatrixIJK()
         m3 = m2.setToInvorted(m1)
-        self.assertIsInstance(m2, MatrixIJK)
+        self.assertIsInstance(m3, MatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m3[row, col], m1_inv[row, col])

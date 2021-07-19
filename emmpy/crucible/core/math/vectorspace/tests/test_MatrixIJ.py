@@ -1,566 +1,1001 @@
+"""Tests for the matrixij module.
+
+Authors
+-------
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
+
 from math import cos, pi, sin, sqrt
 import unittest
 
+import numpy as np
+
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the matrixij module."""
 
     def test___init__(self):
-        # 0-argument form
+        """Test the __init__ method."""
+        # 0 arguments - empty matrix
         m = MatrixIJ()
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        # 1-argument forms
-        m = MatrixIJ([[1, 2, 3],
-                      [4, 5, 6],
-                      [7, 8, 9]])
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 4)
-        self.assertAlmostEqual(m.ij, 2)
-        self.assertAlmostEqual(m.jj, 5)
-        m2 = MatrixIJ(m)
-        self.assertAlmostEqual(m2.ii, 1)
-        self.assertAlmostEqual(m2.ji, 4)
-        self.assertAlmostEqual(m2.ij, 2)
-        self.assertAlmostEqual(m2.jj, 5)
-        # 2-argument forms
-        m2 = MatrixIJ(-2, m)
-        self.assertAlmostEqual(m2.ii, -2)
-        self.assertAlmostEqual(m2.ji, -8)
-        self.assertAlmostEqual(m2.ij, -4)
-        self.assertAlmostEqual(m2.jj, -10)
-        v1 = UnwritableVectorIJ(1, 2)
-        v2 = UnwritableVectorIJ(3, 4)
-        m = MatrixIJ(v1, v2)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        self.assertAlmostEqual(m.ij, 3)
-        self.assertAlmostEqual(m.jj, 4)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertTrue(np.isnan(m[row, col]))
+
+        # 1-argument forms: 2x2 array-like of float
+        # list of lists
+        data = [[0, 2], [1, 3]]
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuple of tuples
+        data = ((0, 2), (1, 3))
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # list of tuples
+        data = [(0, 2), (1, 3)]
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuple of lists
+        data = ([0, 2], [1, 3])
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # np.ndarray
+        a = np.array(data)
+        m = MatrixIJ(a)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # MatrixIJ
+        m2 = MatrixIJ(data)
+        m = MatrixIJ(m2)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+
+        # 2 arg forms - scale factor and 2x2 array-like
+        scale = -2.2
+        # Scale and list of lists
+        data = [[0, 2], [1, 3]]
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 2), (1, 3))
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 2), (1, 3)]
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 2], [1, 3])
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and MatrixIJ
+        m2 = MatrixIJ(data)
+        m = MatrixIJ(scale, m2)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+
+        # 2 args - column vectors
+        # lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data]]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data])]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # np.ndarrays
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data])]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # VectorIJs
+        v = [VectorIJ([row[0] for row in data]),
+             VectorIJ([row[1] for row in data])]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+
         # 3-argument forms
-        m2 = MatrixIJ(-1, -2, m)
-        self.assertAlmostEqual(m2.ii, -1)
-        self.assertAlmostEqual(m2.ji, -2)
-        self.assertAlmostEqual(m2.ij, -6)
-        self.assertAlmostEqual(m2.jj, -8)
+        # Column scale factors and matrix
+        scales = (-1.1, -2.2)
+        m2 = MatrixIJ(*scales, m)
+        self.assertIsInstance(m2, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scales[col]*data[row][col])
+
         # 4-argument forms
-        m = MatrixIJ(1, 2, 3, 4)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        self.assertAlmostEqual(m.ij, 3)
-        self.assertAlmostEqual(m.jj, 4)
-        m = MatrixIJ(-1, v1, -2, v2)
-        self.assertAlmostEqual(m.ii, -1)
-        self.assertAlmostEqual(m.ji, -2)
-        self.assertAlmostEqual(m.ij, -6)
-        self.assertAlmostEqual(m.jj, -8)
+        # 4 individual elements
+        data = list(range(4))
+        m = MatrixIJ(*data)
+        for row in range(2):
+            for col in range(2):
+                k = row*2 + col
+                self.assertAlmostEqual(m[row, col], data[k])
+        # Scale factors and columns
+        m = MatrixIJ(scales[0], v[0], scales[1], v[1])
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scales[col]*v[col][row])
+
         # Invalid forms
-        with self.assertRaises(Exception):
-            MatrixIJ(0, 0, 0, 0, 0)
+        data = [None]*5
+        with self.assertRaises(TypeError):
+            m = MatrixIJ(*data)
 
-    def test_createTranspose(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = m1.createTranspose()
-        self.assertAlmostEqual(m2.ii, 1)
-        self.assertAlmostEqual(m2.ji, 3)
-        self.assertAlmostEqual(m2.ij, 2)
-        self.assertAlmostEqual(m2.jj, 4)
+    def test___getattr__(self):
+        """Test the __getattr__ method."""
+        data = [[1.1, 2.2], [3.3, 4.4]]
+        m = MatrixIJ(data)
+        self.assertAlmostEqual(m.ii, data[0][0])
+        self.assertAlmostEqual(m.ij, data[0][1])
+        self.assertAlmostEqual(m.ji, data[1][0])
+        self.assertAlmostEqual(m.jj, data[1][1])
+        with self.assertRaises(KeyError):
+            data = m.bad
 
-    def test_createUnitizedColumns(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = m1.createUnitizedColumns()
-        self.assertAlmostEqual(m2.ii, 1/sqrt(5))
-        self.assertAlmostEqual(m2.ji, 2/sqrt(5))
-        self.assertAlmostEqual(m2.ij, 3/5)
-        self.assertAlmostEqual(m2.jj, 4/5)
-
-    def test_createInverse(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = m1.createInverse()
-        self.assertAlmostEqual(m2.ii, -2)
-        self.assertAlmostEqual(m2.ji, 1)
-        self.assertAlmostEqual(m2.ij, 3/2)
-        self.assertAlmostEqual(m2.jj, -1/2)
-        m3 = m2.createInverse(1e-4)
-        self.assertAlmostEqual(m3.ii, 1)
-        self.assertAlmostEqual(m3.ji, 2)
-        self.assertAlmostEqual(m3.ij, 3)
-        self.assertAlmostEqual(m3.jj, 4)
-
-    def test_createInvorted(self):
-        a = pi/3
-        m1 = MatrixIJ(cos(a), sin(a), -sin(a), cos(a))
-        m2 = m1.createInvorted()
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, -sin(a))
-        self.assertAlmostEqual(m2.ij, sin(a))
-        self.assertAlmostEqual(m2.jj, cos(a))
-
-    def test_transpose(self):
-        m = MatrixIJ(1, 2, 3, 4)
-        m.transpose()
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 3)
-        self.assertAlmostEqual(m.ij, 2)
-        self.assertAlmostEqual(m.jj, 4)
-
-    def test_unitizeColumns(self):
-        m = MatrixIJ(1, 2, 3, 4)
-        m.unitizeColumns()
-        self.assertAlmostEqual(m.ii, 1/sqrt(5))
-        self.assertAlmostEqual(m.ji, 2/sqrt(5))
-        self.assertAlmostEqual(m.ij, 3/5)
-        self.assertAlmostEqual(m.jj, 4/5)
-
-    def test_invert(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = m1.invert()
-        self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, -2)
-        self.assertAlmostEqual(m1.ji, 1)
-        self.assertAlmostEqual(m1.ij, 3/2)
-        self.assertAlmostEqual(m1.jj, -1/2)
-        m2 = m1.invert(1e-4)
-        self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, 1)
-        self.assertAlmostEqual(m1.ji, 2)
-        self.assertAlmostEqual(m1.ij, 3)
-        self.assertAlmostEqual(m1.jj, 4)
-        m1 = MatrixIJ(0, 0, 0, 0)
-        with self.assertRaises(Exception):
-            m1.invert()
-        with self.assertRaises(Exception):
-            m1.invert(1e-4)
-
-    def test_invort(self):
-        a = pi/3
-        m1 = MatrixIJ(cos(a), sin(a), -sin(a), cos(a))
-        m2 = m1.invort()
-        self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, cos(a))
-        self.assertAlmostEqual(m1.ji, -sin(a))
-        self.assertAlmostEqual(m1.ij, sin(a))
-        self.assertAlmostEqual(m1.jj, cos(a))
-        with self.assertRaises(Exception):
-            m1 = MatrixIJ(0, 0, 0, 0)
-            m1.invort()
-
-    def test_scale(self):
-        m = MatrixIJ(1, 2, 3, 4)
-        m.scale(-2)
-        self.assertAlmostEqual(m.ii, -2)
-        self.assertAlmostEqual(m.ji, -4)
-        self.assertAlmostEqual(m.ij, -6)
-        self.assertAlmostEqual(m.jj, -8)
-        m.scale(-1, -2)
-        self.assertAlmostEqual(m.ii, 2)
-        self.assertAlmostEqual(m.ji, 4)
-        self.assertAlmostEqual(m.ij, 12)
-        self.assertAlmostEqual(m.jj, 16)
+    def test___setattr__(self):
+        """Test the __getattr__ method."""
+        data = [[1.1, 2.2], [3.3, 4.4]]
+        m = MatrixIJ()
+        m.ii = data[0][0]
+        self.assertAlmostEqual(m.ii, data[0][0])
+        m.ij = data[0][1]
+        self.assertAlmostEqual(m.ij, data[0][1])
+        m.ji = data[1][0]
+        self.assertAlmostEqual(m.ji, data[1][0])
+        m.jj = data[1][1]
+        self.assertAlmostEqual(m.jj, data[1][1])
+        with self.assertRaises(KeyError):
+            data = m.bad
 
     def test_setII(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        """Test the setII method."""
+        m = MatrixIJ()
         m.setII(-1)
         self.assertAlmostEqual(m.ii, -1)
 
     def test_setJI(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        """Test the setJI method."""
+        m = MatrixIJ()
         m.setJI(-1)
         self.assertAlmostEqual(m.ji, -1)
 
     def test_setIJ(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        """Test the setIJ method."""
+        m = MatrixIJ()
         m.setIJ(-1)
         self.assertAlmostEqual(m.ij, -1)
 
     def test_setJJ(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        """Test the setJJ method."""
+        m = MatrixIJ()
         m.setJJ(-1)
         self.assertAlmostEqual(m.jj, -1)
 
     def test_set(self):
-        m = MatrixIJ(0, 0, 0, 0)
-        m.set(0, 0, 1)
-        m.set(1, 0, 2)
-        m.set(0, 1, 3)
-        m.set(1, 1, 4)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        self.assertAlmostEqual(m.ij, 3)
-        self.assertAlmostEqual(m.jj, 4)
-        with self.assertRaises(Exception):
-            m.set(0, 2, -1)
-        with self.assertRaises(Exception):
-            m.set(1, 2, -1)
-        with self.assertRaises(Exception):
-            m.set(2, 0, -1)
+        """Test the set method."""
+        m = MatrixIJ()
+        for row in range(2):
+            for col in range(2):
+                val = row*10 + col
+                m.set(row, col, val)
+                self.assertAlmostEqual(m[row, col], val)
 
     def test_setIthColumn(self):
-        m = MatrixIJ(0, 0, 0, 0)
-        v = VectorIJ(1, 2)
-        m.setIthColumn(v)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
+        """Test the setIthColumn method."""
+        # list
+        m = MatrixIJ()
+        data = list(range(2))
+        m.setIthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 0], data[row])
+        # tuple
+        m = MatrixIJ()
+        data = tuple(range(2))
+        m.setIthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 0], data[row])
+        # np.ndarray
+        m = MatrixIJ()
+        data = np.array(range(2))
+        m.setIthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 0], data[row])
+        # VectorIJ
+        m = MatrixIJ()
+        data = VectorIJ(list(range(2)))
+        m.setIthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 0], data[row])
 
     def test_setJthColumn(self):
-        m = MatrixIJ(0, 0, 0, 0)
-        v = VectorIJ(1, 2)
-        m.setJthColumn(v)
-        self.assertAlmostEqual(m.ij, 1)
-        self.assertAlmostEqual(m.jj, 2)
+        """Test the setJthColumn method."""
+        # list
+        m = MatrixIJ()
+        data = list(range(2))
+        m.setJthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 1], data[row])
+        # tuple
+        m = MatrixIJ()
+        data = tuple(range(2))
+        m.setJthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 1], data[row])
+        # np.ndarray
+        m = MatrixIJ()
+        data = np.array(range(2))
+        m.setJthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 1], data[row])
+        # VectorIJK
+        m = MatrixIJ()
+        data = VectorIJ(list(range(2)))
+        m.setJthColumn(data)
+        for row in range(2):
+            self.assertAlmostEqual(m[row, 1], data[row])
 
     def test_setColumn(self):
-        m = MatrixIJ(0, 0, 0, 0)
-        v = VectorIJ(1, 2)
-        m.setColumn(0, v)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        v = VectorIJ(3, 4)
-        m.setColumn(1, v)
-        self.assertAlmostEqual(m.ij, 3)
-        self.assertAlmostEqual(m.jj, 4)
-        with self.assertRaises(Exception):
-            m.setColumn(2, v)
+        """Test the setColumn method."""
+        m = MatrixIJ()
+        data = list(range(2))
+        v = VectorIJ(*data)
+        for col in range(2):
+            m.setColumn(col, v)
+            for row in range(2):
+                self.assertAlmostEqual(m[row, col], data[row])
 
     def test_setTo(self):
-        m0 = MatrixIJ(0, 0, 0, 0)
+        """Test the setTo method."""
         m1 = MatrixIJ()
-        # 1-argument forms
-        m2 = m1.setTo([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        # 1 arg forms
+        # list of lists
+        data = [[0, 1], [2, 3]]
+        m2 = m1.setTo(data)
         self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, 1)
-        self.assertAlmostEqual(m1.ji, 4)
-        self.assertAlmostEqual(m1.ij, 2)
-        self.assertAlmostEqual(m1.jj, 5)
-        m2 = MatrixIJ()
-        m3 = m2.setTo(m0)
-        self.assertIs(m3, m2)
-        self.assertAlmostEqual(m2.ii, 0)
-        self.assertAlmostEqual(m2.ji, 0)
-        self.assertAlmostEqual(m2.ij, 0)
-        self.assertAlmostEqual(m2.jj, 0)
-        # 2-argument forms
-        m2 = MatrixIJ(1, 2, 3, 4)
-        m3 = m1.setTo(-2, m2)
-        self.assertIs(m3, m1)
-        self.assertAlmostEqual(m1.ii, -2)
-        self.assertAlmostEqual(m1.ji, -4)
-        self.assertAlmostEqual(m1.ij, -6)
-        self.assertAlmostEqual(m1.jj, -8)
-        v1 = UnwritableVectorIJ(1, 2)
-        v2 = UnwritableVectorIJ(3, 4)
-        m2 = m1.setTo(v1, v2)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # tuple of tuples
+        data = ((0, 1), (2, 3))
+        m2 = m1.setTo(data)
         self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, 1)
-        self.assertAlmostEqual(m1.ji, 2)
-        self.assertAlmostEqual(m1.ij, 3)
-        self.assertAlmostEqual(m1.jj, 4)
-        # 3-argument form
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m3 = m2.setTo(-1, -2, m1)
-        self.assertIs(m3, m2)
-        self.assertAlmostEqual(m2.ii, -1)
-        self.assertAlmostEqual(m2.ji, -2)
-        self.assertAlmostEqual(m2.ij, -6)
-        self.assertAlmostEqual(m2.jj, -8)
-        # 4-argument forms
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # list of tuples
+        data = [(0, 1), (2, 3)]
+        m2 = m1.setTo(data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # tuple of lists
+        data = ([0, 1], [2, 3])
+        m2 = m1.setTo(data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # np.ndarray
+        a = np.array(data)
+        m2 = m1.setTo(a)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # matrix
+        m3 = MatrixIJ(data)
+        m2 = m1.setTo(m3)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # 2-arg forms: scale factor and array-like
+        scale = -2.2
+        # Scale and list of lists.
+        data = [[0, 1], [3, 4]]
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 1), (3, 4))
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 1), (3, 4)]
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 1], [3, 4])
+        m2 = m1.setTo(scale, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m2 = m1.setTo(scale, a)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Scale and matrix
+        m3 = MatrixIJ(data)
+        m2 = m1.setTo(scale, m3)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
+        # Column vectors
+        data = [[0, 1], [2, 3]]
+        # list of lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data]]
+        m2 = m1.setTo(*v)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # list of tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data])]
+        m2 = m1.setTo(*v)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # list of np.ndarray
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data])]
+        m2 = m1.setTo(*v)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data[row][col])
+        # 3 arg forms: scale an array-like by columns
+        scales = (-1.1, -2.2)
+        # Scales and list of lists
+        data = [[0, 1], [2, 3]]
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 1), (2, 3))
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 1), (2, 3)]
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 1], [2, 3])
+        m2 = m1.setTo(*scales, data)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m2 = m1.setTo(*scales, a)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # Scale and MatrixIJ
+        m3 = MatrixIJ(data)
+        m2 = m1.setTo(*scales, m3)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
+        # 4 arg forms: individually-scaled columns
+        s = (-1.1, -2.2)
+        data = [[0, 1], [3, 4]]
+        # lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data]]
         m1 = MatrixIJ()
-        m2 = m1.setTo(1, 2, 3, 4)
+        m2 = m1.setTo(s[0], v[0], s[1], v[1])
         self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, 1)
-        self.assertAlmostEqual(m1.ji, 2)
-        self.assertAlmostEqual(m1.ij, 3)
-        self.assertAlmostEqual(m1.jj, 4)
-        m2 = m1.setTo(-1, v1, 2, v2)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data])]
+        m1 = MatrixIJ()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1])
         self.assertIs(m2, m1)
-        self.assertAlmostEqual(m1.ii, -1)
-        self.assertAlmostEqual(m1.ji, -2)
-        self.assertAlmostEqual(m1.ij, 6)
-        self.assertAlmostEqual(m1.jj, 8)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # np.ndarray
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data])]
+        m1 = MatrixIJ()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1])
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # VectorIJ
+        v = [VectorIJ([row[0] for row in data]),
+             VectorIJ([row[1] for row in data])]
+        m1 = MatrixIJ()
+        m2 = m1.setTo(s[0], v[0], s[1], v[1])
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], s[col]*data[row][col])
+        # individual values
+        m1 = MatrixIJ()
+        m2 = m1.setTo(*(data[0] + data[1]))
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                k = col*3 + row
+                self.assertAlmostEqual(m2[row, col], k)
         # Invalid forms
-        with self.assertRaises(Exception):
-            m2.setTo()
+        for n in (0, 5):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m1.setTo(*data)
+
+    def test_transposeInPlace(self):
+        """Test the tranposeInPlace method."""
+        data = list(range(4))
+        m1 = MatrixIJ(*data)
+        m1_orig = MatrixIJ(m1)
+        m2 = m1.transposeInPlace()
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], m1_orig[col, row])
+
+    def unitizeColumns(self):
+        """Convert each column to a unit vector.
+
+        Unitize the columns of the matrix in-place.
+
+        Returns
+        -------
+        self : MatrixIJ
+            The current object, for convenience.
+        """
+        for col in range(2):
+            length = np.linalg.norm(self[:, col])
+            self[:, col] /= length
+        return self
+
+    def test_unitizeColumns(self):
+        """Test the unitizeColumns method."""
+        data1 = list(range(4))
+        a1 = np.array(data1).reshape((2, 2))
+        lengths = np.linalg.norm(a1, axis=0)
+        a2 = a1/lengths
+        m1 = MatrixIJ(*data1)
+        m2 = m1.unitizeColumns()
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], a2[row, col])
+
+    def test_invert(self):
+        """Test the invert method."""
+        data = [[1, 2], [3, 4]]
+        data_inv = (-2, 1.5, 1.0, -0.5)
+        m1 = MatrixIJ(*data)
+        m1_inv = MatrixIJ(*data_inv)
+        m2 = m1.invert()
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], m1_inv[row, col])
+
+    def test_invort(self):
+        a = pi/3
+        data = (cos(a), -sin(a), sin(a), cos(a))
+        data_inv = [[cos(a), sin(a)], [-sin(a), cos(a)]]
+        m1 = MatrixIJ(*data)
+        m2 = m1.invort()
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], data_inv[row][col])
+
+    def test_scale(self):
+        """Test the scale method."""
+        data = list(range(4))
+        # 1 arg form
+        # Single scale factor.
+        scale = -1.1
+        m1 = MatrixIJ(*data)
+        m1_orig = MatrixIJ(m1)
+        m2 = m1.scale(scale)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scale*m1_orig[row, col])
+        # 2-arg form.
+        # Column scale factors.
+        scales = (-1.1, -2.2)
+        m1 = MatrixIJ(*data)
+        m2 = m1.scale(*scales)
+        self.assertIs(m2, m1)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*m1_orig[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m1.scale(*data)
+
+    def test_createTranspose(self):
+        """Test the createTranspose method."""
+        data = list(range(4))
+        m1 = MatrixIJ(*data)
+        m2 = m1.createTranspose()
+        self.assertIsInstance(m2, MatrixIJ)
+        for i in range(2):
+            for j in range(2):
+                self.assertAlmostEqual(m2[i, j], m1[j, i])
+
+    def test_createUnitizedColumns(self):
+        """Test the createUnitizedColumns method."""
+        data1 = list(range(4))
+        a1 = np.array(data1).reshape((2, 2))
+        lengths = np.linalg.norm(a1, axis=0)
+        a2 = a1/lengths
+        m1 = MatrixIJ(*data1)
+        m2 = m1.createUnitizedColumns()
+        self.assertIsInstance(m2, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], a2[row, col])
+
+    def test_createInverse(self):
+        """Test the createInverse method."""
+        data = (1, 3, 2, 4)
+        data_inv = (-2, 1.5, 1, -0.5)
+        m1 = MatrixIJ(*data)
+        m1_inv = MatrixIJ(*data_inv)
+        m2 = m1.createInverse()
+        self.assertIsInstance(m2, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], m1_inv[row, col])
+
+    def test_createInvorted(self):
+        """Test the createInvorted method."""
+        a = pi/3
+        data = (cos(a), -sin(a), sin(a), cos(a))
+        data_inv = (cos(a), sin(a), -sin(a), cos(a))
+        m1 = MatrixIJ(*data)
+        m1_inv = MatrixIJ(*data_inv)
+        m2 = m1.createInvorted()
+        self.assertIsInstance(m2, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], m1_inv[row, col])
 
     def test_setToTranspose(self):
-        m1 = MatrixIJ()
-        m2 = MatrixIJ(1, 2, 3, 4)
-        m1.setToTranspose(m2)
-        self.assertAlmostEqual(m1.ii, 1)
-        self.assertAlmostEqual(m1.ji, 3)
-        self.assertAlmostEqual(m1.ij, 2)
-        self.assertAlmostEqual(m1.jj, 4)
+        """Test the setToTranspose method."""
+        data = list(range(4))
+        m1 = MatrixIJ(*data)
+        m2 = MatrixIJ()
+        m3 = m2.setToTranspose(m1)
+        self.assertIs(m3, m2)
+        for i in range(2):
+            for j in range(2):
+                self.assertAlmostEqual(m3[i, j], m1[j, i])
 
     def test_setToUnitizedColumns(self):
-        m1 = MatrixIJ()
-        m2 = MatrixIJ(1, 2, 3, 4)
-        m1.setToUnitizedColumns(m2)
-        self.assertAlmostEqual(m1.ii, 1/sqrt(5))
-        self.assertAlmostEqual(m1.ji, 2/sqrt(5))
-        self.assertAlmostEqual(m1.ij, 3/5)
-        self.assertAlmostEqual(m1.jj, 4/5)
+        """Test the createUnitizedColumns method."""
+        data1 = list(range(4))
+        a1 = np.array(data1).reshape((2, 2))
+        lengths = np.linalg.norm(a1, axis=0)
+        a2 = a1/lengths
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ()
+        m3 = m2.setToUnitizedColumns(m1)
+        self.assertIs(m3, m2)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m3[row, col], a2[row, col])
 
     def test_setToInverse(self):
-        m1 = MatrixIJ()
-        m2 = MatrixIJ(1, 2, 3, 4)
-        m3 = m1.setToInverse(m2)
-        self.assertIs(m3, m1)
-        self.assertAlmostEqual(m1.ii, -2)
-        self.assertAlmostEqual(m1.ji, 1)
-        self.assertAlmostEqual(m1.ij, 3/2)
-        self.assertAlmostEqual(m1.jj, -1/2)
-        m4 = MatrixIJ()
-        m5 = m4.setToInverse(m1, 1e-4)
-        self.assertIs(m5, m4)
-        self.assertAlmostEqual(m4.ii, 1)
-        self.assertAlmostEqual(m4.ji, 2)
-        self.assertAlmostEqual(m4.ij, 3)
-        self.assertAlmostEqual(m4.jj, 4)
-        with self.assertRaises(Exception):
-            m6 = MatrixIJ(0, 0, 0, 0)
-            m5.setToInverse(m6)
-        with self.assertRaises(Exception):
-            m6 = MatrixIJ(0, 0, 0, 0)
-            m5.setToInverse(m6, 1e-4)
-
-    def test_setToInvorted(self):
-        a = pi/3
-        m1 = MatrixIJ(cos(a), sin(a), -sin(a), cos(a))
+        """Test the setToInverse method."""
+        data = (1, 3, 2, 4)
+        data_inv = (-2, 1.5, 1, -0.5)
+        m1 = MatrixIJ(*data)
+        m1_inv = MatrixIJ(*data_inv)
         m2 = MatrixIJ()
-        m2.setToInvorted(m1)
-        self.assertAlmostEqual(m2.ii, cos(a))
-        self.assertAlmostEqual(m2.ji, -sin(a))
-        self.assertAlmostEqual(m2.ij, sin(a))
-        self.assertAlmostEqual(m2.jj, cos(a))
+        m3 = m2.setToInverse(m1)
+        self.assertIs(m3, m2)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m3[row, col], m1_inv[row, col])
 
-    def test_mxmt(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(5, 6, 7, 8)
-        m3 = MatrixIJ.mxmt(m1, m2)
-        # |1 3| |5 7|T = |1 3| |5 6|
-        # |2 4| |6 8|    |2 4| |7 8|
-        self.assertAlmostEqual(m3.ii, 1*5 + 3*7)
-        self.assertAlmostEqual(m3.ij, 1*6 + 3*8)
-        self.assertAlmostEqual(m3.ji, 2*5 + 4*7)
-        self.assertAlmostEqual(m3.jj, 2*6 + 4*8)
-        m4 = MatrixIJ()
-        m5 = MatrixIJ.mxmt(m1, m2, m4)
-        self.assertIs(m5, m4)
-        self.assertAlmostEqual(m5.ii, 1*5 + 3*7)
-        self.assertAlmostEqual(m5.ij, 1*6 + 3*8)
-        self.assertAlmostEqual(m5.ji, 2*5 + 4*7)
-        self.assertAlmostEqual(m5.jj, 2*6 + 4*8)
+    def test_createInvorted(self):
+        """Test the createInvorted method."""
+        a = pi/3
+        data = (cos(a), -sin(a), sin(a), cos(a))
+        data_inv = (cos(a), sin(a), -sin(a), cos(a))
+        m1 = MatrixIJ(*data)
+        m1_inv = MatrixIJ(*data_inv)
+        m2 = MatrixIJ()
+        m3 = m2.setToInvorted(m1)
+        self.assertIsInstance(m3, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m3[row, col], m1_inv[row, col])
 
-    def test_mtxm(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(5, 6, 7, 8)
-        m3 = MatrixIJ.mtxm(m1, m2)
-        # |1 3|T |5 7| = |1 2| |5 7|
-        # |2 4|  |6 8|   |3 4| |6 8|
-        self.assertAlmostEqual(m3.ii, 1*5 + 2*6)
-        self.assertAlmostEqual(m3.ij, 1*7 + 2*8)
-        self.assertAlmostEqual(m3.ji, 3*5 + 4*6)
-        self.assertAlmostEqual(m3.jj, 3*7 + 4*8)
+    def test_add(self):
+        """Test the add method."""
+        data1 = list(range(1, 5))
+        data2 = list(reversed(data1))
+        data3 = [x1 + x2 for (x1, x2) in zip(data1, data2)]
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = MatrixIJ(*data3)
+        # 1-arg form.
+        # No buffer.
+        m4 = m1.add(m2)
+        self.assertIsInstance(m4, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg form.
+        # Use buffer.
         m4 = MatrixIJ()
-        m5 = MatrixIJ.mtxm(m1, m2, m4)
+        m5 = m1.add(m2, m4)
         self.assertIs(m5, m4)
-        self.assertAlmostEqual(m5.ii, 1*5 + 2*6)
-        self.assertAlmostEqual(m5.ij, 1*7 + 2*8)
-        self.assertAlmostEqual(m5.ji, 3*5 + 4*6)
-        self.assertAlmostEqual(m5.jj, 3*7 + 4*8)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m5[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            with self.assertRaises(ValueError):
+                data = [None]*n
+                m1.add(*data)
+
+    def test_subtract(self):
+        """Test the subtract method."""
+        data1 = list(range(1, 5))
+        data2 = list(reversed(data1))
+        data3 = [x1 - x2 for (x1, x2) in zip(data1, data2)]
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = MatrixIJ(*data3)
+        # 1-arg form.
+        # No buffer.
+        m4 = m1.subtract(m2)
+        self.assertIsInstance(m4, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg form.
+        # Use buffer.
+        m4 = MatrixIJ()
+        m5 = m1.subtract(m2, m4)
+        self.assertIs(m5, m4)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m5[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            with self.assertRaises(ValueError):
+                data = [None]*n
+                m1.subtract(*data)
 
     def test_mxm(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(5, 6, 7, 8)
-        m3 = MatrixIJ.mxm(m1, m2)
-        # |1 3| |5 7|
-        # |2 4| |6 8|
-        self.assertAlmostEqual(m3.ii, 1*5 + 3*6)
-        self.assertAlmostEqual(m3.ij, 1*7 + 3*8)
-        self.assertAlmostEqual(m3.ji, 2*5 + 4*6)
-        self.assertAlmostEqual(m3.jj, 2*7 + 4*8)
+        """Test the mxm method."""
+        data1 = list(range(4))
+        data2 = list(reversed(data1))
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        p = np.zeros((2, 2))
+        for row in range(2):
+            for col in range(2):
+                for k in range(2):
+                    p[row][col] += m1[row][k]*m2[k][col]
+        m3 = MatrixIJ(p)
+        # 1-arg version
+        # No buffer.
+        m4 = m1.mxm(m2)
+        self.assertIsInstance(m4, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg version.
+        # With buffer.
         m4 = MatrixIJ()
-        m5 = MatrixIJ.mxm(m1, m2, m4)
+        m5 = m1.mxm(m2, m4)
         self.assertIs(m5, m4)
-        self.assertAlmostEqual(m5.ii, 1*5 + 3*6)
-        self.assertAlmostEqual(m5.ij, 1*7 + 3*8)
-        self.assertAlmostEqual(m5.ji, 2*5 + 4*6)
-        self.assertAlmostEqual(m5.jj, 2*7 + 4*8)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m3 = m1.mxm(*data)
 
-    def test_mxmtadd(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(5, 6, 7, 8)
-        m3 = MatrixIJ(9, 1, 2, 3)
-        m4 = MatrixIJ(4, 5, 6, 7)
-        # |1 3| |5 7|T + |9 2| |4 6|T = |1 3| |5 6| + |9 2| |4 5|
-        # |2 4| |6 8|    |1 3| |5 7|    |2 4| |7 8|   |1 3| |6 7|
-        m5 = MatrixIJ.mxmtadd(m1, m2, m3, m4)
-        self.assertAlmostEqual(m5.ii, 1*5 + 3*7 + 9*4 + 2*6)
-        self.assertAlmostEqual(m5.ji, 2*5 + 4*7 + 1*4 + 3*6)
-        self.assertAlmostEqual(m5.ij, 1*6 + 3*8 + 9*5 + 2*7)
-        self.assertAlmostEqual(m5.jj, 2*6 + 4*8 + 1*5 + 3*7)
-        m6 = MatrixIJ()
-        m7 = MatrixIJ.mxmtadd(m1, m2, m3, m4, m6)
-        self.assertIs(m7, m6)
-        self.assertAlmostEqual(m7.ii, 1*5 + 3*7 + 9*4 + 2*6)
-        self.assertAlmostEqual(m7.ji, 2*5 + 4*7 + 1*4 + 3*6)
-        self.assertAlmostEqual(m7.ij, 1*6 + 3*8 + 9*5 + 2*7)
-        self.assertAlmostEqual(m7.jj, 2*6 + 4*8 + 1*5 + 3*7)
+    def test_mxmt(self):
+        """Test the mxmt method."""
+        data1 = list(range(4))
+        data2 = list(reversed(data1))
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = m1.dot(m2.T)
+        # 1-arg version
+        # No buffer.
+        m4 = MatrixIJ.mxmt(m1, m2)
+        self.assertIsInstance(m4, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg version.
+        # With buffer.
+        m4 = MatrixIJ()
+        m5 = m1.mxmt(m2, m4)
+        self.assertIs(m5, m4)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m5[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m3 = m1.mxmt(*data)
 
-    def test_mtxmadd(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(5, 6, 7, 8)
-        m3 = MatrixIJ(9, 1, 2, 3)
-        m4 = MatrixIJ(4, 5, 6, 7)
-        # |1 3|T|5 7| + |9 2|T|4 6| = |1 2| |5 7| + |9 1| |4 6|
-        # |2 4| |6 8|   |1 3| |5 7|   |3 4| |6 8|   |2 3| |5 7|
-        m5 = MatrixIJ.mtxmadd(m1, m2, m3, m4)
-        self.assertAlmostEqual(m5.ii, 1*5 + 2*6 + 9*4 + 1*5)
-        self.assertAlmostEqual(m5.ji, 3*5 + 4*6 + 2*4 + 3*5)
-        self.assertAlmostEqual(m5.ij, 1*7 + 2*8 + 9*6 + 1*7)
-        self.assertAlmostEqual(m5.jj, 3*7 + 4*8 + 2*6 + 3*7)
-        m6 = MatrixIJ()
-        m7 = MatrixIJ.mtxmadd(m1, m2, m3, m4, m6)
-        self.assertIs(m7, m6)
-        self.assertAlmostEqual(m7.ii, 1*5 + 2*6 + 9*4 + 1*5)
-        self.assertAlmostEqual(m7.ji, 3*5 + 4*6 + 2*4 + 3*5)
-        self.assertAlmostEqual(m7.ij, 1*7 + 2*8 + 9*6 + 1*7)
-        self.assertAlmostEqual(m7.jj, 3*7 + 4*8 + 2*6 + 3*7)
+    def test_mtxm(self):
+        """Test the mtxm method."""
+        data1 = list(range(1, 5))
+        data2 = list(reversed(data1))
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = m1.T.dot(m2)
+        # 1-arg form
+        # No buffer.
+        m4 = m1.mtxm(m2)
+        self.assertIsInstance(m4, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m4[row, col], m3[row, col])
+        # 2-arg form.
+        # Use buffer.
+        m4 = MatrixIJ()
+        m5 = m1.mtxm(m2, m4)
+        self.assertIs(m5, m4)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m5[row, col], m3[row, col])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                m3 = m1.mtxm(*data)
 
     def test_mxmadd(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(5, 6, 7, 8)
-        m3 = MatrixIJ(9, 1, 2, 3)
-        m4 = MatrixIJ(4, 5, 6, 7)
-        # |1 3| |5 7| + |9 2| |4 6|
-        # |2 4| |6 8|   |1 3| |5 7|
-        m5 = MatrixIJ.mxmadd(m1, m2, m3, m4)
-        self.assertAlmostEqual(m5.ii, 1*5 + 3*6 + 9*4 + 2*5)
-        self.assertAlmostEqual(m5.ji, 2*5 + 4*6 + 1*4 + 3*5)
-        self.assertAlmostEqual(m5.ij, 1*7 + 3*8 + 9*6 + 2*7)
-        self.assertAlmostEqual(m5.jj, 2*7 + 4*8 + 1*6 + 3*7)
+        """Test the mxmadd method."""
+        data1 = (1, 2, 3, 4)
+        data2 = (2, 3, 4, 1)
+        data3 = (3, 4, 1, 2)
+        data4 = (4, 1, 2, 3)
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = MatrixIJ(*data3)
+        m4 = MatrixIJ(*data4)
+        m5a = MatrixIJ.mxm(m1, m2)
+        m5b = MatrixIJ.mxm(m3, m4)
+        m5 = m5a + m5b
+        # 4-arg form.
+        # No buffer.
+        m6 = MatrixIJ.mxmadd(m1, m2, m3, m4)
+        self.assertIsInstance(m6, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m6[row, col], m5[row, col])
+        # 5-arg form.
+        # Use buffer.
         m6 = MatrixIJ()
         m7 = MatrixIJ.mxmadd(m1, m2, m3, m4, m6)
         self.assertIs(m7, m6)
-        self.assertAlmostEqual(m7.ii, 1*5 + 3*6 + 9*4 + 2*5)
-        self.assertAlmostEqual(m7.ji, 2*5 + 4*6 + 1*4 + 3*5)
-        self.assertAlmostEqual(m7.ij, 1*7 + 3*8 + 9*6 + 2*7)
-        self.assertAlmostEqual(m7.jj, 2*7 + 4*8 + 1*6 + 3*7)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m7[row, col], m5[row, col])
 
-    def test_subtract(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(1.1, 2.2, 3.3, 4.4)
-        m3 = MatrixIJ.subtract(m1, m2)
-        self.assertAlmostEqual(m3.ii, -0.1)
-        self.assertAlmostEqual(m3.ji, -0.2)
-        self.assertAlmostEqual(m3.ij, -0.3)
-        self.assertAlmostEqual(m3.jj, -0.4)
-        m4 = MatrixIJ()
-        m5 = MatrixIJ.subtract(m1, m2, m4)
-        self.assertIs(m5, m4)
-        self.assertAlmostEqual(m5.ii, -0.1)
-        self.assertAlmostEqual(m5.ji, -0.2)
-        self.assertAlmostEqual(m5.ij, -0.3)
-        self.assertAlmostEqual(m5.jj, -0.4)
+    def test_mxmtadd(self):
+        """Test the mxmtadd method."""
+        data1 = (1, 2, 3, 4)
+        data2 = (2, 3, 4, 1)
+        data3 = (3, 4, 1, 2)
+        data4 = (4, 1, 2, 3)
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = MatrixIJ(*data3)
+        m4 = MatrixIJ(*data4)
+        m5a = MatrixIJ.mxmt(m1, m2)
+        m5b = MatrixIJ.mxmt(m3, m4)
+        m5 = m5a + m5b
+        # 4-arg form.
+        # No buffer.
+        m6 = MatrixIJ.mxmtadd(m1, m2, m3, m4)
+        self.assertIsInstance(m6, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m6[row, col], m5[row, col])
+        # 5-arg form.
+        # Use buffer.
+        m6 = MatrixIJ()
+        m7 = MatrixIJ.mxmtadd(m1, m2, m3, m4, m6)
+        self.assertIs(m7, m6)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m7[row, col], m5[row, col])
 
-    def test_add(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
-        m2 = MatrixIJ(1.1, 2.2, 3.3, 4.4)
-        m3 = MatrixIJ.add(m1, m2)
-        self.assertAlmostEqual(m3.ii, 2.1)
-        self.assertAlmostEqual(m3.ji, 4.2)
-        self.assertAlmostEqual(m3.ij, 6.3)
-        self.assertAlmostEqual(m3.jj, 8.4)
-        m4 = MatrixIJ()
-        m5 = MatrixIJ.add(m1, m2, m4)
-        self.assertIs(m5, m4)
-        self.assertAlmostEqual(m5.ii, 2.1)
-        self.assertAlmostEqual(m5.ji, 4.2)
-        self.assertAlmostEqual(m5.ij, 6.3)
-        self.assertAlmostEqual(m5.jj, 8.4)
-
-    def test_diagonalizeSymmetricMatrix(self):
-        m1 = MatrixIJ(6, 2, 2, 3)
-        v = VectorIJ()
-        m2 = MatrixIJ()
-        MatrixIJ.diagonalizeSymmetricMatrix(m1, v, m2)
-        self.assertAlmostEqual(v.i, 7)
-        self.assertAlmostEqual(v.j, 2)
-        self.assertAlmostEqual(m2.ii, 0.8944271909999159)
-        self.assertAlmostEqual(m2.ji, 0.44721359549995787)
-        self.assertAlmostEqual(m2.ij, -0.44721359549995787)
-        self.assertAlmostEqual(m2.jj, 0.8944271909999159)
-
-    def test_solveQuadratic(self):
-        # (x - 1)*(x - 2) = x**2 - 3*x + 2
-        a = 1
-        b = -3
-        c = 2
-        v = VectorIJ()
-        MatrixIJ.solveQuadratic(a, b, c, v)
-        self.assertAlmostEqual(v.i, 2)
-        self.assertAlmostEqual(v.j, 1)
-        # (x - 1)*(x - 1) = x**2 - 2*x + 1
-        a = 1
-        b = -2
-        c = 1
-        v = VectorIJ()
-        MatrixIJ.solveQuadratic(a, b, c, v)
-        self.assertAlmostEqual(v.i, 1)
-        self.assertAlmostEqual(v.j, 1)
-        # (x + 2)*(x - 1) = x**2 + x - 2
-        a = 1
-        b = 1
-        c = -2
-        v = VectorIJ()
-        MatrixIJ.solveQuadratic(a, b, c, v)
-        self.assertAlmostEqual(v.i, 1)
-        self.assertAlmostEqual(v.j, -2)
-        # (2x + 1)*(x - 1) = 2*x**2 - x - 1
-        a = 2
-        b = -1
-        c = -1
-        v = VectorIJ()
-        MatrixIJ.solveQuadratic(a, b, c, v)
-        self.assertAlmostEqual(v.i, 1)
-        self.assertAlmostEqual(v.j, -1/2)
-        # x - 2
-        a = 0
-        b = 1
-        c = -2
-        v = VectorIJ()
-        MatrixIJ.solveQuadratic(a, b, c, v)
-        self.assertAlmostEqual(v.i, 2)
-        self.assertAlmostEqual(v.j, 2)
-
-    def test_mtxv(self):
-        m = MatrixIJ(1, 2, 3, 4)
-        v1 = VectorIJ(5, 6)
-        v2 = MatrixIJ.mtxv(m, v1)
-        self.assertAlmostEqual(v2.i, 17)
-        self.assertAlmostEqual(v2.j, 39)
-        v3 = VectorIJ()
-        v4 = MatrixIJ.mtxv(m, v1, v3)
-        self.assertIs(v4, v3)
-        self.assertAlmostEqual(v4.i, 17)
-        self.assertAlmostEqual(v4.j, 39)
+    def test_mtxmadd(self):
+        """Test the mtxmadd method."""
+        data1 = (1, 2, 3, 4)
+        data2 = (2, 3, 4, 1)
+        data3 = (3, 4, 1, 2)
+        data4 = (4, 1, 2, 3)
+        m1 = MatrixIJ(*data1)
+        m2 = MatrixIJ(*data2)
+        m3 = MatrixIJ(*data3)
+        m4 = MatrixIJ(*data4)
+        m5a = MatrixIJ.mtxm(m1, m2)
+        m5b = MatrixIJ.mtxm(m3, m4)
+        m5 = m5a + m5b
+        # 4-arg form.
+        # No buffer.
+        m6 = MatrixIJ.mtxmadd(m1, m2, m3, m4)
+        self.assertIsInstance(m6, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m6[row, col], m5[row, col])
+        # 5-arg form.
+        # Use buffer.
+        m6 = MatrixIJ()
+        m7 = MatrixIJ.mtxmadd(m1, m2, m3, m4, m6)
+        self.assertIs(m7, m6)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m7[row, col], m5[row, col])
 
     def test_mxv(self):
-        m = MatrixIJ(1, 2, 3, 4)
-        v1 = VectorIJ(5, 6)
-        v2 = MatrixIJ.mxv(m, v1)
-        self.assertAlmostEqual(v2.i, 23)
-        self.assertAlmostEqual(v2.j, 34)
+        """Test the mxv method."""
+        data1 = list(range(4))
+        data2 = list(range(2))
+        m1 = MatrixIJ(*data1)
+        v1 = VectorIJ(*data2)
+        v2 = m1.dot(v1)
+        # 1-arg form.
+        # No buffer.
+        v3 = m1.mxv(v1)
+        self.assertIsInstance(v3, VectorIJ)
+        for row in range(2):
+            self.assertAlmostEqual(v3[row], v2[row])
+        # 2-arg form.
+        # Use buffer.
         v3 = VectorIJ()
-        v4 = MatrixIJ.mxv(m, v1, v3)
+        v4 = m1.mxv(v1, v3)
         self.assertIs(v4, v3)
-        self.assertAlmostEqual(v4.i, 23)
-        self.assertAlmostEqual(v4.j, 34)
+        for row in range(2):
+            self.assertAlmostEqual(v4[row], v2[row])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                v2 = m1.mxv(*data)
+
+    def test_mtxv(self):
+        """Test the mtxv method."""
+        data1 = list(range(4))
+        data2 = list(range(2))
+        m1 = MatrixIJ(*data1)
+        v1 = VectorIJ(*data2)
+        v2 = m1.T.dot(v1)
+        # 1-arg form.
+        # No buffer.
+        v3 = m1.mtxv(v1)
+        self.assertIsInstance(v3, VectorIJ)
+        for row in range(2):
+            self.assertAlmostEqual(v3[row], v2[row])
+        # 2-arg form.
+        # Use buffer.
+        v3 = VectorIJ()
+        v4 = m1.mtxv(v1, v3)
+        self.assertIs(v4, v3)
+        for row in range(2):
+            self.assertAlmostEqual(v4[row], v2[row])
+        # Invalid forms.
+        for n in (0, 3):
+            data = [None]*n
+            with self.assertRaises(ValueError):
+                v2 = m1.mtxv(*data)
 
 
 if __name__ == '__main__':

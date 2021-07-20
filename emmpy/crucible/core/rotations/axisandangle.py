@@ -9,9 +9,6 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import (
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
-    UnwritableRotationMatrixIJK
-)
 from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK
 )
@@ -47,7 +44,7 @@ class AxisAndAngle(Rotation):
             # Angle of rotation, specified in radians.
             self.angle = 0.0
         elif len(args) == 1:
-            if isinstance(args[0], UnwritableRotationMatrixIJK):
+            if isinstance(args[0], RotationMatrixIJK):
                 (matrix,) = args
                 # Create an axis and angle rotation from the specified rotation
                 # matrix.
@@ -143,7 +140,7 @@ class AxisAndAngle(Rotation):
                 self.axis.setTo(axisAndAngle.axis)
                 self.angle = axisAndAngle.angle
                 return self
-            elif isinstance(args[0], UnwritableRotationMatrixIJK):
+            elif isinstance(args[0], RotationMatrixIJK):
                 (matrix,) = args
                 # In the event that the identity matrix is supplied to this
                 # method, the axis is selected to be VectorIJK.K with a

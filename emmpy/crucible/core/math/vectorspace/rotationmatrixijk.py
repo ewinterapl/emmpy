@@ -27,41 +27,23 @@ DETERMINANT_TOLERANCE = 1E-4
 
 
 class RotationMatrixIJK(MatrixIJK):
-    """A 3-D rotation matrix in Cartesian (i, j, k) coordinates.
+    """A 3-D rotation matrix in Cartesian (i, j, k) coordinates."""
 
-    Authors
-    -------
-    F.S.Turner
-    Eric Winter (eric.winter@jhuapl.edu)
-    """
+    def __init__(self, *args):
+        """Initialize a new RotationMatrixIJK object.
 
-    def __new__(cls, *args):
-        """Create a new RotationMatrixIJK object.
-
-        Allocate a new RotationMatrixIJK object by allocating a new
-        MatrixIJK object on which the RotationMatrixIJK will expand.
+        Initialize a new RotationMatrixIJK object.
 
         Parameters
         ----------
-        args : tuple of object
-            Arguments for polymorphic constructor.
-        data : list or tuple of (list or tuple) of float
-            Values for matrix elements in row-major order. Array must
-            be at least 3x3 in size.
-        OR
-        matrix : MatrixIJK
-            Matrix to copy values from.
-        OR
-        scale : float
-            The scale factor to apply.
-        matrix : MatrixIJK
-            The matrix whose components are to be scaled and copied.
+        data : array-like
+            3x3 array of values for matrix elements in row-major order.
         OR
         ithColumn, jthColumn, kthColumn : VectorIJK
             Vectors containing the 3 columns to use for the matrix.
         OR
-        ii, ji, ki, ij, jj, kj, ik, jk, kk : Float
-            Elements of new matrix.
+        ii, ij, ik, ji, jj, jk, ki, kj, kk : float
+            Elements of new matrix, in row-major order.
 
         Returns
         -------
@@ -77,31 +59,26 @@ class RotationMatrixIJK(MatrixIJK):
         """
         if len(args) == 0:
             # Construct an identity matrix.
-            data = IDENTITY
+            self[:, :] = IDENTITY
         elif len(args) == 1:
-            if isinstance(args[0], (list, tuple)):
-                # Copy the upper 3x3 block of a 2-D array of floats.
-                (data,) = args
-                data = data[0][:3] + data[1][:3] + data[2][:3]
-            elif isinstance(args[0], np.ndarray):
-                # Copy the values from an existing 3x3 Numpy array.
-                (matrix,) = args
-                data = matrix[:3, :3].flatten()
-            else:
-                raise ValueError('Bad arguments for constructor!')
+            # Initialize matrix from a 3x3 array-like of floats.
+            (a,) = args
+            self[:, :] = np.array(a)
         elif len(args) == 3:
-            # Set the columns using the supplied vectors.
-            (ithColumn, jthColumn, kthColumn) = args
-            data = np.vstack([ithColumn, jthColumn, kthColumn]).T.flatten()
+            # Initialize matrix by populating the columns of the matrix
+            # with the supplied vectors.
+            (colI, colJ, colK) = args
+            self[:, 0] = np.array(colI)
+            self[:, 1] = np.array(colJ)
+            self[:, 2] = np.array(colK)
         elif len(args) == 9:
-            # Constructs a matrix from the nine basic components.
-            data = args
+            # Constructs a matrix from the nine basic components, in row-
+            # major order.
+            self[:, :] = np.array(args).reshape((3, 3))
         else:
-            raise ValueError('Bad arguments for constructor!')
-        m = MatrixIJK.__new__(cls, *data)
-        if not m.isRotation():
-            raise MalformedRotationException('Not a rotation matrix!')
-        return m
+            raise ValueError
+        if not self.isRotation():
+            raise MalformedRotationException
 
     def isRotation(self, *args):
         """Check if this is a rotation matrix.
@@ -243,6 +220,5 @@ class RotationMatrixIJK(MatrixIJK):
         return self
 
 
-# Instance of a rotation matrix capturing the content of the multiplicative
-# identity.
-IDENTITY = RotationMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
+# Identity matrix.
+IDENTITY = MatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)

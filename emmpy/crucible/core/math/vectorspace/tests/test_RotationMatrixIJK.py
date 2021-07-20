@@ -18,8 +18,8 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
     """Tests for the rotationmatrixijk module."""
 
-    def test___new__(self):
-        """Test the __new__ method."""
+    def test___init__(self):
+        """Test the __init__ method."""
         # 0-arg form - creates identity matrix.
         m1 = RotationMatrixIJK()
         self.assertIsInstance(m1, RotationMatrixIJK)
@@ -29,43 +29,39 @@ class TestBuilder(unittest.TestCase):
                     self.assertAlmostEqual(m1[row, col], 1)
                 else:
                     self.assertAlmostEqual(m1[row, col], 0)
-        # 1 arg forms
-        # list of lists, use upper-left 3x3 block.
+        # 1 arg forms.
+        # list of lists.
         a = 1
-        data1 = [[cos(a), 0, sin(a), 4],
-                 [0, 1, 0, 7],
-                 [-sin(a), 0, cos(a), 0],
-                 [4, 3, 2, 1]]
+        data1 = [[cos(a), 0, sin(a)],
+                 [0, 1, 0],
+                 [-sin(a), 0, cos(a)]]
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m1[row, col], data1[row][col])
         # tuple of tuples
-        data1 = ((cos(a), 0, sin(a), 4),
-                 (0, 1, 0, 7),
-                 (-sin(a), 0, cos(a), 0),
-                 (4, 3, 2, 1))
+        data1 = ((cos(a), 0, sin(a)),
+                 (0, 1, 0),
+                 (-sin(a), 0, cos(a)))
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m1[row, col], data1[row][col])
         # list of tuples
-        data1 = [(cos(a), 0, sin(a), 4),
-                 (0, 1, 0, 7),
-                 (-sin(a), 0, cos(a), 0),
-                 (4, 3, 2, 1)]
+        data1 = [(cos(a), 0, sin(a)),
+                 (0, 1, 0),
+                 (-sin(a), 0, cos(a))]
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m1[row, col], data1[row][col])
         # tuple of lists
-        data1 = ([cos(a), 0, sin(a), 4],
-                 [0, 1, 0, 7],
-                 [-sin(a), 0, cos(a), 0],
-                 [4, 3, 2, 1])
+        data1 = ([cos(a), 0, sin(a)],
+                 [0, 1, 0],
+                 [-sin(a), 0, cos(a)])
         m1 = RotationMatrixIJK(data1)
         self.assertIsInstance(m1, RotationMatrixIJK)
         for row in range(3):
@@ -81,7 +77,7 @@ class TestBuilder(unittest.TestCase):
         # 3 args - column vectors
         v = []
         for col in range(3):
-            data = [row[col] for row in data1[:3]]
+            data = [row[col] for row in data1]
             v.append(VectorIJK(*data))
         m1 = RotationMatrixIJK(*v)
         self.assertIsInstance(m1, RotationMatrixIJK)
@@ -98,7 +94,7 @@ class TestBuilder(unittest.TestCase):
             for col in range(3):
                 self.assertAlmostEqual(m1[row, col], data1[row*3 + col])
         # Invalid forms.
-        for n in (1, 2, 4, 5, 6, 7, 10):
+        for n in (2, 4, 5, 6, 7, 8, 10):
             with self.assertRaises(ValueError):
                 args = [None]*n
                 m1 = RotationMatrixIJK(*args)

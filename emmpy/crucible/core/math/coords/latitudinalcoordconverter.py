@@ -12,9 +12,7 @@ from emmpy.crucible.core.math.coords.latitudinaltocartesianjacobian import (
 from emmpy.crucible.core.math.coords.latitudinalvector import (
     LatitudinalVector
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class LatitudinalCoordConverter(AbstractCoordConverter):
@@ -83,4 +81,4 @@ class LatitudinalCoordConverter(AbstractCoordConverter):
             cos(coordinate.getLatitude())
         )
         k = coordinate.getRadius()*sin(coordinate.getLatitude())
-        return UnwritableVectorIJK(i, j, k)
+        return VectorIJK(i, j, k)

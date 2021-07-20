@@ -12,9 +12,6 @@ from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
 from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
@@ -229,7 +226,7 @@ class SphericalVectorField(VectorField):
                     # VectorIJK buffer
                     (location, buffer) = args
                     assert(
-                        isinstance(location, UnwritableVectorIJK) and
+                        isinstance(location, VectorIJK) and
                         isinstance(buffer, VectorIJK))
                     return field.evaluate(location, buffer)
                 else:
@@ -299,7 +296,7 @@ class SphericalVectorField(VectorField):
             raise Exception
         elif len(args) == 2:
             (location, buffer) = args
-            assert(isinstance(location, UnwritableVectorIJK))
+            assert(isinstance(location, VectorIJK))
             assert(isinstance(buffer, VectorIJK))
 
             # convert the Cartesian position to spherical

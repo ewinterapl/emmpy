@@ -8,13 +8,10 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class VectorIJK(UnwritableVectorIJK):
+class VectorIJK:
     """A 3-D vector.
 
     Writable subclass of UnwritableVectorIJK.
@@ -25,33 +22,14 @@ class VectorIJK(UnwritableVectorIJK):
     author F.S.Turner
     """
 
-    # The ZERO vector.
-    ZERO = UnwritableVectorIJK(0, 0, 0)
-
-    # The I basis vector: (1,0,0).
-    I = UnwritableVectorIJK(1, 0, 0)
-
-    # The J basis vector: (0,1,0).
-    J = UnwritableVectorIJK(0, 1, 0)
-
-    # The K basis vector: (0,0,1).
-    K = UnwritableVectorIJK(0, 0, 1)
-
-    # The negative of the I basis vector: (-1,0,0).
-    MINUS_I = UnwritableVectorIJK(-1, 0, 0)
-
-    # The negative of the J basis vector: (0,-1,0).
-    MINUS_J = UnwritableVectorIJK(0, -1, 0)
-
-    # The negative of the K basis vector: (0,0,-1).
-    MINUS_K = UnwritableVectorIJK(0, 0, -1)
-
     def __init__(self, *args):
         """Create a VectorIJK."""
         if len(args) == 0:
             # Construct a vector with an initial value of
             # VectorIJK.ZERO
-            UnwritableVectorIJK.__init__(self, 0, 0, 0)
+            self.i = 0
+            self.j = 0
+            self.k = 0
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a vector from the first three elements of an array
@@ -60,13 +38,17 @@ class VectorIJK(UnwritableVectorIJK):
                 # throws IndexOutOfBoundsException if the supplied data array
                 # does not contain at least three elements
                 (data,) = args
-                UnwritableVectorIJK.__init__(self, data)
-            elif isinstance(args[0], UnwritableVectorIJK):
+                self.i = data[0]
+                self.j = data[1]
+                self.k = data[2]
+            elif isinstance(args[0], VectorIJK):
                 # Copy constructor, creates a vector by copying the values of
                 # a pre-exisiting one.
                 # @param vector the vector whose contents are to be copied
                 (vector,) = args
-                UnwritableVectorIJK.__init__(self, vector)
+                self.i = vector.i
+                self.j = vector.j
+                self.k = vector.k
             else:
                 raise Exception
         elif len(args) == 2:
@@ -80,9 +62,11 @@ class VectorIJK(UnwritableVectorIJK):
                 # does not contain three elements at indices offset through
                 # offset + 2
                 (index, data) = args
-                UnwritableVectorIJK.__init__(self, index, data)
+                self.i = data[offset]
+                self.j = data[offset + 1]
+                self.k = data[offset + 2]
             elif (isRealNumber(args[0]) and
-                  isinstance(args[1], UnwritableVectorIJK)):
+                  isinstance(args[1], VectorIJK)):
                 # Scaling constructor, creates a new vector by applying a
                 # scalar multiple to the components of a pre-existing vector.
                 # This results in (scale*vector) being stored in the newly
@@ -90,7 +74,9 @@ class VectorIJK(UnwritableVectorIJK):
                 # @param scale the scale factor to apply
                 # @param vector the vector whose contents are to be scaled
                 (scale, vector) = args
-                UnwritableVectorIJK.__init__(self, scale, vector)
+                self.i = scale*vector.i
+                self.j = scale*vector.j
+                self.k = scale*vector.k
             else:
                 raise Exception
         elif len(args) == 3:
@@ -99,7 +85,9 @@ class VectorIJK(UnwritableVectorIJK):
             # @param j the jth component
             # @param k the kth component
             (i, j, k) = args
-            UnwritableVectorIJK.__init__(self, i, j, k)
+            self.i = i
+            self.j = j
+            self.k = k
         else:
             raise Exception
 
@@ -207,7 +195,7 @@ class VectorIJK(UnwritableVectorIJK):
     def setTo(self, *args):
         """Set the vector contents."""
         if len(args) == 1:
-            if isinstance(args[0], UnwritableVectorIJK):
+            if isinstance(args[0], VectorIJK):
                 # Set the vector contents to match those of another.
                 # param vector the vector whose contents are to be copied into
                 # the vector
@@ -225,8 +213,7 @@ class VectorIJK(UnwritableVectorIJK):
             else:
                 raise Exception
         elif len(args) == 2:
-            if isRealNumber(args[0]) and isinstance(args[1],
-                                                    UnwritableVectorIJK):
+            if isRealNumber(args[0]) and isinstance(args[1], VectorIJK):
                 # Set the vector contents to match the scale of another.
                 # @param scale the scale factor to apply to vector
                 # @param vector the vector whose scaled contents are to be
@@ -283,8 +270,8 @@ class VectorIJK(UnwritableVectorIJK):
         """Rotate the vector."""
         if len(args) == 3:
             if (
-                isinstance(args[0], UnwritableVectorIJK) and
-                isinstance(args[1], UnwritableVectorIJK) and
+                isinstance(args[0], VectorIJK) and
+                isinstance(args[1], VectorIJK) and
                 isinstance(args[2], float)
             ):
                 # Rotate one vector about another by an angle specified in
@@ -302,8 +289,8 @@ class VectorIJK(UnwritableVectorIJK):
                 v = VectorIJK.rotate(vector, axis, angle, VectorIJK())
         elif len(args) == 4:
             if (
-                isinstance(args[0], UnwritableVectorIJK) and
-                isinstance(args[1], UnwritableVectorIJK) and
+                isinstance(args[0], VectorIJK) and
+                isinstance(args[1], VectorIJK) and
                 isinstance(args[2], float) and
                 isinstance(args[3], VectorIJK)
             ):
@@ -806,3 +793,49 @@ class VectorIJK(UnwritableVectorIJK):
             return buffer.setTo(i, j, k)
         else:
             raise Exception
+
+    def getI(self):
+        """Get the ith component (float)."""
+        return self.i
+
+    def getJ(self):
+        """Get the jth component (float)."""
+        return self.j
+
+    def getK(self):
+        """Get the kth component (float)."""
+        return self.k
+
+    @staticmethod
+    def copyOf(vector):
+        """Make a copy of the supplied vector.
+
+        param UnwritableVectorIJK vector a vector to copy.
+
+        return UnwritableVectorIJK either a reference to vector (if vector is
+        already only an instance of UnwritableVectorIJK, otherwise an
+        unwritable copy of vector's contents
+        """
+        return VectorIJK(vector)
+
+
+# The ZERO vector.
+ZERO = VectorIJK(0, 0, 0)
+
+# The I basis vector: (1,0,0).
+I = VectorIJK(1, 0, 0)
+
+# The J basis vector: (0,1,0).
+J = VectorIJK(0, 1, 0)
+
+# The K basis vector: (0,0,1).
+K = VectorIJK(0, 0, 1)
+
+# The negative of the I basis vector: (-1,0,0).
+MINUS_I = VectorIJK(-1, 0, 0)
+
+# The negative of the J basis vector: (0,-1,0).
+MINUS_J = VectorIJK(0, -1, 0)
+
+# The negative of the K basis vector: (0,0,-1).
+MINUS_K = VectorIJK(0, 0, -1)

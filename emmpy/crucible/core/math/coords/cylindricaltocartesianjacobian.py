@@ -9,9 +9,7 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class CylindricalToCartesianJacobian(Transformation):
@@ -78,7 +76,7 @@ class CylindricalToCartesianJacobian(Transformation):
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordVelocity) = args
             return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
-        elif isinstance(args[1], UnwritableVectorIJK):
+        elif isinstance(args[1], VectorIJK):
             (inverseJacobian, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
             return CylindricalVector(vect.getI(), vect.getJ(), vect.getK())

@@ -4,9 +4,7 @@
 from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
     AbstractVectorFieldValue
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class CartesianVectorFieldValue(AbstractVectorFieldValue):
@@ -22,6 +20,5 @@ class CartesianVectorFieldValue(AbstractVectorFieldValue):
         @param value a Cartesian vector field value at that coordinate
         """
         AbstractVectorFieldValue.__init__(
-            self, UnwritableVectorIJK.copyOf(position),
-            UnwritableVectorIJK.copyOf(value)
+            self, VectorIJK.copyOf(position), VectorIJK.copyOf(value)
         )

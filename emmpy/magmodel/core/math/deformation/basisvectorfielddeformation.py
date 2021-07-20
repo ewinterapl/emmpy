@@ -1,9 +1,6 @@
 """Deformation for a basis vector field."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.vectorfielddeformation import (
     VectorFieldDeformation
@@ -39,9 +36,7 @@ class BasisVectorFieldDeformation(BasisVectorField):
             v = trans.mxv(
                 VectorIJK(bField.getI(), bField.getJ(), bField.getK())
             )
-            bFieldExpansionDeformed.append(
-                UnwritableVectorIJK(v.getI(), v.getJ(), v.getK())
-            )
+            bFieldExpansionDeformed.append(VectorIJK(v.getI(), v.getJ(), v.getK()))
         return bFieldExpansionDeformed
 
     def getNumberOfBasisFunctions(self):

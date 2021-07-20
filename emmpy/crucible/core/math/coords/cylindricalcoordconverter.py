@@ -10,9 +10,7 @@ from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
     CylindricalToCartesianJacobian
 )
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class CylindricalCoordConverter(AbstractCoordConverter):
@@ -69,7 +67,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
         # r = coordinate.getCylindricalRadius()
         # lon = coordinate.getLongitude()
         # z = coordinate.getHeight()
-        return UnwritableVectorIJK(
+        return VectorIJK(
             coordinate.getCylindricalRadius()*cos(coordinate.getLongitude()),
             coordinate.getCylindricalRadius()*sin(coordinate.getLongitude()),
             coordinate.getHeight()

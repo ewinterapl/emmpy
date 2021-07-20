@@ -3,10 +3,7 @@
 
 import sys
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
-
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
 )
@@ -64,11 +61,11 @@ def runThinSheet():
     )
 
     # evaluate the model at r=(4,5,-2)
-    pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
+    pos = VectorIJK(4.0, 5.0, -2.0)
 
     # evaluate the magnetic field
     bVect = model.evaluate(pos)
-    print(bVect)
+    print(bVect.i, bVect.j, bVect.k)
 
     print("Ending runThinSheet()")
 
@@ -102,12 +99,12 @@ def runTs07D(coeffsFile):
     model = modelBuilder.build()
 
     # evaluate the model at r=(4,5,-2)
-    pos = UnwritableVectorIJK(4.0, 5.0, -2.0)
+    pos = VectorIJK(4.0, 5.0, -2.0)
 
     # evaluate the magnetic field
     # Returns an UnwritableVectorIJK.
     bVect = model.evaluate(pos)
-    print(bVect)
+    print(bVect.i, bVect.j, bVect.k)
 
     print("Ending runTs07D()")
 

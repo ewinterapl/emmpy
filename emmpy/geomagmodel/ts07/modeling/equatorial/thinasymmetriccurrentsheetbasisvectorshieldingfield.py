@@ -9,9 +9,6 @@
 # import magmodel.core.math.expansions.CoefficientExpansion2D;
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
@@ -80,7 +77,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
             chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,
                                            self.bessel, TrigParity.ODD)
             chf.evaluate(location, buffer)
-            symmetricExpansions[n - 1] = UnwritableVectorIJK(
+            symmetricExpansions[n - 1] = VectorIJK(
                 buffer.getI(), buffer.getJ(), buffer.getK()
             )
 
@@ -106,9 +103,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 chf.evaluate(location, buffer)
                 buffer.scale(negateConst)
                 oddExpansions[m - 1][n - 1] = (
-                    UnwritableVectorIJK(buffer.getI(), buffer.getJ(),
-                                        buffer.getK())
-                )
+                    VectorIJK(buffer.getI(), buffer.getJ(), buffer.getK()))
 
         # n is the radial expansion number
         # m is the azimuthal expansion number
@@ -132,9 +127,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 chf.evaluate(location, buffer)
                 buffer.scale(negateConst)
                 evenExpansions[m - 1][n - 1] = (
-                    UnwritableVectorIJK(buffer.getI(), buffer.getJ(),
-                                        buffer.getK())
-                )
+                    VectorIJK(buffer.getI(), buffer.getJ(), buffer.getK()))
 
         return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions, 1),
             Expansion2Ds.createFromArray(oddExpansions, 1, 1),

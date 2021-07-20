@@ -4,9 +4,7 @@
 # import crucible.core.math.vectorspace.VectorIJK;
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class XYPlaneReflectedField(VectorField):
@@ -36,7 +34,7 @@ class XYPlaneReflectedField(VectorField):
         return VectorIJK
         """
         # UnwritableVectorIJK reflectedLocation
-        reflectedLocation = UnwritableVectorIJK(
+        reflectedLocation = VectorIJK(
             location.getI(), location.getJ(), -location.getK()
         )
         self.delgate.evaluate(reflectedLocation, buffer)

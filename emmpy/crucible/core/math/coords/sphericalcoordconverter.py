@@ -10,9 +10,7 @@ from emmpy.crucible.core.math.coords.sphericaltocartesianjacobian import (
     SphericalToCartesianJacobian
 )
 from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class SphericalCoordConverter(AbstractCoordConverter):
@@ -97,4 +95,4 @@ class SphericalCoordConverter(AbstractCoordConverter):
         i = r * cosLong*sinColat
         j = r*sinLong*sinColat
         k = r*cosColat
-        return UnwritableVectorIJK(i, j, k)
+        return VectorIJK(i, j, k)

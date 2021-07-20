@@ -1,9 +1,6 @@
 """emmpy.magmodel.core.math.expansions.expansion2ds"""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
     ArrayExpansion2D
@@ -102,7 +99,7 @@ class Expansion2Ds:
                 e2d.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
                 e2d.getExpansion = (
                     lambda azimuthalExpansion, radialExpansion:
-                    UnwritableVectorIJK(
+                    VectorIJK(
                         scaleFactor,
                         a.getExpansion(azimuthalExpansion, radialExpansion)
                     )
@@ -123,7 +120,7 @@ class Expansion2Ds:
                     scaleFactor = scaleFactors.getCoefficient(
                         azimuthalExpansion, radialExpansion
                     )
-                    return UnwritableVectorIJK(
+                    return VectorIJK(
                         scaleFactor,
                         a.getExpansion(azimuthalExpansion, radialExpansion)
                     )
@@ -146,4 +143,4 @@ class Expansion2Ds:
                     bx += vect.getI()
                     by += vect.getJ()
                     bz += vect.getK()
-            return UnwritableVectorIJK(bx, by, bz)
+            return VectorIJK(bx, by, bz)

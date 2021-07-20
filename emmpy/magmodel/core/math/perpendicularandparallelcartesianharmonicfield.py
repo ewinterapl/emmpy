@@ -4,7 +4,7 @@
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import (J, VectorIJK)
 from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
 
 from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
@@ -114,10 +114,10 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         # RotationMatrixIJK rmijk1, rmijk2
         # UnwritableRotationMatrixIJK perpendicularRotation, parallelRotation
         # (same objects as rmijk1, rmijk2)
-        aaa1 = AxisAndAngle(VectorIJK.J, -perpendicularTiltAngle)
+        aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)
         rmijk1 = RotationMatrixIJK()
         perpendicularRotation = aaa1.getRotation(rmijk1)
-        aaa2 = AxisAndAngle(VectorIJK.J, -parallelTiltAngle)
+        aaa2 = AxisAndAngle(J, -parallelTiltAngle)
         rmijk2 = RotationMatrixIJK()
         parallelRotation = aaa2.getRotation(rmijk2)
 
@@ -174,10 +174,10 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         # RotationMatrixIJK rmijk1, rmijk2
         # UnwritableRotationMatrixIJK perpendicularRotation, parallelRotation
         # (same objects as rmijk1, rmijk2)
-        aaa1 = AxisAndAngle(VectorIJK.J, -perpendicularTiltAngle)
+        aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)
         rmijk1 = RotationMatrixIJK()
         perpendicularRotation = aaa1.getRotation(rmijk1)
-        aaa2 = AxisAndAngle(VectorIJK.J, -parallelTiltAngle)
+        aaa2 = AxisAndAngle(J, -parallelTiltAngle)
         rmijk2 = RotationMatrixIJK()
         parallelRotation = aaa2.getRotation(rmijk2)
 

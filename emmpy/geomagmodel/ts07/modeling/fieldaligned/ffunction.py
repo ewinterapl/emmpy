@@ -11,9 +11,7 @@ import math
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 
 # import crucible.core.math.vectorfields.ScalarField;
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 
 
@@ -128,7 +126,7 @@ class Ffunction(ScalarField):
                 (Ffunction.hingeDistance*r*dQr)
             )
             return FDerivatives(phiStretched, dF_dPhi, dF_dRho, dF_dy)
-        elif isinstance(location, UnwritableVectorIJK):
+        elif isinstance(location, VectorIJK):
             x = location.getI()
             y = location.getJ()
             z = location.getK()

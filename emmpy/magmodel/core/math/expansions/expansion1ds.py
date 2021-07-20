@@ -1,9 +1,6 @@
 """Utility functions for 1-D expansions."""
 
 
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import (
     VectorIJK
 )
@@ -56,7 +53,7 @@ class Expansion1Ds:
             return Expansion1D<UnwritableVectorIJK>
             """
             # UnwritableVectorIJK constantCopy
-            constantCopy = UnwritableVectorIJK.copyOf(constant)
+            constantCopy = VectorIJK.copyOf(constant)
 
             # Expansion1D e1d
             e1d = Expansion1D()
@@ -115,8 +112,7 @@ class Expansion1Ds:
                 e1d.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
                 e1d.getExpansion = (
                     lambda radialExpansion:
-                    UnwritableVectorIJK(scaleFactor,
-                                        a.getExpansion(radialExpansion))
+                    VectorIJK(scaleFactor, a.getExpansion(radialExpansion))
                 )
                 return e1d
             elif isinstance(args[1], CoefficientExpansion1D):
@@ -131,8 +127,7 @@ class Expansion1Ds:
                 def my_getExpansion(radialExpansion):
                     # float scaleFactor
                     scaleFactor = scaleFactors.getCoefficient(radialExpansion)
-                    return UnwritableVectorIJK(scaleFactor,
-                                               a.getExpansion(radialExpansion))
+                    return VectorIJK(scaleFactor, a.getExpansion(radialExpansion))
                 e1d.getExpansion = my_getExpansion
                 return e1d
             else:
@@ -155,4 +150,4 @@ class Expansion1Ds:
                 bx += vect.getI()
                 by += vect.getJ()
                 bz += vect.getK()
-            return UnwritableVectorIJK(bx, by, bz)
+            return VectorIJK(bx, by, bz)

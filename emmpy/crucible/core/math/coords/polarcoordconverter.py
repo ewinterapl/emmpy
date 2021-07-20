@@ -10,9 +10,7 @@ from emmpy.crucible.core.math.coords.polartocartesianjacobian import (
     PolarToCartesianJacobian
 )
 from emmpy.crucible.core.math.coords.polarvector import PolarVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
+from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class PolarCoordConverter(AbstractCoordConverterIJ):
@@ -72,4 +70,4 @@ class PolarCoordConverter(AbstractCoordConverterIJ):
         """
         i = coordinate.getRadius()*cos(coordinate.getAngle())
         j = coordinate.getRadius()*sin(coordinate.getAngle())
-        return UnwritableVectorIJ(i, j)
+        return VectorIJ(i, j)

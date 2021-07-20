@@ -9,14 +9,11 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class VectorIJ(UnwritableVectorIJ):
+class VectorIJ:
     """A 2-D vector.
 
     Writable subclass of the unwritable 2D vector parent completing the
@@ -33,56 +30,47 @@ class VectorIJ(UnwritableVectorIJ):
     @author G.K.Stephens copy and extension of F.S.Turner
     """
 
-    # The ZERO vector.
-    ZERO = UnwritableVectorIJ(0, 0)
-
-    # The I basis vector: (1,0).
-    I = UnwritableVectorIJ(1, 0)
-
-    # The J basis vector: (0,1).
-    J = UnwritableVectorIJ(0, 1)
-
-    # The negative of the I basis vector: (-1,0).
-    MINUS_I = UnwritableVectorIJ(-1, 0)
-
-    # The negative of the J basis vector: (0,-1).
-    MINUS_J = UnwritableVectorIJ(0, -1)
-
     def __init__(self, *args):
         """Build a new object."""
         if len(args) == 0:
             # Construct a vector with an initial value of 0.
-            UnwritableVectorIJ.__init__(self, 0.0, 0.0)
+            self.i = 0
+            self.j = 0
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a vector from the first two elements of an array
                 # of doubles.
                 (data,) = args
-                UnwritableVectorIJ.__init__(self, data)
+                self.i = data[0]
+                self.j = data[1]
             elif isinstance(args[0], VectorIJ):
                 # Copy constructor, creates a vector by copying the values of
                 # a pre-exisiting one.
                 (vector,) = args
-                UnwritableVectorIJ.__init__(self, vector)
+                self.i = vector.i
+                self.j = vector.j
             else:
                 raise Exception
         elif len(args) == 2:
             if isRealNumber(args[0]) and isRealNumber(args[1]):
                 # Constructs a vector from two basic components.
                 (i, j) = args
-                UnwritableVectorIJ.__init__(self, i, j)
+                self.i = i
+                self.j = j
             elif isinstance(args[0], int) and isinstance(args[1], list):
                 # Constructs a vector from the two elements of an array of
                 # double starting with the offset index.
                 (offset, data) = args
-                UnwritableVectorIJ.__init__(self, offset, data)
+                self.i = data[offset]
+                self.j = data[offset + 1]
             elif isRealNumber(args[0]) and isinstance(args[1], VectorIJ):
                 # Scaling constructor, creates a new vector by applying a
                 # scalar multiple to the components of a pre-existing vector.
                 # This results in (scale*vector) being stored in the newly
                 # constructed vector.
                 (scale, vector) = args
-                UnwritableVectorIJ.__init__(self, scale, vector)
+                self.i = scale*vector.i
+                self.j = scale*vector.j
             else:
                 raise Exception
         else:
@@ -564,3 +552,19 @@ class VectorIJ(UnwritableVectorIJ):
             return buffer.setTo(i, j)
         else:
             raise Exception
+
+
+# The ZERO vector.
+ZERO = VectorIJ(0, 0)
+
+# The I basis vector: (1,0).
+I = VectorIJ(1, 0)
+
+# The J basis vector: (0,1).
+J = VectorIJ(0, 1)
+
+# The negative of the I basis vector: (-1,0).
+MINUS_I = VectorIJ(-1, 0)
+
+# The negative of the J basis vector: (0,-1).
+MINUS_J = VectorIJ(0, -1)

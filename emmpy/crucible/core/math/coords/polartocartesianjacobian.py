@@ -8,7 +8,6 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 )
 from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.coords.transformationij import TransformationIJ
-from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
 
 
 class PolarToCartesianJacobian(TransformationIJ):

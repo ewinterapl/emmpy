@@ -2,9 +2,6 @@ from math import cos, pi, sin, sqrt
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
@@ -36,8 +33,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.ji, -8)
         self.assertAlmostEqual(m2.ij, -4)
         self.assertAlmostEqual(m2.jj, -10)
-        v1 = UnwritableVectorIJ(1, 2)
-        v2 = UnwritableVectorIJ(3, 4)
+        v1 = VectorIJ(1, 2)
+        v2 = VectorIJ(3, 4)
         m = MatrixIJ(v1, v2)
         self.assertAlmostEqual(m.ii, 1)
         self.assertAlmostEqual(m.ji, 2)
@@ -253,8 +250,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m1.ji, -4)
         self.assertAlmostEqual(m1.ij, -6)
         self.assertAlmostEqual(m1.jj, -8)
-        v1 = UnwritableVectorIJ(1, 2)
-        v2 = UnwritableVectorIJ(3, 4)
+        v1 = VectorIJ(1, 2)
+        v2 = VectorIJ(3, 4)
         m2 = m1.setTo(v1, v2)
         self.assertIs(m2, m1)
         self.assertAlmostEqual(m1.ii, 1)

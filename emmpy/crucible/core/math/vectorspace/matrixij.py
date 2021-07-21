@@ -2,18 +2,39 @@
 
 
 from math import sqrt
-
+import sys
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
+    computeDeterminant,
     computeNorm
-)
-from emmpy.crucible.core.math.vectorspace.unwritablematrixij import (
-    UnwritableMatrixIJ
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class MatrixIJ(UnwritableMatrixIJ):
+# Default tolerance for determining if a matrix is invertible. The
+# determinant must be greater than this tolerance:
+# {@value #INVERSION_TOLERANCE}
+INVERSION_TOLERANCE = 1E-16
+
+# One of the two default tolerances that control how close to a rotation a
+# rotation matrix must be. This value determines how far off unity the norm
+# of the column vectors of a matrix must be. Currently it is set to:
+# {@value #NORM_TOLERANCE}
+NORM_TOLERANCE = 1E-4
+
+# The other of the two default tolerances that control how close to a
+# rotation a rotation matrix must be. This value determines how far off
+# unity the determinant of the matrix must be. Currently it is set to:
+# {@value #DETERMINANT_TOLERANCE}
+DETERMINANT_TOLERANCE = 1E-4
+
+# The bound defining the boundary length at which the invort procedure
+# works with double precision. Note: this is necessary because larger
+# negative exponents are captured by 64 IEEE doubles than positive ones.
+INVORSION_BOUND = sys.float_info.max
+
+
+class MatrixIJ:
     """A writable 2-D matrix..
 
     This class contains the mutator methods necessary to set or alter the
@@ -22,20 +43,12 @@ class MatrixIJ(UnwritableMatrixIJ):
     @author G.K.Stephens copy and extension of F.S.Turner
     """
 
-    # The matrix whose components are all zero.
-    ZEROS = UnwritableMatrixIJ(0, 0, 0, 0)
-
-    # The matrix whose components are all ones.
-    ONES = UnwritableMatrixIJ(1, 1, 1, 1)
-
-    # The multiplicative identity.
-    IDENTITY = UnwritableMatrixIJ(1, 0, 0, 1)
-
     def __init__(self, *args):
         """Build a new object."""
         if len(args) == 0:
             # Construct a matrix with an initial value of {@link #IDENTITY}.
-            UnwritableMatrixIJ.__init__(self, self.IDENTITY)
+            data = (1, 0, 0, 1)
+            self.__init__(*data)
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a matrix from the upper two by two block of a two
@@ -45,30 +58,30 @@ class MatrixIJ(UnwritableMatrixIJ):
                 # does not contain at least two arrays of arrays of length
                 # two or greater.
                 (data,) = args
-                UnwritableMatrixIJ.__init__(self, data)
+                self.__init__(data[0][0], data[1][0], data[0][1], data[1][1])
             else:
                 # Copy constructor, creates a matrix by copying the values of a
                 # pre-existing one.
                 # @param matrix the matrix whose contents are to be copied.
-                (matrix,) = args
-                UnwritableMatrixIJ.__init__(self, matrix)
+                (m,) = args
+                self.__init__(m.ii, m.ji, m.ij, m.jj)
         elif len(args) == 2:
             if isRealNumber(args[0]) and isinstance(args[1],
-                                                    UnwritableMatrixIJ):
+                                                    MatrixIJ):
                 # Scaling constructor, creates a new matrix by applying a
                 # scalar multiple to the components of a pre-existing matrix.
                 # @param scale the scale factor to apply
                 # @param matrix the matrix whose components are to be scaled
                 # and copied
-                (scale, matrix) = args
-                UnwritableMatrixIJ.__init__(self, scale, matrix)
+                (s, m) = args
+                self.__init__(s*m.ii, s*m.ji, s*m.ij, s*m.jj)
             else:
                 # Column vector constructor, creates a new matrix by populating
                 # the columns of the matrix with the supplied vectors.
                 # @param ithColumn the vector containing the ith column
                 # @param jthColumn the vector containing the jth column
-                (ithColumn, jthColumn) = args
-                UnwritableMatrixIJ.__init__(self, ithColumn, jthColumn)
+                (colI, colJ) = args
+                self.__init__(colI.i, colI.j, colJ.i, colJ.j)
         elif len(args) == 3:
             # Column scaling constructor, creates a new matrix by applying
             # scalar multiples to each column of a pre-existing matrix.
@@ -76,8 +89,8 @@ class MatrixIJ(UnwritableMatrixIJ):
             # @param scaleJ the scale factor to apply to the jth column
             # @param matrix the matrix whose columns are to be scaled and
             # copied
-            (scaleI, scaleJ, matrix) = args
-            UnwritableMatrixIJ.__init__(self, scaleI, scaleJ, matrix)
+            (sI, sJ, m) = args
+            self.__init__(sI*m.ii, sI*m.ji, sJ*m.ij, sJ*m.jj)
         elif len(args) == 4:
             if (isRealNumber(args[0]) and isRealNumber(args[1]) and
                 isRealNumber(args[2]) and isRealNumber(args[3])):
@@ -87,7 +100,10 @@ class MatrixIJ(UnwritableMatrixIJ):
                 # @param ij ith row, jth column element
                 # @param jj jth row, jth column element
                 (ii, ji, ij, jj) = args
-                UnwritableMatrixIJ.__init__(self, ii, ji, ij, jj)
+                self.ii = ii
+                self.ji = ji
+                self.ij = ij
+                self.jj = jj
             else:
                 # Scaled column vector constructor, creates a new matrix by
                 # populating the columns of the matrix with scaled versions of
@@ -96,10 +112,8 @@ class MatrixIJ(UnwritableMatrixIJ):
                 # @param ithColumn the vector containing the ith column
                 # @param scaleJ the scale factor to apply to the jth column
                 # @param jthColumn the vector containing the jth column
-                (scaleI, ithColumn, scaleJ, jthColumn) = args
-                UnwritableMatrixIJ.__init__(self,
-                                            scaleI, ithColumn,
-                                            scaleJ, jthColumn)
+                (sI, colI, sJ, colJ) = args
+                self.__init__(sI*colI.i, sI*colI.j, sJ*colJ.i, sJ*colJ.j)
         else:
             raise Exception
 
@@ -159,7 +173,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             # @throws UnsupportedOperationException if the determinant of the
             # instance is within {@link UnwritableMatrixIJ#INVERSION_TOLERANCE}
             # of 0.0.
-            return self.invert(UnwritableMatrixIJ.INVERSION_TOLERANCE)
+            return self.invert(INVERSION_TOLERANCE)
         elif len(args) == 1:
             # Invert the matrix if the determinant is within the supplied
             # tolerance of zero.
@@ -193,7 +207,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         self.transpose()
 
         length = computeNorm(self.ii, self.ij)
-        if length*UnwritableMatrixIJ.INVORSION_BOUND < 1 or length == 0:
+        if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
                 "inverse." % length)
@@ -203,7 +217,7 @@ class MatrixIJ(UnwritableMatrixIJ):
         self.ij /= length
 
         length = computeNorm(self.ji, self.jj)
-        if length*MatrixIJ.INVORSION_BOUND < 1 or length == 0:
+        if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "jth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
@@ -337,7 +351,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 (data,) = args
                 self.setTo(data[0][0], data[1][0], data[0][1], data[1][1])
                 return self
-            elif isinstance(args[0], UnwritableMatrixIJ):
+            elif isinstance(args[0], MatrixIJ):
                 # Sets the contents of this matrix to match those of a supplied
                 # matrix
                 # @param matrix the matrix to copy
@@ -348,7 +362,7 @@ class MatrixIJ(UnwritableMatrixIJ):
                 return self
         elif len(args) == 2:
             if isRealNumber(args[0]) and isinstance(args[1],
-                                                    UnwritableMatrixIJ):
+                                                    MatrixIJ):
                 # Sets the contents of this matrix to a scaled version of the
                 # supplied matrix
                 # @param scale the scale factor to apply to matrix
@@ -445,7 +459,7 @@ class MatrixIJ(UnwritableMatrixIJ):
             # within {@link UnwritableMatrixIJ#INVERSION_TOLERANCE} of 0.0.
             (matrix,) = args
             det = matrix.getDeterminant()
-            if abs(det) < UnwritableMatrixIJ.DETERMINANT_TOLERANCE:
+            if abs(det) < DETERMINANT_TOLERANCE:
                 raise Exception(
                     "Matrix nearly singular, unable to invert.")
             self.setTo(matrix)
@@ -888,10 +902,14 @@ class MatrixIJ(UnwritableMatrixIJ):
         """
         if len(args) == 2:
             (m, v) = args
-            return UnwritableMatrixIJ.mtxv(m, v, VectorIJ())
+            return MatrixIJ.mtxv(m, v, VectorIJ())
         elif len(args) == 3:
             (m, v, buffer) = args
-            return UnwritableMatrixIJ.mtxv(m, v, buffer)
+            i = m.ii*v.i + m.ji*v.j
+            j = m.ij*v.i + m.jj*v.j
+            buffer.i = i
+            buffer.j = j
+            return buffer
 
     @staticmethod
     def mxv(*args):
@@ -912,7 +930,28 @@ class MatrixIJ(UnwritableMatrixIJ):
         """
         if len(args) == 2:
             (m, v) = args
-            return UnwritableMatrixIJ.mxv(m, v, VectorIJ())
+            return MatrixIJ.mxv(m, v, VectorIJ())
         elif len(args) == 3:
             (m, v, buffer) = args
-            return UnwritableMatrixIJ.mxv(m, v, buffer)
+            i = m.ii*v.i + m.ij*v.j
+            j = m.ji*v.i + m.jj*v.j
+            buffer.i = i
+            buffer.j = j
+            return buffer
+
+    def getDeterminant(self):
+        """Compute the determinant of the matrix.
+
+        @return the determinant of the instance
+        """
+        return computeDeterminant(self.ii, self.ji, self.ij, self.jj)
+
+
+# The matrix whose components are all zero.
+ZEROS = MatrixIJ(0, 0, 0, 0)
+
+# The matrix whose components are all ones.
+ONES = MatrixIJ(1, 1, 1, 1)
+
+# The multiplicative identity.
+IDENTITY = MatrixIJ(1, 0, 0, 1)

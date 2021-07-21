@@ -18,9 +18,7 @@ from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -30,8 +28,8 @@ class TestBuilder(unittest.TestCase):
         self.assertIsNotNone(vfvc)
 
     def test_convertToCylindrical(self):
-        cartesianPosition = UnwritableVectorIJK(1, 2, 3)
-        cartesianValue = UnwritableVectorIJK(4, 5, 6)
+        cartesianPosition = VectorIJK(1, 2, 3)
+        cartesianValue = VectorIJK(4, 5, 6)
         cartesian = CartesianVectorFieldValue(
             cartesianPosition, cartesianValue
         )
@@ -59,8 +57,8 @@ class TestBuilder(unittest.TestCase):
             VectorFieldValueConversions.convertToCylindrical(None, None, None)
 
     def test_convertToSpherical(self):
-        cartesianPosition = UnwritableVectorIJK(1, 2, 3)
-        cartesianValue = UnwritableVectorIJK(4, 5, 6)
+        cartesianPosition = VectorIJK(1, 2, 3)
+        cartesianValue = VectorIJK(4, 5, 6)
         cartesian = CartesianVectorFieldValue(
             cartesianPosition, cartesianValue
         )

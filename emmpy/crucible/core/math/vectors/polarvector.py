@@ -6,7 +6,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectors.vector2d import Vector2D
+from emmpy.math.vectors.vector2d import Vector2D
 
 
 class PolarVector(Vector2D):

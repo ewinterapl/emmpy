@@ -2,9 +2,7 @@ from math import cos, pi, sin, sqrt
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -60,9 +58,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, -12)
         self.assertAlmostEqual(m2.kk, -18)
         # 3 args - column vectors
-        v1 = UnwritableVectorIJK(1, 2, 3)
-        v2 = UnwritableVectorIJK(4, 5, 6)
-        v3 = UnwritableVectorIJK(7, 8, 9)
+        v1 = VectorIJK(1, 2, 3)
+        v2 = VectorIJK(4, 5, 6)
+        v3 = VectorIJK(7, 8, 9)
         m = MatrixIJK(v1, v2, v3)
         self.assertAlmostEqual(m.ii, 1)
         self.assertAlmostEqual(m.ji, 2)
@@ -332,7 +330,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_setIthColumn(self):
         m = MatrixIJK()
-        v = UnwritableVectorIJK(1, 2, 3)
+        v = VectorIJK(1, 2, 3)
         m.setIthColumn(v)
         self.assertAlmostEqual(m.ii, 1)
         self.assertAlmostEqual(m.ji, 2)
@@ -340,7 +338,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_setJthColumn(self):
         m = MatrixIJK()
-        v = UnwritableVectorIJK(1, 2, 3)
+        v = VectorIJK(1, 2, 3)
         m.setJthColumn(v)
         self.assertAlmostEqual(m.ij, 1)
         self.assertAlmostEqual(m.jj, 2)
@@ -348,7 +346,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_setKthColumn(self):
         m = MatrixIJK()
-        v = UnwritableVectorIJK(1, 2, 3)
+        v = VectorIJK(1, 2, 3)
         m.setKthColumn(v)
         self.assertAlmostEqual(m.ik, 1)
         self.assertAlmostEqual(m.jk, 2)
@@ -356,7 +354,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_setColumn(self):
         m = MatrixIJK()
-        v = UnwritableVectorIJK(1, 2, 3)
+        v = VectorIJK(1, 2, 3)
         m.setColumn(0, v)
         self.assertAlmostEqual(m.ii, 1)
         self.assertAlmostEqual(m.ji, 2)
@@ -411,9 +409,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, -16)
         self.assertAlmostEqual(m2.kk, -18)
         # 3 args - column vectors
-        v1 = UnwritableVectorIJK(1, 2, 3)
-        v2 = UnwritableVectorIJK(4, 5, 6)
-        v3 = UnwritableVectorIJK(7, 8, 9)
+        v1 = VectorIJK(1, 2, 3)
+        v2 = VectorIJK(4, 5, 6)
+        v3 = VectorIJK(7, 8, 9)
         m3 = m2.setTo(v1, v2, v3)
         self.assertIs(m3, m2)
         self.assertAlmostEqual(m2.ii, 1)
@@ -833,7 +831,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_mtxv(self):
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v1 = UnwritableVectorIJK(1, 2, 3)
+        v1 = VectorIJK(1, 2, 3)
         v2 = MatrixIJK.mtxv(m, v1)
         self.assertAlmostEqual(v2.i, 1*1 + 2*2 + 3*3)
         self.assertAlmostEqual(v2.j, 4*1 + 5*2 + 6*3)
@@ -847,7 +845,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_mxv(self):
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        v1 = UnwritableVectorIJK(1, 2, 3)
+        v1 = VectorIJK(1, 2, 3)
         v2 = MatrixIJK.mxv(m, v1)
         self.assertAlmostEqual(v2.i, 1*1 + 4*2 + 7*3)
         self.assertAlmostEqual(v2.j, 2*1 + 5*2 + 8*3)

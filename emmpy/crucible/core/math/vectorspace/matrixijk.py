@@ -22,20 +22,11 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class MatrixIJK(UnwritableMatrixIJK):
     """A writable 3-D matrix."""
 
-    # The matrix whose components are all zero.
-    ZEROS = UnwritableMatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-    # The matrix whose components are all ones.
-    ONES = UnwritableMatrixIJK(1, 1, 1, 1, 1, 1, 1, 1, 1)
-
-    # The multiplicative identity.
-    IDENTITY = UnwritableMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
-
     def __init__(self, *args):
         """Build a new object."""
         if len(args) == 0:
             # Construct a matrix with an initial value of {@link #IDENTITY}.
-            UnwritableMatrixIJK.__init__(self, MatrixIJK.IDENTITY)
+            UnwritableMatrixIJK.__init__(self, IDENTITY)
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a matrix from the upper three by three block of a
@@ -966,3 +957,13 @@ class MatrixIJK(UnwritableMatrixIJK):
         #     return UnwritableMatrixIJK.mxv(m, v, buffer)
         else:
             raise Exception
+
+
+# The matrix whose components are all zero.
+ZEROS = MatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+# The matrix whose components are all ones.
+ONES = MatrixIJK(1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+# The multiplicative identity.
+IDENTITY = MatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)

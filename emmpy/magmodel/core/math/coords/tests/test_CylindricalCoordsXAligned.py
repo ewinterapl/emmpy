@@ -3,9 +3,7 @@ import unittest
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -16,7 +14,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_convert(self):
         ccxa = CylindricalCoordsXAligned()
-        cartesian = UnwritableVectorIJK(1, 2, 3)
+        cartesian = VectorIJK(1, 2, 3)
         cylindrical = ccxa.convert(cartesian)
         self.assertIsNotNone(cylindrical)
         self.assertAlmostEqual(cylindrical.getI(), 3.6055512754639896)

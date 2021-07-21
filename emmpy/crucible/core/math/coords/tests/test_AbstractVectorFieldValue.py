@@ -3,9 +3,6 @@ import unittest
 from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
     AbstractVectorFieldValue
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
 
 
 class TestBuilder(unittest.TestCase):

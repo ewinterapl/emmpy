@@ -6,9 +6,7 @@ from emmpy.crucible.core.math.coords.polarcoordconverter import (
 from emmpy.crucible.core.math.coords.polarvector import (
     PolarVector
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorij import (
-    UnwritableVectorIJ
-)
+from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class TestBuilder(unittest.TestCase):
@@ -19,7 +17,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_toCoordinate(self):
         pcc = PolarCoordConverter()
-        cartesian = UnwritableVectorIJ(1, 2)
+        cartesian = VectorIJ(1, 2)
         polar = pcc.toCoordinate(cartesian)
         self.assertAlmostEqual(polar.getI(), 2.2360679774998)
         self.assertAlmostEqual(polar.getJ(), 1.1071487177941)

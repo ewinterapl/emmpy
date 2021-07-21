@@ -8,9 +8,7 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
-from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
-    UnwritableMatrixIJK
-)
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
     UnwritableRotationMatrixIJK
 )
@@ -72,7 +70,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                 # @param matrix the matrix whose contents are to be copied.
                 (matrix,) = args
                 UnwritableRotationMatrixIJK.__init__(self, matrix)
-            elif isinstance(args[0], UnwritableMatrixIJK):
+            elif isinstance(args[0], MatrixIJK):
                 # Copy constructor, of sorts, creates a matrix by copying the
                 # values of a pre-existing matrix.
                 # Note: This constructor performs no validation on the input by
@@ -297,7 +295,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                 self.jk = matrix.jk
                 self.kk = matrix.kk
                 return self
-            elif isinstance(args[0], UnwritableMatrixIJK):
+            elif isinstance(args[0], MatrixIJK):
                 # Sets the contents of this matrix to match those of a
                 # supplied matrix
                 # @param matrix the matrix to copy
@@ -400,7 +398,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         if isinstance(matrix, UnwritableRotationMatrixIJK):
             self.setTo(matrix)
             return self.sharpen()
-        elif isinstance(matrix, UnwritableMatrixIJK):
+        elif isinstance(matrix, MatrixIJK):
             self.setTo(matrix)
             return self.sharpen()
 
@@ -414,7 +412,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         if isinstance(matrix, UnwritableRotationMatrixIJK):
             self.setTo(matrix)
             return self.transpose()
-        elif isinstance(matrix, UnwritableMatrixIJK):
+        elif isinstance(matrix, MatrixIJK):
             self.setTo(matrix)
             return self.transpose()
 

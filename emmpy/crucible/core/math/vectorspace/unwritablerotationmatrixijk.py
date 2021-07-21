@@ -8,12 +8,14 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
-from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
-    UnwritableMatrixIJK
+from emmpy.crucible.core.math.vectorspace.matrixijk import (
+    MatrixIJK,
+    DETERMINANT_TOLERANCE,
+    NORM_TOLERANCE
 )
 
 
-class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
+class UnwritableRotationMatrixIJK(MatrixIJK):
     """An unwritable 3-D rotation matrix.
 
     A weakly immutable extension of the unwritable matrix class designed to
@@ -58,15 +60,15 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
             matrix.ii, matrix.ji, matrix.ki,
             matrix.ij, matrix.jj, matrix.kj,
             matrix.ik, matrix.jk, matrix.kk,
-            UnwritableMatrixIJK.NORM_TOLERANCE,
-            UnwritableMatrixIJK.DETERMINANT_TOLERANCE)
+            NORM_TOLERANCE,
+            DETERMINANT_TOLERANCE)
 
     def __init__(self, *args):
         """Build a new object."""
         if len(args) == 0:
             # Protected no argument, no operation constructor for subclasses to
             # utilize.
-            UnwritableMatrixIJK.__init__(self)
+            MatrixIJK.__init__(self)
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a matrix from the upper three by three block of a
@@ -89,8 +91,8 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
                 # pre-existing instance of the parent unwritable matrix class.
                 # @param matrix the matrix whose contents are to be copied.
                 (matrix,) = args
-                UnwritableMatrixIJK.__init__(self, matrix)
-            elif isinstance(args[0], UnwritableMatrixIJK):
+                MatrixIJK.__init__(self, matrix)
+            elif isinstance(args[0], MatrixIJK):
                 # Copy constructor, of sorts, creates a matrix by copying the
                 # values of a pre-existing matrix.
                 # Note: This constructor performs no validation on the input
@@ -103,7 +105,9 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
                 # determinant is not within
                 # {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
                 (matrix,) = args
-                UnwritableMatrixIJK.__init__(self, matrix)
+                MatrixIJK.__init__(self, matrix)
+            else:
+                raise TypeError
         elif len(args) == 2:
             # Scaling constructor, creates a new matrix by applying a scalar
             # multiple to the components of a pre-existing matrix.
@@ -184,7 +188,7 @@ class UnwritableRotationMatrixIJK(UnwritableMatrixIJK):
             # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            UnwritableMatrixIJK.__init__(self,
+            MatrixIJK.__init__(self,
                                          ii, ji, ki,
                                          ij, jj, kj,
                                          ik, jk, kk)

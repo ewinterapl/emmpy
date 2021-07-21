@@ -3,8 +3,8 @@
 
 from math import acos, cos, sin, sqrt
 
-from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
-    UnwritableRotationMatrixIJK
+from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
+    RotationMatrixIJK
 )
 from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK

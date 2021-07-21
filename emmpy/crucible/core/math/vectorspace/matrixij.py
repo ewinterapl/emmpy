@@ -946,6 +946,22 @@ class MatrixIJ:
         """
         return computeDeterminant(self.ii, self.ji, self.ij, self.jj)
 
+    def getII(self):
+        """Get the ith row, ith column component."""
+        return self.ii
+
+    def getJI(self):
+        """Get the jth row, ith column component."""
+        return self.ji
+
+    def getIJ(self):
+        """Get the ith row, jth column component."""
+        return self.ij
+
+    def getJJ(self):
+        """Get the jth row, jth column component."""
+        return self.jj
+
 
 # The matrix whose components are all zero.
 ZEROS = MatrixIJ(0, 0, 0, 0)

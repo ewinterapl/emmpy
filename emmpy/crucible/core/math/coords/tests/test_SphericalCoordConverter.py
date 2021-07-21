@@ -6,9 +6,7 @@ from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
 from emmpy.crucible.core.math.coords.sphericalvector import (
     SphericalVector
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -19,7 +17,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_toCoordinate(self):
         scc = SphericalCoordConverter()
-        cartesian = UnwritableVectorIJK(1, 2, 3)
+        cartesian = VectorIJK(1, 2, 3)
         spherical = scc.toCoordinate(cartesian)
         self.assertAlmostEqual(spherical.getI(), 3.741657386773941)
         self.assertAlmostEqual(spherical.getJ(), 0.6405223126794246)

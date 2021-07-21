@@ -6,9 +6,7 @@ from emmpy.crucible.core.math.coords.radeccoordconverter import (
 from emmpy.crucible.core.math.coords.radecvector import (
     RaDecVector
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -19,7 +17,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_toCoordinate(self):
         rdcc = RaDecCoordConverter()
-        cartesian = UnwritableVectorIJK(1, 2, 3)
+        cartesian = VectorIJK(1, 2, 3)
         radv = rdcc.toCoordinate(cartesian)
         self.assertAlmostEqual(radv.getRadius(), 3.741657386773941)
         self.assertAlmostEqual(radv.getRightAscension(), 1.1071487177940904)

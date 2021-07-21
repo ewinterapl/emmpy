@@ -1009,6 +1009,42 @@ class MatrixIJK:
             self.ij, self.jj, self.kj,
             self.ik, self.jk, self.kk)
 
+    def getII(self):
+        """Get the ith row, ith column component."""
+        return self.ii
+
+    def getJI(self):
+        """Get the jth row, ith column component."""
+        return self.ji
+
+    def getKI(self):
+        """Get the kth row, ith column component."""
+        return self.ki
+
+    def getIJ(self):
+        """Get the ith row, jth column component."""
+        return self.ij
+
+    def getJJ(self):
+        """Get the jth row, jth column component."""
+        return self.jj
+
+    def getKJ(self):
+        """Get the kth row, jth column component."""
+        return self.kj
+
+    def getIK(self):
+        """Get the ith row, kth column component."""
+        return self.ik
+
+    def getJK(self):
+        """Get the jth row, kth column component."""
+        return self.jk
+
+    def getKK(self):
+        """Get the kth row, kth column component."""
+        return self.kk
+
 
 # The matrix whose components are all zero.
 ZEROS = MatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)

@@ -553,6 +553,12 @@ class VectorIJ:
         else:
             raise Exception
 
+    def getI(self):
+        return self.i
+
+    def getJ(self):
+        return self.j
+
 
 # The ZERO vector.
 ZERO = VectorIJ(0, 0)

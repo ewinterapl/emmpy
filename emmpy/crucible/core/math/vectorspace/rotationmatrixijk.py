@@ -8,7 +8,11 @@ from emmpy.crucible.core.math.vectorspace.internaloperations import (
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.matrixijk import (
+    MatrixIJK,
+    DETERMINANT_TOLERANCE,
+    NORM_TOLERANCE
+)
 from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
     UnwritableRotationMatrixIJK
 )
@@ -372,8 +376,8 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             try:
                 checkRotation(
                     ii, ji, ki, ij, jj, kj, ik, jk, kk,
-                    UnwritableRotationMatrixIJK.NORM_TOLERANCE,
-                    UnwritableRotationMatrixIJK.DETERMINANT_TOLERANCE)
+                    NORM_TOLERANCE,
+                    DETERMINANT_TOLERANCE)
             except MalformedRotationException as e:
                 raise Exception(
                     "Matrix components do not describe a rotation.", e)

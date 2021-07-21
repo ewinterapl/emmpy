@@ -62,9 +62,9 @@ class VectorIJK:
                 # does not contain three elements at indices offset through
                 # offset + 2
                 (index, data) = args
-                self.i = data[offset]
-                self.j = data[offset + 1]
-                self.k = data[offset + 2]
+                self.i = data[index]
+                self.j = data[index + 1]
+                self.k = data[index + 2]
             elif (isRealNumber(args[0]) and
                   isinstance(args[1], VectorIJK)):
                 # Scaling constructor, creates a new vector by applying a

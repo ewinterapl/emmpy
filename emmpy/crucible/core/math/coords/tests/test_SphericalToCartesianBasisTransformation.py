@@ -7,12 +7,8 @@ from emmpy.crucible.core.math.coords.sphericalvector import (
     SphericalVector
 )
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
-    UnwritableMatrixIJK
-)
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -55,7 +51,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_mxv(self):
         s2cbt = SphericalToCartesianBasisTransformation()
-        jacobian = UnwritableMatrixIJK(
+        jacobian = MatrixIJK(
             -0.4161468365471424, -0.9092974268256817, 0,
             0.9092974268256817, -0.4161468365471424, 0,
             0, 0, 1
@@ -66,7 +62,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.getJ(), -1.7415910999199666)
         self.assertAlmostEqual(v.getK(), 3)
         jacobianInverse = jacobian.createInverse()
-        cartVelocity = UnwritableVectorIJK(1, 2, 3)
+        cartVelocity = VectorIJK(1, 2, 3)
         v = s2cbt.mxv(jacobianInverse, cartVelocity)
         self.assertAlmostEqual(v.getI(), -2.234741690198506)
         self.assertAlmostEqual(v.getJ(), 0.0770037537313969)

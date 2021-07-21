@@ -6,9 +6,7 @@ from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
 from emmpy.crucible.core.math.coords.latitudinalvector import (
     LatitudinalVector
 )
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -19,7 +17,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_toCoordinate(self):
         lcc = LatitudinalCoordConverter()
-        cart = UnwritableVectorIJK(1, 2, 3)
+        cart = VectorIJK(1, 2, 3)
         latv = lcc.toCoordinate(cart)
         self.assertAlmostEqual(latv.getI(), 3.741657386773941)
         self.assertAlmostEqual(latv.getJ(), 0.9302740141154721)

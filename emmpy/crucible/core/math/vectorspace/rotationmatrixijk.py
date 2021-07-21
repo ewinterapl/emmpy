@@ -13,12 +13,9 @@ from emmpy.crucible.core.math.vectorspace.matrixijk import (
     DETERMINANT_TOLERANCE,
     NORM_TOLERANCE
 )
-from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
-    UnwritableRotationMatrixIJK
-)
 
 
-class RotationMatrixIJK(UnwritableRotationMatrixIJK):
+class RotationMatrixIJK(MatrixIJK):
     """A 3-D rotation matrix.
 
     A writable subclass of the unwritable 3D rotation matrix parent
@@ -43,16 +40,12 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
     @author F.S.Turner
     """
 
-    # Instance of a rotation matrix capturing the content of the multiplicative
-    # identity.
-    IDENTITY = UnwritableRotationMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
-
     def __init__(self, *args):
         """Build a new object."""
         if len(args) == 0:
             # Creates a rotation matrix and sets it to the identity.
-            UnwritableRotationMatrixIJK.__init__(self,
-                                                 RotationMatrixIJK.IDENTITY)
+            data = (1, 0, 0, 0, 1, 0, 0, 0, 1)
+            self.__init__(*data)
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a matrix from the upper three by three block of a
@@ -67,13 +60,17 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                 # determinant is not within
                 # {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
                 (data,) = args
-                UnwritableRotationMatrixIJK.__init__(self, data)
-            elif isinstance(args[0], UnwritableRotationMatrixIJK):
+                self.__init__(data[0][0], data[1][0], data[2][0],
+                              data[0][1], data[1][1], data[2][1],
+                              data[0][2], data[1][2], data[2][2])
+            elif isinstance(args[0], RotationMatrixIJK):
                 # Copy constructor, creates a matrix by copying the values of a
                 # pre-existing instance of the parent unwritable matrix class.
                 # @param matrix the matrix whose contents are to be copied.
-                (matrix,) = args
-                UnwritableRotationMatrixIJK.__init__(self, matrix)
+                (m,) = args
+                self.__init__(m.ii, m.ji, m.ki,
+                              m.ij, m.jj, m.kj,
+                              m.ik, m.jk, m.kk)
             elif isinstance(args[0], MatrixIJK):
                 # Copy constructor, of sorts, creates a matrix by copying the
                 # values of a pre-existing matrix.
@@ -86,8 +83,10 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                 # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the
                 # determinant is not within
                 # {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
-                (matrix,) = args
-                UnwritableRotationMatrixIJK.__init__(self, matrix)
+                (m,) = args
+                self.__init__(m.ii, m.ji, m.ki,
+                              m.ij, m.jj, m.kj,
+                              m.ik, m.jk, m.kk)
         elif len(args) == 2:
             # Scaling constructor, creates a new matrix by applying a scalar
             # multiple to the components of a pre-existing matrix.
@@ -98,8 +97,10 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             # supplied matrix have norms that are not within
             # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
-            (scale, matrix) = args
-            UnwritableRotationMatrixIJK.__init__(self, scale, matrix)
+            (s, m) = args
+            self.__init__(s*m.ii, s*m.ji, s*m.ki,
+                          s*m.ij, s*m.jj, s*m.kj,
+                          s*m.ik, s*m.jk, s*m.kk)
         elif len(args) == 3:
             # Column vector constructor, creates a new matrix by populating the
             # columns of the rotation matrix with the supplied vectors.
@@ -110,9 +111,10 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             # supplied matrix have norms that are not within
             # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
-            (ithColumn, jthColumn, kthColumn) = args
-            UnwritableRotationMatrixIJK.__init__(self, ithColumn, jthColumn,
-                                                 kthColumn)
+            (colI, colJ, colK) = args
+            self.__init__(colI.i, colI.j, colI.k,
+                          colJ.i, colJ.j, colJ.k,
+                          colK.i, colK.j, colK.k)
         elif len(args) == 4:
             # Column scaling constructor, creates a new rotation matrix by
             # applying scalar multiples to the columns of a pre-existing
@@ -126,9 +128,10 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             # supplied matrix have norms that are not within
             # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
-            (scaleI, scaleJ, scaleK, matrix) = args
-            UnwritableRotationMatrixIJK.__init__(self, scaleI, scaleJ, scaleK,
-                                                 matrix)
+            (sI, sJ, sK, m) = args
+            self.__init__(sI*m.ii, sI*m.ji, sI*m.ki,
+                          sJ*m.ij, sJ*m.jj, sJ*m.kj,
+                          sK*m.ik, sK*m.jk, sK*m.kk)
         elif len(args) == 6:
             # Scaled column vector constructor, creates a new rotation matrix
             # by populating the columns of the matrix with scaled versions of
@@ -143,9 +146,10 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             # supplied matrix have norms that are not within
             # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
-            (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
-            UnwritableRotationMatrixIJK.__init__(
-                self, scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn)
+            (sI, colI, sJ, colJ, sK, colK) = args
+            self.__init__(sI*colI.i, sI*colI.j, sI*colI.k,
+                          sJ*colJ.i, sJ*colJ.j, sJ*colJ.k,
+                          sK*colK.i, sK*colK.j, sK*colK.k)
         elif len(args) == 9:
             # Constructs a rotation matrix from the nine basic components.
             # @param ii ith row, ith column element
@@ -162,8 +166,15 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             # {@link UnwritableMatrixIJK#NORM_TOLERANCE} or if the determinant
             # is not within {@link UnwritableMatrixIJK#DETERMINANT_TOLERANCE}.
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            UnwritableRotationMatrixIJK.__init__(
-                self, ii, ji, ki, ij, jj, kj, ik, jk, kk)
+            self.ii = ii
+            self.ji = ji
+            self.ki = ki
+            self.ij = ij
+            self.jj = jj
+            self.kj = kj
+            self.ik = ik
+            self.jk = jk
+            self.kk = kk
 
     def createSharpened(self):
         """Create a "sharpened" copy of the matrix.
@@ -282,7 +293,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
                            data[0][1], data[1][1], data[2][1],
                            data[0][2], data[1][2], data[2][2])
                 return self
-            elif isinstance(args[0], UnwritableRotationMatrixIJK):
+            elif isinstance(args[0], RotationMatrixIJK):
                 # Sets the contents of this rotation matrix to match those of a
                 # supplied rotation matrix
                 # @param matrix the matrix to copy
@@ -399,7 +410,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         @return a reference to the instance, with the contents set to
         the sharpened version of matrix
         """
-        if isinstance(matrix, UnwritableRotationMatrixIJK):
+        if isinstance(matrix, RotationMatrixIJK):
             self.setTo(matrix)
             return self.sharpen()
         elif isinstance(matrix, MatrixIJK):
@@ -413,7 +424,7 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
         @return a reference to the instance, with the contents set to the
         tranposed version of matrix
         """
-        if isinstance(matrix, UnwritableRotationMatrixIJK):
+        if isinstance(matrix, RotationMatrixIJK):
             self.setTo(matrix)
             return self.transpose()
         elif isinstance(matrix, MatrixIJK):
@@ -577,3 +588,8 @@ class RotationMatrixIJK(UnwritableRotationMatrixIJK):
             source.ii, source.ji, source.ki,
             source.ij, source.jj, source.kj,
             source.ik, source.jk, source.kk)
+
+
+# Instance of a rotation matrix capturing the content of the multiplicative
+# identity.
+IDENTITY = RotationMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)

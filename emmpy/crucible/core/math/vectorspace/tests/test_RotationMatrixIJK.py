@@ -6,9 +6,6 @@ from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.unwritablerotationmatrixijk import (
-    UnwritableRotationMatrixIJK
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -246,7 +243,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jk, 0)
         self.assertAlmostEqual(m2.kk, cos(a))
         # 1 UnwritbleRotationMatrixIJK arg
-        m = UnwritableRotationMatrixIJK(
+        m = RotationMatrixIJK(
             cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
         m2 = RotationMatrixIJK(m)
         self.assertAlmostEqual(m2.ii, cos(a))
@@ -314,7 +311,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_setToSharpened(self):
         a = 1
-        m = UnwritableRotationMatrixIJK(cos(a), 0, sin(a),
+        m = RotationMatrixIJK(cos(a), 0, sin(a),
                                         0, 1, 0,
                                         -sin(a), 0, cos(a))
         m2 = RotationMatrixIJK()
@@ -346,7 +343,7 @@ class TestBuilder(unittest.TestCase):
 
     def setToTransposed(self):
         a = 1
-        m = UnwritableRotationMatrixIJK(cos(a), 0, sin(a),
+        m = RotationMatrixIJK(cos(a), 0, sin(a),
                                         0, 1, 0,
                                         -sin(a), 0, cos(a))
         m2 = RotationMatrixIJK()
@@ -382,7 +379,7 @@ class TestBuilder(unittest.TestCase):
                                0, 1, 0,
                                -sin(a), 0, cos(a))
         b = 2
-        m2 = UnwritableRotationMatrixIJK(cos(b), 0, sin(b),
+        m2 = RotationMatrixIJK(cos(b), 0, sin(b),
                                          0, 1, 0,
                                          -sin(b), 0, cos(b))
         m3 = RotationMatrixIJK.mxmt(m1, m2)
@@ -409,7 +406,7 @@ class TestBuilder(unittest.TestCase):
                                0, 1, 0,
                                -sin(a), 0, cos(a))
         b = 2
-        m2 = UnwritableRotationMatrixIJK(cos(b), 0, sin(b),
+        m2 = RotationMatrixIJK(cos(b), 0, sin(b),
                                          0, 1, 0,
                                          -sin(b), 0, cos(b))
         m3 = RotationMatrixIJK.mtxm(m1, m2)
@@ -436,7 +433,7 @@ class TestBuilder(unittest.TestCase):
                                0, 1, 0,
                                -sin(a), 0, cos(a))
         b = 2
-        m2 = UnwritableRotationMatrixIJK(cos(b), 0, sin(b),
+        m2 = RotationMatrixIJK(cos(b), 0, sin(b),
                                          0, 1, 0,
                                          -sin(b), 0, cos(b))
         m3 = RotationMatrixIJK.mxm(m1, m2)

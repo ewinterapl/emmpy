@@ -10,23 +10,38 @@ internals of the parent classes fields.
 """
 
 
+import sys
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
+    computeDeterminant,
     computeNorm
-)
-from emmpy.crucible.core.math.vectorspace.unwritablematrixijk import (
-    UnwritableMatrixIJK
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
-class MatrixIJK(UnwritableMatrixIJK):
+# Default tolerance for determining if a matrix is invertible. The
+# determinant must be greater than this tolerance.
+INVERSION_TOLERANCE = 1E-16
+
+# The other of the two default tolerances that control how close to a
+# rotation a rotation matrix must be. This value determines how far off
+# unity the determinant of the matrix must be.
+DETERMINANT_TOLERANCE = 1E-4
+
+# The bound defining the boundary length at which the invort procedure
+# works with double precision. Note: this is necessary because larger
+# negative exponents are captured by 64 IEEE doubles than positive ones.
+INVORSION_BOUND = sys.float_info.max
+
+
+class MatrixIJK:
     """A writable 3-D matrix."""
 
     def __init__(self, *args):
         """Build a new object."""
         if len(args) == 0:
             # Construct a matrix with an initial value of {@link #IDENTITY}.
-            UnwritableMatrixIJK.__init__(self, IDENTITY)
+            data = (1, 0, 0, 0, 1, 0, 0, 0, 1)
+            self.__init__(*data)
         elif len(args) == 1:
             if isinstance(args[0], list):
                 # Constructs a matrix from the upper three by three block of a
@@ -36,29 +51,37 @@ class MatrixIJK(UnwritableMatrixIJK):
                 # does not contain at least three arrays of arrays of length
                 # three or greater.
                 (data,) = args
-                UnwritableMatrixIJK.__init__(self, data)
+                self.__init__(data[0][0], data[1][0], data[2][0],
+                              data[0][1], data[1][1], data[2][1],
+                              data[0][2], data[1][2], data[2][2])
             else:
                 # Copy constructor, creates a matrix by copying the values of
                 # a pre-existing one.
                 # @param matrix the matrix whose contents are to be copied.
-                (matrix,) = args
-                UnwritableMatrixIJK.__init__(self, matrix)
+                (m,) = args
+                self.__init__(m.ii, m.ji, m.ki,
+                              m.ij, m.jj, m.kj,
+                              m.ik, m.jk, m.kk)
         elif len(args) == 2:
             # Scaling constructor, creates a new matrix by applying a scalar
             # multiple to the components of a pre-existing matrix.
             # @param scale the scale factor to apply
             # @param matrix the matrix whose components are to be scaled and
             # copied
-            (scale, matrix) = args
-            UnwritableMatrixIJK.__init__(self, scale, matrix)
+            (s, m) = args
+            self.__init__(s*m.ii, s*m.ji, s*m.ki,
+                          s*m.ij, s*m.jj, s*m.kj,
+                          s*m.ik, s*m.jk, s*m.kk)
         elif len(args) == 3:
             # Column vector constructor, creates a new matrix by populating the
             # columns of the matrix with the supplied vectors.
             # @param ithColumn the vector containing the ith column
             # @param jthColumn the vector containing the jth column
             # @param kthColumn the vector containing the kth column
-            (ithColumn, jthColumn, kthColumn) = args
-            UnwritableMatrixIJK.__init__(self, ithColumn, jthColumn, kthColumn)
+            (colI, colJ, colK) = args
+            self.__init__(colI.i, colI.j, colI.k,
+                          colJ.i, colJ.j, colJ.k,
+                          colK.i, colK.j, colK.k)
         elif len(args) == 4:
             # Column scaling constructor, creates a new matrix by applying
             # scalar multiples to each column of a pre-existing matrix.
@@ -67,8 +90,10 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param scaleK the scale factor to apply to the kth column
             # @param matrix the matrix whose columns are to be scaled and
             # copied
-            (scaleI, scaleJ, scaleK, matrix) = args
-            UnwritableMatrixIJK.__init__(self, scaleI, scaleJ, scaleK, matrix)
+            (sI, sJ, sK, m) = args
+            self.__init__(sI*m.ii, sI*m.ji, sI*m.ki,
+                          sJ*m.ij, sJ*m.jj, sJ*m.kj,
+                          sK*m.ik, sK*m.jk, sK*m.kk)
         elif len(args) == 6:
             # Scaled column vector constructor, creates a new matrix by
             # populating the columns of the matrix with scaled versions of the
@@ -79,9 +104,10 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param jthColumn the vector containing the jth column
             # @param scaleK the scale factor to apply to the kth column
             # @param kthColumn the vector containing the kth column
-            (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
-            UnwritableMatrixIJK.__init__(
-                self, scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn)
+            (sI, colI, sJ, colJ, sK, colK) = args
+            self.__init__(sI*colI.i, sI*colI.j, sI*colI.k,
+                          sJ*colJ.i, sJ*colJ.j, sJ*colJ.k,
+                          sK*colK.i, sK*colK.j, sK*colK.k)
         elif len(args) == 9:
             # Constructs a matrix from the nine basic components.
             # @param ii ith row, ith column element
@@ -94,10 +120,17 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @param jk jth row, kth column element
             # @param kk kth row, kth column element
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            UnwritableMatrixIJK.__init__(
-                self, ii, ji, ki, ij, jj, kj, ik, jk, kk)
+            self.ii = ii
+            self.ji = ji
+            self.ki = ki
+            self.ij = ij
+            self.jj = jj
+            self.kj = kj
+            self.ik = ik
+            self.jk = jk
+            self.kk = kk
         else:
-            raise Exception
+            raise TypeError
 
     def createTranspose(self):
         """Create a transposed copy of the matrix.
@@ -176,7 +209,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @throws UnsupportedOperationException if the determinant of the
             # instance is within
             # {@link UnwritableMatrixIJK#INVERSION_TOLERANCE} of 0.0.
-            return self.invert(UnwritableMatrixIJK.INVERSION_TOLERANCE)
+            return self.invert(INVERSION_TOLERANCE)
         elif len(args) == 1:
             # Invert the matrix if the determinant is within the supplied
             # tolerance of zero.
@@ -214,7 +247,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         """
         self.transpose()
         length = computeNorm(self.ii, self.ij, self.ik)
-        if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
+        if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
                 "inverse." % length)
@@ -225,7 +258,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.ik /= length
         self.ik /= length
         length = computeNorm(self.ji, self.jj, self.jk)
-        if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
+        if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "jth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
@@ -236,7 +269,7 @@ class MatrixIJK(UnwritableMatrixIJK):
         self.jk /= length
         self.jk /= length
         length = computeNorm(self.ki, self.kj, self.kk)
-        if length*MatrixIJK.INVORSION_BOUND < 1 or length == 0:
+        if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "kth column of matrix has length, %s, for which there is no "
                 "inverse." % length)
@@ -559,7 +592,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # within {@link UnwritableMatrixIJK#INVERSION_TOLERANCE} of 0.0.
             (matrix,) = args
             det = matrix.getDeterminant()
-            if abs(det) < UnwritableMatrixIJK.DETERMINANT_TOLERANCE:
+            if abs(det) < DETERMINANT_TOLERANCE:
                 raise Exception(
                     "Matrix nearly singular, unable to invert.")
             self.setTo(matrix)
@@ -925,7 +958,7 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK)
             (m, v) = args
-            return UnwritableMatrixIJK.mtxv(m, v, VectorIJK())
+            return MatrixIJK.mtxv(m, v, VectorIJK())
         elif len(args) == 3:
             # @param m the matrix
             # @param v the vector
@@ -933,30 +966,44 @@ class MatrixIJK(UnwritableMatrixIJK):
             # @return a reference to buffer for convenience.
             # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK, VectorIJK)
             (m, v, buffer) = args
-            return UnwritableMatrixIJK.mtxv(m, v, buffer)
+            i = m.ii*v.i + m.ji*v.j + m.ki*v.k
+            j = m.ij*v.i + m.jj*v.j + m.kj*v.k
+            k = m.ik*v.i + m.jk*v.j + m.kk*v.k
+            buffer.i = i
+            buffer.j = j
+            buffer.k = k
+            return buffer
 
     def mxv(self, *args):
         """Compute the product of a matrix with a vector."""
         if len(args) == 1:
             (v,) = args
-            return UnwritableMatrixIJK.mxv(self, v)
+            return self.mxv(v, VectorIJK())
         elif len(args) == 2:
             # @param m the matrix
             # @param v the vector
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK)
             (v, buffer) = args
-            return UnwritableMatrixIJK.mxv(self, v, buffer)
-        # elif len(args) == 3:
-        #     # @param m the matrix
-        #     # @param v the vector
-        #     # @param buffer the buffer to receive the product, m*v.
-        #     # @return a reference to buffer for convenience.
-        #     # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK, VectorIJK)
-        #     (m, v, buffer) = args
-        #     return UnwritableMatrixIJK.mxv(m, v, buffer)
+            i = self.ii*v.i + self.ij*v.j + self.ik*v.k
+            j = self.ji*v.i + self.jj*v.j + self.jk*v.k
+            k = self.ki*v.i + self.kj*v.j + self.kk*v.k
+            buffer.i = i
+            buffer.j = j
+            buffer.k = k
+            return buffer
         else:
             raise Exception
+
+    def getDeterminant(self):
+        """Compute the determinant of the matrix.
+
+        @return the determinant of the instance
+        """
+        return computeDeterminant(
+            self.ii, self.ji, self.ki,
+            self.ij, self.jj, self.kj,
+            self.ik, self.jk, self.kk)
 
 
 # The matrix whose components are all zero.

@@ -3,13 +3,11 @@ import unittest
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        pass
         # 0 arguments - identity matrix
         m = MatrixIJK()
         self.assertAlmostEqual(m.ii, 1)
@@ -105,8 +103,11 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.jk, 8)
         self.assertAlmostEqual(m.kk, 9)
         # Invalid form
-        with self.assertRaises(Exception):
-            MatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        sizes = (5, 7, 8, 10)
+        for s in sizes:
+            with self.assertRaises(TypeError):
+                data = [None]*s
+                m = MatrixIJK(*data)
 
     def test_createTranspose(self):
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -833,15 +834,18 @@ class TestBuilder(unittest.TestCase):
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         v1 = VectorIJK(1, 2, 3)
         v2 = MatrixIJK.mtxv(m, v1)
-        self.assertAlmostEqual(v2.i, 1*1 + 2*2 + 3*3)
-        self.assertAlmostEqual(v2.j, 4*1 + 5*2 + 6*3)
-        self.assertAlmostEqual(v2.k, 7*1 + 8*2 + 9*3)
+        # | 1 4 7 |T  | 1 |   | 1 2 3 | | 1 |   | 14 |
+        # | 2 5 8 |   | 2 | = | 4 5 6 | | 2 | = | 32 |
+        # | 3 6 9 |   | 3 |   | 7 8 9 | | 3 |   | 50 |
+        self.assertAlmostEqual(v2.i, 14)
+        self.assertAlmostEqual(v2.j, 32)
+        self.assertAlmostEqual(v2.k, 50)
         v3 = VectorIJK()
         v4 = MatrixIJK.mtxv(m, v1, v3)
         self.assertIs(v4, v3)
-        self.assertAlmostEqual(v4.i, 1*1 + 2*2 + 3*3)
-        self.assertAlmostEqual(v4.j, 4*1 + 5*2 + 6*3)
-        self.assertAlmostEqual(v4.k, 7*1 + 8*2 + 9*3)
+        self.assertAlmostEqual(v4.i, 14)
+        self.assertAlmostEqual(v4.j, 32)
+        self.assertAlmostEqual(v4.k, 50)
 
     def test_mxv(self):
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -851,7 +855,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.j, 2*1 + 5*2 + 8*3)
         self.assertAlmostEqual(v2.k, 3*1 + 6*2 + 9*3)
         v3 = VectorIJK()
-        v4 = MatrixIJK.mxv(m, v1, v3)
+        v4 = m.mxv(v1, v3)
         self.assertIs(v4, v3)
         self.assertAlmostEqual(v4.i, 1*1 + 4*2 + 7*3)
         self.assertAlmostEqual(v4.j, 2*1 + 5*2 + 8*3)

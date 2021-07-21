@@ -4,9 +4,7 @@ from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.vectorspace.unwritablevectorijk import (
-    UnwritableVectorIJK
-)
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -17,7 +15,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_toCoordinate(self):
         ccc = CylindricalCoordConverter()
-        cart = UnwritableVectorIJK(1, 2, 3)
+        cart = VectorIJK(1, 2, 3)
         cyl = ccc.toCoordinate(cart)
         self.assertAlmostEqual(cyl.getI(), 2.2360679774998)
         self.assertAlmostEqual(cyl.getJ(), 1.1071487177941)

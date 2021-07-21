@@ -22,6 +22,11 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 # determinant must be greater than this tolerance.
 INVERSION_TOLERANCE = 1E-16
 
+# One of the two default tolerances that control how close to a rotation a
+# rotation matrix must be. This value determines how far off unity the norm
+# of the column vectors of a matrix must be.
+NORM_TOLERANCE = 1E-4
+
 # The other of the two default tolerances that control how close to a
 # rotation a rotation matrix must be. This value determines how far off
 # unity the determinant of the matrix must be.

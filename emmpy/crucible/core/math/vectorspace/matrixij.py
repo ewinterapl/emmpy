@@ -3,11 +3,13 @@
 
 from math import sqrt
 import sys
+import numpy as np
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeDeterminant,
     computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.matrices.matrix2d import Matrix2D
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
@@ -16,11 +18,11 @@ from emmpy.utilities.isrealnumber import isRealNumber
 # {@value #INVERSION_TOLERANCE}
 INVERSION_TOLERANCE = 1E-16
 
-# One of the two default tolerances that control how close to a rotation a
-# rotation matrix must be. This value determines how far off unity the norm
-# of the column vectors of a matrix must be. Currently it is set to:
-# {@value #NORM_TOLERANCE}
-NORM_TOLERANCE = 1E-4
+# # One of the two default tolerances that control how close to a rotation a
+# # rotation matrix must be. This value determines how far off unity the norm
+# # of the column vectors of a matrix must be. Currently it is set to:
+# # {@value #NORM_TOLERANCE}
+# NORM_TOLERANCE = 1E-4
 
 # The other of the two default tolerances that control how close to a
 # rotation a rotation matrix must be. This value determines how far off
@@ -34,7 +36,12 @@ DETERMINANT_TOLERANCE = 1E-4
 INVORSION_BOUND = sys.float_info.max
 
 
-class MatrixIJ:
+# Map matrix component names to indices.
+components = {'ii': (0, 0), 'ij': (0, 1),
+              'ji': (1, 0), 'jj': (1, 1)}
+
+
+class MatrixIJ(Matrix2D):
     """A writable 2-D matrix..
 
     This class contains the mutator methods necessary to set or alter the
@@ -44,66 +51,79 @@ class MatrixIJ:
     """
 
     def __init__(self, *args):
-        """Build a new object."""
+        """Initialize a new MatrixIJ object.
+
+        Initialize a new MatrixIJ object.
+
+        Parameters
+        ----------
+        a : 2x2 array-like of float, optional, default 2x2 None
+            Values for matrix elements in row-major order.
+        OR
+        scale : float
+            The scale factor to apply.
+        a : 2x2 array-like of float
+            The array whose components are to be scaled and copied.
+        # OR
+        # colI, colJ, colK : array-like of 3 float
+        #     3-element array-likes containing the columns to use for the matrix.
+        # OR
+        # scaleI, scaleJ, scaleK : float
+        #     Scale factors to apply to the ith, jth, kth columns.
+        # a : 3x3 array-like of float
+        #     The array whose components are to be scaled and copied.
+        # OR
+        # scaleI : float
+        #     The scale factor to apply to the ith column.
+        # colI : array-like of 3 float
+        #     The vector containing the ith column.
+        # scaleJ : float
+        #     The scale factor to apply to the jth column.
+        # colJ : array-like of 3 float
+        #     The vector containing the jth column.
+        # scaleK : float
+        #     The scale factor to apply to the kth column.
+        # colK : array-like of 3 float
+        #     The vector containing the kth column.
+        # OR
+        # ii, ij, ik, ji, jj, jk, ki, kj, kk : float
+        #     Elements of new matrix in row-major order.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 0:
-            # Construct a matrix with an initial value of {@link #IDENTITY}.
-            data = (1, 0, 0, 1)
-            self.__init__(*data)
+            # Construct an empty matrix.
+            self[:, :] = np.array((None,)*4).reshape((2, 2))
         elif len(args) == 1:
-            if isinstance(args[0], list):
-                # Constructs a matrix from the upper two by two block of a two
-                # dimensional array of doubles.
-                # @param data the array of doubles
-                # @throws IndexOutOfBoundsException if the supplied data array
-                # does not contain at least two arrays of arrays of length
-                # two or greater.
-                (data,) = args
-                self.__init__(data[0][0], data[1][0], data[0][1], data[1][1])
-            else:
-                # Copy constructor, creates a matrix by copying the values of a
-                # pre-existing one.
-                # @param matrix the matrix whose contents are to be copied.
-                (m,) = args
-                self.__init__(m.ii, m.ji, m.ij, m.jj)
+            # Initialize matrix from a 2x2 array-like of floats.
+            (a,) = args
+            self[:, :] = np.array(a)
         elif len(args) == 2:
-            if isRealNumber(args[0]) and isinstance(args[1],
-                                                    MatrixIJ):
-                # Scaling constructor, creates a new matrix by applying a
-                # scalar multiple to the components of a pre-existing matrix.
-                # @param scale the scale factor to apply
-                # @param matrix the matrix whose components are to be scaled
-                # and copied
-                (s, m) = args
-                self.__init__(s*m.ii, s*m.ji, s*m.ij, s*m.jj)
+            if isRealNumber(args[0]):
+                # Scale an existing array-like.
+                (scale, a) = args
+                self[:, :] = scale*np.array(a)
             else:
-                # Column vector constructor, creates a new matrix by populating
-                # the columns of the matrix with the supplied vectors.
-                # @param ithColumn the vector containing the ith column
-                # @param jthColumn the vector containing the jth column
-                (colI, colJ) = args
-                self.__init__(colI.i, colI.j, colJ.i, colJ.j)
+                # Column vectors
+                (ithColumn, jthColumn) = args
+                self[:, 0] = np.array(ithColumn)
+                self[:, 1] = np.array(jthColumn)
         elif len(args) == 3:
             # Column scaling constructor, creates a new matrix by applying
             # scalar multiples to each column of a pre-existing matrix.
-            # @param scaleI the scale factor to apply to the ith column
-            # @param scaleJ the scale factor to apply to the jth column
-            # @param matrix the matrix whose columns are to be scaled and
-            # copied
-            (sI, sJ, m) = args
-            self.__init__(sI*m.ii, sI*m.ji, sJ*m.ij, sJ*m.jj)
+            (scaleI, scaleJ, matrix) = args
+            self[:, 0] = scaleI*np.array(matrix)[:, 0]
+            self[:, 1] = scaleJ*np.array(matrix)[:, 1]
         elif len(args) == 4:
             if (isRealNumber(args[0]) and isRealNumber(args[1]) and
                 isRealNumber(args[2]) and isRealNumber(args[3])):
                 # Constructs a matrix from the four basic components.
-                # @param ii ith row, ith column element
-                # @param ji jth row, ith column element
-                # @param ij ith row, jth column element
-                # @param jj jth row, jth column element
+                # COLUMN-MAJOR ORDER
                 (ii, ji, ij, jj) = args
-                self.ii = ii
-                self.ji = ji
-                self.ij = ij
-                self.jj = jj
+                self[:, :] = [[ii, ij], [ji, jj]]
             else:
                 # Scaled column vector constructor, creates a new matrix by
                 # populating the columns of the matrix with scaled versions of
@@ -112,10 +132,43 @@ class MatrixIJ:
                 # @param ithColumn the vector containing the ith column
                 # @param scaleJ the scale factor to apply to the jth column
                 # @param jthColumn the vector containing the jth column
-                (sI, colI, sJ, colJ) = args
-                self.__init__(sI*colI.i, sI*colI.j, sJ*colJ.i, sJ*colJ.j)
+                (scaleI, ithColumn, scaleJ, jthColumn) = args
+                self[:, 0] = scaleI*np.array(ithColumn)
+                self[:, 1] = scaleJ*np.array(jthColumn)
         else:
-            raise Exception
+            raise TypeError
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to get.
+
+        Returns
+        -------
+        self[i, j] : float
+            Value of specified element (i, j).
+        """
+        return self[components[name]]
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Returns
+        -------
+        None
+        """
+        self[components[name]] = value
 
     def createTranspose(self):
         """Return a transposed copy of the matrix."""
@@ -382,6 +435,7 @@ class MatrixIJ:
                 # the jth column
                 # @return a reference to the instance for convenience
                 (ithColumn, jthColumn) = args
+                # COLUMN-MAJOR ORDER
                 self.setTo(ithColumn.i, ithColumn.j, jthColumn.i, jthColumn.j)
                 return self
         elif len(args) == 3:
@@ -944,6 +998,7 @@ class MatrixIJ:
 
         @return the determinant of the instance
         """
+        # COLUMN-MAJOR ORDER
         return computeDeterminant(self.ii, self.ji, self.ij, self.jj)
 
     def getII(self):

@@ -1,6 +1,6 @@
 from math import cos, pi, sin, sqrt
 import unittest
-
+import numpy as np
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
@@ -8,61 +8,187 @@ from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        # 0-argument form
+        """Test the __init__ method."""
+        # 0 arguments - empty matrix
         m = MatrixIJ()
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        # 1-argument forms
-        m = MatrixIJ([[1, 2, 3],
-                      [4, 5, 6],
-                      [7, 8, 9]])
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 4)
-        self.assertAlmostEqual(m.ij, 2)
-        self.assertAlmostEqual(m.jj, 5)
-        m2 = MatrixIJ(m)
-        self.assertAlmostEqual(m2.ii, 1)
-        self.assertAlmostEqual(m2.ji, 4)
-        self.assertAlmostEqual(m2.ij, 2)
-        self.assertAlmostEqual(m2.jj, 5)
-        # 2-argument forms
-        m2 = MatrixIJ(-2, m)
-        self.assertAlmostEqual(m2.ii, -2)
-        self.assertAlmostEqual(m2.ji, -8)
-        self.assertAlmostEqual(m2.ij, -4)
-        self.assertAlmostEqual(m2.jj, -10)
-        v1 = VectorIJ(1, 2)
-        v2 = VectorIJ(3, 4)
-        m = MatrixIJ(v1, v2)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        self.assertAlmostEqual(m.ij, 3)
-        self.assertAlmostEqual(m.jj, 4)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertTrue(np.isnan(m[row, col]))
+        # 1-argument forms: 2x2 array-like of float
+        # list of lists
+        data = [[0, 2], [1, 3]]
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuple of tuples
+        data = ((0, 2), (1, 3))
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # list of tuples
+        data = [(0, 2), (1, 3)]
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuple of lists
+        data = ([0, 2], [1, 3])
+        m = MatrixIJ(data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # np.ndarray
+        a = np.array(data)
+        m = MatrixIJ(a)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # MatrixIJ
+        m2 = MatrixIJ(data)
+        m = MatrixIJ(m2)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # 2 arg forms - scale factor and 2x2 array-like
+        scale = -2.2
+        # Scale and list of lists
+        data = [[0, 2], [1, 3]]
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and tuple of tuples
+        data = ((0, 2), (1, 3))
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and list of tuples
+        data = [(0, 2), (1, 3)]
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and tuple of lists
+        data = ([0, 2], [1, 3])
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and np.ndarray
+        a = np.array(data)
+        m = MatrixIJ(scale, data)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # Scale and MatrixIJ
+        m2 = MatrixIJ(data)
+        m = MatrixIJ(scale, m2)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scale*data[row][col])
+        # 2 args - column vectors
+        # lists
+        v = [[row[0] for row in data],
+             [row[1] for row in data]]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # tuples
+        v = [tuple([row[0] for row in data]),
+             tuple([row[1] for row in data])]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # np.ndarrays
+        v = [np.array([row[0] for row in data]),
+             np.array([row[1] for row in data])]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
+        # VectorIJs
+        v = [VectorIJ([row[0] for row in data]),
+             VectorIJ([row[1] for row in data])]
+        m = MatrixIJ(*v)
+        self.assertIsInstance(m, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], data[row][col])
         # 3-argument forms
-        m2 = MatrixIJ(-1, -2, m)
-        self.assertAlmostEqual(m2.ii, -1)
-        self.assertAlmostEqual(m2.ji, -2)
-        self.assertAlmostEqual(m2.ij, -6)
-        self.assertAlmostEqual(m2.jj, -8)
+        # Column scale factors and matrix
+        scales = (-1.1, -2.2)
+        m2 = MatrixIJ(*scales, m)
+        self.assertIsInstance(m2, MatrixIJ)
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m2[row, col], scales[col]*data[row][col])
         # 4-argument forms
-        m = MatrixIJ(1, 2, 3, 4)
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 2)
-        self.assertAlmostEqual(m.ij, 3)
-        self.assertAlmostEqual(m.jj, 4)
-        m = MatrixIJ(-1, v1, -2, v2)
-        self.assertAlmostEqual(m.ii, -1)
-        self.assertAlmostEqual(m.ji, -2)
-        self.assertAlmostEqual(m.ij, -6)
-        self.assertAlmostEqual(m.jj, -8)
+        # 4 individual elements COLUMN-MAJOR ORDER
+        data = list(range(4))
+        m = MatrixIJ(*data)
+        for row in range(2):
+            for col in range(2):
+                k = row + 2*col
+                self.assertAlmostEqual(m[row, col], data[k])
+        # Scale factors and columns
+        m = MatrixIJ(scales[0], v[0], scales[1], v[1])
+        for row in range(2):
+            for col in range(2):
+                self.assertAlmostEqual(m[row, col], scales[col]*v[col][row])
         # Invalid forms
-        with self.assertRaises(Exception):
-            MatrixIJ(0, 0, 0, 0, 0)
+        data = [None]*5
+        with self.assertRaises(TypeError):
+            m = MatrixIJ(*data)
+
+    def test___getattr__(self):
+        """Test the __getattr__ method."""
+        data = [[1.1, 2.2], [3.3, 4.4]]
+        m = MatrixIJ(data)
+        self.assertAlmostEqual(m.ii, data[0][0])
+        self.assertAlmostEqual(m.ij, data[0][1])
+        self.assertAlmostEqual(m.ji, data[1][0])
+        self.assertAlmostEqual(m.jj, data[1][1])
+        with self.assertRaises(KeyError):
+            data = m.bad
+
+    def test___setattr__(self):
+        """Test the __getattr__ method."""
+        data = [[1.1, 2.2], [3.3, 4.4]]
+        m = MatrixIJ()
+        m.ii = data[0][0]
+        self.assertAlmostEqual(m.ii, data[0][0])
+        m.ij = data[0][1]
+        self.assertAlmostEqual(m.ij, data[0][1])
+        m.ji = data[1][0]
+        self.assertAlmostEqual(m.ji, data[1][0])
+        m.jj = data[1][1]
+        self.assertAlmostEqual(m.jj, data[1][1])
+        with self.assertRaises(KeyError):
+            data = m.bad
 
     def test_createTranspose(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
+        m1 = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m2 = m1.createTranspose()
         self.assertAlmostEqual(m2.ii, 1)
         self.assertAlmostEqual(m2.ji, 3)
@@ -70,7 +196,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jj, 4)
 
     def test_createUnitizedColumns(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
+        m1 = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m2 = m1.createUnitizedColumns()
         self.assertAlmostEqual(m2.ii, 1/sqrt(5))
         self.assertAlmostEqual(m2.ji, 2/sqrt(5))
@@ -78,7 +204,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jj, 4/5)
 
     def test_createInverse(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
+        m1 = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m2 = m1.createInverse()
         self.assertAlmostEqual(m2.ii, -2)
         self.assertAlmostEqual(m2.ji, 1)
@@ -100,7 +226,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jj, cos(a))
 
     def test_transpose(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        m = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m.transpose()
         self.assertAlmostEqual(m.ii, 1)
         self.assertAlmostEqual(m.ji, 3)
@@ -108,7 +234,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.jj, 4)
 
     def test_unitizeColumns(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        m = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m.unitizeColumns()
         self.assertAlmostEqual(m.ii, 1/sqrt(5))
         self.assertAlmostEqual(m.ji, 2/sqrt(5))
@@ -116,7 +242,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.jj, 4/5)
 
     def test_invert(self):
-        m1 = MatrixIJ(1, 2, 3, 4)
+        m1 = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m2 = m1.invert()
         self.assertIs(m2, m1)
         self.assertAlmostEqual(m1.ii, -2)
@@ -149,7 +275,7 @@ class TestBuilder(unittest.TestCase):
             m1.invort()
 
     def test_scale(self):
-        m = MatrixIJ(1, 2, 3, 4)
+        m = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         m.scale(-2)
         self.assertAlmostEqual(m.ii, -2)
         self.assertAlmostEqual(m.ji, -4)
@@ -229,6 +355,7 @@ class TestBuilder(unittest.TestCase):
         m0 = MatrixIJ(0, 0, 0, 0)
         m1 = MatrixIJ()
         # 1-argument forms
+        # COLUMN-MAJOR ORDER
         m2 = m1.setTo([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
         self.assertIs(m2, m1)
         self.assertAlmostEqual(m1.ii, 1)
@@ -268,7 +395,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.jj, -8)
         # 4-argument forms
         m1 = MatrixIJ()
-        m2 = m1.setTo(1, 2, 3, 4)
+        m2 = m1.setTo(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
         self.assertIs(m2, m1)
         self.assertAlmostEqual(m1.ii, 1)
         self.assertAlmostEqual(m1.ji, 2)
@@ -558,6 +685,31 @@ class TestBuilder(unittest.TestCase):
         self.assertIs(v4, v3)
         self.assertAlmostEqual(v4.i, 23)
         self.assertAlmostEqual(v4.j, 34)
+
+    def test_getDeterminant(self):
+        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
+        m = MatrixIJ(*data)
+        self.assertAlmostEqual(m.getDeterminant(), -2)
+
+    def test_getII(self):
+        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
+        m = MatrixIJ(*data)
+        self.assertAlmostEqual(m.getII(), data[0])
+
+    def test_getJI(self):
+        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
+        m = MatrixIJ(*data)
+        self.assertAlmostEqual(m.getJI(), data[1])
+
+    def test_getIJ(self):
+        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
+        m = MatrixIJ(*data)
+        self.assertAlmostEqual(m.getIJ(), data[2])
+
+    def test_getJJ(self):
+        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
+        m = MatrixIJ(*data)
+        self.assertAlmostEqual(m.getJJ(), data[3])
 
 
 if __name__ == '__main__':

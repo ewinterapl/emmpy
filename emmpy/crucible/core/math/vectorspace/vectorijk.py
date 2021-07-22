@@ -108,13 +108,13 @@ class VectorIJK(Vector3D):
         """
         self[components[name]] = value
 
-    def createUnitized(self):
-        """Create a unitized copy of the vector."""
-        return VectorIJK(self).unitize()
+#     def createUnitized(self):
+#         """Create a unitized copy of the vector."""
+#         return VectorIJK(self).unitize()
 
-    def createNegated(self):
-        """Create a negated copy of the vector."""
-        return VectorIJK(self).negate()
+#     def createNegated(self):
+#         """Create a negated copy of the vector."""
+#         return VectorIJK(self).negate()
 
     def createScaled(self, scale):
         """Create a scaled copy of the vector."""
@@ -159,16 +159,16 @@ class VectorIJK(Vector3D):
         self.k *= -1
         return self
 
-    def clear(self):
-        """Clear the vector.
+#     def clear(self):
+#         """Clear the vector.
 
-        @return a reference to the instance, now containing
-        {@link VectorIJK#ZERO}
-        """
-        self.i = 0.0
-        self.j = 0.0
-        self.k = 0.0
-        return self
+#         @return a reference to the instance, now containing
+#         {@link VectorIJK#ZERO}
+#         """
+#         self.i = 0.0
+#         self.j = 0.0
+#         self.k = 0.0
+#         return self
 
     def setI(self, i):
         """Set the ith component of the vector.
@@ -191,23 +191,23 @@ class VectorIJK(Vector3D):
         """
         self.k = k
 
-    def set(self, index, value):
-        """Set the specified component of the vector to a supplied value.
+#     def set(self, index, value):
+#         """Set the specified component of the vector to a supplied value.
 
-        @param index the index of the component to set. 0 = ith, 1 = jth,
-        2 = kth.
-        @param value the value with which to replace the specified component
-        @throws IllegalArgumentException if an invalid index, outside the range
-        [0,2], is specified.
-        """
-        if index == 0:
-            self.i = value
-        elif index == 1:
-            self.j = value
-        elif index == 2:
-            self.k = value
-        else:
-            raise BugException
+#         @param index the index of the component to set. 0 = ith, 1 = jth,
+#         2 = kth.
+#         @param value the value with which to replace the specified component
+#         @throws IllegalArgumentException if an invalid index, outside the range
+#         [0,2], is specified.
+#         """
+#         if index == 0:
+#             self.i = value
+#         elif index == 1:
+#             self.j = value
+#         elif index == 2:
+#             self.k = value
+#         else:
+#             raise BugException
 
     def setTo(self, *args):
         """Set the vector contents."""
@@ -260,27 +260,27 @@ class VectorIJK(Vector3D):
             raise Exception
         return self
 
-    def setToUnitized(self, vector):
-        """Set the vector to the unit-length version of another.
+#     def setToUnitized(self, vector):
+#         """Set the vector to the unit-length version of another.
 
-        @param vector the vector whose contents are to be unitized and stored
-        in the instance
-        @return a reference to the instance
-        @throws UnsupportedOperationException if the supplied vector argument
-        is {@link VectorIJK#ZERO}
-        """
-        self.setTo(vector)
-        return self.unitize()
+#         @param vector the vector whose contents are to be unitized and stored
+#         in the instance
+#         @return a reference to the instance
+#         @throws UnsupportedOperationException if the supplied vector argument
+#         is {@link VectorIJK#ZERO}
+#         """
+#         self.setTo(vector)
+#         return self.unitize()
 
-    def setToNegated(self, vector):
-        """Set the vector content to the negated version of another.
+#     def setToNegated(self, vector):
+#         """Set the vector content to the negated version of another.
 
-        @param vector the vector whose contents are to be negated and stored in
-        the instance
-        @return a reference to the instance
-        """
-        self.setTo(vector)
-        return self.negate()
+#         @param vector the vector whose contents are to be negated and stored in
+#         the instance
+#         @return a reference to the instance
+#         """
+#         self.setTo(vector)
+#         return self.negate()
 
     @staticmethod
     def rotate(*args):
@@ -383,70 +383,70 @@ class VectorIJK(Vector3D):
             raise Exception
         return v
 
-    @staticmethod
-    def planeProject(*args):
-        """Compute the projection of one vector onto a plane.
+#     @staticmethod
+#     def planeProject(*args):
+#         """Compute the projection of one vector onto a plane.
 
-        Algebraicly, this routine effectively computes:
+#         Algebraicly, this routine effectively computes:
 
-                                   <vector, to> * to
-                          vector - ---------------------
-                                      || to ||
+#                                    <vector, to> * to
+#                           vector - ---------------------
+#                                       || to ||
 
-        where <> denotes the standard scalar product and ||x|| the norm of x.
-        For numeric precision reasons the implementation may vary slightly from
-        the above prescription.
+#         where <> denotes the standard scalar product and ||x|| the norm of x.
+#         For numeric precision reasons the implementation may vary slightly from
+#         the above prescription.
 
-        @param vector the vector to project
-        @param normal the normal to the plane to project vector onto
-        @return a new <code>VectorIJK</code> containing the results of the
-        projection
-        @throws IllegalArgumentException if normal is equal to
-        {@link VectorIJK#ZERO}
-        @see VectorIJK#planeProject(UnwritableVectorIJK, UnwritableVectorIJK,
-        VectorIJK)
-        """
-        if len(args) == 2:
-            (vector, normal) = args
-            v = VectorIJK.planeProject(vector, normal, VectorIJK())
-        elif len(args) == 3:
-            # @param vector the vector to project
-            # @param normal the normal to the plane to project vector onto
-            # @param buffer the buffer to receive the contents of the
-            # projection
-            # @return a reference to buffer for convenience
-            # @throws IllegalArgumentException if normal is equal to
-            # {@link VectorIJK#ZERO}
-            (vector, normal, buffer) = args
-            maxVector = absMaxComponent(vector.i, vector.j, vector.k)
+#         @param vector the vector to project
+#         @param normal the normal to the plane to project vector onto
+#         @return a new <code>VectorIJK</code> containing the results of the
+#         projection
+#         @throws IllegalArgumentException if normal is equal to
+#         {@link VectorIJK#ZERO}
+#         @see VectorIJK#planeProject(UnwritableVectorIJK, UnwritableVectorIJK,
+#         VectorIJK)
+#         """
+#         if len(args) == 2:
+#             (vector, normal) = args
+#             v = VectorIJK.planeProject(vector, normal, VectorIJK())
+#         elif len(args) == 3:
+#             # @param vector the vector to project
+#             # @param normal the normal to the plane to project vector onto
+#             # @param buffer the buffer to receive the contents of the
+#             # projection
+#             # @return a reference to buffer for convenience
+#             # @throws IllegalArgumentException if normal is equal to
+#             # {@link VectorIJK#ZERO}
+#             (vector, normal, buffer) = args
+#             maxVector = absMaxComponent(vector.i, vector.j, vector.k)
 
-            # Check to see if maxVector is zero length. If it is, populate
-            # buffer with VectorIJK.ZERO.
-            if maxVector == 0.0:
-                buffer.clear()
-                return buffer
+#             # Check to see if maxVector is zero length. If it is, populate
+#             # buffer with VectorIJK.ZERO.
+#             if maxVector == 0.0:
+#                 buffer.clear()
+#                 return buffer
 
-            # Create a scaled copy of the input vector to project.
-            scaledVector = VectorIJK(vector.i/maxVector, vector.j/maxVector,
-                                     vector.k/maxVector)
-            VectorIJK.project(scaledVector, normal, buffer)
+#             # Create a scaled copy of the input vector to project.
+#             scaledVector = VectorIJK(vector.i/maxVector, vector.j/maxVector,
+#                                      vector.k/maxVector)
+#             VectorIJK.project(scaledVector, normal, buffer)
 
-            # The second unusual case is when vector itself is zero. This is
-            # simple enough, the zero vector projects as the zero vector.
-            if maxVector == 0.0:
-                buffer.clear()
-                return buffer
+#             # The second unusual case is when vector itself is zero. This is
+#             # simple enough, the zero vector projects as the zero vector.
+#             if maxVector == 0.0:
+#                 buffer.clear()
+#                 return buffer
 
-            # Subtract buffer from the v components to place the result in the
-            # plane.
-            VectorIJK.subtract(scaledVector, buffer, buffer)
+#             # Subtract buffer from the v components to place the result in the
+#             # plane.
+#             VectorIJK.subtract(scaledVector, buffer, buffer)
 
-            # Rescale the result.
-            buffer.scale(maxVector)
-            v = buffer
-        else:
-            raise Exception
-        return v
+#             # Rescale the result.
+#             buffer.scale(maxVector)
+#             v = buffer
+#         else:
+#             raise Exception
+#         return v
 
     @staticmethod
     def project(*args):
@@ -508,232 +508,232 @@ class VectorIJK(Vector3D):
         else:
             raise Exception
 
-    @staticmethod
-    def combine(*args):
-        """Linearly combine vectors.
+#     @staticmethod
+#     def combine(*args):
+#         """Linearly combine vectors.
 
-        @param scaleA the scale factor for vector a
-        @param a a vector
-        @param scaleB the scale vector for vector b
-        @param b another vector
-        @param scaleC the scale factor for vector c
-        @param c the third vector
-        @param scaleD the scale factor for vector d
-        @param d the fourth vector
-        @param scaleE the scale factor for vector e
-        @param e the fifth vector
-        @param scaleF the scale factor for vector f
-        @param f the sixth vector
-        @param scaleG the scale factor for vector g
-        @param g the seventh vector
-        @param scaleH the scale factor for vector h
-        @param h the eighth vector
-        @return a new <code>VectorIJK</code> which now contains
-        ( scaleA*a + scaleB*b + scaleC*c + scaleD*d +
-          scaleE*e + scaleF*f + scaleG*g + scaleH*h)
-        @see VectorIJK#combine(double, UnwritableVectorIJK, double,
-        UnwritableVectorIJK, double, UnwritableVectorIJK, VectorIJK)
-        """
-        if len(args) == 4:
-            (scaleA, a, scaleB, b) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, VectorIJK())
-        elif len(args) == 5:
-            (scaleA, a, scaleB, b, buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k)
-            return buffer
-        elif len(args) == 6:
-            (scaleA, a, scaleB, b, scaleC, c) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
-                                     VectorIJK())
-        elif len(args) == 7:
-            (scaleA, a, scaleB, b, scaleC, c, buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k)
-            return buffer
-        elif len(args) == 8:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
-                                     scaleD, d, VectorIJK())
-        elif len(args) == 9:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k)
-            return buffer
-        elif len(args) == 10:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
-                                     scaleD, d, scaleE, e, VectorIJK())
-        elif len(args) == 11:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
-                        scaleE*e.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
-                        scaleE*e.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
-                        scaleE*e.k)
-            return buffer
-        elif len(args) == 12:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             scaleF, f) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
-                                     scaleD, d, scaleE, e, scaleF, f,
-                                     VectorIJK())
-        elif len(args) == 13:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             scaleF, f, buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
-                        scaleE*e.i + scaleF*f.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
-                        scaleE*e.j + scaleF*f.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
-                        scaleE*e.k + scaleF*f.k)
-            return buffer
-        elif len(args) == 14:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             scaleF, f, scaleG, g) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
-                                     scaleD, d, scaleE, e, scaleF, f,
-                                     scaleG, g, VectorIJK())
-        elif len(args) == 15:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             scaleF, f, scaleG, g, buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
-                        scaleE*e.i + scaleF*f.i + scaleG*g.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
-                        scaleE*e.j + scaleF*f.j + scaleG*g.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
-                        scaleE*e.k + scaleF*f.k + scaleG*g.k)
-            return buffer
-        elif len(args) == 16:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             scaleF, f, scaleG, g, scaleH, h) = args
-            return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
-                                     scaleD, d, scaleE, e, scaleF, f,
-                                     scaleG, g, scaleH, h, VectorIJK())
-        elif len(args) == 17:
-            (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
-             scaleF, f, scaleG, g, scaleH, h, buffer) = args
-            buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
-                        scaleE*e.i + scaleF*f.i + scaleG*g.i + scaleH*h.i)
-            buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
-                        scaleE*e.j + scaleF*f.j + scaleG*g.j + scaleH*h.j)
-            buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
-                        scaleE*e.k + scaleF*f.k + scaleG*g.k + scaleH*h.k)
-            return buffer
-        else:
-            raise Exception
+#         @param scaleA the scale factor for vector a
+#         @param a a vector
+#         @param scaleB the scale vector for vector b
+#         @param b another vector
+#         @param scaleC the scale factor for vector c
+#         @param c the third vector
+#         @param scaleD the scale factor for vector d
+#         @param d the fourth vector
+#         @param scaleE the scale factor for vector e
+#         @param e the fifth vector
+#         @param scaleF the scale factor for vector f
+#         @param f the sixth vector
+#         @param scaleG the scale factor for vector g
+#         @param g the seventh vector
+#         @param scaleH the scale factor for vector h
+#         @param h the eighth vector
+#         @return a new <code>VectorIJK</code> which now contains
+#         ( scaleA*a + scaleB*b + scaleC*c + scaleD*d +
+#           scaleE*e + scaleF*f + scaleG*g + scaleH*h)
+#         @see VectorIJK#combine(double, UnwritableVectorIJK, double,
+#         UnwritableVectorIJK, double, UnwritableVectorIJK, VectorIJK)
+#         """
+#         if len(args) == 4:
+#             (scaleA, a, scaleB, b) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, VectorIJK())
+#         elif len(args) == 5:
+#             (scaleA, a, scaleB, b, buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k)
+#             return buffer
+#         elif len(args) == 6:
+#             (scaleA, a, scaleB, b, scaleC, c) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
+#                                      VectorIJK())
+#         elif len(args) == 7:
+#             (scaleA, a, scaleB, b, scaleC, c, buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k)
+#             return buffer
+#         elif len(args) == 8:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
+#                                      scaleD, d, VectorIJK())
+#         elif len(args) == 9:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k)
+#             return buffer
+#         elif len(args) == 10:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
+#                                      scaleD, d, scaleE, e, VectorIJK())
+#         elif len(args) == 11:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
+#                         scaleE*e.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
+#                         scaleE*e.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
+#                         scaleE*e.k)
+#             return buffer
+#         elif len(args) == 12:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              scaleF, f) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
+#                                      scaleD, d, scaleE, e, scaleF, f,
+#                                      VectorIJK())
+#         elif len(args) == 13:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              scaleF, f, buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
+#                         scaleE*e.i + scaleF*f.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
+#                         scaleE*e.j + scaleF*f.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
+#                         scaleE*e.k + scaleF*f.k)
+#             return buffer
+#         elif len(args) == 14:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              scaleF, f, scaleG, g) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
+#                                      scaleD, d, scaleE, e, scaleF, f,
+#                                      scaleG, g, VectorIJK())
+#         elif len(args) == 15:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              scaleF, f, scaleG, g, buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
+#                         scaleE*e.i + scaleF*f.i + scaleG*g.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
+#                         scaleE*e.j + scaleF*f.j + scaleG*g.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
+#                         scaleE*e.k + scaleF*f.k + scaleG*g.k)
+#             return buffer
+#         elif len(args) == 16:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              scaleF, f, scaleG, g, scaleH, h) = args
+#             return VectorIJK.combine(scaleA, a, scaleB, b, scaleC, c,
+#                                      scaleD, d, scaleE, e, scaleF, f,
+#                                      scaleG, g, scaleH, h, VectorIJK())
+#         elif len(args) == 17:
+#             (scaleA, a, scaleB, b, scaleC, c, scaleD, d, scaleE, e,
+#              scaleF, f, scaleG, g, scaleH, h, buffer) = args
+#             buffer.i = (scaleA*a.i + scaleB*b.i + scaleC*c.i + scaleD*d.i +
+#                         scaleE*e.i + scaleF*f.i + scaleG*g.i + scaleH*h.i)
+#             buffer.j = (scaleA*a.j + scaleB*b.j + scaleC*c.j + scaleD*d.j +
+#                         scaleE*e.j + scaleF*f.j + scaleG*g.j + scaleH*h.j)
+#             buffer.k = (scaleA*a.k + scaleB*b.k + scaleC*c.k + scaleD*d.k +
+#                         scaleE*e.k + scaleF*f.k + scaleG*g.k + scaleH*h.k)
+#             return buffer
+#         else:
+#             raise Exception
 
-    @staticmethod
-    def uCross(*args):
-        """Compute the cross product of a and b; unitize the result.
+#     @staticmethod
+#     def uCross(*args):
+#         """Compute the cross product of a and b; unitize the result.
 
-        @param a the left hand vector to cross
-        @param b the right hand vector to cross
-        @return a new <code>VectorIJK</code> which now contains
-        (a x b)/||a||/||b||.
-        @throws IllegalArgumentException if either a or b are equivalent to the
-        {@link VectorIJK#ZERO}
-        @throws UnsupportedOperationException if the result of crossing a with
-        b results in {@link VectorIJK#ZERO}
-        @see VectorIJK#uCross(UnwritableVectorIJK, UnwritableVectorIJK,
-        VectorIJK)
-        """
-        if len(args) == 2:
-            (a, b) = args
-            return VectorIJK.uCross(a, b, VectorIJK())
-        elif len(args) == 3:
-            (a, b, buffer) = args
-            # We should scale each vector by its maximal component.
-            amax = absMaxComponent(a.i, a.j, a.k)
-            bmax = absMaxComponent(b.i, b.j, b.k)
-            if amax == 0.0 or bmax == 0.0:
-                raise Exception(
-                    "At least one input vector is of zero length. Unable to "
-                    "unitize resultant cross product."
-                )
-            ti = (a.j/amax)*(b.k/bmax) - (a.k/amax)*(b.j/bmax)
-            tj = (a.k/amax)*(b.i/bmax) - (a.i/amax)*(b.k/bmax)
-            tk = (a.i/amax)*(b.j/bmax) - (a.j/amax)*(b.i/bmax)
-            buffer.i = ti
-            buffer.j = tj
-            buffer.k = tk
-            return buffer.unitize()
-        else:
-            raise Exception
+#         @param a the left hand vector to cross
+#         @param b the right hand vector to cross
+#         @return a new <code>VectorIJK</code> which now contains
+#         (a x b)/||a||/||b||.
+#         @throws IllegalArgumentException if either a or b are equivalent to the
+#         {@link VectorIJK#ZERO}
+#         @throws UnsupportedOperationException if the result of crossing a with
+#         b results in {@link VectorIJK#ZERO}
+#         @see VectorIJK#uCross(UnwritableVectorIJK, UnwritableVectorIJK,
+#         VectorIJK)
+#         """
+#         if len(args) == 2:
+#             (a, b) = args
+#             return VectorIJK.uCross(a, b, VectorIJK())
+#         elif len(args) == 3:
+#             (a, b, buffer) = args
+#             # We should scale each vector by its maximal component.
+#             amax = absMaxComponent(a.i, a.j, a.k)
+#             bmax = absMaxComponent(b.i, b.j, b.k)
+#             if amax == 0.0 or bmax == 0.0:
+#                 raise Exception(
+#                     "At least one input vector is of zero length. Unable to "
+#                     "unitize resultant cross product."
+#                 )
+#             ti = (a.j/amax)*(b.k/bmax) - (a.k/amax)*(b.j/bmax)
+#             tj = (a.k/amax)*(b.i/bmax) - (a.i/amax)*(b.k/bmax)
+#             tk = (a.i/amax)*(b.j/bmax) - (a.j/amax)*(b.i/bmax)
+#             buffer.i = ti
+#             buffer.j = tj
+#             buffer.k = tk
+#             return buffer.unitize()
+#         else:
+#             raise Exception
 
-    @staticmethod
-    def cross(*args):
-        """Compute the cross product of a and b.
+#     @staticmethod
+#     def cross(*args):
+#         """Compute the cross product of a and b.
 
-        @param a the left hand vector to cross
-        @param b the right hand vector to cross
-        @return a new <code>VectorIJK</code> which now contains (a x b)
-        @see VectorIJK#cross(UnwritableVectorIJK, UnwritableVectorIJK,
-        VectorIJK)
-        """
-        if len(args) == 2:
-            (a, b) = args
-            return VectorIJK.cross(a, b, VectorIJK())
-        elif len(args) == 3:
-            (a, b, buffer) = args
-            ti = a.j*b.k - a.k*b.j
-            tj = a.k*b.i - a.i*b.k
-            tk = a.i*b.j - a.j*b.i
-            buffer.i = ti
-            buffer.j = tj
-            buffer.k = tk
-            return buffer
-        else:
-            raise Exception
+#         @param a the left hand vector to cross
+#         @param b the right hand vector to cross
+#         @return a new <code>VectorIJK</code> which now contains (a x b)
+#         @see VectorIJK#cross(UnwritableVectorIJK, UnwritableVectorIJK,
+#         VectorIJK)
+#         """
+#         if len(args) == 2:
+#             (a, b) = args
+#             return VectorIJK.cross(a, b, VectorIJK())
+#         elif len(args) == 3:
+#             (a, b, buffer) = args
+#             ti = a.j*b.k - a.k*b.j
+#             tj = a.k*b.i - a.i*b.k
+#             tk = a.i*b.j - a.j*b.i
+#             buffer.i = ti
+#             buffer.j = tj
+#             buffer.k = tk
+#             return buffer
+#         else:
+#             raise Exception
 
-    @staticmethod
-    def pointwiseMultiply(*args):
-        """Create the Pointwise (aka Hadamard, Schur) product of two vectors.
+#     @staticmethod
+#     def pointwiseMultiply(*args):
+#         """Create the Pointwise (aka Hadamard, Schur) product of two vectors.
 
-        @param a a vector
-        @param b another vector
-        @return a new <code>VectorIJK</code> which now contains (a .* b).
-        @see VectorIJK#pointwiseMultiply(UnwritableVectorIJK,
-        UnwritableVectorIJK, VectorIJK)
-        """
-        if len(args) == 2:
-            (a, b) = args
-            return VectorIJK.pointwiseMultiply(a, b, VectorIJK())
-        elif len(args) == 3:
-            (a, b, buffer) = args
-            buffer.i = a.i*b.i
-            buffer.j = a.j*b.j
-            buffer.k = a.k*b.k
-            return buffer
-        else:
-            raise Exception
+#         @param a a vector
+#         @param b another vector
+#         @return a new <code>VectorIJK</code> which now contains (a .* b).
+#         @see VectorIJK#pointwiseMultiply(UnwritableVectorIJK,
+#         UnwritableVectorIJK, VectorIJK)
+#         """
+#         if len(args) == 2:
+#             (a, b) = args
+#             return VectorIJK.pointwiseMultiply(a, b, VectorIJK())
+#         elif len(args) == 3:
+#             (a, b, buffer) = args
+#             buffer.i = a.i*b.i
+#             buffer.j = a.j*b.j
+#             buffer.k = a.k*b.k
+#             return buffer
+#         else:
+#             raise Exception
 
-    @staticmethod
-    def subtract(*args):
-        """Subtract one vector from another.
+#     @staticmethod
+#     def subtract(*args):
+#         """Subtract one vector from another.
 
-        @param a the minuend
-        @param b the subtrahend
-        @return a new <code>VectorIJK</code> which now contains (a - b)
-        @see VectorIJK#subtract(UnwritableVectorIJK, UnwritableVectorIJK,
-        VectorIJK)
-        """
-        if len(args) == 2:
-            (a, b) = args
-            return VectorIJK.subtract(a, b, VectorIJK())
-        elif len(args) == 3:
-            (a, b, buffer) = args
-            buffer.i = a.i - b.i
-            buffer.j = a.j - b.j
-            buffer.k = a.k - b.k
-            return buffer
-        else:
-            raise Exception
+#         @param a the minuend
+#         @param b the subtrahend
+#         @return a new <code>VectorIJK</code> which now contains (a - b)
+#         @see VectorIJK#subtract(UnwritableVectorIJK, UnwritableVectorIJK,
+#         VectorIJK)
+#         """
+#         if len(args) == 2:
+#             (a, b) = args
+#             return VectorIJK.subtract(a, b, VectorIJK())
+#         elif len(args) == 3:
+#             (a, b, buffer) = args
+#             buffer.i = a.i - b.i
+#             buffer.j = a.j - b.j
+#             buffer.k = a.k - b.k
+#             return buffer
+#         else:
+#             raise Exception
 
     @staticmethod
     def add(*args):
@@ -757,59 +757,59 @@ class VectorIJK(Vector3D):
         else:
             raise Exception
 
-    @staticmethod
-    def addAll(*args):
-        """Add all the vectors in an list of vectors.
+#     @staticmethod
+#     def addAll(*args):
+#         """Add all the vectors in an list of vectors.
 
-        @param vectors an {@link Iterable} of vectors to be added
-        @param buffer the buffer to receive the results of the addition
-        @return a reference to buffer for convenience which now contains
-        (a + b + ... + n).
-        """
-        if len(args) == 1:
-            (vectors,) = args
-            return VectorIJK.addAll(vectors, VectorIJK())
-        elif len(args) == 2:
-            (vectors, buffer) = args
-            sumI = 0.0
-            sumJ = 0.0
-            sumK = 0.0
-            for vector in vectors:
-                sumI += vector.i
-                sumJ += vector.j
-                sumK += vector.k
-            return buffer.setTo(sumI, sumJ, sumK)
-        else:
-            raise Exception
+#         @param vectors an {@link Iterable} of vectors to be added
+#         @param buffer the buffer to receive the results of the addition
+#         @return a reference to buffer for convenience which now contains
+#         (a + b + ... + n).
+#         """
+#         if len(args) == 1:
+#             (vectors,) = args
+#             return VectorIJK.addAll(vectors, VectorIJK())
+#         elif len(args) == 2:
+#             (vectors, buffer) = args
+#             sumI = 0.0
+#             sumJ = 0.0
+#             sumK = 0.0
+#             for vector in vectors:
+#                 sumI += vector.i
+#                 sumJ += vector.j
+#                 sumK += vector.k
+#             return buffer.setTo(sumI, sumJ, sumK)
+#         else:
+#             raise Exception
 
-    @staticmethod
-    def addRSS(*args):
-        """Compute the component-wise root sum square of two vectors.
+#     @staticmethod
+#     def addRSS(*args):
+#         """Compute the component-wise root sum square of two vectors.
 
-        @param a a vector
-        @param b another vector
+#         @param a a vector
+#         @param b another vector
 
-        @return a new <code>VectorIJK</code> which now contains
-        (sqrt(a<sub>i</sub> + b<sub>i</sub> ) ,
-         sqrt(a<sub>j</sub> + b<sub>j</sub>) ,
-         sqrt(a<sub>k</sub> + b<sub>k</sub> )).
+#         @return a new <code>VectorIJK</code> which now contains
+#         (sqrt(a<sub>i</sub> + b<sub>i</sub> ) ,
+#          sqrt(a<sub>j</sub> + b<sub>j</sub>) ,
+#          sqrt(a<sub>k</sub> + b<sub>k</sub> )).
 
-        @see VectorIJK#addRSS(UnwritableVectorIJK, UnwritableVectorIJK,
-        VectorIJK)
-        """
-        if len(args) == 2:
-            (a, b) = args
-            return VectorIJK.addRSS(a, b, VectorIJK())
-        elif len(args) == 3:
-            # Performs a component wise root sum square of two vectors (add in
-            # quadrature).
-            (a, b, buffer) = args
-            i = computeNorm(a.i, b.i)
-            j = computeNorm(a.j, b.j)
-            k = computeNorm(a.k, b.k)
-            return buffer.setTo(i, j, k)
-        else:
-            raise Exception
+#         @see VectorIJK#addRSS(UnwritableVectorIJK, UnwritableVectorIJK,
+#         VectorIJK)
+#         """
+#         if len(args) == 2:
+#             (a, b) = args
+#             return VectorIJK.addRSS(a, b, VectorIJK())
+#         elif len(args) == 3:
+#             # Performs a component wise root sum square of two vectors (add in
+#             # quadrature).
+#             (a, b, buffer) = args
+#             i = computeNorm(a.i, b.i)
+#             j = computeNorm(a.j, b.j)
+#             k = computeNorm(a.k, b.k)
+#             return buffer.setTo(i, j, k)
+#         else:
+#             raise Exception
 
     def getI(self):
         """Get the ith component (float)."""
@@ -836,8 +836,8 @@ class VectorIJK(Vector3D):
         return VectorIJK(vector)
 
 
-# The ZERO vector.
-ZERO = VectorIJK(0, 0, 0)
+# # The ZERO vector.
+# ZERO = VectorIJK(0, 0, 0)
 
 # The I basis vector: (1,0,0).
 I = VectorIJK(1, 0, 0)
@@ -848,11 +848,11 @@ J = VectorIJK(0, 1, 0)
 # The K basis vector: (0,0,1).
 K = VectorIJK(0, 0, 1)
 
-# The negative of the I basis vector: (-1,0,0).
-MINUS_I = VectorIJK(-1, 0, 0)
+# # The negative of the I basis vector: (-1,0,0).
+# MINUS_I = VectorIJK(-1, 0, 0)
 
-# The negative of the J basis vector: (0,-1,0).
-MINUS_J = VectorIJK(0, -1, 0)
+# # The negative of the J basis vector: (0,-1,0).
+# MINUS_J = VectorIJK(0, -1, 0)
 
-# The negative of the K basis vector: (0,0,-1).
-MINUS_K = VectorIJK(0, 0, -1)
+# # The negative of the K basis vector: (0,0,-1).
+# MINUS_K = VectorIJK(0, 0, -1)

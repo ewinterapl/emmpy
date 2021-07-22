@@ -11,11 +11,13 @@ internals of the parent classes fields.
 
 
 import sys
+import numpy as np
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     computeDeterminant,
     computeNorm
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.matrices.matrix3d import Matrix3D
 
 
 # Default tolerance for determining if a matrix is invertible. The
@@ -38,104 +40,129 @@ DETERMINANT_TOLERANCE = 1E-4
 INVORSION_BOUND = sys.float_info.max
 
 
-class MatrixIJK:
+# Map matrix component names to indices.
+components = {'ii': (0, 0), 'ij': (0, 1), 'ik': (0, 2),
+              'ji': (1, 0), 'jj': (1, 1), 'jk': (1, 2),
+              'ki': (2, 0), 'kj': (2, 1), 'kk': (2, 2)}
+
+
+class MatrixIJK(Matrix3D):
     """A writable 3-D matrix."""
 
     def __init__(self, *args):
-        """Build a new object."""
+        """Initialize a new MatrixIJK object.
+
+        Initialize a new MatrixIJK object.
+
+        Parameters
+        ----------
+        a : 3x3 array-like of float, optional, default 3x3 None
+            Values for matrix elements in row-major order.
+        OR
+        scale : float
+            The scale factor to apply.
+        a : 3x3 array-like of float
+            The array whose components are to be scaled and copied.
+        OR
+        colI, colJ, colK : array-like of 3 float
+            3-element array-likes containing the columns to use for the matrix.
+        OR
+        scaleI, scaleJ, scaleK : float
+            Scale factors to apply to the ith, jth, kth columns.
+        a : 3x3 array-like of float
+            The array whose components are to be scaled and copied.
+        OR
+        scaleI : float
+            The scale factor to apply to the ith column.
+        colI : array-like of 3 float
+            The vector containing the ith column.
+        scaleJ : float
+            The scale factor to apply to the jth column.
+        colJ : array-like of 3 float
+            The vector containing the jth column.
+        scaleK : float
+            The scale factor to apply to the kth column.
+        colK : array-like of 3 float
+            The vector containing the kth column.
+        OR
+        ii, ij, ik, ji, jj, jk, ki, kj, kk : float
+            Elements of new matrix in row-major order.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 0:
-            # Construct a matrix with an initial value of {@link #IDENTITY}.
-            data = (1, 0, 0, 0, 1, 0, 0, 0, 1)
-            self.__init__(*data)
+            # Construct an empty matrix.
+            self[:, :] = np.array((None,)*9).reshape((3, 3))
         elif len(args) == 1:
-            if isinstance(args[0], list):
-                # Constructs a matrix from the upper three by three block of a
-                # two dimensional array of doubles.
-                # @param data the array of doubles
-                # @throws IndexOutOfBoundsException if the supplied data array
-                # does not contain at least three arrays of arrays of length
-                # three or greater.
-                (data,) = args
-                self.__init__(data[0][0], data[1][0], data[2][0],
-                              data[0][1], data[1][1], data[2][1],
-                              data[0][2], data[1][2], data[2][2])
-            else:
-                # Copy constructor, creates a matrix by copying the values of
-                # a pre-existing one.
-                # @param matrix the matrix whose contents are to be copied.
-                (m,) = args
-                self.__init__(m.ii, m.ji, m.ki,
-                              m.ij, m.jj, m.kj,
-                              m.ik, m.jk, m.kk)
+            # Initialize matrix from a 3x3 array-like of floats.
+            (a,) = args
+            self[:, :] = np.array(a)
         elif len(args) == 2:
-            # Scaling constructor, creates a new matrix by applying a scalar
-            # multiple to the components of a pre-existing matrix.
-            # @param scale the scale factor to apply
-            # @param matrix the matrix whose components are to be scaled and
-            # copied
-            (s, m) = args
-            self.__init__(s*m.ii, s*m.ji, s*m.ki,
-                          s*m.ij, s*m.jj, s*m.kj,
-                          s*m.ik, s*m.jk, s*m.kk)
+            # Initialize matrix by applying a scale factor to the
+            # components of an existing array-like.
+            (scale, a) = args
+            self[:, :] = scale*np.array(a)
         elif len(args) == 3:
-            # Column vector constructor, creates a new matrix by populating the
-            # columns of the matrix with the supplied vectors.
-            # @param ithColumn the vector containing the ith column
-            # @param jthColumn the vector containing the jth column
-            # @param kthColumn the vector containing the kth column
+            # Initialize matrix by populating the columns of the matrix
+            # with the supplied vectors.
             (colI, colJ, colK) = args
-            self.__init__(colI.i, colI.j, colI.k,
-                          colJ.i, colJ.j, colJ.k,
-                          colK.i, colK.j, colK.k)
+            self[:, 0] = np.array(colI)
+            self[:, 1] = np.array(colJ)
+            self[:, 2] = np.array(colK)
         elif len(args) == 4:
-            # Column scaling constructor, creates a new matrix by applying
-            # scalar multiples to each column of a pre-existing matrix.
-            # @param scaleI the scale factor to apply to the ith column
-            # @param scaleJ the scale factor to apply to the jth column
-            # @param scaleK the scale factor to apply to the kth column
-            # @param matrix the matrix whose columns are to be scaled and
-            # copied
-            (sI, sJ, sK, m) = args
-            self.__init__(sI*m.ii, sI*m.ji, sI*m.ki,
-                          sJ*m.ij, sJ*m.jj, sJ*m.kj,
-                          sK*m.ik, sK*m.jk, sK*m.kk)
+            # Initialize matrix by applying scalar multiples to each
+            # column of an existing array-like.
+            (scaleI, scaleJ, scaleK, a) = args
+            scales = (scaleI, scaleJ, scaleK)
+            self[:, :] = scales*np.array(a)
         elif len(args) == 6:
-            # Scaled column vector constructor, creates a new matrix by
-            # populating the columns of the matrix with scaled versions of the
-            # supplied vectors
-            # @param scaleI the scale factor to apply to the ith column
-            # @param ithColumn the vector containing the ith column
-            # @param scaleJ the scale factor to apply to the jth column
-            # @param jthColumn the vector containing the jth column
-            # @param scaleK the scale factor to apply to the kth column
-            # @param kthColumn the vector containing the kth column
-            (sI, colI, sJ, colJ, sK, colK) = args
-            self.__init__(sI*colI.i, sI*colI.j, sI*colI.k,
-                          sJ*colJ.i, sJ*colJ.j, sJ*colJ.k,
-                          sK*colK.i, sK*colK.j, sK*colK.k)
+            # Initialize matrix by applying individual scale factors to
+            # columns.
+            (scaleI, colI, scaleJ, colJ, scaleK, colK) = args
+            self[:, 0] = scaleI*np.array(colI)
+            self[:, 1] = scaleJ*np.array(colJ)
+            self[:, 2] = scaleK*np.array(colK)
         elif len(args) == 9:
-            # Constructs a matrix from the nine basic components.
-            # @param ii ith row, ith column element
-            # @param ji jth row, ith column element
-            # @param ki kth row, ith column element
-            # @param ij ith row, jth column element
-            # @param jj jth row, jth column element
-            # @param kj kth row, jth column element
-            # @param ik ith row, kth column element
-            # @param jk jth row, kth column element
-            # @param kk kth row, kth column element
-            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            self.ii = ii
-            self.ji = ji
-            self.ki = ki
-            self.ij = ij
-            self.jj = jj
-            self.kj = kj
-            self.ik = ik
-            self.jk = jk
-            self.kk = kk
+            # Constructs a matrix from the nine basic components, in column-
+            # major order.
+            self[:, :] = np.array(args).reshape((3, 3)).T
         else:
-            raise TypeError
+            raise ValueError
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to get.
+
+        Returns
+        -------
+        self[i, j] : float
+            Value of specified element (i, j).
+        """
+        return self[components[name]]
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Returns
+        -------
+        None
+        """
+        self[components[name]] = value
 
     def createTranspose(self):
         """Create a transposed copy of the matrix.
@@ -553,6 +580,7 @@ class MatrixIJK:
             # @param kk kth row, kth column element
             # @return a reference to the instance, for convenience, that
             # contains the newly set matrix
+            # COLUMN-MAJOR ORDER
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
             self.ii = ii
             self.ji = ji
@@ -1009,48 +1037,48 @@ class MatrixIJK:
             self.ij, self.jj, self.kj,
             self.ik, self.jk, self.kk)
 
-    def getII(self):
-        """Get the ith row, ith column component."""
-        return self.ii
+#     def getII(self):
+#         """Get the ith row, ith column component."""
+#         return self.ii
 
-    def getJI(self):
-        """Get the jth row, ith column component."""
-        return self.ji
+#     def getJI(self):
+#         """Get the jth row, ith column component."""
+#         return self.ji
 
-    def getKI(self):
-        """Get the kth row, ith column component."""
-        return self.ki
+#     def getKI(self):
+#         """Get the kth row, ith column component."""
+#         return self.ki
 
-    def getIJ(self):
-        """Get the ith row, jth column component."""
-        return self.ij
+#     def getIJ(self):
+#         """Get the ith row, jth column component."""
+#         return self.ij
 
-    def getJJ(self):
-        """Get the jth row, jth column component."""
-        return self.jj
+#     def getJJ(self):
+#         """Get the jth row, jth column component."""
+#         return self.jj
 
-    def getKJ(self):
-        """Get the kth row, jth column component."""
-        return self.kj
+#     def getKJ(self):
+#         """Get the kth row, jth column component."""
+#         return self.kj
 
-    def getIK(self):
-        """Get the ith row, kth column component."""
-        return self.ik
+#     def getIK(self):
+#         """Get the ith row, kth column component."""
+#         return self.ik
 
-    def getJK(self):
-        """Get the jth row, kth column component."""
-        return self.jk
+#     def getJK(self):
+#         """Get the jth row, kth column component."""
+#         return self.jk
 
-    def getKK(self):
-        """Get the kth row, kth column component."""
-        return self.kk
+#     def getKK(self):
+#         """Get the kth row, kth column component."""
+#         return self.kk
 
 
-# The matrix whose components are all zero.
-ZEROS = MatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
+# # The matrix whose components are all zero.
+# ZEROS = MatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-# The matrix whose components are all ones.
-ONES = MatrixIJK(1, 1, 1, 1, 1, 1, 1, 1, 1)
+# # The matrix whose components are all ones.
+# ONES = MatrixIJK(1, 1, 1, 1, 1, 1, 1, 1, 1)
 
-# The multiplicative identity.
-IDENTITY = MatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
+# # The multiplicative identity.
+# IDENTITY = MatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)

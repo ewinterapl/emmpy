@@ -1,6 +1,6 @@
 from math import cos, pi, sin, sqrt
 import unittest
-
+import numpy as np
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
@@ -8,22 +8,17 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        # 0 arguments - identity matrix
+        """Test the __init__ method."""
+        # 0 arguments - empty matrix
         m = MatrixIJK()
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 0)
-        self.assertAlmostEqual(m.ki, 0)
-        self.assertAlmostEqual(m.ij, 0)
-        self.assertAlmostEqual(m.jj, 1)
-        self.assertAlmostEqual(m.kj, 0)
-        self.assertAlmostEqual(m.ik, 0)
-        self.assertAlmostEqual(m.jk, 0)
-        self.assertAlmostEqual(m.kk, 1)
+        self.assertIsInstance(m, MatrixIJK)
+        for row in range(3):
+            for col in range(3):
+                self.assertTrue(np.isnan(m[row, col]))
         # 1 arg - list of lists
-        m = MatrixIJK([[1, 2, 3, 4],
-                       [4, 5, 6, 7],
-                       [7, 8, 9, 0],
-                       [4, 3, 2, 1]])
+        m = MatrixIJK([[1, 2, 3],
+                       [4, 5, 6],
+                       [7, 8, 9]])
         self.assertAlmostEqual(m.ii, 1)
         self.assertAlmostEqual(m.ji, 4)
         self.assertAlmostEqual(m.ki, 7)
@@ -105,9 +100,51 @@ class TestBuilder(unittest.TestCase):
         # Invalid form
         sizes = (5, 7, 8, 10)
         for s in sizes:
-            with self.assertRaises(TypeError):
+            with self.assertRaises(ValueError):
                 data = [None]*s
                 m = MatrixIJK(*data)
+
+    def test___getattr__(self):
+        """Test the __getattr__ method."""
+        # COLUMN-MAJOR ORDER
+        data = [i*1.1 for i in range(9)]
+        m = MatrixIJK(*data)
+        self.assertAlmostEqual(m.ii, 0)
+        self.assertAlmostEqual(m.ji, 1.1)
+        self.assertAlmostEqual(m.ki, 2.2)
+        self.assertAlmostEqual(m.ij, 3.3)
+        self.assertAlmostEqual(m.jj, 4.4)
+        self.assertAlmostEqual(m.kj, 5.5)
+        self.assertAlmostEqual(m.ik, 6.6)
+        self.assertAlmostEqual(m.jk, 7.7)
+        self.assertAlmostEqual(m.kk, 8.8)
+        with self.assertRaises(KeyError):
+            data = m.bad
+
+    def test___setattr__(self):
+        """Test the __setattr__ method."""
+        m = MatrixIJK()
+        data = [i*1.1 for i in range(9)]
+        m.ii = data[0]
+        self.assertAlmostEqual(m.ii, data[0])
+        m.ij = data[1]
+        self.assertAlmostEqual(m.ij, data[1])
+        m.ik = data[2]
+        self.assertAlmostEqual(m.ik, data[2])
+        m.ji = data[3]
+        self.assertAlmostEqual(m.ji, data[3])
+        m.jj = data[4]
+        self.assertAlmostEqual(m.jj, data[4])
+        m.jk = data[5]
+        self.assertAlmostEqual(m.jk, data[5])
+        m.ki = data[6]
+        self.assertAlmostEqual(m.ki, data[6])
+        m.kj = data[7]
+        self.assertAlmostEqual(m.kj, data[7])
+        m.kk = data[8]
+        self.assertAlmostEqual(m.kk, data[8])
+        with self.assertRaises(KeyError):
+            m.bad = 0
 
     def test_createTranspose(self):
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -173,6 +210,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.kk, cos(a))
 
     def test_transpose(self):
+        # COLUMN-MAJOR ORDER
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = m.transpose()
         self.assertIs(m2, m)
@@ -860,6 +898,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v4.i, 1*1 + 4*2 + 7*3)
         self.assertAlmostEqual(v4.j, 2*1 + 5*2 + 8*3)
         self.assertAlmostEqual(v4.k, 3*1 + 6*2 + 9*3)
+
+    def test_getDeterminant(self):
+        pass
 
 
 if __name__ == '__main__':

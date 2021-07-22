@@ -1,5 +1,6 @@
 from math import pi, sqrt
 import unittest
+import numpy as np
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
@@ -7,11 +8,12 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
+        """Test the __init__ method."""
         # 0-argument form
         v = VectorIJK()
-        self.assertAlmostEqual(v.i, 0)
-        self.assertAlmostEqual(v.j, 0)
-        self.assertAlmostEqual(v.k, 0)
+        self.assertTrue(np.isnan(v.i))
+        self.assertTrue(np.isnan(v.j))
+        self.assertTrue(np.isnan(v.k))
         # 1-argument forms
         v = VectorIJK([1.1, 2.2, 3.3])
         self.assertAlmostEqual(v.i, 1.1)
@@ -21,15 +23,17 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.i, 1.1)
         self.assertAlmostEqual(v2.j, 2.2)
         self.assertAlmostEqual(v2.k, 3.3)
-        v2 = VectorIJK(-2.0, v)
-        self.assertAlmostEqual(v2.i, -2.2)
-        self.assertAlmostEqual(v2.j, -4.4)
-        self.assertAlmostEqual(v2.k, -6.6)
         # 2-argument forms
+        # Offset and list
         v = VectorIJK(1, [0.0, 1.1, 2.2, 3.3])
         self.assertAlmostEqual(v.i, 1.1)
         self.assertAlmostEqual(v.j, 2.2)
         self.assertAlmostEqual(v.k, 3.3)
+        # Scale and vector
+        v2 = VectorIJK(-2.0, v)
+        self.assertAlmostEqual(v2.i, -2.2)
+        self.assertAlmostEqual(v2.j, -4.4)
+        self.assertAlmostEqual(v2.k, -6.6)
         # 3-argument form
         v = VectorIJK(1.1, 2.2, 3.3)
         self.assertAlmostEqual(v.i, 1.1)
@@ -42,6 +46,29 @@ class TestBuilder(unittest.TestCase):
             VectorIJK(0, 1)
         with self.assertRaises(Exception):
             VectorIJK(0, 1, 2, 3)
+
+    def test___getattr__(self):
+        """Test the __getattr__ method."""
+        (i, j, k) = (1.1, 2.2, 3.3)
+        v = VectorIJK(i, j, k)
+        self.assertAlmostEqual(v.i, i)
+        self.assertAlmostEqual(v.j, j)
+        self.assertAlmostEqual(v.k, k)
+        with self.assertRaises(KeyError):
+            v.bad
+
+    def test___setattr__(self):
+        """Test the __setattr__ method."""
+        v = VectorIJK()
+        (i, j, k) = (1.1, 2.2, 3.3)
+        v.i = i
+        self.assertAlmostEqual(v.i, i)
+        v.j = j
+        self.assertAlmostEqual(v.j, j)
+        v.j = k
+        self.assertAlmostEqual(v.j, k)
+        with self.assertRaises(KeyError):
+            v.bad = 0
 
     def test_createUnitized(self):
         v1 = VectorIJK(1, 2, 3)
@@ -127,6 +154,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_setTo(self):
         # 1-argument forms
+        # vector
         v1 = VectorIJK(1.1, 2.2, 3.3)
         v2 = VectorIJK()
         v3 = v2.setTo(v1)
@@ -134,17 +162,20 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.i, 1.1)
         self.assertAlmostEqual(v2.j, 2.2)
         self.assertAlmostEqual(v2.k, 3.3)
+        # list
         v3 = v2.setTo([5.5, 6.6, 7.7])
         self.assertIs(v3, v2)
         self.assertAlmostEqual(v2.i, 5.5)
         self.assertAlmostEqual(v2.j, 6.6)
         self.assertAlmostEqual(v2.k, 7.7)
         # 2-argument forms
+        # scale and vector
         v3 = v2.setTo(-2, v1)
         self.assertIs(v3, v2)
         self.assertAlmostEqual(v2.i, -2.2)
         self.assertAlmostEqual(v2.j, -4.4)
         self.assertAlmostEqual(v2.k, -6.6)
+        # offset and list
         v3 = v2.setTo(1, [1.11, 2.22, 3.33, 4.44])
         self.assertIs(v3, v2)
         self.assertAlmostEqual(v2.i, 2.22)
@@ -429,6 +460,29 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v3.k, sqrt(34))
         with self.assertRaises(Exception):
             VectorIJK.addRSS()
+
+    def test_getI(self):
+        (i, j, k) = (1.1, 2.2, 3.3)
+        v = VectorIJK(i, j, k)
+        self.assertAlmostEqual(v.getI(), i)
+
+    def test_getJ(self):
+        (i, j, k) = (1.1, 2.2, 3.3)
+        v = VectorIJK(i, j, k)
+        self.assertAlmostEqual(v.getJ(), j)
+
+    def test_getI(self):
+        (i, j, k) = (1.1, 2.2, 3.3)
+        v = VectorIJK(i, j, k)
+        self.assertAlmostEqual(v.getK(), k)
+
+    def test_copyOf(self):
+        (i, j, k) = (1.1, 2.2, 3.3)
+        v1 = VectorIJK(i, j, k)
+        v2 = VectorIJK.copyOf(v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        self.assertAlmostEqual(v2.k, k)
 
 
 if __name__ == '__main__':

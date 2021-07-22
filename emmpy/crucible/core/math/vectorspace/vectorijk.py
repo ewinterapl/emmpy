@@ -2,16 +2,21 @@
 
 
 from math import cos, sin
-
+import numpy as np
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
     computeNorm
 )
+from emmpy.math.vectors.vector3d import Vector3D
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
-class VectorIJK:
+# Map vector component names to indices.
+components = {'i': 0, 'j': 1, 'k': 2}
+
+
+class VectorIJK(Vector3D):
     """A 3-D vector.
 
     Writable subclass of UnwritableVectorIJK.
@@ -23,73 +28,85 @@ class VectorIJK:
     """
 
     def __init__(self, *args):
-        """Create a VectorIJK."""
+        """Initialize a new VectorIJK object.
+
+        Initialize a new VectorIJK object.
+
+        Parameters
+        ----------
+        iter : Iterable of 3 float
+            Values for (i, j, k) coordinates.
+        OR
+        offset : int
+            Offset into iter for assignment to vector elements.
+        iter : Iterable of >=3 float
+            Values to use for vector elements, starting at offset.
+        OR
+        scale : float
+            Scale factor for components to copy.
+        iter : Iterable of 3 float
+            Vector components to copy and scale.
+        OR
+        i, j, k : float
+            Values for vector elements.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 0:
-            # Construct a vector with an initial value of
-            # VectorIJK.ZERO
-            self.i = 0
-            self.j = 0
-            self.k = 0
+            self[:] = (None, None, None)
         elif len(args) == 1:
-            if isinstance(args[0], list):
-                # Constructs a vector from the first three elements of an array
-                # of doubles.
-                # param data the array of doubles.
-                # throws IndexOutOfBoundsException if the supplied data array
-                # does not contain at least three elements
-                (data,) = args
-                self.i = data[0]
-                self.j = data[1]
-                self.k = data[2]
-            elif isinstance(args[0], VectorIJK):
-                # Copy constructor, creates a vector by copying the values of
-                # a pre-exisiting one.
-                # @param vector the vector whose contents are to be copied
-                (vector,) = args
-                self.i = vector.i
-                self.j = vector.j
-                self.k = vector.k
-            else:
-                raise Exception
+            # Iterable of 3 values for the components.
+            (iter,) = args
+            self[:] = list(iter)
         elif len(args) == 2:
-            if isinstance(args[0], int) and isinstance(args[1], list):
-                # Constructs a vector from the three elements of an array of
-                # double starting with the offset index.
-                # @param offset index into the data array to copy into the ith
-                # component.
-                # @param data the array of doubles.
-                # @throws IndexOutOfBoundsException if the supplied data array
-                # does not contain three elements at indices offset through
-                # offset + 2
-                (index, data) = args
-                self.i = data[index]
-                self.j = data[index + 1]
-                self.k = data[index + 2]
-            elif (isRealNumber(args[0]) and
-                  isinstance(args[1], VectorIJK)):
-                # Scaling constructor, creates a new vector by applying a
-                # scalar multiple to the components of a pre-existing vector.
-                # This results in (scale*vector) being stored in the newly
-                # constructed vector.
-                # @param scale the scale factor to apply
-                # @param vector the vector whose contents are to be scaled
-                (scale, vector) = args
-                self.i = scale*vector.i
-                self.j = scale*vector.j
-                self.k = scale*vector.k
+            if isinstance(args[0], int):
+                # Offset and iterable of >= (3 + offset + 1) values.
+                (offset, iter) = args
+                self[:] = list(iter[offset:offset + 3])
             else:
-                raise Exception
+                # Scale factor and iterable to scale.
+                (scale, iter) = args
+                self[:] = scale*np.array(iter)
         elif len(args) == 3:
-            # Constructs a vector from three basic components
-            # @param i the ith component
-            # @param j the jth component
-            # @param k the kth component
-            (i, j, k) = args
-            self.i = i
-            self.j = j
-            self.k = k
+            # Scalar values (3) for the components.
+            self[:] = args
         else:
-            raise Exception
+            raise ValueError
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Parameters
+        ----------
+        name : str
+            Name of attribute to get.
+
+        Returns
+        -------
+        self[0|1|2] : float
+            Value of specified attribute (i, j, or k).
+        """
+        return self[components[name]]
+
+    def __setattr__(self, name, value):
+        """Set the value of a computed attribute.
+
+        Set the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        components dictionary.
+
+        Returns
+        -------
+        None
+        """
+        self[components[name]] = value
 
     def createUnitized(self):
         """Create a unitized copy of the vector."""

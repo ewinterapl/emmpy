@@ -1,6 +1,9 @@
-from math import sqrt
-import unittest
+"""Tests for the vectorij module."""
 
+
+import unittest
+from math import sqrt
+import numpy as np
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
@@ -12,35 +15,87 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        # 0-argument form
-        vij = VectorIJ()
-        self.assertAlmostEqual(vij.i, 0)
-        self.assertAlmostEqual(vij.j, 0)
+        """Test the __init__ method."""
+        # 0-argument form.
+        v = VectorIJ()
+        self.assertIsInstance(v, VectorIJ)
+        for x in v:
+            self.assertTrue(np.isnan(x))
+        # Test data
+        (i, j) = (1.1, 2.2)
         # 1-argument forms
-        vij = VectorIJ([1.1, 2.2])
-        self.assertAlmostEqual(vij.i, 1.1)
-        self.assertAlmostEqual(vij.j, 2.2)
-        vij2 = VectorIJ(vij)
-        self.assertAlmostEqual(vij2.i, 1.1)
-        self.assertAlmostEqual(vij2.j, 2.2)
+        # list
+        v = VectorIJ([i, j])
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # tuple
+        v = VectorIJ((i, j))
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # np.ndarray
+        v = VectorIJ(np.array([i, j]))
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # vector
+        v2 = VectorIJ(v)
+        self.assertIsInstance(v2, VectorIJ)
+        self.assertAlmostEqual(v2[0], i)
+        self.assertAlmostEqual(v2[1], j)
         # 2-argument forms
-        vij = VectorIJ(1.1, 2.2)
-        self.assertAlmostEqual(vij.i, 1.1)
-        self.assertAlmostEqual(vij.j, 2.2)
-        vij = VectorIJ(1, [0.0, 1.1, 2.2, 3.3])
-        self.assertAlmostEqual(vij.i, 1.1)
-        self.assertAlmostEqual(vij.j, 2.2)
-        vij1 = VectorIJ(1.1, 2.2)
-        vij2 = VectorIJ(-2.0, vij1)
-        self.assertAlmostEqual(vij2.i, -2.2)
-        self.assertAlmostEqual(vij2.j, -4.4)
-        # Invalid forms.
-        with self.assertRaises(Exception):
-            VectorIJ(None)
-        with self.assertRaises(Exception):
-            VectorIJ(None, None)
-        with self.assertRaises(CrucibleRuntimeException):
-            VectorIJ(0, 1, 2)
+        # offset and list
+        v = VectorIJ(1, [0, i, j])
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # offset and tuple
+        v = VectorIJ(1, (0, i, j))
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # offset and np.ndarray
+        a = np.array([0, i, j])
+        v = VectorIJ(1, a)
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # scale and vector
+        scale = -2.2
+        v = VectorIJ([i, j])
+        v2 = VectorIJ(scale, v)
+        self.assertIsInstance(v2, VectorIJ)
+        self.assertAlmostEqual(v2[0], scale*i)
+        self.assertAlmostEqual(v2[1], scale*j)
+        # set components
+        v = VectorIJ(i, j)
+        self.assertIsInstance(v, VectorIJ)
+        self.assertAlmostEqual(v[0], i)
+        self.assertAlmostEqual(v[1], j)
+        # >= 3 args is invalid
+        with self.assertRaises(ValueError):
+            v = VectorIJ(i, j, None)
+
+    def test___getattr__(self):
+        """Test the __getattr__ method."""
+        (i, j) = (1.1, 2.2)
+        v = VectorIJ(i, j)
+        self.assertAlmostEqual(v.i, i)
+        self.assertAlmostEqual(v.j, j)
+        with self.assertRaises(KeyError):
+            bad = v.bad
+
+    def test___setattr__(self):
+        """Test the __setattr__ method."""
+        v = VectorIJ()
+        (i, j) = (1.1, 2.2)
+        v.i = i
+        self.assertAlmostEqual(v.i, i)
+        v.j = j
+        self.assertAlmostEqual(v.j, j)
+        with self.assertRaises(KeyError):
+            v.bad = 0
 
     def test_createUnitized(self):
         vij1 = VectorIJ(1, 2)
@@ -105,21 +160,27 @@ class TestBuilder(unittest.TestCase):
 
     def test_setTo(self):
         # 1-argument forms
+        # vector copy
         vij1 = VectorIJ(1.1, 2.2)
         vij2 = VectorIJ(3.3, 4.4)
-        vij2.setTo(vij1)
+        vij3 = vij2.setTo(vij1)
+        self.assertIs(vij3, vij2)
         self.assertAlmostEqual(vij2.i, 1.1)
         self.assertAlmostEqual(vij2.j, 2.2)
+        # Set from list
         vij2.setTo([5.5, 6.6])
         self.assertAlmostEqual(vij2.i, 5.5)
         self.assertAlmostEqual(vij2.j, 6.6)
         # 2-argument forms
+        # Scale a vector.
         vij2.setTo(-2, vij1)
         self.assertAlmostEqual(vij2.i, -2.2)
         self.assertAlmostEqual(vij2.j, -4.4)
+        # Offset and list
         vij2.setTo(1, [1.11, 2.22, 3.33])
         self.assertAlmostEqual(vij2.i, 2.22)
         self.assertAlmostEqual(vij2.j, 3.33)
+        # Explicit values
         vij2.setTo(7.77, 8.88)
         self.assertAlmostEqual(vij2.i, 7.77)
         self.assertAlmostEqual(vij2.j, 8.88)
@@ -304,6 +365,18 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(vij4.j, sqrt(20))
         with self.assertRaises(Exception):
             VectorIJ.addRSS()
+
+    def test_getI(self):
+        """Test the getI method."""
+        (i, j) = (1.1, 2.2)
+        v = VectorIJ(i, j)
+        self.assertAlmostEqual(v.getI(), i)
+
+    def test_getJ(self):
+        """Test the getJ method."""
+        (i, j) = (1.1, 2.2)
+        v = VectorIJ(i, j)
+        self.assertAlmostEqual(v.getJ(), j)
 
 
 if __name__ == '__main__':

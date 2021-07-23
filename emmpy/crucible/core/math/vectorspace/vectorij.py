@@ -7,6 +7,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
 from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
@@ -34,18 +35,18 @@ class VectorIJ(Vector2D):
 
         Parameters
         ----------
-        iter : iterable of 2 float
+        data : array-like of 2 float, optional, default (None, None)
             Values for (i, j) coordinates.
         OR
         offset : int
-            Offset into data for assignment to vector elements.
-        iterable : list of >=2 float
-            Values to use for vector elements, starting at offset.
+            Offset into array data for assignment to (i, j) coordinates.
+        data : array-like of >=2 float
+            Values to assign to (i, j) coordinates, starting at offset.
         OR
         scale : float
             Scale factor for components to copy.
-        iter : Iterable of 2 float
-            Existing vector to copy and scale.
+        data : array-like of 2 float
+            Existing array of values to copy and scale.
         OR
         i, j : float
             Values for vector elements.
@@ -56,22 +57,22 @@ class VectorIJ(Vector2D):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            self[:] = (None, None)
+            self[:] = np.array([None, None])
         elif len(args) == 1:
-            # Iterable of 2 values for the components.
-            (iter,) = args
-            self[:] = list(iter)
+            # Array-like of 2 values for the components.
+            (data,) = args
+            self[:] = np.array(data)
         elif len(args) == 2:
             if isinstance(args[0], int) and not isRealNumber(args[1]):
-                # Offset and iterable of >= (2 + offset + 1) values.
-                (offset, iter) = args
-                self[:] = list(iter[offset:offset + 2])
+                # Offset and array-like of >= (2 + offset + 1) values.
+                (offset, data) = args
+                self[:] = np.array(data)[offset:offset + 2]
             elif isRealNumber(args[0]) and not isRealNumber(args[1]):
-                # Scale factor and np.ndarray to scale.
-                (scale, a) = args
-                self[:] = scale*a
+                # Scale factor and array-like of 2 values to scale.
+                (scale, data) = args
+                self[:] = scale*np.array(data)
             else:
-                # Scalar values (2) for the components.
+                # Scalar values (i, j) for the components.
                 self[:] = args
         else:
             raise ValueError
@@ -124,31 +125,40 @@ class VectorIJ(Vector2D):
 #         """
 #         return VectorIJ(self).negate()
 
-    def scale(self, scale: float):
+    def scale(self, scale):
         """Scale the vector.
 
-        @param scale the scale factor to apply.
-        @return a reference to the instance for convenience, which now contains
-        (scale*this)
+        Apply a scale factor to the vector.
+
+        Parameters
+        ----------
+        scale : float
+            Scale factor to apply.
+
+        Returns
+        -------
+        self : VectorIJ
+            The current object.
         """
-        self.i *= scale
-        self.j *= scale
+        self[:] *= scale
         return self
 
     def unitize(self):
         """Unitize the vector.
 
-        @return a reference to the instance for convenience, which now contains
-        a vector of unit length in the direction of the original vector.
-        @throws UnsupportedOperationException if the vector is equal to
-        {@link VectorIJ#ZERO}
+        Normalize the vector to unit length.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self : VectorIJ
+            The current vector, normalized to unit length.
         """
-        norm = computeNorm(self.i, self.j)
-        if norm == 0.0:
-            raise Exception(
-                "Unable to unitize vector. Instance is zero length.")
-        self.i /= norm
-        self.j /= norm
+        length = np.linalg.norm(self)
+        self[:] /= length
         return self
 
 #     def negate(self):
@@ -200,42 +210,58 @@ class VectorIJ(Vector2D):
 #             raise BugException
 
     def setTo(self, *args):
-        """Set the vector contents to match those of another."""
+        """Set the vector components.
+
+        Set the values of the vector components.
+
+        Parameters
+        ----------
+        data : array-like of 2 float, optional, default (None, None)
+            Values for (i, j) coordinates.
+        OR
+        offset : int
+            Offset into array data for assignment to (i, j) coordinates.
+        data : array-like of >=2 float
+            Values to assign to (i, j) coordinates, starting at offset.
+        OR
+        scale : float
+            Scale factor for components to copy.
+        data : array-like of 2 float
+            Existing array of values to copy and scale.
+        OR
+        i, j : float
+            Values for vector elements.
+
+        Returns
+        -------
+        self : VectorIJ
+            The current object.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 1:
-            if isinstance(args[0], VectorIJ):
-                # Copy values from existing vector.
-                (vector,) = args
-                self.i = vector.i
-                self.j = vector.j
-                return self
-            elif isinstance(args[0], list):
-                # Copy values from first 2 elements of a list.
-                (data,) = args
-                self.setTo(data[0], data[1])
-                return self
-            else:
-                raise Exception
+            # Array-like of 2 float.
+            (data,) = args
+            self[:] = data
         elif len(args) == 2:
-            if isRealNumber(args[0]) and isinstance(args[1], VectorIJ):
+            if isinstance(args[0], int) and not isRealNumber(args[1]):
+                # Set by offset into array.
+                (offset, data) = args
+                self[:] = np.array(data)[offset:offset + 2]
+            elif isRealNumber(args[0]) and not isRealNumber(args[1]):
                 # Set by scaling an existing vector.
-                (scale, vector) = args
-                self.i = scale*vector.i
-                self.j = scale*vector.j
-                return self
-            elif isinstance(args[0], int) and isinstance(args[1], list):
-                # Set with 2 values at index into a list.
-                (index, data) = args
-                self.setTo(data[index], data[index + 1])
-                return self
+                (scale, data) = args
+                self[:] = scale*np.array(data)
             elif isRealNumber(args[0]) and isRealNumber(args[1]):
+                # Explicit component values.
                 (i, j) = args
-                self.i = i
-                self.j = j
-                return self
-            else:
-                raise Exception
+                self[:] = (i, j)
         else:
-            raise CrucibleRuntimeException
+            raise TypeError
+        return self
 
 #     def setToUnitized(self, vector):
 #         """Set the vector content to the a unit length version of another.
@@ -586,9 +612,27 @@ class VectorIJ(Vector2D):
 #             raise Exception
 
     def getI(self):
+        """Return the value of the i coordinate.
+        
+        Return the value of the i coordinate.
+        
+        Returns
+        -------
+        self.i : float
+            Value of the i coordinate.
+        """
         return self.i
 
     def getJ(self):
+        """Return the value of the j coordinate.
+        
+        Return the value of the j coordinate.
+        
+        Returns
+        -------
+        self.j : float
+            Value of the j coordinate.
+        """
         return self.j
 
     def setI(self, i):

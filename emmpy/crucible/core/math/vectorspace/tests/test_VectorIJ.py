@@ -16,7 +16,7 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ method."""
-        # 0-argument form.
+        # 0-argument form - all NaN.
         v = VectorIJ()
         self.assertIsInstance(v, VectorIJ)
         for x in v:
@@ -110,20 +110,19 @@ class TestBuilder(unittest.TestCase):
     #     self.assertAlmostEqual(vij2.j, -2.2)
 
     def test_scale(self):
+        """Test the scale() method."""
         vij = VectorIJ(1, 2)
         vij.scale(-1.1)
         self.assertAlmostEqual(vij.i, -1.1)
         self.assertAlmostEqual(vij.j, -2.2)
 
     def test_unitize(self):
+        """Test the unitize() method."""
         vij = VectorIJ(1, 2)
         vij2 = vij.unitize()
         self.assertIs(vij2, vij)
         self.assertAlmostEqual(vij.i, 1/sqrt(5))
         self.assertAlmostEqual(vij.j, 2/sqrt(5))
-        vij = VectorIJ(0, 0)
-        with self.assertRaises(Exception):
-            vij.unitize()
 
     # def test_negate(self):
     #     vij = VectorIJ(1, 2)
@@ -159,40 +158,105 @@ class TestBuilder(unittest.TestCase):
     #         vij.set(2, 5.5)
 
     def test_setTo(self):
+        """Test the setTo method."""
+        # Test data
+        (i, j, k) = (1.1, 2.2, 3.3)
         # 1-argument forms
-        # vector copy
-        vij1 = VectorIJ(1.1, 2.2)
-        vij2 = VectorIJ(3.3, 4.4)
-        vij3 = vij2.setTo(vij1)
-        self.assertIs(vij3, vij2)
-        self.assertAlmostEqual(vij2.i, 1.1)
-        self.assertAlmostEqual(vij2.j, 2.2)
-        # Set from list
-        vij2.setTo([5.5, 6.6])
-        self.assertAlmostEqual(vij2.i, 5.5)
-        self.assertAlmostEqual(vij2.j, 6.6)
+        # list
+        data = [i, j]
+        v1 = VectorIJ()
+        v2 = v1.setTo(data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        # tuple
+        data = (i, j)
+        v1 = VectorIJ()
+        v2 = v1.setTo(data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        # np.ndarray
+        data = np.array([i, j])
+        v1 = VectorIJ()
+        v2 = v1.setTo(data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        # VectorIJ
+        data = VectorIJ([i, j])
+        v1 = VectorIJ()
+        v2 = v1.setTo(data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
         # 2-argument forms
-        # Scale a vector.
-        vij2.setTo(-2, vij1)
-        self.assertAlmostEqual(vij2.i, -2.2)
-        self.assertAlmostEqual(vij2.j, -4.4)
         # Offset and list
-        vij2.setTo(1, [1.11, 2.22, 3.33])
-        self.assertAlmostEqual(vij2.i, 2.22)
-        self.assertAlmostEqual(vij2.j, 3.33)
+        offset = 1
+        data = [k, i, j]
+        v1 = VectorIJ()
+        v2 = v1.setTo(offset, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        # Offset and tuple
+        offset = 1
+        data = (k, i, j)
+        v1 = VectorIJ()
+        v2 = v1.setTo(offset, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        # Offset and np.ndarray
+        offset = 1
+        data = np.array([k, i, j])
+        v1 = VectorIJ()
+        v2 = v1.setTo(offset, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
+        # Scale factor and list
+        scale = 1.1
+        data = [i, j]
+        v1 = VectorIJ()
+        v2 = v1.setTo(scale, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, scale*i)
+        self.assertAlmostEqual(v2.j, scale*j)
+        # Scale factor and tuple
+        data = (i, j)
+        v1 = VectorIJ()
+        v2 = v1.setTo(scale, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, scale*i)
+        self.assertAlmostEqual(v2.j, scale*j)
+        # Scale factor and np.ndarray
+        data = np.array([i, j])
+        v1 = VectorIJ()
+        v2 = v1.setTo(scale, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, scale*i)
+        self.assertAlmostEqual(v2.j, scale*j)
+        # Scale factor and VectorIJ
+        data = VectorIJ(i, j)
+        v1 = VectorIJ()
+        v2 = v1.setTo(scale, data)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, scale*i)
+        self.assertAlmostEqual(v2.j, scale*j)
         # Explicit values
-        vij2.setTo(7.77, 8.88)
-        self.assertAlmostEqual(vij2.i, 7.77)
-        self.assertAlmostEqual(vij2.j, 8.88)
+        v1 = VectorIJ()
+        v2 = v1.setTo(i, j)
+        self.assertIs(v2, v1)
+        self.assertAlmostEqual(v2.i, i)
+        self.assertAlmostEqual(v2.j, j)
         # Invalid forms
-        with self.assertRaises(CrucibleRuntimeException):
-            vij2.setTo()
-        with self.assertRaises(Exception):
-            vij2.setTo(1)
-        with self.assertRaises(Exception):
-            vij2.setTo(1, None)
-        with self.assertRaises(CrucibleRuntimeException):
-            vij2.setTo(1, 2, 3, 4)
+        sizes = (0, 3)
+        for s in sizes:
+            data = [None]*s
+            v = VectorIJ()
+            with self.assertRaises(TypeError):
+                v2 = v.setTo(*data)
 
     # def test_setToUnitized(self):
     #     vij1 = VectorIJ(1, 1)
@@ -379,18 +443,18 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.getJ(), j)
 
     def test_setI(self):
-        """Test the getI method."""
+        """Test the setI method."""
         (i, j) = (1.1, 2.2)
         v = VectorIJ()
         v.setI(i)
-        self.assertAlmostEqual(v.getI(), i)
+        self.assertAlmostEqual(v.i, i)
 
     def test_setJ(self):
-        """Test the getJ method."""
+        """Test the setJ method."""
         (i, j) = (1.1, 2.2)
         v = VectorIJ()
         v.setJ(j)
-        self.assertAlmostEqual(v.getJ(), j)
+        self.assertAlmostEqual(v.j, j)
 
 
 if __name__ == '__main__':

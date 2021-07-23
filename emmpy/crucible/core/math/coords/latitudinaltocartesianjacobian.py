@@ -69,4 +69,4 @@ class LatitudinalToCartesianJacobian(Transformation):
         else:
             (inverseJacobian, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
-            return LatitudinalVector(vect.i, vect.getJ(), vect.getK())
+            return LatitudinalVector(vect.i, vect.j, vect.getK())

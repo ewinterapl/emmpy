@@ -79,6 +79,6 @@ class CylindricalToCartesianJacobian(Transformation):
         elif isinstance(args[1], VectorIJK):
             (inverseJacobian, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
-            return CylindricalVector(vect.i, vect.getJ(), vect.getK())
+            return CylindricalVector(vect.i, vect.j, vect.getK())
         else:
             raise Exception

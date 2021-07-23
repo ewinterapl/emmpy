@@ -66,7 +66,7 @@ class StretchedField(VectorField):
 
         # float x, y, z, rho2, rho, phi, sinPhi, cosPhi
         x = location.i
-        y = location.getJ()
+        y = location.j
         z = location.getK()
         # convert to spherical and cylindrical
         rho2 = x*x + z*z
@@ -114,9 +114,9 @@ class StretchedField(VectorField):
         # Tsy 2002-1 eqn 23, B' apply the transformation matrix
         # float bRho, bPhi, by
         bRho = bRhoStar*dF_dPhi
-        bPhi = bPhiStar - rho*(unstretchedVector.getJ()*dF_dy +
+        bPhi = bPhiStar - rho*(unstretchedVector.j*dF_dy +
                                bRhoStar*dF_dRho)
-        by = unstretchedVector.getJ()*dF_dPhi
+        by = unstretchedVector.j*dF_dPhi
 
         # Tsy 2002-1 eqn 24, and now convert B' from cylindrial to Cartesian
         # float bx, bz

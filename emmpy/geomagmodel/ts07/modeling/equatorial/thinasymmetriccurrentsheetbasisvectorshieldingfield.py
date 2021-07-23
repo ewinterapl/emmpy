@@ -78,7 +78,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                                            self.bessel, TrigParity.ODD)
             chf.evaluate(location, buffer)
             symmetricExpansions[n - 1] = VectorIJK(
-                buffer.i, buffer.getJ(), buffer.getK()
+                buffer.i, buffer.j, buffer.getK()
             )
 
         # n is the radial expansion number
@@ -103,7 +103,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 chf.evaluate(location, buffer)
                 buffer.scale(negateConst)
                 oddExpansions[m - 1][n - 1] = (
-                    VectorIJK(buffer.i, buffer.getJ(), buffer.getK()))
+                    VectorIJK(buffer.i, buffer.j, buffer.getK()))
 
         # n is the radial expansion number
         # m is the azimuthal expansion number
@@ -127,7 +127,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 chf.evaluate(location, buffer)
                 buffer.scale(negateConst)
                 evenExpansions[m - 1][n - 1] = (
-                    VectorIJK(buffer.i, buffer.getJ(), buffer.getK()))
+                    VectorIJK(buffer.i, buffer.j, buffer.getK()))
 
         return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions, 1),
             Expansion2Ds.createFromArray(oddExpansions, 1, 1),

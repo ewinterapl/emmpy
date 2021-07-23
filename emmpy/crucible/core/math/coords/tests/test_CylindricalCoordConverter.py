@@ -26,7 +26,7 @@ class TestBuilder(unittest.TestCase):
         cyl = CylindricalVector(1, 2, 3)
         cart = ccc.toCartesian(cyl)
         self.assertAlmostEqual(cart.i, -0.4161468365)
-        self.assertAlmostEqual(cart.getJ(), 0.9092974268)
+        self.assertAlmostEqual(cart.j, 0.9092974268)
         self.assertAlmostEqual(cart.getK(), 3)
 
 

@@ -59,7 +59,7 @@ class CartesianHarmonicField(BasisVectorField):
     def evaluate(self, location, buffer):
         """Evaluate the field."""
         x = location.i
-        y = location.getJ()
+        y = location.j
         z = location.getK()
         firstI = self.piCoeffs.getLowerBoundIndex()
         lastI = self.piCoeffs.getUpperBoundIndex()

@@ -51,7 +51,7 @@ class TailSheetAsymmetricExpansion(VectorField):
             (location, buffer) = args
             m = self.azimuthalExpansionNumber
             x = location.i
-            y = location.getJ()
+            y = location.j
             z = location.getK()
             locationIJ = VectorIJ(x, y)
 

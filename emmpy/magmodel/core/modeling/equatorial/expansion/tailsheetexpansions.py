@@ -125,7 +125,7 @@ class TailSheetExpansions:
         for n in range(1, self.numRadialExpansions + 1):
             basisFunction = self.tailSheetSymmetricValues.getExpansion(n)
             bxSum += basisFunction.i
-            bySum += basisFunction.getJ()
+            bySum += basisFunction.j
             bzSum += basisFunction.getK()
 
         # n is the radial expansion number
@@ -134,7 +134,7 @@ class TailSheetExpansions:
             for m in range(1, self.numAzimuthalExpansions + 1):
                 basisFunction = self.tailSheetOddValues.getExpansion(m, n)
                 bxSum += basisFunction.i
-                bySum += basisFunction.getJ()
+                bySum += basisFunction.j
                 bzSum += basisFunction.getK()
 
         # n is the radial expansion number
@@ -143,7 +143,7 @@ class TailSheetExpansions:
             for m in range(1, self.numAzimuthalExpansions + 1):
                 basisFunction = self.tailSheetEvenValues.getExpansion(m, n)
                 bxSum += basisFunction.i
-                bySum += basisFunction.getJ()
+                bySum += basisFunction.j
                 bzSum += basisFunction.getK()
 
         return VectorIJK(bxSum, bySum, bzSum)

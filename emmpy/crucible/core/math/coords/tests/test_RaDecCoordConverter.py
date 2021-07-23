@@ -30,7 +30,7 @@ class TestBuilder(unittest.TestCase):
         )
         cartesian = rdcc.toCartesian(radv)
         self.assertAlmostEqual(cartesian.i, 1)
-        self.assertAlmostEqual(cartesian.getJ(), 2)
+        self.assertAlmostEqual(cartesian.j, 2)
         self.assertAlmostEqual(cartesian.getK(), 3)
 
 

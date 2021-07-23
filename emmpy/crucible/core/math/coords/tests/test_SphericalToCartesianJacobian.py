@@ -60,7 +60,7 @@ class TestBuilder(unittest.TestCase):
         sphericalVelocity = SphericalVector(1, 1, 1)
         cartesianVelocity = s2cj.mxv(mijk, sphericalVelocity)
         self.assertAlmostEqual(cartesianVelocity.i, -0.6165354442722912)
-        self.assertAlmostEqual(cartesianVelocity.getJ(), -0.8306042144606817)
+        self.assertAlmostEqual(cartesianVelocity.j, -0.8306042144606817)
         self.assertAlmostEqual(cartesianVelocity.getK(), -1.325444263372824)
         s2cj.getInverseTransformation(spherical, mijk)
         sphericalVelocity = s2cj.mxv(mijk, cartesianVelocity)

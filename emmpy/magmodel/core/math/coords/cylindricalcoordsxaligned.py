@@ -50,7 +50,7 @@ class CylindricalCoordsXAligned:
             # coordinate
             # @return a CylindricalVector holding the cylindrical coordinate
             x = cartesian.i
-            y = cartesian.getJ()
+            y = cartesian.j
             z = cartesian.getK()
 
             # Use temporary variables for computing R.
@@ -96,10 +96,10 @@ class CylindricalCoordsXAligned:
             # @param field the Cartesian field value at that coordinate
             # @return the cylindrical vector field value
             (cartesian, field) = args
-            y = cartesian.getJ()
+            y = cartesian.j
             z = cartesian.getK()
             bx = field.i
-            by = field.getJ()
+            by = field.j
             bz = field.getK()
             rho = sqrt(y*y + z*z)
             cosPhi = y/rho

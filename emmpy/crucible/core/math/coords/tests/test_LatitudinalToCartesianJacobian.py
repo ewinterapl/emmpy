@@ -56,7 +56,7 @@ class TestBuilder(unittest.TestCase):
         latitudinalVelocity = LatitudinalVector(1, 1, 1)
         cartesianVelocity = l2cj.mxv(mijk, latitudinalVelocity)
         self.assertAlmostEqual(cartesianVelocity.i, 1.3709065203288213)
-        self.assertAlmostEqual(cartesianVelocity.getJ(), 0.22493554053560527)
+        self.assertAlmostEqual(cartesianVelocity.j, 0.22493554053560527)
         self.assertAlmostEqual(cartesianVelocity.getK(), 0.4931505902785393)
         l2cj.getInverseTransformation(lv, mijk)
         latitudinalalVelocity = l2cj.mxv(mijk, cartesianVelocity)

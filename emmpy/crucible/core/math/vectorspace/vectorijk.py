@@ -815,9 +815,9 @@ class VectorIJK(Vector3D):
     #     """Get the ith component (float)."""
     #     return self.i
 
-    def getJ(self):
-        """Get the jth component (float)."""
-        return self.j
+    # def getJ(self):
+    #     """Get the jth component (float)."""
+    #     return self.j
 
     def getK(self):
         """Get the kth component (float)."""

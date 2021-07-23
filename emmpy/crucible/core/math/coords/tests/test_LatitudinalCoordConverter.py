@@ -30,7 +30,7 @@ class TestBuilder(unittest.TestCase):
         )
         cart = lcc.toCartesian(latv)
         self.assertAlmostEqual(cart.i, 1)
-        self.assertAlmostEqual(cart.getJ(), 2)
+        self.assertAlmostEqual(cart.j, 2)
         self.assertAlmostEqual(cart.getK(), 3)
 
 

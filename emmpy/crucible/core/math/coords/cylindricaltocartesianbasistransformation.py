@@ -55,4 +55,4 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         else:
             (inverseTransformation, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)
-            return CylindricalVector(vect.i, vect.getJ(), vect.getK())
+            return CylindricalVector(vect.i, vect.j, vect.getK())

@@ -611,49 +611,37 @@ class VectorIJ(Vector2D):
 #         else:
 #             raise Exception
 
-    # def getJ(self):
-    #     """Return the value of the j coordinate.
+    # def setI(self, i):
+    #     """Set the value of the i coordinate.
         
-    #     Return the value of the j coordinate.
+    #     Set the value of the i coordinate.
         
+    #     Parameters
+    #     ----------
+    #     i : float
+    #         Value to assign to i coordinate.
+
     #     Returns
     #     -------
-    #     self.j : float
-    #         Value of the j coordinate.
+    #     None
     #     """
-    #     return self.j
-
-    def setI(self, i):
-        """Set the value of the i coordinate.
-        
-        Set the value of the i coordinate.
-        
-        Parameters
-        ----------
-        i : float
-            Value to assign to i coordinate.
-
-        Returns
-        -------
-        None
-        """
-        self.i = i
+    #     self.i = i
     
-    def setJ(self, j):
-        """Set the value of the j coordinate.
+    # def setJ(self, j):
+    #     """Set the value of the j coordinate.
         
-        Set the value of the j coordinate.
+    #     Set the value of the j coordinate.
         
-        Parameters
-        ----------
-        j : float
-            Value to assign to j coordinate.
+    #     Parameters
+    #     ----------
+    #     j : float
+    #         Value to assign to j coordinate.
 
-        Returns
-        -------
-        None
-        """
-        self.j = j
+    #     Returns
+    #     -------
+    #     None
+    #     """
+    #     self.j = j
 
 
 # The ZERO vector.

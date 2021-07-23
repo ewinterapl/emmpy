@@ -42,7 +42,7 @@ class PolarCoordConverter(AbstractCoordConverterIJ):
         RETURN END
         """
         x = cartesian.i
-        y = cartesian.getJ()
+        y = cartesian.j
         radius = 0
         angle = 0
         big = max(abs(x), abs(y))
@@ -52,7 +52,7 @@ class PolarCoordConverter(AbstractCoordConverterIJ):
             radius = big*sqrt(x*x + y*y)
             angle = atan2(y, x)
             x = cartesian.i
-            y = cartesian.getJ()
+            y = cartesian.j
         else:
             radius = 0
             angle = 0

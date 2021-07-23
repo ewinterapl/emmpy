@@ -45,7 +45,7 @@ class AbstractVectorIJ:
 
     def getJ(self):
         """Return the J coordinate."""
-        return self.ijCoordinate.getJ()
+        return self.ijCoordinate.j
 
     def getVectorIJ(self):
         """Return the IJ coordinate."""

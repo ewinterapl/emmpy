@@ -27,7 +27,7 @@ class TestBuilder(unittest.TestCase):
         polar = PolarVector(2.2360679774998, 1.1071487177941)
         cartesian = pcc.toCartesian(polar)
         self.assertAlmostEqual(cartesian.i, 1)
-        self.assertAlmostEqual(cartesian.getJ(), 2)
+        self.assertAlmostEqual(cartesian.j, 2)
 
 
 if __name__ == '__main__':

@@ -430,11 +430,11 @@ class TestBuilder(unittest.TestCase):
     #     with self.assertRaises(Exception):
     #         VectorIJ.addRSS()
 
-    def test_getJ(self):
-        """Test the getJ method."""
-        (i, j) = (1.1, 2.2)
-        v = VectorIJ(i, j)
-        self.assertAlmostEqual(v.getJ(), j)
+    # def test_getJ(self):
+    #     """Test the getJ method."""
+    #     (i, j) = (1.1, 2.2)
+    #     v = VectorIJ(i, j)
+    #     self.assertAlmostEqual(v.getJ(), j)
 
     def test_setI(self):
         """Test the setI method."""

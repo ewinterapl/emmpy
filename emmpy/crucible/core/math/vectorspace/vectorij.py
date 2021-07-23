@@ -611,17 +611,17 @@ class VectorIJ(Vector2D):
 #         else:
 #             raise Exception
 
-    def getJ(self):
-        """Return the value of the j coordinate.
+    # def getJ(self):
+    #     """Return the value of the j coordinate.
         
-        Return the value of the j coordinate.
+    #     Return the value of the j coordinate.
         
-        Returns
-        -------
-        self.j : float
-            Value of the j coordinate.
-        """
-        return self.j
+    #     Returns
+    #     -------
+    #     self.j : float
+    #         Value of the j coordinate.
+    #     """
+    #     return self.j
 
     def setI(self, i):
         """Set the value of the i coordinate.

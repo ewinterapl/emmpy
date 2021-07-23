@@ -43,7 +43,7 @@ class TestBuilder(unittest.TestCase):
         p2cj.getTransformation(pv, mij)
         polarVelocity = PolarVector(1, 1)
         cartesianVelocity = p2cj.mxv(mij, polarVelocity)
-        self.assertAlmostEqual(cartesianVelocity.getI(), -1.325444263372824)
+        self.assertAlmostEqual(cartesianVelocity.i, -1.325444263372824)
         self.assertAlmostEqual(cartesianVelocity.getJ(), 0.4931505902785393)
         p2cj.getInverseTransformation(pv, mij)
         polarVelocity = p2cj.mxv(mij, cartesianVelocity)

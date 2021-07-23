@@ -40,4 +40,4 @@ class PolarToCartesianJacobian(TransformationIJ):
         else:
             (inverseJacobian, cartVelocity) = args
             vect = MatrixIJ.mxv(inverseJacobian, cartVelocity)
-            return PolarVector(vect.getI(), vect.getJ())
+            return PolarVector(vect.i, vect.getJ())

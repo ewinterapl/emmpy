@@ -26,7 +26,7 @@ class TestBuilder(unittest.TestCase):
         pcc = PolarCoordConverter()
         polar = PolarVector(2.2360679774998, 1.1071487177941)
         cartesian = pcc.toCartesian(polar)
-        self.assertAlmostEqual(cartesian.getI(), 1)
+        self.assertAlmostEqual(cartesian.i, 1)
         self.assertAlmostEqual(cartesian.getJ(), 2)
 
 

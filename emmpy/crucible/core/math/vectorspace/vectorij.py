@@ -611,18 +611,6 @@ class VectorIJ(Vector2D):
 #         else:
 #             raise Exception
 
-    def getI(self):
-        """Return the value of the i coordinate.
-        
-        Return the value of the i coordinate.
-        
-        Returns
-        -------
-        self.i : float
-            Value of the i coordinate.
-        """
-        return self.i
-
     def getJ(self):
         """Return the value of the j coordinate.
         

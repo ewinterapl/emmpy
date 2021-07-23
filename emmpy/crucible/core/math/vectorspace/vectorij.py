@@ -636,23 +636,49 @@ class VectorIJ(Vector2D):
         return self.j
 
     def setI(self, i):
+        """Set the value of the i coordinate.
+        
+        Set the value of the i coordinate.
+        
+        Parameters
+        ----------
+        i : float
+            Value to assign to i coordinate.
+
+        Returns
+        -------
+        None
+        """
         self.i = i
     
     def setJ(self, j):
+        """Set the value of the j coordinate.
+        
+        Set the value of the j coordinate.
+        
+        Parameters
+        ----------
+        j : float
+            Value to assign to j coordinate.
+
+        Returns
+        -------
+        None
+        """
         self.j = j
 
 
-# # The ZERO vector.
-# ZERO = VectorIJ(0, 0)
+# The ZERO vector.
+ZERO = VectorIJ(0, 0)
 
-# # The I basis vector: (1,0).
-# I = VectorIJ(1, 0)
+# The I basis vector: (1,0).
+I = VectorIJ(1, 0)
 
-# # The J basis vector: (0,1).
-# J = VectorIJ(0, 1)
+# The J basis vector: (0,1).
+J = VectorIJ(0, 1)
 
-# # The negative of the I basis vector: (-1,0).
-# MINUS_I = VectorIJ(-1, 0)
+# The negative of the I basis vector: (-1,0).
+MINUS_I = VectorIJ(-1, 0)
 
-# # The negative of the J basis vector: (0,-1).
-# MINUS_J = VectorIJ(0, -1)
+# The negative of the J basis vector: (0,-1).
+MINUS_J = VectorIJ(0, -1)

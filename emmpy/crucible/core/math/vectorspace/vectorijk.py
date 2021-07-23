@@ -170,26 +170,26 @@ class VectorIJK(Vector3D):
 #         self.k = 0.0
 #         return self
 
-    def setI(self, i):
-        """Set the ith component of the vector.
+    # def setI(self, i):
+    #     """Set the ith component of the vector.
 
-        @param i the ith component
-        """
-        self.i = i
+    #     @param i the ith component
+    #     """
+    #     self.i = i
 
-    def setJ(self, j):
-        """Set the jth component of the vector.
+    # def setJ(self, j):
+    #     """Set the jth component of the vector.
 
-        @param j the jth component
-        """
-        self.j = j
+    #     @param j the jth component
+    #     """
+    #     self.j = j
 
-    def setK(self, k):
-        """Set the kth component of the vector.
+    # def setK(self, k):
+    #     """Set the kth component of the vector.
 
-        @param k the kth component
-        """
-        self.k = k
+    #     @param k the kth component
+    #     """
+    #     self.k = k
 
 #     def set(self, index, value):
 #         """Set the specified component of the vector to a supplied value.

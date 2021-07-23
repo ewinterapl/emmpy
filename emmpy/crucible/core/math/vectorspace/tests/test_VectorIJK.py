@@ -126,20 +126,20 @@ class TestBuilder(unittest.TestCase):
     #     self.assertEqual(v.j, 0)
     #     self.assertEqual(v.k, 0)
 
-    def test_setI(self):
-        v = VectorIJK(1.1, 2.2, 3.3)
-        v.setI(4.4)
-        self.assertAlmostEqual(v.i, 4.4)
+    # def test_setI(self):
+    #     v = VectorIJK(1.1, 2.2, 3.3)
+    #     v.setI(4.4)
+    #     self.assertAlmostEqual(v.i, 4.4)
 
-    def test_setJ(self):
-        v = VectorIJK(1.1, 2.2, 3.3)
-        v.setJ(4.4)
-        self.assertAlmostEqual(v.j, 4.4)
+    # def test_setJ(self):
+    #     v = VectorIJK(1.1, 2.2, 3.3)
+    #     v.setJ(4.4)
+    #     self.assertAlmostEqual(v.j, 4.4)
 
-    def test_setK(self):
-        v = VectorIJK(1.1, 2.2, 3.3)
-        v.setK(4.4)
-        self.assertAlmostEqual(v.k, 4.4)
+    # def test_setK(self):
+    #     v = VectorIJK(1.1, 2.2, 3.3)
+    #     v.setK(4.4)
+    #     self.assertAlmostEqual(v.k, 4.4)
 
     # def test_set(self):
     #     v = VectorIJK(1.1, 2.2, 3.3)

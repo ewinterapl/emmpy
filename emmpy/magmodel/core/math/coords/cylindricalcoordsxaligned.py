@@ -49,7 +49,7 @@ class CylindricalCoordsXAligned:
             # @param cartesian a UnwritableVectorIJK holding the Cartesian
             # coordinate
             # @return a CylindricalVector holding the cylindrical coordinate
-            x = cartesian.getI()
+            x = cartesian.i
             y = cartesian.getJ()
             z = cartesian.getK()
 
@@ -98,7 +98,7 @@ class CylindricalCoordsXAligned:
             (cartesian, field) = args
             y = cartesian.getJ()
             z = cartesian.getK()
-            bx = field.getI()
+            bx = field.i
             by = field.getJ()
             bz = field.getK()
             rho = sqrt(y*y + z*z)

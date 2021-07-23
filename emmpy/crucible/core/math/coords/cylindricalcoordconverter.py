@@ -36,7 +36,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
         IF ( LONG .LT. 0.D0) THEN LONG = LONG + TWOPI() END IF
         """
         # Use temporary variables for computing R.
-        big = max(abs(cartesian.getI()), abs(cartesian.getJ()))
+        big = max(abs(cartesian.i), abs(cartesian.getJ()))
 
         # Convert to cylindrical coordinates
         height = cartesian.getK()
@@ -46,7 +46,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
             cylindricalRadius = 0.0
             longitude = 0.0
         else:
-            x = cartesian.getI()/big
+            x = cartesian.i/big
             y = cartesian.getJ()/big
             cylindricalRadius = big*sqrt(x*x + y*y)
             longitude = atan2(y, x)

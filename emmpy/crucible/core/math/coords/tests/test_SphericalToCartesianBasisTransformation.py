@@ -58,7 +58,7 @@ class TestBuilder(unittest.TestCase):
         )
         spherical = SphericalVector(1, 2, 3)
         v = s2cbt.mxv(jacobian, spherical)
-        self.assertAlmostEqual(v.getI(), 1.402448017104221)
+        self.assertAlmostEqual(v.i, 1.402448017104221)
         self.assertAlmostEqual(v.getJ(), -1.7415910999199666)
         self.assertAlmostEqual(v.getK(), 3)
         jacobianInverse = jacobian.createInverse()

@@ -29,7 +29,7 @@ class TestBuilder(unittest.TestCase):
             3.741657386773941, 0.6405223126794246, 1.1071487177940904
         )
         cartesian = scc.toCartesian(spherical)
-        self.assertAlmostEqual(cartesian.getI(), 1)
+        self.assertAlmostEqual(cartesian.i, 1)
         self.assertAlmostEqual(cartesian.getJ(), 2)
         self.assertAlmostEqual(cartesian.getK(), 3)
 

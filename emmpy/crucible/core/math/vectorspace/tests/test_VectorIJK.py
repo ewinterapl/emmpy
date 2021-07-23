@@ -461,10 +461,10 @@ class TestBuilder(unittest.TestCase):
     #     with self.assertRaises(Exception):
     #         VectorIJK.addRSS()
 
-    def test_getI(self):
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v = VectorIJK(i, j, k)
-        self.assertAlmostEqual(v.getI(), i)
+    # def test_getI(self):
+    #     (i, j, k) = (1.1, 2.2, 3.3)
+    #     v = VectorIJK(i, j, k)
+    #     self.assertAlmostEqual(v.getI(), i)
 
     def test_getJ(self):
         (i, j, k) = (1.1, 2.2, 3.3)

@@ -22,7 +22,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(cylindrical.getK(), 1)
         cartesian = ccxa.convert(cylindrical)
         self.assertIsNotNone(cartesian)
-        self.assertAlmostEqual(cartesian.getI(), 1)
+        self.assertAlmostEqual(cartesian.i, 1)
         self.assertAlmostEqual(cartesian.getJ(), 2)
         self.assertAlmostEqual(cartesian.getK(), 3)
         with self.assertRaises(Exception):

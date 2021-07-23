@@ -40,7 +40,7 @@ class LatitudinalCoordConverter(AbstractCoordConverter):
           END IF
         ELSE RADIUS = 0.0D0 LAT = 0.D0 LONG = 0.D0 END IF
         """
-        x = cartesian.getI()
+        x = cartesian.i
         y = cartesian.getJ()
         z = cartesian.getK()
         radius = 0
@@ -53,7 +53,7 @@ class LatitudinalCoordConverter(AbstractCoordConverter):
             z /= big
             radius = big*sqrt(x*x + y*y + z*z)
             latitude = atan2(z, sqrt(x*x + y*y))
-            x = cartesian.getI()
+            x = cartesian.i
             y = cartesian.getJ()
             if x == 0 and y == 0:
                 longitude = 0

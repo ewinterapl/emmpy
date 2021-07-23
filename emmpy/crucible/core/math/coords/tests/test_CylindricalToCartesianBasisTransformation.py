@@ -56,7 +56,7 @@ class TestBuilder(unittest.TestCase):
         )
         cyl = CylindricalVector(1, 2, 3)
         v = c2cbt.mxv(jacobian, cyl)
-        self.assertAlmostEqual(v.getI(), -2.234741690198506)
+        self.assertAlmostEqual(v.i, -2.234741690198506)
         self.assertAlmostEqual(v.getJ(), 0.0770037537313969)
         self.assertAlmostEqual(v.getK(), 3)
         jacobianInverse = jacobian.createInverse()

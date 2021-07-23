@@ -28,7 +28,7 @@ class TestBuilder(unittest.TestCase):
     def test_getVectorIJK(self):
         av = AbstractVector(0.1, 1.2, 2.3)
         vijk = av.getVectorIJK()
-        self.assertAlmostEqual(vijk.getI(), 0.1)
+        self.assertAlmostEqual(vijk.i, 0.1)
         self.assertAlmostEqual(vijk.getJ(), 1.2)
         self.assertAlmostEqual(vijk.getK(), 2.3)
 

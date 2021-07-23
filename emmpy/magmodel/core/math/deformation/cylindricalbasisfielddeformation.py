@@ -58,7 +58,7 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
                           bField.getHeight())
             )
             bFieldExpansionDeformed.append(
-                CylindricalVector(v.getI(), v.getJ(), v.getK())
+                CylindricalVector(v.i, v.getJ(), v.getK())
             )
         return bFieldExpansionDeformed
 

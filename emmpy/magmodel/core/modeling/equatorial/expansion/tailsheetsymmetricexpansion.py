@@ -42,7 +42,7 @@ class TailSheetSymmetricExpansion(VectorField):
             return self.evaluate(location, buffer)
         elif len(args) == 2:
             (location, buffer) = args
-            x = location.getI()
+            x = location.i
             y = location.getJ()
             z = location.getK()
             locationIJ = VectorIJ(x, y)

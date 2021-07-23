@@ -58,9 +58,9 @@ class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
             # UnwritableVectorIJK, UnwritableVectorIJK)
             (ithColumn, jthColumn, kthColumn) = args
             return self.setToWithoutCheck(
-                ithColumn.getI(), ithColumn.getJ(), ithColumn.getK(),
-                jthColumn.getI(), jthColumn.getJ(), jthColumn.getK(),
-                kthColumn.getI(), kthColumn.getJ(), kthColumn.getK())
+                ithColumn.i, ithColumn.getJ(), ithColumn.getK(),
+                jthColumn.i, jthColumn.getJ(), jthColumn.getK(),
+                kthColumn.i, kthColumn.getJ(), kthColumn.getK())
         elif len(args) == 6:
             # see RotationMatrixIJK.setTo(double, UnwritableVectorIJK,
             # double, UnwritableVectorIJK, double, UnwritableVectorIJK)

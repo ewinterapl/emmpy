@@ -44,7 +44,7 @@ class AbstractVector:
 
     def getI(self) -> float:
         """Get the I coordinate."""
-        return self.ijkCoordinate.getI()
+        return self.ijkCoordinate.i
 
     def getJ(self) -> float:
         """Get the J coordinate."""

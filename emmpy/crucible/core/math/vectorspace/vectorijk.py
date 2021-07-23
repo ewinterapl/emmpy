@@ -811,9 +811,9 @@ class VectorIJK(Vector3D):
 #         else:
 #             raise Exception
 
-    def getI(self):
-        """Get the ith component (float)."""
-        return self.i
+    # def getI(self):
+    #     """Get the ith component (float)."""
+    #     return self.i
 
     def getJ(self):
         """Get the jth component (float)."""

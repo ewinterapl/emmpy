@@ -126,21 +126,6 @@ class TestBuilder(unittest.TestCase):
     #     self.assertEqual(v.j, 0)
     #     self.assertEqual(v.k, 0)
 
-    # def test_setI(self):
-    #     v = VectorIJK(1.1, 2.2, 3.3)
-    #     v.setI(4.4)
-    #     self.assertAlmostEqual(v.i, 4.4)
-
-    # def test_setJ(self):
-    #     v = VectorIJK(1.1, 2.2, 3.3)
-    #     v.setJ(4.4)
-    #     self.assertAlmostEqual(v.j, 4.4)
-
-    # def test_setK(self):
-    #     v = VectorIJK(1.1, 2.2, 3.3)
-    #     v.setK(4.4)
-    #     self.assertAlmostEqual(v.k, 4.4)
-
     # def test_set(self):
     #     v = VectorIJK(1.1, 2.2, 3.3)
     #     v.set(0, 4.4)
@@ -460,21 +445,6 @@ class TestBuilder(unittest.TestCase):
     #     self.assertAlmostEqual(v3.k, sqrt(34))
     #     with self.assertRaises(Exception):
     #         VectorIJK.addRSS()
-
-    # def test_getI(self):
-    #     (i, j, k) = (1.1, 2.2, 3.3)
-    #     v = VectorIJK(i, j, k)
-    #     self.assertAlmostEqual(v.getI(), i)
-
-    # def test_getJ(self):
-    #     (i, j, k) = (1.1, 2.2, 3.3)
-    #     v = VectorIJK(i, j, k)
-    #     self.assertAlmostEqual(v.getJ(), j)
-
-    # def test_getK(self):
-    #     (i, j, k) = (1.1, 2.2, 3.3)
-    #     v = VectorIJK(i, j, k)
-    #     self.assertAlmostEqual(v.getK(), k)
 
     def test_copyOf(self):
         (i, j, k) = (1.1, 2.2, 3.3)

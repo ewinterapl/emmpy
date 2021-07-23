@@ -52,7 +52,7 @@ class TailSheetAsymmetricExpansion(VectorField):
             m = self.azimuthalExpansionNumber
             x = location.i
             y = location.j
-            z = location.getK()
+            z = location.k
             locationIJ = VectorIJ(x, y)
 
             # get the current sheet half thickness

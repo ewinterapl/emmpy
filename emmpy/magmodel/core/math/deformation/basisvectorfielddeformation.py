@@ -34,9 +34,9 @@ class BasisVectorFieldDeformation(BasisVectorField):
         bFieldExpansionDeformed = []
         for bField in bFieldExpansion:
             v = trans.mxv(
-                VectorIJK(bField.i, bField.j, bField.getK())
+                VectorIJK(bField.i, bField.j, bField.k)
             )
-            bFieldExpansionDeformed.append(VectorIJK(v.i, v.j, v.getK()))
+            bFieldExpansionDeformed.append(VectorIJK(v.i, v.j, v.k))
         return bFieldExpansionDeformed
 
     def getNumberOfBasisFunctions(self):

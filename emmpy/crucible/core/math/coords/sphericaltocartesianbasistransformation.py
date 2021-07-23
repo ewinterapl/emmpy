@@ -51,4 +51,4 @@ class SphericalToCartesianBasisTransformation(Transformation):
         else:
             (inverseJacobian, cartVelocity) = args
             vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
-            return SphericalVector(vect.i, vect.j, vect.getK())
+            return SphericalVector(vect.i, vect.j, vect.k)

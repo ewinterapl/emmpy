@@ -471,10 +471,10 @@ class TestBuilder(unittest.TestCase):
     #     v = VectorIJK(i, j, k)
     #     self.assertAlmostEqual(v.getJ(), j)
 
-    def test_getK(self):
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v = VectorIJK(i, j, k)
-        self.assertAlmostEqual(v.getK(), k)
+    # def test_getK(self):
+    #     (i, j, k) = (1.1, 2.2, 3.3)
+    #     v = VectorIJK(i, j, k)
+    #     self.assertAlmostEqual(v.getK(), k)
 
     def test_copyOf(self):
         (i, j, k) = (1.1, 2.2, 3.3)

@@ -54,7 +54,7 @@ class SphericalCoordConverter(AbstractCoordConverter):
         """
         x = cartesian.i
         y = cartesian.j
-        z = cartesian.getK()
+        z = cartesian.k
         radius = 0
         colatitude = 0
         longitude = 0

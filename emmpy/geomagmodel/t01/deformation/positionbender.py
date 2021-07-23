@@ -148,7 +148,7 @@ class PositionBender(DifferentiableVectorField):
         # float x, y, z, r2, r, z_r
         x = location.i
         y = location.j
-        z = location.getK()
+        z = location.k
         r2 = x*x + y*y + z*z
         r = sqrt(r2)
         z_r = z/r

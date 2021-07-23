@@ -30,7 +30,7 @@ class TestBuilder(unittest.TestCase):
         vijk = av.getVectorIJK()
         self.assertAlmostEqual(vijk.i, 0.1)
         self.assertAlmostEqual(vijk.j, 1.2)
-        self.assertAlmostEqual(vijk.getK(), 2.3)
+        self.assertAlmostEqual(vijk.k, 2.3)
 
 
 if __name__ == '__main__':

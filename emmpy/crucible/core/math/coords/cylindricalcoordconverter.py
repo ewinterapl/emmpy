@@ -39,7 +39,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
         big = max(abs(cartesian.i), abs(cartesian.j))
 
         # Convert to cylindrical coordinates
-        height = cartesian.getK()
+        height = cartesian.k
         cylindricalRadius = 0
         longitude = 0
         if big == 0.0:

@@ -42,7 +42,7 @@ class LatitudinalCoordConverter(AbstractCoordConverter):
         """
         x = cartesian.i
         y = cartesian.j
-        z = cartesian.getK()
+        z = cartesian.k
         radius = 0
         latitude = 0
         longitude = 0

@@ -60,7 +60,7 @@ class TestBuilder(unittest.TestCase):
         v = s2cbt.mxv(jacobian, spherical)
         self.assertAlmostEqual(v.i, 1.402448017104221)
         self.assertAlmostEqual(v.j, -1.7415910999199666)
-        self.assertAlmostEqual(v.getK(), 3)
+        self.assertAlmostEqual(v.k, 3)
         jacobianInverse = jacobian.createInverse()
         cartVelocity = VectorIJK(1, 2, 3)
         v = s2cbt.mxv(jacobianInverse, cartVelocity)

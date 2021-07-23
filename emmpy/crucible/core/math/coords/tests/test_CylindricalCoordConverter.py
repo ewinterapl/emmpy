@@ -27,7 +27,7 @@ class TestBuilder(unittest.TestCase):
         cart = ccc.toCartesian(cyl)
         self.assertAlmostEqual(cart.i, -0.4161468365)
         self.assertAlmostEqual(cart.j, 0.9092974268)
-        self.assertAlmostEqual(cart.getK(), 3)
+        self.assertAlmostEqual(cart.k, 3)
 
 
 if __name__ == '__main__':

@@ -40,5 +40,5 @@ class BasisVectorField(VectorField):
         for basisVector in basisVectors:
             fx += basisVector.i
             fy += basisVector.j
-            fz += basisVector.getK()
+            fz += basisVector.k
         return buffer.setTo(fx, fy, fz)

@@ -67,7 +67,7 @@ class StretchedField(VectorField):
         # float x, y, z, rho2, rho, phi, sinPhi, cosPhi
         x = location.i
         y = location.j
-        z = location.getK()
+        z = location.k
         # convert to spherical and cylindrical
         rho2 = x*x + z*z
         rho = sqrt(rho2)
@@ -105,10 +105,10 @@ class StretchedField(VectorField):
         # the deformed coordinates
         # float bRhoStar, bPhiStar
         bRhoStar = (
-            unstretchedVector.i*cosF - unstretchedVector.getK()*sinF
+            unstretchedVector.i*cosF - unstretchedVector.k*sinF
         )
         bPhiStar = (
-            -unstretchedVector.i*sinF - unstretchedVector.getK()*cosF
+            -unstretchedVector.i*sinF - unstretchedVector.k*cosF
         )
 
         # Tsy 2002-1 eqn 23, B' apply the transformation matrix

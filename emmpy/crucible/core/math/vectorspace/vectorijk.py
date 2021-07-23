@@ -819,9 +819,9 @@ class VectorIJK(Vector3D):
     #     """Get the jth component (float)."""
     #     return self.j
 
-    def getK(self):
-        """Get the kth component (float)."""
-        return self.k
+    # def getK(self):
+    #     """Get the kth component (float)."""
+    #     return self.k
 
     @staticmethod
     def copyOf(vector):

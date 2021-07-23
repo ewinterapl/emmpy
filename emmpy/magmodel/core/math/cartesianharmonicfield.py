@@ -60,7 +60,7 @@ class CartesianHarmonicField(BasisVectorField):
         """Evaluate the field."""
         x = location.i
         y = location.j
-        z = location.getK()
+        z = location.k
         firstI = self.piCoeffs.getLowerBoundIndex()
         lastI = self.piCoeffs.getUpperBoundIndex()
         firstK = self.pkCoeffs.getLowerBoundIndex()

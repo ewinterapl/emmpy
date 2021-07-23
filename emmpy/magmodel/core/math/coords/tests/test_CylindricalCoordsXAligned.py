@@ -24,7 +24,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsNotNone(cartesian)
         self.assertAlmostEqual(cartesian.i, 1)
         self.assertAlmostEqual(cartesian.j, 2)
-        self.assertAlmostEqual(cartesian.getK(), 3)
+        self.assertAlmostEqual(cartesian.k, 3)
         with self.assertRaises(Exception):
             ccxa.convert([])
 

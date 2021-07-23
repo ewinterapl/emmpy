@@ -52,7 +52,7 @@ class AbstractVector:
 
     def getK(self) -> float:
         """Get the K coordinate."""
-        return self.ijkCoordinate.getK()
+        return self.ijkCoordinate.k
 
     def getVectorIJK(self):
         """Get the IJK coordinates.

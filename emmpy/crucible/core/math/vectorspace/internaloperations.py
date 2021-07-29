@@ -1,16 +1,19 @@
 """Utility methods for other vectorspace classes.
 
-Module providing various static methods that support the implementation
+This module provides functions that support the implementation
 of methods of the various other classes provided in this package.
 
-<b>Maintainer Note:</b>This class is an implementation detail of the
-classes and methods provided by this package as a whole. Functionality
-present here should not be exposed outside of this package. Further, as
-methods defined here may be invoked from any class in this package, it must
-remain free of references to all other classes in this package. In other
-words, it is at the absolute bottom of the package layering structure.
+Maintainer Note: This class is an implementation detail of the classes and
+methods provided by this package as a whole. Functionality present here
+should not be exposed outside of this package. Further, as methods defined
+here may be invoked from any class in this package, it must remain free of
+references to all other classes in this package. In other words, it is at
+the absolute bottom of the package layering structure.
 
-@author F.S.Turner
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
@@ -21,79 +24,91 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 
 
 def absMaxComponent(*args) -> float:
-    """Compute the absolute value of the largest component .
+    """Compute the absolute value of the largest of a group of numbers.
 
-    @param i the ith component
-    @param j the jth component
-    @param k the kth component
-    @return the absolute value of the largest, in magnitude, component of
-    the vector [i,j,k].
+    Determine the largest component by magnitude, and return it absolte
+    value.
+
+    Parameters
+    ----------
+    *args : float
+        Arbitrary number of floats.
+
+    Returns
+    -------
+    max(abs(x)) : float
+        Absolute value of the largest number in args.
     """
-    if len(args) not in (2, 3):
-        raise Exception
     return max(abs(x) for x in args)
 
 
 def checkRotation(*args) -> None:
-    """Determine if a 3x3 matrix is a rotation.
+    """Determine if the values of matrix are a rotation.
 
-    @param ii ith row, ith column element
-    @param ji jth row, ith column element
-    @param ki kth row, ith column element
-    @param ij ith row, jth column element
-    @param jj jth row, jth column element
-    @param kj kth row, jth column element
-    @param ik ith row, kth column element
-    @param jk jth row, kth column element
-    @param kk kth row, kth column element
-    @param normTolerance tolerance off of unity for the magnitude of the
-    column vectors
-    @param detTolerance tolerance off of unity for the determinant of the
-    matrix
+    Determine if the values of a column-major matrix composed of the
+    arguments constitute a valid rotation matrix. If so, take no action.
+    If not, raise a MalformedRotationException.
 
-    @throws MalformedRotationException if the supplied components do not
-    adequately describe a rotation given the supplied tolerances
+    Parameters
+    ----------
+    ii, ji, ij, jj : float
+        2-D matrix components in column-major order.
+    OR
+    ii, ji, ki, ij, jj, kj, ik, jk, kk : float
+        3-D matrix components in column-major order.
+    normTolerance : float
+        Tolerance relative to unity for matrix norm calculation.
+    detTolerance : float
+        Tolerance relative to unity for determinant calculation.
+    
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    MalformedRotationException
+        If the supplied components do not form a valid rotation matrix
+        under the specified tolerances.
+    ValueError
+        If incorrect parameters are provided.
     """
-    if len(args) == 8:
+    if len(args) == 6:
+        # 2-D matrix
         (ii, ji, ij, jj, normTolerance, detTolerance) = args
-        testVal = np.linalg.norm([ii, ji])
-        if (testVal < 1.0 - normTolerance) or (testVal > 1.0 + normTolerance):
-            raise MalformedRotationException(
-                "Matrix's ith column is not sufficiently close to unit " +
-                "length.")
-        testVal = np.linalg.norm([ij, jj])
-        if ((testVal < 1.0 - normTolerance) or (testVal > 1.0 +
-                                                normTolerance)):
-            raise MalformedRotationException(
-                "Matrix's jth column is not sufficiently close to unit " +
-                "length.")
-        testVal = np.linalg.det(np.array([ii, ij, ji, jj])).reshape((2, 2))
-        if ((testVal < 1.0 - detTolerance) or (testVal > 1.0 + detTolerance)):
-            raise MalformedRotationException(
-                "Matrix's determinant is not sufficiently close to unity.")
+        # Verify the first column has unit norm.
+        norm = np.linalg.norm([ii, ji])
+        if abs(norm) > 1 + normTolerance:
+            raise MalformedRotationException
+        # Verify the second column has unit norm.
+        norm = np.linalg.norm([ij, jj])
+        if abs(norm) > 1 + normTolerance:
+            raise MalformedRotationException
+        # Verify the matrix has unit determinant.
+        a = np.array([ii, ij, ji, jj]).reshape(2, 2)
+        det = np.linalg.det(a)
+        if abs(det) > 1 + normTolerance:
+            raise MalformedRotationException
     elif len(args) == 11:
+        # 3-D matrix.
         (ii, ji, ki, ij, jj, kj, ik, jk, kk,
-            normTolerance, detTolerance) = args
-        testVal = np.linalg.norm([ii, ji, ki])
-        if ((testVal < 1.0 - normTolerance) or (testVal > 1.0 +
-                                                normTolerance)):
-            raise MalformedRotationException(
-                "Matrix's ith column is not sufficiently close to unit " +
-                "length.")
-        testVal = np.linalg.norm([ij, jj, kj])
-        if ((testVal < 1.0 - normTolerance) or (testVal > 1.0 +
-                                                normTolerance)):
-            raise MalformedRotationException(
-                "Matrix's jth column is not sufficiently close to unit " +
-                "length."
-            )
-        testVal = np.linalg.norm([ik, jk, kk])
-        if (testVal < 1.0 - normTolerance) or (testVal > 1.0 + normTolerance):
-            raise MalformedRotationException(
-                "Matrix's kth column is not sufficiently close to unit " +
-                "length."
-            )
-        testVal = np.linalg.det(np.array([ii, ij, ik, ji, jj, jk, ki, kj, kk]).reshape((3, 3)))
-        if ((testVal < 1.0 - detTolerance) or (testVal > 1.0 + detTolerance)):
-            raise MalformedRotationException(
-                "Matrix's determinant is not sufficiently close to unity.")
+         normTolerance, detTolerance) = args
+        # Verify the first column has unit norm.
+        norm = np.linalg.norm([ii, ji, ki])
+        if abs(norm) > 1 + normTolerance:
+            raise MalformedRotationException
+        # Verify the second column has unit norm.
+        norm = np.linalg.norm([ij, jj, kj])
+        if abs(norm) > 1 + normTolerance:
+            raise MalformedRotationException
+        # Verify the third column has unit norm.
+        norm = np.linalg.norm([ik, jk, kk])
+        if abs(norm) > 1 + normTolerance:
+            raise MalformedRotationException
+        # Verify the matrix has unit determinant.
+        a = np.array([ii, ij, ik, ji, jj, jk, ki, kj, kk]).reshape(3, 3)
+        det = np.linalg.det(a)
+        if abs(det) > 1 + normTolerance:
+            raise MalformedRotationException
+    else:
+        raise ValueError

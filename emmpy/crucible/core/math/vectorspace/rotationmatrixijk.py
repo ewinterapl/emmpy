@@ -1,9 +1,9 @@
 """A 3-D rotation matrix."""
 
 
+import numpy as np
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    checkRotation,
-    computeNorm
+    checkRotation
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
@@ -224,7 +224,7 @@ class RotationMatrixIJK(MatrixIJK):
         @return a reference to the instance for convenience.
         """
         # Normalize the first column vector of the matrix.
-        norm = computeNorm(self.ii, self.ji, self.ki)
+        norm = np.linalg.norm([self.ii, self.ji, self.ki])
         self.ii /= norm
         self.ji /= norm
         self.ki /= norm
@@ -236,7 +236,7 @@ class RotationMatrixIJK(MatrixIJK):
         self.kk = self.ii*self.jj - self.ji*self.ij
 
         # Normalize the result.
-        norm = computeNorm(self.ik, self.jk, self.kk)
+        norm = np.linalg.norm([self.ik, self.jk, self.kk])
         self.ik /= norm
         self.jk /= norm
         self.kk /= norm
@@ -246,7 +246,7 @@ class RotationMatrixIJK(MatrixIJK):
         self.jj = self.kk*self.ii - self.ik*self.ki
         self.kj = self.ik*self.ji - self.jk*self.ii
 
-        norm = computeNorm(self.ij, self.jj, self.kj)
+        norm = np.linalg.norm([self.ij, self.jj, self.kj])
         self.ij /= norm
         self.jj /= norm
         self.kj /= norm

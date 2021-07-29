@@ -4,10 +4,6 @@
 from math import sqrt
 import sys
 import numpy as np
-from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    computeDeterminant,
-    computeNorm
-)
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.math.matrices.matrix2d import Matrix2D
 from emmpy.utilities.isrealnumber import isRealNumber
@@ -259,7 +255,7 @@ class MatrixIJ(Matrix2D):
         """
         self.transpose()
 
-        length = computeNorm(self.ii, self.ij)
+        length = np.linalg.norm([self.ii, self.ij])
         if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
@@ -269,7 +265,7 @@ class MatrixIJ(Matrix2D):
         self.ij /= length
         self.ij /= length
 
-        length = computeNorm(self.ji, self.jj)
+        length = np.linalg.norm([self.ji, self.jj])
         if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "jth column of matrix has length, %s, for which there is no "

@@ -12,10 +12,6 @@ internals of the parent classes fields.
 
 import sys
 import numpy as np
-from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    computeDeterminant,
-    computeNorm
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.matrices.matrix3d import Matrix3D
 
@@ -278,7 +274,7 @@ class MatrixIJK(Matrix3D):
         the space available to double precision
         """
         self.transpose()
-        length = computeNorm(self.ii, self.ij, self.ik)
+        length = np.linalg.norm([self.ii, self.ij, self.ik])
         if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "ith column of matrix has length, %s, for which there is no "
@@ -289,7 +285,7 @@ class MatrixIJK(Matrix3D):
         self.ij /= length
         self.ik /= length
         self.ik /= length
-        length = computeNorm(self.ji, self.jj, self.jk)
+        length = np.linalg.norm([self.ji, self.jj, self.jk])
         if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "jth column of matrix has length, %s, for which there is no "
@@ -300,7 +296,7 @@ class MatrixIJK(Matrix3D):
         self.jj /= length
         self.jk /= length
         self.jk /= length
-        length = computeNorm(self.ki, self.kj, self.kk)
+        length = np.linalg.norm([self.ki, self.kj, self.kk])
         if length*INVORSION_BOUND < 1 or length == 0:
             raise Exception(
                 "kth column of matrix has length, %s, for which there is no "
@@ -1032,10 +1028,7 @@ class MatrixIJK(Matrix3D):
 
         @return the determinant of the instance
         """
-        return computeDeterminant(
-            self.ii, self.ji, self.ki,
-            self.ij, self.jj, self.kj,
-            self.ik, self.jk, self.kk)
+        return np.linalg.det(self)
 
     def getII(self):
         """Get the ith row, ith column component."""

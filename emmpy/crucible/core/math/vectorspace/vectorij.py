@@ -13,8 +13,7 @@ from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
     CrucibleRuntimeException
 )
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    absMaxComponent,
-    computeNorm
+    absMaxComponent
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.vectors.vector2d import Vector2D

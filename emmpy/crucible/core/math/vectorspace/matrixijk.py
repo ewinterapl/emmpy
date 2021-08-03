@@ -302,7 +302,6 @@ class MatrixIJK(Matrix3D):
             raise Exception
         return self
 
-    @staticmethod
     def mtxv(*args):
         """Compute the product of the transpose of a matrix with a vector."""
         if len(args) == 2:

@@ -3,13 +3,6 @@
 This module provides functions that support the implementation
 of methods of the various other classes provided in this package.
 
-Maintainer Note: This class is an implementation detail of the classes and
-methods provided by this package as a whole. Functionality present here
-should not be exposed outside of this package. Further, as methods defined
-here may be invoked from any class in this package, it must remain free of
-references to all other classes in this package. In other words, it is at
-the absolute bottom of the package layering structure.
-
 Authors
 -------
 F.S.Turner
@@ -18,15 +11,16 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 import numpy as np
+
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
 
 
-def absMaxComponent(*args) -> float:
+def absMaxComponent(*args):
     """Compute the absolute value of the largest of a group of numbers.
 
-    Determine the largest component by magnitude, and return it absolte
+    Determine the largest component by magnitude, and return its absolute
     value.
 
     Parameters
@@ -42,7 +36,7 @@ def absMaxComponent(*args) -> float:
     return max(abs(x) for x in args)
 
 
-def checkRotation(*args) -> None:
+def checkRotation(*args):
     """Determine if the values of matrix are a rotation.
 
     Determine if the values of a column-major matrix composed of the

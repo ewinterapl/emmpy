@@ -20,10 +20,10 @@ class TestBuilder(unittest.TestCase):
         buffer = MatrixIJ()
         b = p2cj.getTransformation(polarv, buffer)
         self.assertIs(b, buffer)
-        self.assertAlmostEqual(b.getII(), -0.4161468365471424)
-        self.assertAlmostEqual(b.getJI(), 0.9092974268256817)
-        self.assertAlmostEqual(b.getIJ(), -0.9092974268256817)
-        self.assertAlmostEqual(b.getJJ(), -0.4161468365471424)
+        self.assertAlmostEqual(b.ii, -0.4161468365471424)
+        self.assertAlmostEqual(b.ji, 0.9092974268256817)
+        self.assertAlmostEqual(b.ij, -0.9092974268256817)
+        self.assertAlmostEqual(b.jj, -0.4161468365471424)
 
     def test_getInverseTransformation(self):
         p2cj = PolarToCartesianJacobian()
@@ -31,10 +31,10 @@ class TestBuilder(unittest.TestCase):
         buffer = MatrixIJ()
         b = p2cj.getInverseTransformation(polarv, buffer)
         self.assertIs(b, buffer)
-        self.assertAlmostEqual(b.getII(), -0.4161468365471424)
-        self.assertAlmostEqual(b.getJI(), -0.9092974268256817)
-        self.assertAlmostEqual(b.getIJ(), 0.9092974268256817)
-        self.assertAlmostEqual(b.getJJ(), -0.4161468365471424)
+        self.assertAlmostEqual(b.ii, -0.4161468365471424)
+        self.assertAlmostEqual(b.ji, -0.9092974268256817)
+        self.assertAlmostEqual(b.ij, 0.9092974268256817)
+        self.assertAlmostEqual(b.jj, -0.4161468365471424)
 
     def test_mxv(self):
         p2cj = PolarToCartesianJacobian()

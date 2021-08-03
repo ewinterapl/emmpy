@@ -357,31 +357,7 @@ class TestBuilder(unittest.TestCase):
             data = [None]*s
             with self.assertRaises(ValueError):
                 v2 = MatrixIJ.mxv(*data)
-
-    def test_getII(self):
-        """Test the getII method."""
-        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
-        m = MatrixIJ(*data)
-        self.assertAlmostEqual(m.getII(), data[0])
-
-    def test_getJI(self):
-        """Test the getJI method."""
-        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
-        m = MatrixIJ(*data)
-        self.assertAlmostEqual(m.getJI(), data[1])
-
-    def test_getIJ(self):
-        """Test the getIJ method."""
-        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
-        m = MatrixIJ(*data)
-        self.assertAlmostEqual(m.getIJ(), data[2])
-
-    def test_getJJ(self):
-        """Test the getJJ method."""
-        data = [0, 1, 2, 3]  # COLUMN-MAJOR ORDER
-        m = MatrixIJ(*data)
-        self.assertAlmostEqual(m.getJJ(), data[3])
-
+ 
 
 if __name__ == '__main__':
     unittest.main()

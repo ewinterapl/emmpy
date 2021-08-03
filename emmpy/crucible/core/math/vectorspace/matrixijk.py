@@ -195,36 +195,6 @@ class MatrixIJK(Matrix3D):
         self.invert()
         return self
 
-    def scale(self, *args):
-        """Scale the matrix as a unit, or by columns.
-        
-        Scale the matrix as a unit, or by columns.
-        
-        Parameters
-        ----------
-        scale : float
-            Scale factor to apply to each matrix element.
-        OR
-        scaleI, scaleJ, scaleK : float
-            Scale factors for columns i, j, k
-
-        Returns
-        -------
-        self : MatrixIJK
-            The current object, after scaling.
-        """
-        if len(args) == 1:
-            # Apply a single scale factor.
-            (scale,) = args
-            self[:, :] *= scale
-        elif len(args) == 3:
-            # Apply a different scale factor to each column.
-            (scaleI, scaleJ, scaleK) = args
-            self[:, 0] *= scaleI
-            self[:, 1] *= scaleJ
-            self[:, 2] *= scaleK
-        return self
-
     def setTo(self, *args):
         """Set the matrix components."""
         if len(args) == 1:
@@ -262,7 +232,7 @@ class MatrixIJK(Matrix3D):
             # contains the scaled version of matrix
             (scale, matrix) = args
             self.setTo(matrix)
-            self.scale(scale)
+            self[:, :] *= scale
             return self
         elif len(args) == 3:
             # Sets the columns of this matrix to the three specified vectors.
@@ -292,7 +262,9 @@ class MatrixIJK(Matrix3D):
             # contains the column scaled version of matrix
             (scaleI, scaleJ, scaleK, matrix) = args
             self.setTo(matrix)
-            self.scale(scaleI, scaleJ, scaleK)
+            self[:, 0] *= scaleI
+            self[:, 1] *= scaleJ
+            self[:, 2] *= scaleK
             return self
         elif len(args) == 6:
             # Sets the columns of this matrix to the scaled versions of the

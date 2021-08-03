@@ -185,32 +185,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.jk, 0)
         self.assertAlmostEqual(m.kk, cos(a))
 
-    def test_scale(self):
-        """Test the scale method."""
-        m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        m2 = m.scale(-2)
-        self.assertIs(m2, m)
-        self.assertAlmostEqual(m.ii, -2)
-        self.assertAlmostEqual(m.ji, -4)
-        self.assertAlmostEqual(m.ki, -6)
-        self.assertAlmostEqual(m.ij, -8)
-        self.assertAlmostEqual(m.jj, -10)
-        self.assertAlmostEqual(m.kj, -12)
-        self.assertAlmostEqual(m.ik, -14)
-        self.assertAlmostEqual(m.jk, -16)
-        self.assertAlmostEqual(m.kk, -18)
-        m2 = m.scale(-1, -2, -3)
-        self.assertIs(m2, m)
-        self.assertAlmostEqual(m.ii, 2)
-        self.assertAlmostEqual(m.ji, 4)
-        self.assertAlmostEqual(m.ki, 6)
-        self.assertAlmostEqual(m.ij, 16)
-        self.assertAlmostEqual(m.jj, 20)
-        self.assertAlmostEqual(m.kj, 24)
-        self.assertAlmostEqual(m.ik, 42)
-        self.assertAlmostEqual(m.jk, 48)
-        self.assertAlmostEqual(m.kk, 54)
-
     def test_setTo(self):
         """Test the setTo method."""
         m1 = MatrixIJK()

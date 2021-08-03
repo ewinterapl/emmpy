@@ -154,6 +154,13 @@ class MatrixIJK(Matrix3D):
         attribute search process. The valid attributes are listed in the
         components dictionary.
 
+        Parameters
+        ----------
+        name : str
+            Name of attribute to set.
+        value : obj
+            Value for attribute to be set.
+
         Returns
         -------
         None
@@ -345,42 +352,6 @@ class MatrixIJK(Matrix3D):
             self.jk *= scaleK
             self.kk *= scaleK
             return self
-
-    def setII(self, ii):
-        """Set the ith row, ith column component."""
-        self.ii = ii
-
-    def setJI(self, ji):
-        """Set the jth row, ith column component."""
-        self.ji = ji
-
-    def setKI(self, ki):
-        """Set the kth row, ith column component."""
-        self.ki = ki
-
-    def setIJ(self, ij):
-        """Set the ith row, jth column component."""
-        self.ij = ij
-
-    def setJJ(self, jj):
-        """Set the jth row, jth column component."""
-        self.jj = jj
-
-    def setKJ(self, kj):
-        """Set the kth row, jth column component."""
-        self.kj = kj
-
-    def setIK(self, ik):
-        """Set the ith row, kth column component."""
-        self.ik = ik
-
-    def setJK(self, jk):
-        """Set the jth row, kth column component."""
-        self.jk = jk
-
-    def setKK(self, kk):
-        """Set the kth row, kth column component."""
-        self.kk = kk
 
     def set(self, row, column, value):
         """Set the component for the specified row and column.
@@ -1026,7 +997,17 @@ class MatrixIJK(Matrix3D):
     def getDeterminant(self):
         """Compute the determinant of the matrix.
 
-        @return the determinant of the instance
+        Compute the determinant of the matrix.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        det : float
+            Determinant of the matrix.
         """
-        return np.linalg.det(self)
+        det = np.linalg.det(self)
+        return det
  

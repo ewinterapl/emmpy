@@ -308,60 +308,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.jk, 48)
         self.assertAlmostEqual(m.kk, 54)
 
-    def test_setII(self):
-        """Test the setII method."""
-        m = MatrixIJK()
-        m.setII(-1)
-        self.assertAlmostEqual(m.ii, -1)
-
-    def test_setJI(self):
-        """Test the setJI method."""
-        m = MatrixIJK()
-        m.setJI(-1)
-        self.assertAlmostEqual(m.ji, -1)
-
-    def test_setKI(self):
-        """Test the setKI method."""
-        m = MatrixIJK()
-        m.setKI(-1)
-        self.assertAlmostEqual(m.ki, -1)
-
-    def test_setIJ(self):
-        """Test the setIJ method."""
-        m = MatrixIJK()
-        m.setIJ(-1)
-        self.assertAlmostEqual(m.ij, -1)
-
-    def test_setJJ(self):
-        """Test the setJJ method."""
-        m = MatrixIJK()
-        m.setJJ(-1)
-        self.assertAlmostEqual(m.jj, -1)
-
-    def test_setKJ(self):
-        """Test the setKJ method."""
-        m = MatrixIJK()
-        m.setKJ(-1)
-        self.assertAlmostEqual(m.kj, -1)
-
-    def test_setIK(self):
-        """Test the setIK method."""
-        m = MatrixIJK()
-        m.setIK(-1)
-        self.assertAlmostEqual(m.ik, -1)
-
-    def test_setJK(self):
-        """Test the setJK method."""
-        m = MatrixIJK()
-        m.setJK(-1)
-        self.assertAlmostEqual(m.jk, -1)
-
-    def test_setKK(self):
-        """Test the setKK method."""
-        m = MatrixIJK()
-        m.setKK(-1)
-        self.assertAlmostEqual(m.kk, -1)
-
     def test_set(self):
         """Test the set method."""
         m = MatrixIJK()

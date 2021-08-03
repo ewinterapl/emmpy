@@ -438,7 +438,7 @@ class VectorIJK(Vector3D):
         ----------
         vector : VectorIJK
             The vector to copy.
-        
+
         Returns
         -------
         v : VectorIJK

@@ -12,6 +12,7 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the vectorijk module."""
 
     def test___init__(self):
         """Test the __init__ method."""
@@ -115,7 +116,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.j, j)
         self.assertAlmostEqual(v.k, k)
         with self.assertRaises(KeyError):
-            v.bad
+            bad = v.bad
 
     def test___setattr__(self):
         """Test the __setattr__ method."""
@@ -153,7 +154,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.k, k/length)
         v1 = VectorIJK(0, 0, 0)
         # Temporarily disable the divide-by-zero warning from Numpy.
-        warnings.filterwarnings("ignore", message="invalid value encountered in true_divide")
+        warnings.filterwarnings(
+            "ignore", message="invalid value encountered in true_divide")
         v2 = v1.unitize()
         for i in range(3):
             self.assertTrue(np.isnan(v2[i]))
@@ -301,6 +303,7 @@ class TestBuilder(unittest.TestCase):
             v3 = VectorIJK.project(v2, v1)
 
     def test_add(self):
+        """Test the add method."""
         v = VectorIJK()
         v1 = VectorIJK(1, 1, 1)
         v2 = VectorIJK(1, 1, 0)
@@ -317,6 +320,7 @@ class TestBuilder(unittest.TestCase):
             VectorIJK.add()
 
     def test_copyOf(self):
+        """Test the copyOf method."""
         (i, j, k) = (1.1, 2.2, 3.3)
         v1 = VectorIJK(i, j, k)
         v2 = VectorIJK.copyOf(v1)

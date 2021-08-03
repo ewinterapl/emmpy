@@ -1061,17 +1061,3 @@ class MatrixIJK(Matrix3D):
     def getJK(self):
         """Get the jth row, kth column component."""
         return self.jk
-
-    def getKK(self):
-        """Get the kth row, kth column component."""
-        return self.kk
-
-
-# The matrix whose components are all zero.
-ZEROS = MatrixIJK(0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-# The matrix whose components are all ones.
-ONES = MatrixIJK(1, 1, 1, 1, 1, 1, 1, 1, 1)
-
-# The multiplicative identity.
-IDENTITY = MatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)

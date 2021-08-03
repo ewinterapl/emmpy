@@ -29,7 +29,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(buffer.getKJ(), 0)
         self.assertAlmostEqual(buffer.getIK(), 0)
         self.assertAlmostEqual(buffer.getJK(), 0)
-        self.assertAlmostEqual(buffer.getKK(), 1)
+        self.assertAlmostEqual(buffer.kk, 1)
 
     def test_getInverseTransformation(self):
         c2cbt = CylindricalToCartesianBasisTransformation()
@@ -45,7 +45,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(buffer.getKJ(), 0)
         self.assertAlmostEqual(buffer.getIK(), 0)
         self.assertAlmostEqual(buffer.getJK(), 0)
-        self.assertAlmostEqual(buffer.getKK(), 1)
+        self.assertAlmostEqual(buffer.kk, 1)
 
     def test_mxv(self):
         c2cbt = CylindricalToCartesianBasisTransformation()

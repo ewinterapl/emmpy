@@ -32,7 +32,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(mijk.getKJ(), -0.9092974268256817)
         self.assertAlmostEqual(mijk.getIK(), -0.12832006020245673)
         self.assertAlmostEqual(mijk.getJK(), -0.9001976297355174)
-        self.assertAlmostEqual(mijk.getKK(), 0)
+        self.assertAlmostEqual(mijk.kk, 0)
 
     def test_getInverseTransformation(self):
         s2cj = SphericalToCartesianJacobian()
@@ -48,7 +48,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(mijk.getKJ(), -1.0887444167267328)
         self.assertAlmostEqual(mijk.getIK(), -0.4161468365471424)
         self.assertAlmostEqual(mijk.getJK(), -0.9092974268256817)
-        self.assertAlmostEqual(mijk.getKK(), 0)
+        self.assertAlmostEqual(mijk.kk, 0)
         with self.assertRaises(PointOnAxisException):
             s2cj.getInverseTransformation(SphericalVector(0, 0, 0), mijk)
 

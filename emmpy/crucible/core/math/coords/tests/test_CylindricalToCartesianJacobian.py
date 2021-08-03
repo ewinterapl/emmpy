@@ -32,7 +32,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(mijk.getKJ(), 0)
         self.assertAlmostEqual(mijk.getIK(), 0)
         self.assertAlmostEqual(mijk.getJK(), 0)
-        self.assertAlmostEqual(mijk.getKK(), 1)
+        self.assertAlmostEqual(mijk.kk, 1)
 
     def test_getInverseTransformation(self):
         c2cj = CylindricalToCartesianJacobian()
@@ -50,7 +50,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(mijk.getKJ(), 0)
         self.assertAlmostEqual(mijk.getIK(), 0)
         self.assertAlmostEqual(mijk.getJK(), 0)
-        self.assertAlmostEqual(mijk.getKK(), 1)
+        self.assertAlmostEqual(mijk.kk, 1)
         cv0 = CylindricalVector(0, 0, 0)
         with self.assertRaises(PointOnAxisException):
             c2cj.getInverseTransformation(cv0, mijk)

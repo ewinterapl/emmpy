@@ -31,7 +31,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(buffer.getKJ(), -0.9092974268256817)
         self.assertAlmostEqual(buffer.getIK(), -0.1411200080598672)
         self.assertAlmostEqual(buffer.getJK(), -0.9899924966004454)
-        self.assertAlmostEqual(buffer.getKK(), 0)
+        self.assertAlmostEqual(buffer.kk, 0)
 
     def test_getInverseTransformation(self):
         s2cbt = SphericalToCartesianBasisTransformation()
@@ -47,7 +47,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(buffer.getKJ(), -0.9899924966004456)
         self.assertAlmostEqual(buffer.getIK(), -0.4161468365471424)
         self.assertAlmostEqual(buffer.getJK(), -0.9092974268256817)
-        self.assertAlmostEqual(buffer.getKK(), 0)
+        self.assertAlmostEqual(buffer.kk, 0)
 
     def test_mxv(self):
         s2cbt = SphericalToCartesianBasisTransformation()

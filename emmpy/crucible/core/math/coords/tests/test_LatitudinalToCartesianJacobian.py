@@ -27,7 +27,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(b.getKJ(), -0.4161468365471424)
         self.assertAlmostEqual(b.getIK(), 0.05872664492762098)
         self.assertAlmostEqual(b.getJK(), 0.411982245665683)
-        self.assertAlmostEqual(b.getKK(), 0)
+        self.assertAlmostEqual(b.kk, 0)
 
     def test_getInverseTransformation(self):
         l2cj = LatitudinalToCartesianJacobian()
@@ -43,7 +43,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(b.getKJ(), 2.378949951451322)
         self.assertAlmostEqual(b.getIK(), 0.9092974268256817)
         self.assertAlmostEqual(b.getJK(), -0.4161468365471424)
-        self.assertAlmostEqual(b.getKK(), 0)
+        self.assertAlmostEqual(b.kk, 0)
 
     def test_mxv(self):
         l2cj = LatitudinalToCartesianJacobian()

@@ -1,11 +1,17 @@
+"""Tests for the matrixijk module."""
+
+
 from math import cos, pi, sin, sqrt
 import unittest
+
 import numpy as np
+
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the matrixijk module."""
 
     def test___init__(self):
         """Test the __init__ method."""
@@ -147,6 +153,7 @@ class TestBuilder(unittest.TestCase):
             m.bad = 0
 
     def test_createTranspose(self):
+        """Test the createTranspose method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = m1.createTranspose()
         self.assertAlmostEqual(m2.ii, 1)
@@ -160,6 +167,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.kk, 9)
 
     def test_createUnitizedColumns(self):
+        """Test the createUnitizedColumns method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = m1.createUnitizedColumns()
         self.assertAlmostEqual(m2.ii, 1/sqrt(14))
@@ -173,6 +181,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.kk, 9/sqrt(194))
 
     def test_createInverse(self):
+        """Test the createInverse method."""
         m = MatrixIJK(1, 0, 5, 2, 1, 6, 3, 5, 0)
         m2 = m.createInverse()
         self.assertAlmostEqual(m2.ii, -6)
@@ -196,6 +205,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m3.kk, 0)
 
     def test_createInvorted(self):
+        """Test the createInvorted method."""
         a = pi/3
         m = MatrixIJK(cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
         m2 = m.createInvorted()
@@ -210,6 +220,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m2.kk, cos(a))
 
     def test_transpose(self):
+        """Test the transpose method."""
         # COLUMN-MAJOR ORDER
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = m.transpose()
@@ -225,6 +236,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, 9)
 
     def test_unitizeColumns(self):
+        """Test the unitizeColumns method."""
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m.unitizeColumns()
         self.assertAlmostEqual(m.ii, 1/sqrt(14))
@@ -238,6 +250,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, 9/sqrt(194))
 
     def test_invert(self):
+        """Test the invert method."""
         m = MatrixIJK(1, 0, 5, 2, 1, 6, 3, 5, 0)
         m2 = m.invert()
         self.assertIs(m2, m)
@@ -255,6 +268,7 @@ class TestBuilder(unittest.TestCase):
             m.invert()
 
     def test_invort(self):
+        """Test the invort method."""
         a = pi/3
         m = MatrixIJK(cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
         m.invort()
@@ -269,6 +283,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, cos(a))
 
     def test_scale(self):
+        """Test the scale method."""
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = m.scale(-2)
         self.assertIs(m2, m)
@@ -294,51 +309,61 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, 54)
 
     def test_setII(self):
+        """Test the setII method."""
         m = MatrixIJK()
         m.setII(-1)
         self.assertAlmostEqual(m.ii, -1)
 
     def test_setJI(self):
+        """Test the setJI method."""
         m = MatrixIJK()
         m.setJI(-1)
         self.assertAlmostEqual(m.ji, -1)
 
     def test_setKI(self):
+        """Test the setKI method."""
         m = MatrixIJK()
         m.setKI(-1)
         self.assertAlmostEqual(m.ki, -1)
 
     def test_setIJ(self):
+        """Test the setIJ method."""
         m = MatrixIJK()
         m.setIJ(-1)
         self.assertAlmostEqual(m.ij, -1)
 
     def test_setJJ(self):
+        """Test the setJJ method."""
         m = MatrixIJK()
         m.setJJ(-1)
         self.assertAlmostEqual(m.jj, -1)
 
     def test_setKJ(self):
+        """Test the setKJ method."""
         m = MatrixIJK()
         m.setKJ(-1)
         self.assertAlmostEqual(m.kj, -1)
 
     def test_setIK(self):
+        """Test the setIK method."""
         m = MatrixIJK()
         m.setIK(-1)
         self.assertAlmostEqual(m.ik, -1)
 
     def test_setJK(self):
+        """Test the setJK method."""
         m = MatrixIJK()
         m.setJK(-1)
         self.assertAlmostEqual(m.jk, -1)
 
     def test_setKK(self):
+        """Test the setKK method."""
         m = MatrixIJK()
         m.setKK(-1)
         self.assertAlmostEqual(m.kk, -1)
 
     def test_set(self):
+        """Test the set method."""
         m = MatrixIJK()
         m.set(0, 0, 1)
         m.set(1, 0, 2)
@@ -368,6 +393,7 @@ class TestBuilder(unittest.TestCase):
             m.set(3, 0, 0)
 
     def test_setIthColumn(self):
+        """Test the setIthColumn method."""
         m = MatrixIJK()
         v = VectorIJK(1, 2, 3)
         m.setIthColumn(v)
@@ -376,6 +402,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.ki, 3)
 
     def test_setJthColumn(self):
+        """Test the setJthColumn method."""
         m = MatrixIJK()
         v = VectorIJK(1, 2, 3)
         m.setJthColumn(v)
@@ -384,6 +411,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kj, 3)
 
     def test_setKthColumn(self):
+        """Test the setKthColumn method."""
         m = MatrixIJK()
         v = VectorIJK(1, 2, 3)
         m.setKthColumn(v)
@@ -392,6 +420,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, 3)
 
     def test_setColumn(self):
+        """Test the setColumn method."""
         m = MatrixIJK()
         v = VectorIJK(1, 2, 3)
         m.setColumn(0, v)
@@ -410,6 +439,7 @@ class TestBuilder(unittest.TestCase):
             m.setColumn(3, v)
 
     def test_setTo(self):
+        """Test the setTo method."""
         m1 = MatrixIJK()
         # 1 arg - list of lists
         m3 = m1.setTo([[1, 4, 7, 4], [2, 5, 8, 9], [3, 6, 9, 2], [3, 4, 5, 6]])
@@ -503,6 +533,7 @@ class TestBuilder(unittest.TestCase):
             m1.setTo()
 
     def test_setToTranspose(self):
+        """Test the setToTranspose method."""
         m1 = MatrixIJK()
         m2 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m3 = m1.setToTranspose(m2)
@@ -518,6 +549,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m1.kk, 9)
 
     def test_setToUnitizedColumns(self):
+        """Test the setToUnitizedCollumns method."""
         m1 = MatrixIJK()
         m2 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m3 = m1.setToUnitizedColumns(m2)
@@ -533,6 +565,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m1.kk, 9/sqrt(194))
 
     def test_setToInverse(self):
+        """Test the setToInverse method."""
         m1 = MatrixIJK()
         m2 = MatrixIJK(1, 0, 5, 2, 1, 6, 3, 5, 0)
         m3 = m1.setToInverse(m2)
@@ -559,6 +592,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m4.kk, 0)
 
     def test_setToInvorted(self):
+        """Test the setToInvorted method."""
         a = pi/3
         m = MatrixIJK()
         m1 = MatrixIJK(cos(a), 0, sin(a), 0, 1, 0, -sin(a), 0, cos(a))
@@ -575,6 +609,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, cos(a))
 
     def test_mxmt(self):
+        """Test the mxmt method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(9, 8, 7, 6, 5, 4, 3, 2, 1)
         m3 = MatrixIJK.mxmt(m1, m2)
@@ -604,6 +639,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m5.kk, 3*7 + 6*4 + 9*1)
 
     def test_mtxm(self):
+        """Test the mtxm method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(9, 8, 7, 6, 5, 4, 3, 2, 1)
         m3 = MatrixIJK.mtxm(m1, m2)
@@ -633,6 +669,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m5.kk, 7*3 + 8*2 + 9*1)
 
     def test_mxm(self):
+        """Test the mxm method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(9, 8, 7, 6, 5, 4, 3, 2, 1)
         m3 = MatrixIJK.mxm(m1, m2)
@@ -662,6 +699,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m5.kk, 3*3 + 6*2 + 9*1)
 
     def test_mxmtadd(self):
+        """Test the mxmtadd method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(2, 3, 4, 5, 6, 7, 8, 9, 1)
         m3 = MatrixIJK(4, 5, 6, 7, 8, 9, 1, 2, 3)
@@ -715,6 +753,7 @@ class TestBuilder(unittest.TestCase):
             m7.kk, 3*4 + 6*7 + 9*1 + 6*9 + 9*3 + 3*6)
 
     def test_mtxmadd(self):
+        """Test the mtxmadd method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(2, 3, 4, 5, 6, 7, 8, 9, 1)
         m3 = MatrixIJK(4, 5, 6, 7, 8, 9, 1, 2, 3)
@@ -768,6 +807,7 @@ class TestBuilder(unittest.TestCase):
             m7.kk, 7*8 + 8*9 + 9*1 + 1*4 + 2*5 + 3*6)
 
     def test_mxmadd(self):
+        """Test the mxmadd method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(2, 3, 4, 5, 6, 7, 8, 9, 1)
         m3 = MatrixIJK(4, 5, 6, 7, 8, 9, 1, 2, 3)
@@ -817,6 +857,7 @@ class TestBuilder(unittest.TestCase):
             m7.kk, 3*8 + 6*9 + 9*1 + 6*4 + 9*5 + 3*6)
 
     def test_subtract(self):
+        """Test the subtract method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(9, 8, 7, 6, 5, 4, 3, 2, 1)
         m3 = MatrixIJK.subtract(m1, m2)
@@ -843,6 +884,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m5.kk, 8)
 
     def test_add(self):
+        """Test the add method."""
         m1 = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         m2 = MatrixIJK(9, 8, 7, 6, 5, 4, 3, 2, 1)
         m3 = MatrixIJK.add(m1, m2)
@@ -869,6 +911,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m5.kk, 10)
 
     def test_mtxv(self):
+        """Test the mtxv method."""
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         v1 = VectorIJK(1, 2, 3)
         v2 = MatrixIJK.mtxv(m, v1)
@@ -886,6 +929,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v4.k, 50)
 
     def test_mxv(self):
+        """Test the mxv method."""
         m = MatrixIJK(1, 2, 3, 4, 5, 6, 7, 8, 9)
         v1 = VectorIJK(1, 2, 3)
         v2 = MatrixIJK.mxv(m, v1)
@@ -900,6 +944,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v4.k, 3*1 + 6*2 + 9*3)
 
     def test_getDeterminant(self):
+        """Test the getDeterminant method."""
         pass
 
 

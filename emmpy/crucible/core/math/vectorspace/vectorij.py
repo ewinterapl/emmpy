@@ -95,6 +95,13 @@ class VectorIJ(Vector2D):
         attribute search process. The valid attributes are listed in the
         components dictionary.
 
+        Parameters
+        ----------
+        name : str
+            Name of attribute to set.
+        value : float
+            Value to assign to attribute.
+
         Returns
         -------
         None

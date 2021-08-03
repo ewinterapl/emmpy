@@ -11,14 +11,12 @@ internals of the parent classes fields.
 
 
 import sys
+
 import numpy as np
+
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.matrices.matrix3d import Matrix3D
 
-
-# Default tolerance for determining if a matrix is invertible. The
-# determinant must be greater than this tolerance.
-INVERSION_TOLERANCE = 1E-16
 
 # One of the two default tolerances that control how close to a rotation a
 # rotation matrix must be. This value determines how far off unity the norm
@@ -29,11 +27,6 @@ NORM_TOLERANCE = 1E-4
 # rotation a rotation matrix must be. This value determines how far off
 # unity the determinant of the matrix must be.
 DETERMINANT_TOLERANCE = 1E-4
-
-# The bound defining the boundary length at which the invort procedure
-# works with double precision. Note: this is necessary because larger
-# negative exponents are captured by 64 IEEE doubles than positive ones.
-INVORSION_BOUND = sys.float_info.max
 
 
 # Map matrix component names to indices.
@@ -53,7 +46,7 @@ class MatrixIJK(Matrix3D):
         Parameters
         ----------
         a : 3x3 array-like of float, optional, default 3x3 None
-            Values for matrix elements in row-major order.
+            Values for matrix elements.
         OR
         scale : float
             The scale factor to apply.
@@ -81,8 +74,8 @@ class MatrixIJK(Matrix3D):
         colK : array-like of 3 float
             The vector containing the kth column.
         OR
-        ii, ij, ik, ji, jj, jk, ki, kj, kk : float
-            Elements of new matrix in row-major order.
+        ii, ji, ki, ij, jj, kj, ik, jk, kk : float
+            Elements of new matrix in column-major order.
 
         Raises
         ------
@@ -90,7 +83,7 @@ class MatrixIJK(Matrix3D):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            # Construct an empty matrix.
+            # Construct an empty matrix (all NaN).
             self[:, :] = np.array((None,)*9).reshape((3, 3))
         elif len(args) == 1:
             # Initialize matrix from a 3x3 array-like of floats.
@@ -167,287 +160,70 @@ class MatrixIJK(Matrix3D):
         """
         self[components[name]] = value
 
-    def createTranspose(self):
-        """Create a transposed copy of the matrix.
+    def invert(self):
+        """Invert the matrix in-place.
+        
+        Invert the matrix in-place.
 
-        Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
+        Parameters
+        ----------
+        None
+        
+        Returns
+        -------
+        self : MatrixIJK
+            Current object.
         """
-        return MatrixIJK(self).transpose()
-
-    def createUnitizedColumns(self):
-        """Create a copy of the matrix with unitized columns.
-
-        Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
-        return MatrixIJK(self).unitizeColumns()
-
-    def createInverse(self, *args):
-        """Create an inverted copy of the matrix.
-
-        Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
-        if len(args) == 0:
-            return MatrixIJK(self).invert()
-        elif len(args) == 1:
-            # Note: this method is overridden to return an instance of the
-            # writable subclass rather than the unwritable parent.
-            (tolerance,) = args
-            return MatrixIJK(self).invert(tolerance)
-
-    def createInvorted(self):
-        """Create an invorted copy of the matrix.
-
-        Note: this method is overridden to return an instance of the
-        writable subclass rather than the unwritable parent.
-        """
-        return MatrixIJK(self).invort()
-
-    def transpose(self):
-        """Transpose the matrix.
-
-        @return a reference to the instance for convenience, which now contains
-        the transpose
-        """
-        tmp = self.ij
-        self.ij = self.ji
-        self.ji = tmp
-        tmp = self.ik
-        self.ik = self.ki
-        self.ki = tmp
-        tmp = self.jk
-        self.jk = self.kj
-        self.kj = tmp
+        self[:, :] = np.linalg.inv(self)
         return self
-
-    def unitizeColumns(self):
-        """Convert each column to a unit vector.
-
-        @return a reference to the instance for convenience
-        @throws UnsupportedOperationException if any of the columns are of
-        length zero
-        """
-        self.setTo(VectorIJK(self.ii, self.ji, self.ki).unitize(),
-                   VectorIJK(self.ij, self.jj, self.kj).unitize(),
-                   VectorIJK(self.ik, self.jk, self.kk).unitize())
-        return self
-
-    def invert(self, *args):
-        """Invert the matrix."""
-        if len(args) == 0:
-            # Invert the matrix if the determinant is not within the default
-            # tolerance of zero.
-            # @return a reference to the instance for convenience, which now
-            # contains the multiplicative inverse
-            # @throws UnsupportedOperationException if the determinant of the
-            # instance is within
-            # {@link UnwritableMatrixIJK#INVERSION_TOLERANCE} of 0.0.
-            return self.invert(INVERSION_TOLERANCE)
-        elif len(args) == 1:
-            # Invert the matrix if the determinant is within the supplied
-            # tolerance of zero.
-            # @param tolerance the absolute value of the determinant of the
-            # instance must be greater than this for inversion to proceed
-            # @return a reference to the instance for convenience, which now
-            # contains the multiplicative inverse
-            # @throws UnsupportedOperationException if the determinant of the
-            # instance is within the supplied tolerance of 0.0.
-            (tolerance,) = args
-            det = self.getDeterminant()
-            if abs(det) < tolerance:
-                raise Exception(
-                    "Matrix nearly singular, unable to invert.")
-            cii = (self.jj*self.kk - self.kj*self.jk)/det
-            cij = -(self.ij*self.kk - self.kj*self.ik)/det
-            cik = (self.ij*self.jk - self.jj*self.ik)/det
-            cji = -(self.ji*self.kk - self.ki*self.jk)/det
-            cjj = (self.ii*self.kk - self.ki*self.ik)/det
-            cjk = -(self.ii*self.jk - self.ji*self.ik)/det
-            cki = (self.ji*self.kj - self.ki*self.jj)/det
-            ckj = -(self.ii*self.kj - self.ki*self.ij)/det
-            ckk = (self.ii*self.jj - self.ji*self.ij)/det
-            return self.setTo(cii, cji, cki, cij, cjj, ckj, cik, cjk, ckk)
 
     def invort(self):
         """Invert, in place, this matrix whose columns are orthogonal.
 
-        Note: No checks are done to verify that the columns are orthogonal.
+        Invert, in place, this matrix whose columns are orthogonal. Note:
+        No checks are done to verify that the columns are orthogonal.
 
-        @return a reference to the instance for convenience
-        @throws UnsupportedOperationException if the lengths of any of the
-        columns are zero or too small to properly invert multiplicatively in
-        the space available to double precision
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self : MatrixIJK
+            The current object after invorsion.
         """
-        self.transpose()
-        length = np.linalg.norm([self.ii, self.ij, self.ik])
-        if length*INVORSION_BOUND < 1 or length == 0:
-            raise Exception(
-                "ith column of matrix has length, %s, for which there is no "
-                "inverse." % length)
-        self.ii /= length
-        self.ii /= length
-        self.ij /= length
-        self.ij /= length
-        self.ik /= length
-        self.ik /= length
-        length = np.linalg.norm([self.ji, self.jj, self.jk])
-        if length*INVORSION_BOUND < 1 or length == 0:
-            raise Exception(
-                "jth column of matrix has length, %s, for which there is no "
-                "inverse." % length)
-        self.ji /= length
-        self.ji /= length
-        self.jj /= length
-        self.jj /= length
-        self.jk /= length
-        self.jk /= length
-        length = np.linalg.norm([self.ki, self.kj, self.kk])
-        if length*INVORSION_BOUND < 1 or length == 0:
-            raise Exception(
-                "kth column of matrix has length, %s, for which there is no "
-                "inverse." % length)
-        self.ki /= length
-        self.ki /= length
-        self.kj /= length
-        self.kj /= length
-        self.kk /= length
-        self.kk /= length
+        self.invert()
         return self
 
     def scale(self, *args):
-        """Scale the matrix."""
+        """Scale the matrix as a unit, or by columns.
+        
+        Scale the matrix as a unit, or by columns.
+        
+        Parameters
+        ----------
+        scale : float
+            Scale factor to apply to each matrix element.
+        OR
+        scaleI, scaleJ, scaleK : float
+            Scale factors for columns i, j, k
+
+        Returns
+        -------
+        self : MatrixIJK
+            The current object, after scaling.
+        """
         if len(args) == 1:
-            # Scales each component of the matrix by the supplied factor.
-            # @param scale the scale factor to apply
-            # @return a reference to the instance which now contains the scaled
-            # matrix.
+            # Apply a single scale factor.
             (scale,) = args
-            self.ii *= scale
-            self.ji *= scale
-            self.ki *= scale
-            self.ij *= scale
-            self.jj *= scale
-            self.kj *= scale
-            self.ik *= scale
-            self.jk *= scale
-            self.kk *= scale
-            return self
+            self[:, :] *= scale
         elif len(args) == 3:
-            # Scales each column of the matrix by the supplied factors.
-            # @param scaleI the ith column scale
-            # @param scaleJ the jth column scale
-            # @param scaleK the kth column scale
-            # @return a reference to the instance for convenience which
-            # contains the scaled matrix.
+            # Apply a different scale factor to each column.
             (scaleI, scaleJ, scaleK) = args
-            self.ii *= scaleI
-            self.ji *= scaleI
-            self.ki *= scaleI
-            self.ij *= scaleJ
-            self.jj *= scaleJ
-            self.kj *= scaleJ
-            self.ik *= scaleK
-            self.jk *= scaleK
-            self.kk *= scaleK
-            return self
-
-    def set(self, row, column, value):
-        """Set the component for the specified row and column.
-
-        @param row a row index in [0,2].
-        @param column a column index in [0,2]
-        @param value the value to place into the matrix at (row,column).
-        @throws IllegalArgumentException if either the supplied row or column
-        index are outside their acceptable ranges of [0,2].
-        """
-        if row == 0:
-            if column == 0:
-                self.ii = value
-            elif column == 1:
-                self.ij = value
-            elif column == 2:
-                self.ik = value
-            else:
-                raise Exception(
-                    "Unable to set element (%s, %s). Column index invalid." %
-                    (row, column))
-        elif row == 1:
-            if column == 0:
-                self.ji = value
-            elif column == 1:
-                self.jj = value
-            elif column == 2:
-                self.jk = value
-            else:
-                raise Exception(
-                    "Unable to set element (%s, %s). Column index invalid." %
-                    (row, column))
-        elif row == 2:
-            if column == 0:
-                self.ki = value
-            elif column == 1:
-                self.kj = value
-            elif column == 2:
-                self.kk = value
-            else:
-                raise Exception(
-                    "Unable to set element (%s, %s). Column index invalid." %
-                    (row, column))
-        else:
-            raise Exception(
-                "Unable to set element (%s, %s). Column index invalid." %
-                (row, column))
-
-    def setIthColumn(self, column):
-        """Set the ith column to the supplied vector.
-
-        @param column the vector whose components are to replace the ith column
-        of this matrix
-        """
-        self.ii = column.i
-        self.ji = column.j
-        self.ki = column.k
-
-    def setJthColumn(self, column):
-        """Set the jth column to the supplied vector.
-
-        @param column the vector whose components are to replace the jth column
-        of this matrix
-        """
-        self.ij = column.i
-        self.jj = column.j
-        self.kj = column.k
-
-    def setKthColumn(self, column):
-        """Set the kth column to the supplied vector.
-
-        @param column the vector whose components are to replace the kth column
-        of this matrix
-        """
-        self.ik = column.i
-        self.jk = column.j
-        self.kk = column.k
-
-    def setColumn(self, columnIndex, column):
-        """Set the column at a specified index to the supplied vector.
-
-        @param columnIndex a column index in [0,2].
-        @param column the vector whose components are to replace the specified
-        column of this matrix
-        @throws IllegalArgumentException if the supplied columnIndex is not in
-        [0,2].
-        """
-        if columnIndex == 0:
-            self.setIthColumn(column)
-        elif columnIndex == 1:
-            self.setJthColumn(column)
-        elif columnIndex == 2:
-            self.setKthColumn(column)
-        else:
-            raise Exception(
-                "Unable to set column. Index: %s is invalid." % columnIndex)
+            self[:, 0] *= scaleI
+            self[:, 1] *= scaleJ
+            self[:, 2] *= scaleK
+        return self
 
     def setTo(self, *args):
         """Set the matrix components."""
@@ -562,392 +338,6 @@ class MatrixIJK(Matrix3D):
         else:
             raise Exception
 
-    def setToTranspose(self, matrix):
-        """Set the matrix components to the transpose of the supplied matrix.
-
-        @param matrix the matrix whose transpose is to be copied into the
-        instance
-        @return a reference to the instance for convenience
-        """
-        self.setTo(matrix)
-        self.transpose()
-        return self
-
-    def setToUnitizedColumns(self, matrix):
-        """Set to the unitized columns of a matrix.
-
-        @return a reference to the instance for convenience
-        @throws UnsupportedOperationException if any of the columns are of
-        length zero
-        """
-        return self.setTo(matrix).unitizeColumns()
-
-    def setToInverse(self, *args):
-        """Set the matrix components to the inverse of the supplied matrix."""
-        if len(args) == 1:
-            # @param matrix the matrix to invert
-            # @return a reference to the instance containing the inverse of
-            # matrix for convenience
-            # @throws IllegalArgumentException if the determinant of matrix is
-            # within {@link UnwritableMatrixIJK#INVERSION_TOLERANCE} of 0.0.
-            (matrix,) = args
-            det = matrix.getDeterminant()
-            if abs(det) < DETERMINANT_TOLERANCE:
-                raise Exception(
-                    "Matrix nearly singular, unable to invert.")
-            self.setTo(matrix)
-            self.invert()
-            return self
-        elif len(args) == 2:
-            # Sets the matrix components to the inverse of the supplied matrix.
-            # @param matrix the matrix to invert
-            # @param tolerance the tolerance
-            # @return a reference to the instance containing the inverse of
-            # matrix for convenience
-            # @throws IllegalArgumentException if the determinant of matrix is
-            # within tolerance of 0.0.
-            (matrix, tolerance) = args
-            det = matrix.getDeterminant()
-            if abs(det) < tolerance:
-                raise Exception(
-                    "Matrix nearly singular, unable to invert.")
-            self.setTo(matrix)
-            self.invert(tolerance)
-            return self
-
-    def setToInvorted(self, matrix):
-        """Set to the invorse of the specified matrix.
-
-        @param matrix a matrix to invert, with orthogonal columns.
-        @return a reference to the instance for convenience
-        @throws UnsupportedOperationException if any of the columns are zero or
-        too small to properly invert multiplicatively in the space available to
-        double precision
-        """
-        return self.setTo(matrix).invort()
-
-    @staticmethod
-    def mxmt(*args):
-        """Compute the product of a matrix with the transpose of another."""
-        if len(args) == 2:
-            # @param a the left hand matrix
-            # @param b the right hand matrix to transpose, then multiply
-            # @return a new <code>MatrixIJK</code> containing the product.
-            # @see MatrixIJK#mxmt(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # MatrixIJK)
-            (a, b) = args
-            return MatrixIJK.mxmt(a, b, MatrixIJK())
-        elif len(args) == 3:
-            # @param a the left hand matrix
-            # @param b the right hand matrix to transpose, then multiply
-            # @param buffer the buffer to receive the product, a*transpose(b).
-            # @return a reference to buffer for convenience.
-            (a, b, buffer) = args
-            ii = a.ii*b.ii + a.ij*b.ij + a.ik*b.ik
-            ij = a.ii*b.ji + a.ij*b.jj + a.ik*b.jk
-            ik = a.ii*b.ki + a.ij*b.kj + a.ik*b.kk
-            ji = a.ji*b.ii + a.jj*b.ij + a.jk*b.ik
-            jj = a.ji*b.ji + a.jj*b.jj + a.jk*b.jk
-            jk = a.ji*b.ki + a.jj*b.kj + a.jk*b.kk
-            ki = a.ki*b.ii + a.kj*b.ij + a.kk*b.ik
-            kj = a.ki*b.ji + a.kj*b.jj + a.kk*b.jk
-            kk = a.ki*b.ki + a.kj*b.kj + a.kk*b.kk
-            buffer.ii = ii
-            buffer.ij = ij
-            buffer.ik = ik
-            buffer.ji = ji
-            buffer.jj = jj
-            buffer.jk = jk
-            buffer.ki = ki
-            buffer.kj = kj
-            buffer.kk = kk
-            return buffer
-
-    @staticmethod
-    def mtxm(*args):
-        """Compute the product of a transpose of a matrix with another."""
-        if len(args) == 2:
-            # @param a the left hand matrix to transpose, then multiply
-            # @param b the right hand matrix
-            # @return a new <code>MatrixIJK</code> containing the product
-            # @see MatrixIJK#mtxm(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # MatrixIJK)
-            (a, b) = args
-            return MatrixIJK.mtxm(a, b, MatrixIJK())
-        elif len(args) == 3:
-            # @param a the left hand matrix to transpose, then multiply
-            # @param b the right hand matrix
-            # @param buffer the buffer to receive the product, transpose(a)*b.
-            # @return a reference to buffer for convenience
-            (a, b, buffer) = args
-            ii = a.ii*b.ii + a.ji*b.ji + a.ki*b.ki
-            ij = a.ii*b.ij + a.ji*b.jj + a.ki*b.kj
-            ik = a.ii*b.ik + a.ji*b.jk + a.ki*b.kk
-            ji = a.ij*b.ii + a.jj*b.ji + a.kj*b.ki
-            jj = a.ij*b.ij + a.jj*b.jj + a.kj*b.kj
-            jk = a.ij*b.ik + a.jj*b.jk + a.kj*b.kk
-            ki = a.ik*b.ii + a.jk*b.ji + a.kk*b.ki
-            kj = a.ik*b.ij + a.jk*b.jj + a.kk*b.kj
-            kk = a.ik*b.ik + a.jk*b.jk + a.kk*b.kk
-            buffer.ii = ii
-            buffer.ij = ij
-            buffer.ik = ik
-            buffer.ji = ji
-            buffer.jj = jj
-            buffer.jk = jk
-            buffer.ki = ki
-            buffer.kj = kj
-            buffer.kk = kk
-            return buffer
-
-    @staticmethod
-    def mxm(*args):
-        """Compute the product of two matrices."""
-        if len(args) == 2:
-            # @param a the left hand matrix
-            # @param b the right hand matrix
-            # @return a new <code>MatrixIJK</code> containing the product (ab).
-            # @see MatrixIJK#mxm(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # MatrixIJK)
-            (a, b) = args
-            return MatrixIJK.mxm(a, b, MatrixIJK())
-        elif len(args) == 3:
-            # @param a the left hand matrix
-            # @param b the right hand matrix
-            # @param buffer the buffer to receive the product, a*b
-            # @return a reference to buffer for convenience
-            (a, b, buffer) = args
-            ii = a.ii*b.ii + a.ij*b.ji + a.ik*b.ki
-            ij = a.ii*b.ij + a.ij*b.jj + a.ik*b.kj
-            ik = a.ii*b.ik + a.ij*b.jk + a.ik*b.kk
-            ji = a.ji*b.ii + a.jj*b.ji + a.jk*b.ki
-            jj = a.ji*b.ij + a.jj*b.jj + a.jk*b.kj
-            jk = a.ji*b.ik + a.jj*b.jk + a.jk*b.kk
-            ki = a.ki*b.ii + a.kj*b.ji + a.kk*b.ki
-            kj = a.ki*b.ij + a.kj*b.jj + a.kk*b.kj
-            kk = a.ki*b.ik + a.kj*b.jk + a.kk*b.kk
-            buffer.ii = ii
-            buffer.ij = ij
-            buffer.ik = ik
-            buffer.ji = ji
-            buffer.jj = jj
-            buffer.jk = jk
-            buffer.ki = ki
-            buffer.kj = kj
-            buffer.kk = kk
-            return buffer
-
-    @staticmethod
-    def mxmtadd(*args):
-        """Compute the sum of 2 matrices multipled with another transposed."""
-        if len(args) == 4:
-            # @param a left hand matrix in the first product
-            # @param b right hand matrix to transpose in the first product
-            # @param c left hand matrix in the second product
-            # @param d right hand matrix to transpose in the second product
-            # @return a new <code>MatrixIJK</code> containing
-            # (a x bt) + (c x dt)
-            # @see MatrixIJK#mxmtadd(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # UnwritableMatrixIJK, UnwritableMatrixIJK, MatrixIJK)
-            (a, b, c, d) = args
-            return MatrixIJK.mxmtadd(a, b, c, d, MatrixIJK())
-        elif len(args) == 5:
-            # @param a left hand matrix in the first product
-            # @param b right hand matrix to transpose in the first product
-            # @param c left hand matrix in the second product
-            # @param d right hand matrix to transpose in the second product
-            # @param buffer buffer to receive the results of
-            # (a x bt) + (c x dt)
-            # @return reference to buffer for convenience
-            (a, b, c, d, buffer) = args
-            ii = a.ii*b.ii + a.ij*b.ij + a.ik*b.ik
-            ij = a.ii*b.ji + a.ij*b.jj + a.ik*b.jk
-            ik = a.ii*b.ki + a.ij*b.kj + a.ik*b.kk
-            ji = a.ji*b.ii + a.jj*b.ij + a.jk*b.ik
-            jj = a.ji*b.ji + a.jj*b.jj + a.jk*b.jk
-            jk = a.ji*b.ki + a.jj*b.kj + a.jk*b.kk
-            ki = a.ki*b.ii + a.kj*b.ij + a.kk*b.ik
-            kj = a.ki*b.ji + a.kj*b.jj + a.kk*b.jk
-            kk = a.ki*b.ki + a.kj*b.kj + a.kk*b.kk
-            ii += c.ii*d.ii + c.ij*d.ij + c.ik*d.ik
-            ij += c.ii*d.ji + c.ij*d.jj + c.ik*d.jk
-            ik += c.ii*d.ki + c.ij*d.kj + c.ik*d.kk
-            ji += c.ji*d.ii + c.jj*d.ij + c.jk*d.ik
-            jj += c.ji*d.ji + c.jj*d.jj + c.jk*d.jk
-            jk += c.ji*d.ki + c.jj*d.kj + c.jk*d.kk
-            ki += c.ki*d.ii + c.kj*d.ij + c.kk*d.ik
-            kj += c.ki*d.ji + c.kj*d.jj + c.kk*d.jk
-            kk += c.ki*d.ki + c.kj*d.kj + c.kk*d.kk
-            buffer.ii = ii
-            buffer.ij = ij
-            buffer.ik = ik
-            buffer.ji = ji
-            buffer.jj = jj
-            buffer.jk = jk
-            buffer.ki = ki
-            buffer.kj = kj
-            buffer.kk = kk
-            return buffer
-
-    @staticmethod
-    def mtxmadd(*args):
-        """Compute the sum of 2 matrix transposes multipled with another."""
-        if len(args) == 4:
-            # @param a left hand matrix to transpose in the first product
-            # @param b right hand matrix in the first product
-            # @param c left hand matrix to transpose in the second product
-            # @param d right hand matrix in the second product
-            # @return a new <code>MatrixIJK</code> containing
-            # (at x b) + (ct x d)
-            # @see MatrixIJK#mtxmadd(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # UnwritableMatrixIJK, UnwritableMatrixIJK, MatrixIJK)
-            (a, b, c, d) = args
-            return MatrixIJK.mtxmadd(a, b, c, d, MatrixIJK())
-        elif len(args) == 5:
-            # @param a left hand matrix to transpose in the first product
-            # @param b right hand matrix in the first product
-            # @param c left hand matrix to transpose in the second product
-            # @param d right hand matrix in the second product
-            # @param buffer buffer to receive the results of
-            # (at x b) + (ct x d)
-            # @return reference to buffer for convenience
-            (a, b, c, d, buffer) = args
-            ii = a.ii*b.ii + a.ji*b.ji + a.ki*b.ki
-            ij = a.ii*b.ij + a.ji*b.jj + a.ki*b.kj
-            ik = a.ii*b.ik + a.ji*b.jk + a.ki*b.kk
-            ji = a.ij*b.ii + a.jj*b.ji + a.kj*b.ki
-            jj = a.ij*b.ij + a.jj*b.jj + a.kj*b.kj
-            jk = a.ij*b.ik + a.jj*b.jk + a.kj*b.kk
-            ki = a.ik*b.ii + a.jk*b.ji + a.kk*b.ki
-            kj = a.ik*b.ij + a.jk*b.jj + a.kk*b.kj
-            kk = a.ik*b.ik + a.jk*b.jk + a.kk*b.kk
-            ii += c.ii*d.ii + c.ji*d.ji + c.ki*d.ki
-            ij += c.ii*d.ij + c.ji*d.jj + c.ki*d.kj
-            ik += c.ii*d.ik + c.ji*d.jk + c.ki*d.kk
-            ji += c.ij*d.ii + c.jj*d.ji + c.kj*d.ki
-            jj += c.ij*d.ij + c.jj*d.jj + c.kj*d.kj
-            jk += c.ij*d.ik + c.jj*d.jk + c.kj*d.kk
-            ki += c.ik*d.ii + c.jk*d.ji + c.kk*d.ki
-            kj += c.ik*d.ij + c.jk*d.jj + c.kk*d.kj
-            kk += c.ik*d.ik + c.jk*d.jk + c.kk*d.kk
-            buffer.ii = ii
-            buffer.ij = ij
-            buffer.ik = ik
-            buffer.ji = ji
-            buffer.jj = jj
-            buffer.jk = jk
-            buffer.ki = ki
-            buffer.kj = kj
-            buffer.kk = kk
-            return buffer
-
-    @staticmethod
-    def mxmadd(*args):
-        """Compute the sum of the products of two pairs of matrices."""
-        if len(args) == 4:
-            # @param a left hand matrix in first product
-            # @param b right hand matrix in first product
-            # @param c left hand matrix in second product
-            # @param d right hand matrix in second product
-            # @return a new <code>MatrixIJK</code> containing (a x b) + (c x d)
-            # @see MatrixIJK#mxmadd(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # UnwritableMatrixIJK, UnwritableMatrixIJK, MatrixIJK)
-            (a, b, c, d) = args
-            return MatrixIJK.mxmadd(a, b, c, d, MatrixIJK())
-        elif len(args) == 5:
-            # @param a left hand matrix in first product
-            # @param b right hand matrix in first product
-            # @param c left hand matrix in second product
-            # @param d right hand matrix in second product
-            # @param buffer buffer to receive the results of (a x b) + (c x d)
-            # @return a reference to buffer for convenience
-            (a, b, c, d, buffer) = args
-            ii = a.ii*b.ii + a.ij*b.ji + a.ik*b.ki
-            ij = a.ii*b.ij + a.ij*b.jj + a.ik*b.kj
-            ik = a.ii*b.ik + a.ij*b.jk + a.ik*b.kk
-            ji = a.ji*b.ii + a.jj*b.ji + a.jk*b.ki
-            jj = a.ji*b.ij + a.jj*b.jj + a.jk*b.kj
-            jk = a.ji*b.ik + a.jj*b.jk + a.jk*b.kk
-            ki = a.ki*b.ii + a.kj*b.ji + a.kk*b.ki
-            kj = a.ki*b.ij + a.kj*b.jj + a.kk*b.kj
-            kk = a.ki*b.ik + a.kj*b.jk + a.kk*b.kk
-            ii += c.ii*d.ii + c.ij*d.ji + c.ik*d.ki
-            ij += c.ii*d.ij + c.ij*d.jj + c.ik*d.kj
-            ik += c.ii*d.ik + c.ij*d.jk + c.ik*d.kk
-            ji += c.ji*d.ii + c.jj*d.ji + c.jk*d.ki
-            jj += c.ji*d.ij + c.jj*d.jj + c.jk*d.kj
-            jk += c.ji*d.ik + c.jj*d.jk + c.jk*d.kk
-            ki += c.ki*d.ii + c.kj*d.ji + c.kk*d.ki
-            kj += c.ki*d.ij + c.kj*d.jj + c.kk*d.kj
-            kk += c.ki*d.ik + c.kj*d.jk + c.kk*d.kk
-            buffer.ii = ii
-            buffer.ij = ij
-            buffer.ik = ik
-            buffer.ji = ji
-            buffer.jj = jj
-            buffer.jk = jk
-            buffer.ki = ki
-            buffer.kj = kj
-            buffer.kk = kk
-            return buffer
-
-    @staticmethod
-    def subtract(*args):
-        """Compute the component-wise difference of two matrices."""
-        if len(args) == 2:
-            # @param a the minuend matrix
-            # @param b the subtrahend matrix
-            # @return a new <code>MatrixIJK</code> which contains (a - b)
-            # @see MatrixIJK#subtract(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # MatrixIJK)
-            (a, b) = args
-            return MatrixIJK.subtract(a, b, MatrixIJK())
-        elif len(args) == 3:
-            # @param a the minuend matrix
-            # @param b the subtrahend matrix
-            # @param buffer the buffer to receive the results of the
-            # subtraction
-            # @return a reference to buffer for convenience which now contains
-            # (a - b)
-            (a, b, buffer) = args
-            buffer.ii = a.ii - b.ii
-            buffer.ji = a.ji - b.ji
-            buffer.ki = a.ki - b.ki
-            buffer.ij = a.ij - b.ij
-            buffer.jj = a.jj - b.jj
-            buffer.kj = a.kj - b.kj
-            buffer.ik = a.ik - b.ik
-            buffer.jk = a.jk - b.jk
-            buffer.kk = a.kk - b.kk
-            return buffer
-
-    @staticmethod
-    def add(*args):
-        """Compute component-wise sum of two matrices."""
-        if len(args) == 2:
-            # @param a a matrix
-            # @param b another matrix
-            # @return a new <code>MatrixIJK</code> containing (a + b)
-            # @see MatrixIJK#add(UnwritableMatrixIJK, UnwritableMatrixIJK,
-            # MatrixIJK)
-            (a, b) = args
-            return MatrixIJK.add(a, b, MatrixIJK())
-        elif len(args) == 3:
-            # @param a a matrix
-            # @param b another matrix
-            # @param buffer the buffer to receive a + b
-            # @return a reference to buffer for convenience
-            (a, b, buffer) = args
-            buffer.ii = a.ii + b.ii
-            buffer.ji = a.ji + b.ji
-            buffer.ki = a.ki + b.ki
-            buffer.ij = a.ij + b.ij
-            buffer.jj = a.jj + b.jj
-            buffer.kj = a.kj + b.kj
-            buffer.ik = a.ik + b.ik
-            buffer.jk = a.jk + b.jk
-            buffer.kk = a.kk + b.kk
-            return buffer
 
     def mtxv(*args):
         """Compute the product of the transpose of a matrix with a vector."""
@@ -993,21 +383,3 @@ class MatrixIJK(Matrix3D):
             return buffer
         else:
             raise Exception
-
-    def getDeterminant(self):
-        """Compute the determinant of the matrix.
-
-        Compute the determinant of the matrix.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        det : float
-            Determinant of the matrix.
-        """
-        det = np.linalg.det(self)
-        return det
- 

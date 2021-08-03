@@ -59,12 +59,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.i, -2.234741690198506)
         self.assertAlmostEqual(v.j, 0.0770037537313969)
         self.assertAlmostEqual(v.k, 3)
-        jacobianInverse = jacobian.createInverse()
-        cartVelocity = VectorIJK(1, 2, 3)
-        v = c2cbt.mxv(jacobianInverse, cartVelocity)
-        self.assertAlmostEqual(v.getI(), 1.402448017104221)
-        self.assertAlmostEqual(v.getJ(), -1.7415910999199666)
-        self.assertAlmostEqual(v.getK(), 3)
 
 
 if __name__ == '__main__':

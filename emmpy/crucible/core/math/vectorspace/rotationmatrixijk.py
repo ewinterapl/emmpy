@@ -575,7 +575,8 @@ class RotationMatrixIJK(MatrixIJK):
 
         # Check the determinant of source to see that it is at least
         # postiive.
-        if source.getDeterminant() <= 0:
+        # if source.getDeterminant() <= 0:
+        if np.linalg.det(source) <= 0:
             raise Exception(
                 "Source has a determinant that is not "
                 "strictly positive.  Unable to sharpen source into "

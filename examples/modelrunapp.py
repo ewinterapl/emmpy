@@ -72,7 +72,7 @@ def runThinSheet():
 
 def runTs07D(coeffsFile):
     """Build and run the TS07D model."""
-    print("Starting runTs07D() with %s." % coeffsFile )
+    print("Starting runTs07D() with %s." % coeffsFile)
 
     # read the coeffs/parameters from the file
     # Returns a
@@ -111,6 +111,6 @@ def runTs07D(coeffsFile):
 
 if __name__ == "__main__":
     print("Starting main()")
-    coeffsFile  = sys.argv[1]
-    ModelRunApp(coeffsFile )
+    coeffsFile = sys.argv[1]
+    ModelRunApp(coeffsFile)
     print("Ending main()")

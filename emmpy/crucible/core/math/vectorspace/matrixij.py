@@ -171,23 +171,6 @@ class MatrixIJ(Matrix2D):
         """
         self[components[name]] = value
 
-    def transpose(self):
-        """Transpose the matrix in-place.
-
-        Transpose the matrix in-place.
-
-        Parameters
-        ----------
-        None
-    
-        Returns
-        -------
-        self : MatrixIJ
-            The current object.
-        """
-        self[:, :] = self.T
-        return self
-
     def invort(self):
         """Invert, in place, this matrix whose columns are orthogonal.
 
@@ -203,43 +186,6 @@ class MatrixIJ(Matrix2D):
             The current object
         """
         self[:, :] = np.linalg.inv(self)
-        return self
-
-    def scale(self, *args):
-        """Scale each component of the matrix by the supplied factors.
-
-        Scale the matrix components with a single scale factor, or a
-        separate scale factor for each column.
-
-        Parameters
-        ----------
-        scale : float
-            Scale factor to apply to entire matrix.
-        OR
-        scaleI, scaleJ : float
-            Scale factors to apply to 1st and 2nd columns.
-
-        Returns
-        -------
-        self : MatrixIJ
-            The current object.
-        
-        Raises
-        ------
-        ValueError
-            If incorrect parameters are provided.
-        """
-        if len(args) == 1:
-            # Apply a single scale factor to the entire matrix.
-            (scale,) = args
-            self[:, :] *= scale
-        elif len(args) == 2:
-            # Scale each column of the matrix by a separate factor.
-            (scaleI, scaleJ) = args
-            self[:, 0] *= scaleI
-            self[:, 1] *= scaleJ
-        else:
-            raise ValueError
         return self
 
     def setTo(self, *args):

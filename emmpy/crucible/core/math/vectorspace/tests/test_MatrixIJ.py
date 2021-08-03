@@ -192,15 +192,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             data = m.bad
 
-    def test_transpose(self):
-        """Test the transpose method."""
-        m = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
-        m.transpose()
-        self.assertAlmostEqual(m.ii, 1)
-        self.assertAlmostEqual(m.ji, 3)
-        self.assertAlmostEqual(m.ij, 2)
-        self.assertAlmostEqual(m.jj, 4)
-
     def test_invort(self):
         """Test the invort method."""
         a = pi/3
@@ -214,26 +205,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(Exception):
             m1 = MatrixIJ(0, 0, 0, 0)
             m1.invort()
-
-    def test_scale(self):
-        """Test the scale method."""
-        m = MatrixIJ(1, 2, 3, 4)  # COLUMN-MAJOR ORDER
-        m.scale(-2)
-        self.assertAlmostEqual(m.ii, -2)
-        self.assertAlmostEqual(m.ji, -4)
-        self.assertAlmostEqual(m.ij, -6)
-        self.assertAlmostEqual(m.jj, -8)
-        m.scale(-1, -2)
-        self.assertAlmostEqual(m.ii, 2)
-        self.assertAlmostEqual(m.ji, 4)
-        self.assertAlmostEqual(m.ij, 12)
-        self.assertAlmostEqual(m.jj, 16)
-        # Invalid forms
-        sizes = (0, 3)
-        for s in sizes:
-            data = [None]*s
-            with self.assertRaises(ValueError):
-                m.scale(*data)
 
     def test_setTo(self):
         """Test the setTo method."""

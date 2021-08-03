@@ -1,3 +1,6 @@
+"""Tests for the malformedrotationexception module."""
+
+
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
@@ -6,8 +9,10 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the malformedrotationexception module."""
 
     def test___init__(self):
+        """Test the __init__ method."""
         MalformedRotationException()
 
 

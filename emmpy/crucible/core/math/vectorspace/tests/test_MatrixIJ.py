@@ -1,7 +1,7 @@
 """Tests for the matrixij module."""
 
 
-from math import cos, pi, sin, sqrt
+from math import cos, pi, sin
 import unittest
 
 import numpy as np
@@ -11,6 +11,7 @@ from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the matrixij module."""
 
     def test___init__(self):
         """Test the __init__ method."""
@@ -147,7 +148,8 @@ class TestBuilder(unittest.TestCase):
         self.assertIsInstance(m2, MatrixIJ)
         for row in range(2):
             for col in range(2):
-                self.assertAlmostEqual(m2[row, col], scales[col]*data[row][col])
+                self.assertAlmostEqual(m2[row, col],
+                                       scales[col]*data[row][col])
         # 4-argument forms
         # 4 individual elements COLUMN-MAJOR ORDER
         data = list(range(4))
@@ -328,7 +330,7 @@ class TestBuilder(unittest.TestCase):
             data = [None]*s
             with self.assertRaises(ValueError):
                 v2 = MatrixIJ.mxv(*data)
- 
+
 
 if __name__ == '__main__':
     unittest.main()

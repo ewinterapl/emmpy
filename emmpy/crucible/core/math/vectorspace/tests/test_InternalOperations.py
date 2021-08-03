@@ -1,7 +1,7 @@
 """Tests for the internaloperations module."""
 
 
-from math import cos, pi, sin, sqrt
+from math import cos, pi, sin
 import unittest
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     absMaxComponent,
@@ -33,28 +33,28 @@ class TestBuilder(unittest.TestCase):
         data = [1, 0, 0, 1]
         try:
             checkRotation(*data, normTolerance, detTolerance)
-        except:
+        except Exception:
             self.assertTrue(False)
         # Rotate by pi/3 radians ccw around z-axis.
         a = pi/3
         data = [cos(a), -sin(a), cos(a), sin(a)]
         try:
             checkRotation(*data, normTolerance, detTolerance)
-        except:
+        except Exception:
             self.assertTrue(False)
         # Valid 3-D rotations.
         # Unit rotation matrix.
         data = [1, 0, 0, 0, 1, 0, 0, 0, 1]
         try:
             checkRotation(*data, normTolerance, detTolerance)
-        except:
+        except Exception:
             self.assertTrue(False)
         # Rotate by pi/3 radians ccw around z-axis.
         a = pi/3
         data = [cos(a), -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
         try:
             checkRotation(*data, normTolerance, detTolerance)
-        except:
+        except Exception:
             self.assertTrue(False)
         # Invalid rotations.
         with self.assertRaises(MalformedRotationException):
@@ -68,6 +68,7 @@ class TestBuilder(unittest.TestCase):
             data = [0]*s
             with self.assertRaises(ValueError):
                 checkRotation(*data, normTolerance, detTolerance)
+
 
 if __name__ == '__main__':
     unittest.main()

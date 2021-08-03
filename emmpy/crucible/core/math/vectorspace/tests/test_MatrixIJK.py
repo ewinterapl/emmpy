@@ -1,7 +1,7 @@
 """Tests for the matrixijk module."""
 
 
-from math import cos, pi, sin, sqrt
+from math import cos, pi, sin
 import unittest
 
 import numpy as np

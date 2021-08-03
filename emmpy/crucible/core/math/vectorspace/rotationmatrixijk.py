@@ -1,18 +1,7 @@
 """A 3-D rotation matrix."""
 
 
-import numpy as np
-from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    checkRotation 
-)
-from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
-    MalformedRotationException
-)
-from emmpy.crucible.core.math.vectorspace.matrixijk import (
-    MatrixIJK,
-    DETERMINANT_TOLERANCE,
-    NORM_TOLERANCE
-)
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
 class RotationMatrixIJK(MatrixIJK):

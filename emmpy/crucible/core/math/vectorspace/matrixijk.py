@@ -10,8 +10,6 @@ internals of the parent classes fields.
 """
 
 
-import sys
-
 import numpy as np
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -162,13 +160,13 @@ class MatrixIJK(Matrix3D):
 
     def invert(self):
         """Invert the matrix in-place.
-        
+
         Invert the matrix in-place.
 
         Parameters
         ----------
         None
-        
+
         Returns
         -------
         self : MatrixIJK
@@ -211,7 +209,6 @@ class MatrixIJK(Matrix3D):
                 self.setTo(data[0][0], data[1][0], data[2][0],
                            data[0][1], data[1][1], data[2][1],
                            data[0][2], data[1][2], data[2][2])
-                return self
             else:
                 # Sets the contents of this matrix to match those of a supplied
                 # matrix
@@ -222,7 +219,6 @@ class MatrixIJK(Matrix3D):
                 self.setTo(matrix.ii, matrix.ji, matrix.ki,
                            matrix.ij, matrix.jj, matrix.kj,
                            matrix.ik, matrix.jk, matrix.kk)
-                return self
         elif len(args) == 2:
             # Sets the contents of this matrix to a scaled version of the
             # supplied matrix
@@ -233,7 +229,6 @@ class MatrixIJK(Matrix3D):
             (scale, matrix) = args
             self.setTo(matrix)
             self[:, :] *= scale
-            return self
         elif len(args) == 3:
             # Sets the columns of this matrix to the three specified vectors.
             # @param ithColumn the vector containing the contents to set the
@@ -247,7 +242,6 @@ class MatrixIJK(Matrix3D):
             self.setTo(ithColumn.i, ithColumn.j, ithColumn.k,
                        jthColumn.i, jthColumn.j, jthColumn.k,
                        kthColumn.i, kthColumn.j, kthColumn.k)
-            return self
         elif len(args) == 4:
             # Sets the contents of this matrix to a column-wise scaled version
             # of the supplied matrix
@@ -265,7 +259,6 @@ class MatrixIJK(Matrix3D):
             self[:, 0] *= scaleI
             self[:, 1] *= scaleJ
             self[:, 2] *= scaleK
-            return self
         elif len(args) == 6:
             # Sets the columns of this matrix to the scaled versions of the
             # supplied vectors.
@@ -281,7 +274,6 @@ class MatrixIJK(Matrix3D):
                 scaleI*ithColumn.i, scaleI*ithColumn.j, scaleI*ithColumn.k,
                 scaleJ*jthColumn.i, scaleJ*jthColumn.j, scaleJ*jthColumn.k,
                 scaleK*kthColumn.i, scaleK*kthColumn.j, scaleK*kthColumn.k)
-            return self
         elif len(args) == 9:
             # Sets the components of this matrix to the supplied components
             # @param ii ith row, ith column element
@@ -306,11 +298,11 @@ class MatrixIJK(Matrix3D):
             self.ik = ik
             self.jk = jk
             self.kk = kk
-            return self
         else:
             raise Exception
+        return self
 
-
+    @staticmethod
     def mtxv(*args):
         """Compute the product of the transpose of a matrix with a vector."""
         if len(args) == 2:
@@ -319,7 +311,7 @@ class MatrixIJK(Matrix3D):
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK)
             (m, v) = args
-            return MatrixIJK.mtxv(m, v, VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 3:
             # @param m the matrix
             # @param v the vector
@@ -327,31 +319,31 @@ class MatrixIJK(Matrix3D):
             # @return a reference to buffer for convenience.
             # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK, VectorIJK)
             (m, v, buffer) = args
-            i = m.ii*v.i + m.ji*v.j + m.ki*v.k
-            j = m.ij*v.i + m.jj*v.j + m.kj*v.k
-            k = m.ik*v.i + m.jk*v.j + m.kk*v.k
-            buffer.i = i
-            buffer.j = j
-            buffer.k = k
-            return buffer
+        i = m.ii*v.i + m.ji*v.j + m.ki*v.k
+        j = m.ij*v.i + m.jj*v.j + m.kj*v.k
+        k = m.ik*v.i + m.jk*v.j + m.kk*v.k
+        buffer.i = i
+        buffer.j = j
+        buffer.k = k
+        return buffer
 
     def mxv(self, *args):
         """Compute the product of a matrix with a vector."""
         if len(args) == 1:
             (v,) = args
-            return self.mxv(v, VectorIJK())
+            buffer = VectorIJK()
         elif len(args) == 2:
             # @param m the matrix
             # @param v the vector
             # @return a new <code>VectorIJK</code> containing the result.
             # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK)
             (v, buffer) = args
-            i = self.ii*v.i + self.ij*v.j + self.ik*v.k
-            j = self.ji*v.i + self.jj*v.j + self.jk*v.k
-            k = self.ki*v.i + self.kj*v.j + self.kk*v.k
-            buffer.i = i
-            buffer.j = j
-            buffer.k = k
-            return buffer
         else:
-            raise Exception
+            raise TypeError
+        i = self.ii*v.i + self.ij*v.j + self.ik*v.k
+        j = self.ji*v.i + self.jj*v.j + self.jk*v.k
+        k = self.ki*v.i + self.kj*v.j + self.kk*v.k
+        buffer.i = i
+        buffer.j = j
+        buffer.k = k
+        return buffer

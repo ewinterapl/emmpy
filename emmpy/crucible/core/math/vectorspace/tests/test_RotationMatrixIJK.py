@@ -1,3 +1,6 @@
+"""Tests for the rotationmatrixijk module."""
+
+
 from math import cos, sin
 import unittest
 
@@ -10,8 +13,10 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the rotationmatrixijk module."""
 
     def test___init__(self):
+        """Test the __init__ method."""
         a = 1
         # 0 args
         m = RotationMatrixIJK()
@@ -52,8 +57,8 @@ class TestBuilder(unittest.TestCase):
         # 1 UnwritbleMatrixIJK arg
         a = 2
         m = MatrixIJK(cos(a), 0, sin(a),
-                                0, 1, 0,
-                                -sin(a), 0, cos(a))
+                      0, 1, 0,
+                      -sin(a), 0, cos(a))
         m2 = RotationMatrixIJK(m)
         self.assertAlmostEqual(m2.ii, cos(a))
         self.assertAlmostEqual(m2.ji, 0)
@@ -94,8 +99,8 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(m.kk, cos(a))
         # 4 args: 3 scale factors, matrix
         m = MatrixIJK(cos(a)/2, 0, sin(a)/2,
-                                0, 1/3, 0,
-                                -sin(a)/4, 0, cos(a)/4)
+                      0, 1/3, 0,
+                      -sin(a)/4, 0, cos(a)/4)
         m2 = RotationMatrixIJK(2, 3, 4, m)
         self.assertAlmostEqual(m2.ii, cos(a))
         self.assertAlmostEqual(m2.ji, 0)

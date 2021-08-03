@@ -54,7 +54,7 @@ def checkRotation(*args):
         Tolerance relative to unity for matrix norm calculation.
     detTolerance : float
         Tolerance relative to unity for determinant calculation.
-    
+
     Returns
     -------
     None

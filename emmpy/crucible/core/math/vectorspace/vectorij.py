@@ -190,19 +190,3 @@ class VectorIJ(Vector2D):
         else:
             raise TypeError
         return self
-
-
-# The ZERO vector.
-ZERO = VectorIJ(0, 0)
-
-# The I basis vector: (1,0).
-I = VectorIJ(1, 0)
-
-# The J basis vector: (0,1).
-J = VectorIJ(0, 1)
-
-# The negative of the I basis vector: (-1,0).
-MINUS_I = VectorIJ(-1, 0)
-
-# The negative of the J basis vector: (0,-1).
-MINUS_J = VectorIJ(0, -1)

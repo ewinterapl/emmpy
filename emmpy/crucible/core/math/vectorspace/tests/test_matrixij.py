@@ -89,8 +89,8 @@ class TestBuilder(unittest.TestCase):
         inv1 = np.linalg.inv(m1)
         m2 = m1.invort()
         self.assertIs(m2, m1)
-        for row in range(3):
-            for col in range(3):
+        for row in range(2):
+            for col in range(2):
                 self.assertAlmostEqual(m2[row, col], inv1[row, col])
 
     def test_setTo(self):

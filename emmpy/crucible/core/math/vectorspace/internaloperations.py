@@ -48,6 +48,9 @@ def checkRotation(*args):
 
     Parameters
     ----------
+    m : array-like, 2x2 or 3x3 of float
+        Matrix to check.
+    OR
     ii, ji, ij, jj : float
         2-D matrix components in column-major order.
     OR
@@ -70,7 +73,10 @@ def checkRotation(*args):
     ValueError
         If incorrect parameters are provided.
     """
-    if len(args) == 6:
+    if len(args) == 3:
+        (data, normTolerance, detTolerance) = args
+        a = np.array(data)
+    elif len(args) == 6:
         # 2-D matrix
         (ii, ji, ij, jj, normTolerance, detTolerance) = args
         # Convert the individual values to a 2x2 np.ndarray.

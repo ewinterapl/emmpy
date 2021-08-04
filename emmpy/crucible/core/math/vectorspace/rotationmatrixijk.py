@@ -27,9 +27,7 @@ ROTATION_NORM_TOLERANCE = 1e-12
 class RotationMatrixIJK(MatrixIJK):
     """A 3-D rotation matrix in Cartesian (i, j, k) coordinates.
 
-    Whenever this matrix changes, it is validated as a rotation matrix. If
-    no longer a valid rotation matrix, a MalformedRotationException is
-    raised.
+    The arguments are checked to verify a valid rotation matrix.
     """
 
     def __init__(self, *args):

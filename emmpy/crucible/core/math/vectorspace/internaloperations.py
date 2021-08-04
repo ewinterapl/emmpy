@@ -43,6 +43,9 @@ def checkRotation(*args):
     arguments constitute a valid rotation matrix. If so, take no action.
     If not, raise a MalformedRotationException.
 
+    A matrix is a valid rotation matrix if the determinant is unity, and
+    each column has unit norm.
+
     Parameters
     ----------
     ii, ji, ij, jj : float
@@ -70,39 +73,24 @@ def checkRotation(*args):
     if len(args) == 6:
         # 2-D matrix
         (ii, ji, ij, jj, normTolerance, detTolerance) = args
-        # Verify the first column has unit norm.
-        norm = np.linalg.norm([ii, ji])
-        if abs(norm) > 1 + normTolerance:
-            raise MalformedRotationException
-        # Verify the second column has unit norm.
-        norm = np.linalg.norm([ij, jj])
-        if abs(norm) > 1 + normTolerance:
-            raise MalformedRotationException
-        # Verify the matrix has unit determinant.
+        # Convert the individual values to a 2x2 np.ndarray.
         a = np.array([ii, ij, ji, jj]).reshape(2, 2)
-        det = np.linalg.det(a)
-        if abs(det) > 1 + normTolerance:
-            raise MalformedRotationException
     elif len(args) == 11:
         # 3-D matrix.
         (ii, ji, ki, ij, jj, kj, ik, jk, kk,
          normTolerance, detTolerance) = args
-        # Verify the first column has unit norm.
-        norm = np.linalg.norm([ii, ji, ki])
-        if abs(norm) > 1 + normTolerance:
-            raise MalformedRotationException
-        # Verify the second column has unit norm.
-        norm = np.linalg.norm([ij, jj, kj])
-        if abs(norm) > 1 + normTolerance:
-            raise MalformedRotationException
-        # Verify the third column has unit norm.
-        norm = np.linalg.norm([ik, jk, kk])
-        if abs(norm) > 1 + normTolerance:
-            raise MalformedRotationException
-        # Verify the matrix has unit determinant.
+        # Convert the individual values to a 3x3 np.ndarray.
         a = np.array([ii, ij, ik, ji, jj, jk, ki, kj, kk]).reshape(3, 3)
-        det = np.linalg.det(a)
-        if abs(det) > 1 + normTolerance:
-            raise MalformedRotationException
     else:
         raise ValueError
+
+    # Verify the matrix has unit determinant, within tolerance.
+    det = np.linalg.det(a)
+    if abs(det) > 1 + detTolerance:
+        raise MalformedRotationException
+
+    # Verify each column has unit norm.
+    for col in range(len(a)):
+        norm = np.linalg.norm(a[:, col])
+        if abs(norm) > 1 + normTolerance:
+            raise MalformedRotationException

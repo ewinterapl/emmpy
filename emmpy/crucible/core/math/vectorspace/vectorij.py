@@ -30,16 +30,6 @@ class VectorIJ(Vector2D):
         data : array-like of 2 float, optional, default (None, None)
             Values for (i, j) coordinates.
         OR
-        offset : int
-            Offset into array data for assignment to (i, j) coordinates.
-        data : array-like of >=2 float
-            Values to assign to (i, j) coordinates, starting at offset.
-        OR
-        scale : float
-            Scale factor for components to copy.
-        data : array-like of 2 float
-            Existing array of values to copy and scale.
-        OR
         i, j : float
             Values for vector elements.
 

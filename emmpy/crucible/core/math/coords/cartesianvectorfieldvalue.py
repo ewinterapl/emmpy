@@ -20,5 +20,5 @@ class CartesianVectorFieldValue(AbstractVectorFieldValue):
         @param value a Cartesian vector field value at that coordinate
         """
         AbstractVectorFieldValue.__init__(
-            self, VectorIJK.copyOf(position), VectorIJK.copyOf(value)
+            self, VectorIJK(position), VectorIJK(value)
         )

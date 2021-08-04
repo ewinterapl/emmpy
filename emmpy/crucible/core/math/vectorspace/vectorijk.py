@@ -363,25 +363,6 @@ class VectorIJK(Vector3D):
             buffer.scale(scaleFactor)
         return buffer
 
-    @staticmethod
-    def copyOf(vector):
-        """Make a copy of the supplied vector.
-
-        Make a copy of the supplied vector.
-
-        Parameters
-        ----------
-        vector : VectorIJK
-            The vector to copy.
-
-        Returns
-        -------
-        v : VectorIJK
-            Copy of the supplied vector.
-        """
-        v = VectorIJK(vector)
-        return v
-
 
 # The I basis vector: (1,0,0).
 I = VectorIJK(1, 0, 0)

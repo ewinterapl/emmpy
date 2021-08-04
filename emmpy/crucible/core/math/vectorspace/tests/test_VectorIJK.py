@@ -249,15 +249,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(BugException):
             v3 = VectorIJK.project(v2, v1)
 
-    def test_copyOf(self):
-        """Test the copyOf method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK(i, j, k)
-        v2 = VectorIJK.copyOf(v1)
-        self.assertAlmostEqual(v2.i, i)
-        self.assertAlmostEqual(v2.j, j)
-        self.assertAlmostEqual(v2.k, k)
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -35,11 +35,6 @@ class VectorIJK(Vector3D):
         data : array-like of 3 float, optional, default (None, None, None)
             Values for (i, j, k) coordinates.
         OR
-        offset : int
-            Offset into data for assignment to vector elements.
-        data : array-like of >= (3 + offset) float
-            Values to use for vector elements, starting at offset.
-        OR
         scale : float
             Scale factor for components to copy.
         data : array-like of 3 float
@@ -58,20 +53,15 @@ class VectorIJK(Vector3D):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            self[:] = (None, None, None)
+            self[:] = np.array([None, None, None])
         elif len(args) == 1:
             # Array-like of 3 floats for the components.
             (data,) = args
             self[:] = list(data)
         elif len(args) == 2:
-            if isinstance(args[0], int):
-                # Offset and array-like of >= (3 + offset) values.
-                (offset, data) = args
-                self[:] = list(data)[offset:offset + 3]
-            else:
-                # Scale factor and array-like of 3 float to scale.
-                (scale, data) = args
-                self[:] = scale*np.array(data)
+            # Scale factor and array-like of 3 float to scale.
+            (scale, data) = args
+            self[:] = scale*np.array(data)
         elif len(args) == 3:
             # Scalar values (3) for the components.
             self[:] = args
@@ -198,16 +188,6 @@ class VectorIJK(Vector3D):
         data : array-like of 3 float
             Values to copy to current vector.
         OR
-        scale : float
-            Scale factor to apply to incoming values.
-        data : array-like of 3 float
-            Values to scale and copy to current vector.
-        OR
-        offset : int
-            Offset into list or tuple.
-        data : array-like of >= (3 + offset) float
-            Data to copy to current vector, starting at offset.
-        OR
         i, j, k : float
             i, j, k vector components.
 
@@ -225,15 +205,6 @@ class VectorIJK(Vector3D):
             # Copy the components from an array.
             (data,) = args
             self[:] = list(data)
-        elif len(args) == 2:
-            if isinstance(args[0], float):
-                # Set the vector components to a scaled array.
-                (scale, data) = args
-                self[:] = scale*np.array(data)
-            else:
-                # Offset + array
-                (offset, data) = args
-                self[:] = list(data)[offset:offset + 3]
         elif len(args) == 3:
             # Sets the three components of the vector.
             self[:] = args

@@ -51,25 +51,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.j, j)
         self.assertAlmostEqual(v2.k, k)
         # 2-argument forms
-        # offset and list
-        v = VectorIJK(1, [0, i, j, k])
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
-        # offset and tuple
-        v = VectorIJK(1, (0, i, j, k))
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
-        # offset and np.ndarray
-        a = np.array([0, i, j, k])
-        v = VectorIJK(1, a)
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
         # scale and list
         scale = -2.2
         data = [i, j, k]
@@ -190,40 +171,6 @@ class TestBuilder(unittest.TestCase):
         v1 = VectorIJK(i, j, k)
         v2 = VectorIJK()
         v3 = v2.setTo(v1)
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
-        # 2-argument forms
-        scale = -4.4
-        # Scale a VectorIJK.
-        v3 = v2.setTo(scale, v1)
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, scale*i)
-        self.assertAlmostEqual(v3.j, scale*j)
-        self.assertAlmostEqual(v3.k, scale*k)
-        # Scale a np.ndarray.
-        v3 = v2.setTo(scale, np.array((i, j, k)))
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, scale*i)
-        self.assertAlmostEqual(v3.j, scale*j)
-        self.assertAlmostEqual(v3.k, scale*k)
-        # Scale a list.
-        v2 = VectorIJK()
-        v3 = v2.setTo(scale, [i, j, k])
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, scale*i)
-        self.assertAlmostEqual(v3.j, scale*j)
-        self.assertAlmostEqual(v3.k, scale*k)
-        # Scale a tuple.
-        v2 = VectorIJK()
-        v3 = v2.setTo(scale, (i, j, k))
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, scale*i)
-        self.assertAlmostEqual(v3.j, scale*j)
-        self.assertAlmostEqual(v3.k, scale*k)
-        # Offset + iterable
-        v3 = v2.setTo(1, (0, i, j, k))
         self.assertIs(v3, v2)
         self.assertAlmostEqual(v3.i, i)
         self.assertAlmostEqual(v3.j, j)

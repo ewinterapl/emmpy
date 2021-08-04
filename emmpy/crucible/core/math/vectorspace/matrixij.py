@@ -195,7 +195,7 @@ class MatrixIJ(Matrix2D):
 
         Parameters
         ----------
-        a : 2x2 array-like of float, optional, default 2x2 None
+        a : 2x2 array-like of float
             Values for matrix elements.
         OR
         scale : float
@@ -234,7 +234,6 @@ class MatrixIJ(Matrix2D):
             If incorrect arguments are provided.
         """
         if len(args) == 1:
-            # Initialize matrix from a 2x2 array-like of floats.
             # Initialize matrix from a 2x2 array-like of floats.
             (a,) = args
             self[:, :] = np.array(a)

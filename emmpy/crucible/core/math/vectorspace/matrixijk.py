@@ -1,12 +1,12 @@
-"""A writable 3-D matrix.
+"""A 3-dimensional matrix in Cartesian (i, j, k) coordinates.
 
-A writable subclass of the unwritable 3D matrix parent completing one link in
-the weak-immutability design pattern.
+This class provides a 3-dimensional matrix in Cartesian (i, j, k)
+coordinates.
 
-This class contains the mutator methods necessary to set or alter the
-internals of the parent classes fields.
-
-@author F.S.Turner
+Authors
+-------
+F.S. Turner
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
@@ -34,7 +34,18 @@ components = {'ii': (0, 0), 'ij': (0, 1), 'ik': (0, 2),
 
 
 class MatrixIJK(Matrix3D):
-    """A writable 3-D matrix."""
+    """A 3-dimensional matrix in Cartesian (i, j, k) coordinates.
+
+    This class implements a 3-dimensional vector in Cartesian (i, j, k)
+    coordinates.
+
+    This class may be used directly as a Numpy array.
+
+    Attributes
+    ----------
+    ii, ji, ki, ij, jj, kj, ik, jk, kk : float
+        Value of matrix components (listed in column-major order).
+    """
 
     def __init__(self, *args):
         """Initialize a new MatrixIJK object.
@@ -194,155 +205,154 @@ class MatrixIJK(Matrix3D):
         return self
 
     def setTo(self, *args):
-        """Set the matrix components."""
+        """Set the matrix to the specified values.
+
+        Set the matrix to the specified values.
+
+        Parameters
+        ----------
+        a : 3x3 array-like of float
+            Values for matrix elements.
+        OR
+        scale : float
+            The scale factor to apply.
+        a : 3x3 array-like of float
+            The array whose components are to be scaled and copied.
+        OR
+        colI, colJ, colK : array-like of 3 float
+            3-element array-likes containing the columns to use for the matrix.
+        # OR
+        # scaleI, scaleJ : float
+        #     Scale factors to apply to the ith and jth columns of a.
+        # a : 2x2 array-like of float
+        #     The array whose components are to be scaled and copied.
+        # OR
+        # ii, ji, ij, jj : float
+        #     Elements of new matrix in column-major order.
+        # OR
+        # scaleI : float
+        #     The scale factor to apply to the ith column.
+        # colI : array-like of 2 float
+        #     The vector containing the ith column.
+        # scaleJ : float
+        #     The scale factor to apply to the jth column.
+        # colJ : array-like of 2 float
+        #     The vector containing the jth column.
+
+        Returns
+        -------
+        self : MatrixIJ
+            The current object.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
         if len(args) == 1:
-            if isinstance(args[0], list):
-                # Sets the contents of this matrix to the upper three by three
-                # block of a supplied two dimensional array of doubles.
-                # @param data the array to copy to the components of this
-                # instance
-                # @return a reference to this instance for convenience
-                # @throws IndexOutOfBoundsException if the supplied data array
-                # does not contain at least three arrays of arrays of length
-                # three or greater.
-                (data,) = args
-                self.setTo(data[0][0], data[1][0], data[2][0],
-                           data[0][1], data[1][1], data[2][1],
-                           data[0][2], data[1][2], data[2][2])
-            else:
-                # Sets the contents of this matrix to match those of a supplied
-                # matrix
-                # @param matrix the matrix to copy
-                # @return a reference to this instance for convenience that
-                # contains the supplied components
-                (matrix,) = args
-                self.setTo(matrix.ii, matrix.ji, matrix.ki,
-                           matrix.ij, matrix.jj, matrix.kj,
-                           matrix.ik, matrix.jk, matrix.kk)
+            # Initialize matrix from a 3x3 array-like of floats.
+            (a,) = args
+            m = np.array(a)
+            self[:, :] = m
         elif len(args) == 2:
-            # Sets the contents of this matrix to a scaled version of the
-            # supplied matrix
-            # @param scale the scale factor to apply to matrix
-            # @param matrix the matrix to scale
-            # @return a reference to this instance for convenience that
-            # contains the scaled version of matrix
-            (scale, matrix) = args
-            self.setTo(matrix)
-            self[:, :] *= scale
+            # Scale an existing 3x3 array-like of floats.
+            (scale, a) = args
+            m = np.array(a)
+            self[:, :] = scale*m
         elif len(args) == 3:
-            # Sets the columns of this matrix to the three specified vectors.
-            # @param ithColumn the vector containing the contents to set the
-            # ith column
-            # @param jthColumn the vector containing the contents to set the
-            # jth column
-            # @param kthColumn the vector containing the contents to set the
-            # kth column
-            # @return a reference to the instance for convenience
-            (ithColumn, jthColumn, kthColumn) = args
-            self.setTo(ithColumn.i, ithColumn.j, ithColumn.k,
-                       jthColumn.i, jthColumn.j, jthColumn.k,
-                       kthColumn.i, kthColumn.j, kthColumn.k)
+                # Assign array-like vectors to columns.
+                (ithColumn, jthColumn, kthColumn) = args
+                self[:, 0] = np.array(ithColumn)
+                self[:, 1] = np.array(jthColumn)
+                self[:, 2] = np.array(kthColumn)
         elif len(args) == 4:
-            # Sets the contents of this matrix to a column-wise scaled version
-            # of the supplied matrix
-            # @param scaleI the scale factor to apply to the ith column of
-            # matrix
-            # @param scaleJ the scale factor to apply to the jth column of
-            # matrix
-            # @param scaleK the scale factor to apply to the kth column of
-            # matrix
-            # @param matrix the matrix to scale
-            # @return a reference to this instance for convenience that
-            # contains the column scaled version of matrix
-            (scaleI, scaleJ, scaleK, matrix) = args
-            self.setTo(matrix)
+            # Apply separate scale factors to the columns of an existing
+            # 3x3 array-like of floats.
+            (scaleI, scaleJ, scaleK, a) = args
+            self.setTo(a)
             self[:, 0] *= scaleI
             self[:, 1] *= scaleJ
             self[:, 2] *= scaleK
         elif len(args) == 6:
-            # Sets the columns of this matrix to the scaled versions of the
-            # supplied vectors.
-            # @param scaleI scale factor to apply to ithColumn
-            # @param ithColumn the ith column vector
-            # @param scaleJ scale factor to apply to jthColumn
-            # @param jthColumn the jth column vector
-            # @param scaleK scale factor to apply to kthColumn
-            # @param kthColumn the kth column vector
-            # @return a reference to the instance for convenience
+            # Scale a set of 3-element array-like of floats to use as
+            # columns.
             (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
-            self.setTo(
-                scaleI*ithColumn.i, scaleI*ithColumn.j, scaleI*ithColumn.k,
-                scaleJ*jthColumn.i, scaleJ*jthColumn.j, scaleJ*jthColumn.k,
-                scaleK*kthColumn.i, scaleK*kthColumn.j, scaleK*kthColumn.k)
+            c1 = scaleI*np.array(ithColumn)
+            c2 = scaleJ*np.array(jthColumn)
+            c3 = scaleK*np.array(kthColumn)
+            self.setTo(c1, c2, c3)
         elif len(args) == 9:
-            # Sets the components of this matrix to the supplied components
-            # @param ii ith row, ith column element
-            # @param ji jth row, ith column element
-            # @param ki kth row, ith column element
-            # @param ij ith row, jth column element
-            # @param jj jth row, jth column element
-            # @param kj kth row, jth column element
-            # @param ik ith row, kth column element
-            # @param jk jth row, kth column element
-            # @param kk kth row, kth column element
-            # @return a reference to the instance, for convenience, that
-            # contains the newly set matrix
-            # COLUMN-MAJOR ORDER
+            # Assign the 9 components, in column-major order.
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            self.ii = ii
-            self.ji = ji
-            self.ki = ki
-            self.ij = ij
-            self.jj = jj
-            self.kj = kj
-            self.ik = ik
-            self.jk = jk
-            self.kk = kk
+            self[:, :] = [[ii, ij, ik], [ji, jj, jk], [ki, kj, kk]]
         else:
-            raise Exception
+            raise TypeError
         return self
 
     def mtxv(*args):
-        """Compute the product of the transpose of a matrix with a vector."""
+        """Compute the product of a matrix transpose with a vector.
+
+        Multiply a 3-D vector by a transposed 3-D matrix.
+
+        Parameters
+        ----------
+        m : MatrixIJK
+            The matrix to transpose and multiply.
+        v : VectorIJK
+            The vector to multiply.
+        buffer : VectorIJK, optional
+            Buffer to hold the result.
+
+        Returns
+        -------
+        buffer : VectorIJK
+            Vector product.
+
+        Raises
+        ------
+        ValueError
+            If incorrect parameters are supplied.
+        """
         if len(args) == 2:
-            # @param m the matrix
-            # @param v the vector
-            # @return a new <code>VectorIJK</code> containing the result.
-            # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK)
             (m, v) = args
             buffer = VectorIJK()
         elif len(args) == 3:
-            # @param m the matrix
-            # @param v the vector
-            # @param buffer the buffer to receive the product, transpose(m)*v
-            # @return a reference to buffer for convenience.
-            # @see UnwritableMatrixIJK#mtxv(UnwritableVectorIJK, VectorIJK)
             (m, v, buffer) = args
-        i = m.ii*v.i + m.ji*v.j + m.ki*v.k
-        j = m.ij*v.i + m.jj*v.j + m.kj*v.k
-        k = m.ik*v.i + m.jk*v.j + m.kk*v.k
-        buffer.i = i
-        buffer.j = j
-        buffer.k = k
+        else:
+            raise ValueError
+        buffer[:] = m.T.dot(v)
         return buffer
 
     def mxv(self, *args):
-        """Compute the product of a matrix with a vector."""
+        """Compute the product of this matrix with a vector.
+
+        Multiply a 3-D vector by a 3-D matrix.
+
+        Parameters
+        ----------
+        m : MatrixIJK
+            The matrix to multiply.
+        v : VectorIJK
+            The vector to multiply.
+        buffer : VectorIJK, optional
+            Buffer to hold the result.
+
+        Returns
+        -------
+        buffer : VectorIJK
+            Vector product.
+
+        Raises
+        ------
+        ValueError
+            If incorrect parameters are supplied.
+        """
         if len(args) == 1:
             (v,) = args
             buffer = VectorIJK()
         elif len(args) == 2:
-            # @param m the matrix
-            # @param v the vector
-            # @return a new <code>VectorIJK</code> containing the result.
-            # @see UnwritableMatrixIJK#mxv(UnwritableVectorIJK)
             (v, buffer) = args
         else:
             raise TypeError
-        i = self.ii*v.i + self.ij*v.j + self.ik*v.k
-        j = self.ji*v.i + self.jj*v.j + self.jk*v.k
-        k = self.ki*v.i + self.kj*v.j + self.kk*v.k
-        buffer.i = i
-        buffer.j = j
-        buffer.k = k
+        buffer[:] = self.dot(v)
         return buffer

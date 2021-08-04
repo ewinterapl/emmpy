@@ -108,9 +108,9 @@ class VectorIJK(Vector3D):
         self[components[name]] = value
 
     def __add__(self, v):
-        """Add this vector to another value.
+        """Addition as first operand.
         
-        Add this vector to another value, and return a new vector.
+        Addition as first operand.
 
         Parameters
         ----------
@@ -125,10 +125,28 @@ class VectorIJK(Vector3D):
         vsum = super().__add__(v)
         return vsum
 
-    def __mul__(self, a):
-        """Multiply this vector by a scalar.
+    def __radd__(self, v):
+        """Addition as second operand.
+        
+        Addition as second operand.
 
-        Multiply this vector by a scalar.
+        Parameters
+        ----------
+        v : float, or 3-element array-like of float
+            Values to add to current vector elements.
+        
+        Returns
+        -------
+        vsum : VectorIJK
+            Sum of both arguments.
+        """
+        vsum = super().__radd__(v)
+        return vsum
+
+    def __mul__(self, a):
+        """Multiplication as first operand.
+
+        Multiplication as first operand.
 
         Parameters
         ----------
@@ -140,8 +158,25 @@ class VectorIJK(Vector3D):
         v : VectorIJK
             Product of vector and scalar.
         """
-        # v = VectorIJK(scale, self)
         v = super().__mul__(a)
+        return v
+
+    def __rmul__(self, a):
+        """Multiplication as second operand.
+
+        Multiplication as second operand.
+
+        Parameters
+        ----------
+        a : float
+            Scalar to multiply vector.
+
+        Returns
+        -------
+        v : VectorIJK
+            Product of vector and scalar.
+        """
+        v = super().__rmul__(a)
         return v
 
     def scale(self, _scale):

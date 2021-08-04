@@ -64,92 +64,6 @@ class TestBuilder(unittest.TestCase):
         for row in range(2):
             for col in range(2):
                 self.assertAlmostEqual(m[row, col], data[row][col])
-        # 2 arg forms - scale factor and 2x2 array-like
-        scale = -2.2
-        # Scale and list of lists
-        data = [[0, 2], [1, 3]]
-        m = MatrixIJ(scale, data)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scale*data[row][col])
-        # Scale and tuple of tuples
-        data = ((0, 2), (1, 3))
-        m = MatrixIJ(scale, data)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scale*data[row][col])
-        # Scale and list of tuples
-        data = [(0, 2), (1, 3)]
-        m = MatrixIJ(scale, data)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scale*data[row][col])
-        # Scale and tuple of lists
-        data = ([0, 2], [1, 3])
-        m = MatrixIJ(scale, data)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scale*data[row][col])
-        # Scale and np.ndarray
-        a = np.array(data)
-        m = MatrixIJ(scale, data)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scale*data[row][col])
-        # Scale and MatrixIJ
-        m2 = MatrixIJ(data)
-        m = MatrixIJ(scale, m2)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scale*data[row][col])
-        # 2 args - column vectors
-        # lists
-        v = [[row[0] for row in data],
-             [row[1] for row in data]]
-        m = MatrixIJ(*v)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], data[row][col])
-        # tuples
-        v = [tuple([row[0] for row in data]),
-             tuple([row[1] for row in data])]
-        m = MatrixIJ(*v)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], data[row][col])
-        # np.ndarrays
-        v = [np.array([row[0] for row in data]),
-             np.array([row[1] for row in data])]
-        m = MatrixIJ(*v)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], data[row][col])
-        # VectorIJs
-        v = [VectorIJ([row[0] for row in data]),
-             VectorIJ([row[1] for row in data])]
-        m = MatrixIJ(*v)
-        self.assertIsInstance(m, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], data[row][col])
-        # 3-argument forms
-        # Column scale factors and matrix
-        scales = (-1.1, -2.2)
-        m2 = MatrixIJ(*scales, m)
-        self.assertIsInstance(m2, MatrixIJ)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col],
-                                       scales[col]*data[row][col])
         # 4-argument forms
         # 4 individual elements COLUMN-MAJOR ORDER
         data = list(range(4))
@@ -158,15 +72,12 @@ class TestBuilder(unittest.TestCase):
             for col in range(2):
                 k = row + 2*col
                 self.assertAlmostEqual(m[row, col], data[k])
-        # Scale factors and columns
-        m = MatrixIJ(scales[0], v[0], scales[1], v[1])
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m[row, col], scales[col]*v[col][row])
         # Invalid forms
-        data = [None]*5
-        with self.assertRaises(TypeError):
-            m = MatrixIJ(*data)
+        sizes = (2, 3, 5)
+        for s in sizes:
+            data = [None]*s
+            with self.assertRaises(TypeError):
+                m = MatrixIJ(*data)
 
     def test___getattr__(self):
         """Test the __getattr__ method."""
@@ -259,34 +170,6 @@ class TestBuilder(unittest.TestCase):
         for row in range(2):
             for col in range(2):
                 self.assertAlmostEqual(m2[row, col], data[row][col])
-        # 2-argument forms
-        m0 = MatrixIJ(data)
-        scale = -1.1
-        m1 = MatrixIJ()
-        m2 = m1.setTo(scale, m0)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col], scale*data[row][col])
-        # Column vectors
-        v1 = VectorIJ(data[0][0], data[1][0])
-        v2 = VectorIJ(data[0][1], data[1][1])
-        m1 = MatrixIJ()
-        m2 = m1.setTo(v1, v2)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col], data[row][col])
-        # 3-argument form
-        # Separate scale factors for each column
-        m0 = MatrixIJ(data)
-        scales = (-1.1, -2.2)
-        m2 = m1.setTo(*scales, m0)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col],
-                                       scales[col]*data[row][col])
         # 4-argument forms
         # 4 elements in column-major order
         m1 = MatrixIJ()
@@ -295,14 +178,6 @@ class TestBuilder(unittest.TestCase):
         for row in range(2):
             for col in range(2):
                 self.assertAlmostEqual(m2[row, col], data[row][col])
-        # Pair of scale factors and pair of 2-element array-likes.
-        m1 = MatrixIJ()
-        m2 = m1.setTo(scales[0], v1, scales[1], v2)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col],
-                                       scales[col]*data[row][col])
         # Invalid forms
         sizes = (0, 5)
         for s in sizes:

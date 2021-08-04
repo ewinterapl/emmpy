@@ -17,22 +17,12 @@ import numpy as np
 
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.math.matrices.matrix2d import Matrix2D
-from emmpy.utilities.isrealnumber import isRealNumber
 
-
-# Default tolerance for determining if a matrix is invertible. The
-# determinant must be greater than this tolerance.
-INVERSION_TOLERANCE = 1E-16
-
-# The other of the two default tolerances that control how close to a
-# rotation a rotation matrix must be. This value determines how far off
-# unity the determinant of the matrix must be.
-DETERMINANT_TOLERANCE = 1E-4
 
 # The bound defining the boundary length at which the invort procedure
 # works with double precision. Note: this is necessary because larger
 # negative exponents are captured by 64 IEEE doubles than positive ones.
-INVORSION_BOUND = sys.float_info.max
+# INVORSION_BOUND = sys.float_info.max
 
 
 # Map matrix component names to indices.
@@ -64,30 +54,8 @@ class MatrixIJ(Matrix2D):
         a : 2x2 array-like of float, optional, default 2x2 None
             Values for matrix elements.
         OR
-        scale : float
-            The scale factor to apply.
-        a : 2x2 array-like of float
-            The array whose components are to be scaled and copied.
-        OR
-        colI, colJ : array-like of 2 float
-            2-element array-likes containing the columns to use for the matrix.
-        OR
-        scaleI, scaleJ : float
-            Scale factors to apply to the ith and jth columns of a.
-        a : 2x2 array-like of float
-            The array whose components are to be scaled and copied.
-        OR
         ii, ji, ij, jj : float
             Elements of new matrix in column-major order.
-        OR
-        scaleI : float
-            The scale factor to apply to the ith column.
-        colI : array-like of 2 float
-            The vector containing the ith column.
-        scaleJ : float
-            The scale factor to apply to the jth column.
-        colJ : array-like of 2 float
-            The vector containing the jth column.
 
         Raises
         ------
@@ -101,39 +69,15 @@ class MatrixIJ(Matrix2D):
             # Initialize matrix from a 2x2 array-like of floats.
             (a,) = args
             self[:, :] = np.array(a)
-        elif len(args) == 2:
-            if isRealNumber(args[0]):
-                # Scale an existing 2x2 array-like of floats.
-                (scale, a) = args
-                self[:, :] = scale*np.array(a)
-            else:
-                # Assign vectors to columns.
-                (ithColumn, jthColumn) = args
-                self[:, 0] = np.array(ithColumn)
-                self[:, 1] = np.array(jthColumn)
-        elif len(args) == 3:
-            # Apply separate scale factors to the columns of an existing
-            # 2x2 array-like of floats.
-            (scaleI, scaleJ, matrix) = args
-            self[:, 0] = scaleI*np.array(matrix)[:, 0]
-            self[:, 1] = scaleJ*np.array(matrix)[:, 1]
         elif len(args) == 4:
-            if (isRealNumber(args[0]) and isRealNumber(args[1]) and
-                isRealNumber(args[2]) and isRealNumber(args[3])):
-                # Assign the 4 components, in column-major order.
-                (ii, ji, ij, jj) = args
-                self[:, :] = [[ii, ij], [ji, jj]]
-            else:
-                # Scale a pair of 2-element array-like of floats to use as
-                # columns.
-                (scaleI, ithColumn, scaleJ, jthColumn) = args
-                self[:, 0] = scaleI*np.array(ithColumn)
-                self[:, 1] = scaleJ*np.array(jthColumn)
+            # Assign the 4 components, in column-major order.
+            (ii, ji, ij, jj) = args
+            self[:, :] = [[ii, ij], [ji, jj]]
         else:
             raise TypeError
 
     def __getattr__(self, name):
-        """Return the value of a computed attribute.
+        """Return the value of an attribute.
 
         Return the value of an attribute not found by the standard
         attribute search process. The valid attributes are listed in the
@@ -146,17 +90,17 @@ class MatrixIJ(Matrix2D):
 
         Returns
         -------
-        self[i, j] : float
-            Value of specified element (i, j).
+        self[components[name]] : float
+            Value of element at location for components[name].
         """
         return self[components[name]]
 
     def __setattr__(self, name, value):
-        """Set the value of a computed attribute.
+        """Set the value of an attribute.
 
-        Set the value of an attribute not found by the standard
-        attribute search process. The valid attributes are listed in the
-        components dictionary.
+        Set the value of an attribute not found by the standard attribute
+        search process. The valid attributes are listed in the components
+        dictionary.
 
         Parameters
         ----------
@@ -172,9 +116,9 @@ class MatrixIJ(Matrix2D):
         self[components[name]] = value
 
     def invort(self):
-        """Invert, in place, this matrix whose columns are orthogonal.
+        """Invert this matrix in-place, assuming it is orthogonal.
 
-        Note: No checks are done to verify that the columns are orthogonal.
+        Note: No checks are done to verify that the matrix is orthogonal.
 
         Parameters
         ----------
@@ -198,30 +142,8 @@ class MatrixIJ(Matrix2D):
         a : 2x2 array-like of float
             Values for matrix elements.
         OR
-        scale : float
-            The scale factor to apply.
-        a : 2x2 array-like of float
-            The array whose components are to be scaled and copied.
-        OR
-        colI, colJ : array-like of 2 float
-            2-element array-likes containing the columns to use for the matrix.
-        OR
-        scaleI, scaleJ : float
-            Scale factors to apply to the ith and jth columns of a.
-        a : 2x2 array-like of float
-            The array whose components are to be scaled and copied.
-        OR
         ii, ji, ij, jj : float
             Elements of new matrix in column-major order.
-        OR
-        scaleI : float
-            The scale factor to apply to the ith column.
-        colI : array-like of 2 float
-            The vector containing the ith column.
-        scaleJ : float
-            The scale factor to apply to the jth column.
-        colJ : array-like of 2 float
-            The vector containing the jth column.
 
         Returns
         -------
@@ -234,37 +156,13 @@ class MatrixIJ(Matrix2D):
             If incorrect arguments are provided.
         """
         if len(args) == 1:
-            # Initialize matrix from a 2x2 array-like of floats.
+            # Set the matrix from a 2x2 array-like of floats.
             (a,) = args
             self[:, :] = np.array(a)
-        elif len(args) == 2:
-            if isRealNumber(args[0]):
-                # Scale an existing 2x2 array-like of floats.
-                (scale, a) = args
-                self[:, :] = scale*np.array(a)
-            else:
-                # Assign vectors to columns.
-                (ithColumn, jthColumn) = args
-                self[:, 0] = np.array(ithColumn)
-                self[:, 1] = np.array(jthColumn)
-        elif len(args) == 3:
-            # Apply separate scale factors to the columns of an existing
-            # 2x2 array-like of floats.
-            (scaleI, scaleJ, matrix) = args
-            self[:, 0] = scaleI*np.array(matrix)[:, 0]
-            self[:, 1] = scaleJ*np.array(matrix)[:, 1]
         elif len(args) == 4:
-            if (isRealNumber(args[0]) and isRealNumber(args[1]) and
-                isRealNumber(args[2]) and isRealNumber(args[3])):
-                # Assign the 4 components, in column-major order.
-                (ii, ji, ij, jj) = args
-                self[:, :] = [[ii, ij], [ji, jj]]
-            else:
-                # Scale a pair of 2-element array-like of floats to use as
-                # columns.
-                (scaleI, ithColumn, scaleJ, jthColumn) = args
-                self[:, 0] = scaleI*np.array(ithColumn)
-                self[:, 1] = scaleJ*np.array(jthColumn)
+            # Assign the 4 components, in column-major order.
+            (ii, ji, ij, jj) = args
+            self[:, :] = [[ii, ij], [ji, jj]]
         else:
             raise ValueError
         return self

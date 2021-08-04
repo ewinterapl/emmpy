@@ -122,8 +122,7 @@ class VectorIJK(Vector3D):
         vsum : VectorIJK
             Sum of both arguments.
         """
-        vsum = super().__add__(v)
-        return vsum
+        return super().__add__(v)
 
     def __radd__(self, v):
         """Addition as second operand.
@@ -140,8 +139,7 @@ class VectorIJK(Vector3D):
         vsum : VectorIJK
             Sum of both arguments.
         """
-        vsum = super().__radd__(v)
-        return vsum
+        return super().__radd__(v)
 
     def __mul__(self, a):
         """Multiplication as first operand.
@@ -158,8 +156,7 @@ class VectorIJK(Vector3D):
         v : VectorIJK
             Product of vector and scalar.
         """
-        v = super().__mul__(a)
-        return v
+        return super().__mul__(a)
 
     def __rmul__(self, a):
         """Multiplication as second operand.
@@ -176,8 +173,7 @@ class VectorIJK(Vector3D):
         v : VectorIJK
             Product of vector and scalar.
         """
-        v = super().__rmul__(a)
-        return v
+        return super().__rmul__(a)
 
     def scale(self, _scale):
         """Scale the vector in-place.

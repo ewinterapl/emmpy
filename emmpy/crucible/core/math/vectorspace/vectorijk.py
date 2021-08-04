@@ -122,8 +122,7 @@ class VectorIJK(Vector3D):
         vsum : VectorIJK
             Sum of both arguments.
         """
-        sum = np.ndarray.__add__(self, v)
-        vsum = VectorIJK(sum)
+        vsum = super().__add__(v)
         return vsum
 
     def scale(self, _scale):

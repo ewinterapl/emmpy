@@ -249,23 +249,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(BugException):
             v3 = VectorIJK.project(v2, v1)
 
-    def test_add(self):
-        """Test the add method."""
-        v = VectorIJK()
-        v1 = VectorIJK(1, 1, 1)
-        v2 = VectorIJK(1, 1, 0)
-        v3 = VectorIJK.add(v1, v2)
-        self.assertAlmostEqual(v3.i, 2)
-        self.assertAlmostEqual(v3.j, 2)
-        self.assertAlmostEqual(v3.k, 1)
-        v3 = VectorIJK.add(v1, v2, v)
-        self.assertIs(v3, v)
-        self.assertAlmostEqual(v3.i, 2)
-        self.assertAlmostEqual(v3.j, 2)
-        self.assertAlmostEqual(v3.k, 1)
-        with self.assertRaises(Exception):
-            VectorIJK.add()
-
     def test_copyOf(self):
         """Test the copyOf method."""
         (i, j, k) = (1.1, 2.2, 3.3)

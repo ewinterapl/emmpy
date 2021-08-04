@@ -88,8 +88,10 @@ class VectorFields:
             # vb = b.evaluate(location)
             va = a.evaluate(location, VectorIJK())
             vb = b.evaluate(location, VectorIJK())
-            v = VectorIJK.add(va, vb, buffer)
-            return v
+            vectorSum = VectorIJK()
+            vectorSum[:] = va + vb
+            buffer[:] = vectorSum
+            return buffer
         vf.evaluate = my_evaluate
         return vf
 

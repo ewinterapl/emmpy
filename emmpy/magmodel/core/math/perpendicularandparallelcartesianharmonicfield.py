@@ -1,6 +1,7 @@
 """Linear combination of perpendicular and parallel Cartesian harmonic fields."""
 
 
+from emmpy.math.vectors.vector import Vector
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
@@ -202,7 +203,9 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         # VectorIJK perpField, parField
         perpField = self.perpendicularField.evaluate(location)
         parField = self.parallelField.evaluate(location, buffer)
-        VectorIJK.add(perpField, parField, buffer)
+        vectorSum = VectorIJK()
+        vectorSum[:] = perpField + parField
+        buffer[:] = vectorSum
         return buffer
 
     def evaluateExpansion(self, location):

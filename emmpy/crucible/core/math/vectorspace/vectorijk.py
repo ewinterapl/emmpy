@@ -364,42 +364,6 @@ class VectorIJK(Vector3D):
         return buffer
 
     @staticmethod
-    def add(*args):
-        """Add one vector to another.
-
-        Add the second vector from the first vector, returning the
-        sum as a new vector.
-
-        Parameters
-        ----------
-        a : VectorIJK
-            The first vector.
-        b : VectorIJK
-            The second vector.
-        buffer : VectorIJK (optional)
-            Buffer to hold result.
-
-        Returns
-        -------
-        buffer : VectorIJK
-            Vector of the sum (a + b).
-
-        Raises
-        ------
-        ValueError:
-            If incorrect arguments are provided.
-        """
-        if len(args) == 2:
-            (a, b) = args
-            buffer = VectorIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
-        else:
-            raise ValueError
-        buffer[:] = a + b
-        return buffer
-
-    @staticmethod
     def copyOf(vector):
         """Make a copy of the supplied vector.
 

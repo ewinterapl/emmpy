@@ -11,18 +11,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import sys
-
 import numpy as np
 
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.math.matrices.matrix2d import Matrix2D
-
-
-# The bound defining the boundary length at which the invort procedure
-# works with double precision. Note: this is necessary because larger
-# negative exponents are captured by 64 IEEE doubles than positive ones.
-# INVORSION_BOUND = sys.float_info.max
 
 
 # Map matrix component names to indices.
@@ -70,7 +62,7 @@ class MatrixIJ(Matrix2D):
             (a,) = args
             self[:, :] = np.array(a)
         elif len(args) == 4:
-            # Assign the 4 components, in column-major order.
+            # Matrix elements in column-major order.
             (ii, ji, ij, jj) = args
             self[:, :] = [[ii, ij], [ji, jj]]
         else:
@@ -158,7 +150,8 @@ class MatrixIJ(Matrix2D):
         if len(args) == 1:
             # Set the matrix from a 2x2 array-like of floats.
             (a,) = args
-            self[:, :] = np.array(a)
+            m = np.array(a)
+            self[:, :] = m
         elif len(args) == 4:
             # Assign the 4 components, in column-major order.
             (ii, ji, ij, jj) = args

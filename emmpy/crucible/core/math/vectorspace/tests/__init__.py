@@ -2,13 +2,13 @@
 
 Modules
 -------
-test_InternalOperations.py
-test_MalformedRotationException.py
-test_MatrixIJ.py
-test_MatrixIJK.py
-test_RotationMatrixIJK.py
-test_VectorIJ.py
-test_VectorIJK.py
+test_internaloperations.py
+test_malformedrotationexception.py
+test_matrixij.py
+test_atrixijk.py
+test_rotationmatrixijk.py
+test_vectorij.py
+test_vectorijk.py
 
 Packages
 --------

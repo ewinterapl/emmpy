@@ -34,92 +34,91 @@ class TestBuilder(unittest.TestCase):
         # Unit rotation matrix.
         m = RotationMatrixIJK()
         isRotation = True
-        # try:
-        #     checkRotation(m, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # Unit rotation matrix (flat).
-        # data = [1, 0, 0, 1]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # Rotate by pi/3 radians around z-axis.
-        # a = pi/3
-        # data = [cos(a), -sin(a), cos(a), sin(a)]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # Valid 3-D rotations.
-        # # Unit rotation matrix.
-        # data = [1, 0, 0, 0, 1, 0, 0, 0, 1]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # Rotate by pi/3 radians around z-axis.
-        # a = pi/3
-        # data = [cos(a), -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # Invalid rotations.
-        # # Invalid 2-D rotation
-        # a = pi/3
-        # data = [cos(a) + 1, -sin(a), cos(a), sin(a)]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertFalse(isRotation)
-        # # Invalid 3-D rotation
-        # a = pi/3
-        # data = [cos(a) + 1, -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertFalse(isRotation)
-        # # Check that tolerances work.
-        # normTolerance, detTolerance = (0.1, 0.1)
-        # # 2-D
-        # a = pi/3
-        # data = [cos(a) + 0.1, -sin(a), cos(a), sin(a)]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # 3-D
-        # a = pi/3
-        # data = [cos(a) + 0.1, -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
-        # isRotation = True
-        # try:
-        #     checkRotation(*data, normTolerance, detTolerance)
-        # except MalformedRotationException:
-        #     isRotation = False
-        # self.assertTrue(isRotation)
-        # # Invalid arguments
-        # sizes = (0, 1, 2, 3, 5, 7, 8, 10, 12)
-        # # No size 4, 9 since it triggers first case in method.
-        # for s in sizes:
-        #     data = [0]*s
-        #     with self.assertRaises(ValueError):
-        #         checkRotation(*data, normTolerance, detTolerance)
+        try:
+            checkRotation(m, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # Unit rotation matrix (flat).
+        data = [1, 0, 0, 1]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # Rotate by pi/3 radians around z-axis.
+        a = pi/3
+        data = [cos(a), -sin(a), cos(a), sin(a)]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # Valid 3-D rotations.
+        # Unit rotation matrix.
+        data = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # Rotate by pi/3 radians around z-axis.
+        a = pi/3
+        data = [cos(a), -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # Invalid rotations.
+        # Invalid 2-D rotation
+        a = pi/3
+        data = [cos(a) + 1, -sin(a), cos(a), sin(a)]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertFalse(isRotation)
+        # Invalid 3-D rotation
+        a = pi/3
+        data = [cos(a) + 1, -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertFalse(isRotation)
+        # Check that tolerances work.
+        normTolerance, detTolerance = (0.1, 0.1)
+        # 2-D
+        a = pi/3
+        data = [cos(a) + 0.1, -sin(a), cos(a), sin(a)]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # 3-D
+        a = pi/3
+        data = [cos(a) + 0.1, -sin(a), 0, sin(a), cos(a), 0, 0, 0, 1]
+        isRotation = True
+        try:
+            checkRotation(*data, normTolerance, detTolerance)
+        except MalformedRotationException:
+            isRotation = False
+        self.assertTrue(isRotation)
+        # Invalid arguments
+        sizes = (0, 1, 2, 4, 5, 7, 8, 9, 10, 12)
+        for s in sizes:
+            data = [0]*s
+            with self.assertRaises(ValueError):
+                checkRotation(*data)
 
 
 if __name__ == '__main__':

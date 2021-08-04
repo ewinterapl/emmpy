@@ -43,29 +43,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2[0], i)
         self.assertAlmostEqual(v2[1], j)
         # 2-argument forms
-        # offset and list
-        v = VectorIJ(1, [0, i, j])
-        self.assertIsInstance(v, VectorIJ)
-        self.assertAlmostEqual(v[0], i)
-        self.assertAlmostEqual(v[1], j)
-        # offset and tuple
-        v = VectorIJ(1, (0, i, j))
-        self.assertIsInstance(v, VectorIJ)
-        self.assertAlmostEqual(v[0], i)
-        self.assertAlmostEqual(v[1], j)
-        # offset and np.ndarray
-        a = np.array([0, i, j])
-        v = VectorIJ(1, a)
-        self.assertIsInstance(v, VectorIJ)
-        self.assertAlmostEqual(v[0], i)
-        self.assertAlmostEqual(v[1], j)
-        # scale and vector
-        scale = -2.2
-        v = VectorIJ([i, j])
-        v2 = VectorIJ(scale, v)
-        self.assertIsInstance(v2, VectorIJ)
-        self.assertAlmostEqual(v2[0], scale*i)
-        self.assertAlmostEqual(v2[1], scale*j)
         # set components
         v = VectorIJ(i, j)
         self.assertIsInstance(v, VectorIJ)

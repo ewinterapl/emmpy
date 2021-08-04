@@ -55,17 +55,8 @@ class VectorIJ(Vector2D):
             (data,) = args
             self[:] = np.array(data)
         elif len(args) == 2:
-            if isinstance(args[0], int) and not isRealNumber(args[1]):
-                # Offset and array-like of >= (2 + offset + 1) values.
-                (offset, data) = args
-                self[:] = np.array(data)[offset:offset + 2]
-            elif isRealNumber(args[0]) and not isRealNumber(args[1]):
-                # Scale factor and array-like of 2 values to scale.
-                (scale, data) = args
-                self[:] = scale*np.array(data)
-            else:
-                # Scalar values (i, j) for the components.
-                self[:] = args
+            # Scalar values (i, j) for the components.
+            self[:] = args
         else:
             raise ValueError
 

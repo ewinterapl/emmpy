@@ -13,7 +13,10 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ method."""
-        MalformedRotationException()
+        e = MalformedRotationException()
+        self.assertIsInstance(e, MalformedRotationException)
+        with self.assertRaises(MalformedRotationException):
+            raise(MalformedRotationException)
 
 
 if __name__ == '__main__':

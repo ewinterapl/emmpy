@@ -211,18 +211,14 @@ class BasisVectorFields:
             # Now, loop through the coefficients
             for expansion in expansions:
                 scaledExpansions.append(
-                    expansion.createScaled(
-                        coeffs.getCoefficient(expansionIndex)
-                    )
+                    expansion*coeffs.getCoefficient(expansionIndex)
                 )
                 expansionIndex += 1
             for c in moreCoeffs:
                 expansionIndex = coeffs.getLowerBoundIndex()
                 for expansion in expansions:
                     scaledExpansions.append(
-                        expansion.createScaled(
-                            c.getCoefficient(expansionIndex)
-                        )
+                        expansion*c.getCoefficient(expansionIndex)
                     )
                     expansionIndex += 1
             return scaledExpansions

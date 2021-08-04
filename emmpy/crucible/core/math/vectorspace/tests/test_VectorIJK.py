@@ -112,6 +112,17 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             v.bad = 0
 
+    def test___mul__(self):
+        """Test the __mul__ method."""
+        data1 = [1, 2, 3]
+        a = 2
+        # Multiply the vector and scalar.
+        v1 = VectorIJK(data1)
+        v3 = v1*a
+        self.assertIsInstance(v3, VectorIJK)
+        for col in range(3):
+            self.assertAlmostEqual(v3[col], a*data1[col])
+
     def test___add__(self):
         """Test the __add__ method."""
         data1 = [1, 2, 3]
@@ -164,17 +175,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.i, -i)
         self.assertAlmostEqual(v2.j, -j)
         self.assertAlmostEqual(v2.k, -k)
-
-    def test_createScaled(self):
-        """Test the createScaled method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        scale = -4.4
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.createScaled(scale)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, scale*i)
-        self.assertAlmostEqual(v2.j, scale*j)
-        self.assertAlmostEqual(v2.k, scale*k)
 
     def test_setTo(self):
         """Test the setTo  method."""

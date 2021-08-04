@@ -46,8 +46,8 @@ class ScaledField(VectorField):
         """
 
         # perform spatial scaling, eq. (25)
-        scaledLoccation = location.createScaled(self.kappaScale)
-        self.unscaledField.evaluate(scaledLoccation, buffer)
+        scaledLocation = location*self.kappaScale
+        self.unscaledField.evaluate(scaledLocation, buffer)
 
         # Apply the kappa scaling factor eq. (25)
         return buffer.scale(self.kappaScale)

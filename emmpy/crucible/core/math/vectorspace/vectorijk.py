@@ -125,6 +125,25 @@ class VectorIJK(Vector3D):
         vsum = super().__add__(v)
         return vsum
 
+    def __mul__(self, a):
+        """Multiply this vector by a scalar.
+
+        Multiply this vector by a scalar.
+
+        Parameters
+        ----------
+        a : float
+            Scalar to multiply vector.
+
+        Returns
+        -------
+        v : VectorIJK
+            Product of vector and scalar.
+        """
+        # v = VectorIJK(scale, self)
+        v = super().__mul__(a)
+        return v
+
     def scale(self, _scale):
         """Scale the vector in-place.
 
@@ -177,24 +196,6 @@ class VectorIJK(Vector3D):
         """
         self[:] = -self
         return self
-
-    def createScaled(self, scale):
-        """Create a scaled copy of the vector.
-
-        Create a scaled copy of the vector.
-
-        Parameters
-        ----------
-        scale : float
-            Scale factor to apply to the copy.
-
-        Returns
-        -------
-        v : VectorIJK
-            A scaled copy of the current vector.
-        """
-        v = VectorIJK(scale, self)
-        return v
 
     def setTo(self, *args):
         """Set the vector contents.

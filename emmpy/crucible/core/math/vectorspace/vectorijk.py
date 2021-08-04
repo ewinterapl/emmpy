@@ -114,7 +114,7 @@ class VectorIJK(Vector3D):
 
         Parameters
         ----------
-        v : 3-element np.ndarray
+        v : float, or 3-element array-like of float
             Values to add to current vector elements.
         
         Returns

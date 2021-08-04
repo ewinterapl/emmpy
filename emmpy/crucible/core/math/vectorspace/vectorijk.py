@@ -107,6 +107,25 @@ class VectorIJK(Vector3D):
         """
         self[components[name]] = value
 
+    def __add__(self, v):
+        """Add this vector to another value.
+        
+        Add this vector to another value, and return a new vector.
+
+        Parameters
+        ----------
+        v : 3-element np.ndarray
+            Values to add to current vector elements.
+        
+        Returns
+        -------
+        vsum : VectorIJK
+            Sum of both arguments.
+        """
+        sum = np.ndarray.__add__(self, v)
+        vsum = VectorIJK(sum)
+        return vsum
+
     def scale(self, _scale):
         """Scale the vector in-place.
 

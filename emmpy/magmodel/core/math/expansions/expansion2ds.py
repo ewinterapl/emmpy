@@ -75,11 +75,9 @@ class Expansion2Ds:
                          [radialExpansion - firstRadialExpansion]
                 )
                 if value is None:
-                    vectorSum = VectorIJK()
-                    vectorSum[:] = (
+                    value = (
                         a.getExpansion(azimuthalExpansion, radialExpansion) +
                         b.getExpansion(azimuthalExpansion, radialExpansion))
-                    value = vectorSum
                     array[azimuthalExpansion - firstAzimuthalExpansion][radialExpansion - firstRadialExpansion] = value
                     return value
                 return value

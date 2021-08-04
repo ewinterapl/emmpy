@@ -87,10 +87,8 @@ class Expansion1Ds:
                 # UnwritableVectorIJK value
                 value = array[radialExpansion - firstExpansion]
                 if value is None:
-                    vectorSum = VectorIJK()
-                    vectorSum = (a.getExpansion(radialExpansion) +
-                                 b.getExpansion(radialExpansion))
-                    value = vectorSum
+                    value = (a.getExpansion(radialExpansion) +
+                             b.getExpansion(radialExpansion))
                     array[radialExpansion - firstExpansion] = value
                     return value
                 return value

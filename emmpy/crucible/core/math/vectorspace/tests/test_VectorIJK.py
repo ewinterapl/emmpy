@@ -112,6 +112,18 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             v.bad = 0
 
+    def test___add__(self):
+        """Test the __add__ method."""
+        data1 = [1, 2, 3]
+        data2 = [4, 5, 6]
+        # Add 2 VectorIJK
+        v1 = VectorIJK(data1)
+        v2 = VectorIJK(data2)
+        v3 = v1 + v2
+        self.assertIsInstance(v3, VectorIJK)
+        for col in range(3):
+            self.assertAlmostEqual(v3[col], data1[col] + data2[col])
+
     def test_scale(self):
         """Test the scale method."""
         (i, j, k) = (1.1, 2.2, 3.3)

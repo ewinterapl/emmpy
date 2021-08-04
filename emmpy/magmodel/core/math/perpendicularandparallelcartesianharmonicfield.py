@@ -203,9 +203,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         # VectorIJK perpField, parField
         perpField = self.perpendicularField.evaluate(location)
         parField = self.parallelField.evaluate(location, buffer)
-        vectorSum = VectorIJK()
-        vectorSum[:] = perpField + parField
-        buffer[:] = vectorSum
+        buffer[:] = perpField + parField
         return buffer
 
     def evaluateExpansion(self, location):

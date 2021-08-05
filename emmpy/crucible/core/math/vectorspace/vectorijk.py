@@ -107,24 +107,6 @@ class VectorIJK(Vector3D):
         """
         self[components[name]] = value
 
-    def unitize(self):
-        """Unitize the vector in-place.
-
-        Normalize the vector to unit length in-place.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-        """
-        length = np.linalg.norm(self)
-        self[:] /= length
-        return self
-
     @staticmethod
     def rotate(*args):
         """Rotate a copy of a vector.

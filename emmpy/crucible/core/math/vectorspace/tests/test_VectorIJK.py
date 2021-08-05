@@ -112,26 +112,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             v.bad = 0
 
-    def test_unitize(self):
-        """Test the unitize method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        length = sqrt(i**2 + j**2 + k**2)
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.unitize()
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, i/length)
-        self.assertAlmostEqual(v2.j, j/length)
-        self.assertAlmostEqual(v2.k, k/length)
-        v1 = VectorIJK(0, 0, 0)
-        # Temporarily disable the divide-by-zero warning from Numpy.
-        warnings.filterwarnings(
-            "ignore", message="invalid value encountered in true_divide")
-        v2 = v1.unitize()
-        for i in range(3):
-            self.assertTrue(np.isnan(v2[i]))
-        # Restore normal warning handlers.
-        warnings.resetwarnings()
-
     def test_rotate(self):
         """Test the rotate method."""
         v1 = VectorIJK(1, 0, 0)

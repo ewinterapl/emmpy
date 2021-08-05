@@ -49,3 +49,21 @@ class Vector(np.ndarray):
         """
         v = super().__new__(cls, shape=(length,), dtype=float)
         return v
+
+    def unitize(self):
+        """Unitize the vector in-place.
+
+        Normalize the vector to unit length in-place.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self : Vector
+            The current object.
+        """
+        length = np.linalg.norm(self)
+        self[:] /= length
+        return self

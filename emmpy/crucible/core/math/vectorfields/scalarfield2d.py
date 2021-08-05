@@ -60,7 +60,8 @@ class ScalarField2D:
 
         Returns
         -------
-        None
+        v : float
+            Value of scalar field at the specified location.
 
         Raises
         ------

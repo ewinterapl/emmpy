@@ -5,10 +5,7 @@ methods will raise exceptions if invoked.
 """
 
 
-from emmpy.crucible.core.math.coords.abstractvectorij import AbstractVectorIJ
-
-
-class TransformationIJ(AbstractVectorIJ):
+class TransformationIJ:
     """This interface assists with the manipulation of Jacobians.
 
     A Jacobian is the matrix of all first order partial derivatives of a vector

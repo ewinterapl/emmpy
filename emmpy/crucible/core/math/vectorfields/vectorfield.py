@@ -28,7 +28,7 @@ class VectorField:
     None
     """
 
-    def evaluate(self, *args):
+    def evaluate(self, location):
         """Evaluate the vector field at a position.
 
         This abstract method must be overridden in a subclass.

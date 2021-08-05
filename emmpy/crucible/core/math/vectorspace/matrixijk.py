@@ -107,23 +107,6 @@ class MatrixIJK(Matrix3D):
         """
         self[components[name]] = value
 
-    def invert(self):
-        """Invert the matrix in-place.
-
-        Invert the matrix in-place.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : MatrixIJK
-            Current object.
-        """
-        self[:, :] = np.linalg.inv(self)
-        return self
-
     def setTo(self, *args):
         """Set the matrix to the specified values.
 

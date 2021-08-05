@@ -92,17 +92,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             m.bad = 0
 
-    def test_invert(self):
-        """Test the invert method."""
-        data = [[1, 0, 5], [2, 1, 6], [3, 5, 0]]
-        m1 = MatrixIJK(data)
-        inv1 = np.linalg.inv(m1)
-        m2 = m1.invert()
-        self.assertIs(m2, m1)
-        for row in range(3):
-            for col in range(3):
-                self.assertAlmostEqual(m2[row, col], inv1[row, col])
-
     def test_setTo(self):
         """Test the setTo method."""
         # 1-argument forms

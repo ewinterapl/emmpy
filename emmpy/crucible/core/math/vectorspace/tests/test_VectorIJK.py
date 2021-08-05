@@ -143,7 +143,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.k, -k)
 
     def test_setTo(self):
-        """Test the setTo  method."""
+        """Test the setTo method."""
         (i, j, k) = (1.1, 2.2, 3.3)
         # 1-argument forms
         v1 = VectorIJK(i, j, k)

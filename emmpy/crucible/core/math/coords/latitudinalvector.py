@@ -26,6 +26,18 @@ class LatitudinalVector(Vector3D):
         """Return the longitude."""
         return self[2]
 
+    def getI(self):
+        return self[0]
+
+    def getJ(self):
+        return self[1]
+
+    def getK(self):
+        return self[2]
+
+    def getVectorIJK(self):
+        return self
+
 
 # The ZERO vector.
 ZERO = LatitudinalVector(0, 0, 0)

@@ -246,7 +246,8 @@ class BasisVectorFields:
             # evaluate using the rotated vector
             field.evaluate(rotated, buffer)
             # rotate the field value back
-            return matrix.mtxv(buffer, buffer)
+            buffer[:] = matrix.T.dot(buffer)
+            return buffer
         bvf.evaluate = my_evaluate
         bvf.getNumberOfBasisFunctions = (
             lambda: field.getNumberOfBasisFunctions()

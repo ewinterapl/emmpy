@@ -165,8 +165,8 @@ class VectorFields:
                 fe = SphericalVectorField.evaluate(field, location, buffer)
             else:
                 fe = field.evaluate(location, buffer)
-            sfe = fe.scale(scaleFactor)
-            return sfe
+            fe *= scaleFactor
+            return fe
         vf.evaluate = my_evaluate
         return vf
 

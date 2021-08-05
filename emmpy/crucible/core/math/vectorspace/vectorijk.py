@@ -107,24 +107,6 @@ class VectorIJK(Vector3D):
         """
         self[components[name]] = value
 
-    def scale(self, _scale):
-        """Scale the vector in-place.
-
-        Scale the vector in-place.
-
-        Parameters
-        ----------
-        _scale : float
-            Scale factor to apply.
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-        """
-        self[:] *= _scale
-        return self
-
     def unitize(self):
         """Unitize the vector in-place.
 
@@ -342,7 +324,7 @@ class VectorIJK(Vector3D):
             t = vector/maxVector
             scaleFactor = sum(t*r)*maxVector/sum(r*r)
             buffer[:] = r
-            buffer.scale(scaleFactor)
+            buffer *= scaleFactor
         return buffer
 
 

@@ -112,17 +112,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             v.bad = 0
 
-    def test_scale(self):
-        """Test the scale method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        scale = -4.4
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.scale(scale)
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, scale*i)
-        self.assertAlmostEqual(v2.j, scale*j)
-        self.assertAlmostEqual(v2.k, scale*k)
-
     def test_unitize(self):
         """Test the unitize method."""
         (i, j, k) = (1.1, 2.2, 3.3)

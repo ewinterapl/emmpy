@@ -109,6 +109,7 @@ class TailSheetAsymmetricExpansion(VectorField):
             # the azimuthal expansion number divided by the wave number, this
             # is not in the paper, this is okay, as this will just rescale the
             # scaling coeffs.
-            return buffer.scale(-m/kn)
+            buffer *= -m/kn
+            return buffer
         else:
             raise Exception

@@ -97,9 +97,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 kn, self.currentSheetHalfThickness, self.bessel
             )
             a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
-            symmetricExpansions[n - 1] = (
-                symBasisFunction.evaluate(location).scale(a)
-            )
+            symmetricExpansions[n - 1] = symBasisFunction.evaluate(location)*a
 
             # m is the azimuthal expansion number
             for m in range(1, self.numAzimuthalExpansions + 1):
@@ -109,8 +107,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     self.bessel
                 )
                 oddExpansions[m - 1][n - 1] = (
-                    oddBasisFunction.evaluate(location).scale(aOdd)
-                )
+                    oddBasisFunction.evaluate(location)*aOdd)
                 aEven = (
                     self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
                 )
@@ -119,8 +116,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     self.bessel
                 )
                 evenExpansions[m - 1][n - 1] = (
-                    evenBasisFunction.evaluate(location).scale(aEven)
-                )
+                    evenBasisFunction.evaluate(location)*aEven)
 
         if self.numAzimuthalExpansions == 0:
             return TailSheetExpansions(

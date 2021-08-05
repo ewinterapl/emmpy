@@ -50,4 +50,5 @@ class ScaledField(VectorField):
         self.unscaledField.evaluate(scaledLocation, buffer)
 
         # Apply the kappa scaling factor eq. (25)
-        return buffer.scale(self.kappaScale)
+        buffer *= self.kappaScale
+        return buffer

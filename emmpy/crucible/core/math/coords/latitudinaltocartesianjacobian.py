@@ -11,6 +11,7 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class LatitudinalToCartesianJacobian(Transformation):
@@ -68,8 +69,11 @@ class LatitudinalToCartesianJacobian(Transformation):
         """Multiply a vector by the Jacobian."""
         if isinstance(args[1], LatitudinalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity.getVectorIJK())
+            return vect
         else:
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return LatitudinalVector(vect.i, vect.j, vect.k)

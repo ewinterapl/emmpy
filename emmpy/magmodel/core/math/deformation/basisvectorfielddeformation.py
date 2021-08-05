@@ -33,9 +33,8 @@ class BasisVectorFieldDeformation(BasisVectorField):
         bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
         bFieldExpansionDeformed = []
         for bField in bFieldExpansion:
-            v = trans.mxv(
-                VectorIJK(bField.i, bField.j, bField.k)
-            )
+            v = VectorIJK()
+            v[:] = trans.dot(VectorIJK(bField.i, bField.j, bField.k))
             bFieldExpansionDeformed.append(VectorIJK(v.i, v.j, v.k))
         return bFieldExpansionDeformed
 

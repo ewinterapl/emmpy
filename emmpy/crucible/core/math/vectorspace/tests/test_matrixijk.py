@@ -111,24 +111,24 @@ class TestBuilder(unittest.TestCase):
         for col in range(3):
             self.assertAlmostEqual(v2[col], v4[col])
 
-    def test_mxv(self):
-        """Test the mxv method."""
-        mdata = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-        vdata1 = [1, 2, 3]
-        m = MatrixIJK(mdata)
-        v1 = VectorIJK(vdata1)
-        # No buffer
-        v3 = m.dot(v1)
-        v2 = MatrixIJK.mxv(m, v1)
-        for col in range(3):
-            self.assertAlmostEqual(v2[col], v3[col])
-        # Buffer
-        v4 = m.dot(v1)
-        v3 = VectorIJK()
-        v2 = MatrixIJK.mxv(m, v1, v3)
-        self.assertIs(v2, v3)
-        for col in range(3):
-            self.assertAlmostEqual(v2[col], v4[col])
+    # def test_mxv(self):
+    #     """Test the mxv method."""
+    #     mdata = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    #     vdata1 = [1, 2, 3]
+    #     m = MatrixIJK(mdata)
+    #     v1 = VectorIJK(vdata1)
+    #     # No buffer
+    #     v3 = m.dot(v1)
+    #     v2 = MatrixIJK.mxv(m, v1)
+    #     for col in range(3):
+    #         self.assertAlmostEqual(v2[col], v3[col])
+    #     # Buffer
+    #     v4 = m.dot(v1)
+    #     v3 = VectorIJK()
+    #     v2 = MatrixIJK.mxv(m, v1, v3)
+    #     self.assertIs(v2, v3)
+    #     for col in range(3):
+    #         self.assertAlmostEqual(v2[col], v4[col])
 
 
 if __name__ == '__main__':

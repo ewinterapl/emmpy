@@ -141,36 +141,36 @@ class MatrixIJK(Matrix3D):
         buffer[:] = m.T.dot(v)
         return buffer
 
-    def mxv(self, *args):
-        """Compute the product of this matrix with a vector.
+    # def mxv(self, *args):
+    #     """Compute the product of this matrix with a vector.
 
-        Multiply a 3-D vector by a 3-D matrix.
+    #     Multiply a 3-D vector by a 3-D matrix.
 
-        Parameters
-        ----------
-        m : MatrixIJK
-            The matrix to multiply.
-        v : VectorIJK
-            The vector to multiply.
-        buffer : VectorIJK, optional
-            Buffer to hold the result.
+    #     Parameters
+    #     ----------
+    #     m : MatrixIJK
+    #         The matrix to multiply.
+    #     v : VectorIJK
+    #         The vector to multiply.
+    #     buffer : VectorIJK, optional
+    #         Buffer to hold the result.
 
-        Returns
-        -------
-        buffer : VectorIJK
-            Vector product.
+    #     Returns
+    #     -------
+    #     buffer : VectorIJK
+    #         Vector product.
 
-        Raises
-        ------
-        ValueError
-            If incorrect parameters are supplied.
-        """
-        if len(args) == 1:
-            (v,) = args
-            buffer = VectorIJK()
-        elif len(args) == 2:
-            (v, buffer) = args
-        else:
-            raise TypeError
-        buffer[:] = self.dot(v)
-        return buffer
+    #     Raises
+    #     ------
+    #     ValueError
+    #         If incorrect parameters are supplied.
+    #     """
+    #     if len(args) == 1:
+    #         (v,) = args
+    #         buffer = VectorIJK()
+    #     elif len(args) == 2:
+    #         (v, buffer) = args
+    #     else:
+    #         raise TypeError
+    #     buffer[:] = self.dot(v)
+    #     return buffer

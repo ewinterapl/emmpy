@@ -241,7 +241,8 @@ class BasisVectorFields:
             else:
                 raise Exception
             # rotate the location
-            rotated = matrix.mxv(location)
+            rotated = VectorIJK()
+            rotated[:] = matrix.dot(location)
             # evaluate using the rotated vector
             field.evaluate(rotated, buffer)
             # rotate the field value back

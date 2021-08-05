@@ -1,6 +1,7 @@
 """Basis transformations between cartesian and cylindrical coordinates."""
 
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin
 
 import numpy as np
@@ -55,8 +56,12 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         """Apply this transformation, or inverse, to a cylindrical vector."""
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordValue) = args
-            return MatrixIJK.mxv(jacobian, coordValue.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordValue.getVectorIJK())
+            return vect
         else:
             (inverseTransformation, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)
+            # vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseTransformation.dot(cartVelocity)
             return CylindricalVector(vect.i, vect.j, vect.k)

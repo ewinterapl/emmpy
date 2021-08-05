@@ -1,6 +1,7 @@
 """Jacobian for spherical to Cartesian transformations."""
 
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin
 
 import numpy as np
@@ -74,8 +75,11 @@ class SphericalToCartesianJacobian(Transformation):
         """Multiply a vector by the Jacobian matrix."""
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity.getVectorIJK())
+            return vect
         else:
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return SphericalVector(vect.i, vect.j, vect.k)

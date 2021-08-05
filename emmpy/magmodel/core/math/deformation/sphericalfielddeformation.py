@@ -48,7 +48,8 @@ class SphericalFieldDeformation(SphericalVectorField):
 
         # evaluate the deformed field
         # VectorIJK v
-        v = trans.mxv(
+        v = VectorIJK()
+        v[:] = trans.dot(
             VectorIJK(bField.getRadius(), bField.getColatitude(),
                       bField.getLongitude())
         )

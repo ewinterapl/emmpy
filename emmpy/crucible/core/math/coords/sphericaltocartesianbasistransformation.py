@@ -9,6 +9,7 @@ import numpy as np
 from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class SphericalToCartesianBasisTransformation(Transformation):
@@ -51,8 +52,11 @@ class SphericalToCartesianBasisTransformation(Transformation):
         """Multiply a vector by the transformation matrix."""
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity.getVectorIJK())
+            return vect
         else:
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return SphericalVector(vect.i, vect.j, vect.k)

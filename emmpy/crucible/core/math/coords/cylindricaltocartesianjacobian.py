@@ -80,10 +80,15 @@ class CylindricalToCartesianJacobian(Transformation):
         """Multiply a velocity by the jacobian."""
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            # return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity.getVectorIJK())
+            return vect
         elif isinstance(args[1], VectorIJK):
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            # vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return CylindricalVector(vect.i, vect.j, vect.k)
         else:
             raise Exception

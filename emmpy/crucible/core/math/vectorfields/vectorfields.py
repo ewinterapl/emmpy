@@ -131,11 +131,11 @@ class VectorFields:
         field
         """
         vf = VectorField()
-        # UnwritableVectorIJK location
-        # VectorIJK buffer
-        vf.evaluate = (
-           lambda location, buffer: field.evaluate(location, buffer).negate()
-        )
+        def my_evaluate(location, buffer):
+            field.evaluate(location, buffer)
+            buffer[:] = -buffer
+            return buffer
+        vf.evaluate = my_evaluate
         return vf
 
     @staticmethod

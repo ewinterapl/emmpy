@@ -132,16 +132,6 @@ class TestBuilder(unittest.TestCase):
         # Restore normal warning handlers.
         warnings.resetwarnings()
 
-    def test_negate(self):
-        """Test the negate method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        v1 = VectorIJK(i, j, k)
-        v2 = v1.negate()
-        self.assertIs(v2, v1)
-        self.assertAlmostEqual(v2.i, -i)
-        self.assertAlmostEqual(v2.j, -j)
-        self.assertAlmostEqual(v2.k, -k)
-
     def test_setTo(self):
         """Test the setTo method."""
         (i, j, k) = (1.1, 2.2, 3.3)

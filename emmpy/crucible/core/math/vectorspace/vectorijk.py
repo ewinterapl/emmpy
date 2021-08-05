@@ -125,23 +125,6 @@ class VectorIJK(Vector3D):
         self[:] /= length
         return self
 
-    def negate(self):
-        """Negate the vector in-place.
-
-        Negate the vector in-place.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-        """
-        self[:] = -self
-        return self
-
     def setTo(self, *args):
         """Set the vector contents.
 

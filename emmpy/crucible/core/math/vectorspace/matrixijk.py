@@ -107,42 +107,6 @@ class MatrixIJK(Matrix3D):
         """
         self[components[name]] = value
 
-    def setTo(self, *args):
-        """Set the matrix to the specified values.
-
-        Set the matrix to the specified values.
-
-        Parameters
-        ----------
-        a : 3x3 array-like of float
-            Values for matrix elements.
-        OR
-        ii, ji, ki, ij, jj, kj, ik, jk, kk : float
-            Elements of new matrix in column-major order.
-
-        Returns
-        -------
-        self : MatrixIJK
-            The current object.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 1:
-            # Initialize matrix from a 3x3 array-like of floats.
-            (a,) = args
-            m = np.array(a)
-            self[:, :] = m
-        elif len(args) == 9:
-            # Assign the 9 components, in column-major order.
-            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            self[:, :] = [[ii, ij, ik], [ji, jj, jk], [ki, kj, kk]]
-        else:
-            raise TypeError
-        return self
-
     def mtxv(*args):
         """Compute the product of a matrix transpose with a vector.
 

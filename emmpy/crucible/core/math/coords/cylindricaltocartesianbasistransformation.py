@@ -40,11 +40,10 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         j_DX_DZ = 0.0
         j_DY_DZ = 0.0
         j_DZ_DZ = 1.0
-        return buffer.setTo(
-            j_DX_DR, j_DY_DR, j_DZ_DR,
-            j_DX_DLON, j_DY_DLON, j_DZ_DLON,
-            j_DX_DZ, j_DY_DZ, j_DZ_DZ
-        )
+        buffer[:, :] = [[j_DX_DR, j_DX_DLON, j_DX_DZ],
+                        [j_DY_DR, j_DY_DLON, j_DY_DZ],
+                        [j_DZ_DR, j_DZ_DLON, j_DZ_DZ]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Return the cartesian-to-cylindrical transformation matrix."""

@@ -56,11 +56,10 @@ class SphericalToCartesianJacobian(Transformation):
         xByLong = -r*sinLong*sinColat
         yByLong = r*cosLong*sinColat
         zByLong = 0
-        return buffer.setTo(
-            xByR, yByR, zByR,
-            xByColat, yByColat, zByColat,
-            xByLong, yByLong, zByLong
-        )
+        buffer[:, :] = [[xByR, xByColat, xByLong],
+                        [yByR, yByColat, yByLong],
+                        [zByR, zByColat, zByLong]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Get the inverse transformation matrix."""

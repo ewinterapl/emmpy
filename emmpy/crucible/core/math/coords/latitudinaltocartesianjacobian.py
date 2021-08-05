@@ -50,11 +50,10 @@ class LatitudinalToCartesianJacobian(Transformation):
         xByLong = -r*sinLong*cosLat
         yByLong = r*cosLong*cosLat
         zByLong = 0
-        return buffer.setTo(
-            xByR, yByR, zByR,
-            xByLat, yByLat, zByLat,
-            xByLong, yByLong, zByLong
-        )
+        buffer[:, :] = [[xByR, xByLat, xByLong],
+                        [yByR, yByLat, yByLong],
+                        [zByR, zByLat, zByLong]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Get the inverse transformation."""

@@ -213,5 +213,5 @@ class AxisAndAngle(Rotation):
         vj = VectorIJK.rotate(J, self.axis, self.angle)
         vk = VectorIJK.rotate(K, self.axis, self.angle)
         assigner.setToWithoutCheck(vi, vj, vk)
-        buffer.setTo(assigner)
+        buffer[:, :] = assigner
         return buffer

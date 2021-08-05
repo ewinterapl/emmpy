@@ -10,11 +10,6 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 class TestBuilder(unittest.TestCase):
     """Tests for the vectorfield module."""
 
-    def test___init__(self):
-        """Test the __init__ method."""
-        with self.assertRaises(AbstractMethodException):
-            vf = VectorField()
-
     def test_evaluate(self):
         """Test the evaluate method."""
         with self.assertRaises(AbstractMethodException):

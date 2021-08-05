@@ -28,24 +28,6 @@ class VectorField:
     None
     """
 
-    def __init__(self):
-        """Initialize a new VectorField object.
-
-        This abstract method must be overridden in a subclass.
-
-        Initialize a new VectorField object.
-
-        Parameters
-        ----------
-        None
-
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException
-
     def evaluate(self, *args):
         """Evaluate the vector field at a position.
 

@@ -3,6 +3,8 @@
 
 from math import cos, sin
 
+import numpy as np
+
 from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
@@ -67,7 +69,9 @@ class CylindricalToCartesianJacobian(Transformation):
     def getInverseTransformation(self, coordPosition, buffer):
         """Return the inverse transformation."""
         try:
-            return self.getTransformation(coordPosition, buffer).invort()
+            self.getTransformation(coordPosition, buffer)
+            buffer[:] = np.linalg.inv(buffer)
+            return buffer
         except Exception as e:
             raise PointOnAxisException(e)
 

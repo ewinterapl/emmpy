@@ -124,24 +124,6 @@ class MatrixIJK(Matrix3D):
         self[:, :] = np.linalg.inv(self)
         return self
 
-    def invort(self):
-        """Invert, in place, this matrix whose columns are orthogonal.
-
-        Invert, in place, this matrix whose columns are orthogonal. Note:
-        No checks are done to verify that the columns are orthogonal.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : MatrixIJK
-            The current object after invorsion.
-        """
-        self.invert()
-        return self
-
     def setTo(self, *args):
         """Set the matrix to the specified values.
 

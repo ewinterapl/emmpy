@@ -3,6 +3,8 @@
 
 from math import cos, sin
 
+import numpy as np
+
 from emmpy.crucible.core.math.coords.latitudinalvector import LatitudinalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
@@ -57,7 +59,9 @@ class LatitudinalToCartesianJacobian(Transformation):
     def getInverseTransformation(self, coordPosition, buffer):
         """Get the inverse transformation."""
         try:
-            return self.getTransformation(coordPosition, buffer).invort()
+            self.getTransformation(coordPosition, buffer)
+            buffer[:] = np.linalg.inv(buffer)
+            return buffer
         except Exception as e:
             raise PointOnAxisException(e)
 

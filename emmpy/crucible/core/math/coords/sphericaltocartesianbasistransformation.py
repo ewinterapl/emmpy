@@ -2,6 +2,9 @@
 
 
 from math import cos, sin
+from re import T
+
+import numpy as np
 
 from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
@@ -41,7 +44,9 @@ class SphericalToCartesianBasisTransformation(Transformation):
         """Get the inverse transformation matrix."""
         # I'm pretty confident that this exception can't be thrown, the columns
         # will always be non-zero
-        return self.getTransformation(coordPosition, buffer).invort()
+        self.getTransformation(coordPosition, buffer)
+        buffer[:] = np.linalg.inv(buffer)
+        return buffer
 
     def mxv(self, *args):
         """Multiply a vector by the transformation matrix."""

@@ -3,6 +3,8 @@
 
 from math import cos, sin
 
+import numpy as np
+
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
@@ -28,7 +30,9 @@ class PolarToCartesianJacobian(TransformationIJ):
     def getInverseTransformation(self, coordPosition, buffer):
         """Return the inverse transformation matrix."""
         try:
-            return self.getTransformation(coordPosition, buffer).invort()
+            self.getTransformation(coordPosition, buffer)
+            buffer[:, :] = np.linalg.inv(buffer)
+            return buffer
         except Exception as e:
             raise PointOnAxisException(e)
 

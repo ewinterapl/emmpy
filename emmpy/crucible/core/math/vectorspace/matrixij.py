@@ -107,23 +107,6 @@ class MatrixIJ(Matrix2D):
         """
         self[components[name]] = value
 
-    def invort(self):
-        """Invert this matrix in-place, assuming it is orthogonal.
-
-        Note: No checks are done to verify that the matrix is orthogonal.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : MatrixIJ
-            The current object
-        """
-        self[:, :] = np.linalg.inv(self)
-        return self
-
     def setTo(self, *args):
         """Set the matrix to the specified values.
 

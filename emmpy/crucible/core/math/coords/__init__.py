@@ -99,7 +99,6 @@ Modules
 abstractcoordconverter.py
 abstractcoordconverterij.py
 abstractvectorfieldvalue.py
-abstractvectorij.py
 cartesianvectorfieldvalue.py
 coordconverter.py
 coordconverterij.py

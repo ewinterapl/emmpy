@@ -97,7 +97,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.j, j)
         self.assertAlmostEqual(v.k, k)
         with self.assertRaises(KeyError):
-            bad = v.bad
+            i = v.bad
 
     def test___setattr__(self):
         """Test the __setattr__ method."""

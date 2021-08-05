@@ -1,10 +1,10 @@
 """A spherical vector."""
 
 
-from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
+from emmpy.math.vectors.vector3d import Vector3D
 
 
-class SphericalVector(AbstractVector):
+class SphericalVector(Vector3D):
     """A class representing a vector in the spherical coordinate system.
 
     @author G.K.Stephens
@@ -12,19 +12,31 @@ class SphericalVector(AbstractVector):
 
     def __init__(self, radius, colatInRadians, longInRadians):
         """Build a new object."""
-        AbstractVector.__init__(self, radius, colatInRadians, longInRadians)
+        self[:] = [radius, colatInRadians, longInRadians]
 
     def getRadius(self):
         """Return the radius."""
-        return AbstractVector.getI(self)
+        return self[0]
 
     def getColatitude(self):
         """Return the colatitude."""
-        return AbstractVector.getJ(self)
+        return self[1]
 
     def getLongitude(self):
         """Return the longitude."""
-        return AbstractVector.getK(self)
+        return self[2]
+
+    def getI(self):
+        return self[0]
+
+    def getJ(self):
+        return self[1]
+    
+    def getK(self):
+        return self[2]
+
+    def getVectorIJK(self):
+        return self
 
 
 # The ZERO vector.

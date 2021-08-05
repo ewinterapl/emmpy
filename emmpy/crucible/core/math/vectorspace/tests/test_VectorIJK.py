@@ -132,30 +132,6 @@ class TestBuilder(unittest.TestCase):
         # Restore normal warning handlers.
         warnings.resetwarnings()
 
-    def test_setTo(self):
-        """Test the setTo method."""
-        (i, j, k) = (1.1, 2.2, 3.3)
-        # 1-argument forms
-        v1 = VectorIJK(i, j, k)
-        v2 = VectorIJK()
-        v3 = v2.setTo(v1)
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
-        # 3-argument forms
-        v2 = VectorIJK()
-        v3 = v2.setTo((i, j, k))
-        self.assertIs(v3, v2)
-        self.assertAlmostEqual(v3.i, i)
-        self.assertAlmostEqual(v3.j, j)
-        self.assertAlmostEqual(v3.k, k)
-        # Invalid forms
-        with self.assertRaises(ValueError):
-            v2.setTo()
-        with self.assertRaises(ValueError):
-            v2.setTo(None, None, None, None)
-
     def test_rotate(self):
         """Test the rotate method."""
         v1 = VectorIJK(1, 0, 0)

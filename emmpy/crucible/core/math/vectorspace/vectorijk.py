@@ -125,40 +125,6 @@ class VectorIJK(Vector3D):
         self[:] /= length
         return self
 
-    def setTo(self, *args):
-        """Set the vector contents.
-
-        Set the values of all components.
-
-        Parameters
-        ----------
-        data : array-like of 3 float
-            Values to copy to current vector.
-        OR
-        i, j, k : float
-            i, j, k vector components.
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 1:
-            # Copy the components from an array.
-            (data,) = args
-            self[:] = list(data)
-        elif len(args) == 3:
-            # Sets the three components of the vector.
-            self[:] = args
-        else:
-            raise ValueError
-        return self
-
     @staticmethod
     def rotate(*args):
         """Rotate a copy of a vector.

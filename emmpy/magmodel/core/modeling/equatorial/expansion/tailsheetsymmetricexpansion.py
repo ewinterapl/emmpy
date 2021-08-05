@@ -79,6 +79,7 @@ class TailSheetSymmetricExpansion(VectorField):
             by = kn*z*j1*sinPhi*ex/zDist
             bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
 
-            return buffer.setTo(bx, by, bz)
+            buffer[:] = [bx, by, bz]
+            return buffer
         else:
             raise Exception

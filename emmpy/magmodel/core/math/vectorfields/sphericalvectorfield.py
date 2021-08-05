@@ -318,7 +318,8 @@ class SphericalVectorField(VectorField):
             )
 
             # return the value
-            return buffer.setTo(valueSphere)
+            buffer[:] = valueSphere
+            return buffer
 
         else:
             raise Exception

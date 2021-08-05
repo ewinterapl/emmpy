@@ -180,7 +180,8 @@ class AxisAndAngle(Rotation):
             # return a reference to the instance for convenience.
             # throws UnsupportedOperationException if the supplied axis is of
             # zero length.
-            self.axis.setTo(axis).unitize()
+            self.axis[:] = axis
+            self.axis.unitize()
             self.angle = angle
             return self
         elif len(args) == 4:

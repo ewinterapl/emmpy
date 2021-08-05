@@ -123,7 +123,9 @@ class StretchedField(VectorField):
         bx = bRho*cosPhi - bPhi*sinPhi
         bz = -bRho*sinPhi - bPhi*cosPhi
 
-        return buffer.setTo(bx, by, bz)
+        # return buffer.setTo(bx, by, bz)
+        buffer[:] = [bx, by, bz]
+        return buffer
 
     def evaluate2(self, location, buffer):
         """evaluate2

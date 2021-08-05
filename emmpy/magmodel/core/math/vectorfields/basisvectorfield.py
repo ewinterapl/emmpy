@@ -41,4 +41,6 @@ class BasisVectorField(VectorField):
             fx += basisVector.i
             fy += basisVector.j
             fz += basisVector.k
-        return buffer.setTo(fx, fy, fz)
+        buffer[:] = [fx, fy, fz]
+        return buffer
+

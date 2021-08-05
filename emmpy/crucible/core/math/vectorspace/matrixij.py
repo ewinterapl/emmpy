@@ -107,42 +107,6 @@ class MatrixIJ(Matrix2D):
         """
         self[components[name]] = value
 
-    def setTo(self, *args):
-        """Set the matrix to the specified values.
-
-        Set the matrix to the specified values.
-
-        Parameters
-        ----------
-        a : 2x2 array-like of float
-            Values for matrix elements.
-        OR
-        ii, ji, ij, jj : float
-            Elements of new matrix in column-major order.
-
-        Returns
-        -------
-        self : MatrixIJ
-            The current object.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 1:
-            # Set the matrix from a 2x2 array-like of floats.
-            (a,) = args
-            m = np.array(a)
-            self[:, :] = m
-        elif len(args) == 4:
-            # Assign the 4 components, in column-major order.
-            (ii, ji, ij, jj) = args
-            self[:, :] = [[ii, ij], [ji, jj]]
-        else:
-            raise ValueError
-        return self
-
     @staticmethod
     def mxv(*args):
         """Compute the product of a matrix with a vector.

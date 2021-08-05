@@ -82,48 +82,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             data = m.bad
 
-    def test_setTo(self):
-        """Test the setTo method."""
-        # 1-argument forms
-        # list of tuples (for some heterogeneity)
-        data = [(0, 2), (1, 3)]
-        m1 = MatrixIJ()
-        m2 = m1.setTo(data)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col], data[row][col])
-        # np.ndarray
-        a = np.array(data)
-        m1 = MatrixIJ()
-        m2 = m1.setTo(a)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col], data[row][col])
-        # MatrixIJ
-        m0 = MatrixIJ(data)
-        m1 = MatrixIJ()
-        m2 = m1.setTo(m0)
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col], data[row][col])
-        # 4-argument forms
-        # 4 elements in column-major order
-        m1 = MatrixIJ()
-        m2 = m1.setTo(data[0][0], data[1][0], data[0][1], data[1][1])
-        self.assertIs(m2, m1)
-        for row in range(2):
-            for col in range(2):
-                self.assertAlmostEqual(m2[row, col], data[row][col])
-        # Invalid forms
-        sizes = (0, 5)
-        for s in sizes:
-            data = [None]*s
-            with self.assertRaises(ValueError):
-                m2.setTo(*data)
-
     def test_mxv(self):
         """Test the mxv method."""
         mdata = [[1, 2], [3, 4]]

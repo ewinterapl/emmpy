@@ -25,7 +25,8 @@ class PolarToCartesianJacobian(TransformationIJ):
         angle = coordPosition.getAngle()
         cosAngle = cos(angle)
         sinAngle = sin(angle)
-        return buffer.setTo(cosAngle, sinAngle, -r*sinAngle, r*cosAngle)
+        buffer[:, :] = [[cosAngle, -r*sinAngle], [sinAngle, r*cosAngle]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Return the inverse transformation matrix."""

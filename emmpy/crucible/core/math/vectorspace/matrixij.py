@@ -106,38 +106,3 @@ class MatrixIJ(Matrix2D):
         None
         """
         self[components[name]] = value
-
-    # @staticmethod
-    # def mxv(*args):
-    #     """Compute the product of a matrix with a vector.
-
-    #     Multiply a 2-D vector by a 2-D matrix.
-
-    #     Parameters
-    #     ----------
-    #     m : MatrixIJ
-    #         The matrix to multiply.
-    #     v : VectorIJ
-    #         The vector to multiply.
-    #     buffer : VectorIJ, optional
-    #         Buffer to hold the result.
-
-    #     Returns
-    #     -------
-    #     buffer : VectorIJ
-    #         Vector product.
-
-    #     Raises
-    #     ------
-    #     ValueError
-    #         If incorrect parameters are supplied.
-    #     """
-    #     if len(args) == 2:
-    #         (m, v) = args
-    #         buffer = VectorIJ()
-    #     elif len(args) == 3:
-    #         (m, v, buffer) = args
-    #     else:
-    #         raise ValueError
-    #     buffer[:] = m.dot(v)
-    #     return buffer

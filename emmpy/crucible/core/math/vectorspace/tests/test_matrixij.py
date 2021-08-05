@@ -82,25 +82,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(KeyError):
             data = m.bad
 
-    # def test_mxv(self):
-    #     """Test the mxv method."""
-    #     mdata = [[1, 2], [3, 4]]
-    #     vdata1 = [1, 2]
-    #     m = MatrixIJ(mdata)
-    #     v1 = VectorIJ(vdata1)
-    #     # No buffer
-    #     v3 = m.dot(v1)
-    #     v2 = MatrixIJ.mxv(m, v1)
-    #     for col in range(2):
-    #         self.assertAlmostEqual(v2[col], v3[col])
-    #     # Buffer
-    #     v4 = m.dot(v1)
-    #     v3 = VectorIJ()
-    #     v2 = MatrixIJ.mxv(m, v1, v3)
-    #     self.assertIs(v2, v3)
-    #     for col in range(2):
-    #         self.assertAlmostEqual(v2[col], v4[col])
-
 
 if __name__ == '__main__':
     unittest.main()

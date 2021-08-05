@@ -7,6 +7,7 @@ from emmpy.crucible.core.math.coords.polarvector import (
     PolarVector
 )
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
+from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 
 
 class TestBuilder(unittest.TestCase):
@@ -42,7 +43,9 @@ class TestBuilder(unittest.TestCase):
         mij = MatrixIJ()
         p2cj.getTransformation(pv, mij)
         polarVelocity = PolarVector(1, 1)
-        cartesianVelocity = p2cj.mxv(mij, polarVelocity)
+        # cartesianVelocity = p2cj.mxv(mij, polarVelocity)
+        cartesianVelocity = VectorIJ()
+        cartesianVelocity[:] = mij.dot(polarVelocity)
         self.assertAlmostEqual(cartesianVelocity.i, -1.325444263372824)
         self.assertAlmostEqual(cartesianVelocity.j, 0.4931505902785393)
         p2cj.getInverseTransformation(pv, mij)

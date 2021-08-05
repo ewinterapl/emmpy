@@ -1,10 +1,10 @@
 """A vector in Ra/Dec coordinates."""
 
 
-from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
+from emmpy.math.vectors.vector3d import Vector3D
 
 
-class RaDecVector(AbstractVector):
+class RaDecVector(Vector3D):
     """A class representing a vector in the Celestial Coordinate system.
 
     @author G.K.Stephens
@@ -12,19 +12,31 @@ class RaDecVector(AbstractVector):
 
     def __init__(self, radius, raRadians, decRadians):
         """Build a new object."""
-        AbstractVector.__init__(self, radius, raRadians, decRadians)
+        self[:] = [radius, raRadians, decRadians]
 
     def getRadius(self):
         """Return the radius."""
-        return AbstractVector.getI(self)
+        return self[0]
 
     def getRightAscension(self):
         """Return the right ascension."""
-        return AbstractVector.getJ(self)
+        return self[1]
 
     def getDeclination(self):
         """Return the declination."""
-        return AbstractVector.getK(self)
+        return self[2]
+
+    def getI(self):
+        return self[0]
+
+    def getJ(self):
+        return self[1]
+
+    def getK(self):
+        return self[2]
+
+    def getVectorIJK(self):
+        return self
 
 
 # The ZERO vector.

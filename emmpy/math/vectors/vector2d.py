@@ -38,31 +38,3 @@ class Vector2D(Vector):
         """
         v = super().__new__(cls, length=N)
         return v
-
-    def __init__(self, *args, **kargs):
-        """Initialize a new Vector2D object.
-
-        Initialize a new Vector2D object.
-
-        Parameters
-        ----------
-        data : array-like, optional, default (None)*2.
-            Values for 1st and 2nd elements.
-        OR
-        data[0], data[1] : float, optional.
-            Values for 1st and 2nd elements.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 0:
-            data = (None,)*N
-        elif len(args) == 1:
-            (data,) = args
-        elif len(args) == N:
-            data = args
-        else:
-            raise ValueError
-        self[:] = data

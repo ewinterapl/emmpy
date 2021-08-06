@@ -11,15 +11,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(Exception):
             VectorFields()
 
-    def test_createIdentity(self):
-        pass
-
-    def test_createSampled(self):
-        pass
-
-    def test_constantField(self):
-        pass
-
     def test_add(self):
         pass
 

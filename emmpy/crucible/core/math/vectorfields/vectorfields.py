@@ -18,6 +18,36 @@ from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
 )
 
 
+def add(a, b):
+    """Create a vector field by adding the two vector fields.
+
+    Create a vector field by adding the two vector fields. The two fields
+    maintain their separate nature, and are only added when this sum field
+    is evaluated.
+
+    Parameters
+    ----------
+    a, b : VectorField
+        The vector fields to add.
+    
+    Returns
+    -------
+    vf : VectorField
+        A VectorField that computes the component-wise sum (a + b).
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically sums the individual vector
+    # fields and stores the sum in the buffer.
+    def my_evaluate(location, buffer):
+        va = a.evaluate(location, VectorIJK())
+        vb = b.evaluate(location, VectorIJK())
+        buffer[:] = va + vb
+        return buffer
+    vf.evaluate = my_evaluate
+    return vf
+
+
 class VectorFields:
     """Utility functions for vector fields.
 
@@ -34,64 +64,30 @@ class VectorFields:
         """
         raise Exception
 
-    @staticmethod
-    def createIdentity():
-        """Create a VectorField with an identity mapping.
-
-        return a newly constructed VectorField where the returned value is the
-        same as the supplied input
-        """
-        vf = VectorField()
-        # UnwritableVectorIJK location
-        # VectorIJK buffer
-        # vf.evaluate() returns VectorIJK = buffer
-        vf.evaluate = lambda location, buffer: buffer.setTo(location)
-        return vf
-
     # @staticmethod
-    # def createSampled(field, x):
-    #     """convert a univariate vector field (sampled at a given value of the
-    #     independent variable) to a vector field
+    # def add(a, b):
+    #     """Create a vector field by adding the two supplied vector fields.
+
+    #     param a a VectorField
+    #     param b another VectorField
+    #     return a newly created VectorField that computes the component-wise
+    #     sum (a + b)
     #     """
     #     vf = VectorField()
-    #     vf.evaluate = (
-    #         lambda location, buffer: field.evaluate(x, location, buffer))
+
+    #     def my_evaluate(location, buffer):
+    #         # UnwritableVectorIJK location
+    #         # VectorIJK buffer
+    #         # Returns VectorIJK
+    #         # VectorIJK va, vb
+    #         # va = a.evaluate(location)
+    #         # vb = b.evaluate(location)
+    #         va = a.evaluate(location, VectorIJK())
+    #         vb = b.evaluate(location, VectorIJK())
+    #         buffer[:] = va + vb
+    #         return buffer
+    #     vf.evaluate = my_evaluate
     #     return vf
-
-    # @staticmethod
-    # def constantField(vector):
-    #     """Creates a vector field that always returns the supplied vector
-
-    #     return a newly created vector field
-    #     """
-    #     vf = VectorField()
-    #     vf.evaluate = lambda location, buffer: buffer.setTo(vector)
-    #     return vf
-
-    @staticmethod
-    def add(a, b):
-        """Create a vector field by adding the two supplied vector fields.
-
-        param a a VectorField
-        param b another VectorField
-        return a newly created VectorField that computes the component-wise
-        sum (a + b)
-        """
-        vf = VectorField()
-
-        def my_evaluate(location, buffer):
-            # UnwritableVectorIJK location
-            # VectorIJK buffer
-            # Returns VectorIJK
-            # VectorIJK va, vb
-            # va = a.evaluate(location)
-            # vb = b.evaluate(location)
-            va = a.evaluate(location, VectorIJK())
-            vb = b.evaluate(location, VectorIJK())
-            buffer[:] = va + vb
-            return buffer
-        vf.evaluate = my_evaluate
-        return vf
 
     @staticmethod
     def addAll(fields):

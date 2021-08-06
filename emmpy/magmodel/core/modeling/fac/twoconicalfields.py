@@ -1,12 +1,9 @@
 """Magnetic field from 2 conical current sheets."""
 
 
-# import static crucible.core.math.vectorfields.VectorFields.negate;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
-
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
     XYPlaneReflectedField
 )
@@ -34,10 +31,8 @@ class TwoConicalFields(VectorField):
 
         param VectorField field
         """
-        # VectorField field
-        self.field = VectorFields.add(
-            field, XYPlaneReflectedField(VectorFields.negate(field))
-        )
+        self.field = vectorfields.add(
+            field, XYPlaneReflectedField(VectorFields.negate(field)))
 
     def evaluate(self, location, buffer):
         """Evaluate the field.

@@ -68,7 +68,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
         # lon = coordinate.getLongitude()
         # z = coordinate.getHeight()
         return VectorIJK(
-            coordinate.rho*cos(coordinate.getLongitude()),
-            coordinate.rho*sin(coordinate.getLongitude()),
+            coordinate.rho*cos(coordinate.phi),
+            coordinate.rho*sin(coordinate.phi),
             coordinate.getHeight()
         )

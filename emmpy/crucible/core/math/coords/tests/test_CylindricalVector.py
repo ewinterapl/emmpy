@@ -8,13 +8,9 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         CylindricalVector(1.1, 2.2, 3.3)
 
-    # def test_getCylindricalRadius(self):
+    # def test_getLongitude(self):
     #     cv = CylindricalVector(1.1, 2.2, 3.3)
-    #     self.assertAlmostEqual(cv.getCylindricalRadius(), 1.1)
-
-    def test_getLongitude(self):
-        cv = CylindricalVector(1.1, 2.2, 3.3)
-        self.assertAlmostEqual(cv.getLongitude(), 2.2)
+    #     self.assertAlmostEqual(cv.getLongitude(), 2.2)
 
     def test_getHeight(self):
         cv = CylindricalVector(1.1, 2.2, 3.3)

@@ -13,10 +13,10 @@ class TestBuilder(unittest.TestCase):
         value = CylindricalVector(4, 5, 6)
         cvfv = CylindricalVectorFieldValue(position, value)
         self.assertAlmostEqual(cvfv.position.rho, 1)
-        self.assertAlmostEqual(cvfv.position.getLongitude(), 2)
+        self.assertAlmostEqual(cvfv.position.phi, 2)
         self.assertAlmostEqual(cvfv.position.getHeight(), 3)
         self.assertAlmostEqual(cvfv.value.rho, 4)
-        self.assertAlmostEqual(cvfv.value.getLongitude(), 5)
+        self.assertAlmostEqual(cvfv.value.phi, 5)
         self.assertAlmostEqual(cvfv.value.getHeight(), 6)
 
 

@@ -71,7 +71,7 @@ class TestBuilder(unittest.TestCase):
         c2cj.getInverseTransformation(cv1, mijk)
         cylindricalVelocity = c2cj.mxv(mijk, cartesianVelocity)
         self.assertAlmostEqual(cylindricalVelocity.rho, 1)
-        self.assertAlmostEqual(cylindricalVelocity.getLongitude(), 1)
+        self.assertAlmostEqual(cylindricalVelocity.phi, 1)
         self.assertAlmostEqual(cylindricalVelocity.getHeight(), 1)
         with self.assertRaises(Exception):
             c2cj.mxv(mijk, [])

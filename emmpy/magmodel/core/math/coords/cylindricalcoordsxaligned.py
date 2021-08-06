@@ -77,7 +77,7 @@ class CylindricalCoordsXAligned:
             # @param cyl a CylindricalVector holding the cylindrical coordinate
             # @return a UnwritableVectorIJK holding the Cartesian coordinate
             x = cyl.getHeight()
-            phi = cyl.getLongitude()
+            phi = cyl.phi
             rho = cyl.rho
             y = rho*cos(phi)
             z = rho*sin(phi)
@@ -118,9 +118,9 @@ class CylindricalCoordsXAligned:
             # @param field the cylindrical field value at that coordinate
             # @return the Cartesian vector field value
             (pos, field) = args
-            phi = pos.getLongitude()
+            phi = pos.phi
             brho = field.rho
-            bphi = field.getLongitude()
+            bphi = field.phi
             bx = field.getHeight()
             cosPhi = cos(phi)
             sinPhi = sin(phi)

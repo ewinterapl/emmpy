@@ -29,7 +29,7 @@ class CylindricalToCartesianBasisTransformation(Transformation):
               |     0           0           1      |
               `-                                  -'
         """
-        lon = coordPosition.getLongitude()
+        lon = coordPosition.phi
         cosLon = cos(lon)
         sinLon = sin(lon)
         j_DX_DR = cosLon

@@ -84,7 +84,7 @@ class Ffunction(ScalarField):
             rho = location.rho
             rho2 = rho*rho
             r = math.sqrt(rho2 + y*y)
-            phi = location.getLongitude()
+            phi = location.phi
             sinPhi = math.sin(phi)
             cosPhi = math.cos(phi)
 

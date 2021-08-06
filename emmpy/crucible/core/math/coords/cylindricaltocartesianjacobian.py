@@ -50,7 +50,7 @@ class CylindricalToCartesianJacobian(Transformation):
         # JACOBI (DY,DZ) = 0.0D0
         # JACOBI (DZ,DZ) = 1.0D0
         r = coordPosition.rho
-        lon = coordPosition.getLongitude()
+        lon = coordPosition.phi
         cosLon = cos(lon)
         sinLon = sin(lon)
         j_DX_DR = cosLon

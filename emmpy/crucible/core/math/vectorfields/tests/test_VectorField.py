@@ -14,6 +14,8 @@ class TestBuilder(unittest.TestCase):
         """Test the evaluate method."""
         with self.assertRaises(AbstractMethodException):
             VectorField.evaluate(None, None)
+        with self.assertRaises(AbstractMethodException):
+            VectorField.evaluate(None, None, None)
 
 
 if __name__ == '__main__':

@@ -26,15 +26,3 @@ class CylindricalVector(MyCylindricalVector):
     def getHeight(self):
         """Return the height (often denoted as z)."""
         return self.z
-
-    # def getI(self):
-    #     return self.rho
-    
-    # def getJ(self):
-        # return self.phi
-
-    # def getK(self):
-    #     return self.z
-
-    def getVectorIJK(self):
-        return self

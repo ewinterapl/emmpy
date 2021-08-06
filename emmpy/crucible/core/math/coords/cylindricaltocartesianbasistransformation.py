@@ -57,11 +57,10 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordValue) = args
             vect = VectorIJK()
-            vect[:] = jacobian.dot(coordValue.getVectorIJK())
+            vect[:] = jacobian.dot(coordValue)
             return vect
         else:
             (inverseTransformation, cartVelocity) = args
-            # vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)
             vect = VectorIJK()
             vect[:] = inverseTransformation.dot(cartVelocity)
             return CylindricalVector(vect.i, vect.j, vect.k)

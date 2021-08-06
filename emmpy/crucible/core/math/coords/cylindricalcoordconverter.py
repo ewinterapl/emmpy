@@ -70,5 +70,5 @@ class CylindricalCoordConverter(AbstractCoordConverter):
         return VectorIJK(
             coordinate.rho*cos(coordinate.phi),
             coordinate.rho*sin(coordinate.phi),
-            coordinate.getHeight()
+            coordinate.z
         )

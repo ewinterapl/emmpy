@@ -55,7 +55,7 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
             # VectorIJK v
             v = VectorIJK()
             vcyl = VectorIJK(bField.rho, bField.phi,
-                             bField.getHeight())
+                             bField.z)
             v[:] = trans.dot(vcyl)
             bFieldExpansionDeformed.append(
                 CylindricalVector(v.i, v.j, v.k)

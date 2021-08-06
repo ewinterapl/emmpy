@@ -78,7 +78,7 @@ class Ffunction(ScalarField):
             # coordinates (in modified cylindrical coordinates) and the partial
             # derivatives of F with respect to these original coordinates.
             # param location the
-            y = location.getHeight()
+            y = location.z
 
             # convert to spherical and cylindrical
             rho = location.rho

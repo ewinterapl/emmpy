@@ -14,7 +14,3 @@ class CylindricalVector(MyCylindricalVector):
     def __init__(self, cylindricalRadius, longInRadians, height):
         """Build a new object."""
         super().__init__(cylindricalRadius, longInRadians, height)
-
-    def getHeight(self):
-        """Return the height (often denoted as z)."""
-        return self.z

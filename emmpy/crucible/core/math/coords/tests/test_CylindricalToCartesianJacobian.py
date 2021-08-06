@@ -72,7 +72,7 @@ class TestBuilder(unittest.TestCase):
         cylindricalVelocity = c2cj.mxv(mijk, cartesianVelocity)
         self.assertAlmostEqual(cylindricalVelocity.rho, 1)
         self.assertAlmostEqual(cylindricalVelocity.phi, 1)
-        self.assertAlmostEqual(cylindricalVelocity.getHeight(), 1)
+        self.assertAlmostEqual(cylindricalVelocity.z, 1)
         with self.assertRaises(Exception):
             c2cj.mxv(mijk, [])
 

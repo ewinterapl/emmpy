@@ -19,7 +19,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsNotNone(cylindrical)
         self.assertAlmostEqual(cylindrical.rho, 3.6055512754639896)
         self.assertAlmostEqual(cylindrical.phi, 0.982793723247329)
-        self.assertAlmostEqual(cylindrical.getHeight(), 1)
+        self.assertAlmostEqual(cylindrical.z, 1)
         cartesian = ccxa.convert(cylindrical)
         self.assertIsNotNone(cartesian)
         self.assertAlmostEqual(cartesian.i, 1)

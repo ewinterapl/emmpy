@@ -76,7 +76,7 @@ class CylindricalCoordsXAligned:
             # Converts a cylindrical coordinate to Cartesian coordinate
             # @param cyl a CylindricalVector holding the cylindrical coordinate
             # @return a UnwritableVectorIJK holding the Cartesian coordinate
-            x = cyl.getHeight()
+            x = cyl.z
             phi = cyl.phi
             rho = cyl.rho
             y = rho*cos(phi)
@@ -121,7 +121,7 @@ class CylindricalCoordsXAligned:
             phi = pos.phi
             brho = field.rho
             bphi = field.phi
-            bx = field.getHeight()
+            bx = field.z
             cosPhi = cos(phi)
             sinPhi = sin(phi)
             by = cosPhi*brho - sinPhi*bphi

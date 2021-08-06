@@ -47,7 +47,7 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         # VectorIJK v
         v = trans.mxv(VectorIJK(
             bField.rho, bField.getLongitude(),
-            bField.getHeight())
+            bField.z)
         )
 
         return CylindricalVector(v.getI(), v.getJ(), v.getK())

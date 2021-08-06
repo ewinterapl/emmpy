@@ -8,10 +8,6 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         CylindricalVector(1.1, 2.2, 3.3)
 
-    def test_getHeight(self):
-        cv = CylindricalVector(1.1, 2.2, 3.3)
-        self.assertAlmostEqual(cv.getHeight(), 3.3)
-
 
 if __name__ == '__main__':
     unittest.main()

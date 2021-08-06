@@ -2,7 +2,7 @@
 
 
 import sys
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
 )

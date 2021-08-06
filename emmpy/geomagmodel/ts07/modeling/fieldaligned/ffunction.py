@@ -8,7 +8,7 @@
 
 import math
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 # import crucible.core.math.vectorfields.ScalarField;
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK

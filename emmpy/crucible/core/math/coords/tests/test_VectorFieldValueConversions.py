@@ -3,9 +3,7 @@ import unittest
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import (
-    CylindricalVector
-)
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )

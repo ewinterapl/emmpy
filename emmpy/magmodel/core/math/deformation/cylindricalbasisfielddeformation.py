@@ -6,7 +6,7 @@
 # import crucible.core.math.vectorspace.UnwritableMatrixIJK;
 # import magmodel.core.math.vectorfields.DifferentiableCylindricalVectorField;
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
     CylindricalFieldDeformation

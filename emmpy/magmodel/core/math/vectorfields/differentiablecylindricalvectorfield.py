@@ -1,7 +1,6 @@
 """A differentiable vector field in cylindrical coordinates."""
 
 
-# import crucible.core.math.coords.CylindricalVector;
 # import crucible.core.math.vectorfields.VectorField;
 
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (

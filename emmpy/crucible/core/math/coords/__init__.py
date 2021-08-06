@@ -106,7 +106,6 @@ coordconverters.py
 cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
-cylindricalvector.py
 cylindricalvectorfieldvalue.py
 latitudinalcoordconverter.py
 latitudinaltocartesianjacobian.py

@@ -10,7 +10,6 @@ methods will raise exceptions if invoked.
 # import crucible.core.exceptions.FunctionEvaluationException;
 # import crucible.core.math.coords.CartesianVectorFieldValue;
 # import crucible.core.math.coords.CoordConverters;
-# import crucible.core.math.coords.CylindricalVector;
 # import crucible.core.math.coords.CylindricalVectorFieldValue;
 # import crucible.core.math.coords.VectorFieldValueConversions;
 # import crucible.core.math.vectorfields.VectorField;

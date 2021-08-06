@@ -5,7 +5,6 @@
 # import static crucible.core.math.coords.VectorFieldValueConversions.convert;
 # import com.google.common.collect.ImmutableList;
 # import crucible.core.exceptions.FunctionEvaluationException;
-# import crucible.core.math.coords.CylindricalVector;
 # import crucible.core.math.coords.CylindricalVectorFieldValue;
 # import crucible.core.math.vectorfields.VectorField;
 # import crucible.core.math.vectorspace.UnwritableVectorIJK;

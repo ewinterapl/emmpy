@@ -188,6 +188,35 @@ def scaleLocation(field, scaleFactor):
     return vf
 
 
+def multiply(a, b):
+    """Create a vector field by multiplying scalar and vector fields.
+
+    Create a vector field by multiplying scalar and vector fields.
+
+    Parameters
+    ----------
+    a : ScalarField
+        A scalar field.
+    b : VectorField
+        A vector field.
+
+    Returns
+    -------
+    buffer : VectorField
+        The product of the scalar and vector fields.
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically computes the product of the
+    # original scalar and vector fields and stores the result in the buffer.
+    def my_evaluate(location, buffer):
+        b.evaluate(location, buffer)
+        return buffer.scale(a.evaluate(location))
+
+    vf.evaluate = my_evaluate
+    return vf
+
+
 class VectorFields:
     """Utility functions for vector fields.
 
@@ -219,63 +248,6 @@ class VectorFields:
             When invoked.
         """
         raise AbstractMethodException
-
-    # @staticmethod
-    # def scaleLocation(field, scaleFactor):
-    #     """Create a vector field by scaling the location of a field.
-
-    #     param field a VectorField
-    #     param scaleFactor a float value to scale the location vector
-    #     return a newly created VectorField that scales the input location
-    #     vector (location*scaleFactor)
-    #     """
-    #     vf = VectorField()
-
-    #     def my_evaluate(location, buffer):
-    #         # UnwritableVectorIJK location
-    #         # VectorIJK buffer
-    #         # Create a scaled location first.
-    #         uvijk = VectorIJK(scaleFactor, location)
-    #         field.evaluate(uvijk, buffer)
-    #         return buffer
-    #     vf.evaluate = my_evaluate
-
-    #     return vf
-
-    @staticmethod
-    def multiply(a, b):
-        """Create a vector field by multiplying scalar and vector fields.
-
-        param a a scalar field
-        param b a vector field
-        return a newly created vector field that computes the
-        multiplication ( a * b )
-        """
-        vf = VectorField()
-
-        def my_evaluate(location, buffer):
-            b.evaluate(location, buffer)
-            return buffer.scale(a.evaluate(location))
-        vf.evaluate = my_evaluate
-        return vf
-
-    @staticmethod
-    def cross(a, b):
-        """Create a vector field as the cross product of 2 fields.
-
-        param a a vector field
-        param b another vector field
-        return a newly created vector field that computes the multiplication
-        ( a x b )
-        """
-        vf = VectorField()
-
-        def my_evaluate(location, buffer):
-            aVect = a.evaluate(location)
-            b.evaluate(location, buffer)
-            return VectorIJK.cross(aVect, buffer, buffer)
-        vf.evaluate = my_evaluate
-        return vf
 
     @staticmethod
     def compose(iField, jField, kField):

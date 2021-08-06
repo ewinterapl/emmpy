@@ -17,23 +17,29 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(AbstractMethodException):
             VectorFields()
 
-    # def test_add(self):
-    #     pass
+    def test_add(self):
+        """Test the add method."""
+        pass
 
-    # def test_addAll(self):
-    #     pass
+    def test_addAll(self):
+        """Test the addAll method."""
+        pass
 
-    # def test_negate(self):
-    #     pass
+    def test_negate(self):
+        """Test the negate method."""
+        pass
 
-    # def test_scale(self):
-    #     pass
+    def test_scale(self):
+        """Test the scale method."""
+        pass
 
-    # def test_scaleLocation(self):
-    #     pass
+    def test_scaleLocation(self):
+        """Test the scaleLocation method."""
+        pass
 
-    # def test_multiply(self):
-    #     pass
+    def test_multiply(self):
+        """Test the multiply method."""
+        pass
 
     # def test_cross(self):
     #     pass

@@ -2,11 +2,11 @@
 
 Modules
 -------
-test_DifferentiableVectorField.py
-test_ScalarField.py
-test_ScalarField2D.py
-test_VectorField.py
-test_VectorFields.py
+test_differentiablevectorField.py
+test_scalarfield.py
+test_scalarfield2d.py
+test_vectorfield.py
+test_vectorfields.py
 
 Packages
 --------

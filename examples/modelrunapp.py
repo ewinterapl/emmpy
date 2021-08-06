@@ -67,6 +67,12 @@ def runThinSheet():
     bVect = model.evaluate(pos)
     print(bVect.i, bVect.j, bVect.k)
 
+    # Check the computed values against the expected values.
+    bVect_ref = VectorIJK(-0.47654433563669696, 2.0705600362600864,
+                          1.5889255378262552)
+    for i in range(len(bVect)):
+        assert bVect[i] == bVect_ref[i], "bVect[%d] is wrong!" % i
+
     print("Ending runThinSheet()")
 
 
@@ -105,6 +111,12 @@ def runTs07D(coeffsFile):
     # Returns an UnwritableVectorIJK.
     bVect = model.evaluate(pos)
     print(bVect.i, bVect.j, bVect.k)
+
+    # Check the computed values against the expected values.
+    bVect_ref = VectorIJK(18.11269495223987, 19.89715571940947,
+                          17.20252488064584)
+    for i in range(len(bVect)):
+        assert bVect[i] == bVect_ref[i], "bVect[%d] is wrong!" % i
 
     print("Ending runTs07D()")
 

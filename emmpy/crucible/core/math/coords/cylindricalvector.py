@@ -15,10 +15,6 @@ class CylindricalVector(MyCylindricalVector):
         """Build a new object."""
         super().__init__(cylindricalRadius, longInRadians, height)
 
-    # def getLongitude(self):
-    #     """Return the longitude."""
-    #     return self.phi
-
     def getHeight(self):
         """Return the height (often denoted as z)."""
         return self.z

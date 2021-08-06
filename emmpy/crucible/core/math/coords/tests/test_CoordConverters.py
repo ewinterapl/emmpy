@@ -29,9 +29,9 @@ class TestBuilder(unittest.TestCase):
     def test_convertToCylindrical(self):
         cartesian = VectorIJK(1, 2, 3)
         cylindrical = CoordConverters.convertToCylindrical(cartesian)
-        self.assertAlmostEqual(cylindrical.getI(), 2.23606797749979)
-        self.assertAlmostEqual(cylindrical.getJ(), 1.1071487177940904)
-        self.assertAlmostEqual(cylindrical.getK(), 3)
+        self.assertAlmostEqual(cylindrical.getCylindricalRadius(), 2.23606797749979)
+        self.assertAlmostEqual(cylindrical.getLongitude(), 1.1071487177940904)
+        self.assertAlmostEqual(cylindrical.getHeight(), 3)
 
     def test_convertToLatitudinal(self):
         cartesian = VectorIJK(1, 2, 3)

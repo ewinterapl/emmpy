@@ -12,12 +12,12 @@ class TestBuilder(unittest.TestCase):
         position = CylindricalVector(1, 2, 3)
         value = CylindricalVector(4, 5, 6)
         cvfv = CylindricalVectorFieldValue(position, value)
-        self.assertAlmostEqual(cvfv.position.getI(), 1)
-        self.assertAlmostEqual(cvfv.position.getJ(), 2)
-        self.assertAlmostEqual(cvfv.position.getK(), 3)
-        self.assertAlmostEqual(cvfv.value.getI(), 4)
-        self.assertAlmostEqual(cvfv.value.getJ(), 5)
-        self.assertAlmostEqual(cvfv.value.getK(), 6)
+        self.assertAlmostEqual(cvfv.position.getCylindricalRadius(), 1)
+        self.assertAlmostEqual(cvfv.position.getLongitude(), 2)
+        self.assertAlmostEqual(cvfv.position.getHeight(), 3)
+        self.assertAlmostEqual(cvfv.value.getCylindricalRadius(), 4)
+        self.assertAlmostEqual(cvfv.value.getLongitude(), 5)
+        self.assertAlmostEqual(cvfv.value.getHeight(), 6)
 
 
 if __name__ == '__main__':

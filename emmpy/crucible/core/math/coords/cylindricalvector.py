@@ -1,10 +1,11 @@
 """Represenation of a vector in cylindrical coordinates."""
 
 
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector as MyCylindricalVector
 from emmpy.math.vectors.vector3d import Vector3D
 
 
-class CylindricalVector(Vector3D):
+class CylindricalVector(MyCylindricalVector):
     """A class representing a vector in the cylindrical coordinate system.
 
     @author G.K.Stephens
@@ -12,32 +13,28 @@ class CylindricalVector(Vector3D):
 
     def __init__(self, cylindricalRadius, longInRadians, height):
         """Build a new object."""
-        self[:] = [cylindricalRadius, longInRadians, height]
+        super().__init__(cylindricalRadius, longInRadians, height)
 
     def getCylindricalRadius(self):
         """Return the cylindrical radius (often denoted as r)."""
-        return self[0]
+        return self.rho
 
     def getLongitude(self):
         """Return the longitude."""
-        return self[1]
+        return self.phi
 
     def getHeight(self):
         """Return the height (often denoted as z)."""
-        return self[2]
+        return self.z
 
-    def getI(self):
-        return self[0]
+    # def getI(self):
+    #     return self.rho
     
-    def getJ(self):
-        return self[1]
+    # def getJ(self):
+        # return self.phi
 
-    def getK(self):
-        return self[2]
+    # def getK(self):
+    #     return self.z
 
     def getVectorIJK(self):
         return self
-
-
-# The ZERO vector.
-ZERO = CylindricalVector(0, 0, 0)

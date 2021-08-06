@@ -28,7 +28,7 @@ class VectorField:
     None
     """
 
-    def evaluate(self, location):
+    def evaluate(self, location, buffer=None):
         """Evaluate the vector field at a position.
 
         This abstract method must be overridden in a subclass.
@@ -40,6 +40,8 @@ class VectorField:
         ----------
         location : Vector3D
             The position in 3-dimensional space.
+        buffer : Vector3D, optional
+            Buffer to hold the result.
 
         Returns
         -------

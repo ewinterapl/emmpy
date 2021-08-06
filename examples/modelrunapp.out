@@ -1,0 +1,10 @@
+Starting main()
+Starting ModelRunApp()
+Starting runThinSheet()
+-0.47654433563669696 2.0705600362600864 1.5889255378262552
+Ending runThinSheet()
+Starting runTs07D() with 2015_076_16_20.par.
+18.11269495223987 19.89715571940947 17.20252488064584
+Ending runTs07D()
+Ending ModelRunApp()
+Ending main()

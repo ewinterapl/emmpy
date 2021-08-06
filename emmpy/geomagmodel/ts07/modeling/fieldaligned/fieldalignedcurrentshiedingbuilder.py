@@ -300,7 +300,7 @@ class FieldAlignedCurrentShiedingBuilder:
                 self.trigParityI, psiT1, pExpansion, rExpansion,
                 aPerpendicular, psiT2, qExpansion, sExpansion, aParallel),
                 self.scalingCoefficient)
-        return VectorFields.scaleLocation(f, dynamicPressureScalingFactor)
+        return vectorfields.scaleLocation(f, dynamicPressureScalingFactor)
 
     @staticmethod
     def fillShieldingCoeffs(region, mode, dipoleTilt, xScale, trigParityI,

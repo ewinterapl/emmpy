@@ -199,7 +199,7 @@ class FieldAlignedCurrentBuilder:
         )
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4)
-        pDynScaledField = VectorFields.scaleLocation(
+        pDynScaledField = vectorfields.scaleLocation(
             stretchedField, dynamicPressureScalingFactor
         )
 

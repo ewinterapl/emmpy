@@ -158,6 +158,36 @@ def scale(field, scaleFactor):
     return vf
 
 
+def scaleLocation(field, scaleFactor):
+    """Create a vector field by scaling the location of a field.
+
+    Create a vector field by scaling the location of a field.
+
+    Parameters
+    ----------
+    field : VectorField
+        The vector field for which to scale locations.
+     scaleFactor : float
+        Scale factor for vector field locations.
+    
+    Returns
+    -------
+    vf : VectorField
+        A vector field that computes the value at a scaled location.
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically scales the location of the
+    # original vector field and stores the result in the buffer.
+    def my_evaluate(location, buffer):
+        v = VectorIJK(scaleFactor, location)
+        field.evaluate(v, buffer)
+        return buffer
+
+    vf.evaluate = my_evaluate
+    return vf
+
+
 class VectorFields:
     """Utility functions for vector fields.
 
@@ -190,27 +220,27 @@ class VectorFields:
         """
         raise AbstractMethodException
 
-    @staticmethod
-    def scaleLocation(field, scaleFactor):
-        """Create a vector field by scaling the location of a field.
+    # @staticmethod
+    # def scaleLocation(field, scaleFactor):
+    #     """Create a vector field by scaling the location of a field.
 
-        param field a VectorField
-        param scaleFactor a float value to scale the location vector
-        return a newly created VectorField that scales the input location
-        vector (location*scaleFactor)
-        """
-        vf = VectorField()
+    #     param field a VectorField
+    #     param scaleFactor a float value to scale the location vector
+    #     return a newly created VectorField that scales the input location
+    #     vector (location*scaleFactor)
+    #     """
+    #     vf = VectorField()
 
-        def my_evaluate(location, buffer):
-            # UnwritableVectorIJK location
-            # VectorIJK buffer
-            # Create a scaled location first.
-            uvijk = VectorIJK(scaleFactor, location)
-            field.evaluate(uvijk, buffer)
-            return buffer
-        vf.evaluate = my_evaluate
+    #     def my_evaluate(location, buffer):
+    #         # UnwritableVectorIJK location
+    #         # VectorIJK buffer
+    #         # Create a scaled location first.
+    #         uvijk = VectorIJK(scaleFactor, location)
+    #         field.evaluate(uvijk, buffer)
+    #         return buffer
+    #     vf.evaluate = my_evaluate
 
-        return vf
+    #     return vf
 
     @staticmethod
     def multiply(a, b):

@@ -113,7 +113,7 @@ class DipoleShieldingField:
         )
         pDynScale3 = pDynScale*pDynScale*pDynScale
         dipoleShieldingField = (vectorfields.scale(
-            VectorFields.scaleLocation(ppchf, pDynScale), pDynScale3))
+            vectorfields.scaleLocation(ppchf, pDynScale), pDynScale3))
 
         return dipoleShieldingField
 

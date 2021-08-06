@@ -4,18 +4,12 @@
 import unittest
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import (
-    VectorFields
+    add, addAll, negate, scale, scaleLocation
 )
-from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class TestBuilder(unittest.TestCase):
     """Tests for the vectorfields module."""
-
-    def test___init__(self):
-        """Test the __init__ method."""
-        with self.assertRaises(AbstractMethodException):
-            VectorFields()
 
     def test_add(self):
         """Test the add method."""

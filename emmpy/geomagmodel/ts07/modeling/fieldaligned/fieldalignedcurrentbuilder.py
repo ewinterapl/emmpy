@@ -2,6 +2,7 @@
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
     BirkelandDeformationFunction
 )
@@ -179,7 +180,7 @@ class FieldAlignedCurrentBuilder:
         deformation = BirkelandDeformationFunction(
             self.a, self.b, self.c, self.d
         )
-        deformedField = VectorFields.scale(
+        deformedField = vectorfields.scale(
             SphericalFieldDeformation(undeformedConicalField,
                                       deformation),
             self.bmScaleFactor
@@ -189,7 +190,7 @@ class FieldAlignedCurrentBuilder:
         twoCones = TwoConicalFields(deformedField)
 
         # scale the FIELD output by the coefficient
-        scaledTwoCones = VectorFields.scale(twoCones, self.scalingCoefficient)
+        scaledTwoCones = vectorfields.scale(twoCones, self.scalingCoefficient)
 
         stretchedField = ScaledField(
             StretchedField(

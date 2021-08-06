@@ -4,6 +4,7 @@
 from math import cos, sin
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
@@ -111,7 +112,7 @@ class DipoleShieldingField:
                 parrCoeffs)
         )
         pDynScale3 = pDynScale*pDynScale*pDynScale
-        dipoleShieldingField = (VectorFields.scale(
+        dipoleShieldingField = (vectorfields.scale(
             VectorFields.scaleLocation(ppchf, pDynScale), pDynScale3))
 
         return dipoleShieldingField
@@ -120,6 +121,6 @@ class DipoleShieldingField:
     def createScaled(dipoleTiltAngle, dynamicPressure, scaleFactor):
         """Creates a new dipole shielding field where the output vector is
         scaled by the supplied value."""
-        return VectorFields.scale(
+        return vectorfields.scale(
             DipoleShieldingField.create(dipoleTiltAngle, dynamicPressure),
             scaleFactor)

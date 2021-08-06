@@ -93,16 +93,16 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                     amp).build()
                 shieldingFieldsBuilder.append(shieldingField)
                 basisFunctionsBuilder.append(
-                    VectorFields.scale(vectorfields.add(field, shieldingField), 1.0/amp))
+                    vectorfields.scale(vectorfields.add(field, shieldingField), 1.0/amp))
             else:
                 basisFunctionsBuilder.append(VectorFields.scale(field, 1.0/amp))
 
         self.internalFields = internalFieldsBuilder
         self.shieldingFields = shieldingFieldsBuilder
-        self.internalField = VectorFields.addAll(self.internalFields)
+        self.internalField = vectorfields.addAll(self.internalFields)
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4)
-        self.shieldingField = VectorFields.addAll(self.shieldingFields)
+        self.shieldingField = vectorfields.addAll(self.shieldingFields)
 
         self.basisFunctions = basisFunctionsBuilder
         self.basisCoefficients = basisCoefficientsBuilder

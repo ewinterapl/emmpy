@@ -1,15 +1,20 @@
 """Utility functions for vector fields.
 
-Author : vandejd1 Created : Feb 27, 2012
+Utility functions for vector fields.
 
-Copyright (C) 2012 The Johns Hopkins University Applied Physics Laboratory
-(JHU/APL) All rights reserved
+Authors
+-------
+Jon Vanderpool (27 February 2012)
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )
@@ -44,6 +49,111 @@ def add(a, b):
         vb = b.evaluate(location, VectorIJK())
         buffer[:] = va + vb
         return buffer
+
+    vf.evaluate = my_evaluate
+    return vf
+
+
+def addAll(fields):
+    """Create a vector field by adding multiple vector fields.
+
+    Create a vector field by adding multiple vector fields. The fields
+    maintain their separate nature, and are only added when this sum field
+    is evaluated.
+
+    Parameters
+    ----------
+    fields : array-like of VectorField
+        The vector fields to add.
+    
+    Returns
+    -------
+    vf : VectorField
+        A VectorField that computes the component-wise sum of the fields.
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically sums the individual vector
+    # fields and stores the sum in the buffer.
+    def my_evaluate(location, buffer):
+        vsum = np.zeros((3,))
+        for field in fields:
+            field.evaluate(location, buffer)
+            vsum[:] += buffer
+        buffer[:] = vsum
+        return buffer
+
+    vf.evaluate = my_evaluate
+    return vf
+
+
+def negate(field):
+    """Create a vector field by negating a vector field.
+
+    Create a vector field by negating a vector field. The original field
+    maintains its separate nature, and is only negated when this negated
+    field is evaluated.
+
+    Parameters
+    ----------
+    field : VectorField
+        The vector field to negate.
+    
+    Returns
+    -------
+    vf : VectorField
+        A VectorField that computes the negation of the original field
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically negates the original vector
+    # field and stores the result in the buffer.
+    def my_evaluate(location, buffer):
+        field.evaluate(location, buffer)
+        buffer *= -1
+        return buffer
+
+    vf.evaluate = my_evaluate
+    return vf
+
+
+def scale(field, scaleFactor):
+    """Create a vector field by scaling a vector field.
+
+    Create a vector field by scaling a vector field. The original field
+    maintains its separate nature, and is only scaled when this scaled
+    field is evaluated.
+
+    Parameters
+    ----------
+    field : VectorField
+        The vector field to negate.
+    scaleFactor : float
+        Scale factor to apply to vector field value.
+
+    Returns
+    -------
+    vf : VectorField
+        A VectorField that computes the scaled version of the original.
+        field.
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically scales the original vector
+    # field and stores the result in the buffer.
+    def my_evaluate(*my_args):
+        if len(my_args) == 1:
+            (location,) = my_args
+            buffer = VectorIJK()
+        else:
+            (location, buffer) = my_args
+        if isinstance(field, SphericalFieldDeformation):
+            fe = SphericalVectorField.evaluate(field, location, buffer)
+        else:
+            fe = field.evaluate(location, buffer)
+        fe *= scaleFactor
+        return fe
+
     vf.evaluate = my_evaluate
     return vf
 
@@ -51,120 +161,34 @@ def add(a, b):
 class VectorFields:
     """Utility functions for vector fields.
 
-    Not all returned implementations are thread safe
+    Utility functions for vector fields.
 
-    author vandejd1
-    author G.K.Stephens
+    Note: Not all returned implementations are thread safe
+
+    Attributes
+    ----------
+    None
     """
 
     def __init__(self):
-        """Build a new object.
+        """Initialize a new VectorFields object.
 
-        INTERFACE - DO NOT INSTANTIATE
+        Initialize a new VectorFields object.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
-
-    # @staticmethod
-    # def add(a, b):
-    #     """Create a vector field by adding the two supplied vector fields.
-
-    #     param a a VectorField
-    #     param b another VectorField
-    #     return a newly created VectorField that computes the component-wise
-    #     sum (a + b)
-    #     """
-    #     vf = VectorField()
-
-    #     def my_evaluate(location, buffer):
-    #         # UnwritableVectorIJK location
-    #         # VectorIJK buffer
-    #         # Returns VectorIJK
-    #         # VectorIJK va, vb
-    #         # va = a.evaluate(location)
-    #         # vb = b.evaluate(location)
-    #         va = a.evaluate(location, VectorIJK())
-    #         vb = b.evaluate(location, VectorIJK())
-    #         buffer[:] = va + vb
-    #         return buffer
-    #     vf.evaluate = my_evaluate
-    #     return vf
-
-    @staticmethod
-    def addAll(fields):
-        """Create a vector field by adding all the supplied vector fields.
-
-        param fields a list of VectorField
-        return a newly created vector field that computes the component-wise
-        sum ( a + b + ...) of all the vector fields
-        """
-        vf = VectorField()
-
-        def my_evaluate(location, buffer):
-            # UnwritableVectorIJK location
-            # VectorIJK buffer
-            fx = 0.0
-            fy = 0.0
-            fz = 0.0
-            for field in fields:
-                # VectorField field
-                field.evaluate(location, buffer)
-                fx += buffer.getI()
-                fy += buffer.getJ()
-                fz += buffer.getK()
-            # Return buffer = VectorIJK
-            return buffer.setTo(fx, fy, fz)
-        vf.evaluate = my_evaluate
-        return vf
-
-    @staticmethod
-    def negate(field):
-        """Create a vector field by negating a vector field.
-
-        The location is not negated.
-
-        param field a VectorField
-        return a newly created VectorField that negates the value of the input
-        field
-        """
-        vf = VectorField()
-        def my_evaluate(location, buffer):
-            field.evaluate(location, buffer)
-            buffer[:] = -buffer
-            return buffer
-        vf.evaluate = my_evaluate
-        return vf
-
-    @staticmethod
-    def scale(field, scaleFactor):
-        """Create a vector field by scaling a vector field.
-
-        The location is not scaled.
-
-        param field a VectorField
-        param scaleFactor a float value to scale the output
-        return a newly created VectorField that computes the scale
-        (a*scaleFactor)
-        """
-        vf = VectorField()
-        # UnwritableVectorIJK location
-        # VectorIJK buffer
-
-        def my_evaluate(*my_args):
-            if len(my_args) == 1:
-                (location,) = my_args
-                buffer = VectorIJK()
-            elif len(my_args) == 2:
-                (location, buffer) = my_args
-            else:
-                raise Exception
-            if isinstance(field, SphericalFieldDeformation):
-                fe = SphericalVectorField.evaluate(field, location, buffer)
-            else:
-                fe = field.evaluate(location, buffer)
-            fe *= scaleFactor
-            return fe
-        vf.evaluate = my_evaluate
-        return vf
+        raise AbstractMethodException
 
     @staticmethod
     def scaleLocation(field, scaleFactor):
@@ -345,26 +369,26 @@ class VectorFields:
         vf.evaluate = my_evaluate
         return vf
 
-    @staticmethod
-    def withCache(expensiveToComputeField, maxItemsToCache):
-        """Evaluate a vector field using a cache.
+    # @staticmethod
+    # def withCache(expensiveToComputeField, maxItemsToCache):
+    #     """Evaluate a vector field using a cache.
 
-        If evaluating the Vector field is expensive, and you want to lazily
-        evaluate and save the values for future retrieval, then this method
-        provides a wrapper implementation that caches the values of the
-        VectorField.
+    #     If evaluating the Vector field is expensive, and you want to lazily
+    #     evaluate and save the values for future retrieval, then this method
+    #     provides a wrapper implementation that caches the values of the
+    #     VectorField.
 
-        Set the maxItemsToCache to the most you want to cache.
+    #     Set the maxItemsToCache to the most you want to cache.
 
-        NOTE: this is not view safe, if the input VectorField is changing,
-        this will not be reflected in the returned VectorField.
+    #     NOTE: this is not view safe, if the input VectorField is changing,
+    #     this will not be reflected in the returned VectorField.
 
-        param expensiveToComputeField
-        param maxItemsToCache
-        return a newly created vector field that lazily caches the values of
-        the field at a given location
-        """
-        raise Exception
+    #     param expensiveToComputeField
+    #     param maxItemsToCache
+    #     return a newly created vector field that lazily caches the values of
+    #     the field at a given location
+    #     """
+    #     raise Exception
         # NOT IMPLEMENTED YET
         # final Cache<UnwritableVectorIJK, UnwritableVectorIJK> cache =
         # CacheBuilder.newBuilder().maximumSize(maxItemsToCache).build();

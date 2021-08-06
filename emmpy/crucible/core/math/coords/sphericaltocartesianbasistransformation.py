@@ -6,7 +6,7 @@ from re import T
 
 import numpy as np
 
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -20,8 +20,8 @@ class SphericalToCartesianBasisTransformation(Transformation):
 
     def getTransformation(self, coordPosition, buffer):
         """Get the transformation matrix."""
-        colat = coordPosition.getColatitude()
-        lon = coordPosition.getLongitude()
+        colat = coordPosition.theta
+        lon = coordPosition.phi
         cosColat = cos(colat)
         sinColat = sin(colat)
         cosLong = cos(lon)
@@ -53,7 +53,7 @@ class SphericalToCartesianBasisTransformation(Transformation):
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
             vect = VectorIJK()
-            vect[:] = jacobian.dot(coordVelocity.getVectorIJK())
+            vect[:] = jacobian.dot(coordVelocity)
             return vect
         else:
             (inverseJacobian, cartVelocity) = args

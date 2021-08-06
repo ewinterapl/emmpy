@@ -12,9 +12,7 @@ from emmpy.crucible.core.math.coords.radecvector import (
     RaDecVector
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -54,9 +52,9 @@ class TestBuilder(unittest.TestCase):
     def test_convertToSpherical(self):
         cartesian = VectorIJK(1, 2, 3)
         spherical = CoordConverters.convertToSpherical(cartesian)
-        self.assertAlmostEqual(spherical.getI(), 3.741657386773941)
-        self.assertAlmostEqual(spherical.getJ(), 0.6405223126794246)
-        self.assertAlmostEqual(spherical.getK(), 1.1071487177940904)
+        self.assertAlmostEqual(spherical.r, 3.741657386773941)
+        self.assertAlmostEqual(spherical.theta, 0.6405223126794246)
+        self.assertAlmostEqual(spherical.phi, 1.1071487177940904)
 
     def test_convert(self):
         cylindrical = CylindricalVector(1, 2, 3)

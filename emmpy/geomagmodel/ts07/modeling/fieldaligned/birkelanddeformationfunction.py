@@ -3,7 +3,7 @@
 
 from math import cos, sin, sqrt
 
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
     Results, DifferentiableSphericalVectorField
 )
@@ -43,9 +43,9 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
         return SphericalVector
         """
         # float r, theta, phi
-        r = location.getRadius()
-        theta = location.getColatitude()
-        phi = location.getLongitude()
+        r = location.r
+        theta = location.theta
+        phi = location.phi
 
         # Deform the coordinate system
         # float rDef, thetaDef
@@ -62,9 +62,9 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
         """
 
         # float r, theta, phi
-        r = location.getRadius()
-        theta = location.getColatitude()
-        phi = location.getLongitude()
+        r = location.r
+        theta = location.theta
+        phi = location.phi
 
         # Deform the coordinate system
         # float rDef, thetaDef
@@ -97,19 +97,19 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
         # double drDef_dr, drDef_dtheta, dthetaDef_dr, dthetaDef_dTheta,
         # dphiDef_dPhi
         drDef_dr = (
-            (locPr.getRadius() - locMr.getRadius()) /
+            (locPr.r - locMr.r) /
             (2*BirkelandDeformationFunction.delta)
         )
         drDef_dtheta = (
-            (locPt.getRadius() - locMt.getRadius()) /
+            (locPt.r - locMt.r) /
             (2*BirkelandDeformationFunction.delta)
         )
         dthetaDef_dr = (
-            (locPr.getColatitude() - locMr.getColatitude()) /
+            (locPr.theta - locMr.theta) /
             (2*BirkelandDeformationFunction.delta)
         )
         dthetaDef_dTheta = (
-            (locPt.getColatitude() - locMt.getColatitude()) /
+            (locPt.theta - locMt.theta) /
             (2*BirkelandDeformationFunction.delta)
         )
         dphiDef_dPhi = 1.0

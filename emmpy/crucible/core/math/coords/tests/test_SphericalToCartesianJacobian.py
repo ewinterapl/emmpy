@@ -6,9 +6,7 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 from emmpy.crucible.core.math.coords.sphericaltocartesianjacobian import (
     SphericalToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
@@ -64,9 +62,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(cartesianVelocity.k, -1.325444263372824)
         s2cj.getInverseTransformation(spherical, mijk)
         sphericalVelocity = s2cj.mxv(mijk, cartesianVelocity)
-        self.assertAlmostEqual(sphericalVelocity.getI(), 1)
-        self.assertAlmostEqual(sphericalVelocity.getJ(), 1)
-        self.assertAlmostEqual(sphericalVelocity.getK(), 1)
+        self.assertAlmostEqual(sphericalVelocity.r, 1)
+        self.assertAlmostEqual(sphericalVelocity.theta, 1)
+        self.assertAlmostEqual(sphericalVelocity.phi, 1)
 
 
 if __name__ == '__main__':

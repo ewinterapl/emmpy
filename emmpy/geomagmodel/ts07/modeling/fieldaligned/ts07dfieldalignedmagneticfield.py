@@ -1,7 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield"""
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (

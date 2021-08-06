@@ -1,7 +1,6 @@
 """emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder"""
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
     BirkelandDeformationFunction

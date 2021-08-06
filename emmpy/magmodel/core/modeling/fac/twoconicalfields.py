@@ -2,7 +2,6 @@
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
 import emmpy.crucible.core.math.vectorfields.vectorfields
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (

@@ -37,35 +37,6 @@ class TestBuilder(unittest.TestCase):
         """Test the scaleLocation method."""
         pass
 
-    def test_multiply(self):
-        """Test the multiply method."""
-        pass
-
-    # def test_cross(self):
-    #     pass
-
-    # def test_compose(self):
-    #     pass
-
-    # def test_unitize(self):
-    #     pass
-
-    # def test_unitizeZero(self):
-    #     pass
-
-    # def test_rotate(self):
-    #     pass
-
-    # def test_offset(self):
-    #     pass
-
-    # def filter(self):
-    #     pass
-
-    # def test_withCache(self):
-    #     with self.assertRaises(Exception):
-    #         VectorFields.withCache(None, None)
-
 
 if __name__ == '__main__':
     unittest.main()

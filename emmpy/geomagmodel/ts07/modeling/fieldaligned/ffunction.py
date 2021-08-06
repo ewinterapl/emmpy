@@ -81,7 +81,7 @@ class Ffunction(ScalarField):
             y = location.getHeight()
 
             # convert to spherical and cylindrical
-            rho = location.getCylindricalRadius()
+            rho = location.rho
             rho2 = rho*rho
             r = math.sqrt(rho2 + y*y)
             phi = location.getLongitude()

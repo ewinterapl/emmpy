@@ -46,7 +46,7 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         # evaluate the deformed field
         # VectorIJK v
         v = trans.mxv(VectorIJK(
-            bField.getCylindricalRadius(), bField.getLongitude(),
+            bField.rho, bField.getLongitude(),
             bField.getHeight())
         )
 
@@ -61,12 +61,12 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         return MatrixIJK
         """
         # float r, hr, hp, hz, hrDef, hpDef, hzDef
-        r = originalCoordinate.getCylindricalRadius()
+        r = originalCoordinate.rho
         hr = 1.0
         hp = r
         hz = 1.0
         hrDef = 1.0
-        hpDef = deformed.getF().getCylindricalRadius()
+        hpDef = deformed.getF().rho
         hzDef = 1.0
 
         # float dFrDr, dFrDp, dFrDz

@@ -78,7 +78,7 @@ class CylindricalCoordsXAligned:
             # @return a UnwritableVectorIJK holding the Cartesian coordinate
             x = cyl.getHeight()
             phi = cyl.getLongitude()
-            rho = cyl.getCylindricalRadius()
+            rho = cyl.rho
             y = rho*cos(phi)
             z = rho*sin(phi)
             return VectorIJK(x, y, z)
@@ -119,7 +119,7 @@ class CylindricalCoordsXAligned:
             # @return the Cartesian vector field value
             (pos, field) = args
             phi = pos.getLongitude()
-            brho = field.getCylindricalRadius()
+            brho = field.rho
             bphi = field.getLongitude()
             bx = field.getHeight()
             cosPhi = cos(phi)

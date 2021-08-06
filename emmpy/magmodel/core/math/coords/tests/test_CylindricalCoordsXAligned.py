@@ -17,7 +17,7 @@ class TestBuilder(unittest.TestCase):
         cartesian = VectorIJK(1, 2, 3)
         cylindrical = ccxa.convert(cartesian)
         self.assertIsNotNone(cylindrical)
-        self.assertAlmostEqual(cylindrical.getCylindricalRadius(), 3.6055512754639896)
+        self.assertAlmostEqual(cylindrical.rho, 3.6055512754639896)
         self.assertAlmostEqual(cylindrical.getLongitude(), 0.982793723247329)
         self.assertAlmostEqual(cylindrical.getHeight(), 1)
         cartesian = ccxa.convert(cylindrical)

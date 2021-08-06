@@ -180,7 +180,7 @@ class TwistWarpFfunction(DifferentiableCylindricalVectorField):
         """
         # float x, rho, rho2, phi, sinPhi, cosPhi, rho4L4
         x = location.getHeight()
-        rho = location.getCylindricalRadius()
+        rho = location.rho
         # TODO
         if rho == 0.0:
             rho = 1.0E-14

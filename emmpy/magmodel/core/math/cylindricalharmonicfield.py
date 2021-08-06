@@ -87,7 +87,7 @@ class CylindricalHarmonicField(BasisVectorField):
         # CylindricalVector cylindricalLocation
         cylindricalLocation = CoordConverters.convertToCylindrical(location)
         # float rho, phi, z
-        rho = cylindricalLocation.getCylindricalRadius()
+        rho = cylindricalLocation.rho
         phi = cylindricalLocation.getLongitude()
         z = cylindricalLocation.getHeight()
 

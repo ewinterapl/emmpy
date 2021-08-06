@@ -37,20 +37,20 @@ class TestBuilder(unittest.TestCase):
             cartesian
         )
         self.assertIsNotNone(cylindrical)
-        self.assertAlmostEqual(cylindrical.position.getCylindricalRadius(), 2.2360679774998)
+        self.assertAlmostEqual(cylindrical.position.rho, 2.2360679774998)
         self.assertAlmostEqual(cylindrical.position.getLongitude(), 1.1071487177941)
         self.assertAlmostEqual(cylindrical.position.getHeight(), 3)
-        self.assertAlmostEqual(cylindrical.value.getCylindricalRadius(), 6.260990336999412)
+        self.assertAlmostEqual(cylindrical.value.rho, 6.260990336999412)
         self.assertAlmostEqual(cylindrical.value.getLongitude(), -1.3416407864998732)
         self.assertAlmostEqual(cylindrical.value.getHeight(), 6)
         cylindrical = VectorFieldValueConversions.convertToCylindrical(
             cartesianPosition, cartesianValue
         )
         self.assertIsNotNone(cylindrical)
-        self.assertAlmostEqual(cylindrical.position.getCylindricalRadius(), 2.2360679774998)
+        self.assertAlmostEqual(cylindrical.position.rho, 2.2360679774998)
         self.assertAlmostEqual(cylindrical.position.getLongitude(), 1.1071487177941)
         self.assertAlmostEqual(cylindrical.position.getHeight(), 3)
-        self.assertAlmostEqual(cylindrical.value.getCylindricalRadius(), 6.260990336999412)
+        self.assertAlmostEqual(cylindrical.value.rho, 6.260990336999412)
         self.assertAlmostEqual(cylindrical.value.getLongitude(), -1.3416407864998732)
         self.assertAlmostEqual(cylindrical.value.getHeight(), 6)
         with self.assertRaises(Exception):

@@ -10,7 +10,7 @@ class TestBuilder(unittest.TestCase):
     """Build and run tests for the bugexception module."""
 
     def test___init__(self):
-        """Test the __init__ function."""
+        """Test the __init__ method."""
         e = BugException()
         self.assertIsNotNone(e)
 

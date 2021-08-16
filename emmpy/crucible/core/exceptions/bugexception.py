@@ -1,8 +1,12 @@
 """Bug exception for Crucible code.
 
-Exception generated as a result of something failing that should never fail.
+Exception generated as a result of something failing that should never
+fail.
 
-author F.S.Turner
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 

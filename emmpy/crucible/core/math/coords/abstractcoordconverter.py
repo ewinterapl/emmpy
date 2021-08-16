@@ -1,6 +1,6 @@
 """Abstract base class for 3-D coordinate converters.
 
-This is the abstract base class for all coordinate converters.
+This is the abstract base class for all 3-D coordinate converters.
 
 Authors
 -------

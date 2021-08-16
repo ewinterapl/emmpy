@@ -5,7 +5,7 @@ fail.
 
 Authors
 -------
-F.S.Turner
+F.S. Turner
 Eric Winter (eric.winter@jhuapl.edu)
 """
 

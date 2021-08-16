@@ -3,7 +3,7 @@
 Modules
 -------
 test_abstractcoordconverter.py
-test_AbstractCoordConverterIJ.py
+test_abstractcoordconverterij.py
 test_AbstractVectorFieldValue.py
 test_CartesianVectorFieldValue.py
 test_CoordConverter.py

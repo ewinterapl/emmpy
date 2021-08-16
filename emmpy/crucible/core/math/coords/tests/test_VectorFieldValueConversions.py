@@ -3,15 +3,11 @@ import unittest
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import (
-    CylindricalVector
-)
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue
 )
@@ -37,22 +33,22 @@ class TestBuilder(unittest.TestCase):
             cartesian
         )
         self.assertIsNotNone(cylindrical)
-        self.assertAlmostEqual(cylindrical.position.getI(), 2.2360679774998)
-        self.assertAlmostEqual(cylindrical.position.getJ(), 1.1071487177941)
-        self.assertAlmostEqual(cylindrical.position.getK(), 3)
-        self.assertAlmostEqual(cylindrical.value.getI(), 6.260990336999412)
-        self.assertAlmostEqual(cylindrical.value.getJ(), -1.3416407864998732)
-        self.assertAlmostEqual(cylindrical.value.getK(), 6)
+        self.assertAlmostEqual(cylindrical.position.rho, 2.2360679774998)
+        self.assertAlmostEqual(cylindrical.position.phi, 1.1071487177941)
+        self.assertAlmostEqual(cylindrical.position.z, 3)
+        self.assertAlmostEqual(cylindrical.value.rho, 6.260990336999412)
+        self.assertAlmostEqual(cylindrical.value.phi, -1.3416407864998732)
+        self.assertAlmostEqual(cylindrical.value.z, 6)
         cylindrical = VectorFieldValueConversions.convertToCylindrical(
             cartesianPosition, cartesianValue
         )
         self.assertIsNotNone(cylindrical)
-        self.assertAlmostEqual(cylindrical.position.getI(), 2.2360679774998)
-        self.assertAlmostEqual(cylindrical.position.getJ(), 1.1071487177941)
-        self.assertAlmostEqual(cylindrical.position.getK(), 3)
-        self.assertAlmostEqual(cylindrical.value.getI(), 6.260990336999412)
-        self.assertAlmostEqual(cylindrical.value.getJ(), -1.3416407864998732)
-        self.assertAlmostEqual(cylindrical.value.getK(), 6)
+        self.assertAlmostEqual(cylindrical.position.rho, 2.2360679774998)
+        self.assertAlmostEqual(cylindrical.position.phi, 1.1071487177941)
+        self.assertAlmostEqual(cylindrical.position.z, 3)
+        self.assertAlmostEqual(cylindrical.value.rho, 6.260990336999412)
+        self.assertAlmostEqual(cylindrical.value.phi, -1.3416407864998732)
+        self.assertAlmostEqual(cylindrical.value.z, 6)
         with self.assertRaises(Exception):
             VectorFieldValueConversions.convertToCylindrical(None, None, None)
 
@@ -66,22 +62,22 @@ class TestBuilder(unittest.TestCase):
             cartesian
         )
         self.assertIsNotNone(spherical)
-        self.assertAlmostEqual(spherical.position.getI(), 3.741657386773941)
-        self.assertAlmostEqual(spherical.position.getJ(), 0.64052231267943)
-        self.assertAlmostEqual(spherical.position.getK(), 1.1071487177941)
-        self.assertAlmostEqual(spherical.value.getI(), 8.55235974119758)
-        self.assertAlmostEqual(spherical.value.getJ(), 1.4342743312012725)
-        self.assertAlmostEqual(spherical.value.getK(), -1.3416407864998732)
+        self.assertAlmostEqual(spherical.position.r, 3.741657386773941)
+        self.assertAlmostEqual(spherical.position.theta, 0.64052231267943)
+        self.assertAlmostEqual(spherical.position.phi, 1.1071487177941)
+        self.assertAlmostEqual(spherical.value.r, 8.55235974119758)
+        self.assertAlmostEqual(spherical.value.theta, 1.4342743312012725)
+        self.assertAlmostEqual(spherical.value.phi, -1.3416407864998732)
         spherical = VectorFieldValueConversions.convertToSpherical(
             cartesianPosition, cartesianValue
         )
         self.assertIsNotNone(spherical)
-        self.assertAlmostEqual(spherical.position.getI(), 3.741657386773941)
-        self.assertAlmostEqual(spherical.position.getJ(), 0.64052231267943)
-        self.assertAlmostEqual(spherical.position.getK(), 1.1071487177941)
-        self.assertAlmostEqual(spherical.value.getI(), 8.55235974119758)
-        self.assertAlmostEqual(spherical.value.getJ(), 1.4342743312012725)
-        self.assertAlmostEqual(spherical.value.getK(), -1.3416407864998732)
+        self.assertAlmostEqual(spherical.position.r, 3.741657386773941)
+        self.assertAlmostEqual(spherical.position.theta, 0.64052231267943)
+        self.assertAlmostEqual(spherical.position.phi, 1.1071487177941)
+        self.assertAlmostEqual(spherical.value.r, 8.55235974119758)
+        self.assertAlmostEqual(spherical.value.theta, 1.4342743312012725)
+        self.assertAlmostEqual(spherical.value.phi, -1.3416407864998732)
         with self.assertRaises(Exception):
             VectorFieldValueConversions.convertToSpherical(None, None, None)
 

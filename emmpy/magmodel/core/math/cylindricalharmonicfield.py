@@ -87,9 +87,9 @@ class CylindricalHarmonicField(BasisVectorField):
         # CylindricalVector cylindricalLocation
         cylindricalLocation = CoordConverters.convertToCylindrical(location)
         # float rho, phi, z
-        rho = cylindricalLocation.getCylindricalRadius()
-        phi = cylindricalLocation.getLongitude()
-        z = cylindricalLocation.getHeight()
+        rho = cylindricalLocation.rho
+        phi = cylindricalLocation.phi
+        z = cylindricalLocation.z
 
         # Precompute the sin(m*phi) and cos(m*phi), this greatly speeds up the
         # code.
@@ -141,8 +141,7 @@ class CylindricalHarmonicField(BasisVectorField):
                 # float coeff
                 coeff = self.coefficientsExpansion.getCoefficient(m, n)
                 # scale the vector, the minus sign comes from the B=-dell U
-                # VectorIJK vect
-                vect = VectorIJK(bx, by, bz).scale(-coeff)
+                vect = VectorIJK(bx, by, bz)*-coeff
                 expansions[m - self.firstM][n - self.firstN] = vect
         return Expansion2Ds.createFromArray(
             expansions, self.firstM, self.firstN

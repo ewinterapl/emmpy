@@ -1,30 +1,34 @@
 """Exception for invoking abstract methods.
 
-author Eric Winter (eric.winter@jhuapl.edu)
+This exception should be raised when an abstract method (a method that
+must be overridden) is invoked.
+
+Authors
+-------
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
 from emmpy.exceptions.emmpyexception import EmmpyException
 
 
-class AbstractMethodxception(EmmpyException):
+class AbstractMethodException(EmmpyException):
     """Raise this exception when an abstract method is invoked."""
 
     # The default message to attach to the exception when no message is
     # provided.
     _default_message = 'Do not invoke an abstract method!'
 
-    def __init__(self, *args):
+    def __init__(self, message=_default_message):
         """Initialize a new AbstractMethodException.
 
-        param (str, optional) message - Message to attach to exception.
-        A default will be created if not provided.
+        Parameters
+        ----------
+        message : str, optional default = _default_message
+            Message to display when exception is raised.
+
+        Returns
+        -------
+        None
         """
-        message = AbstractMethodxception._default_message
-        if len(args) == 0:
-            pass
-        elif len(args) == 1:
-            message = args[0]
-        else:
-            raise Exception
-        EmmpyException.__init__(self, message)
+        super().__init__(message)

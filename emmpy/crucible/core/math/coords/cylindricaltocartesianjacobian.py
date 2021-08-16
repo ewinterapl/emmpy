@@ -3,7 +3,9 @@
 
 from math import cos, sin
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+import numpy as np
+
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
@@ -47,8 +49,8 @@ class CylindricalToCartesianJacobian(Transformation):
         # JACOBI (DX,DZ) = 0.0D0
         # JACOBI (DY,DZ) = 0.0D0
         # JACOBI (DZ,DZ) = 1.0D0
-        r = coordPosition.getCylindricalRadius()
-        lon = coordPosition.getLongitude()
+        r = coordPosition.rho
+        lon = coordPosition.phi
         cosLon = cos(lon)
         sinLon = sin(lon)
         j_DX_DR = cosLon
@@ -60,14 +62,17 @@ class CylindricalToCartesianJacobian(Transformation):
         j_DX_DZ = 0.0
         j_DY_DZ = 0.0
         j_DZ_DZ = 1.0
-        return buffer.setTo(j_DX_DR, j_DY_DR, j_DZ_DR,
-                            j_DX_DLON, j_DY_DLON, j_DZ_DLON,
-                            j_DX_DZ, j_DY_DZ, j_DZ_DZ)
+        buffer[:, :] = [[j_DX_DR, j_DX_DLON, j_DX_DZ],
+                        [j_DY_DR, j_DY_DLON, j_DY_DZ],
+                        [j_DZ_DR, j_DZ_DLON, j_DZ_DZ]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Return the inverse transformation."""
         try:
-            return self.getTransformation(coordPosition, buffer).invort()
+            self.getTransformation(coordPosition, buffer)
+            buffer[:] = np.linalg.inv(buffer)
+            return buffer
         except Exception as e:
             raise PointOnAxisException(e)
 
@@ -75,10 +80,13 @@ class CylindricalToCartesianJacobian(Transformation):
         """Multiply a velocity by the jacobian."""
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity)
+            return vect
         elif isinstance(args[1], VectorIJK):
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return CylindricalVector(vect.i, vect.j, vect.k)
         else:
             raise Exception

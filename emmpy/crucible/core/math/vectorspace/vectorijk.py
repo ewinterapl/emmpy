@@ -35,11 +35,6 @@ class VectorIJK(Vector3D):
         data : array-like of 3 float, optional, default (None, None, None)
             Values for (i, j, k) coordinates.
         OR
-        offset : int
-            Offset into data for assignment to vector elements.
-        data : array-like of >= (3 + offset) float
-            Values to use for vector elements, starting at offset.
-        OR
         scale : float
             Scale factor for components to copy.
         data : array-like of 3 float
@@ -58,20 +53,15 @@ class VectorIJK(Vector3D):
             If incorrect arguments are provided.
         """
         if len(args) == 0:
-            self[:] = (None, None, None)
+            self[:] = np.array([None, None, None])
         elif len(args) == 1:
             # Array-like of 3 floats for the components.
             (data,) = args
             self[:] = list(data)
         elif len(args) == 2:
-            if isinstance(args[0], int):
-                # Offset and array-like of >= (3 + offset) values.
-                (offset, data) = args
-                self[:] = list(data)[offset:offset + 3]
-            else:
-                # Scale factor and array-like of 3 float to scale.
-                (scale, data) = args
-                self[:] = scale*np.array(data)
+            # Scale factor and array-like of 3 float to scale.
+            (scale, data) = args
+            self[:] = scale*np.array(data)
         elif len(args) == 3:
             # Scalar values (3) for the components.
             self[:] = args
@@ -116,130 +106,6 @@ class VectorIJK(Vector3D):
         None
         """
         self[components[name]] = value
-
-    def scale(self, _scale):
-        """Scale the vector in-place.
-
-        Scale the vector in-place.
-
-        Parameters
-        ----------
-        _scale : float
-            Scale factor to apply.
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-        """
-        self[:] *= _scale
-        return self
-
-    def unitize(self):
-        """Unitize the vector in-place.
-
-        Normalize the vector to unit length in-place.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-        """
-        length = np.linalg.norm(self)
-        self[:] /= length
-        return self
-
-    def negate(self):
-        """Negate the vector in-place.
-
-        Negate the vector in-place.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-        """
-        self[:] = -self
-        return self
-
-    def createScaled(self, scale):
-        """Create a scaled copy of the vector.
-
-        Create a scaled copy of the vector.
-
-        Parameters
-        ----------
-        scale : float
-            Scale factor to apply to the copy.
-
-        Returns
-        -------
-        v : VectorIJK
-            A scaled copy of the current vector.
-        """
-        v = VectorIJK(scale, self)
-        return v
-
-    def setTo(self, *args):
-        """Set the vector contents.
-
-        Set the values of all components.
-
-        Parameters
-        ----------
-        data : array-like of 3 float
-            Values to copy to current vector.
-        OR
-        scale : float
-            Scale factor to apply to incoming values.
-        data : array-like of 3 float
-            Values to scale and copy to current vector.
-        OR
-        offset : int
-            Offset into list or tuple.
-        data : array-like of >= (3 + offset) float
-            Data to copy to current vector, starting at offset.
-        OR
-        i, j, k : float
-            i, j, k vector components.
-
-        Returns
-        -------
-        self : VectorIJK
-            The current object.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 1:
-            # Copy the components from an array.
-            (data,) = args
-            self[:] = list(data)
-        elif len(args) == 2:
-            if isinstance(args[0], float):
-                # Set the vector components to a scaled array.
-                (scale, data) = args
-                self[:] = scale*np.array(data)
-            else:
-                # Offset + array
-                (offset, data) = args
-                self[:] = list(data)[offset:offset + 3]
-        elif len(args) == 3:
-            # Sets the three components of the vector.
-            self[:] = args
-        else:
-            raise ValueError
-        return self
 
     @staticmethod
     def rotate(*args):
@@ -389,63 +255,8 @@ class VectorIJK(Vector3D):
             t = vector/maxVector
             scaleFactor = sum(t*r)*maxVector/sum(r*r)
             buffer[:] = r
-            buffer.scale(scaleFactor)
+            buffer *= scaleFactor
         return buffer
-
-    @staticmethod
-    def add(*args):
-        """Add one vector to another.
-
-        Add the second vector from the first vector, returning the
-        sum as a new vector.
-
-        Parameters
-        ----------
-        a : VectorIJK
-            The first vector.
-        b : VectorIJK
-            The second vector.
-        buffer : VectorIJK (optional)
-            Buffer to hold result.
-
-        Returns
-        -------
-        buffer : VectorIJK
-            Vector of the sum (a + b).
-
-        Raises
-        ------
-        ValueError:
-            If incorrect arguments are provided.
-        """
-        if len(args) == 2:
-            (a, b) = args
-            buffer = VectorIJK()
-        elif len(args) == 3:
-            (a, b, buffer) = args
-        else:
-            raise ValueError
-        buffer[:] = a + b
-        return buffer
-
-    @staticmethod
-    def copyOf(vector):
-        """Make a copy of the supplied vector.
-
-        Make a copy of the supplied vector.
-
-        Parameters
-        ----------
-        vector : VectorIJK
-            The vector to copy.
-        
-        Returns
-        -------
-        v : VectorIJK
-            Copy of the supplied vector.
-        """
-        v = VectorIJK(vector)
-        return v
 
 
 # The I basis vector: (1,0,0).

@@ -6,9 +6,7 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
 from emmpy.crucible.core.math.coords.sphericaltocartesianjacobian import (
     SphericalToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
@@ -24,15 +22,15 @@ class TestBuilder(unittest.TestCase):
         mijk = MatrixIJK()
         b = s2cj.getTransformation(spherical, mijk)
         self.assertIs(b, mijk)
-        self.assertAlmostEqual(mijk.getII(), -0.9001976297355174)
-        self.assertAlmostEqual(mijk.getJI(), 0.12832006020245673)
-        self.assertAlmostEqual(mijk.getKI(), -0.4161468365471424)
-        self.assertAlmostEqual(mijk.getIJ(), 0.411982245665683)
-        self.assertAlmostEqual(mijk.getJJ(), -0.058726644927620980)
-        self.assertAlmostEqual(mijk.getKJ(), -0.9092974268256817)
-        self.assertAlmostEqual(mijk.getIK(), -0.12832006020245673)
-        self.assertAlmostEqual(mijk.getJK(), -0.9001976297355174)
-        self.assertAlmostEqual(mijk.getKK(), 0)
+        self.assertAlmostEqual(mijk.ii, -0.9001976297355174)
+        self.assertAlmostEqual(mijk.ji, 0.12832006020245673)
+        self.assertAlmostEqual(mijk.ki, -0.4161468365471424)
+        self.assertAlmostEqual(mijk.ij, 0.411982245665683)
+        self.assertAlmostEqual(mijk.jj, -0.058726644927620980)
+        self.assertAlmostEqual(mijk.kj, -0.9092974268256817)
+        self.assertAlmostEqual(mijk.ik, -0.12832006020245673)
+        self.assertAlmostEqual(mijk.jk, -0.9001976297355174)
+        self.assertAlmostEqual(mijk.kk, 0)
 
     def test_getInverseTransformation(self):
         s2cj = SphericalToCartesianJacobian()
@@ -40,15 +38,15 @@ class TestBuilder(unittest.TestCase):
         mijk = MatrixIJK()
         b = s2cj.getInverseTransformation(spherical, mijk)
         self.assertIs(b, mijk)
-        self.assertAlmostEqual(mijk.getII(), -0.9001976297355174)
-        self.assertAlmostEqual(mijk.getJI(), 0.411982245665683)
-        self.assertAlmostEqual(mijk.getKI(), -0.15519675289581672)
-        self.assertAlmostEqual(mijk.getIJ(), 0.12832006020245673)
-        self.assertAlmostEqual(mijk.getJJ(), -0.058726644927620980)
-        self.assertAlmostEqual(mijk.getKJ(), -1.0887444167267328)
-        self.assertAlmostEqual(mijk.getIK(), -0.4161468365471424)
-        self.assertAlmostEqual(mijk.getJK(), -0.9092974268256817)
-        self.assertAlmostEqual(mijk.getKK(), 0)
+        self.assertAlmostEqual(mijk.ii, -0.9001976297355174)
+        self.assertAlmostEqual(mijk.ji, 0.411982245665683)
+        self.assertAlmostEqual(mijk.ki, -0.15519675289581672)
+        self.assertAlmostEqual(mijk.ij, 0.12832006020245673)
+        self.assertAlmostEqual(mijk.jj, -0.058726644927620980)
+        self.assertAlmostEqual(mijk.kj, -1.0887444167267328)
+        self.assertAlmostEqual(mijk.ik, -0.4161468365471424)
+        self.assertAlmostEqual(mijk.jk, -0.9092974268256817)
+        self.assertAlmostEqual(mijk.kk, 0)
         with self.assertRaises(PointOnAxisException):
             s2cj.getInverseTransformation(SphericalVector(0, 0, 0), mijk)
 
@@ -64,9 +62,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(cartesianVelocity.k, -1.325444263372824)
         s2cj.getInverseTransformation(spherical, mijk)
         sphericalVelocity = s2cj.mxv(mijk, cartesianVelocity)
-        self.assertAlmostEqual(sphericalVelocity.getI(), 1)
-        self.assertAlmostEqual(sphericalVelocity.getJ(), 1)
-        self.assertAlmostEqual(sphericalVelocity.getK(), 1)
+        self.assertAlmostEqual(sphericalVelocity.r, 1)
+        self.assertAlmostEqual(sphericalVelocity.theta, 1)
+        self.assertAlmostEqual(sphericalVelocity.phi, 1)
 
 
 if __name__ == '__main__':

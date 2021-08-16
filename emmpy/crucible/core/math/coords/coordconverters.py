@@ -4,9 +4,7 @@
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import (
-    CylindricalVector
-)
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
 )
@@ -28,9 +26,7 @@ from emmpy.crucible.core.math.coords.radecvector import (
 from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
     SphericalCoordConverter
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class CoordConverters:

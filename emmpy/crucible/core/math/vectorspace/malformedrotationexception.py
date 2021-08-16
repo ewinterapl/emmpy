@@ -1,19 +1,16 @@
-"""Exception to use for a malformed rotation matrix."""
+"""Exception to use for a malformed rotation matrix.
+
+Raise this exception when an invalid rotation matrix is encountered.
+
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 class MalformedRotationException(Exception):
-    """Exception for the specification of an invalod rotation matrix.
-
-    @author F.S.Turner
+    """Exception to use for a malformed rotation matrix.
+    
+    Raise this exception when an invalid rotation matrix is encountered.
     """
-
-    def __init__(self, *args):
-        """Build the object."""
-        if len(args) == 0:
-            pass
-        elif len(args) == 1:
-            Exception(self, args[0])
-        elif len(args) == 2:
-            Exception(self, args[0], args[1])
-        else:
-            raise Exception

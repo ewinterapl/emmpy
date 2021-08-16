@@ -1,6 +1,6 @@
 import unittest
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )
@@ -12,12 +12,12 @@ class TestBuilder(unittest.TestCase):
         position = CylindricalVector(1, 2, 3)
         value = CylindricalVector(4, 5, 6)
         cvfv = CylindricalVectorFieldValue(position, value)
-        self.assertAlmostEqual(cvfv.position.getI(), 1)
-        self.assertAlmostEqual(cvfv.position.getJ(), 2)
-        self.assertAlmostEqual(cvfv.position.getK(), 3)
-        self.assertAlmostEqual(cvfv.value.getI(), 4)
-        self.assertAlmostEqual(cvfv.value.getJ(), 5)
-        self.assertAlmostEqual(cvfv.value.getK(), 6)
+        self.assertAlmostEqual(cvfv.position.rho, 1)
+        self.assertAlmostEqual(cvfv.position.phi, 2)
+        self.assertAlmostEqual(cvfv.position.z, 3)
+        self.assertAlmostEqual(cvfv.value.rho, 4)
+        self.assertAlmostEqual(cvfv.value.phi, 5)
+        self.assertAlmostEqual(cvfv.value.z, 6)
 
 
 if __name__ == '__main__':

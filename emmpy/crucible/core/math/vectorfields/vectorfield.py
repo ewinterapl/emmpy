@@ -1,46 +1,56 @@
-"""A 3-D vector field.
+"""A vector field in a 3-dimensional space.
 
-N.B. This class was created from a Java interface, and therefore most of these
-methods will raise exceptions if invoked.
+This class represents a vector field in a 3-dimensional vector space. The
+only required method is evaluate().
+
+N.B. This class was based on a Java interface, and therefore these methods
+will raise exceptions if invoked.
+
+Authors
+-------
+J. Vanderpool
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class VectorField:
-    """A 3-D vector field.
+    """A vector field in a 3-dimensional space.
 
-    author vandejd1
-    author G.K.Stephens
+    This class represents a vector field in a 3-dimensional vector space.
+    The only required method is evaluate().
+
+    Attributes
+    ----------
+    None
     """
 
-    def __init__(self):
-        """Build a new object."""
+    def evaluate(self, location, buffer=None):
+        """Evaluate the vector field at a position.
 
-    def evaluate(self, *args):
-        """Evaluate the field at the given position.
+        This abstract method must be overridden in a subclass.
 
-        INTERFACE - DO NOT INVOKE
+        Evaluate the vector field at the specified position in a
+        3-dimensional space.
 
-        units and such are up to the implementors
+        Parameters
+        ----------
+        location : Vector3D
+            The position in 3-dimensional space.
+        buffer : Vector3D, optional
+            Buffer to hold the result.
 
-        throws FunctionEvaluationException if the function cannot perform the
-        evaluation
+        Returns
+        -------
+        v : Vector3D
+            Value of vector field at the specified location.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        if len(args) == 1:
-            # param location VectorIJK, often location
-            # return the resultant VectorIJK
-            (location,) = args
-            return self.evaluate(location, VectorIJK())
-        elif len(args) == 2:
-            # Evaluate the field at the given position, put the result into the
-            # buffer and return the buffer
-            # param location VectorIJK, often location
-            # param buffer a VectorIJK buffer that will hold the result of the
-            # evaluation
-            # return the buffer
-            (location, buffer) = args
-            raise Exception
-        else:
-            raise Exception
+        raise AbstractMethodException

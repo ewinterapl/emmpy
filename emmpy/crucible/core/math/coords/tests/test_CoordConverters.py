@@ -1,9 +1,7 @@
 import unittest
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.crucible.core.math.coords.cylindricalvector import (
-    CylindricalVector
-)
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.latitudinalvector import (
     LatitudinalVector
 )
@@ -14,9 +12,7 @@ from emmpy.crucible.core.math.coords.radecvector import (
     RaDecVector
 )
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -29,9 +25,9 @@ class TestBuilder(unittest.TestCase):
     def test_convertToCylindrical(self):
         cartesian = VectorIJK(1, 2, 3)
         cylindrical = CoordConverters.convertToCylindrical(cartesian)
-        self.assertAlmostEqual(cylindrical.getI(), 2.23606797749979)
-        self.assertAlmostEqual(cylindrical.getJ(), 1.1071487177940904)
-        self.assertAlmostEqual(cylindrical.getK(), 3)
+        self.assertAlmostEqual(cylindrical.rho, 2.23606797749979)
+        self.assertAlmostEqual(cylindrical.phi, 1.1071487177940904)
+        self.assertAlmostEqual(cylindrical.z, 3)
 
     def test_convertToLatitudinal(self):
         cartesian = VectorIJK(1, 2, 3)
@@ -56,9 +52,9 @@ class TestBuilder(unittest.TestCase):
     def test_convertToSpherical(self):
         cartesian = VectorIJK(1, 2, 3)
         spherical = CoordConverters.convertToSpherical(cartesian)
-        self.assertAlmostEqual(spherical.getI(), 3.741657386773941)
-        self.assertAlmostEqual(spherical.getJ(), 0.6405223126794246)
-        self.assertAlmostEqual(spherical.getK(), 1.1071487177940904)
+        self.assertAlmostEqual(spherical.r, 3.741657386773941)
+        self.assertAlmostEqual(spherical.theta, 0.6405223126794246)
+        self.assertAlmostEqual(spherical.phi, 1.1071487177940904)
 
     def test_convert(self):
         cylindrical = CylindricalVector(1, 2, 3)

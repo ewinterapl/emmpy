@@ -5,10 +5,7 @@ methods will raise exceptions if invoked.
 """
 
 
-from emmpy.crucible.core.math.coords.abstractvector import AbstractVector
-
-
-class Transformation(AbstractVector):
+class Transformation:
     """Base class for coordinate transformations.
 
     This interface assists with the manipulation of Jacobians. A Jacobian is

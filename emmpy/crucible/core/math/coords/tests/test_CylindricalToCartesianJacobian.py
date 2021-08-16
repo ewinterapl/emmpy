@@ -4,7 +4,7 @@ import unittest
 from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
     CylindricalToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
@@ -24,15 +24,15 @@ class TestBuilder(unittest.TestCase):
         cv = CylindricalVector(r, lon, z)
         mijk = MatrixIJK()
         c2cj.getTransformation(cv, mijk)
-        self.assertAlmostEqual(mijk.getII(), cos(lon))
-        self.assertAlmostEqual(mijk.getJI(), sin(lon))
-        self.assertAlmostEqual(mijk.getKI(), 0)
-        self.assertAlmostEqual(mijk.getIJ(), -r*sin(lon))
-        self.assertAlmostEqual(mijk.getJJ(), r*cos(lon))
-        self.assertAlmostEqual(mijk.getKJ(), 0)
-        self.assertAlmostEqual(mijk.getIK(), 0)
-        self.assertAlmostEqual(mijk.getJK(), 0)
-        self.assertAlmostEqual(mijk.getKK(), 1)
+        self.assertAlmostEqual(mijk.ii, cos(lon))
+        self.assertAlmostEqual(mijk.ji, sin(lon))
+        self.assertAlmostEqual(mijk.ki, 0)
+        self.assertAlmostEqual(mijk.ij, -r*sin(lon))
+        self.assertAlmostEqual(mijk.jj, r*cos(lon))
+        self.assertAlmostEqual(mijk.kj, 0)
+        self.assertAlmostEqual(mijk.ik, 0)
+        self.assertAlmostEqual(mijk.jk, 0)
+        self.assertAlmostEqual(mijk.kk, 1)
 
     def test_getInverseTransformation(self):
         c2cj = CylindricalToCartesianJacobian()
@@ -42,15 +42,15 @@ class TestBuilder(unittest.TestCase):
         cv = CylindricalVector(r, lon, z)
         mijk = MatrixIJK()
         c2cj.getInverseTransformation(cv, mijk)
-        self.assertAlmostEqual(mijk.getII(), cos(lon))
-        self.assertAlmostEqual(mijk.getJI(), -r*sin(lon))
-        self.assertAlmostEqual(mijk.getKI(), 0)
-        self.assertAlmostEqual(mijk.getIJ(), sin(lon))
-        self.assertAlmostEqual(mijk.getJJ(), r*cos(lon))
-        self.assertAlmostEqual(mijk.getKJ(), 0)
-        self.assertAlmostEqual(mijk.getIK(), 0)
-        self.assertAlmostEqual(mijk.getJK(), 0)
-        self.assertAlmostEqual(mijk.getKK(), 1)
+        self.assertAlmostEqual(mijk.ii, cos(lon))
+        self.assertAlmostEqual(mijk.ji, -r*sin(lon))
+        self.assertAlmostEqual(mijk.ki, 0)
+        self.assertAlmostEqual(mijk.ij, sin(lon))
+        self.assertAlmostEqual(mijk.jj, r*cos(lon))
+        self.assertAlmostEqual(mijk.kj, 0)
+        self.assertAlmostEqual(mijk.ik, 0)
+        self.assertAlmostEqual(mijk.jk, 0)
+        self.assertAlmostEqual(mijk.kk, 1)
         cv0 = CylindricalVector(0, 0, 0)
         with self.assertRaises(PointOnAxisException):
             c2cj.getInverseTransformation(cv0, mijk)
@@ -70,9 +70,9 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(cartesianVelocity.k, 1)
         c2cj.getInverseTransformation(cv1, mijk)
         cylindricalVelocity = c2cj.mxv(mijk, cartesianVelocity)
-        self.assertAlmostEqual(cylindricalVelocity.getI(), 1)
-        self.assertAlmostEqual(cylindricalVelocity.getJ(), 1)
-        self.assertAlmostEqual(cylindricalVelocity.getK(), 1)
+        self.assertAlmostEqual(cylindricalVelocity.rho, 1)
+        self.assertAlmostEqual(cylindricalVelocity.phi, 1)
+        self.assertAlmostEqual(cylindricalVelocity.z, 1)
         with self.assertRaises(Exception):
             c2cj.mxv(mijk, [])
 

@@ -7,6 +7,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import unittest
 
+import numpy as np
+
 from emmpy.math.vectors.vector import Vector
 
 
@@ -32,6 +34,18 @@ class TestBuilder(unittest.TestCase):
             with self.assertRaises(TypeError):
                 args = (None,)*n
                 v = Vector(*args)
+
+    def test_unitize(self):
+        """Test the unitize method."""
+        datas = [[1.1], [1.1, 2.2], [1.1, 2.2, 3.3], [1.1, 2.2, 3.3, 4.4]]
+        for data in datas:
+            length = np.linalg.norm(data)
+            v1 = Vector(length=len(data))
+            v1[:] = data
+            v2 = v1.unitize()
+            self.assertIs(v2, v1)
+            for col in range(len(data)):
+                self.assertAlmostEqual(v2[col], data[col]/length)
 
 
 if __name__ == '__main__':

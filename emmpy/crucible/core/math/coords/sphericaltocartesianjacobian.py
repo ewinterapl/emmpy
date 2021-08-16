@@ -1,14 +1,15 @@
 """Jacobian for spherical to Cartesian transformations."""
 
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin
+
+import numpy as np
 
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
@@ -38,9 +39,9 @@ class SphericalToCartesianJacobian(Transformation):
         JACOBI(DY, DLON) = R*CLONG*SCOLAT
         JACOBI(DZ, DLON) = 0.0D0
         """
-        r = coordPosition.getRadius()
-        colat = coordPosition.getColatitude()
-        lon = coordPosition.getLongitude()
+        r = coordPosition.r
+        colat = coordPosition.theta
+        lon = coordPosition.phi
         cosColat = cos(colat)
         sinColat = sin(colat)
         cosLong = cos(lon)
@@ -54,16 +55,17 @@ class SphericalToCartesianJacobian(Transformation):
         xByLong = -r*sinLong*sinColat
         yByLong = r*cosLong*sinColat
         zByLong = 0
-        return buffer.setTo(
-            xByR, yByR, zByR,
-            xByColat, yByColat, zByColat,
-            xByLong, yByLong, zByLong
-        )
+        buffer[:, :] = [[xByR, xByColat, xByLong],
+                        [yByR, yByColat, yByLong],
+                        [zByR, zByColat, zByLong]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Get the inverse transformation matrix."""
         try:
-            return self.getTransformation(coordPosition, buffer).invort()
+            self.getTransformation(coordPosition, buffer)
+            buffer[:] = np.linalg.inv(buffer)
+            return buffer
         except Exception as e:
             raise PointOnAxisException(e)
 
@@ -71,8 +73,11 @@ class SphericalToCartesianJacobian(Transformation):
         """Multiply a vector by the Jacobian matrix."""
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity)
+            return vect
         else:
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return SphericalVector(vect.i, vect.j, vect.k)

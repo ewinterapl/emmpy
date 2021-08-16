@@ -1,6 +1,6 @@
 import unittest
 
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue
 )
@@ -13,12 +13,12 @@ class TestBuilder(unittest.TestCase):
         value = SphericalVector(4, 5, 6)
         svfv = SphericalVectorFieldValue(position, value)
         self.assertIsNotNone(svfv)
-        self.assertAlmostEqual(svfv.getPosition().getI(), 1)
-        self.assertAlmostEqual(svfv.getPosition().getJ(), 2)
-        self.assertAlmostEqual(svfv.getPosition().getK(), 3)
-        self.assertAlmostEqual(svfv.getValue().getI(), 4)
-        self.assertAlmostEqual(svfv.getValue().getJ(), 5)
-        self.assertAlmostEqual(svfv.getValue().getK(), 6)
+        self.assertAlmostEqual(svfv.getPosition().r, 1)
+        self.assertAlmostEqual(svfv.getPosition().theta, 2)
+        self.assertAlmostEqual(svfv.getPosition().phi, 3)
+        self.assertAlmostEqual(svfv.getValue().r, 4)
+        self.assertAlmostEqual(svfv.getValue().theta, 5)
+        self.assertAlmostEqual(svfv.getValue().phi, 6)
 
 
 if __name__ == '__main__':

@@ -1,30 +1,71 @@
-"""A 3-D scalar field.
+"""A scalar field in a 3-dimensional space.
 
-N.B. This class was created from a Java interface, and therefore most of these
-methods will raise exceptions if invoked.
+This class represents a scalar field in a 3-dimensional vector space. The
+only required method is evaluate().
+
+N.B. This class was based on a Java interface, and therefore these methods
+will raise exceptions if invoked.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-class ScalarField:
-    """A 3-D scalar field.
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
-    @author G.K.Stephens
+
+class ScalarField:
+    """A scalar field in a 3-dimensional space.
+
+    This class represents a scalar field in a 3-dimensional vector space.
+    The only required method is evaluate().
+
+    Attributes
+    ----------
+    None
     """
 
-    def __init__(self, location):
-        """Build a new object."""
-        raise Exception
+    def __init__(self):
+        """Initialize a new ScalarField object.
+
+        This abstract method must be overridden in a subclass.
+
+        Initialize a new ScalarField object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def evaluate(self, location):
-        """Evaluate the field at a position.
+        """Evaluate the scalar field at a position.
 
-        INTERFACE - DO NOT INVOKE.
+        This abstract method must be overridden in a subclass.
 
-        units and such are up to the implementors
+        Evaluate the scalar field at the specified position in a
+        3-dimensional space.
 
-        @param location {@link VectorIJK}, often location
-        @return the scalar value
-        @throws FunctionEvaluationException if the function cannot perform the
-        evaluation
+        Parameters
+        ----------
+        location : Vector3D
+            The position in 3-dimensional space.
+
+        Returns
+        -------
+        v : float
+            Value of scalar field at the specified location.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException

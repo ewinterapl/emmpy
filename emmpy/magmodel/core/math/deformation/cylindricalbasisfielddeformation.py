@@ -6,7 +6,7 @@
 # import crucible.core.math.vectorspace.UnwritableMatrixIJK;
 # import magmodel.core.math.vectorfields.DifferentiableCylindricalVectorField;
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
     CylindricalFieldDeformation
@@ -53,10 +53,10 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
         # CylindricalVector bField
         for bField in bFieldExpansion:
             # VectorIJK v
-            v = trans.mxv(
-                VectorIJK(bField.getCylindricalRadius(), bField.getLongitude(),
-                          bField.getHeight())
-            )
+            v = VectorIJK()
+            vcyl = VectorIJK(bField.rho, bField.phi,
+                             bField.z)
+            v[:] = trans.dot(vcyl)
             bFieldExpansionDeformed.append(
                 CylindricalVector(v.i, v.j, v.k)
             )

@@ -3,7 +3,7 @@ import unittest
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -17,9 +17,9 @@ class TestBuilder(unittest.TestCase):
         ccc = CylindricalCoordConverter()
         cart = VectorIJK(1, 2, 3)
         cyl = ccc.toCoordinate(cart)
-        self.assertAlmostEqual(cyl.getI(), 2.2360679774998)
-        self.assertAlmostEqual(cyl.getJ(), 1.1071487177941)
-        self.assertAlmostEqual(cyl.getK(), 3)
+        self.assertAlmostEqual(cyl.rho, 2.2360679774998)
+        self.assertAlmostEqual(cyl.phi, 1.1071487177941)
+        self.assertAlmostEqual(cyl.z, 3)
 
     def test_toCartesian(self):
         ccc = CylindricalCoordConverter()

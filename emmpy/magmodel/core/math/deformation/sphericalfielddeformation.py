@@ -4,7 +4,7 @@
 from math import sin
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
@@ -48,10 +48,8 @@ class SphericalFieldDeformation(SphericalVectorField):
 
         # evaluate the deformed field
         # VectorIJK v
-        v = trans.mxv(
-            VectorIJK(bField.getRadius(), bField.getColatitude(),
-                      bField.getLongitude())
-        )
+        v = VectorIJK()
+        v[:] = trans.dot(VectorIJK(bField.r, bField.theta, bField.phi))
 
         return SphericalVector(v.i, v.j, v.k)
 
@@ -64,15 +62,15 @@ class SphericalFieldDeformation(SphericalVectorField):
         return MatrixIJK
         """
         # float r, theta, hr, ht, hp, hrDef, htDef, hpDef
-        r = originalCoordinate.getRadius()
-        theta = originalCoordinate.getColatitude()
+        r = originalCoordinate.r
+        theta = originalCoordinate.theta
         hr = 1
         ht = r
         hp = r*sin(theta)
         hrDef = 1
-        htDef = deformed.getF().getRadius()
+        htDef = deformed.getF().r
         hpDef = (
-            deformed.getF().getRadius()*sin(deformed.getF().getColatitude())
+            deformed.getF().r*sin(deformed.getF().theta)
         )
 
         # float dFrDr, dFrDt, dFrDp, dFtDr, dFtDt, dFtDp, dFpDr, dFpDt, dFpDp

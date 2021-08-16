@@ -36,31 +36,3 @@ class Vector3D(Vector):
         """
         v = super().__new__(cls, length=N)
         return v
-
-    def __init__(self, *args, **kargs):
-        """Initialize a new Vector3D object.
-
-        Initialize a new Vector3D object.
-
-        Parameters
-        ----------
-        data : array-like, optional, default (None)*3.
-            Values for 1st, 2nd, and 3rd elements.
-        OR
-        data[0], data[1], data[2] : float, optional.
-            Values for 1st, 2nd, and 3rd elements.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 0:
-            data = (None,)*N
-        elif len(args) == 1:
-            (data,) = args
-        elif len(args) == N:
-            data = args
-        else:
-            raise ValueError
-        self[:] = data

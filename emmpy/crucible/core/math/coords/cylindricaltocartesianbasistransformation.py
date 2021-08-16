@@ -1,8 +1,12 @@
 """Basis transformations between cartesian and cylindrical coordinates."""
 
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+
+import numpy as np
+
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
@@ -25,7 +29,7 @@ class CylindricalToCartesianBasisTransformation(Transformation):
               |     0           0           1      |
               `-                                  -'
         """
-        lon = coordPosition.getLongitude()
+        lon = coordPosition.phi
         cosLon = cos(lon)
         sinLon = sin(lon)
         j_DX_DR = cosLon
@@ -37,22 +41,26 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         j_DX_DZ = 0.0
         j_DY_DZ = 0.0
         j_DZ_DZ = 1.0
-        return buffer.setTo(
-            j_DX_DR, j_DY_DR, j_DZ_DR,
-            j_DX_DLON, j_DY_DLON, j_DZ_DLON,
-            j_DX_DZ, j_DY_DZ, j_DZ_DZ
-        )
+        buffer[:, :] = [[j_DX_DR, j_DX_DLON, j_DX_DZ],
+                        [j_DY_DR, j_DY_DLON, j_DY_DZ],
+                        [j_DZ_DR, j_DZ_DLON, j_DZ_DZ]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Return the cartesian-to-cylindrical transformation matrix."""
-        return self.getTransformation(coordPosition, buffer).invort()
+        self.getTransformation(coordPosition, buffer)
+        buffer[:] = np.linalg.inv(buffer)
+        return buffer
 
     def mxv(self, *args):
         """Apply this transformation, or inverse, to a cylindrical vector."""
         if isinstance(args[1], CylindricalVector):
             (jacobian, coordValue) = args
-            return MatrixIJK.mxv(jacobian, coordValue.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordValue)
+            return vect
         else:
             (inverseTransformation, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseTransformation, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseTransformation.dot(cartVelocity)
             return CylindricalVector(vect.i, vect.j, vect.k)

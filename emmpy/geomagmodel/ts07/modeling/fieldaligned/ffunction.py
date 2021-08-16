@@ -8,7 +8,7 @@
 
 import math
 
-from emmpy.crucible.core.math.coords.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 # import crucible.core.math.vectorfields.ScalarField;
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -78,13 +78,13 @@ class Ffunction(ScalarField):
             # coordinates (in modified cylindrical coordinates) and the partial
             # derivatives of F with respect to these original coordinates.
             # param location the
-            y = location.getHeight()
+            y = location.z
 
             # convert to spherical and cylindrical
-            rho = location.getCylindricalRadius()
+            rho = location.rho
             rho2 = rho*rho
             r = math.sqrt(rho2 + y*y)
-            phi = location.getLongitude()
+            phi = location.phi
             sinPhi = math.sin(phi)
             cosPhi = math.cos(phi)
 

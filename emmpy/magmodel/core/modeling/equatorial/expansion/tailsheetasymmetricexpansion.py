@@ -102,13 +102,14 @@ class TailSheetAsymmetricExpansion(VectorField):
             bZ = kn*jK*ex*(cosMPhi - kn*thick*dThickdPhi*sinMPhi/(m*zDist))
 
             # Convert from cylindrical coordinates to GSM
-            buffer.setTo(
+            buffer[:] = (
                 bRho*cosPhi - bPhi*sinPhi, bRho*sinPhi + bPhi*cosPhi, bZ)
 
             # TODO for what ever reason, in the code the vectors are scaled by
             # the azimuthal expansion number divided by the wave number, this
             # is not in the paper, this is okay, as this will just rescale the
             # scaling coeffs.
-            return buffer.scale(-m/kn)
+            buffer *= -m/kn
+            return buffer
         else:
             raise Exception

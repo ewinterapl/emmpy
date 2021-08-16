@@ -10,18 +10,14 @@ from emmpy.crucible.core.math.coords.coordconverters import (
 from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
     CylindricalToCartesianBasisTransformation
 )
-from emmpy.crucible.core.math.coords.cylindricalvector import (
-    CylindricalVector
-)
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
     SphericalToCartesianBasisTransformation
 )
-from emmpy.crucible.core.math.coords.sphericalvector import (
-    SphericalVector
-)
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue
 )

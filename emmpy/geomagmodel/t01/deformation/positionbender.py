@@ -1,16 +1,15 @@
-"""Deformation in the X-Z plane related to the dipole tilt."""
+"""Compute deformation in the X-Z plane related to the dipole tilt.
 
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static crucible.core.math.CrucibleMath.pow;
-# import static crucible.core.math.CrucibleMath.sin;
-# import static crucible.core.math.CrucibleMath.sqrt;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.VectorIJK;
-# import magmodel.core.math.deformation.VectorFieldDeformation;
-# import magmodel.core.math.vectorfields.BasisVectorField;
 
 from math import sin, sqrt
+
+import numpy as np
 
 from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
     DifferentiableVectorField, Results
@@ -21,41 +20,172 @@ from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
 )
 
 
+# WHAT ARE THESE CONSTANTS?
+# Can be changed to "0" to avoid problems with simplex iterating to
+# non-real values.
+RH2 = -5.2
+EPSILON = 3
+
+
 class PositionBender(DifferentiableVectorField):
-    """Deformation in the X-Z plane related to the dipole tilt.
+    """Compute deformation in the X-Z plane related to the dipole tilt.
 
     From Tsyganeneko's code, an implementation of Tsyganenko [1998]
     section 3, "deformation in the X-Z plane related to the dipole tilt"
 
     Computes:
-    X* = Xcos&#936;*(r) - Zsin&#936;*(r)
+    X* = X*cos(psi)*(r) - Z*sin(psi)*(r)
     Y* = Y
-    Z* = Xsin&#936;*(r) + Zcos&#936;*(r)
+    Z* = Xsin(psi)*(r) + Zcos(psi)*(r)
     where
-    sin&#936;* = R<sub>H</sub>sin&#936;/(R<sub>H</sub><sup>3</sup>+r<sup>3</sup>)<sup>1/3</sup >
-    R<sub>H</sub> =  R<sub>H0</sub> +  R<sub>H2</sub> Z<sup>2</sup>/r<sup>2</sup>
+    sin(psi)* = R_H*sin(psi)/(R_H**3 + r**3)**(1/3)
+    R_H =  R_H0 +  R_H2 Z**2/r**2
     This is similar to the FORTRAN subroutine:
          SUBROUTINE DEFORMED (PS,X,Y,Z,BX,BY,BZ)
     see ./doc-files/tsy1998Math.docx
 
-    author G.K.Stephens
+    Attributes
+    ----------
+    sinTilt : float
+        Sine of tilt angle.
+    rh0 : float
+        Hinge distance (units?)
     """
 
-    # Can be changed to "0" to avoid problems with simplex iterating to
-    # non-real values.
-    # float rh2, epsilon
-    rh2 = -5.2
-    epsilon = 3
-
     def __init__(self, dipoleTilt, hingeDistance):
-        """Build a new object.
+        """Initialize a new PositionBender object.
 
-        param double dipoleTilt
-        param double hingeDistance R_H0, must be greater than or equal to the
-        value R_H2, which is 5.2
+        Initialize a new PositionBender object.
+
+        Parameters
+        ----------
+        dipoleTilt : float
+            Dipole tilt angle (radians)
+        hingeDistance : float
+            Hinge distance; must be greater than or equal to R_H2.
+        
+        Returns
+        -------
+        None
         """
         self.sinTilt = sin(dipoleTilt)
         self.rh0 = hingeDistance
+
+    @staticmethod
+    def deformBasisField(dipoleTilt, hingeDistance, undeformedField):
+        """Deform a basis vector field.
+
+        Deform a basis vector field.
+
+        Parameters
+        ----------
+        dipoleTilt : float
+            Dipole tilt angle (radians).
+        hingeDistance : float
+            ???
+        undeformedField : BasisVectorField
+            The basis vector field to deform.
+
+        Returns
+        -------
+        deformedField : BasisVectorField
+            The deformed basis vector field.
+        """
+
+        # Create a PositionBender to compute the deformation.
+        deformation = PositionBender(dipoleTilt, hingeDistance)
+
+        # Deform the field.
+        deformedField = BasisVectorFieldDeformation(undeformedField,
+                                                    deformation)
+
+        # Return the deformed field.
+        return deformedField
+
+    def differentiate(self, location):
+        """Differentiate the field at the specified Cartesian location.
+
+        Compute the gradient of the field at the specified Cartesian
+        location.
+
+        Parameters
+        ----------
+        location : Vector3D
+            Cartesian location to compute differentiation.
+        
+        Returns
+        -------
+        results : Results
+            Object containing gradient components.
+        
+        Notes
+        -----
+        A "S" suffix indicates starred quantities from the original paper.
+        """
+
+        # Fetch the Cartesian location components.
+        x = location.i
+        y = location.j
+        z = location.k
+
+        # Compute the radial distance, and normalize z to it.
+        r = np.linalg.norm(location)
+        z_r = z/r
+
+        # Allow the hinging distance to be a function of position.
+        # Tsy. 1998 eq. 12
+        rh = self.rh0 + RH2*z_r**2
+        r_rh = r/rh
+
+        # eq. 10 Tsy. 1998, Q(r) = [1+ (r/rh)^ep]^(-1/ep)
+        Q = 1/pow(1 + pow(r_rh, EPSILON), 1/EPSILON)
+
+        # Now compute the cos and sin of the radially dependent tilt
+        # angle. This is Tsy. 1998 eq. 7.
+        sinTiltS = self.sinTilt*Q
+        cosTiltS = sqrt(1 - sinTiltS**2)
+
+        # The point deformation from eq. 7 in Tsy. 1998.
+        xS = x*cosTiltS - z*sinTiltS
+        yS = y
+        zS = x*sinTiltS + z*cosTiltS
+
+        # The radial and height derivative of rh.
+        dRhDr = -2*RH2*z_r**2/r
+        dRhDz = 2*RH2*z_r/r
+
+        # Now compute the x,y,z derivatives of Q using the chain rule.
+        # fr is the first term dQ/dr.
+        fr = -pow(r_rh, EPSILON - 1)*pow(Q, EPSILON + 1)/rh
+        dQdRh = -r_rh*fr
+        dQdr = fr - fr*r_rh*dRhDr
+        dQdx = dQdr*x/r
+        dQdy = dQdr*y/r
+        dQdz = dQdr*z/r + dQdRh*dRhDz
+
+        # Store this ratio sinT/cosT*.
+        sin_cos = self.sinTilt/cosTiltS
+
+        # Compute the derivative components.
+        dXsDx = cosTiltS - zS * dQdx*sin_cos
+        dXsDy = -zS*dQdy*sin_cos
+        dXsDz = -sinTiltS - zS*dQdz*sin_cos
+        dYsDx = 0.0
+        dYsDy = 1.0
+        dYsDz = 0.0
+        dZsDx = sinTiltS + xS*dQdx*sin_cos
+        dZsDy = xS*dQdy*sin_cos
+        dZsDz = cosTiltS + xS*dQdz*sin_cos
+
+        # Make a Cartesian vector for the starred location.
+        f = VectorIJK(xS, yS, zS)
+
+        # Create and return the Results object.
+        results = Results(f,
+                          dXsDx, dXsDy, dXsDz,
+                          dYsDx, dYsDy, dYsDz,
+                          dZsDx, dZsDy, dZsDz)
+        return results
 
     # /**
     # *
@@ -72,24 +202,6 @@ class PositionBender(DifferentiableVectorField):
     #     VectorFieldDeformation deformedField = new VectorFieldDeformation(undeformedField, deformation);
     #     return deformedField;
     # }
-
-    @staticmethod
-    def deformBasisField(dipoleTilt, hingeDistance, undeformedField):
-        """Deform the basis field.
-
-        param double dipoleTilt
-        param double hingeDistance
-        param BasisVectorField undeformedField
-        return BasisVectorField
-        """
-        # Construct the deformation
-        deformation = PositionBender(dipoleTilt, hingeDistance)
-
-        # Deform the field
-        deformedField = BasisVectorFieldDeformation(undeformedField,
-                                                    deformation)
-
-        return deformedField
 
     # /**
     # * Bend the position vector to account for the bending of the tail field in the X-Z GSM plane.
@@ -113,7 +225,7 @@ class PositionBender(DifferentiableVectorField):
     #     /*
     #     * Allow the hinging distance to be a function of position, Tsy. 1998 eq. 12
     #     */
-    #     double rh = rh0 + rh2 * z_r * z_r;
+    #     double rh = rh0 + RH2 * z_r * z_r;
 
     #     // r/RH
     #     double r_rh = r / rh;
@@ -121,7 +233,7 @@ class PositionBender(DifferentiableVectorField):
     #     /*
     #     * eq. 10 Tsy. 1998, Q(r) = [1+ (r/RH)^ep ]^(-1/ep)
     #     */
-    #     double Q = 1 / pow(1 + pow(r_rh, epsilon), 1 / epsilon);
+    #     double Q = 1 / pow(1 + pow(r_rh, EPSILON), 1 / EPSILON);
 
     #     /*
     #     * Now compute the cos and sin of the radial dependent tilt angle, this is Tsy. 1998 eq. 7
@@ -137,127 +249,4 @@ class PositionBender(DifferentiableVectorField):
     #     double zS = x * sinTiltS + z * cosTiltS;
 
     #     return buffer.setTo(xS, yS, zS);
-    # }
-
-    def differentiate(self, location):
-        """Differentiate the field at the given location.
-
-        param UnwritableVectorIJK location
-        return Results
-        """
-        # float x, y, z, r2, r, z_r
-        x = location.i
-        y = location.j
-        z = location.k
-        r2 = x*x + y*y + z*z
-        r = sqrt(r2)
-        z_r = z/r
-
-        # Allow the hinging distance to be a function of position,
-        # Tsy. 1998 eq. 12
-        # double rh, r_rh
-        rh = self.rh0 + PositionBender.rh2 * z_r*z_r
-        r_rh = r/rh
-
-        # eq. 10 Tsy. 1998, Q(r) = [1+ (r/RH)^ep ]^(-1/ep)
-        # float Q
-        Q = 1/pow(1 + pow(r_rh, PositionBender.epsilon), 1/PositionBender.epsilon)
-
-        # Now compute the cos and sin of the radial dependent tilt angle,
-        # this is Tsy. 1998 eq. 7
-        # float sinTiltS, cosTiltS
-        sinTiltS = self.sinTilt*Q
-        cosTiltS = sqrt(1 - sinTiltS*sinTiltS)
-
-        # The point deformation from eq. 7 in Tsy. 1998
-        # float xS, yS, zS
-        xS = x*cosTiltS - z*sinTiltS
-        yS = y
-        zS = x*sinTiltS + z*cosTiltS
-
-        # The radial and height derivative of Rh
-        # float dRhDr, dRhDz
-        dRhDr = -2*PositionBender.rh2*z_r*z_r/r
-        dRhDz = 2*PositionBender.rh2*z_r/r
-
-        # Now compute the x,y,z derivatives of Q, apply the chain rule
-        # fr is the first term dQ/dr
-        # float fr, dQdRh, dQdr, dQdx, dQdy, dQdz
-        fr = -pow(r_rh, PositionBender.epsilon - 1)*pow(Q, PositionBender.epsilon + 1)/rh
-        dQdRh = -r_rh*fr
-        dQdr = fr - fr*r_rh*dRhDr
-        dQdx = dQdr*x/r
-        dQdy = dQdr*y/r
-        dQdz = dQdr*z/r + dQdRh*dRhDz
-
-        # store this ratio sinT/cosT*
-        # float sin_cos
-        sin_cos = self.sinTilt/cosTiltS
-
-        # float dXsdx, dXsdy, dXsdz, dYsdx, dYsdy, dYsdz, dZsdx, dZsdy, dZsdz
-        dXsDx = cosTiltS - zS * dQdx*sin_cos
-        dXsDy = -zS*dQdy*sin_cos
-        dXsDz = -sinTiltS - zS*dQdz*sin_cos
-        dYsDx = 0.0
-        dYsDy = 1.0
-        dYsDz = 0.0
-        dZsDx = sinTiltS + xS*dQdx*sin_cos
-        dZsDy = xS*dQdy*sin_cos
-        dZsDz = cosTiltS + xS*dQdz*sin_cos
-
-        # UnwritableVectorIJK f
-        f = VectorIJK(xS, yS, zS)
-
-        # Results results`
-        results = Results(
-            f, dXsDx, dXsDy, dXsDz, dYsDx, dYsDy, dYsDz, dZsDx, dZsDy, dZsDz
-        )
-
-        return results
-
-    # @Override
-    # public double differentiateFiDi(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFjDi(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFkDi(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFiDj(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFjDj(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFkDj(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFiDk(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFjDk(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
-    # @Override
-    # public double differentiateFkDk(@SuppressWarnings("unused") UnwritableVectorIJK location) {
-    #     throw new UnsupportedOperationException();
-    # }
-
     # }

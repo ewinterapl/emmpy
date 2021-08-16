@@ -3,7 +3,7 @@
 
 from math import cos, sin
 
-from emmpy.crucible.core.math.vectorfields.vectorfields import VectorFields
+import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
@@ -294,12 +294,12 @@ class FieldAlignedCurrentShiedingBuilder:
             )
         )
         # VectorField f
-        f = VectorFields.scale(
+        f = vectorfields.scale(
             PerpendicularAndParallelCartesianHarmonicField.createWithRotation(
                 self.trigParityI, psiT1, pExpansion, rExpansion,
                 aPerpendicular, psiT2, qExpansion, sExpansion, aParallel),
                 self.scalingCoefficient)
-        return VectorFields.scaleLocation(f, dynamicPressureScalingFactor)
+        return vectorfields.scaleLocation(f, dynamicPressureScalingFactor)
 
     @staticmethod
     def fillShieldingCoeffs(region, mode, dipoleTilt, xScale, trigParityI,

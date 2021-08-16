@@ -49,3 +49,47 @@ class Vector(np.ndarray):
         """
         v = super().__new__(cls, shape=(length,), dtype=float)
         return v
+
+    def __init__(self, *args, **kargs):
+        """Initialize a new Vector object.
+
+        Initialize a new Vector object.
+
+        Parameters
+        ----------
+        data : array-like, optional, default None.
+            Values for vector elements.
+        OR
+        *data : array-like of float, optional.
+            Values for vector elements.
+
+        Raises
+        ------
+        ValueError
+            If incorrect arguments are provided.
+        """
+        if len(args) == 0:
+            data = None
+        elif len(args) == 1:
+            (data,) = args
+        else:
+            data = args
+        self[:] = data
+
+    def unitize(self):
+        """Unitize the vector in-place.
+
+        Normalize the vector to unit length in-place.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self : Vector
+            The current object.
+        """
+        length = np.linalg.norm(self)
+        self[:] /= length
+        return self

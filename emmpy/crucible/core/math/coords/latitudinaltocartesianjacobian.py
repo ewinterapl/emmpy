@@ -3,12 +3,15 @@
 
 from math import cos, sin
 
+import numpy as np
+
 from emmpy.crucible.core.math.coords.latitudinalvector import LatitudinalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class LatitudinalToCartesianJacobian(Transformation):
@@ -48,16 +51,17 @@ class LatitudinalToCartesianJacobian(Transformation):
         xByLong = -r*sinLong*cosLat
         yByLong = r*cosLong*cosLat
         zByLong = 0
-        return buffer.setTo(
-            xByR, yByR, zByR,
-            xByLat, yByLat, zByLat,
-            xByLong, yByLong, zByLong
-        )
+        buffer[:, :] = [[xByR, xByLat, xByLong],
+                        [yByR, yByLat, yByLong],
+                        [zByR, zByLat, zByLong]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Get the inverse transformation."""
         try:
-            return self.getTransformation(coordPosition, buffer).invort()
+            self.getTransformation(coordPosition, buffer)
+            buffer[:] = np.linalg.inv(buffer)
+            return buffer
         except Exception as e:
             raise PointOnAxisException(e)
 
@@ -65,8 +69,11 @@ class LatitudinalToCartesianJacobian(Transformation):
         """Multiply a vector by the Jacobian."""
         if isinstance(args[1], LatitudinalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity.getVectorIJK())
+            return vect
         else:
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return LatitudinalVector(vect.i, vect.j, vect.k)

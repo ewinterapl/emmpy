@@ -211,18 +211,14 @@ class BasisVectorFields:
             # Now, loop through the coefficients
             for expansion in expansions:
                 scaledExpansions.append(
-                    expansion.createScaled(
-                        coeffs.getCoefficient(expansionIndex)
-                    )
+                    expansion*coeffs.getCoefficient(expansionIndex)
                 )
                 expansionIndex += 1
             for c in moreCoeffs:
                 expansionIndex = coeffs.getLowerBoundIndex()
                 for expansion in expansions:
                     scaledExpansions.append(
-                        expansion.createScaled(
-                            c.getCoefficient(expansionIndex)
-                        )
+                        expansion*c.getCoefficient(expansionIndex)
                     )
                     expansionIndex += 1
             return scaledExpansions
@@ -245,11 +241,13 @@ class BasisVectorFields:
             else:
                 raise Exception
             # rotate the location
-            rotated = matrix.mxv(location)
+            rotated = VectorIJK()
+            rotated[:] = matrix.dot(location)
             # evaluate using the rotated vector
             field.evaluate(rotated, buffer)
             # rotate the field value back
-            return matrix.mtxv(buffer, buffer)
+            buffer[:] = matrix.T.dot(buffer)
+            return buffer
         bvf.evaluate = my_evaluate
         bvf.getNumberOfBasisFunctions = (
             lambda: field.getNumberOfBasisFunctions()

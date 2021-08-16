@@ -98,9 +98,7 @@ Modules
 -------
 abstractcoordconverter.py
 abstractcoordconverterij.py
-abstractvector.py
 abstractvectorfieldvalue.py
-abstractvectorij.py
 cartesianvectorfieldvalue.py
 coordconverter.py
 coordconverterij.py
@@ -108,7 +106,6 @@ coordconverters.py
 cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
-cylindricalvector.py
 cylindricalvectorfieldvalue.py
 latitudinalcoordconverter.py
 latitudinaltocartesianjacobian.py

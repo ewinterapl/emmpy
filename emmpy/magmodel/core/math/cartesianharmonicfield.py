@@ -82,7 +82,8 @@ class CartesianHarmonicField(BasisVectorField):
                 bx += aik*exp_*sqrtP*sinYpi*sinZpk
                 by += aik*exp_*pi*cosYpi*sinZpk
                 bz += aik*exp_*pk*sinYpi*cosZpk
-        return buffer.setTo(-bx, -by, -bz)
+        buffer[:] = [-bx, -by, -bz]
+        return buffer
 
     def evaluateExpansion2D(self, location):
         """Return the full expansion results."""

@@ -101,7 +101,8 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     TrigParity.ODD
                 )
                 chf.evaluate(location, buffer)
-                buffer.scale(negateConst)
+                # buffer.scale(negateConst)
+                buffer *= negateConst
                 oddExpansions[m - 1][n - 1] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
@@ -125,7 +126,8 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     TrigParity.EVEN
                 )
                 chf.evaluate(location, buffer)
-                buffer.scale(negateConst)
+                # buffer.scale(negateConst)
+                buffer *= negateConst
                 evenExpansions[m - 1][n - 1] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 

@@ -2,10 +2,14 @@
 
 
 from math import cos, sin
+from re import T
 
-from emmpy.crucible.core.math.coords.sphericalvector import SphericalVector
+import numpy as np
+
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class SphericalToCartesianBasisTransformation(Transformation):
@@ -16,8 +20,8 @@ class SphericalToCartesianBasisTransformation(Transformation):
 
     def getTransformation(self, coordPosition, buffer):
         """Get the transformation matrix."""
-        colat = coordPosition.getColatitude()
-        lon = coordPosition.getLongitude()
+        colat = coordPosition.theta
+        lon = coordPosition.phi
         cosColat = cos(colat)
         sinColat = sin(colat)
         cosLong = cos(lon)
@@ -31,24 +35,28 @@ class SphericalToCartesianBasisTransformation(Transformation):
         xByLong = -sinLong
         yByLong = cosLong
         zByLong = 0
-        return buffer.setTo(
-            xByR, yByR, zByR,
-            xByColat, yByColat, zByColat,
-            xByLong, yByLong, zByLong
-        )
+        buffer[:, :] = [[xByR, xByColat, xByLong],
+                        [yByR, yByColat, yByLong],
+                        [zByR, zByColat, zByLong]]
+        return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
         """Get the inverse transformation matrix."""
         # I'm pretty confident that this exception can't be thrown, the columns
         # will always be non-zero
-        return self.getTransformation(coordPosition, buffer).invort()
+        self.getTransformation(coordPosition, buffer)
+        buffer[:] = np.linalg.inv(buffer)
+        return buffer
 
     def mxv(self, *args):
         """Multiply a vector by the transformation matrix."""
         if isinstance(args[1], SphericalVector):
             (jacobian, coordVelocity) = args
-            return MatrixIJK.mxv(jacobian, coordVelocity.getVectorIJK())
+            vect = VectorIJK()
+            vect[:] = jacobian.dot(coordVelocity)
+            return vect
         else:
             (inverseJacobian, cartVelocity) = args
-            vect = MatrixIJK.mxv(inverseJacobian, cartVelocity)
+            vect = VectorIJK()
+            vect[:] = inverseJacobian.dot(cartVelocity)
             return SphericalVector(vect.i, vect.j, vect.k)

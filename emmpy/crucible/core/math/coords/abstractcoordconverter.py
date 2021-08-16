@@ -1,4 +1,4 @@
-"""Abstract base class for coordinate converters.
+"""Abstract base class for 3-D coordinate converters.
 
 This is the abstract base class for all coordinate converters.
 
@@ -13,11 +13,11 @@ from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
 
 
 class AbstractCoordConverter(CoordConverter):
-    """Abstract base class for coordinate converters.
+    """Abstract base class for 3-D coordinate converters.
 
     Attributes
     ----------
-    jacobian : array-like
+    jacobian : 3x3 array-like of float
         Jacobian matrix for coordinate conversion.
     """
 
@@ -28,7 +28,7 @@ class AbstractCoordConverter(CoordConverter):
 
         Parameters
         ----------
-        jacobian : array-like
+        jacobian : 3x3 array-like of float
             Jacobian matrix for coordinate conversion.
         """
         self.jacobian = jacobian

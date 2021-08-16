@@ -13,11 +13,11 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ method."""
-        jacobian = [[0, 1], [2, 3]]
+        jacobian = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         acc = AbstractCoordConverter(jacobian)
         self.assertIsInstance(acc, AbstractCoordConverter)
-        for row in range(2):
-            for col in range(2):
+        for row in range(3):
+            for col in range(3):
                 self.assertAlmostEqual(acc.jacobian[row][col],
                                        jacobian[row][col])
 

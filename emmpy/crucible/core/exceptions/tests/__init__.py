@@ -5,10 +5,7 @@ hierarchy.
 
 Modules
 -------
-test_BugException.py
-test_CrucibleException.py
-test_CrucibleRuntimeException.py
-
-Packages
---------
+test_bugexception.py
+test_crucibleexception.py
+test_crucibleruntimeexception.py
 """

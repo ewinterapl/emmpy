@@ -35,9 +35,9 @@ class CartesianVectorFieldValue(AbstractVectorFieldValue):
 
         Parameters
         ----------
-        position : Vector
+        position : VectorIJK
             Position in the vector field.
-        value : Vector
+        value : VectorIJK
             Value of the vector field at the position.
         """
         AbstractVectorFieldValue.__init__(

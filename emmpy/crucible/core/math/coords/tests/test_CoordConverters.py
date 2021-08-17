@@ -1,88 +1,183 @@
+"""Tests for the coordconverters module."""
+
+
+from math import atan2, cos, pi, sin, sqrt
 import unittest
 
+import numpy as np
+
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.coords.latitudinalvector import (
-    LatitudinalVector
-)
-from emmpy.crucible.core.math.coords.polarvector import (
-    PolarVector
-)
-from emmpy.crucible.core.math.coords.radecvector import (
-    RaDecVector
-)
+from emmpy.crucible.core.math.coords.latitudinalvector import LatitudinalVector
+from emmpy.crucible.core.math.coords.polarvector import PolarVector
+from emmpy.crucible.core.math.coords.radecvector import RaDecVector
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
-from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
+
+
+# Test grids.
+n = 25
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+zs = np.linspace(-10, 10, n)
+rhos = np.linspace(0, 10, n)
+phis = np.linspace(0, 2*pi, n)
+radiuss = np.linspace(0, 10, n)
+lats = np.linspace(-pi/2, pi/2, n)
+lons = np.linspace(-pi, pi, n)
+angles = np.linspace(0, 2*pi, n)
+ras = np.linspace(0, 2*pi, n)
+decs = np.linspace(-pi/2, pi/2, n)
+rs = np.linspace(0, 10, n)
+thetas = np.linspace(0, pi, n)
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the coordconverters module."""
 
     def test___init__(self):
-        cc = CoordConverters()
-        self.assertIsNotNone(cc)
+        """Test the __init__ method."""
+        with self.assertRaises(AbstractMethodException):
+            CoordConverters()
 
     def test_convertToCylindrical(self):
-        cartesian = VectorIJK(1, 2, 3)
-        cylindrical = CoordConverters.convertToCylindrical(cartesian)
-        self.assertAlmostEqual(cylindrical.rho, 2.23606797749979)
-        self.assertAlmostEqual(cylindrical.phi, 1.1071487177940904)
-        self.assertAlmostEqual(cylindrical.z, 3)
+        """Test the convertToCylindrical method."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = VectorIJK(x, y, z)
+                    rho = sqrt(x**2 + y**2)
+                    phi = atan2(y, x)
+                    if phi < 0:
+                        phi += 2*pi
+                    cyl = CoordConverters.convertToCylindrical(cartesian)
+                    self.assertAlmostEqual(cyl.rho, rho)
+                    self.assertAlmostEqual(cyl.phi, phi)
+                    self.assertAlmostEqual(cyl.z, z)
 
     def test_convertToLatitudinal(self):
-        cartesian = VectorIJK(1, 2, 3)
-        latitudinal = CoordConverters.convertToLatitudinal(cartesian)
-        self.assertAlmostEqual(latitudinal.getI(), 3.741657386773941)
-        self.assertAlmostEqual(latitudinal.getJ(), 0.9302740141154721)
-        self.assertAlmostEqual(latitudinal.getK(), 1.1071487177940904)
+        """Test the convertToLatitudinal method."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = VectorIJK(x, y, z)
+                    radius = sqrt(x**2 + y**2 + z**2)
+                    lat = atan2(z, sqrt(x**2 + y**2))
+                    lon = atan2(y, x)
+                    latitudinal = CoordConverters.convertToLatitudinal(
+                        cartesian)
+                    self.assertAlmostEqual(latitudinal.getRadius(), radius)
+                    self.assertAlmostEqual(latitudinal.getLatitude(), lat)
+                    self.assertAlmostEqual(latitudinal.getLongitude(), lon)
 
     def test_convertToPolar(self):
-        cartesian = VectorIJ(1, 2)
-        polar = CoordConverters.convertToPolar(cartesian)
-        self.assertAlmostEqual(polar.getI(), 2.23606797749979)
-        self.assertAlmostEqual(polar.getJ(), 1.1071487177940904)
+        """Test the convertToPolar method."""
+        for x in xs:
+            for y in ys:
+                cartesian = VectorIJ(x, y)
+                radius = sqrt(x**2 + y**2)
+                angle = atan2(y, x)
+                cyl = CoordConverters.convertToPolar(cartesian)
+                self.assertAlmostEqual(cyl.getRadius(), radius)
+                self.assertAlmostEqual(cyl.getAngle(), angle)
 
     def test_convertToRaDec(self):
-        cartesian = VectorIJK(1, 2, 3)
-        radec = CoordConverters.convertToRaDec(cartesian)
-        self.assertAlmostEqual(radec.getI(), 3.741657386773941)
-        self.assertAlmostEqual(radec.getJ(), 1.1071487177940904)
-        self.assertAlmostEqual(radec.getK(), 0.9302740141154721)
+        """Test the convertToRaDec method."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = VectorIJK(x, y, z)
+                    radius = sqrt(x**2 + y**2 + z**2)
+                    rightAscension = atan2(y, x)
+                    if rightAscension < 0:
+                        rightAscension += 2*pi
+                    declination = atan2(z, sqrt(x**2 + y**2))
+                    radec = CoordConverters.convertToRaDec(cartesian)
+                    self.assertAlmostEqual(radec.getRadius(), radius)
+                    self.assertAlmostEqual(radec.getDeclination(), declination)
+                    self.assertAlmostEqual(radec.getRightAscension(),
+                                           rightAscension)
 
     def test_convertToSpherical(self):
-        cartesian = VectorIJK(1, 2, 3)
-        spherical = CoordConverters.convertToSpherical(cartesian)
-        self.assertAlmostEqual(spherical.r, 3.741657386773941)
-        self.assertAlmostEqual(spherical.theta, 0.6405223126794246)
-        self.assertAlmostEqual(spherical.phi, 1.1071487177940904)
+        """Test the convertToSpherical method."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = VectorIJK(x, y, z)
+                    r = sqrt(x**2 + y**2 + z**2)
+                    if x == y == z == 0:
+                        theta = 0
+                    else:
+                        theta = pi/2 - atan2(z, sqrt(x**2 + y**2))
+                    phi = atan2(y, x)
+                    spherical = CoordConverters.convertToSpherical(cartesian)
+                    self.assertAlmostEqual(spherical.r, r)
+                    self.assertAlmostEqual(spherical.theta, theta)
+                    self.assertAlmostEqual(spherical.phi, phi)
 
     def test_convert(self):
-        cylindrical = CylindricalVector(1, 2, 3)
-        cartesian = CoordConverters.convert(cylindrical)
-        self.assertAlmostEqual(cartesian.i, -0.4161468365471424)
-        self.assertAlmostEqual(cartesian.j, 0.9092974268256817)
-        self.assertAlmostEqual(cartesian.k, 3)
-        latitudinal = LatitudinalVector(1, 2, 3)
-        cartesian = CoordConverters.convert(latitudinal)
-        self.assertAlmostEqual(cartesian.i, 0.411982245665683)
-        self.assertAlmostEqual(cartesian.j, -0.05872664492762098)
-        self.assertAlmostEqual(cartesian.k, 0.9092974268256817)
-        polar = PolarVector(1, 2)
-        cartesian = CoordConverters.convert(polar)
-        self.assertAlmostEqual(cartesian.i, -0.4161468365471424)
-        self.assertAlmostEqual(cartesian.j, 0.9092974268256817)
-        radec = RaDecVector(1, 2, 3)
-        cartesian = CoordConverters.convert(radec)
-        self.assertAlmostEqual(cartesian.i, 0.411982245665683)
-        self.assertAlmostEqual(cartesian.j, -0.9001976297355174)
-        self.assertAlmostEqual(cartesian.k, 0.1411200080598672)
-        spherical = SphericalVector(1, 2, 3)
-        cartesian = CoordConverters.convert(spherical)
-        self.assertAlmostEqual(cartesian.i, -0.9001976297355174)
-        self.assertAlmostEqual(cartesian.j, 0.12832006020245673)
-        self.assertAlmostEqual(cartesian.k, -0.4161468365471424)
-        with self.assertRaises(Exception):
-            CoordConverters.convert([])
+        """Test the convert method."""
+        # Cylindrical to Cartesian
+        for rho in rhos:
+            for phi in phis:
+                for z in zs:
+                    x = rho*cos(phi)
+                    y = rho*sin(phi)
+                    cylindrical = CylindricalVector(rho, phi, z)
+                    cartesian = CoordConverters.convert(cylindrical)
+                    self.assertAlmostEqual(cartesian.i, x)
+                    self.assertAlmostEqual(cartesian.j, y)
+                    self.assertAlmostEqual(cartesian.k, z)
+        # Latitudinal to Cartesian
+        for radius in radiuss:
+            for lat in lats:
+                for lon in lons:
+                    x = radius*cos(lat)*cos(lon)
+                    y = radius*cos(lat)*sin(lon)
+                    z = radius*sin(lat)
+                    latitudinal = LatitudinalVector(radius, lat, lon)
+                    cartesian = CoordConverters.convert(latitudinal)
+                    self.assertAlmostEqual(cartesian.i, x)
+                    self.assertAlmostEqual(cartesian.j, y)
+                    self.assertAlmostEqual(cartesian.k, z)
+        # Polar to Cartesian
+        for radius in radiuss:
+            for angle in angles:
+                x = radius*cos(angle)
+                y = radius*sin(angle)
+                polar = PolarVector(radius, angle)
+                cartesian = CoordConverters.convert(polar)
+                self.assertAlmostEqual(cartesian.i, x)
+                self.assertAlmostEqual(cartesian.j, y)
+        # RA/DEC to Cartesian
+        for radius in radiuss:
+            for ra in ras:
+                for dec in decs:
+                    x = radius*cos(dec)*cos(ra)
+                    y = radius*cos(dec)*sin(ra)
+                    z = radius*sin(dec)
+                    radec = RaDecVector(radius, ra, dec)
+                    cartesian = CoordConverters.convert(radec)
+                    self.assertAlmostEqual(cartesian.i, x)
+                    self.assertAlmostEqual(cartesian.j, y)
+                    self.assertAlmostEqual(cartesian.k, z)
+        # Spherical to Cartesian
+        for r in rs:
+            for theta in thetas:
+                for phi in phis:
+                    x = r*sin(theta)*cos(phi)
+                    y = r*sin(theta)*sin(phi)
+                    z = r*cos(theta)
+                    radec = SphericalVector(r, theta, phi)
+                    cartesian = CoordConverters.convert(radec)
+                    self.assertAlmostEqual(cartesian.i, x)
+                    self.assertAlmostEqual(cartesian.j, y)
+                    self.assertAlmostEqual(cartesian.k, z)
+        # Invalid args.
+        with self.assertRaises(ValueError):
+            CoordConverters.convert(None)
 
 
 if __name__ == '__main__':

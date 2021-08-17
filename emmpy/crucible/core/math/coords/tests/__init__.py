@@ -12,7 +12,7 @@ test_CoordConverters.py
 test_CylindricalCoordConverter.py
 test_CylindricalToCartesianBasisTransformation.py
 test_CylindricalToCartesianJacobian.py
-test_CylindricalVectorFieldValue.py
+test_cylindricalvectorfieldvalue.py
 test_LatitudinalCoordConverter.py
 test_LatitudinalToCartesianJacobian.py
 test_LatitudinalVector.py

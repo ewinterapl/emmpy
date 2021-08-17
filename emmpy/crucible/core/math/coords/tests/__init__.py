@@ -29,7 +29,7 @@ test_SphericalVector.py
 test_SphericalVectorFieldValue.py
 test_Transformation.py
 test_TransformationIJ.py
-test_VectorFieldValue.py
+test_vectorfieldvalue.py
 test_VectorFieldValueConversions.py
 
 Packages

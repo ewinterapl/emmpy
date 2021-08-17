@@ -1,20 +1,28 @@
+"""Tests for the vectorfieldvalue module."""
+
+
 import unittest
 
 from emmpy.crucible.core.math.coords.vectorfieldvalue import VectorFieldValue
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the vectorfieldvalue module."""
 
     def test___init__(self):
-        with self.assertRaises(Exception):
+        """Test the __init__ method."""
+        with self.assertRaises(AbstractMethodException):
             VectorFieldValue()
 
     def test_getPosition(self):
-        with self.assertRaises(Exception):
+        """Test the getPosition method."""
+        with self.assertRaises(AbstractMethodException):
             VectorFieldValue.getPosition(None)
 
     def test_getValue(self):
-        with self.assertRaises(Exception):
+        """Test the getValue method."""
+        with self.assertRaises(AbstractMethodException):
             VectorFieldValue.getValue(None)
 
 

@@ -1,49 +1,85 @@
-"""2-D coordinate converter interface class.
+"""Abstract base class for 2-D coordinate converters.
 
-N.B. This class was created from a Java interface, and therefore most of these
+This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+
+
 class CoordConverterIJ:
-    """An interface for conversion between different coordinate systems.
+    """Abstract base class for 2-D coordinate converters.
 
-    The four methods allow you to convert positions and states from Cartesian
-    to the coordinate system and back. It is templated on the Unwritable and
-    Writable version of the coordinate class.
+    This class defines the methods required by 2-D coordinate converter
+    classes.
 
-    @author G.K.Stephens
-
-    @param <U> The Unwritable Coordinate class.
-    @param <W> The Writable version of the Coordinate class.
+    Attributes
+    ----------
+    None
     """
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE."""
-        raise Exception
+        """Initialize a new CoordConverterIJ object.
+
+        Initialize a new CoordConverterIJ object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def toCoordinate(self, cartesian):
-        """Convert a Cartesian position to another coordinate system position.
+        """Convert a Cartesian vector to the coordinate system.
 
-        INTERFACE - DO NOT INVOKE.
+        Converts a Cartesian vector to this coordinate system.
 
-        @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
-        position.
-        @param coordinateBuffer A coordinate buffer holding the position in
-        this coordinate system.
-        @return a reference to buffer for convenience.
+        Parameters
+        ----------
+        cartesian : Vector
+            A Cartesian vector.
+
+        Returns
+        -------
+        coordinate : Vector
+            The input vector converted to the current coordinate system.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
     def toCartesian(self, coordinate):
-        """Convert a coordinate system position to a Cartesian position.
+        """Convert a coordinate vector to the Cartesian system.
 
-        INTERFACE - DO NOT INVOKE.
+        Converts a coordinate vector to this Cartesian system.
 
-        @param coordinate A coordinate holding the position in this coordinate
-        system.
-        @param cartesianBuffer A {@link UnwritableVectorIJK} buffer holding the
-        Cartesian position.
-        @return a reference to buffer for convenience.
+        Parameters
+        ----------
+        coordinate : Vector
+            A vector in the current coordinate system.
+
+        Returns
+        -------
+        cartesian : Vector
+            The input vector converted to the Cartesian coordinate system.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException

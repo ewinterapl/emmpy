@@ -7,7 +7,7 @@ test_abstractcoordconverterij.py
 test_abstractvectorfieldvalue.py
 test_cartesianvectorfieldvalue.py
 test_coordconverter.py
-test_CoordConverterIJ.py
+test_coordconverterij.py
 test_CoordConverters.py
 test_CylindricalCoordConverter.py
 test_CylindricalToCartesianBasisTransformation.py

@@ -13,7 +13,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
     AbstractVectorFieldValue
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class CartesianVectorFieldValue(AbstractVectorFieldValue):
@@ -40,6 +39,4 @@ class CartesianVectorFieldValue(AbstractVectorFieldValue):
         value : VectorIJK
             Value of the vector field at the position.
         """
-        AbstractVectorFieldValue.__init__(
-            self, VectorIJK(position), VectorIJK(value)
-        )
+        AbstractVectorFieldValue.__init__(self, position, value)

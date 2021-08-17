@@ -15,7 +15,7 @@ test_CylindricalToCartesianJacobian.py
 test_cylindricalvectorfieldvalue.py
 test_LatitudinalCoordConverter.py
 test_LatitudinalToCartesianJacobian.py
-test_LatitudinalVector.py
+test_latitudinalvector.py
 test_PointOnAxisException.py
 test_PolarCoordConverter.py
 test_PolarToCartesianJacobian.py

@@ -49,7 +49,7 @@ class CoordConverter:
         ----------
         cartesian : Vector
             A Cartesian vector.
-        
+
         Returns
         -------
         coordinate : Vector
@@ -71,7 +71,7 @@ class CoordConverter:
         ----------
         coordinate : Vector
             A vector in the current coordinate system.
-        
+
         Returns
         -------
         cartesian : Vector

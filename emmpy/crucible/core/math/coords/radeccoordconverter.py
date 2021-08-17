@@ -1,5 +1,8 @@
 """Convert between Ra/Dec and Cartesian coordinates."""
 
+
+from math import pi
+
 from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter

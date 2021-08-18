@@ -10,7 +10,7 @@ test_coordconverter.py
 test_coordconverterij.py
 test_coordconverters.py
 test_cylindricalcoordconverter.py
-test_CylindricalToCartesianBasisTransformation.py
+test_cylindricaltocartesianbasistransformation.py
 test_CylindricalToCartesianJacobian.py
 test_cylindricalvectorfieldvalue.py
 test_LatitudinalCoordConverter.py

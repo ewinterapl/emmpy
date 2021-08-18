@@ -15,9 +15,6 @@ from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 # Test grids.
 n = 25
-xs = np.linspace(-10, 10, n)
-ys = np.linspace(-10, 10, n)
-zs = np.linspace(-10, 10, n)
 rhos = np.linspace(0, 10, n)
 phis = np.linspace(0, 2*pi, n)
 zs = np.linspace(-10, 10, n)
@@ -78,7 +75,9 @@ class TestBuilder(unittest.TestCase):
         for rho in rhos:
             for phi in phis:
                 for z in zs:
-                    cyl = CylindricalVector(rho, phi, z)
+                    # Transform a cylindrical basis vector to Cartesian,
+                    # then back to cylindrical.
+                    cyl = CylindricalVector(1, 1, 1)
                     cos_phi = cos(phi)
                     sin_phi = sin(phi)
                     jac = np.array([[cos_phi, -sin_phi, 0],

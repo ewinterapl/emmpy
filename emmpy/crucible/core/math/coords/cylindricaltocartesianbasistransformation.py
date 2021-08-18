@@ -65,7 +65,7 @@ class CylindricalToCartesianBasisTransformation(Transformation):
                         [0, 0, 1]]
         return buffer
 
-    def getInverseTransformation(self, coordPosition, buffer):
+    def getInverseTransformation(self, cylindrical, buffer):
         """Return the Cartesian-to-cylindrical basis transformation matrix.
 
         Return the Cartesian-to-cylindrical basis transformation matrix at
@@ -87,7 +87,7 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         buffer : MatrixIJK
             The Cartesian-to-cylindrical basis transformation matrix.
         """
-        self.getTransformation(coordPosition, buffer)
+        self.getTransformation(cylindrical, buffer)
         buffer[:, :] = np.linalg.inv(buffer)
         return buffer
 

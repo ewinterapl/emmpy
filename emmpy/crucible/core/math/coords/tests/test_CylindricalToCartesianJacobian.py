@@ -1,80 +1,107 @@
-from math import cos, sin
+"""Tests for the cylindricaltocartesianjacobian module."""
+
+
+from math import cos, pi, sin
 import unittest
+
+import numpy as np
 
 from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
     CylindricalToCartesianJacobian
 )
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+
+
+# Test grids.
+n = 25
+rhos = np.linspace(0, 10, n)
+phis = np.linspace(0, 2*pi, n)
+zs = np.linspace(-10, 10, n)
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the cylindricaltocartesianjacobian module."""
 
     def test___init__(self):
-        CylindricalToCartesianJacobian()
+        """Test the __init__ method."""
+        c2cj = CylindricalToCartesianJacobian()
+        self.assertIsInstance(c2cj, CylindricalToCartesianJacobian)
 
     def test_getTransformation(self):
+        """Test the getTransformation method."""
         c2cj = CylindricalToCartesianJacobian()
-        r = 1.0
-        lon = 2.0
-        z = 3.0
-        cv = CylindricalVector(r, lon, z)
-        mijk = MatrixIJK()
-        c2cj.getTransformation(cv, mijk)
-        self.assertAlmostEqual(mijk.ii, cos(lon))
-        self.assertAlmostEqual(mijk.ji, sin(lon))
-        self.assertAlmostEqual(mijk.ki, 0)
-        self.assertAlmostEqual(mijk.ij, -r*sin(lon))
-        self.assertAlmostEqual(mijk.jj, r*cos(lon))
-        self.assertAlmostEqual(mijk.kj, 0)
-        self.assertAlmostEqual(mijk.ik, 0)
-        self.assertAlmostEqual(mijk.jk, 0)
-        self.assertAlmostEqual(mijk.kk, 1)
+        for rho in rhos:
+            for phi in phis:
+                for z in zs:
+                    cylindrical = CylindricalVector(rho, phi, z)
+                    buffer = MatrixIJK()
+                    jac = c2cj.getTransformation(cylindrical, buffer)
+                    self.assertIs(jac, buffer)
+                    cos_phi = cos(phi)
+                    sin_phi = sin(phi)
+                    jac_ref = np.array([[cos_phi, -rho*sin_phi, 0],
+                                        [sin_phi, rho*cos_phi, 0],
+                                        [0, 0, 1]])
+                    for row in range(3):
+                        for col in range(3):
+                            self.assertAlmostEqual(jac[row][col],
+                                                   jac_ref[row][col])
 
     def test_getInverseTransformation(self):
+        """Test the getInverseTransformation method."""
         c2cj = CylindricalToCartesianJacobian()
-        r = 1.0
-        lon = 2.0
-        z = 3.0
-        cv = CylindricalVector(r, lon, z)
-        mijk = MatrixIJK()
-        c2cj.getInverseTransformation(cv, mijk)
-        self.assertAlmostEqual(mijk.ii, cos(lon))
-        self.assertAlmostEqual(mijk.ji, -r*sin(lon))
-        self.assertAlmostEqual(mijk.ki, 0)
-        self.assertAlmostEqual(mijk.ij, sin(lon))
-        self.assertAlmostEqual(mijk.jj, r*cos(lon))
-        self.assertAlmostEqual(mijk.kj, 0)
-        self.assertAlmostEqual(mijk.ik, 0)
-        self.assertAlmostEqual(mijk.jk, 0)
-        self.assertAlmostEqual(mijk.kk, 1)
-        cv0 = CylindricalVector(0, 0, 0)
-        with self.assertRaises(PointOnAxisException):
-            c2cj.getInverseTransformation(cv0, mijk)
+        for rho in rhos:
+            for phi in phis:
+                for z in zs:
+                    cylindrical = CylindricalVector(rho, phi, z)
+                    buffer = MatrixIJK()
+                    if rho == 0:
+                        with self.assertRaises(PointOnAxisException):
+                            jac = c2cj.getInverseTransformation(
+                                cylindrical, buffer)
+                        continue
+                    jac = c2cj.getInverseTransformation(
+                        cylindrical, buffer)
+                    self.assertIs(jac, buffer)
+                    cos_phi = cos(phi)
+                    sin_phi = sin(phi)
+                    jac_ref = np.array([[cos_phi, -rho*sin_phi, 0],
+                                        [sin_phi, rho*cos_phi, 0],
+                                        [0, 0, 1]])
+                    jac_ref = np.linalg.inv(jac_ref)
+                    for row in range(3):
+                        for col in range(3):
+                            self.assertAlmostEqual(jac[row][col],
+                                                   jac_ref[row][col])
 
     def test_mxv(self):
+        """Test the mxv method."""
         c2cj = CylindricalToCartesianJacobian()
-        r = 1.0
-        lon = 2.0
-        z = 3.0
-        cv1 = CylindricalVector(r, lon, z)
-        mijk = MatrixIJK()
-        c2cj.getTransformation(cv1, mijk)
-        cylindricalVelocity = CylindricalVector(1, 1, 1)
-        cartesianVelocity = c2cj.mxv(mijk, cylindricalVelocity)
-        self.assertAlmostEqual(cartesianVelocity.i, -1.325444263372824)
-        self.assertAlmostEqual(cartesianVelocity.j, 0.4931505902785393)
-        self.assertAlmostEqual(cartesianVelocity.k, 1)
-        c2cj.getInverseTransformation(cv1, mijk)
-        cylindricalVelocity = c2cj.mxv(mijk, cartesianVelocity)
-        self.assertAlmostEqual(cylindricalVelocity.rho, 1)
-        self.assertAlmostEqual(cylindricalVelocity.phi, 1)
-        self.assertAlmostEqual(cylindricalVelocity.z, 1)
-        with self.assertRaises(Exception):
-            c2cj.mxv(mijk, [])
+        for rho in rhos:
+            for phi in phis:
+                for z in zs:
+                    # Transform a cylindrical vector to Cartesian,
+                    # then back to cylindrical.
+                    cyl = CylindricalVector(rho, phi, z)
+                    buffer = MatrixIJK()
+                    jac = c2cj.getTransformation(cyl, buffer)
+                    cart = c2cj.mxv(jac, cyl)
+                    cart_ref = [row.dot(cyl) for row in jac]
+                    for i in range(3):
+                        self.assertAlmostEqual(cart[i], cart_ref[i])
+                    if rho == 0:
+                        with self.assertRaises(PointOnAxisException):
+                            jac = c2cj.getInverseTransformation(
+                                cyl, buffer)
+                        continue
+                    jac_inv = np.linalg.inv(jac)
+                    new_cyl = c2cj.mxv(jac_inv, cart)
+                    for i in range(3):
+                        self.assertAlmostEqual(new_cyl[i], cyl[i])
 
 
 if __name__ == '__main__':

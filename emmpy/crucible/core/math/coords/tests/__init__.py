@@ -11,7 +11,7 @@ test_coordconverterij.py
 test_coordconverters.py
 test_cylindricalcoordconverter.py
 test_cylindricaltocartesianbasistransformation.py
-test_CylindricalToCartesianJacobian.py
+test_cylindricaltocartesianjacobian.py
 test_cylindricalvectorfieldvalue.py
 test_LatitudinalCoordConverter.py
 test_LatitudinalToCartesianJacobian.py

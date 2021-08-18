@@ -1,92 +1,120 @@
-"""Jacobian matrix for the cylindrical-to-cartesian transformation."""
+"""Jacobian to convert vectors from cylindrical to Cartesian coordinates.
+
+Jacobian to convert vectors from cylindrical to Cartesian coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import cos, sin
 
 import numpy as np
 
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
-    PointOnAxisException
-)
+    PointOnAxisException)
 from emmpy.crucible.core.math.coords.transformation import Transformation
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
 class CylindricalToCartesianJacobian(Transformation):
-    """Jacobian matrix for the cylindrical-to-cartesian transformation."""
+    """Jacobian to convert vectors from cylindrical to Cartesian coordinates.
+
+    Jacobian to convert vectors from cylindrical to Cartesian coordinates.
+
+    Attributes
+    ----------
+    None
+    """
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new CylindricalToCartesianJacobian object.
 
-    def getTransformation(self, coordPosition, buffer):
-        """Return the transformation matrix.
+        Initialize a new CylindricalToCartesianJacobian object.
 
-        .-                                  -.
-        |  dx/dr     dx/dlong       dx/dz    |
-        |                                    |
-        |  dy/dr     dy/dlong       dy/dz    |
-        |                                    |
-        |  dz/dr     dz/dlong       dz/dz    |
-        `-                                  -'
-
-        .-                                  -.
-        |  cos(long)  -sin(long)*r    0      |
-        |                                    |
-        |  sin(long)   cos(long)*r    0      |
-        |                                    |
-        |     0           0           1      |
-        `-                                  -'
+        Parameters
+        ----------
+        None
         """
-        # from SPICE's routine in drdcyl.f
-        # JACOBI (DX,DR) = DCOS( LONG )
-        # JACOBI (DY,DR) = DSIN( LONG )
-        # JACOBI (DZ,DR) = 0.0D0
-        # JACOBI (DX,DLON) = -DSIN( LONG ) * R
-        # JACOBI (DY,DLON) = DCOS( LONG ) * R
-        # JACOBI (DZ,DLON) = 0.0D0
-        # JACOBI (DX,DZ) = 0.0D0
-        # JACOBI (DY,DZ) = 0.0D0
-        # JACOBI (DZ,DZ) = 1.0D0
-        r = coordPosition.rho
-        lon = coordPosition.phi
-        cosLon = cos(lon)
-        sinLon = sin(lon)
-        j_DX_DR = cosLon
-        j_DY_DR = sinLon
-        j_DZ_DR = 0.0
-        j_DX_DLON = -sinLon*r
-        j_DY_DLON = cosLon*r
-        j_DZ_DLON = 0.0
-        j_DX_DZ = 0.0
-        j_DY_DZ = 0.0
-        j_DZ_DZ = 1.0
-        buffer[:, :] = [[j_DX_DR, j_DX_DLON, j_DX_DZ],
-                        [j_DY_DR, j_DY_DLON, j_DY_DZ],
-                        [j_DZ_DR, j_DZ_DLON, j_DZ_DZ]]
+
+    def getTransformation(self, cylindrical, buffer):
+        """Return the cylindrical-to-Cartesian Jacobian.
+
+        Return the cylindrical-to-Cartesian Jacobian at the specified
+        position.
+
+        Parameters
+        ----------
+        cylindrical : CylindricalVector
+            Position in cylindrical coordinates.
+        buffer : MatrixIJK
+            Buffer to hold the cylindrical-to-Cartesian Jacobian.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The cylindrical-to-Cartesian Jacobian.
+        """
+        rho = cylindrical.rho
+        phi = cylindrical.phi
+        cos_phi = cos(phi)
+        sin_phi = sin(phi)
+        buffer[:, :] = [[cos(phi), -rho*sin_phi, 0],
+                        [sin_phi, rho*cos_phi, 0],
+                        [0, 0, 1]]
         return buffer
 
-    def getInverseTransformation(self, coordPosition, buffer):
-        """Return the inverse transformation."""
-        try:
-            self.getTransformation(coordPosition, buffer)
-            buffer[:] = np.linalg.inv(buffer)
-            return buffer
-        except Exception as e:
-            raise PointOnAxisException(e)
+    def getInverseTransformation(self, cylindrical, buffer):
+        """Return the Cartesian-to-cylindrical Jacobian.
 
-    def mxv(self, *args):
-        """Multiply a velocity by the jacobian."""
-        if isinstance(args[1], CylindricalVector):
-            (jacobian, coordVelocity) = args
-            vect = VectorIJK()
-            vect[:] = jacobian.dot(coordVelocity)
-            return vect
-        elif isinstance(args[1], VectorIJK):
-            (inverseJacobian, cartVelocity) = args
-            vect = VectorIJK()
-            vect[:] = inverseJacobian.dot(cartVelocity)
-            return CylindricalVector(vect.i, vect.j, vect.k)
+        Return the Cartesian-to-cylindrical Jacobian at the specified
+        position.
+
+        Parameters
+        ----------
+        cylindrical : CylindricalVector
+            Position in cylindrical coordinates.
+        buffer : MatrixIJK
+            Buffer to hold the Cartesian-to-cylindrical Jacobian.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The Cartesian-to-cylindrical Jacobian.
+        """
+        try:
+            self.getTransformation(cylindrical, buffer)
+            buffer[:, :] = np.linalg.inv(buffer)
+            return buffer
+        except np.linalg.LinAlgError as e:
+            raise PointOnAxisException
+
+    def mxv(self, jacobian, vector):
+        """Transform a vector between cylindrical and Cartesian coordinates.
+
+        Transform a vector between cylindrical and Cartesian coordinates.
+        The transformation can go in either direction, and is computed
+        based on the input vector type.
+
+        Parameters
+        ----------
+        jacobian : MatrixIJK
+            Jacobian matrix for conversion.
+        vector : CylindricalVector or VectorIJK
+            Vector in original coordinates.
+
+        Returns
+        -------
+        converted_vector : VectorIJK or CylindricalVector
+            Vector in converted coordinates.
+        """
+        v = jacobian.dot(vector)
+        converted_vector = None
+        if isinstance(vector, CylindricalVector):
+            converted_vector = VectorIJK(v)
         else:
-            raise Exception
+            converted_vector = VectorIJK(v)
+        return converted_vector

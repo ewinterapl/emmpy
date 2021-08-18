@@ -29,7 +29,14 @@ class CylindricalToCartesianBasisTransformation(Transformation):
     """
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new CylindricalToCartesianBasisTransformation object.
+
+        Initialize a new CylindricalToCartesianBasisTransformation object.
+
+        Parameters
+        ----------
+        None
+        """
 
     def getTransformation(self, cylindrical, buffer):
         """Return the cylindrical-to-Cartesian basis transformation matrix.
@@ -53,8 +60,8 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         phi = cylindrical.phi
         cos_phi = cos(phi)
         sin_phi = sin(phi)
-        buffer[:, :] = [[cos(phi), -sin_phi, 0],
-                        [sin_phi, cos(phi), 0],
+        buffer[:, :] = [[cos_phi, -sin_phi, 0],
+                        [sin_phi, cos_phi, 0],
                         [0, 0, 1]]
         return buffer
 

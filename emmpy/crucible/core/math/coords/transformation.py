@@ -106,20 +106,22 @@ class Transformation:
         """
         raise AbstractMethodException
 
-    def mxv(self, *args):
+    def mxv(self, jacobian, vector):
         """Multiply a vector by a matrix.
 
         Multiply a vector by a matrix.
 
         Parameters
         ----------
-        *args : tuple of object
-            Defined by subclass.
+        jacobian : MatrixIJK
+            Jacobian matrix for conversion.
+        vector : Vector3D
+            Vector in original coordinates.
 
         Returns
         -------
-        result : object
-            Defined by subclass.
+        converted_vector : Vector3D
+            Vector in converted coordinates.
 
         Raises
         ------

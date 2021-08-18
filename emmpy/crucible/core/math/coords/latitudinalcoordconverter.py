@@ -1,4 +1,13 @@
-"""Convert between latitudinal and cartesian coordinates."""
+"""Convert to and from latitudinal coordinates.
+
+This class provides methods that convert between latitudinal and Cartesian
+coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import atan2, cos, sin, sqrt
@@ -16,69 +25,76 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class LatitudinalCoordConverter(AbstractCoordConverter):
-    """Convert between latitudinal and cartesian coordinates."""
+    """Convert to and from latitudinal coordinates.
 
+    Convert to and from latitudinal coordinates.
+
+    Attributes
+    ----------
+    JACOBIAN : 3x3 array-like of float
+        Jacobian matrix to convert from latitudinal to Cartesian
+        coordinates.
+    """
+
+    # Jacobian matrix to convert from latitudinal to Cartesian
+    # coordinates.
     JACOBIAN = LatitudinalToCartesianJacobian()
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new CylindricalCoordConverter object.
+
+        Initialize a new CylindricalCoordConverter object.
+
+        Parameters
+        ----------
+        None
+        """
         AbstractCoordConverter.__init__(
             self, LatitudinalCoordConverter.JACOBIAN
         )
 
     def toCoordinate(self, cartesian):
-        """From the SPICE routine reclat.f.
+        """Convert a Cartesian vector to latitudinal coordinates.
 
-        BIG = MAX ( DABS(RECTAN(1)), DABS(RECTAN(2)), DABS(RECTAN(3)) )
-        IF ( BIG .GT. 0 ) THEN
-          X = RECTAN(1) / BIG Y = RECTAN(2) / BIG Z = RECTAN(3) / BIG
-          RADIUS = BIG * DSQRT (X*X + Y*Y + Z*Z)
-          LAT = DATAN2 ( Z, DSQRT(X*X + Y*Y) )
-          X = RECTAN(1) Y = RECTAN(2)
-          IF (X.EQ.0.D0 .AND. Y.EQ.0.D0) THEN LONG = 0.D0
-          ELSE LONG=DATAN2(Y,X)
-          END IF
-        ELSE RADIUS = 0.0D0 LAT = 0.D0 LONG = 0.D0 END IF
+        Convert a Cartesian vector to latitudinal coordinates.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            Vector in Cartesian coordinates.
+
+        Returns
+        -------
+        latitudinal : LatitudinalVector
+            Input vector converted to latitudinal coordinates.
         """
-        x = cartesian.i
-        y = cartesian.j
-        z = cartesian.k
-        radius = 0
-        latitude = 0
-        longitude = 0
-        big = max(abs(x), abs(y), abs(z))
-        if big > 0:
-            x /= big
-            y /= big
-            z /= big
-            radius = big*sqrt(x*x + y*y + z*z)
-            latitude = atan2(z, sqrt(x*x + y*y))
-            x = cartesian.i
-            y = cartesian.j
-            if x == 0 and y == 0:
-                longitude = 0
-            else:
-                longitude = atan2(y, x)
-        else:
-            radius = 0
-            latitude = 0
-            longitude = 0
-        return LatitudinalVector(radius, latitude, longitude)
+        (x, y, z) = (cartesian.i, cartesian.j, cartesian.k)
+        radius = sqrt(x**2 + y**2 + z**2)
+        latitude = atan2(z, sqrt(x**2 + y**2))
+        longitude = atan2(y, x)
+        latitudinal = LatitudinalVector(radius, latitude, longitude)
+        return latitudinal
 
-    def toCartesian(self, coordinate):
-        """From the SPICE routine latrec.f.
+    def toCartesian(self, latitudinal):
+        """Convert a latitudinal vector to Cartesian coordinates.
 
-        X = RADIUS * DCOS(LONG) * DCOS(LAT)
-        Y = RADIUS * DSIN(LONG) * DCOS(LAT)
-        Z = RADIUS * DSIN(LAT)
+        Convert a latitudinal vector to Cartesian coordinates.
+
+        Parameters
+        ----------
+        latitudinal : LatitudinalVector
+            Vector in latitudinal coordinates.
+
+        Returns
+        -------
+        cartesian : VectorIJK
+            Input vector converted to Cartesian coordinates.
         """
-        i = (
-            coordinate.getRadius()*cos(coordinate.getLongitude()) *
-            cos(coordinate.getLatitude())
-        )
-        j = (
-            coordinate.getRadius()*sin(coordinate.getLongitude()) *
-            cos(coordinate.getLatitude())
-        )
-        k = coordinate.getRadius()*sin(coordinate.getLatitude())
-        return VectorIJK(i, j, k)
+        radius = latitudinal.getRadius()
+        latitude = latitudinal.getLatitude()
+        longitude = latitudinal.getLongitude()
+        x = radius*cos(latitude)*cos(longitude)
+        y = radius*cos(latitude)*sin(longitude)
+        z = radius*sin(latitude)
+        cartesian = VectorIJK(x, y, z)
+        return cartesian

@@ -1,4 +1,10 @@
+"""Test code for the latitudinalcoordconverter module."""
+
+
+from math import atan2, cos, pi, sin, sqrt
 import unittest
+
+import numpy as np
 
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
@@ -9,29 +15,54 @@ from emmpy.crucible.core.math.coords.latitudinalvector import (
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
+# Test grids.
+n = 25
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+zs = np.linspace(-10, 10, n)
+radiuss = np.linspace(0, 10, n)
+lats = np.linspace(-pi/2, pi/2, n)
+lons = np.linspace(-pi, pi, n)
+
+
 class TestBuilder(unittest.TestCase):
+    """Test code for the latitudinalcoordconverter module."""
 
     def test___init__(self):
-        lcc = LatitudinalCoordConverter()
-        self.assertIsNotNone(lcc)
+        """Test the __init__ method."""
+        ccc = LatitudinalCoordConverter()
+        self.assertIsInstance(ccc, LatitudinalCoordConverter)
 
     def test_toCoordinate(self):
+        """Test the toCoordinate method."""
         lcc = LatitudinalCoordConverter()
-        cart = VectorIJK(1, 2, 3)
-        latv = lcc.toCoordinate(cart)
-        self.assertAlmostEqual(latv.getI(), 3.741657386773941)
-        self.assertAlmostEqual(latv.getJ(), 0.9302740141154721)
-        self.assertAlmostEqual(latv.getK(), 1.1071487177940904)
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = VectorIJK(x, y, z)
+                    radius = sqrt(x**2 + y**2 + z**2)
+                    latitude = atan2(z, sqrt(x**2 + y**2))
+                    longitude = atan2(y, x)
+                    latitudinal = lcc.toCoordinate(cartesian)
+                    self.assertAlmostEqual(latitudinal.getRadius(), radius)
+                    self.assertAlmostEqual(latitudinal.getLatitude(), latitude)
+                    self.assertAlmostEqual(latitudinal.getLongitude(),
+                                           longitude)
 
     def test_toCartesian(self):
-        lcc = LatitudinalCoordConverter()
-        latv = LatitudinalVector(
-            3.741657386773941, 0.9302740141154721, 1.1071487177940904
-        )
-        cart = lcc.toCartesian(latv)
-        self.assertAlmostEqual(cart.i, 1)
-        self.assertAlmostEqual(cart.j, 2)
-        self.assertAlmostEqual(cart.k, 3)
+        """Test the toCartesian method."""
+        ccc = LatitudinalCoordConverter()
+        for r in radiuss:
+            for lat in lats:
+                for lon in lons:
+                    latitudinal = LatitudinalVector(r, lat, lon)
+                    x = r*cos(lat)*cos(lon)
+                    y = r*cos(lat)*sin(lon)
+                    z = r*sin(lat)
+                    cartesian = ccc.toCartesian(latitudinal)
+                    self.assertAlmostEqual(cartesian.i, x)
+                    self.assertAlmostEqual(cartesian.j, y)
+                    self.assertAlmostEqual(cartesian.k, z)
 
 
 if __name__ == '__main__':

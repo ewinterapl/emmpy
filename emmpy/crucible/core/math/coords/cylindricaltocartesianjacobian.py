@@ -116,5 +116,5 @@ class CylindricalToCartesianJacobian(Transformation):
         if isinstance(vector, CylindricalVector):
             converted_vector = VectorIJK(v)
         else:
-            converted_vector = VectorIJK(v)
+            converted_vector = CylindricalVector(v)
         return converted_vector

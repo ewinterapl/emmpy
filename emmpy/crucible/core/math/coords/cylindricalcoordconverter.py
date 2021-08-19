@@ -29,7 +29,7 @@ class CylindricalCoordConverter(AbstractCoordConverter):
 
     Attributes
     ----------
-    JACOBIAN : 3x3 array-like of float
+    JACOBIAN : MatrixIJK
         Jacobian matrix to convert from cylindrical to Cartesian
         coordinates.
     """

@@ -17,7 +17,7 @@ test_latitudinalcoordconverter.py
 test_LatitudinalToCartesianJacobian.py
 test_latitudinalvector.py
 test_PointOnAxisException.py
-test_PolarCoordConverter.py
+test_polarcoordconverter.py
 test_PolarToCartesianJacobian.py
 test_PolarVector.py
 test_RaDecCoordConverter.py

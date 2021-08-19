@@ -19,7 +19,7 @@ test_latitudinalvector.py
 test_PointOnAxisException.py
 test_polarcoordconverter.py
 test_PolarToCartesianJacobian.py
-test_PolarVector.py
+test_polarvector.py
 test_RaDecCoordConverter.py
 test_RaDecVector.py
 test_SphericalCoordConverter.py

@@ -41,9 +41,9 @@ class LatitudinalCoordConverter(AbstractCoordConverter):
     JACOBIAN = LatitudinalToCartesianJacobian()
 
     def __init__(self):
-        """Initialize a new CylindricalCoordConverter object.
+        """Initialize a new LatitudinalCoordConverter object.
 
-        Initialize a new CylindricalCoordConverter object.
+        Initialize a new LatitudinalCoordConverter object.
 
         Parameters
         ----------

@@ -28,7 +28,7 @@ test_SphericalToCartesianJacobian.py
 test_SphericalVector.py
 test_SphericalVectorFieldValue.py
 test_transformation.py
-test_TransformationIJ.py
+test_transformationij.py
 test_vectorfieldvalue.py
 test_vectorfieldvalueconversions.py
 

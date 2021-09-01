@@ -1,5 +1,6 @@
 """Test code for the univariatefunction module."""
 
+
 import unittest
 
 from emmpy.crucible.core.math.functions.univariatefunction import (

@@ -1,27 +1,56 @@
-"""An unwritable rotation interface class."""
+"""Abstract class representing an unwritable rotation matrix.
+
+N.B. This class was based on a Java interface, and therefore these methods
+will raise exceptions if invoked.
+
+Authors
+-------
+F.S. Turner
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
+
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class UnwritableRotation:
-    """An unwritable rotation interface class.
+    """Abstract class representing an unwritable rotation matrix.
 
-    Interface encapsulating rotation matrix retrieval from another class.
-
-    author F.S.Turner
+    N.B. This class was based on a Java interface, and therefore these
+    methods will raise exceptions if invoked.
     """
 
     def __init__(self):
-        """Build a new object.
+        """Initialize a new UnwritableRotation object.
 
-        INTERFACE - DO NOT INSTANTIATE
+        This abstract method must be overridden in a subclass.
+
+        Initialize a new UnwritableRotation object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
     def getRotation(self, buffer):
         """Convert the representation of the rotation into a matrix.
 
-        INTERFACE - DO NOT INVOKE
+        Convert the representation of the rotation into a matrix.
 
-        param buffer the buffer to capture the result
-        return a reference to buffer for convenience
+        Parameters
+        ----------
+        buffer : Matrix
+            Matrix to capture the result.
+
+        Returns
+        -------
+        buffer : Matrix
+            The rotation matrix.
         """
-        raise Exception
+        raise AbstractMethodException

@@ -21,9 +21,9 @@ class UnivariateFunction:
     """
 
     def __init__(self):
-        """Initialize a new CoordConverter object.
+        """Initialize a new UnivariateFunction object.
 
-        Initialize a new CoordConverter object.
+        Initialize a new UnivariateFunction object.
 
         Parameters
         ----------

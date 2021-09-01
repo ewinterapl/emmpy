@@ -1,31 +1,59 @@
-"""A single-variabe function.
+"""Abstract base class for single-variable functions.
 
-N.B. This class was created from a Java interface, and therefore most of these
-methods will raise exceptions if invoked.
+N.B. This class was created from a Java interface, and therefore most of
+these methods will raise exceptions if invoked.
+
+Authors
+-------
+F.S.Turner
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-class UnivariateFunction:
-    """Simple interface describing a function of a single variable.
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
-    author F.S.Turner
+
+class UnivariateFunction:
+    """Abstract base class for single-variable functions.
+
+    N.B. This class was created from a Java interface, and therefore most
+    of these methods will raise exceptions if invoked.
     """
 
     def __init__(self):
-        """Build a new object.
+        """Initialize a new CoordConverter object.
 
-        INTERFACE - DO NOT INSTANTIATE.
+        Initialize a new CoordConverter object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
     def evaluate(self, t):
         """Evaluate the function at the specified value.
 
-        INTERFACE - DO NOT INVOKE
+        Evaluate the function at the specified value.
 
-        @param t the value of interest
-        @return the value of the function at t
-        @throws FunctionEvaluationException if the function cannot perform the
-        evaluation
+        Parameters
+        ----------
+        t : float
+            The value of interest.
+
+        Returns
+        -------
+        result : float
+            The value of the function at t.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException

@@ -24,7 +24,7 @@ test_radeccoordconverter.py
 test_radecvector.py
 test_SphericalCoordConverter.py
 test_SphericalToCartesianBasisTransformation.py
-test_SphericalToCartesianJacobian.py
+test_sphericaltocartesianjacobian.py
 test_SphericalVector.py
 test_SphericalVectorFieldValue.py
 test_transformation.py

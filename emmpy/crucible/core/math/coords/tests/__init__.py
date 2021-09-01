@@ -22,7 +22,7 @@ test_polartocartesianjacobian.py
 test_polarvector.py
 test_radeccoordconverter.py
 test_radecvector.py
-test_SphericalCoordConverter.py
+test_sphericalcoordconverter.py
 test_SphericalToCartesianBasisTransformation.py
 test_sphericaltocartesianjacobian.py
 test_SphericalVector.py

@@ -1,4 +1,13 @@
-"""Convert between Ra/Dec and Cartesian coordinates."""
+"""Convert to and from celestial coordinates.
+
+This class provides methods that convert between celestial (right
+ascension and declination) and Cartesian coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import pi
@@ -14,27 +23,64 @@ from emmpy.crucible.core.math.coords.radecvector import RaDecVector
 
 
 class RaDecCoordConverter(CoordConverter):
-    """Convert between Ra/Dec and Cartesian coordinates."""
+    """Convert to and from celestial coordinates.
+
+    This class provides methods that convert between celestial (right
+    ascension and declination) and Cartesian coordinates.
+    """
 
     LAT_CONVERTER = LatitudinalCoordConverter()
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new RaDecCoordConverter object.
+
+        Initialize a new RaDecCoordConverter object.
+
+        Parameters
+        ----------
+        None
+        """
 
     def toCoordinate(self, cartesian):
-        """Convert Cartesian to Ra/Dec coordinates."""
-        workCoord = RaDecCoordConverter.LAT_CONVERTER.toCoordinate(cartesian)
-        r = workCoord.getRadius()
-        lat = workCoord.getLatitude()
-        lon = workCoord.getLongitude()
-        if lon < 0.0:
-            lon += 2*pi
-        return RaDecVector(r, lon, lat)
+        """Convert a Cartesian vector to celestial coordinates.
 
-    def toCartesian(self, coordinate):
-        """Convert Ra/Dec to Cartesian coordinates."""
-        workCoord = LatitudinalVector(
-            coordinate.getRadius(), coordinate.getDeclination(),
-            coordinate.getRightAscension()
+        Convert a Cartesian vector to celestial coordinates.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            Vector in Cartesian coordinates.
+
+        Returns
+        -------
+        celestial : RaDecVector
+            Input vector converted to celestial coordinates.
+        """
+        latitudinal = RaDecCoordConverter.LAT_CONVERTER.toCoordinate(cartesian)
+        r = latitudinal.getRadius()
+        ra = latitudinal.getLongitude()
+        dec = latitudinal.getLatitude()
+        if ra < 0.0:
+            ra += 2*pi
+        return RaDecVector(r, ra, dec)
+
+    def toCartesian(self, celestial):
+        """Convert a celestial vector to Cartesian coordinates.
+
+        Convert a celestial vector to Cartesian coordinates.
+
+        Parameters
+        ----------
+        celestial : RaDecVector
+            Vector in celestial coordinates.
+
+        Returns
+        -------
+        cartesian : VectorIJK
+            Input vector converted to Cartesian coordinates.
+        """
+        latitudinal = LatitudinalVector(
+            celestial.getRadius(), celestial.getDeclination(),
+            celestial.getRightAscension()
         )
-        return RaDecCoordConverter.LAT_CONVERTER.toCartesian(workCoord)
+        return RaDecCoordConverter.LAT_CONVERTER.toCartesian(latitudinal)

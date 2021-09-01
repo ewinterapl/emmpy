@@ -1,4 +1,4 @@
-"""Tests for Python port of Java classes from the crucible.core.math.coords hierarchy.
+"""Tests for Python port of Java classes from the coords hierarchy.
 
 Modules
 -------
@@ -20,7 +20,7 @@ test_pointonaxisexception.py
 test_polarcoordconverter.py
 test_polartocartesianjacobian.py
 test_polarvector.py
-test_RaDecCoordConverter.py
+test_radeccoordconverter.py
 test_radecvector.py
 test_SphericalCoordConverter.py
 test_SphericalToCartesianBasisTransformation.py

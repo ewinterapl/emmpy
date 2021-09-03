@@ -1,5 +1,13 @@
-"""A rotation matrix without consistency checks."""
+"""A rotation matrix without consistency checks.
 
+Authors
+-------
+F.S. Turner
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
+
+import numpy as np
 
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
@@ -9,12 +17,10 @@ from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
 class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
     """A rotation matrix without consistency checks.
 
-    This extension of RotationMatrixIJK exists to allow code in this package
-    that is constructing rotation matrices that are valid to bypass the
-    checking inherent in the
-    RotationMatrixIJK.setTo(double, double, double, double, double, double,
-                            double, double, double)
-    method family.
+    This extension of RotationMatrixIJK exists to allow code in this
+    package that is constructing rotation matrices that are valid to
+    bypass the checking inherent in the RotationMatrixIJK.setTo() method
+    family.
 
     The basic pattern to utilize this class is, replace this code:
 
@@ -29,61 +35,45 @@ class PrivilegedRotationMatrixIJK(RotationMatrixIJK):
     buffer.setTo(assigner);
 
     This will by-pass the check that the final setTo methods on
-    RotationMatrixIJK are performing, so it should only be used when the values
-    being assigned are clearly a rotation as determined by the normal setTo
-    method.
+    RotationMatrixIJK are performing, so it should only be used when the
+    values being assigned are clearly a rotation as determined by the
+    normal setTo method.
 
-    In performance testing on my mac laptop, I determined that this was as fast
-    as disabling the check in the setTo() methods, and over 13 times faster
-    than performing the check needlessly.
-
-    author F.S.Turner
+    In performance testing on my mac laptop, I determined that this was as
+    fast as disabling the check in the setTo() methods, and over 13 times
+    faster than performing the check needlessly.
     """
 
-    def __init__(self):
-        """Build a new object."""
-
     def setToWithoutCheck(self, *args):
-        """Set the matrix without checks."""
+        """Set the matrix without checks.
+
+        Set the matrix elements without checks for a valid rotation.
+
+        Parameters
+        ----------
+        data : 3x3 array-like of float
+            Values to copy to this object.
+        """
         if len(args) == 1:
-            # RotationMatrixIJK#setTo(double[][])
-            (data,) = args
-            self.setToWithoutCheck(
-                data[0][0], data[1][0], data[2][0],
-                data[0][1], data[1][1], data[2][1],
-                data[0][2], data[1][2], data[2][2])
-            return self
+            # Copy from an existing array.
+            (a,) = args
+            data = np.array(a)
         elif len(args) == 3:
-            # see RotationMatrixIJK#setTo(UnwritableVectorIJK,
-            # UnwritableVectorIJK, UnwritableVectorIJK)
+            # Set with 3 column vectors.
             (ithColumn, jthColumn, kthColumn) = args
-            return self.setToWithoutCheck(
-                ithColumn.i, ithColumn.j, ithColumn.k,
-                jthColumn.i, jthColumn.j, jthColumn.k,
-                kthColumn.i, kthColumn.j, kthColumn.k)
+            data = np.vstack([np.array(ithColumn),
+                              np.array(jthColumn),
+                              np.array(kthColumn)]).T
         elif len(args) == 6:
-            # see RotationMatrixIJK.setTo(double, UnwritableVectorIJK,
-            # double, UnwritableVectorIJK, double, UnwritableVectorIJK)
+            # 3 column vectors and scale factors.
             (scaleI, ithColumn, scaleJ, jthColumn, scaleK, kthColumn) = args
-            return self.setToWithoutCheck(
-                scaleI*ithColumn.getI(), scaleI*ithColumn.getJ(),
-                scaleI*ithColumn.getK(),
-                scaleJ*jthColumn.getI(), scaleJ*jthColumn.getJ(),
-                scaleJ*jthColumn.getK(), scaleK*kthColumn.getI(),
-                scaleK*kthColumn.getJ(), scaleK*kthColumn.getK())
+            data = np.vstack([np.array(ithColumn)*scaleI,
+                              np.array(jthColumn)*scaleJ,
+                              np.array(kthColumn)*scaleK]).T
         elif len(args) == 9:
-            # see RotationMatrixIJK#setTo(double, double, double, double,
-            # double, double, double, double, double)
-            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            self.ii = ii
-            self.ji = ji
-            self.ki = ki
-            self.ij = ij
-            self.jj = jj
-            self.kj = kj
-            self.ik = ik
-            self.jk = jk
-            self.kk = kk
-            return self
+            # Set elements in column-major order.
+            data = np.array(args).reshape((3, 3)).T
         else:
-            raise Exception
+            raise TypeError
+        self[:, :] = data
+        return self

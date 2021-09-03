@@ -4,7 +4,6 @@ Modules
 -------
 axisandangle.py
 privilegedrotationmatrixijk.py
-quaternion.py
 rotation.py
 unwritablerotation.py
 

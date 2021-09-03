@@ -12,7 +12,6 @@ from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
 from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK
 )
-from emmpy.crucible.core.rotations.quaternion import Quaternion
 from emmpy.crucible.core.rotations.rotation import Rotation
 from emmpy.utilities.doubletolongbits import doubleToLongBits
 
@@ -139,36 +138,6 @@ class AxisAndAngle(Rotation):
                 # return a reference to the instance for convenience.
                 self.axis.setTo(axisAndAngle.axis)
                 self.angle = axisAndAngle.angle
-                return self
-            elif isinstance(args[0], RotationMatrixIJK):
-                (matrix,) = args
-                # In the event that the identity matrix is supplied to this
-                # method, the axis is selected to be VectorIJK.K with a
-                # rotation angle of zero by convention. This is done to
-                # preserve the integrity of the instance under configuration
-                # and to prevent the handling of unnecessary unchecked
-                # exceptions.
-                q = Quaternion()
-                # First convert the supplied matrix to a quaternion.
-                q.setTo(matrix)
-                q.getVector(self.axis)
-                # Handle the identity rotation case. By convention, all
-                # rotations that are identity rotations have their axis as
-                # VectorIJK.K.
-                if self.axis.getLength() == 0.0:
-                    self.angle = 0
-                    self.axis.setTo(VectorIJK.K)
-                    return self
-                # Now handle the case when the rotation magnitude is Pi.
-                scalar = q.getScalar()
-                # There is no need to set the axis, as we already retrieved it
-                # with the q.getVector() method above--since the scalar
-                # component is 0.0.
-                if scalar == 0.0:
-                    self.angle = pi
-                    return self
-                self.angle = 2*atan2(self.axis.getLength(), scalar)
-                self.axis.unitize()
                 return self
             else:
                 raise Exception

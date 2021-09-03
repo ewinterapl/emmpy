@@ -1,18 +1,23 @@
+"""Tests for the rotation module."""
+
+
 import unittest
 
-from emmpy.crucible.core.rotations.rotation import (
-    Rotation
-)
+from emmpy.crucible.core.rotations.rotation import Rotation
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the rotation module."""
 
     def test___init__(self):
-        with self.assertRaises(Exception):
+        """Test the __init__ method."""
+        with self.assertRaises(AbstractMethodException):
             Rotation()
 
     def test_setTo(self):
-        with self.assertRaises(Exception):
+        """Test the setTo method."""
+        with self.assertRaises(AbstractMethodException):
             Rotation.setTo(None, None)
 
 

@@ -3,7 +3,7 @@
 Modules
 -------
 test_differentiablescalarfieldij.py
-test_scalarfieldspatialderivative.py
+test_scalarfieldijspatialderivative.py
 
 Packages
 --------

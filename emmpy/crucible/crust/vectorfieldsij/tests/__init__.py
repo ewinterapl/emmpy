@@ -2,8 +2,8 @@
 
 Modules
 -------
-test_DifferentiableScalarFieldIJ.py
-test_ScalarFieldSpatialDerivative.py
+test_differentiablescalarfieldij.py
+test_scalarfieldspatialderivative.py
 
 Packages
 --------

@@ -1,68 +1,73 @@
+"""Tests for the cylindricalcoordsxaligned module."""
+
+
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 import unittest
 
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        ccxa = CylindricalCoordsXAligned()
-        self.assertIsNotNone(ccxa)
+    """Tests for the cylindricalcoordsxaligned module."""
 
     def test_convert(self):
-        ccxa = CylindricalCoordsXAligned()
-        cartesian = VectorIJK(1, 2, 3)
-        cylindrical = ccxa.convert(cartesian)
-        self.assertIsNotNone(cylindrical)
+        """Test the convert method."""
+        # Test Cartesian->x-aligned cylindrical.
+        (x, y, z) = (1, 2, 3)
+        cartesian = VectorIJK(x, y, z)
+        cylindrical = CylindricalCoordsXAligned.convert(cartesian)
+        self.assertIsInstance(cylindrical, CylindricalVector)
         self.assertAlmostEqual(cylindrical.rho, 3.6055512754639896)
         self.assertAlmostEqual(cylindrical.phi, 0.982793723247329)
         self.assertAlmostEqual(cylindrical.z, 1)
-        cartesian = ccxa.convert(cylindrical)
-        self.assertIsNotNone(cartesian)
+        # Test x-aligned cylindrical->Cartesian.
+        cartesian = CylindricalCoordsXAligned.convert(cylindrical)
+        self.assertIsInstance(cartesian, VectorIJK)
         self.assertAlmostEqual(cartesian.i, 1)
         self.assertAlmostEqual(cartesian.j, 2)
         self.assertAlmostEqual(cartesian.k, 3)
-        with self.assertRaises(Exception):
-            ccxa.convert([])
+        # Invalid cases.
+        with self.assertRaises(TypeError):
+            CylindricalCoordsXAligned.convert(None)
 
     def test_convertFieldValue(self):
-        pass
-        # ccxa = CylindricalCoordsXAligned()
-        # cartesianPosition = UnwritableVectorIJK(1, 2, 3)
-        # cartesianValue = UnwritableVectorIJK(4, 5, 6)
-        # cylindricalValue = ccxa.convertFieldValue(
-        #     cartesianPosition, cartesianValue
-        # )
-        # self.assertIsNotNone(cylindricalValue)
-        # self.assertAlmostEqual(cylindricalValue.getI(), 7.7658027471532085)
-        # self.assertAlmostEqual(cylindricalValue.getJ(), -0.832050294337844)
-        # self.assertAlmostEqual(cylindricalValue.getK(), 4)
-        # cylindricalPosition = ccxa.convert(cartesianPosition)
-        # cartesianValue = ccxa.convertFieldValue(
-        #     cylindricalPosition, cylindricalValue
-        # )
-        # self.assertIsNotNone(cartesianValue)
-        # self.assertAlmostEqual(cartesianValue.getI(), 4)
-        # self.assertAlmostEqual(cartesianValue.getJ(), 5)
-        # self.assertAlmostEqual(cartesianValue.getK(), 6)
-        # with self.assertRaises(Exception):
-        #     ccxa.convertFieldValue([])
+        """Test the convertFieldValue method."""
+        # Test Cartesian->x-aligned cylindrical.
+        (x, y, z) = (1, 2, 3)
+        (vx, vy, vz) = (4, 5, 6)
+        cartesianPosition = VectorIJK(x, y, z)
+        cartesianValue = VectorIJK(vx, vy, vz)
+        cylindricalValue = CylindricalCoordsXAligned.convertFieldValue(
+            cartesianPosition, cartesianValue
+        )
+        self.assertIsInstance(cylindricalValue, CylindricalVector)
+        self.assertAlmostEqual(cylindricalValue.rho, 7.7658027471532085)
+        self.assertAlmostEqual(cylindricalValue.phi, -0.832050294337844)
+        self.assertAlmostEqual(cylindricalValue.z, 4)
+        # Test x-aligned cylindrical->Cartesian.
+        cylindricalPosition = CylindricalCoordsXAligned.convert(
+            cartesianPosition
+        )
+        cartesianValue = CylindricalCoordsXAligned.convertFieldValue(
+            cylindricalPosition, cylindricalValue
+        )
+        self.assertIsInstance(cartesianValue, VectorIJK)
+        self.assertAlmostEqual(cartesianValue.i, vx)
+        self.assertAlmostEqual(cartesianValue.j, vy)
+        self.assertAlmostEqual(cartesianValue.k, vz)
+        # Invalid forms.
+        with self.assertRaises(TypeError):
+            CylindricalCoordsXAligned.convertFieldValue(None, None)
 
     def test_convertBasisField(self):
-        pass
-        # ccxa = CylindricalCoordsXAligned()
-        # cartesian = UnwritableVectorIJK(1, 2, 3)
-        # cylindrical = ccxa.convertBasisField(cartesian)
-        # self.assertIsNotNone(cylindrical)
-        # self.assertAlmostEqual(cylindrical.getI(), 0)
-        # self.assertAlmostEqual(cylindrical.getJ(), 0)
-        # self.assertAlmostEqual(cylindrical.getK(), 0)
-
-    def test_convertField(self):
-        pass
+        """Test the convertBasisField method."""
+        # NEED THESE TESTS.
+        # Invalid forms.
+        with self.assertRaises(TypeError):
+            CylindricalCoordsXAligned.convertBasisField(None)
 
 
 if __name__ == '__main__':

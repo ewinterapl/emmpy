@@ -1,8 +1,8 @@
-"""Tests for Python port of Java classes from the magmodel.core.math.coords hierarchy.
+"""Tests for Python port of Java classes from the coords hierarchy.
 
 Modules
 -------
-test_CylindricalCoordsXAligned.py
+test_cylindricalcoordsxaligned.py
 
 Packages
 --------

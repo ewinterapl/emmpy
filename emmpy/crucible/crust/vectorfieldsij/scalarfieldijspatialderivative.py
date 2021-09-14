@@ -23,7 +23,6 @@ class ScalarFieldIJSpatialDerivative:
         ------
         AbstractMethodException
             When invoked.
-
         """
         raise AbstractMethodException
 

@@ -1,4 +1,4 @@
-"""Python port of Java classes from the magmodel.core.math.deformation hierarchy.
+"""Python port of Java classes from the deformation hierarchy.
 
 Modules
 -------

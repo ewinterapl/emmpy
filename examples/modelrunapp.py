@@ -11,7 +11,6 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses impo
     CurrentSheetHalfThicknesses
 )
 from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
-
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
@@ -23,7 +22,6 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
 def ModelRunApp(coeffsFile):
     """Run the models."""
     print("Starting ModelRunApp()")
-    # runThinSheet() produces identical results in Java and Python.
     runThinSheet()
     runTs07D(coeffsFile)
     print("Ending ModelRunApp()")
@@ -51,10 +49,6 @@ def runThinSheet():
     # Set all the linear coeffs to 1.0
     coeffs = TailSheetCoefficients.createUnity(numAz, numRad)
 
-    # use Jay Albert's Bessel function evaluator
-    # bessel = AlbertBesselFunctionEvaluator(14)
-    bessel = None
-
     # now construct the thin sheet field model
     model = ThinAsymmetricCurrentSheetBasisVectorField(
         tailLength, currentSheetHalfThickness, coeffs, bessel
@@ -81,8 +75,6 @@ def runTs07D(coeffsFile):
     print("Starting runTs07D() with %s." % coeffsFile)
 
     # read the coeffs/parameters from the file
-    # Returns a
-    # emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficients.TS07DVariableCoefficients
     coeffs = TS07DVariableCoefficientsUtils.create(coeffsFile)
 
     # read the dipole tilt angle and dynamic pressure from the coeffs file
@@ -90,25 +82,18 @@ def runTs07D(coeffsFile):
     pDyn = TS07DVariableCoefficientsUtils.readDynamicPressure(coeffsFile)
 
     # construct the model builder
-    # Returns a
-    # emmpy.geomagmodel.ts07.ts07dmodelbuilder.TS07DModelBuilder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
-
-    # Python and Java identical to this point.
 
     # optional setting to use Jay Albert's Bessel function evaluator
     modelBuilder.withAlbertBessel()
 
     # now construct the TS07D model
-    # Returns a
-    # emmpy.magmodel.core.math.vectorfields.basisvectorfield.BasisVectorField
     model = modelBuilder.build()
 
     # evaluate the model at r=(4,5,-2)
     pos = VectorIJK(4.0, 5.0, -2.0)
 
     # evaluate the magnetic field
-    # Returns an UnwritableVectorIJK.
     bVect = model.evaluate(pos)
     print(bVect.i, bVect.j, bVect.k)
 

@@ -19,11 +19,11 @@ class ArrayExpansion1D(Expansion1D):
     Attributes
     ----------
     array : list of float
-        Expansion coefficiens.
+        Expansion values.
     firstRadialExpansionNumber : int
-        Index of first coefficient in expansion.
+        Index of first value in expansion.
     lastRadialExpansionNumber : int
-        Index of last coefficient in expansion.
+        Index of last value in expansion.
     """
 
     def __init__(self, array, firstRadialExpansionNumber):
@@ -34,9 +34,9 @@ class ArrayExpansion1D(Expansion1D):
         Parameters
         ----------
         array : list of float
-            Expansion coefficiens.
+            Expansion values.
         firstRadialExpansionNumber : int
-            Index of first coefficient in expansion.
+            Index of first value in expansion.
         """
         self.array = array
         self.firstRadialExpansionNumber = firstRadialExpansionNumber
@@ -45,9 +45,9 @@ class ArrayExpansion1D(Expansion1D):
         )
 
     def getLowerBoundIndex(self):
-        """Return the lowest expansion coefficient index.
+        """Return the lowest expansion value index.
 
-        Return the lowest expansion coefficient index.
+        Return the lowest expansion value index.
 
         Parameters
         ----------
@@ -56,14 +56,14 @@ class ArrayExpansion1D(Expansion1D):
         Returns
         -------
         self.firstRadialExpansionNumber : int
-            Index of first expansion coefficient.
+            Index of first expansion value.
         """
         return self.firstRadialExpansionNumber
 
     def getUpperBoundIndex(self):
-        """Return the highest expansion coefficient index.
+        """Return the highest expansion value index.
 
-        Return the highest expansion coefficient index.
+        Return the highest expansion value index.
 
         Parameters
         ----------
@@ -72,23 +72,23 @@ class ArrayExpansion1D(Expansion1D):
         Returns
         -------
         self.lastRadialExpansionNumber : int
-            Index of last expansion coefficient.
+            Index of last expansion value.
         """
         return self.lastRadialExpansionNumber
 
     def getExpansion(self, radialExpansion):
-        """Return the the specified expansion coefficient.
+        """Return the the specified expansion value.
         
-        Return the the specified expansion coefficient.
+        Return the the specified expansion value.
 
         Parameters
         ----------
         radialExpansion : int
-            Index of expansion coefficient to retrieve.
+            Index of expansion value to retrieve.
 
         Returns
         -------
         result : float
-            Value of expansion coefficient at specified index.
+            Value of expansion at specified index.
         """
         return self.array[radialExpansion - self.firstRadialExpansionNumber]

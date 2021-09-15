@@ -51,7 +51,7 @@ def runThinSheet():
 
     # now construct the thin sheet field model
     model = ThinAsymmetricCurrentSheetBasisVectorField(
-        tailLength, currentSheetHalfThickness, coeffs, bessel
+        tailLength, currentSheetHalfThickness, coeffs, None
     )
 
     # evaluate the model at r=(4,5,-2)
@@ -83,10 +83,7 @@ def runTs07D(coeffsFile):
 
     # construct the model builder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
-
-    # optional setting to use Jay Albert's Bessel function evaluator
-    modelBuilder.withAlbertBessel()
-
+``
     # now construct the TS07D model
     model = modelBuilder.build()
 

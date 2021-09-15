@@ -1,4 +1,12 @@
-"""A differentiable vector field in spherical coordinates."""
+"""A differentiable vector field in spherical coordinates.
+
+A differentiable vector field in spherical coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
@@ -7,101 +15,209 @@ from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
 
 
 class Results:
-    """The 9 spatial derivatives of a VectorField in spherical coordinates.
+    """The spatial derivatives of a VectorField in spherical coordinates.
 
-    where r is the radius, &#952; is the co-latitude angle, and &#966; is the
-    longitude (or aziumuth) angle
+    The spatial derivatives of a VectorField in spherical coordinates.
 
-    author G.K.Stephes
+    Attributes
+    ----------
+    f : SphericalVector
+        Location for computing derivatives.
+    dFrDr, dFrDt, dFrDp : float
+        Derivatives of radial component wrt r, theta, phi.
+    dFtDr, dFtDt, dFtDp : float
+        Derivatives of theta component wrt r, theta, phi.
+    dFpDr, dFpDt, dFpDp : float
+        Derivatives of phi component wrt r, theta, phi.
     """
 
     def __init__(self, f, dFrDr, dFrDt, dFrDp, dFtDr, dFtDt, dFtDp, dFpDr,
                  dFpDt, dFpDp):
-        """Build a new object.
+        """Initialize a new Results object.
 
-        param SphericalVector f
-        param double dFrDr
-        param double dFrDt
-        param double dFrDp
-        param double dFtDr
-        param double dFtDt
-        param double dFtDp
-        pram double dFpDr
-        param double dFpDt
-        param double dFpDp
+        Initialize a new Results object.
+
+        Parameters
+        ----------
+        f : SphericalVector
+            Location for computing derivatives.
+        dFrDr, dFrDt, dFrDp : float
+            Derivatives of radial component wrt r, theta, phi.
+        dFtDr, dFtDt, dFtDp : float
+            Derivatives of theta component wrt r, theta, phi.
+        dFpDr, dFpDt, dFpDp : float
+            Derivatives of phi component wrt r, theta, phi.
         """
-        # SphericalVector f
         self.f = f
-        # double dFrDr
         self.dFrDr = dFrDr
-        # double dFrDt
         self.dFrDt = dFrDt
-        # double dFrDp
         self.dFrDp = dFrDp
-        # double dFtDr
         self.dFtDr = dFtDr
-        # double dFtDt
         self.dFtDt = dFtDt
-        # double dFtDp
         self.dFtDp = dFtDp
-        # double dFpDr
         self.dFpDr = dFpDr
-        # double dFpDt
         self.dFpDt = dFpDt
-        # double dFpDp
         self.dFpDp = dFpDp
 
     def getF(self):
         """Return the field value.
 
-        return SphericalVector
+        Return the field value.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : SphericalVector
+            Value of the field.
         """
         return self.f
 
     def getdFrDr(self):
-        """Return dFr/dr."""
+        """Return dFr/dr.
+        
+        Return dFr/dr.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of r-component wrt r.
+        """
         return self.dFrDr
 
     def getdFrDt(self):
-        """Return dFr/dt."""
+        """Return dFr/dt.
+        
+        Return dFr/dt.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of r-component wrt theta.
+        """
         return self.dFrDt
 
     def getdFrDp(self):
-        """Return dFr/dp."""
+        """Return dFr/dp.
+        
+        Return dFr/dp.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of r-component wrt phi.
+        """
         return self.dFrDp
 
     def getdFtDr(self):
-        """Return dFt/dr."""
+        """Return dFt/dr.
+        
+        Return dFt/dr.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of theta-component wrt r.
+        """
         return self.dFtDr
 
     def getdFtDt(self):
-        """Return dFt/dt."""
+        """Return dFt/dt.
+        
+        Return dFt/dt.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of theta-component wrt theta.
+        """
         return self.dFtDt
 
     def getdFtDp(self):
-        """Return dFt/dp."""
+        """Return dFt/dp.
+        
+        Return dFt/dp.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of theta-component wrt phi.
+        """
         return self.dFtDp
 
     def getdFpDr(self):
-        """Return dFp/dr."""
+        """Return dFp/dr.
+        
+        Return dFp/dr.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of phi-component wrt r.
+        """
         return self.dFpDr
 
     def getdFpDt(self):
-        """Return dFp/dt."""
+        """Return dFp/dt.
+        
+        Return dFp/dt.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of phi-component wrt theta.
+        """
         return self.dFpDt
 
     def getdFpDp(self):
-        """Return dFp/dp."""
-        return self.dFpDp
+        """Return dFp/dp.
+        
+        Return dFp/dp.
 
-    def toString(self):
-        """Convert the object to a string."""
-        return (
-            "Results [f=%s, dFrDr=%s, dFrDt=%s, dFrDp=%s, dFtDr=%s, dFtDt=%s, "
-            "dFtDp=%s, dFpDr=%s, dFpDt=%s, dFpDp=%s]" %
-            (self.f, self.dFrDr, self.dFrDt, self.dFrDp, self.dFtDr,
-             self.dFtDt, self.dFtDp, self.dFpDr, self.dFpDt, self.dFpDp)
-        )
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Derivative of phi-component wrt phi.
+        """
+        return self.dFpDp
 
 
 class DifferentiableSphericalVectorField(SphericalVectorField):
@@ -109,27 +225,4 @@ class DifferentiableSphericalVectorField(SphericalVectorField):
 
     Represents the 9 spatial derivatives of a VectorField in spherical
     coordinates.
-
-    where r is the radius, &#952; is the co-latitude angle, and &#966; is the
-    longitude (or aziumuth) angle
-
-    author G.K.Stephens
     """
-
-    def __init__(self):
-        """Build a new object.
-
-        INTERFACE - DO NOT INSTANTIATE
-        """
-        raise Exception
-
-    def differentiate(self, location):
-        """Evaluate the field and the derivatives at the given position.
-
-        INTERFACE - DO NOT INVOKE
-
-        param location SphericalVector, often location
-        return the Results of the evaluation, which holds the value of the
-        function and the 9 spatial derivatives
-        """
-        raise Exception

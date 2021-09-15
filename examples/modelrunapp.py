@@ -83,7 +83,7 @@ def runTs07D(coeffsFile):
 
     # construct the model builder
     modelBuilder = TS07DModelBuilder.create(dipoleTilt, pDyn, coeffs)
-``
+
     # now construct the TS07D model
     model = modelBuilder.build()
 

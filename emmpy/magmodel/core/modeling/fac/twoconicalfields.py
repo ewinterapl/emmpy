@@ -1,8 +1,16 @@
-"""Magnetic field from 2 conical current sheets."""
+"""Magnetic field from 2 conical current sheets.
+
+Magnetic field from 2 conical current sheets.
+
+Authors
+-------
+Nicholas Sharp
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-import emmpy.crucible.core.math.vectorfields.vectorfields
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
     XYPlaneReflectedField
@@ -13,23 +21,30 @@ class TwoConicalFields(VectorField):
     """Magnetic field from 2 conical current sheets.
 
     Represents the magnetic field of two deformed azimuthal harmonic of a
-    finite thickness conical current sheet
+    finite thickness conical current sheet.
 
     As described in "A model of the near magnetosphere with a dawn-dusk
-    asymmetry 1. Mathematical structure" by N. A. Tsyganenko. See eq. (20).
-    The cones' axis is the +/-Z axis.
+    asymmetry 1. Mathematical structure" by N. A. Tsyganenko. See eq.
+    (20). The cones' axis is the +/-Z axis.
 
     see http://onlinelibrary.wiley.com/doi/10.1029/2001JA000219/abstract
     (Tsyganenko, 2002
 
-    author Nicholas Sharp
-    author G.K.Stephens
+    Attributes
+    ----------
+    field : VectorField
+        field
     """
 
     def __init__(self, field):
-        """Build a new object.
+        """Initialize a new TwoConicalFields object.
 
-        param VectorField field
+        Initialize a new TwoConicalFields object.
+
+        Parameters
+        ----------
+        field : VectorField
+            field
         """
         self.field = vectorfields.add(
             field, XYPlaneReflectedField(vectorfields.negate(field)))
@@ -37,7 +52,18 @@ class TwoConicalFields(VectorField):
     def evaluate(self, location, buffer):
         """Evaluate the field.
 
-        param UnwritableVectorIJK location
-        param VectorIJK buffer
+        Evaluate the field.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate the field.
+        buffer : VectorIJK
+            Buffer to hold the result.
+        
+        Returns
+        -------
+        buffer : VectorIJK
+            Result of evaluation.
         """
         return self.field.evaluate(location, buffer)

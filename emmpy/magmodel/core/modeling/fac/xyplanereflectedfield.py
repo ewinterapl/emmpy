@@ -1,7 +1,13 @@
-"""Reflect a field about the XY plane."""
+"""Reflect a field about the XY plane.
 
+Reflect a field about the XY plane.
 
-# import crucible.core.math.vectorspace.VectorIJK;
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -10,35 +16,50 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class XYPlaneReflectedField(VectorField):
     """Reflect a field about the XY plane.
 
-    From T02: "The contribution from the southern currents (symmetric to the
-    northern ones for TILT = 0) can be readily represented by rotating the
-    northern (N) part by 180deg around the X-axis and changing the polarity
-    of the current."
+    From T02: "The contribution from the southern currents (symmetric to
+    the northern ones for TILT = 0) can be readily represented by rotating
+    the northern (N) part by 180deg around the X-axis and changing the
+    polarity of the current."
 
-    author G.K.Stephens
+    Attributes
+    ----------
+    delgate : VectorField
+        delgate
     """
 
     def __init__(self, delgate):
-        """Build a new object.
+        """Initializen a new XYPlaneReflectedField object.
 
-        param VectorField delgate
+        Initializen a new XYPlaneReflectedField object.
+
+        Parameters
+        ----------
+        delgate : VectorField
+            delgate
         """
-        # VectorField delgate
         self.delgate = delgate
 
     def evaluate(self, location, buffer):
         """Evaluate the field.
 
-        param UnwritableVectorIJK location
-        param VectorIJK buffer
-        return VectorIJK
+        Evaluate the field.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to perform the evaluation.
+        buffer : VectorIJK
+            Buffer to hold result.
+        
+        Returns
+        -------
+        buffer : VectorIJK
+            Result of field evaluation.
         """
-        # UnwritableVectorIJK reflectedLocation
         reflectedLocation = VectorIJK(
             location.i, location.j, -location.k
         )
         self.delgate.evaluate(reflectedLocation, buffer)
-        # double bz
         bz = buffer.k
         buffer.k = -bz
         return buffer

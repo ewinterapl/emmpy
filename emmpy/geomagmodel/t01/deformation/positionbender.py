@@ -91,7 +91,6 @@ class PositionBender(DifferentiableVectorField):
         deformedField : BasisVectorField
             The deformed basis vector field.
         """
-
         # Create a PositionBender to compute the deformation.
         deformation = PositionBender(dipoleTilt, hingeDistance)
 
@@ -122,7 +121,6 @@ class PositionBender(DifferentiableVectorField):
         -----
         A "S" suffix indicates starred quantities from the original paper.
         """
-
         # Fetch the Cartesian location components.
         x = location.i
         y = location.j
@@ -186,67 +184,3 @@ class PositionBender(DifferentiableVectorField):
                           dYsDx, dYsDy, dYsDz,
                           dZsDx, dZsDy, dZsDz)
         return results
-
-    # /**
-    # *
-    # * @param dipoleTilt
-    # * @param hingeDistance
-    # * @param undeformedField
-    # * @return
-    # */
-    # public static VectorField deformField(double dipoleTilt, double hingeDistance,
-    #     VectorField undeformedField) {
-    #     // Construct the deformation
-    #     PositionBender deformation = new PositionBender(dipoleTilt, hingeDistance);
-    #     // Deform the field
-    #     VectorFieldDeformation deformedField = new VectorFieldDeformation(undeformedField, deformation);
-    #     return deformedField;
-    # }
-
-    # /**
-    # * Bend the position vector to account for the bending of the tail field in the X-Z GSM plane.
-    # *
-    # * Derivation: Tsyganenko 2002-1 Eqn 13
-    # *
-    # * @param position
-    # * @param buffer
-    # */
-    # @Override
-    # public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
-
-    #     double x = location.getI();
-    #     double y = location.getJ();
-    #     double z = location.getK();
-
-    #     double r2 = x * x + y * y + z * z;
-    #     double r = sqrt(r2);
-    #     double z_r = z / r;
-
-    #     /*
-    #     * Allow the hinging distance to be a function of position, Tsy. 1998 eq. 12
-    #     */
-    #     double rh = rh0 + RH2 * z_r * z_r;
-
-    #     // r/RH
-    #     double r_rh = r / rh;
-
-    #     /*
-    #     * eq. 10 Tsy. 1998, Q(r) = [1+ (r/RH)^ep ]^(-1/ep)
-    #     */
-    #     double Q = 1 / pow(1 + pow(r_rh, EPSILON), 1 / EPSILON);
-
-    #     /*
-    #     * Now compute the cos and sin of the radial dependent tilt angle, this is Tsy. 1998 eq. 7
-    #     */
-    #     double sinTiltS = sinTilt * Q;
-    #     double cosTiltS = sqrt(1 - sinTiltS * sinTiltS);
-
-    #     /*
-    #     * The point deformation from eq. 7 in Tsy. 1998
-    #     */
-    #     double xS = x * cosTiltS - z * sinTiltS;
-    #     double yS = y;
-    #     double zS = x * sinTiltS + z * cosTiltS;
-
-    #     return buffer.setTo(xS, yS, zS);
-    # }

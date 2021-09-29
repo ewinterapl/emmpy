@@ -1,4 +1,12 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder"""
+"""Build a field-aligned current shielding field.
+
+Build a field-aligned current shielding field.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import cos, sin
@@ -15,16 +23,32 @@ from emmpy.utilities.nones import nones
 
 
 class FieldAlignedCurrentShiedingBuilder:
-    """author G.K.Stephens"""
+    """Build a field-aligned current shielding field.
 
-    # Below are the TS07 values
-    # float [] kappaScaleAdj
+    Build a field-aligned current shielding field.
+
+    Attributes
+    ----------
+    region : int
+        FAC region code.
+    mode : int
+        Trigonometric mode.
+    trigParityI : TrigParity
+        Even for cosine, odd for sine.
+    dipoleTilt : float
+        Dipole tilt angle.
+    dynamicPressure : float
+        Dynamic pressure.
+    kappa : float
+        Kappa scaling factor.
+    scalingCoefficient : float
+        Scaling coefficient.
+    """
+
+    # Below are the TS07 values.
     kappaScaleAdj = [1.1, 1.0]
-
-    # float[][] T1ASym, T2ASym
     T1ASym = [[0.2256245602, 0.1379899178], [0.1930034238, 0.1486276863]]
     T2ASym = [[-0.05841594319, 0.06607020029], [-0.02261109942, 0.06859991529]]
-    # float[][][] pASym, qASym, rASym, sASym
     pASym = [
         [[59.41537992, 41.18892281, 80.86101200],
          [145.0262164, 70.73187036, 85.51110098]],
@@ -55,7 +79,6 @@ class FieldAlignedCurrentShiedingBuilder:
     # you print them out there will be extra bits. This gives several more
     # digits of consistency with the Fortran code. The correct thing to do is
     # refit these guys using all double code.
-    # double[][][] shieldingAmpASym
     shieldingAmpASym = [
         [[46488.84663, -15541.95244, -23210.09824, -32625.03856, -109894.4551, -71415.32808,
           58168.94612, 55564.87578, -22890.60626, -6056.763968, 5091.368100, 239.7001538,
@@ -107,13 +130,10 @@ class FieldAlignedCurrentShiedingBuilder:
           143.2872994, -1028.009017, -64.22739330, 547.8536586, -20.58928632, 597.3893669,
           10.17964133, -337.7800252]]
     ]
-
-    # float[][] T1Sym, T2Sym
     T1Sym = [[0.8213262337E-01, 0.8742978101E-01],
              [0.8407754233E-01, 0.8708605901E-01]]
     T2Sym = [[-0.7962186676E-05, -0.1028562327E-04],
              [-0.9613356793E-05, -0.1256706895E-04]]
-    # float[][][] pSym, qSym, rSym, sSym
     pSym = [
         [[148.5493329, 99.79912328, 70.78093196],
          [204.8672197, 110.7748799, 87.36036207]],
@@ -138,7 +158,6 @@ class FieldAlignedCurrentShiedingBuilder:
         [[7.718306072, 25.22866153, 5.013583103],
          [6.282634037, 27.79399216, 2.270602235]]
     ]
-    # float[][][] shieldingAmpSym
     shieldingAmpSym = [
         [[4956703.683, -26922641.21, -11383659.85, 29604361.65, -38919785.97, 70230899.72,
           34993479.24, -90409215.02, 30448713.69, -48360257.19, -35556751.23, 57136283.60,
@@ -193,39 +212,52 @@ class FieldAlignedCurrentShiedingBuilder:
 
     def __init__(self, region, mode, trigParityI, dipoleTilt, dynamicPressure,
                  kappa, scalingCoefficient):
-        """Constructor
+        """Initialize a new FieldAlignedCurrentShiedingBuilder object.
 
-        param int region
-        param int mode
-        param TrigParity trigParityI
-        param double dipoleTilt
-        param double dynamicPressure
-        param double kappa
-        param double scalingCoefficient
+        Initialize a new FieldAlignedCurrentShiedingBuilder object.
+
+        Parameters
+        ----------
+        region : int
+            FAC region code.
+        mode : int
+            Trigonometric mode.
+        trigParityI : TrigParity
+            Even for cosine, odd for sine.
+        dipoleTilt : float
+            Dipole tilt angle.
+        dynamicPressure : float
+            Dynamic pressure.
+        kappa : float
+            Kappa scaling factor.
+        scalingCoefficient : float
+            Scaling coefficient.
         """
-        # int region, mode
         self.region = region
         self.mode = mode
-        # TrigParity trigParityI
         self.trigParityI = trigParityI
-        # float dipoleTilt, dynamicPressure, kappa, scalingCoefficient
         self.dipoleTilt = dipoleTilt
         self.dynamicPressure = dynamicPressure
         self.kappa = kappa
         self.scalingCoefficient = scalingCoefficient
 
     def build(self):
-        """build
+        """Build the field-aligned current shielding field.
 
-        return VectorField
+        Build the field-aligned current shielding field.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : VectorField
+            The field-aligned current shielding field.
         """
-
-        # float dynamicPressureScalingFactor
         dynamicPressureScalingFactor = pow(self.dynamicPressure/2, 0.155)
-        # float[][] aPerpenValues, aParallValues
         aPerpenValues = nones((3, 3))
         aParallValues = nones((3, 3))
-        # double xScale
         xScale = (
             self.kappa -
             FieldAlignedCurrentShiedingBuilder.kappaScaleAdj[self.region - 1]
@@ -234,17 +266,13 @@ class FieldAlignedCurrentShiedingBuilder:
             self.region, self.mode, self.dipoleTilt, xScale, self.trigParityI,
             aPerpenValues, aParallValues
         )
-        
         if self.trigParityI is TrigParity.ODD:
-            # float[][] T1, T2
             T1 = FieldAlignedCurrentShiedingBuilder.T1Sym
             T2 = FieldAlignedCurrentShiedingBuilder.T2Sym
-            # float [][][] p, q, r, s
             p = FieldAlignedCurrentShiedingBuilder.pSym
             q = FieldAlignedCurrentShiedingBuilder.qSym
             r = FieldAlignedCurrentShiedingBuilder.rSym
             s = FieldAlignedCurrentShiedingBuilder.sSym
-            # CoefficientExpansion2D aPerpendicular, aParallel
             aPerpendicular = CoefficientExpansions.negate(
                 CoefficientExpansions.createExpansionFromArray(
                     aPerpenValues, 1, 1)
@@ -254,25 +282,20 @@ class FieldAlignedCurrentShiedingBuilder:
                     aParallValues, 1, 1)
             )
         else:
-            # float[][] T1, T2
             T1 = FieldAlignedCurrentShiedingBuilder.T1ASym
             T2 = FieldAlignedCurrentShiedingBuilder.T2ASym
-            # float[][][] p, q, r, s
             p = FieldAlignedCurrentShiedingBuilder.pASym
             q = FieldAlignedCurrentShiedingBuilder.qASym
             r = FieldAlignedCurrentShiedingBuilder.rASym
             s = FieldAlignedCurrentShiedingBuilder.sASym
-            # CoefficientExpansion2D aPerpendicular, aParallel
             aPerpendicular = CoefficientExpansions.createExpansionFromArray(
                 aPerpenValues, 1, 1
             )
             aParallel = CoefficientExpansions.createExpansionFromArray(
                 aParallValues, 1, 1
             )
-        # float psiT1, psiT2
         psiT1 = self.dipoleTilt*T1[self.region - 1][self.mode - 1]
         psiT2 = self.dipoleTilt*T2[self.region - 1][self.mode - 1]
-        # CoefficientExpansion1D pExpansion, qExpansion, rExpansion, sExpansion
         pExpansion = CoefficientExpansions.invert(
             CoefficientExpansions.createExpansionFromArray(
                 p[self.region - 1][self.mode - 1], 1
@@ -293,7 +316,6 @@ class FieldAlignedCurrentShiedingBuilder:
                 s[self.region - 1][self.mode - 1], 1
             )
         )
-        # VectorField f
         f = vectorfields.scale(
             PerpendicularAndParallelCartesianHarmonicField.createWithRotation(
                 self.trigParityI, psiT1, pExpansion, rExpansion,
@@ -304,27 +326,38 @@ class FieldAlignedCurrentShiedingBuilder:
     @staticmethod
     def fillShieldingCoeffs(region, mode, dipoleTilt, xScale, trigParityI,
                             aPerpenValuesBuffer, aParallValuesBuffer):
-        """fillShieldingCoefficients
+        """Fill in the shielding coefficients.
 
-        param int region
-        param int mode
-        param double dipoleTilt
-        param double xScale
-        param TrigParity trigParityI
-        param double[][] aPerpenValuesBuffer
-        param double[][] aParallValuesBuffer
-        return None
+        Fill in the shielding coefficients.
+
+        Parameters
+        ----------
+        region : int
+            FAC region code.
+        mode : int
+            Trigonometric mode.
+        dipoleTilt : float
+            Dipole tilt angle.
+        xScale : float
+            Scale factor for x-coordinate.
+        trigParityI : TrigParity
+            Even for cosine, odd for sine.
+        aPerpenValuesBuffer : 2-D array-like of float
+            Buffer to hold perpendicular values.
+        aParallValuesBuffer : 2-D array-like of float
+            Buffer to hold parallel values.
+
+        Returns
+        -------
+        None
         """
-        # double sinPsi, cosPsi, sin3Psi
         sinPsi = sin(dipoleTilt)
         cosPsi = cos(dipoleTilt)
         sin3Psi = 2*cosPsi  # Name kept from legacy... why is it so named?
-        # int loop
         loop = 0
         for m in range(2):
             for i in range(3):
                 for k in range(3):
-                    # double coeff, coeff2, coeff3, coeff4
                     coeff = 0.0
                     coeff2 = 0.0
                     coeff3 = 0.0

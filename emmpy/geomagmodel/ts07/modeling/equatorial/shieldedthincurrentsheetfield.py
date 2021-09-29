@@ -1,41 +1,63 @@
-"""emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield"""
+"""A shielded this current sheet field.
 
+A shielded this current sheet field.
 
-# import com.google.common.collect.ImmutableList;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.crust.vectorfieldsij.DifferentiableScalarFieldIJ;
-# import geomagmodel.ts07.coefficientreader.ThinCurrentSheetShieldingCoefficients;
-# import magmodel.core.math.bessel.BesselFunctionEvaluator;
-# import magmodel.core.math.expansions.Expansion1D;
-# import magmodel.core.math.expansions.Expansion2D;
-# import magmodel.core.modeling.equatorial.expansion.TailSheetCoefficients;
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
 
 from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
     ThinAsymmetricCurrentSheetBasisVectorShieldingField
 )
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
-    ThinAsymmetricCurrentSheetBasisVectorField
-)
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
+from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
+    ThinAsymmetricCurrentSheetBasisVectorField
+)
 
 
 class ShieldedThinCurrentSheetField(BasisVectorField):
-    """author G.K.Stephens"""
+    """A shielded this current sheet field.
+
+    A shielded this current sheet field.
+
+    Attributes
+    ----------
+    thinCurrentSheet : ThinAsymmetricCurrentSheetBasisVectorField
+        thinCurrentSheet
+    thinCurrentSheetShield : ThinAsymmetricCurrentSheetBasisVectorShieldingField
+        thinCurrentSheetShield
+    includeShield : bool
+        True to include the shielding field, else False.
+    numAzimuthalExpansions : int
+        Number of azimuthal expansions.
+    numRadialExpansions : int
+        Number of radial expansions.
+    """
 
     def __init__(self, thinCurrentSheet, thinCurrentSheetShield,
         includeShield):
-        """Constructor
+        """Initialize a new ShieldedThinCurrentSheetField object.
 
-        param ThinAsymmetricCurrentSheetBasisVectorField thinCurrentSheet
-        param ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield
-        param includeShield includeShield
+        Initialize a new ShieldedThinCurrentSheetField object.
+
+        Parameters
+        ----------
+        thinCurrentSheet : ThinAsymmetricCurrentSheetBasisVectorField
+            thinCurrentSheet
+        thinCurrentSheetShield : ThinAsymmetricCurrentSheetBasisVectorShieldingField
+            thinCurrentSheetShield
+        includeShield : bool
+            True to include the shielding field, else False.
         """
         self.thinCurrentSheet = thinCurrentSheet
         self.thinCurrentSheetShield = thinCurrentSheetShield
@@ -43,40 +65,30 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         self.numAzimuthalExpansions = thinCurrentSheet.getNumAzimuthalExpansions()
         self.numRadialExpansions = thinCurrentSheet.getNumRadialExpansions()
 
-    #   /**
-    #    * 
-    #    * @param tailCoeffs
-    #    * @param currentSheetHalfThickness
-    #    * @param tailLength
-    #    * @param bessel
-    #    * @param staticCoefficients
-    #    * @param includeShield
-    #    * @return
-    #    */
-    #   public static ShieldedThinCurrentSheetField create(TailSheetCoefficients tailCoeffs,
-    #       DifferentiableScalarFieldIJ currentSheetHalfThickness, double tailLength,
-    #       BesselFunctionEvaluator bessel, ThinCurrentSheetShieldingCoefficients staticCoefficients,
-    #       boolean includeShield) {
-    #     ThinAsymmetricCurrentSheetBasisVectorField thinCurrentSheet =
-    #         new ThinAsymmetricCurrentSheetBasisVectorField(tailLength, currentSheetHalfThickness,
-    #             tailCoeffs, bessel);
-    #     ThinAsymmetricCurrentSheetBasisVectorShieldingField thinCurrentSheetShield =
-    #         new ThinAsymmetricCurrentSheetBasisVectorShieldingField(staticCoefficients, bessel);
-    #     return new ShieldedThinCurrentSheetField(thinCurrentSheet, thinCurrentSheetShield,
-    #         includeShield);
-    #   }
-
     @staticmethod
     def createUnity(currentSheetHalfThickness, tailLength, bessel,
                     staticCoefficients, includeShield):
-        """createUnity
+        """The createUnity method.
 
-        param DifferentiableScalarFieldIJ currentSheetHalfThickness
-        param double tailLength
-        param BesselFunctionEvaluator bessel
-        param ThinCurrentSheetShieldingCoefficients staticCoefficients
-        param boolean includeShield
-        return ShieldedThinCurrentSheetField
+        The createUnity method.
+
+        Parameters
+        ----------
+        currentSheetHalfThickness : DifferentiableScalarFieldIJ
+            currentSheetHalfThickness
+        tailLength : float
+            Tail length,
+        bessel : BesselFunctionEvaluator
+            Bessel function evaluator.
+        staticCoefficients : ThinCurrentSheetShieldingCoefficients
+            Static coefficients.
+        includeShield : bool
+            True to include the shield.
+        
+        Returns
+        -------
+        result : ShieldedThinCurrentSheetField
+            The shielded field.
         """
         thinCurrentSheet = (
             ThinAsymmetricCurrentSheetBasisVectorField.createUnity(
@@ -90,40 +102,40 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
             thinCurrentSheet, thinCurrentSheetShield, includeShield)
 
     def evaluateExpansions(self, position):
-        """evaluateExpansions
+        """Evaluate the expansions at the given position.
 
-        param UnwritableVectorIJK position
-        return TailSheetExpansions
+        Evaluate the expansions at the given position.
+
+        Parameters
+        ----------
+        position : VectoriJK
+            Position to evaluate the expansions.
+        
+        Returns
+        -------
+        result : TailSheetExpansions
+            The expansions evaluated at the location.
         """
-
-        # TailSheetExpansions equatorialExpansions
         equatorialExpansions = (
             self.thinCurrentSheet.evaluateExpansions(position)
         )
 
-        # Calculate the field expansions
-        # Expansion1D<UnwritableVectorIJK> tailSheetSymmetricValues
+        # Calculate the field expansions.
         tailSheetSymmetricValues = (
             equatorialExpansions.getTailSheetSymmetricValues()
         )
-        # Expansion2D<UnwritableVectorIJK> tailSheetOddValues,
-        # tailSheetEvenValues
         tailSheetOddValues = equatorialExpansions.getTailSheetOddValues()
         tailSheetEvenValues = equatorialExpansions.getTailSheetEvenValues()
 
         # This is the most expensive lines of the module, If you don't need the
         # shielding, it should NOT be computed. These three lines account for
-        # for over 90% of the model evaluation
+        # for over 90% of the model evaluation.
         if self.includeShield:
-            # TailSheetExpansions shield
             shield = self.thinCurrentSheetShield.evaluateExpansions(position)
-            # Expansion1D<UnwritableVectorIJK> tailSheetSymmetricShieldValues
             tailSheetSymmetricShieldValues = (
                 shield.getTailSheetSymmetricValues()
             )
-            # Expansion2D<UnwritableVectorIJK> tailSheetOddShieldValues
             tailSheetOddShieldValues = shield.getTailSheetOddValues()
-            # Expansion2D<UnwritableVectorIJK> tailSheetEvenShieldValues
             tailSheetEvenShieldValues = shield.getTailSheetEvenValues()
             tailSheetSymmetricValues = (
                 Expansion1Ds.Vectors.add(tailSheetSymmetricValues,
@@ -140,16 +152,18 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
                                    tailSheetEvenValues)
 
     def evaluateExpansion(self, location):
-        """evaluateExpansion
+        """Evaluate the expansion at the given location.
 
-        param UnwritableVectorIJK location
-        return [UnwritableVectorIJK] 
+        Evaluate the expansion at the given location.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate the expansion.
+        
+        Returns
+        -------
+        result : list of VectorIJK
+            Expansion evaluated at location.
         """
         return self.evaluateExpansions(location).getExpansionsAsList()
-
-    #   @Override
-    #   public int getNumberOfBasisFunctions() {
-    #     return numRadialExpansions + 2 * (numAzimuthalExpansions * numRadialExpansions);
-    #   }
-
-    # }

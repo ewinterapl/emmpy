@@ -1,4 +1,13 @@
-"""emmpy.geomagmodel.ts07.modeling.dipoleshield.dipoleshieldingfield"""
+"""Model of the dipole shielding field.
+
+Model of the dipole shielding field.
+
+Authors
+-------
+Nicholas Sharp
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import cos, sin
@@ -14,7 +23,9 @@ from emmpy.magmodel.core.math.trigparity import TrigParity
 
 
 class DipoleShieldingField:
-    """The shielding field for the Earth's dipole constructed from the
+    """The shielding field for the Earth's dipole.
+    
+    The shielding field for the Earth's dipole, constructed from the
     combination of a parallel and a perpendicular 2x2x3 Cartesian Harmonic
     field.
 
@@ -41,8 +52,6 @@ class DipoleShieldingField:
     C   18 "Cartesian" harmonics  PLUS TWO TILT ANGLES FOR THE CARTESIAN
     C       HARMONICS (ONE FOR THE PSI=0 MODE AND ANOTHER FOR THE PSI=90 MODE)
 
-    author Nicholas Sharp
-    author G.K.Stephens
     """
 
     kappaPerp = .8385953499E-01  # Previously T1
@@ -80,12 +89,24 @@ class DipoleShieldingField:
 
     @staticmethod
     def create(dipoleTiltAngle, dynamicPressure):
-        """Creates a new dipole shielding field.
+        """Create a new dipole shielding field.
+
+        Create a new dipole shielding field.
 
         Note: this is a point of inconsistency with the Fortran code, in the
         Fortran this calculation is done in single precision. When the field
         values are very large, this can result in tenths of differences between
         the Java and the Fortran version of the model
+
+        Parameters
+        ----------
+        dynamicPressure : float
+            Dynamic pressure.
+        
+        Returns
+        -------
+        dipoleShieldingField : VectorField
+            The dipole shielding field.
         """
         pDynScale = pow(dynamicPressure/2, 0.155)
         perpCoeffs = CoefficientExpansions.add(
@@ -97,19 +118,16 @@ class DipoleShieldingField:
                                         sin(dipoleTiltAngle)),
             CoefficientExpansions.scale(DipoleShieldingField.d,
                                         sin(2*dipoleTiltAngle)))
-        ppchf = (
-            PerpendicularAndParallelCartesianHarmonicField.
-            createWithRotationAndAlternate(
-                TrigParity.EVEN,
-                dipoleTiltAngle*DipoleShieldingField.kappaPerp,
-                CoefficientExpansions.invert(DipoleShieldingField.p),
-                CoefficientExpansions.invert(DipoleShieldingField.r),
-                perpCoeffs,
-                dipoleTiltAngle*DipoleShieldingField.kappaParallel,
-                CoefficientExpansions.invert(DipoleShieldingField.q),
-                CoefficientExpansions.invert(DipoleShieldingField.s),
-                parrCoeffs)
-        )
+        ppchf = PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
+            TrigParity.EVEN,
+            dipoleTiltAngle*DipoleShieldingField.kappaPerp,
+            CoefficientExpansions.invert(DipoleShieldingField.p),
+            CoefficientExpansions.invert(DipoleShieldingField.r),
+            perpCoeffs,
+            dipoleTiltAngle*DipoleShieldingField.kappaParallel,
+            CoefficientExpansions.invert(DipoleShieldingField.q),
+            CoefficientExpansions.invert(DipoleShieldingField.s),
+            parrCoeffs)
         pDynScale3 = pDynScale*pDynScale*pDynScale
         dipoleShieldingField = (vectorfields.scale(
             vectorfields.scaleLocation(ppchf, pDynScale), pDynScale3))
@@ -118,8 +136,25 @@ class DipoleShieldingField:
 
     @staticmethod
     def createScaled(dipoleTiltAngle, dynamicPressure, scaleFactor):
-        """Creates a new dipole shielding field where the output vector is
-        scaled by the supplied value."""
+        """Create a scaled dipole shielding field.
+        
+        Create a scaled dipole shielding field, where the output vector is
+        scaled by the supplied value.
+        
+        Parameters
+        ----------
+        dipoleTiltAngle : float
+            Dipole tilt angle.
+        dynamicPressure : float
+            Dynamic pressure.
+        scaleFactor : float
+            Scale factor.
+        
+        Returns
+        -------
+        result : VectorField
+            Scaled vector field.
+        """
         return vectorfields.scale(
             DipoleShieldingField.create(dipoleTiltAngle, dynamicPressure),
             scaleFactor)

@@ -1,78 +1,187 @@
-"""Variable equatorial coefficients for the TS07 geomagnetic field model."""
+"""Variable equatorial coefficients for the TS07 geomagnetic field model.
+
+Variable equatorial coefficients for the TS07 geomagnetic field model.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-from emmpy.utilities.doubletolongbits import doubleToLongBits
 from emmpy.utilities.isrealnumber import isRealNumber
 
 
 class Ts07EquatorialVariableCoefficients:
-    """Variable equatorial coefficients for the TS07 geomagnetic field model.
+    """Variable equatorial coefficients for TS07 geomagnetic field model.
 
-    author G.K.Stephens
+    Variable equatorial coefficients for TS07 geomagnetic field model.
+
+    Attributes
+    ----------
+    currThicks : array-like of float
+        currThicks
+    hingeDist : float
+        Hinge distance.
+    warpingParam : float
+        Warping parameter.
+    twistParam : float
+        Twist parameter.
+    equatorialLinearCoeffs : list of Ts07EquatorialLinearCoefficients
+        Equatorial linear coefficients.
     """
 
     def __init__(self, currThicks, hingeDist, warpingParam, twistParam,
                  equatorialLinearCoeffs):
-        """Build a new object."""
-        if (isRealNumber(currThicks) and isRealNumber(hingeDist) and
-            isRealNumber(warpingParam) and isRealNumber(twistParam) and
-            isinstance(equatorialLinearCoeffs, list)):
-            # @param currThicks
-            # @param hingeDist
-            # @param warpingParam
-            # @param twistParam
-            # @param equatorialLinearCoeffs
+        """Initialize a new Ts07EquatorialVariableCoefficients object.
+
+        Initialize a new Ts07EquatorialVariableCoefficients object.
+
+        Parameters
+        ----------
+        currThicks : float or list of float
+            Current sheet thicknesses.
+        hingeDist : float
+            Hinge distance.
+        warpingParam : float
+            Warping parameter.
+        twistParam : float
+            Twist parameter.
+        equatorialLinearCoeffs : list of Ts07EquatorialLinearCoefficients
+            Equatorial linear coefficients.
+        
+        Raises
+        ------
+        TypeError
+            If invalid parameters are provided.
+        """
+        if isRealNumber(currThicks):
             self.currThicks = [currThicks]
-            self.hingeDist = hingeDist
-            self.warpingParam = warpingParam
-            self.twistParam = twistParam
-            self.equatorialLinearCoeffs = equatorialLinearCoeffs
         elif isinstance(currThicks, list):
-            # param currThicks
-            # param hingeDist
-            # param warpingParam
-            # param twistParam
-            # param equatorialLinearCoeffs
             # The current sheet thickness and the number of sets of linear
             # coeffs must be the same size.
             self.currThicks = currThicks
-            self.hingeDist = hingeDist
-            self.warpingParam = warpingParam
-            self.twistParam = twistParam
-            self.equatorialLinearCoeffs = equatorialLinearCoeffs
         else:
-            raise Exception
+            raise TypeError
+        self.hingeDist = hingeDist
+        self.warpingParam = warpingParam
+        self.twistParam = twistParam
+        self.equatorialLinearCoeffs = equatorialLinearCoeffs
 
     def getCurrThicks(self):
-        """Return the current sheet thicknesses."""
+        """Return the current sheet thicknesses.
+
+        Return the current sheet thicknesses.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : list of float
+            Current sheet thicknesses.
+        """
         return self.currThicks
 
     def getHingeDistance(self):
-        """Return the hinge distance."""
+        """Return the hinge distance.
+
+        Return the hinge distance.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Hinge distance.
+        """
         return self.hingeDist
 
     def getWarpingParam(self):
-        """Return the warping parameter."""
+        """Return the warping parameter.
+
+        Return the warping parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Warping parameter.
+        """
         return self.warpingParam
 
     def getTwistParam(self):
-        """Return the twist parameter."""
+        """Return the twist parameter.
+
+        Return the twist parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Twist parameter.
+        """
         return self.twistParam
 
     def getLinearCoeffs(self):
-        """Return the linear coefficients."""
+        """Return the linear coefficients.
+
+        Return the linear coefficients.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : list of Ts07EquatorialLinearCoefficients
+            The linear coefficients.
+        """
         return self.equatorialLinearCoeffs
 
     def getTotalNumberOfParameters(self):
-        """Return the total number of parameters."""
+        """Return the total number of parameters.
+
+        Return the total number of parameters.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Total number of parameters.
+        """
         return (self.getTotalNumberOfLinearParameters() +
                 self.getTotalNumberOfNonLinearParameters())
 
     def getTotalNumberOfLinearParameters(self):
-        """Return the total number of linear parameters."""
+        """Return the total number of linear parameters.
+        
+        Return the total number of linear parameters.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        numLinear : int
+            Total number of linear parameters.
+        """
         numLinear = 0
 
-        # loop through all the linear parameters and add them up
+        # Loop through all the linear parameters and add them up.
         for lin in self.equatorialLinearCoeffs:
             m = lin.getNumAzimuthalExpansions()
             n = lin.getNumRadialExpansions()
@@ -80,6 +189,18 @@ class Ts07EquatorialVariableCoefficients:
         return numLinear
 
     def getTotalNumberOfNonLinearParameters(self):
-        """Return the total number of nonlinear parameters."""
-        # currThicks, hingeDist, warpingParam,TwistParam
+        """Return the total number of nonlinear parameters.
+        
+        Return the total number of nonlinear parameters.
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Total number of nonlinear parameters.
+        """
+        # currThicks, hingeDist, warpingParam, TwistParam.
         return len(self.currThicks) + 3

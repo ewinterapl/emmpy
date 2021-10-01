@@ -31,7 +31,6 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuild
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
     Ts07DFieldAlignedMagneticField
 )
-from emmpy.geomagmodel.t96magnetopause import T96Magnetopause
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )

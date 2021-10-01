@@ -1,14 +1,22 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned.smoothedconicalcurrentmagneticfield"""
+"""Compute the magnetic field from a smoothed conical current sheet.
+
+Compute the magnetic field from a smoothed conical current sheet.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
+import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
@@ -16,45 +24,74 @@ from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
 from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.utilities.nones import nones
 
 
 class SmoothedConicalCurrentMagneticField(SphericalVectorField):
+    """Compute the magnetic field from a smoothed conical current sheet.
+
+    Compute the magnetic field from a smoothed conical current sheet.
+
+    Attributes
+    ----------
+    smoothedField : VectorField
+        The smoothed vector field.
+    """
 
     def __init__(self, theta0, deltaTheta, mode, trigParity):
-        """Constructor
+        """Initialize a new SmoothedConicalCurrentMagneticField object.
 
-        param double theta0
-        param double deltaTheta
-        param int mode
-        param TrigParity trigParity
+        Initialize a new SmoothedConicalCurrentMagneticField object.
+
+        Parameters
+        ----------
+        theta0 : float
+            theta0
+        deltaTheta : float
+            deltaTheta
+        mode : int
+            mode
+        trigParity : TrigParity
+            trigParity
         """
-        # double shiftDistance
         shiftDistance = deltaTheta/5.0
-        # int numShifts
         numShifts = 5
-        # list of VectorField
         shiftedFields = nones((numShifts,))
         for i in range(numShifts):
-            # double shiftedTheta0
             shiftedTheta0 = theta0 - 2.0*shiftDistance + i*shiftDistance
-            # ConicalCurrentMagneticField
             shiftedFields[i] = ConicalCurrentMagneticField.create(
                 shiftedTheta0, deltaTheta, mode, trigParity)
-        # VectorField
-        self.smoothedField = VectorFields.scale(
-            VectorFields.addAll(shiftedFields), 1.0/numShifts
+        self.smoothedField = vectorfields.scale(
+            vectorfields.addAll(shiftedFields), 1.0/numShifts
         )
 
     def evaluate(self, *args):
+        """Evaluate the magnetic field.
+        
+        Evaluate the magnetic field.
+        
+        Parameters
+        ----------
+        location : SphericalVector or VectorIJK
+            Location for evaluation.
+        buffer : VectorIJK, optional
+            Buffer to hold result.
+
+        Returns
+        -------
+        result : SphericalVector or VectorIJK
+            Field evaluated at location.
+
+        Raises
+        ------
+        TypeError
+            If invalid parameters are provided.
+        """
         if len(args) == 1:
             (location,) = args
             assert(isinstance(location, SphericalVector))
-            # UnwritableVectorIJK locationCartesian
             locationCartesian = CoordConverters.convert(location)
-            # CartesianVectorFieldValue fieldValue
-            # WILL THIS CALL RAISE AN EXCEPTION FROM THE INHERITED
-            # SphericalVectorField.evaluate()?
             fieldValue = CartesianVectorFieldValue(
                 locationCartesian, self.evaluate(locationCartesian)
             )
@@ -68,5 +105,4 @@ class SmoothedConicalCurrentMagneticField(SphericalVectorField):
             assert(isinstance(buffer, VectorIJK))
             return self.smoothedField.evaluate(location, buffer)
         else:
-            raise Exception
-
+            raise TypeError

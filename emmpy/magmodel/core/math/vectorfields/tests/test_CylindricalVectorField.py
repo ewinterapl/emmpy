@@ -1,3 +1,6 @@
+"""Tests for the CylindricalVectorField module."""
+
+
 import unittest
 
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
@@ -6,16 +9,7 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        with self.assertRaises(Exception):
-            CylindricalVectorField()
-
-    def test_asCylindrical(self):
-        pass
-
-    def test_evaluate(self):
-        pass
+    """Tests for the CylindricalVectorField module."""
 
 
 if __name__ == '__main__':

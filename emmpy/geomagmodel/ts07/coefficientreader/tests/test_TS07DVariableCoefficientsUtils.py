@@ -7,10 +7,6 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils imp
 
 class TestBuilder(unittest.TestCase):
 
-    def test___init__(self):
-        with self.assertRaises(Exception):
-            TS07DVariableCoefficientsUtils()
-
     def test_createTS07D(self):
         pass
 

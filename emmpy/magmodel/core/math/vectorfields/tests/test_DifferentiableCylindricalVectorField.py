@@ -1,3 +1,6 @@
+"""Tests for the DifferentiableCylindricalVectorField module."""
+
+
 import unittest
 
 from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
@@ -6,14 +9,7 @@ from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield 
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        with self.assertRaises(Exception):
-            DifferentiableCylindricalVectorField()
-
-    def test_differentiate(self):
-        with self.assertRaises(Exception):
-            DifferentiableCylindricalVectorField.differentiate(None, None)
+    """Tests for the DifferentiableCylindricalVectorField module."""
 
 
 if __name__ == '__main__':

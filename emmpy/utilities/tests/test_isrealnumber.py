@@ -10,7 +10,7 @@ class TestDouble(unittest.TestCase):
     """Build and run tests for the isrealnumber module."""
 
     def test_isRealNumber(self):
-        """Test the isRealNumber() function."""
+        """Test the isRealNumber function."""
         self.assertTrue(isRealNumber(0))
         self.assertTrue(isRealNumber(0.0))
         self.assertTrue(isRealNumber(-0))
@@ -24,5 +24,5 @@ class TestDouble(unittest.TestCase):
         self.assertFalse(isRealNumber(1 + 1j))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

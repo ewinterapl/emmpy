@@ -24,5 +24,5 @@ class TestDouble(unittest.TestCase):
         self.assertFalse(isRealNumber(1 + 1j))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -2,7 +2,6 @@
 
 Modules
 -------
-isragged.py
 isrealnumber.py
 nones.py
 

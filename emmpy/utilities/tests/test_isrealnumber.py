@@ -21,6 +21,7 @@ class TestDouble(unittest.TestCase):
         self.assertTrue(isRealNumber(-1.1))
         self.assertFalse(isRealNumber(None))
         self.assertFalse(isRealNumber("0"))
+        self.assertFalse(isRealNumber("not_a_number"))
         self.assertFalse(isRealNumber(1 + 1j))
 
 

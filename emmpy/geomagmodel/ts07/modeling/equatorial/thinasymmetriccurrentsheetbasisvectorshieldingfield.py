@@ -1,14 +1,14 @@
-"""emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield"""
+"""Thin asymmetric current sheet basis vector shielding field.
+
+Thin asymmetric current sheet basis vector shielding field.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-# import com.google.common.collect.ImmutableList;
-# import crucible.core.math.vectorspace.VectorIJK;
-# import geomagmodel.ts07.coefficientreader.ThinCurrentSheetShieldingCoefficients;
-# import magmodel.core.math.bessel.BesselFunctionEvaluator;
-# import magmodel.core.math.expansions.CoefficientExpansion1D;
-# import magmodel.core.math.expansions.CoefficientExpansion2D;
-
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
@@ -26,50 +26,81 @@ from emmpy.utilities.nones import nones
 
 
 class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
+    """Thin asymmetric current sheet basis vector shielding field.
+
+    Thin asymmetric current sheet basis vector shielding field.
+
+    Attributes
+    ----------
+    coeffs : ThinCurrentSheetShieldingCoefficients
+        Shielding coefficients.
+    bessel : BesselFunctionEvaluator
+        Bessel function evaluator.
+    numAzimuthalExpansions : int
+        Number of azimuthal expansions
+    numRadialExpansions : int
+        Number of radial expansions.
+    """
 
     def __init__(self, coeffs, bessel):
-        """Constructor
+        """Initialize a new object.
 
-        param ThinCurrentSheetShieldingCoefficients coeffs
-        param BesselFunctionEvaluator bessel
+        Initialize a new object.
+
+        Parameters
+        ----------
+        coeffs : ThinCurrentSheetShieldingCoefficients
+            Shielding coefficients.
+        bessel : BesselFunctionEvaluator
+            Bessel function evaluator.
         """
-        # ThinCurrentSheetShieldingCoefficients coeffs
         self.coeffs = coeffs
-        # BesselFunctionEvaluator bessel
         self.bessel = bessel
-        # int numAzimuthalExpansions
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
-        # int numRadialExpansions
         self.numRadialExpansions = coeffs.getNumRadialExpansions()
 
     def evaluateExpansion(self, location):
-        """evaluateExpansion
+        """Evaluate the expansion at a location.
 
-        param UnwritableVectorIJK location
-        return ImmutableList<UnwritableVectorIJK>
+        Evaluate the expansion at a location.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Location for evaluation.
+        
+        Returns
+        -------
+        result : list of VectorIJK
+            Expansion evaluated at location.
         """
         return self.evaluateExpansions(location).getExpansionsAsList()
 
     def evaluateExpansions(self, location):
-        """evaluateExpansions
+        """Evaluate the expansions at a location.
 
-        param UnwritableVectorIJK location
-        return TailSheetExpansions
+        Evaluate the expansions at a location.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Location for evaluation.
+        
+        Returns
+        -------
+        result : TailSheetExpansions
+            Expansions evaluated at location.
         """
-        # [UnwritableVectorIJK] symmetricExpansions
         symmetricExpansions = nones((self.numRadialExpansions,))
-        # [[UnwritableVectorIJK]] oddExpansions, evenExpansions
         oddExpansions = nones((self.numAzimuthalExpansions,
                                self.numRadialExpansions))
         evenExpansions = nones((self.numAzimuthalExpansions,
                                 self.numRadialExpansions))
-        # n is the radial expansion number
+        # n is the radial expansion number.
         for n in range(1, self.numRadialExpansions + 1):
-            # CoefficientExpansion2D tailExpansion
             tailExpansion = (
                 self.coeffs.getSymmetricTailExpansion().getExpansion(n)
             )
-            # CoefficientExpansion1D waveNumberExpansion
             waveNumberExpansion = (
                 self.coeffs.getSymmetricTailWaveExpansion().getExpansion(n)
             )
@@ -81,17 +112,14 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 buffer.i, buffer.j, buffer.k
             )
 
-        # n is the radial expansion number
-        # m is the azimuthal expansion number
-        # float negateConst
+        # n is the radial expansion number.
+        # m is the azimuthal expansion number.
         negateConst = 1.0
         for n in range(1, self.numRadialExpansions + 1):
             for m in range(1, self.numAzimuthalExpansions + 1):
-                # CoefficientExpansion2D tailExpansion
                 tailExpansion = (
                     self.coeffs.getOddTailExpansion().getExpansion(m, n)
                 )
-                # CoefficientExpansion1D waveNumberExpansion
                 waveNumberExpansion = (
                     self.coeffs.getOddTailWaveExpansion().getExpansion(m, n)
                 )
@@ -101,22 +129,18 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     TrigParity.ODD
                 )
                 chf.evaluate(location, buffer)
-                # buffer.scale(negateConst)
                 buffer *= negateConst
                 oddExpansions[m - 1][n - 1] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
-        # n is the radial expansion number
-        # m is the azimuthal expansion number
-        # float negateConst
+        # n is the radial expansion number.
+        # m is the azimuthal expansion number.
         negateConst = -1.0
         for n in range(1, self.numRadialExpansions + 1):
             for m in range(1, self.numAzimuthalExpansions + 1):
-                # CoefficientExpansion2D tailExpansion
                 tailExpansion = (
                     self.coeffs.getEvenTailExpansion().getExpansion(m, n)
                 )
-                # CoefficientExpansion1D waveNumberExpansion
                 waveNumberExpansion = (
                     self.coeffs.getEvenTailWaveExpansion().getExpansion(m, n)
                 )
@@ -126,7 +150,6 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     TrigParity.EVEN
                 )
                 chf.evaluate(location, buffer)
-                # buffer.scale(negateConst)
                 buffer *= negateConst
                 evenExpansions[m - 1][n - 1] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
@@ -136,7 +159,19 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
             Expansion2Ds.createFromArray(evenExpansions, 1, 1))
 
     def getNumberOfBasisFunctions(self):
-        """return int"""
+        """Return the number of basis functions.
+
+        Return the number of basis functions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            The number of basis functions.
+        """
         return (
             self.numRadialExpansions +
             2*self.numRadialExpansions*self.numAzimuthalExpansions

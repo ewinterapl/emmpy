@@ -1,3 +1,6 @@
+"""Tests for the cartesianvectorfieldvalue module."""
+
+
 import unittest
 
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
@@ -7,14 +10,17 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the cartesianvectorfieldvalue module."""
 
     def test___init__(self):
-        uvijk1 = VectorIJK(1, 1, 1)
-        uvijk2 = VectorIJK(2, 2, 2)
-        cvfv = CartesianVectorFieldValue(uvijk1, uvijk2)
-        self.assertIsNotNone(cvfv)
-        # self.assertTrue(cvfv.position.equals(uvijk1))
-        # self.assertTrue(cvfv.value.equals(uvijk2))
+        """Test the __init__ method."""
+        position = VectorIJK(1, 2, 3)
+        value = VectorIJK(4, 5, 6)
+        cvfv = CartesianVectorFieldValue(position, value)
+        self.assertIsInstance(cvfv, CartesianVectorFieldValue)
+        for i in range(3):
+            self.assertAlmostEqual(cvfv.position[i], position[i])
+            self.assertAlmostEqual(cvfv.value[i], value[i])
 
 
 if __name__ == '__main__':

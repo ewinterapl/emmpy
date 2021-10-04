@@ -1,4 +1,12 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield"""
+"""Manage calculations for field-aligned currents.
+
+Manage calculations for field-aligned currents.
+
+Authors
+-------
+Nicholas Sharp
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
@@ -9,7 +17,6 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder imp
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder import (
     FieldAlignedCurrentShiedingBuilder
 )
-
 from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -17,32 +24,56 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 
 
 class Ts07DFieldAlignedMagneticField(BasisVectorField):
-    """Manages calculations for the Field Aligned Current Modules.
+    """Manage calculations for field-aligned currents.
+
+    Manage calculations for field-aligned currents.
 
     Citations:
     Tsyganenko and Sitnov 2007 - "Magnetospheric Configurations from a
-    high-resolution data-based magnetic field model" , Journal of Geophysical
-    Research
+    high-resolution data-based magnetic field model" , Journal of
+    Geophysical Research
     Tsyganenko 2002 - "A New Magnetosphere Magnetic Field Model -
     Mathematical Structure", section 2.3, Journal of Geophysical Research
 
-    author Nicholas Sharp
+    Attributes
+    ----------
+    includeShielding : bool
+        True to compute shielding field.
+    internalFields : list of VectorField
+        internalFields
+    internalField : VectorField
+        internalField
+    shieldingFields : list of VectorField
+        shieldingFields
+    shieldingField : VectorField
+        shieldingField
+    basisFunctions : list of VectorField
+        basisFunctions
+    basisCoefficients : list of float
+        basisCoefficients
     """
-    pass
 
     def __init__(self, dipoleTiltAngle, dynamicPressure, region1KappaScaling,
                  region2KappaScaling, options, includeShielding):
-        """Constructor
+        """Initialize a new Ts07DFieldAlignedMagneticField object.
 
-        double dipoleTiltAngle
-        double dynamicPressure
-        double region1KappaScaling
-        double region2KappaScaling
-        Iterable<FacConfigurationOptions> options
-        boolean includeShielding
-        return Ts07DFieldAlignedMagneticField
+        Initialize a new Ts07DFieldAlignedMagneticField object.
+
+        Parameters
+        ----------
+        dipoleTiltAngle : float
+            dipoleTiltAngle
+        dynamicPressure : float
+            dynamicPressure
+        region1KappaScaling : float
+            region1KappaScaling
+        region2KappaScaling : float
+            region2KappaScaling
+        options : list of FacConfigurationOptions
+            options
+        includeShielding : bool
+            True to compute shielding field.
         """
-
         self.includeShielding = includeShielding
 
         # Magnitudes are multiplied by 800 to approximately normalize them with
@@ -60,8 +91,8 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         basisFunctionsBuilder = []
         basisCoefficientsBuilder = []
 
-        # construct all the fields, unlike in the original TS07D, instead of 4
-        # FAC systems, this now supports any number
+        # Construct all the fields, unlike in the original TS07D, instead of 4
+        # FAC systems, this now supports any number.
         for option in options:
             amp = option.getAmplitudeScaling()
             basisCoefficientsBuilder.append(amp)
@@ -94,13 +125,13 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                 basisFunctionsBuilder.append(
                     vectorfields.scale(vectorfields.add(field, shieldingField), 1.0/amp))
             else:
-                basisFunctionsBuilder.append(VectorFields.scale(field, 1.0/amp))
+                basisFunctionsBuilder.append(vectorfields.scale(field, 1.0/amp))
 
         self.internalFields = internalFieldsBuilder
         self.shieldingFields = shieldingFieldsBuilder
         self.internalField = vectorfields.addAll(self.internalFields)
 
-        # Scale position vector for solar wind (see Tsy 2002-1 2.4)
+        # Scale position vector for solar wind (see Tsy 2002-1 2.4).
         self.shieldingField = vectorfields.addAll(self.shieldingFields)
 
         self.basisFunctions = basisFunctionsBuilder
@@ -109,19 +140,30 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
     @staticmethod
     def create(dipoleTiltAngle, dynamicPressure, region1KappaScaling,
                region2KappaScaling, options, includeShielding):
-        """Creates a new Ts07DFieldAlignedMagneticField module from the
+        """Create a new Ts07DFieldAlignedMagneticField module.
+
+        Creates a new Ts07DFieldAlignedMagneticField module from the
         provided list of FacConfigurationOptions.
 
-        param dipoleTiltAngle the dipole tilt angle
-        param dynamicPressure the dynamic pressure
-        param facKappaScale_R1 the global spatial scaling of the region-1
-        field aligned current modules
-        param facKappaScale_R2 the global spatial scaling of the region-2
-        field aligned current modules
-        param options (list)
-        param includeShielding (bool)
-        return a newly constructed
-        CopyOfModifiedTs07DFieldAlignedMagneticField
+        Parameters
+        ----------
+        dipoleTiltAngle : float
+            The dipole tilt angle.
+        dynamicPressure : float
+            The dynamic pressure.
+        region1KappaScaling : float
+            The global spatial scaling of the region-1 FAC modules.
+        region2KappaScaling : float
+            The global spatial scaling of the region-2 FAC modules.
+        options : list of FacConfigurationOptions
+            options
+        includeShielding :bool;
+            includeShielding
+        
+        Returns
+        -------
+        result : Ts07DFieldAlignedMagneticField
+            The newly-constructed field.
         """
         return Ts07DFieldAlignedMagneticField(
             dipoleTiltAngle, dynamicPressure, region1KappaScaling,
@@ -130,51 +172,82 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
     def evaluate(self, location, buffer):
         """Evaluate the field.
 
-        param UnwritableVectorIJK location
-        param VectorIJK buffer
-        return VectorIJK
-        """
+        Evaluate the field.
 
-        # evaluate the FAC internal fields
-        # UnwritableVectorIJK internal, shield
+        Parameters
+        ----------
+        location : VectorIJK
+            Location for evaluation.
+        buffer : VectorIJK
+            Buffer to hold result.
+        
+        Returns
+        -------
+        v : VectorIJK
+            Evaluation of field at location.
+        """
+        # Evaluate the FAC internal fields.
         internal = self.internalField.evaluate(location)
         shield = VectorIJK(0, 0, 0)
 
-        # if shielding fields are turned on, evaluate those
+        # If shielding fields are turned on, evaluate those.
         if self.includeShielding:
             shield = self.shieldingField.evaluate(location)
 
-        # add the internal+shielding
+        # Add the internal+shielding.
         v = VectorIJK.addAll([internal, shield], buffer)
         return v
 
     def getBasisFunctions(self):
         """Return the list of basis functions.
 
-        return [VectorField]
+        Return the list of basis functions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.basisFunctions : list of VectorField
+            The basis functions for the field.
         """
         return self.basisFunctions
 
     def getBasisCoefficients(self):
-        """Return the list of basis coefficients
+        """Return the list of basis coefficients.
 
-        return [float]
+        Return the list of basis coefficients.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.basisCoefficients : list of float
+            The basis coefficients for the field.
         """
         return self.basisCoefficients
 
     def evaluateExpansion(self, location):
-        """evaluateExpansion
+        """Evaluate the expansion at a location.
 
-        param UnwritableVectorIJK location
-        return ImmutableList<UnwritableVectorIJK>
+        Evaluate the expansion at a location.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Location for evaluation.
+        
+        Returns
+        -------
+        values : list of VectorIJK
+            Evaluation of expansion components at location.
         """
-        # [UnwritableVectorIJK] values
         values = []
-        # int count
         count = 0
-        # VectorField basisFunction
         for basisFunction in self.basisFunctions:
-            # float coeff
             coeff = self.basisCoefficients[count]
             count += 1
             bfe = basisFunction.evaluate(location)
@@ -185,20 +258,47 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
     def getNumberOfBasisFunctions(self):
         """Get the number of basis functions.
 
-        return int
+        Get the number of basis functions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Number of basis functions.
         """
         return self.basisFunctions.size()
 
     def getInternalFields(self):
         """Return the list of internal fields.
 
-        return [VectorField]
+        Return the list of internal fields.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.internalFields : list of VectorField
+            Internal fields for the overall field.
         """
         return self.internalFields
 
     def getShieldingFields(self):
         """Return the list of shielding fields.
 
-        return [VectorField]
+        Return the list of shielding fields.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.shieldingFields : list of VectorField
+            Shielding fields for the overall field.
         """
         return self.shieldingFields

@@ -1,39 +1,76 @@
-"""Basis transformation from spherical to Cartesian."""
+"""Convert basis vectors between Cartesian and spherical coordinates.
+
+Convert basis vectors between Cartesian and spherical coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import cos, sin
-from re import T
 
 import numpy as np
 
-from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class SphericalToCartesianBasisTransformation(Transformation):
-    """Basis transformation from spherical to Cartesian."""
+    """Convert basis vectors between Cartesian and spherical coordinates.
+
+    Convert basis vectors between Cartesian and spherical coordinates.
+
+    Attributes
+    ----------
+    None
+    """
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new SphericalToCartesianBasisTransformation object.
+
+        Initialize a new SphericalToCartesianBasisTransformation object.
+
+        Parameters
+        ----------
+        None
+        """
 
     def getTransformation(self, coordPosition, buffer):
-        """Get the transformation matrix."""
-        colat = coordPosition.theta
-        lon = coordPosition.phi
-        cosColat = cos(colat)
-        sinColat = sin(colat)
-        cosLong = cos(lon)
-        sinLong = sin(lon)
-        xByR = cosLong*sinColat
-        yByR = sinLong*sinColat
-        zByR = cosColat
-        xByColat = cosLong*cosColat
-        yByColat = sinLong*cosColat
-        zByColat = -sinColat
-        xByLong = -sinLong
-        yByLong = cosLong
+        """Return the spherical-to-Cartesian basis transformation matrix.
+
+        Return the spherical-to-Cartesian basis transformation matrix at
+        the specified position.
+
+        Parameters
+        ----------
+        spherical : SphericalVector
+            Position in spherical coordinates.
+        buffer : MatrixIJK
+            Buffer to hold the spherical-to-Cartesian basis
+            transformation matrix.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The spherical-to-Cartesian basis transformation matrix.
+        """
+        theta = coordPosition.theta
+        phi = coordPosition.phi
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+        cos_phi = cos(phi)
+        sin_phi = sin(phi)
+        xByR = cos_phi*sin_theta
+        yByR = sin_phi*sin_theta
+        zByR = cos_theta
+        xByColat = cos_phi*cos_theta
+        yByColat = sin_phi*cos_theta
+        zByColat = -sin_theta
+        xByLong = -sin_phi
+        yByLong = cos_phi
         zByLong = 0
         buffer[:, :] = [[xByR, xByColat, xByLong],
                         [yByR, yByColat, yByLong],
@@ -41,22 +78,54 @@ class SphericalToCartesianBasisTransformation(Transformation):
         return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
-        """Get the inverse transformation matrix."""
-        # I'm pretty confident that this exception can't be thrown, the columns
-        # will always be non-zero
+        """Return the Cartesian-to-spherical basis transformation matrix.
+
+        Return the Cartesian-to-spherical basis transformation matrix at
+        the specified position.
+
+        The Cartesian-to-spherical basis transformation matrix is the
+        inverse of the spherical-to-Cartesian transformation matrix.
+
+        Parameters
+        ----------
+        spherical : SphericalVector
+            Position in spherical coordinates.
+        buffer : MatrixIJK
+            Buffer to hold the Cartesian-to-spherical basis
+            transformation matrix.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The Cartesian-to-spherical basis transformation matrix.
+        """
         self.getTransformation(coordPosition, buffer)
-        buffer[:] = np.linalg.inv(buffer)
+        buffer[:, :] = np.linalg.inv(buffer)
         return buffer
 
-    def mxv(self, *args):
-        """Multiply a vector by the transformation matrix."""
-        if isinstance(args[1], SphericalVector):
-            (jacobian, coordVelocity) = args
-            vect = VectorIJK()
-            vect[:] = jacobian.dot(coordVelocity)
-            return vect
+    def mxv(self, jacobian, vector):
+        """Transform a basis vector between spherical and Cartesian coordinates.
+
+        Transform a basis vector between spherical and Cartesian
+        coordinates. The transformation can go in either direction, and is
+        computed based on the input vector type.
+
+        Parameters
+        ----------
+        jacobian : MatrixIJK
+            Jacobian matrix for conversion.
+        vector : SphericalVector or VectorIJK
+            Vector in original coordinates.
+
+        Returns
+        -------
+        converted_vector : VectorIJK or SphericalVector
+            Vector in converted coordinates.
+        """
+        v = jacobian.dot(vector)
+        converted_vector = None
+        if isinstance(vector, SphericalVector):
+            converted_vector = VectorIJK(v)
         else:
-            (inverseJacobian, cartVelocity) = args
-            vect = VectorIJK()
-            vect[:] = inverseJacobian.dot(cartVelocity)
-            return SphericalVector(vect.i, vect.j, vect.k)
+            converted_vector = SphericalVector(v)
+        return converted_vector

@@ -1,10 +1,13 @@
-"""Deformation for a vector field."""
+"""Deform a vector field.
 
-# import crucible.core.math.vectorfields.DifferentiableVectorField;
-# import crucible.core.math.vectorfields.VectorField;
-# import crucible.core.math.vectorspace.MatrixIJK;
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
+Deform a vector field using a differentiable vector field.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
@@ -12,42 +15,73 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class VectorFieldDeformation(VectorField):
-    """Deformation for a vector field.
+    """Deform a vector field.
 
-    author G.K.Stephens
+    Deform a vector field using a differentiable vector field.
     """
 
     def __init__(self, originalField, coordDeformation):
-        """Build a new object.
+        """Initialize a new VectorFieldDeformation object.
 
-        param originalField
-        param coordDeformation
+        Initialize a new VectorFieldDeformation object.
+
+        Parameters
+        ----------
+        originalField : VectorField
+            The original vector field to deform.
+        coordDeformation : DifferentiableVectorField
+            The vector field defining the deformation.
         """
         self.originalField = originalField
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate, buffer):
-        """Evaluate the field."""
-        # compute the derivatives at the given location
+        """Evaluate the field, then apply the deformation.
+        
+        Evaluate the field, then apply the deformation.
+
+        Parameters
+        ----------
+        originalCoordinate : VectorIJK
+            Location to evaluate field before deformation.
+        buffer : VectorIJK
+            Buffer to hold deformed vector field value.
+        
+        Returns
+        -------
+        buffer : VectorIJK
+            Deformed vector field value at location.
+        """
+        # Compute the deformation derivatives at the given location.
         deformed = self.coordDeformation.differentiate(originalCoordinate)
 
-        # compute the deformation matrix
+        # Compute the deformation matrix.
         trans = self.computeMatrix(deformed)
 
-        # evaluate the field at the deformed location
+        # Evaluate the field at the deformed location.
         bField = self.originalField.evaluate(deformed.getF())
 
-        #  evaluate the deformed field
+        # Evaluate the deformed field.
         v = trans.mxv(VectorIJK(bField.getI(), bField.getJ(), bField.getK()))
 
+        # Return the updated buffer.
         return buffer.setTo(v.getI(), v.getJ(), v.getK())
 
     @staticmethod
     def computeMatrix(deformed):
-        """Compute the matrix.
+        """Compute the deformation matrix from the field derivatives.
 
-        param deformed
-        return
+        Compute the deformation matrix from the field derivatives.
+
+        Parameters
+        ----------
+        deformed : DifferentiableVectorField.Results
+            Object containing the deformation derivatives.
+
+        Returns
+        -------
+        trans : MatrixIJK
+            The deformation matrix.
         """
         dFxDx = deformed.getdFxDx()
         dFxDy = deformed.getdFxDy()

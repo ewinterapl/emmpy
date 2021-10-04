@@ -1,30 +1,63 @@
-"""A minimal rotation interface."""
+"""Abstract class representing a rotation matrix.
+
+N.B. This class was based on a Java interface, and therefore these methods
+will raise exceptions if invoked.
+
+Authors
+-------
+F.S. Turner
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.rotations.unwritablerotation import (
     UnwritableRotation
 )
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class Rotation(UnwritableRotation):
-    """A minimal rotation interface.
+    """Abstract class representing a rotation matrix.
 
-    Interface describing the two, minimal methods to implement a rotation.
-
-    author F.S.Turner
+    N.B. This class was based on a Java interface, and therefore these
+    methods will raise exceptions if invoked.
     """
 
     def __init__(self):
-        """Build a new object.
+        """Initialize a new Rotation object.
 
-        INTERFACE - DO NOT INSTANTIATE
+        This abstract method must be overridden in a subclass.
+
+        Initialize a new Rotation object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
     def setTo(self, matrix):
         """Set the representation to the value of the supplied matrix.
 
-        param matrix the rotation matrix to capture
-        return a reference to the instance for convenience
+        Set the representation to the value of the supplied matrix.
+
+        Parameters
+        ----------
+        matrix : Matrix
+            Matrix of values for the rotation matrix.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException

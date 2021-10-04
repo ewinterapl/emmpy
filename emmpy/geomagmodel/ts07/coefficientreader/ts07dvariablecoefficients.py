@@ -1,4 +1,13 @@
-"""Time-variable coefficients for the TS07D geomagnetic field model."""
+"""Time-variable coefficients for the TS07D geomagnetic field model.
+
+Time-variable coefficients for the TS07D geomagnetic field model.
+
+Authors
+-------
+Nicholas Sharp
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.geomagmodel.ts07.coefficientreader.ts07nonlinearparameters import (
@@ -10,26 +19,43 @@ class TS07DVariableCoefficients:
     """Time-variable coefficients for the TS07D geomagnetic field model.
 
     A container class that groups together the time-dependent coefficients
-    and parameters needed to construct the TS07D geomagnetic field model and
-    derivative models.
+    and parameters needed to construct the TS07D geomagnetic field model
+    and derivative models.
 
     To construct this class, use the TS07DVariableCoefficientsUtils class.
 
-    author Nicholas Sharp
-    author G.K.Stephens
+    Attributes
+    ----------
+    cfAmplitude : float
+        The amplitude for the dipole shielding field.
+    equatorialCoeffs : Ts07EquatorialVariableCoefficients
+        The parameters and coefficients for constructing the equatorial
+        currents.
+    facCoeffs : Ts07FacVariableCoefficients
+        The parameters and coefficients for constructing the field-aligned
+        currents.
+    nonLinearParameters : Ts07NonLinearParameters
+        nonLinearParameters
     """
 
     def __init__(self, cfAmplitude, equatorialCoeffs, facCoeffs):
-        """Build a new object.
+        """Initialize a new TS07DVariableCoefficients object.
 
         Constructor is package private, should be constructed using the
         TS07DVariableCoefficientsUtils class.
 
-        param cfAmplitude the amplitude for the dipole shielding field
-        param equatorialCoeffs the parameters and coefficients for
-        constructing the equatorial currents
-        param facCoeffs the parameters and coefficients for constructing the
-        field aligned currents
+        Parameters
+        ----------
+        cfAmplitude : float
+            The amplitude for the dipole shielding field.
+        equatorialCoeffs : Ts07EquatorialVariableCoefficients
+            The parameters and coefficients for constructing the equatorial
+            currents.
+        facCoeffs : Ts07FacVariableCoefficients
+            The parameters and coefficients for constructing the
+            field-aligned currents.
+        nonLinearParameters : Ts07NonLinearParameters
+            nonLinearParameters
         """
         self.cfAmplitude = cfAmplitude
         self.equatorialCoeffs = equatorialCoeffs
@@ -45,41 +71,65 @@ class TS07DVariableCoefficients:
         )
 
     def getEquatorialCoefficients(self):
-        """Return the equatorial coefficients."""
+        """Return the equatorial coefficients.
+
+        Return the equatorial coefficients.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Ts07EquatorialVariableCoefficients
+            The equatorial coefficients.
+        """
         return self.equatorialCoeffs
 
     def getDipoleShieldingAmplitude(self):
-        """Return the amplitude of the dipole shielding field."""
+        """Return the dipole shielding amplitude.
+
+        Return the dipole shielding amplitude.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            The dipole shielding amplitude.
+        """
         return self.cfAmplitude
 
     def getFacCoefficients(self):
-        """Return the field-aligned current parameters."""
+        """Return the field-aligned current coefficients.
+
+        Return the field-aligned current coefficients.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Ts07FacVariableCoefficients
+            The field-aligned current coefficients.
+        """
         return self.facCoeffs
 
     def getNonLinearParameters(self):
-        """Return all the non-linear parameters in the TS07D model."""
+        """Return all the non-linear parameters in the TS07D model.
+
+        Return all the non-linear parameters in the TS07D model.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Ts07NonLinearParameters
+            The nonlinear parameters.
+        """
         return self.nonLinearParameters
-
-    # def getTotalNumberOfParameters(self):
-    #     """@return the total number of non-linear and linear parameters in the
-    #     TS07D model"""
-    #     return (
-    #         self.getTotalNumberOfLinearParameters() +
-    #         self.getTotalNumberOfNonLinearParameters()
-    #     )
-
-    # def getTotalNumberOfLinearParameters(self):
-    #     """@return the total number of linear parameters (coefficients) in the
-    #     TS07D model"""
-    #     return (
-    #         1 + self.equatorialCoeffs.getTotalNumberOfLinearParameters() +
-    #         len(self.facCoeffs.getLienarCoefficients())
-    #     )
-
-    # def getTotalNumberOfNonLinearParameters(self):
-    #     """@return the total number of non-linear parameters in the TS07D
-    #     model"""
-    #     # the number of equatorial parameters + 2 for the FAC parameters
-    #     return (
-    #         self.equatorialCoeffs.getTotalNumberOfNonLinearParameters() + 2
-    #     )

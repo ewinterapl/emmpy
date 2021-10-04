@@ -1,40 +1,59 @@
-"""Useful coordinate conversions."""
+"""Useful coordinate conversion methods.
+
+This class contains several useful coordinate conversion methods.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
-)
-from emmpy.crucible.core.math.coords.latitudinalvector import (
-    LatitudinalVector
 )
 from emmpy.crucible.core.math.coords.polarcoordconverter import (
     PolarCoordConverter
 )
-from emmpy.crucible.core.math.coords.polarvector import (
-    PolarVector
-)
+from emmpy.crucible.core.math.coords.polarvector import PolarVector
+from emmpy.crucible.core.math.coords.radecvector import RaDecVector
 from emmpy.crucible.core.math.coords.radeccoordconverter import (
     RaDecCoordConverter
-)
-from emmpy.crucible.core.math.coords.radecvector import (
-    RaDecVector
 )
 from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
     SphericalCoordConverter
 )
+from emmpy.crucible.core.math.coords.latitudinalvector import (
+    LatitudinalVector
+)
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class CoordConverters:
-    """Useful coordinate conversions.
+    """Useful coordinate conversion methods.
 
-    author G.K.Stephens
+    This class contains several useful coordinate conversion methods.
+
+    Attributes
+    ----------
+    cylindricalCoordConverter : CylindricalCoordConverter
+        Converts between Cartesian and cylindrical coordinates.
+    latitudinalCoordConverter : LatitudinalCoordConverter
+        Converts between Cartesian and latitudinal coordinates.
+    raDecCoordConverter : RaDecCoordConverter
+        Converts between Cartesian and ra-dec coordinates.
+    polarCoordConverter : PolarCoordConverter
+        Converts between Cartesian and polar coordinates.
+    sphericalCoordConverter : SphericalCoordConverter
+        Converts between Cartesian and spherical coordinates.
     """
 
+    # Create the standard converters.
     cylindricalCoordConverter = CylindricalCoordConverter()
     latitudinalCoordConverter = LatitudinalCoordConverter()
     polarCoordConverter = PolarCoordConverter()
@@ -42,116 +61,157 @@ class CoordConverters:
     sphericalCoordConverter = SphericalCoordConverter()
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new CoordConverters object.
+
+        Initialize a new CoordConverters object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     @staticmethod
     def convertToCylindrical(cartesian):
-        """Convert a Cartesian position to cylindrical position.
+        """Convert a 3-D Cartesian vector to a cylindrical vector.
 
-        @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
-        position.
-        @param cylindricalBuffer A {@link CylindricalVector} buffer holding the
-        cylindrical position;
-        @return a reference to buffer for convenience.
+        Convert a 3-D Cartesian vector to a cylindrical vector.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            A Cartesian vector.
+
+        Returns
+        -------
+        cylindrical : CylindricalVector
+            The input vector converted to cylindrical coordinates.
         """
-        return CoordConverters.cylindricalCoordConverter.toCoordinate(
+        cylindrical = CoordConverters.cylindricalCoordConverter.toCoordinate(
             cartesian
         )
+        return cylindrical
 
     @staticmethod
     def convertToLatitudinal(cartesian):
-        """Convert from Cartesian coordinates to Latitudinal coordinates.
+        """Convert a 3-D Cartesian vector to a latitudinal vector.
 
-        @param cartesian
-        @param LatitudinalBuffer
-        @return
+        Convert a 3-D Cartesian vector to a latitudinal vector.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            A Cartesian vector.
+
+        Returns
+        -------
+        latitudinal : LatitudinalVector
+            The input vector converted to latitudinal coordinates.
         """
-        return CoordConverters.latitudinalCoordConverter.toCoordinate(
+        latitudinal = CoordConverters.latitudinalCoordConverter.toCoordinate(
             cartesian
         )
+        return latitudinal
 
     @staticmethod
     def convertToPolar(cartesian):
-        """Convert a Cartesian position to polar position.
+        """Convert a 2-D Cartesian vector to a polar vector.
 
-        @param cartesian A {@link UnwritableVectorIJ} holding the Cartesian
-        position.
-        @param polarBuffer A {@link PolarVector} buffer holding the polar
-        position;
-        @return a reference to buffer for convenience.
+        Convert a 2-D Cartesian vector to a polar vector.
+
+        Parameters
+        ----------
+        cartesian : VectorIJ
+            A Cartesian vector.
+
+        Returns
+        -------
+        polar : PolarVector
+            The input vector converted to polar coordinates.
         """
-        return CoordConverters.polarCoordConverter.toCoordinate(cartesian)
+        polar = CoordConverters.polarCoordConverter.toCoordinate(cartesian)
+        return polar
 
     @staticmethod
     def convertToRaDec(cartesian):
-        """Convert from Cartesian coordinates to RaDec coordinates.
+        """Convert a 3-D Cartesian vector to a RA/DEC vector.
 
-        @param cartesian
-        @param RaDecBuffer
-        @return
+        Convert a 3-D Cartesian vector to a RA/DEC vector.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            A Cartesian vector.
+
+        Returns
+        -------
+        radec : RaDecVector
+            The input vector converted to RA/DEC coordinates.
         """
-        return CoordConverters.raDecCoordConverter.toCoordinate(cartesian)
+        radec = CoordConverters.raDecCoordConverter.toCoordinate(
+            cartesian
+        )
+        return radec
 
     @staticmethod
     def convertToSpherical(cartesian):
-        """Convert a Cartesian position to spherical position.
+        """Convert a 3-D Cartesian vector to a spherical vector.
 
-        @param cartesian A {@link UnwritableVectorIJK} holding the Cartesian
-        position.
-        @param sphericalBuffer A {@link SphericalVector} buffer holding the
-        spherical position;
-        @return a reference to buffer for convenience.
+        Convert a 3-D Cartesian vector to a spherical vector.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            A Cartesian vector.
+
+        Returns
+        -------
+        spherical : SphericalVector
+            The input vector converted to spherical coordinates.
         """
-        return CoordConverters.sphericalCoordConverter.toCoordinate(cartesian)
+        spherical = CoordConverters.sphericalCoordConverter.toCoordinate(
+            cartesian
+        )
+        return spherical
 
     @staticmethod
     def convert(position):
-        """Convert back to Cartesian coordinates."""
+        """Convert an input vector to Cartesian coordinates.
+
+        Convert a cylindrical, latitudinal, polar, RA/DEC, or spherical
+        vector to Cartesian coordinates.
+
+        Parameters
+        -----------
+        position : Vector
+            A vector in cylindrical, latitudinal, polar, RA/DEC, or spherical
+            coordinates.
+
+        Returns
+        -------
+        cartesian : VectorIJK
+            Input vector converted to Cartesian coordinates.
+        """
         if isinstance(position, CylindricalVector):
-            # Converts a cylindrical position to a Cartesian position.
-            # @param cylindrical A {@link CylindricalVector} holding the
-            # cylindrical position.
-            # @param cartesianBuffer A {@link VectorIJK} buffer holding the
-            # Cartesian position.
-            # @return a reference to buffer for convenience.
-            cylindrical = position
-            return CoordConverters.cylindricalCoordConverter.toCartesian(
-                cylindrical
-            )
+            cartesian = CoordConverters.cylindricalCoordConverter.toCartesian(
+                position)
         elif isinstance(position, LatitudinalVector):
-            # Converts from Latitudinal coordinates to Cartesian coordinates
-            # @param Latitudinal
-            # @param cartesianBuffer
-            # @return
-            latitudinal = position
-            return CoordConverters.latitudinalCoordConverter.toCartesian(
-                latitudinal
-            )
+            cartesian = CoordConverters.latitudinalCoordConverter.toCartesian(
+                position)
         elif isinstance(position, PolarVector):
-            # Converts a polar position to a Cartesian position.
-            # @param polar A {@link PolarVector} holding the polar position.
-            # @param cartesianBuffer A {@link VectorIJ} buffer holding the
-            # Cartesian position.
-            # @return a reference to buffer for convenience.
-            polar = position
-            return CoordConverters.polarCoordConverter.toCartesian(polar)
+            cartesian = CoordConverters.polarCoordConverter.toCartesian(
+                position)
         elif isinstance(position, RaDecVector):
-            # Converts from RaDec coordinates to Cartesian coordinates
-            # @param RaDec
-            # @param cartesianBuffer
-            # @return
-            RaDec = position
-            return CoordConverters.raDecCoordConverter.toCartesian(RaDec)
+            cartesian = CoordConverters.raDecCoordConverter.toCartesian(
+                position)
         elif isinstance(position, SphericalVector):
-            # Converts a spherical position to a Cartesian position.
-            # @param spherical A {@link SphericalVector} holding the spherical
-            # position.
-            # @param cartesianBuffer A {@link VectorIJK} buffer holding the
-            # Cartesian position.
-            # @return a reference to buffer for convenience.
-            spherical = position
-            return CoordConverters.sphericalCoordConverter.toCartesian(
-                spherical
-            )
+            cartesian = CoordConverters.sphericalCoordConverter.toCartesian(
+                position)
         else:
-            raise Exception
+            raise ValueError
+        return cartesian

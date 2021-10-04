@@ -1,12 +1,14 @@
-"""Deformation of a cylindrical basis vector field."""
+"""Deformation of a cylindrical basis vector field.
+
+Deformation of a cylindrical basis vector field.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-# import com.google.common.collect.ImmutableList;
-# import crucible.core.math.vectorspace.MatrixIJK;
-# import crucible.core.math.vectorspace.UnwritableMatrixIJK;
-# import magmodel.core.math.vectorfields.DifferentiableCylindricalVectorField;
-
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
     CylindricalFieldDeformation
@@ -14,70 +16,54 @@ from emmpy.magmodel.core.math.deformation.cylindricalfielddeformation import (
 from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
     CylindricalBasisVectorField
 )
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
 class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
     """Deformation of a cylindrical basis vector field.
 
-    author G.K.Stephens
+    Deformation of a cylindrical basis vector field.
     """
 
-    # private final CylindricalBasisVectorField originalField;
-    # private final DifferentiableCylindricalVectorField coordDeformation;
-
     def __init__(self, originalField, coordDeformation):
-        """Build a new object.
+        """Initialize a new CylindricalBasisVectorFieldDeformation object.
 
-        param CylindricalBasisVectorField originalField
-        param DifferentiableCylindricalVectorField coordDeformation
+        Initialize a new CylindricalBasisVectorFieldDeformation object.
+
+        Parameters
+        ----------
+        originalField : CylindricalBasisVectorField
+            Original field to deform.
+        coordDeformation : DifferentiableCylindricalVectorField
+            Vector field defining the deformation.
         """
         self.originalField = originalField
         self.coordDeformation = coordDeformation
 
     def evaluateExpansion(self, originalCoordinate):
-        """Evaluate the expansion.
+        """Evaluate and deform the expansion.
 
-        param CylindricalVector originalCoordinate
-        return [CylindricalVector]
+        Evaluate and deform the expansion.
+
+        Parameters
+        ----------
+        originalCoordinate : CylindricalVector
+            Location to compute deformed field.
+
+        Returns
+        -------
+        bFieldExpansionDeformed : list of CylindricalVector
+            Deformed expansion components.
         """
-        # DifferentiableCylindricalVectorField.Results deformed
         deformed = self.coordDeformation.differentiate(originalCoordinate)
-        # UnwritableMatrixIJK trans
         trans = CylindricalFieldDeformation.computeMatrix(
             deformed, originalCoordinate
         )
-        # [CylindricalVector] bFieldExpansion
         bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
-        # [CylindricalVector] bFieldExpansionDeformed
         bFieldExpansionDeformed = []
-        # CylindricalVector bField
         for bField in bFieldExpansion:
-            # VectorIJK v
             v = VectorIJK()
-            vcyl = VectorIJK(bField.rho, bField.phi,
-                             bField.z)
+            vcyl = VectorIJK(bField.rho, bField.phi, bField.z)
             v[:] = trans.dot(vcyl)
-            bFieldExpansionDeformed.append(
-                CylindricalVector(v.i, v.j, v.k)
-            )
+            bFieldExpansionDeformed.append(CylindricalVector(v.i, v.j, v.k))
         return bFieldExpansionDeformed
-
-    #   @Override
-    #   public int getNumberOfBasisFunctions() {
-    #     return originalField.getNumberOfBasisFunctions();
-    #   }
-
-    #   @Override
-    #   public CylindricalVector evaluate(CylindricalVector originalCoordinate) {
-    #     // compute the derivatives at the given location
-    #     DifferentiableCylindricalVectorField.Results deformed =
-    #         coordDeformation.differentiate(originalCoordinate);
-    #     // compute the deformation matrix
-    #     MatrixIJK trans = CylindricalFieldDeformation.computeMatrix(deformed, originalCoordinate);
-    #     // evaluate the field at the deformed location
-    #     CylindricalVector bField = originalField.evaluate(deformed.getF());
-    #     // evaluate the deformed field
-    #     VectorIJK v = trans.mxv(
-    #         new VectorIJK(bField.getCylindricalRadius(), bField.getLongitude(), bField.getHeight()));
-    #     return new CylindricalVector(v.getI(), v.getJ(), v.getK());
-    #   }

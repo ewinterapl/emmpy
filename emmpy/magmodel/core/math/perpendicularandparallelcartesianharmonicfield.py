@@ -1,7 +1,15 @@
-"""Linear combination of perpendicular and parallel Cartesian harmonic fields."""
+"""Linear combination of perpendicular and parallel Cartesian harmonic fields.
+
+Linear combination of perpendicular and parallel Cartesian harmonic fields.
+
+Authors
+-------
+G.K. Stephens
+Nicholas Sharp
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-from emmpy.math.vectors.vector import Vector
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
@@ -21,6 +29,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
+from emmpy.math.vectors.vector import Vector
 
 
 class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
@@ -36,42 +45,28 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     magnetopause currents that can be used to contain the magnetic field within
     the magnetosphere: e.g. Tsyganenko 1998].
 
-    author G.K.Stephens
-    author Nicholas Sharp
+    Attributes
+    ----------
+    perpendicularField : BasisVectorField
+        The perpendicular field.
+    parallelField : BasisVectorField
+        The parallel field.
     """
 
     def __init__(self, perpendicularField, parallelField):
-        """Build a new object.
+        """Initialize a new PerpendicularAndParallelCartesianHarmonicField object.
 
-        param BasisVectorField perpendicularField
-        param BasisVectorField parallelField
+        Initialize a new PerpendicularAndParallelCartesianHarmonicField object.
+
+        Parameters
+        ----------
+        perpendicularField : BasisVectorField
+            The perpendicular field.
+        parallelField : BasisVectorField
+            The parallel field.
         """
         self.perpendicularField = perpendicularField
         self.parallelField = parallelField
-
-    # @staticmethod
-    # def create(trigParityI, p, r, perpCoeffs, q, s, parrCoeffs):
-    #     """Creates a PerpendicularAndParallelCartesianHarmonicField
-
-    #     param trigParityI the TrigParity associated with the Y terms
-    #     (odd=sine, even=cosine)
-    #     param p an expansion containing the nonlinear set of coefficients p_i
-    #     param r an expansion containing the nonlinear set of coefficients r_k
-    #     param perpCoeffs an expansion containing the linear scaling
-    #     coefficients a_ik
-    #     param q an expansion containing the nonlinear set of coefficients q_i
-    #     param s an expansion containing the nonlinear set of coefficients s_k
-    #     param parrCoeffs an expansion containing the linear scaling
-    #     coefficients b_ik
-    #     return a newly constructed
-    #     PerpendicularAndParallelCartesianHarmonicField
-    #     """
-    #     perpendicularVectorField = CartesianHarmonicField(
-    #         p, r, perpCoeffs, trigParityI, TrigParity.ODD)
-    #     parallelDipoleShieldingField = CartesianHarmonicField(
-    #         q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
-    #     return PerpendicularAndParallelCartesianHarmonicField(
-    #         perpendicularVectorField, parallelDipoleShieldingField)
 
     @staticmethod
     def createWithRotation(
@@ -82,39 +77,42 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
 
         Described in detail in the appendix of Tsyganenko [1998].
 
-        param TrigParity trigParityI the TrigParity associated with the Y terms
-        (odd=sine, even=cosine)
-        param double perpendicularTiltAngle the angle to rotate the
-        perpendicular field about the y-axis
-        param CoefficientExpansion1D p an expansion containing the nonlinear
-        set of coefficients p_i
-        param CoefficientExpansion1D r an expansion containing the nonlinear
-        set of coefficients r_k
-        param CoefficientExpansion2D perpCoeffs an expansion containing the
-        linear scaling coefficients a_ik
-        param double parallelTiltAngle the angle to rotate the parallel field
-        about the y-axis
-        param CoefficientExpansion1D q an expansion containing the nonlinear
-        set of coefficients q_i
-        param CoefficientExpansion1D s an expansion containing the nonlinear
-        set of coefficients s_k
-        param CoefficientExpansion2D parrCoeffs an expansion containing the
-        linear scaling coefficients b_ik
-        return a newly constructed
-        PerpendicularAndParallelCartesianHarmonicField
+        Parameters
+        ----------
+        trigParityI : TrigParity
+            The TrigParity associated with the Y terms (odd=sine,
+            even=cosine).
+        perpendicularTiltAngle : float
+            The angle (radians) to rotate the perpendicular field about
+            the y-axis.
+        p : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients p_i
+        r : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients r_k.
+        perpCoeffs : CoefficientExpansion2D
+            An expansion containing the linear scaling coefficients a_ik.
+        parallelTiltAngle : float
+            The angle (radians) to rotate the parallel field about the
+            y-axis.
+        q : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients q_i.
+        s : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients s_k.
+        parrCoeffs : CoefficientExpansion2D
+            An expansion containing the linear scaling coefficients b_ik.
+        
+        Returns
+        -------
+        papchf : PerpendicularAndParallelCartesianHarmonicField
+            New field combining the input fields.
         """
-        # construct the unrotated fields
-        # BasisVectorField perpField, paraField
+        # Construct the unrotated fields.
         perpField = CartesianHarmonicField(
             p, r, perpCoeffs, trigParityI, TrigParity.ODD)
         paraField = CartesianHarmonicField(
             q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 
-        # the rotation matrices about Y axis
-        # AxisAndAngle aaa1, aaa2
-        # RotationMatrixIJK rmijk1, rmijk2
-        # UnwritableRotationMatrixIJK perpendicularRotation, parallelRotation
-        # (same objects as rmijk1, rmijk2)
+        # The rotation matrices about Y axis.
         aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)
         rmijk1 = RotationMatrixIJK()
         perpendicularRotation = aaa1.getRotation(rmijk1)
@@ -122,8 +120,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         rmijk2 = RotationMatrixIJK()
         parallelRotation = aaa2.getRotation(rmijk2)
 
-        # now rotate the fields
-        # BasisVectorField rotatedPerpField, rotatedParaField
+        # Now rotate the fields.
         rotatedPerpField = BasisVectorFields.rotate(
             perpField, perpendicularRotation)
         rotatedParaField = BasisVectorFields.rotate(
@@ -142,39 +139,40 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
 
         Described in detail in the appendix of Tsyganenko [1998].
 
-        param TrigParity trigParityI the TrigParity associated with the Y terms
-        (odd=sine, even=cosine)
-        param double perpendicularTiltAngle the angle to rotate the
-        perpendicular field about the y-axis
-        param CoefficientExpansion1D p an expansion containing the nonlinear
-        set of coefficients p_i
-        param CoefficientExpansion1D r an expansion containing the nonlinear
-        set of coefficients r_k
-        param CoefficientExpansion2D perpCoeffs an expansion containing the
-        linear scaling coefficients a_ik
-        param double parallelTiltAngle the angle to rotate the parallel field
-        about the y-axis
-        param CoefficientExpansion1D q an expansion containing the nonlinear
-        set of coefficients q_i
-        param CoefficientExpansion1D s an expansion containing the nonlinear
-        set of coefficients s_k
-        param CoefficientExpansion2D parrCoeffs an expansion containing the
-        linear scaling coefficients b_ik
-        return a newly constructed
-        PerpendicularAndParallelCartesianHarmonicField
+        Parameters
+        ----------
+        trigParityI : TrigParity
+            Parity associated with the Y terms (odd=sine, even=cosine).
+        perpendicularTiltAngle : float
+            The angle (radians) to rotate the perpendicular field about the
+            y-axis.
+        p : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients p_i.
+        r : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients r_k.
+        perpCoeffs : CoefficientExpansion2D
+            An expansion containing the linear scaling coefficients a_ik.
+        parallelTiltAngle : float
+            The angle to rotate the parallel field about the y-axis.
+        q : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients q_i.
+        s : CoefficientExpansion1D
+            An expansion containing the nonlinear set of coefficients s_k.
+        parrCoeffs : CoefficientExpansion2D
+            An expansion containing the linear scaling coefficients b_ik.
+        
+        Returns
+        -------
+        papchf : PerpendicularAndParallelCartesianHarmonicField
+            New harmonic field combining the inputs.
         """
-        # construct the unrotated fields
-        # BasisVectorField perpField, paraField
+        # Construct the unrotated fields.
         perpField = AlternateCartesianHarmonicField(
             p, r, perpCoeffs, trigParityI, TrigParity.ODD)
         paraField = CartesianHarmonicField(
             q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
 
-        # the rotation matrices about Y axis
-        # AxisAndAngle aaa1, aaa2
-        # RotationMatrixIJK rmijk1, rmijk2
-        # UnwritableRotationMatrixIJK perpendicularRotation, parallelRotation
-        # (same objects as rmijk1, rmijk2)
+        # The rotation matrices about Y axis.
         aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)
         rmijk1 = RotationMatrixIJK()
         perpendicularRotation = aaa1.getRotation(rmijk1)
@@ -182,8 +180,7 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         rmijk2 = RotationMatrixIJK()
         parallelRotation = aaa2.getRotation(rmijk2)
 
-        # now rotate the fields
-        # BasisVectorField rotatedPerpField, rotatedParaField
+        # Now rotate the fields.
         rotatedPerpField = BasisVectorFields.rotate(
             perpField, perpendicularRotation)
         rotatedParaField = BasisVectorFields.rotate(
@@ -196,18 +193,40 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
     def evaluate(self, location, buffer):
         """Evaluate the field.
 
-        param UnwritableVectorIJK location
-        param VectorIJK buffer
-        return VectorIJK buffer
+        Evaluate the field.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location for evaluation.
+        buffer : VectorIJK
+            Buffer to hold result.
+        
+        Returns
+        -------
+        buffer : VectorIJK
+            Field evaluated at location.
         """
-        # VectorIJK perpField, parField
         perpField = self.perpendicularField.evaluate(location)
         parField = self.parallelField.evaluate(location, buffer)
         buffer[:] = perpField + parField
         return buffer
 
     def evaluateExpansion(self, location):
-        """Evaluate the expansion."""
+        """Evaluate the expansion.
+        
+        Evaluate the expansion.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location for evaluation.
+        
+        Returns
+        -------
+        expansions : list of function
+            Functions to represent the expansion components.
+        """
         perpFields = self.perpendicularField.evaluateExpansion(location)
         parFields = self.parallelField.evaluateExpansion(location)
         expansions = []
@@ -216,15 +235,3 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         for f in parFields:
             expansions.append(f)
         return expansions
-
-    # def getNumberOfBasisFunctions(self):
-    #     return (self.perpendicularField.getNumberOfBasisFunctions()
-    #             + self.parallelField.getNumberOfBasisFunctions())
-
-    # def getPerpendicularField(self):
-    #     """return the perpendicular field"""
-    #     return self.perpendicularField
-
-    # def getParallelField(self):
-    #     """return the parallel field"""
-    #     return self.parallelField

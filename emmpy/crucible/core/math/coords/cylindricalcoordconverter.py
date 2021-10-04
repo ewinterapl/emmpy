@@ -1,4 +1,13 @@
-"""Convert to and from cylindrical coordinates."""
+"""Convert to and from cylindrical coordinates.
+
+This class provides methods that convert between cylindrical and Cartesian
+coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import atan2, cos, pi, sin, sqrt
@@ -9,66 +18,82 @@ from emmpy.crucible.core.math.coords.abstractcoordconverter import (
 from emmpy.crucible.core.math.coords.cylindricaltocartesianjacobian import (
     CylindricalToCartesianJacobian
 )
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
 class CylindricalCoordConverter(AbstractCoordConverter):
-    """Convert to and from cylindrical coordinates."""
+    """Convert to and from cylindrical coordinates.
 
+    Convert to and from cylindrical coordinates.
+
+    Attributes
+    ----------
+    JACOBIAN : MatrixIJK
+        Jacobian matrix to convert from cylindrical to Cartesian
+        coordinates.
+    """
+
+    # Jacobian matrix to convert from cylindrical to Cartesian coordinates.
     JACOBIAN = CylindricalToCartesianJacobian()
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new CylindricalCoordConverter object.
+
+        Initialize a new CylindricalCoordConverter object.
+
+        Parameters
+        ----------
+        None
+        """
         AbstractCoordConverter.__init__(
             self, CylindricalCoordConverter.JACOBIAN
         )
 
     def toCoordinate(self, cartesian):
-        """Use temporary variables for computing R.
+        """Convert a Cartesian vector to cylindrical coordinates.
 
-        BIG = MAX( DABS(RECTAN(1)), DABS(RECTAN(2)) )
-        Convert to cylindrical coordinates C Z = RECTAN(3 )
-        IF ( BIG .EQ. 0 ) THEN R = 0.D0 LONG = 0.D0
-        ELSE X = RECTAN(1) / BIG Y = RECTAN(2) / BIG
-        R = BIG * DSQRT (X*X + Y*Y)
-        LONG = DATAN2 (Y,X) END IF
-        IF ( LONG .LT. 0.D0) THEN LONG = LONG + TWOPI() END IF
+        Convert a Cartesian vector to cylindrical coordinates.
+
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            Vector in Cartesian coordinates.
+
+        Returns
+        -------
+        cylindrical : CylindricalVector
+            Input vector converted to cylindrical coordinates.
         """
-        # Use temporary variables for computing R.
-        big = max(abs(cartesian.i), abs(cartesian.j))
-
-        # Convert to cylindrical coordinates
-        height = cartesian.k
-        cylindricalRadius = 0
-        longitude = 0
-        if big == 0.0:
-            cylindricalRadius = 0.0
-            longitude = 0.0
+        (x, y, z) = (cartesian.i, cartesian.j, cartesian.k)
+        if x == y == 0:
+            rho = 0
+            phi = 0
         else:
-            x = cartesian.i/big
-            y = cartesian.j/big
-            cylindricalRadius = big*sqrt(x*x + y*y)
-            longitude = atan2(y, x)
-        if longitude < 0.0:
-            longitude += 2*pi
+            rho = sqrt(x**2 + y**2)
+            phi = atan2(y, x)
+            if phi < 0:
+                phi += 2*pi
+        cylindrical = CylindricalVector(rho, phi, z)
+        return cylindrical
 
-        return CylindricalVector(cylindricalRadius, longitude, height)
+    def toCartesian(self, cylindrical):
+        """Convert a cylindrical vector to Cartesian coordinates.
 
-    def toCartesian(self, coordinate):
-        """From the SPICE routine cylrec.f.
+        Convert a cylindrical vector to Cartesian coordinates.
 
-        Convert to rectangular coordinates, storing the results in C temporary
-        variables.
-        X = R * DCOS(LONG) Y = R * DSIN(LONG)
-        Move the results to the output variables.
-        RECTAN(1) = X RECTAN(2) = Y RECTAN(3) = Z
+        Parameters
+        ----------
+        cylindrical : CylindricalVector
+            Vector in cylindrical coordinates.
+
+        Returns
+        -------
+        cartesian : VectorIJK
+            Input vector converted to Cartesian coordinates.
         """
-        # r = coordinate.getCylindricalRadius()
-        # lon = coordinate.getLongitude()
-        # z = coordinate.getHeight()
-        return VectorIJK(
-            coordinate.rho*cos(coordinate.phi),
-            coordinate.rho*sin(coordinate.phi),
-            coordinate.z
-        )
+        (rho, phi, z) = (cylindrical.rho, cylindrical.phi, cylindrical.z)
+        x = rho*cos(phi)
+        y = rho*sin(phi)
+        cartesian = VectorIJK(x, y, z)
+        return cartesian

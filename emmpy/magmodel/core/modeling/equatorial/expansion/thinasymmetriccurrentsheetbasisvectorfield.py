@@ -1,4 +1,12 @@
-"""Basis vector field for a thin asymmetric current sheet."""
+"""Basis vector field for a thin asymmetric current sheet.
+
+Basis vector field for a thin asymmetric current sheet.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -26,8 +34,8 @@ from emmpy.utilities.nones import nones
 class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     """Basis vector field for a thin asymmetric current sheet.
 
-    This module described the tail fields as stated in Tsyganenko and Sitnov
-    2007
+    This module described the tail fields as stated in Tsyganenko and
+    Sitnov 2007:
 
     "Magnetospheric configurations from a high-resolution data-based magnetic
     fields model", eq. 14.
@@ -35,11 +43,38 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
     This is equivalent to the FORTRAN subroutine:
     SUBROUTINE UNWARPED (X,Y,Z,BXS,BYS,BZS,BXO,BYO,BZO,BXE,BYE,BZE)
 
-    author G.K.Stephens
+    Attributes
+    ----------
+    tailLength : float
+        Length of tail.
+    currentSheetHalfThickness : DifferentiableScalarFieldIJ
+        currentSheetHalfThickness
+    coeffs : DifferentiableScalarFieldIJ
+        Coefficients for expansion.
+    bessel : BesselFunctionEvaluator, ignored
+        Bessel function evaluator.
+    numAzimuthalExpansions : int
+        Number of azimuthal expansions.
+    numRadialExpansions : int
+        Number of radial expansions.
     """
 
     def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
-        """Build a new object."""
+        """Initialize a new ThinAsymmetricCurrentSheetBasisVectorField object.
+
+        Initialize a new ThinAsymmetricCurrentSheetBasisVectorField object.
+
+        Parameters
+        ----------
+        tailLength : float
+            Length of tail.
+        currentSheetHalfThickness : DifferentiableScalarFieldIJ
+            currentSheetHalfThickness
+        coeffs : DifferentiableScalarFieldIJ
+            Coefficients for expansion.
+        bessel : BesselFunctionEvaluator, ignored
+            Bessel function evaluator.
+        """
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
         self.numRadialExpansions = coeffs.getNumRadialExpansions()
@@ -57,12 +92,23 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         Creates a ThinAsymmetricCurrentSheetBasisVectorField where all
         the coefficients have been set to 1.
 
-        param tailLength
-        param currentSheetHalfThickness
-        param numAzimuthalExpansions
-        param numRadialExpansions
-        param bessel
-        return
+        Parameters
+        ----------
+        tailLength : float
+            Length of tail.
+        currentSheetHalfThickness : DifferentiableScalarFieldIJ
+            currentSheetHalfThickness
+        numAzimuthalExpansions : int
+            Number of azimuthal expansions.
+        numRadialExpansions : int
+            Number of radial expansions.
+        bessel : BesselFunctionEvaluator, ignored
+            Bessel function evaluator.
+        
+        Returns
+        -------
+        result : ThinAsymmetricCurrentSheetBasisVectorField
+            Field with all coefficients set to unity.
         """
         coeffs = TailSheetCoefficients.createUnity(
             numAzimuthalExpansions, numRadialExpansions
@@ -71,27 +117,66 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             tailLength, currentSheetHalfThickness, coeffs, bessel)
 
     def evaluate(self, location):
-        """Evaluate the field."""
+        """Evaluate the field.
+
+        Evaluate the field.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location for evaluation.
+        
+        Returns
+        -------
+        buffer : VectorIJK
+            Vector result of evaluation at location.
+        """
         buffer = VectorIJK()
         buffer[:] = self.evaluateExpansions(location).sum()
         return buffer
 
     def evaluateExpansion(self, location):
-        """Evaluate the expansion."""
+        """Evaluate the expansion.
+        
+        Evaluate the expansion.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location for evaluation.
+        
+        Returns
+        -------
+        result : list of VectorIJK
+            Components of expansion at location.
+        """
         return self.evaluateExpansions(location).getExpansionsAsList()
 
     def evaluateExpansions(self, location):
-        """Recalculate everything."""
+        """Recalculate everything.
+        
+        Recalculate everything.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location for evaluation.
+        
+        Returns
+        -------
+        result : TailSheetExpansions
+            All expansion components at location.
+        """
         # Preallocate the arrays of vectors for the expansions.
         symmetricExpansions = nones((self.numRadialExpansions,))
         oddExpansions = nones((self.numAzimuthalExpansions,
                                self.numRadialExpansions))
         evenExpansions = nones((self.numAzimuthalExpansions,
                                 self.numRadialExpansions))
-        # n is the radial expansion number
+        # n is the radial expansion number.
         for n in range(1, self.numRadialExpansions + 1):
 
-            # Calculate the wave number (kn = n/rho0)
+            # Calculate the wave number (kn = n/rho0).
             kn = n/self.tailLength
 
             symBasisFunction = TailSheetSymmetricExpansion(
@@ -100,7 +185,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
             symmetricExpansions[n - 1] = symBasisFunction.evaluate(location)*a
 
-            # m is the azimuthal expansion number
+            # m is the azimuthal expansion number.
             for m in range(1, self.numAzimuthalExpansions + 1):
                 aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
                 oddBasisFunction = TailSheetAsymmetricExpansion(
@@ -132,15 +217,51 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         )
 
     def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions."""
+        """Return the number of azimuthal expansions.
+        
+        Return the number of azimuthal expansions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Number of azimuthal expansions.
+        """
         return self.numAzimuthalExpansions
 
     def getNumRadialExpansions(self):
-        """Return the number of radial expansions."""
+        """Return the number of radial expansions.
+        
+        Return the number of radial expansions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Number of radial expansions.
+        """
         return self.numRadialExpansions
 
     def getNumberOfBasisFunctions(self):
-        """Return the number of basis functions."""
+        """Return the number of basis functions.
+        
+        Return the number of basis functions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Total number of basis functions.
+        """
         return (
             self.numRadialExpansions +
             2*self.numRadialExpansions*self.numAzimuthalExpansions

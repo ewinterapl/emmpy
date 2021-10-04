@@ -1,4 +1,12 @@
-"""Equatorial linear coefficients for the TS07 model."""
+"""Equatorial linear coefficients for the TS07 model.
+
+Equatorial linear coefficients for the TS07 model.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import sqrt
@@ -14,12 +22,37 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 class Ts07EquatorialLinearCoefficients:
     """Equatorial linear coefficients for the TS07 model.
 
-    author G.K.Stephens
+    Equatorial linear coefficients for the TS07 model.
+
+    Attributes
+    ----------
+    coeffs : TailSheetCoefficients
+        coeffs
+    pdynDependentCoeffs : TailSheetCoefficients
+        pdynDependentCoeffs
+    numAzimuthalExpansions : int
+        Number of azimuthal expansions.
+    numRadialExpansions : int
+        Number of radial expansions.
     """
 
     def __init__(self, coeffs, pdynDependentCoeffs, numAzimuthalExpansions,
                  numRadialExpansions):
-        """Build a new object."""
+        """Initialize a new Ts07EquatorialLinearCoefficients object.
+
+        Initialize a new Ts07EquatorialLinearCoefficients object.
+
+        Parameters
+        ----------
+        coeffs : TailSheetCoefficients
+            coeffs
+        pdynDependentCoeffs : TailSheetCoefficients
+            pdynDependentCoeffs
+        numAzimuthalExpansions : int
+            Number of azimuthal expansions.
+        numRadialExpansions : int
+            Number of radial expansions.
+        """
         self.coeffs = coeffs
         self.pdynDependentCoeffs = pdynDependentCoeffs
         self.numAzimuthalExpansions = numAzimuthalExpansions
@@ -30,7 +63,34 @@ class Ts07EquatorialLinearCoefficients:
         sym,
         symPdynDependent, aOdd, aOddPdynDependent, aEven,
         aEvenPdynDependent, numAzimuthalExpansions, numRadialExpansions):
-        """Create a new object."""
+        """Create a new Ts07EquatorialLinearCoefficients object.
+        
+        Create a new Ts07EquatorialLinearCoefficients object.
+
+        Parameters
+        ----------
+        sym : CoefficientExpansion1D
+            XXX
+        symPdynDependent : CoefficientExpansion1D
+            XXX
+        aOdd : CoefficientExpansion2D
+            XXX
+        aOddPdynDependent : CoefficientExpansion2D
+            XXX
+        aEven : CoefficientExpansion2D
+            XXX
+        aEvenPdynDependent : CoefficientExpansion2D
+            XXX
+        numAzimuthalExpansions : int
+            Number of azimuthal expansions.
+        numRadialExpansions : int
+            Number of radial expansions.
+        
+        Returns
+        -------
+        result : Ts07EquatorialLinearCoefficients
+            THe new object.
+        """
         coeffs = TailSheetCoefficients(sym, aOdd, aEven)
         pdynDependentCoeffs = TailSheetCoefficients(
             symPdynDependent, aOddPdynDependent, aEvenPdynDependent
@@ -41,23 +101,84 @@ class Ts07EquatorialLinearCoefficients:
         )
 
     def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions."""
+        """Return the number of azimuthal expansions.
+        
+        Return the number of azimuthal expansions.
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Number of azimuthal expansions.
+        """
         return self.numAzimuthalExpansions
 
     def getNumRadialExpansions(self):
-        """Return the number of radial expansions."""
+        """Return the number of radial expansions.
+
+        Return the number of radial expansions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Number of radial expansions.
+        """
         return self.numRadialExpansions
 
     def getCoeffs(self):
-        """Return the coefficients."""
+        """Return the coefficients.
+        
+        Return the coefficients.
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : TailSheetCoefficients
+            The tail sheet coefficients.
+        """
         return self.coeffs
 
     def getPdynDependentCoeffs(self):
-        """Return the coefficients dependent on the dynamic pressure."""
+        """Return the coefficients dependent on the dynamic pressure.
+
+        Return the coefficients dependent on the dynamic pressure.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : TailSheetCoefficients
+            The coefficients which are dependent on dynamic pressure.
+        """
         return self.pdynDependentCoeffs
 
     def getPdynScaledCoeffs(self, dynamicPressure):
-        """Return the coefficients scaled by the dynamic pressure."""
+        """Return the coefficients scaled by the dynamic pressure.
+        
+        Return the coefficients scaled by the dynamic pressure.
+
+        Parameters
+        ----------
+        dynamicPressure : float
+            Dynamic pressure.
+
+        Returns
+        -------
+        result : TailSheetCoefficients
+            The tail sheet coefficients scaled using the dynamic pressure.
+        """
         pDyn0 = 2.0
         pDynNormalized = sqrt(dynamicPressure/pDyn0) - 1
         symPdynDependent = CoefficientExpansions.scale(

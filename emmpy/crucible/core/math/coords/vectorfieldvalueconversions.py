@@ -1,29 +1,30 @@
-"""Useful vector field value conversions."""
+"""Useful vector field value conversions.
+
+This class provides conversions from Cartesian coordinates and vector
+field values to cylindrical and spherical coordinates and vector field
+values, and vice versa.
+
+Authors
+-------
+Grant Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
-    CartesianVectorFieldValue
-)
-from emmpy.crucible.core.math.coords.coordconverters import (
-    CoordConverters
-)
-from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
-    CylindricalToCartesianBasisTransformation
-)
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
+from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
+    CartesianVectorFieldValue)
+from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
+    CylindricalToCartesianBasisTransformation)
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
-    CylindricalVectorFieldValue
-)
+    CylindricalVectorFieldValue)
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
-    SphericalToCartesianBasisTransformation
-)
+    SphericalToCartesianBasisTransformation)
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
-    SphericalVectorFieldValue
-)
-from emmpy.crucible.core.math.vectorspace.matrixijk import (
-    MatrixIJK
-)
+    SphericalVectorFieldValue)
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
 class VectorFieldValueConversions:
@@ -33,182 +34,160 @@ class VectorFieldValueConversions:
     field values to cylindrical and spherical coordinates and vector field
     values, and vice versa.
 
-    @author G.K.Stephens
     """
 
+    # Create the cylindrical and spherical converters.
     CYLINDRICAL = CylindricalToCartesianBasisTransformation()
     SPHERICAL = SphericalToCartesianBasisTransformation()
 
-    def __init__(self):
-        """Build a new object."""
+    # def __init__(self):
+    #     """Build a new object."""
 
     @staticmethod
     def convertToCylindrical(*args):
-        """Convert a Cartesian vector to cylindrical coordinates."""
+        """Convert a Cartesian vector field value to cylindrical.
+
+        Parameters
+        ----------
+        cartesian : CartesianVectorFieldValue
+            Vector field value to convert.
+        OR
+        cartesianPosition, cartesianValue : VectorIJK
+            Cartesian position and vector value.
+
+        Returns
+        -------
+        cylindrical : CylindricalVectorFieldValue
+            Input vector field value converted to cylindrical coordinates.
+        """
         if len(args) == 1:
-            # Converts a Cartesian coordinate and vector field value at that
-            # coordinate to a cylindrical coordinate and vector field value
-            # @param Cartesian a Cartesian coordinate and vector field value
-            # at that coordinate
-            # @return a cylindrical coordinate and vector field value at that
-            # coordinate
+            # Convert a Cartesian vector field value to a cylindrical
+            # vector field value.
             (cartesian,) = args
-            matrix = MatrixIJK()
-            position = CoordConverters.convertToCylindrical(
-                cartesian.getPosition())
-            VectorFieldValueConversions.CYLINDRICAL.getInverseTransformation(
-                position, matrix
-            )
-            value = VectorFieldValueConversions.CYLINDRICAL.mxv(
-                matrix, cartesian.getValue()
-            )
-            return CylindricalVectorFieldValue(position, value)
+            cartesianPosition = cartesian.getPosition()
+            cartesianValue = cartesian.getValue()
         elif len(args) == 2:
-            # Converts a Cartesian coordinate and vector field value at that
-            # coordinate to a cylindrical coordinate and vector field value.
-            # @param cartPos a Cartesian coordinate
-            # @param cartValue a vector field value at that coordinate
-            # @return a cylindrical coordinate and vector field value at that
-            # coordinate
-            (cartPos, cartValue) = args
-            matrix = MatrixIJK()
-            position = CoordConverters.convertToCylindrical(cartPos)
-            VectorFieldValueConversions.CYLINDRICAL.getInverseTransformation(
-                position, matrix
-            )
-            value = VectorFieldValueConversions.CYLINDRICAL.mxv(
-                matrix, cartValue)
-            return CylindricalVectorFieldValue(position, value)
+            # Convert a Cartesian position vector and a Cartesian value
+            # vector to a cylindrical vector field value.
+            (cartesianPosition, cartesianValue) = args
         else:
-            raise Exception
+            raise TypeError
+
+        # Convert the Cartesian position to cylindrical.
+        cylindricalPosition = CoordConverters.convertToCylindrical(
+            cartesianPosition)
+
+        # Get the Cartesian-to-cylindrical transformation matrix at
+        # the current cylindrical position.
+        cartToCylMatrix = MatrixIJK()
+        VectorFieldValueConversions.CYLINDRICAL.getInverseTransformation(
+            cylindricalPosition, cartToCylMatrix)
+
+        # Convert the Cartesian vector value to cylindrical.
+        cylindricalValue = VectorFieldValueConversions.CYLINDRICAL.mxv(
+            cartToCylMatrix, cartesianValue)
+
+        # Create and return the new cylindrical vector field value.
+        cylindrical = CylindricalVectorFieldValue(
+            cylindricalPosition, cylindricalValue)
+        return cylindrical
 
     @staticmethod
     def convertToSpherical(*args):
-        """Convert Cartesian to spherical coordinates."""
+        """Convert a Cartesian vector field value to spherical.
+
+        Parameters
+        ----------
+        cartesian : CartesianVectorFieldValue
+            Vector field value to convert.
+        OR
+        cartesianPosition, cartesianValue : VectorIJK
+            Cartesian position and vector value.
+
+        Returns
+        -------
+        spherical : SphericalVectorFieldValue
+            Input vector field value converted to spherical coordinates.
+        """
         if len(args) == 1:
-            # Converts a Cartesian coordinate and vector field value at that
-            # coordinate to a spherical coordinate and vector field value
-            # @param cartesian a Cartesian coordinate and vector field value at
-            # that coordinate
-            # @return a spherical coordinate and vector field value at that
-            # coordinate
+            # Convert a Cartesian vector field value to a spherical
+            # vector field value.
             (cartesian,) = args
-            matrix = MatrixIJK()
-            position = CoordConverters.convertToSpherical(
-                cartesian.getPosition()
-            )
-            VectorFieldValueConversions.SPHERICAL.getInverseTransformation(
-                position, matrix
-            )
-            value = VectorFieldValueConversions.SPHERICAL.mxv(
-                matrix, cartesian.getValue()
-            )
-            return SphericalVectorFieldValue(position, value)
+            cartesianPosition = cartesian.getPosition()
+            cartesianValue = cartesian.getValue()
         elif len(args) == 2:
-            # Converts a Cartesian coordinate and vector field value at that
-            # coordinate to a spherical coordinate and vector field value.
-            # @param cartPos a Cartesian coordinate
-            # @param cartValue a vector field value at that coordinate
-            # @return a spherical coordinate and vector field value at that
-            # coordinate
-            (cartPos, cartValue) = args
-            matrix = MatrixIJK()
-            position = CoordConverters.convertToSpherical(cartPos)
-            VectorFieldValueConversions.SPHERICAL.getInverseTransformation(
-                position, matrix
-            )
-            value = VectorFieldValueConversions.SPHERICAL.mxv(
-                matrix, cartValue
-            )
-            return SphericalVectorFieldValue(position, value)
+            # Convert a Cartesian position vector and a Cartesian value
+            # vector to a spherical vector field value.
+            (cartesianPosition, cartesianValue) = args
         else:
-            raise Exception
+            raise TypeError
+
+        # Convert the Cartesian position to spherical.
+        sphericalPosition = CoordConverters.convertToSpherical(
+            cartesianPosition)
+
+        # Get the Cartesian-to-spherical transformation matrix at
+        # the current spherical position.
+        cartToSphMatrix = MatrixIJK()
+        VectorFieldValueConversions.SPHERICAL.getInverseTransformation(
+            sphericalPosition, cartToSphMatrix)
+
+        # Convert the Cartesian vector value to spherical.
+        sphericalValue = VectorFieldValueConversions.SPHERICAL.mxv(
+            cartToSphMatrix, cartesianValue)
+
+        # Create and return the new spherical vector field value.
+        spherical = SphericalVectorFieldValue(
+            sphericalPosition, sphericalValue)
+        return spherical
 
     @staticmethod
     def convert(*args):
-        """Convert between Cartesian, cylindrical, and spherical."""
+        """Convert a cylindrical or spherical vector field value to Cartesian.
+
+        Parameters
+        ----------
+        vfv : CylindricalVectorFieldValue or SphericalVectorFieldValue
+            Vector field value to convert.
+        OR
+        position, value : CylindricalVector or SphericalVector
+            Cylindrical or spherical position and vector value.
+
+        Returns
+        -------
+        cartesian : CartesianVectorFieldValue
+            Input vector field value converted to Cartesian coordinates.
+        """
         if len(args) == 1:
-            if isinstance(args[0], CylindricalVectorFieldValue):
-                # Converts a cylindrical coordinate and vector field value at
-                # that coordinate to a Cartesian coordinate and vector field
-                # value.
-                # @param cylindrical a cylindrical coordinate and vector field
-                # value at that coordinate
-                # @return a Cartesian coordinate and vector field value at that
-                # coordinate
-                (cylindrical,) = args
-                matrix = MatrixIJK()
-                position = CoordConverters.convert(cylindrical.getPosition())
-                VectorFieldValueConversions.CYLINDRICAL.getTransformation(
-                    cylindrical.getPosition(), matrix
-                )
-                value = VectorFieldValueConversions.CYLINDRICAL.mxv(
-                    matrix, cylindrical.getValue()
-                )
-                return CartesianVectorFieldValue(position, value)
-            elif isinstance(args[0], SphericalVectorFieldValue):
-                # Converts a spherical coordinate and vector field value at
-                # that coordinate to a Cartesian coordinate and vector field
-                # value.
-                # @param spherical a spherical coordinate and vector field
-                # value at that coordinate
-                # @return a Cartesian coordinate and vector field value at that
-                # coordinate
-                (spherical,) = args
-                matrix = MatrixIJK()
-                position = CoordConverters.convert(spherical.getPosition())
-                VectorFieldValueConversions.SPHERICAL.getTransformation(
-                    spherical.getPosition(), matrix
-                )
-                value = VectorFieldValueConversions.SPHERICAL.mxv(
-                    matrix, spherical.getValue()
-                )
-                return CartesianVectorFieldValue(position, value)
-            else:
-                raise Exception
+            # Convert a vector field value in cylindrical or spherical
+            # coordinates to Cartesian.
+            (vfv,) = args
+            position = vfv.getPosition()
+            value = vfv.getValue()
         elif len(args) == 2:
-            if (
-                isinstance(args[0], CylindricalVector) and
-                isinstance(args[1], CylindricalVector)
-            ):
-                # Converts a cylindrical coordinate and vector field value at
-                # that coordinate to a Cartesian coordinate and vector field
-                # value.
-                # @param cylPos a cylindrical coordinate
-                # @param cylValue a cylindrical vector field value at that
-                # coordinate
-                # @return a Cartesian coordinate and vector field value at that
-                # coordinate
-                (cylPos, cylValue) = args
-                matrix = MatrixIJK()
-                position = CoordConverters.convert(cylPos)
-                VectorFieldValueConversions.CYLINDRICAL.getTransformation(
-                    cylPos, matrix
-                )
-                value = VectorFieldValueConversions.CYLINDRICAL.mxv(
-                    matrix, cylValue
-                )
-                return CartesianVectorFieldValue(position, value)
-            elif (
-                isinstance(args[0], SphericalVector) and
-                isinstance(args[1], SphericalVector)
-            ):
-                # Converts a spherical coordinate and vector field value at
-                # that coordinate to a Cartesian coordinate and vector field
-                # value.
-                # @param sphPos a spherical coordinate
-                # @param sphValue a vector field value at that coordinate
-                # @return a Cartesian coordinate and vector field value at that
-                # coordinate
-                (sphPos, sphValue) = args
-                matrix = MatrixIJK()
-                position = CoordConverters.convert(sphPos)
-                VectorFieldValueConversions.SPHERICAL.getTransformation(
-                    sphPos, matrix)
-                value = VectorFieldValueConversions.SPHERICAL.mxv(
-                    matrix, sphValue)
-                return CartesianVectorFieldValue(position, value)
-            else:
-                raise Exception
+            # Convert an input position/value pair to a Cartesian
+            # vector field value.
+            (position, value) = args
         else:
-            raise Exception
+            raise TypeError
+
+        # Convert the input position to Cartesian.
+        cartesianPosition = CoordConverters.convert(position)
+
+        # Convert the input vector value to Cartesian.
+        toCartMatrix = MatrixIJK()
+        if (isinstance(args[0], (CylindricalVectorFieldValue,
+                                 CylindricalVector))):
+            coordSys = VectorFieldValueConversions.CYLINDRICAL
+        elif (isinstance(args[0], (SphericalVectorFieldValue,
+                                   SphericalVector))):
+            coordSys = VectorFieldValueConversions.SPHERICAL
+        else:
+            raise TypeError
+        coordSys.getTransformation(position, toCartMatrix)
+        cartesianValue = coordSys.mxv(toCartMatrix, value)
+
+        # Create and return the new Cartesian vector field value.
+        cartesian = CartesianVectorFieldValue(
+            cartesianPosition, cartesianValue)
+        return cartesian

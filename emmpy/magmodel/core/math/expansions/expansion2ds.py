@@ -1,4 +1,12 @@
-"""emmpy.magmodel.core.math.expansions.expansion2ds"""
+"""Utility methods for 2-D expansions.
+
+Utility methods for 2-D expansions.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -14,52 +22,59 @@ from emmpy.utilities.nones import nones
 
 
 class Expansion2Ds:
+    """Utility methods for 2-D expansions.
 
-    @staticmethod
-    def createNull(firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
-                   lastRadialExpansionNumber):
-        e2d = Expansion2D()
-        e2d.getJLowerBoundIndex = lambda: firstRadialExpansionNumber
-        e2d.getJUpperBoundIndex = lambda: lastRadialExpansionNumber
-        e2d.getILowerBoundIndex = lambda: firstAzimuthalExpansionNumber
-        e2d.getIUpperBoundIndex = firstAzimuthalExpansionNumber - 1
-
-        def my_getExpansion():
-            raise Exception
-        e2d.getExpansion = my_getExpansion
-        return e2d
+    Utility methods for 2-D expansions.
+    """
 
     @staticmethod
     def createFromArray(data, firstAzimuthalExpansionNumber,
                         firstRadialExpansionNumber):
+        """Create an expansion from a 2-D array.
+        
+        Create an expansion from a 2-D array.
+        
+        Parameters
+        ----------
+        data : 2-D list of VectorIJK
+            Values to use for expansion.
+        firstAzimuthalExpansionNumber : int
+            First expansion index in 1st dimension.
+        firstRadialExpansionNumber : int
+            First expansion index in 2nd dimension.
+        
+        Returns
+        -------
+        result : ArrayExpansion2D
+            Expansion for the specified inputs.
+        """
         return ArrayExpansion2D(
             data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
         )
 
     class Vectors:
-        """author stephgk1"""
+        """Internal helper class."""
 
         @staticmethod
         def add(a, b):
-            """add
+            """Add two expansions using a wrapper object.
 
-            param Expansion2D<UnwritableVectorIJK> a
-            param Expansion2D<UnwritableVectorIJK> b
-            return Expansion2D<UnwritableVectorIJK>
+            Add two expansions using a wrapper object.
+
+            Parameters
+            ----------
+            a, b : Expansion2D
+                Expansions to add.
+
+            Returns
+            -------
+            e2d : Expansion2D
+                Wrapper object for expansion sum.
             """
-            # int firstAzimuthalExpansion, lastAzimuthalExpansion,
-            # firstRadialExpansion, lastRadialExpansion
             firstAzimuthalExpansion = a.getILowerBoundIndex()
             lastAzimuthalExpansion = a.getIUpperBoundIndex()
             firstRadialExpansion = a.getJLowerBoundIndex()
             lastRadialExpansion = a.getJUpperBoundIndex()
-            # [[UnwritableVectorIJK]] array
-            # array = []
-            # for i in range(lastAzimuthalExpansion - firstAzimuthalExpansion + 1):
-            #     array.append([])
-            #     for j in range(lastRadialExpansion -
-            #                    firstRadialExpansion + 1):
-            #         array[i].append(None)
             array = nones(
                 (lastAzimuthalExpansion - firstAzimuthalExpansion + 1,
                  lastRadialExpansion - firstRadialExpansion + 1))
@@ -83,63 +98,3 @@ class Expansion2Ds:
                 return value
             e2d.getExpansion = my_getExpansion
             return e2d
-
-        @staticmethod
-        def scale(*args):
-            if isRealNumber(args[1]):
-                (a, scaleFactor) = args
-                # param Expansion2D a
-                # param float scaleFactor
-                # return Expansion2D
-                e2d = Expansion2D()
-                e2d.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
-                e2d.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
-                e2d.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
-                e2d.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
-                e2d.getExpansion = (
-                    lambda azimuthalExpansion, radialExpansion:
-                    VectorIJK(
-                        scaleFactor,
-                        a.getExpansion(azimuthalExpansion, radialExpansion)
-                    )
-                )
-                return e2d
-            elif isinstance(args[1], CoefficientExpansion2D):
-                (a, scaleFactors) = args
-                # Expansion2D a
-                # CoefficientExpansion2D scaleFactors
-                # return Expansion2D
-                e2d = Expansion2D()
-                e2d.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
-                e2d.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
-                e2d.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
-                e2d.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
-
-                def my_getExpansion(azimuthalExpansion, radialExpansion):
-                    scaleFactor = scaleFactors.getCoefficient(
-                        azimuthalExpansion, radialExpansion
-                    )
-                    return VectorIJK(
-                        scaleFactor,
-                        a.getExpansion(azimuthalExpansion, radialExpansion)
-                    )
-                e2d = my_getExpansion
-                return e2d
-            else:
-                raise Exception
-
-        @staticmethod
-        def computeSum(a):
-            # float bx, by, bz
-            bx = 0.0
-            by = 0.0
-            bz = 0.0
-            for az in range(a.getILowerBoundIndex(), a.getIUpperBoundIndex + 1):
-                for rad in range(
-                    a.getJLowerBoundIndex(), a.getJUpperBoundIndex() + 1
-                ):
-                    vect = a.getExpansion(az, rad)
-                    bx += vect.getI()
-                    by += vect.getJ()
-                    bz += vect.getK()
-            return VectorIJK(bx, by, bz)

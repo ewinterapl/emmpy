@@ -1,80 +1,118 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformation"""
+"""Deformation to model a Birkeland current sheet.
+
+Deformation to model a Birkeland current sheet.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import cos, sin, sqrt
 
-from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
     Results, DifferentiableSphericalVectorField
 )
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
-    """Represents the analytical deformation of spherical coordinates to model
-    the shape of Birkeland current sheets as described in Tsyganenko 2002
-    "A model of the near magnetosphere with a dawn-dusk asymmetry
-    1. Mathematical structure" by N. A. Tsyganenko. See eq. (18 and 19).
+    """Deformation to model a Birkeland current sheet.
 
-    author G.K.Stephens
+    Represents the analytical deformation of spherical coordinates to
+    model the shape of Birkeland current sheets as described in
+    Tsyganenko 2002 "A model of the near magnetosphere with a dawn-dusk
+    asymmetry 1. Mathematical structure" by N. A. Tsyganenko.
+    See eq. (18 and 19).
+
+    Attributes
+    ----------
+    a : array-like of float
+        Radial deformation constants.
+    b : array-like of float
+        Radial deformation constants.
+    c : array-like of float
+        Co-latitudinal deformation constants.
+    d : array-like of float
+        Co-latitudinal deformation constants.
     """
 
-    # Used for numerical differentiation
+    # Used for numerical differentiation.
     delta = 1E-6
 
     def __init__(self, a, b, c, d):
-        """Construct deformed field by providing the coefficients a, b, c,
-        and d.
+        """Initialize a new BirkelandDeformationFunction object.
 
-        param a an array of doubles containing the radial deformation constants
-        param b an array of doubles containing the radial deformation constants
-        param c an array of doubles containing the co-latitudinal deformation constants
-        param d an array of doubles containing the co-latitudinal deformation constants
+        Initialize a new BirkelandDeformationFunction object.
+
+        Parameters
+        ----------
+        a : array-like of float
+            Radial deformation constants.
+        b : array-like of float
+            Radial deformation constants.
+        c : array-like of float
+            Co-latitudinal deformation constants.
+        d : array-like of float
+            Co-latitudinal deformation constants.
         """
-        # make defensive copy
+        # Make A defensive copy.
         self.a = a[:]
         self.b = b[:]
         self.c = c[:]
         self.d = d[:]
 
     def evaluate(self, location):
-        """evaluate
+        """Evaluate the deformation.
 
-        param SphericalVector location
-        return SphericalVector
+        Evaluate the deformation.
+
+        Parameters
+        ----------
+        location : SphericalVector
+            Location for evaluation.
+        
+        Returns
+        -------
+        result : SphericalVector
+            Value of deformation function at location.
         """
-        # float r, theta, phi
         r = location.r
         theta = location.theta
         phi = location.phi
 
-        # Deform the coordinate system
-        # float rDef, thetaDef
+        # Deform the coordinate system.
         rDef = self.rDeform(r, theta)
         thetaDef = self.thetaDeform(r, theta)
 
         return SphericalVector(rDef, thetaDef, phi)
 
     def differentiate(self, location):
-        """differentiate
+        """Differentiate the deformation function.
 
-        param SphericalVector location
-        return Results
+        Differentiate the deformation function.
+
+        Parameters
+        ----------
+        location : SphericalVector
+            Location for differentiation.
+
+        Returns
+        -------
+        result : differentiablesphericalvectorfield.Results
+            Result of differentiation at location.
         """
-
-        # float r, theta, phi
         r = location.r
         theta = location.theta
         phi = location.phi
 
-        # Deform the coordinate system
-        # float rDef, thetaDef
+        # Deform the coordinate system.
         rDef = self.rDeform(r, theta)
         thetaDef = self.thetaDeform(r, theta)
-        # SphericalVector locDef
         locDef = SphericalVector(rDef, thetaDef, phi)
 
-        # Numerically approximate derivatives for deformation
-        # SphericalVector locPr, locMr
+        # Numerically approximate derivatives for deformation.
         locPr = self.evaluate(
             SphericalVector(r + BirkelandDeformationFunction.delta, theta,
                             phi)
@@ -84,7 +122,6 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
                             phi)
         )
 
-        # SphericalVector locPt, locMt
         locPt = self.evaluate(
             SphericalVector(r, theta + BirkelandDeformationFunction.delta,
             phi)
@@ -94,8 +131,6 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
             phi)
         )
 
-        # double drDef_dr, drDef_dtheta, dthetaDef_dr, dthetaDef_dTheta,
-        # dphiDef_dPhi
         drDef_dr = (
             (locPr.r - locMr.r) /
             (2*BirkelandDeformationFunction.delta)
@@ -118,21 +153,30 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
                        dthetaDef_dTheta, 0, 0, 0, dphiDef_dPhi)
 
     def rDeform(self, r, theta):
-        """Deforms the radius to describe the field aligned current.
+        """Deform the radius to describe the field aligned current.
 
-        See Tsy 2002-1 Eqn 18
-        The b coefficients as given in table 2 were always squared, so they are
-        squared here to save math. Note the difference.
+        Deform the radius to describe the field aligned current.
 
-        There are two differences between this calculation and the published
-        equation. An email to Nikolai Tsyganenko confirmed that these are the
-        proper versions (6/25/2011).
+        See Tsy 2002-1 Eqn 18. The b coefficients as given in table 2
+        were always squared, so they are squared here to save math. Note
+        the difference.
 
-        param double r the undeformed radius
-        param double theta the underformed polar angle (measured from the GSM Z axis)
-        return (double) the deformed radius
+        There are two differences between this calculation and the
+        published equation. An email to Nikolai Tsyganenko confirmed that
+        these are the proper versions (6/25/2011).
+
+        Parameters
+        ----------
+        r : float
+            The undeformed radius.
+        theta : float
+            The undeformed polar angle (measured from the GSM Z axis).
+        
+        Returns
+        -------
+        result: float
+            The deformed radius.
         """
-        # double r2
         r2 = r*r
         return (
             r + self.a[0]/r + (self.a[1]*r /(sqrt(r2 + self.b[0]*self.b[0]))) +
@@ -148,15 +192,22 @@ class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
     def thetaDeform(self, r, theta):
         """Deforms theta to describe the field aligned current.
 
-        See Tsy 2002-1 Eqn 19.
-        The d coefficients as given in table 2 were always squared, so they
-        are squared here to save math. Note the difference.
+        See Tsy 2002-1 Eqn 19. The d coefficients as given in table 2 were
+        always squared, so they are squared here to save math. Note the
+        difference.
 
-        param r the initial radius
-        param theta the initial polar angle (measured from the GSM Z axis)
-        return the deformed polar angle (theta)
+        Parameters
+        ----------
+        r : float
+            The initial radius.
+        theta : float
+            The initial polar angle (measured from the GSM Z axis).
+        
+        Returns
+        -------
+        result : float
+            The deformed polar angle (theta).
         """
-        # double r2
         r2 = r*r
         return (
             theta + (self.c[0] + self.c[1]/r + self.c[2]/r2 +

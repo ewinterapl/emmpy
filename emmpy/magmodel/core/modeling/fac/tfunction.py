@@ -1,10 +1,13 @@
-"""A modeling function for Birkeland currents."""
+"""A modeling function for Birkeland currents.
 
+A modeling function for Birkeland currents.
 
-# import static crucible.core.math.CrucibleMath.cos;
-# import static crucible.core.math.CrucibleMath.pow;
-# import static crucible.core.math.CrucibleMath.sin;
-# import static crucible.core.math.CrucibleMath.tan;
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
 
 from math import cos, sin, tan
 
@@ -21,67 +24,105 @@ class TFunction(DifferentiableUnivariateFunction):
 
     See eq. (14). The cone's axis is the +Z axis.
     see http://www.sciencedirect.com/science/article/pii/003206339190058I
-    (Tsyganenko, 1990)
+    (Tsyganenko, 1990).
 
-    author G.K.Stephens
+    Attributes
+    ----------
+    thetaNeg : float
+        thetaNeg
+    thetaPos : float
+        thetaPos
+    mode : int
+        mode
     """
 
     def __init__(self, thetaNeg, thetaPos, mode):
-        """Build a new object.
+        """Initialize a new TFunction object.
 
-        param double thetaNeg
-        param double thetaPos
-        param int mode
+        Initialize a new TFunction object.
+
+        Parameters
+        ----------
+        thetaNeg : float
+            thetaNeg
+        thetaPos : float
+            thetaPos
+        mode : int
+            mode
+        twoMplus1 : float
+            twoMplus1
+        tanHalfThetaNeg : float
+            tanHalfThetaNeg
+        tanHalfThetaPos : float
+            tanHalfThetaPos
+        tanMhalfThetaNeg : float
+            tanMhalfThetaNeg
+        tanMhalfThetaPos : float
+            tanMhalfThetaPos
+        tan2mp1HalfThetaNeg : float
+            tan2mp1HalfThetaNeg
+        tan2mp1HalfThetaPos : float
+            tan2mp1HalfThetaPos
+        constFactor : float
+            constFactor
         """
         self.thetaNeg = thetaNeg
         self.thetaPos = thetaPos
         self.mode = mode
-        # double twoMplus1
         self.twoMplus1 = 2.0*mode + 1.0
-        # double tanHalfThetaNeg
         self.tanHalfThetaNeg = tan(thetaNeg/2)
-        # double tanHalfThetaPos
         self.tanHalfThetaPos = tan(thetaPos/2)
-        # double tanMhalfThetaNeg
         tanMhalfThetaNeg = pow(self.tanHalfThetaNeg, mode)
-        # double tanMhalfThetaPos
         tanMhalfThetaPos = pow(self.tanHalfThetaPos, mode)
-        # double tan2mp1HalfThetaNeg
         self.tan2mp1HalfThetaNeg = (
             tanMhalfThetaNeg*tanMhalfThetaNeg*self.tanHalfThetaNeg
         )
-        # double tan2mp1HalfThetaPos;
         self.tan2mp1HalfThetaPos = (
             tanMhalfThetaPos*tanMhalfThetaPos*self.tanHalfThetaPos
         )
-        # double constFactor
         self.constFactor = 1./(self.tanHalfThetaPos - self.tanHalfThetaNeg)
 
     @staticmethod
     def createFromDelta(theta0, deltaTheta, mode):
         """Create the function using a current sheet half thickness.
 
-        param double theta0 a polar angle (colatitude) that is the center of
-        the conical current sheet
-        param double deltaTheta the half thickness of the conical current sheet
-        param int mode the mode of the harmonic (m)
-        return a newly constructed TFunction
+        Create the function using a current sheet half thickness.
+
+        Parameters
+        ----------
+        theta0 : float
+            A polar angle (colatitude) that is the center of the conical
+            current sheet.
+        deltaTheta : float
+            The half thickness of the conical current sheet.
+        mode : int
+            The mode of the harmonic (m).
+        
+        Returns
+        -------
+        result : TFunction
+            A newly constructed TFunction.
         """
-        # double thetaPos
         thetaPos = theta0 + deltaTheta
-        # double thetaNeg
         thetaNeg = theta0 - deltaTheta
         return TFunction(thetaNeg, thetaPos, mode)
 
     def evaluate(self, theta):
         """Evaluate the function.
 
-        param double theta
-        return double
+        Evaluate the function.
+
+        Parameters
+        ----------
+        theta : float
+            thera
+        
+        Returns
+        -------
+        result : float
+            Result of function evaluation.
         """
-        # double tanHalfTheta
         tanHalfTheta = tan(theta/2)
-        # double tanMhalfTheta
         tanMhalfTheta = pow(tanHalfTheta, self.mode)
 
         # First piecewise condition: theta < theta-
@@ -92,7 +133,6 @@ class TFunction(DifferentiableUnivariateFunction):
         # Note that this looks a bit different than the form given in
         # Tsy 2002-1 Eqn 17, however it is algebraically equivalent.
         if theta < self.thetaPos:
-            # double tan2mp1HalfTheta
             tan2mp1HalfTheta = tanMhalfTheta*tanMhalfTheta*tanHalfTheta
             return self.constFactor*(
                 tanMhalfTheta*(self.tanHalfThetaPos - tanHalfTheta) +
@@ -110,14 +150,20 @@ class TFunction(DifferentiableUnivariateFunction):
     def differentiate(self, theta):
         """Differentiate the function.
 
-        param double theta
-        return double
+        Differentiate the function.
+
+        Parameters
+        ----------
+        theta : float
+            theta
+        
+        Returns
+        -------
+        result : float
+            Result of the differentiation.
         """
-        # double tanHalfTheta
         tanHalfTheta = tan(theta/2)
-        # double tanMhalfTheta
         tanMhalfTheta = pow(tanHalfTheta, self.mode)
-        # double cosHalfTheta
         cosHalfTheta = cos(theta/2)
 
         # First piecewise condition: theta < theta-

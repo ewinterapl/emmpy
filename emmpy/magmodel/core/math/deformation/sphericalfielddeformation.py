@@ -1,53 +1,67 @@
-"""Deformation for a spherical field."""
+"""Deformation for a spherical field.
+
+Deformation for a spherical field.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import sin
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class SphericalFieldDeformation(SphericalVectorField):
     """Deformation for a spherical field.
 
-    author G.K.Stephens
+    Deformation for a spherical field.
     """
 
     def __init__(self, originalField, coordDeformation):
-        """Build a new object.
+        """Initialize a new SphericalFieldDeformation object.
 
-        param SphericalVectorField originalField
-        param DifferentiableSphericalVectorField coordDeformation
+        Initialize a new SphericalFieldDeformation object.
+
+        Parameters
+        ----------
+        originalField : SphericalVectorField
+            Original field to deform.
+        coordDeformation : DifferentiableSphericalVectorField
+            Vector field defining the deformation.
         """
-        # SphericalVectorField originalField
         self.originalField = originalField
-        # DifferentiableSphericalVectorField coordDeformation
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate):
         """Evaluate the field.
 
-        param SphericalVector originalCoordinate
-        return SphericalVector
+        Evaluate the field.
+
+        Parameters
+        ----------
+        originalCoordinate : SphericalVector
+            Location to evaluate the field
+        SphericalVector
+            Deformed spherical field value.
         """
-        # compute the derivatives at the given location
-        # Results deformed
+        # Compute the derivatives at the given location.
         deformed = self.coordDeformation.differentiate(originalCoordinate)
 
-        # compute the deformation matrix
-        # MatrixIJK trans
+        # Compute the deformation matrix.
         trans = self.computeMatrix(deformed, originalCoordinate)
 
-        # evaluate the field at the deformed location
-        # SphericalVector bField
+        # Evaluate the field at the deformed location.
         bField = self.originalField.evaluate(deformed.getF())
 
-        # evaluate the deformed field
-        # VectorIJK v
+        # Evaluate the deformed field.
         v = VectorIJK()
         v[:] = trans.dot(VectorIJK(bField.r, bField.theta, bField.phi))
 
@@ -57,11 +71,20 @@ class SphericalFieldDeformation(SphericalVectorField):
     def computeMatrix(deformed, originalCoordinate):
         """Compute the deformation matrix.
 
-        param Results deformed
-        param SphericalVector originalCoordinate
-        return MatrixIJK
+        Compute the deformation matrix.
+
+        Parameters
+        ----------
+        deformed : DifferentiableSphericalVectorField.Results
+            Derivatives of deformation field.
+        originalCoordinate : SphericalVector
+            Location to compute the deformation.
+
+        Returns
+        -------
+        trans : MatrixIJK
+            Deformationm transformation matrix.
         """
-        # float r, theta, hr, ht, hp, hrDef, htDef, hpDef
         r = originalCoordinate.r
         theta = originalCoordinate.theta
         hr = 1
@@ -69,11 +92,7 @@ class SphericalFieldDeformation(SphericalVectorField):
         hp = r*sin(theta)
         hrDef = 1
         htDef = deformed.getF().r
-        hpDef = (
-            deformed.getF().r*sin(deformed.getF().theta)
-        )
-
-        # float dFrDr, dFrDt, dFrDp, dFtDr, dFtDt, dFtDp, dFpDr, dFpDt, dFpDp
+        hpDef = deformed.getF().r*sin(deformed.getF().theta)
         dFrDr = deformed.getdFrDr()
         dFrDt = deformed.getdFrDt()
         dFrDp = deformed.getdFrDp()
@@ -83,8 +102,6 @@ class SphericalFieldDeformation(SphericalVectorField):
         dFpDr = deformed.getdFpDr()
         dFpDt = deformed.getdFpDt()
         dFpDp = deformed.getdFpDp()
-
-        # float trr, trt, trp, ttr, ttt, ttp, tpr, tpt, tpp
         trr = (htDef*hpDef/(ht*hp))*(dFtDt*dFpDp - dFtDp*dFpDt)
         trt = (hrDef*hpDef/(ht*hp))*(dFrDp*dFpDt - dFrDt*dFpDp)
         trp = (hrDef*htDef/(ht*hp))*(dFrDt*dFtDp - dFrDp*dFtDt)
@@ -94,7 +111,5 @@ class SphericalFieldDeformation(SphericalVectorField):
         tpr = (htDef*hpDef/(hr*ht))*(dFtDr*dFpDt - dFtDt*dFpDr)
         tpt = (hrDef*hpDef/(hr*ht))*(dFrDt*dFpDr - dFrDr*dFpDt)
         tpp = (hrDef*htDef/(hr*ht))*(dFrDr*dFtDt - dFrDt*dFtDr)
-
-        # MatrixIJK trans
         trans = MatrixIJK(trr, ttr, tpr, trt, ttt, tpt, trp, ttp, tpp)
         return trans

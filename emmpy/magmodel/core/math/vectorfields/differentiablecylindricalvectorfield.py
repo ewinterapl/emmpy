@@ -1,7 +1,13 @@
-"""A differentiable vector field in cylindrical coordinates."""
+"""A differentiable vector field in cylindrical coordinates.
 
+A differentiable vector field in cylindrical coordinates.
 
-# import crucible.core.math.vectorfields.VectorField;
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
 
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
@@ -9,39 +15,38 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
 
 
 class Results:
-    """The 9 spatial derivatives of a VectorField in cylindrical coordinates.
+    """The spatial derivatives of a cylindrical VectorField.
 
-    where r is the radius, &#952; is the co-latitude angle, and &#966; is the
-    longitude (or aziumuth) angle
+    The spatial derivatives of a cylindrical VectorField.
 
-    author G.K.Stephes
+    Attributes
+    ----------
+    f : CylindricalVector
+        Location to evaluate derivatives.
+    dFrDr, dFrDp, dFrDz : float
+        Derivatives of radial component wrt radius, angle, height.
+    dFpDr, dFpDp, dFpDz : float
+        Derivatives of angular component wrt radius, angle, height.
+    dFzDr, dFzDp, dFzDz : float
+        Derivatives of height component wrt radius, angle, height.
     """
-
-    # private final CylindricalVector f;
-    # private final double dFrDr;
-    # private final double dFrDp;
-    # private final double dFrDz;
-    # private final double dFpDr;
-    # private final double dFpDp;
-    # private final double dFpDz;
-    # private final double dFzDr;
-    # private final double dFzDp;
-    # private final double dFzDz;
 
     def __init__(self, f, dFrDr, dFrDp, dFrDz, dFpDr, dFpDp, dFpDz, dFzDr,
                  dFzDp, dFzDz):
-        """Build a new object.
+        """Initialize a new DifferentiableCylindricalVectorField object.
 
-        param CylindricalVector f
-        param double dFrDr
-        param double dFrDp
-        param double dFrDz
-        param double dFpDr
-        param double dFpDp
-        param double dFpDz
-        param double dFzDr
-        param double dFzDp
-        param double dFzDz
+        Initialize a new DifferentiableCylindricalVectorField object.
+
+        Parameters
+        ----------
+        f : CylindricalVector
+            Location to evaluate derivatives.
+        dFrDr, dFrDp, dFrDz : float
+            Derivatives of radial component wrt radius, angle, height.
+        dFpDr, dFpDp, dFpDz : float
+            Derivatives of angular component wrt radius, angle, height.
+        dFzDr, dFzDp, dFzDz : float
+            Derivatives of height component wrt radius, angle, height.
         """
         self.f = f
         self.dFrDr = dFrDr
@@ -55,46 +60,163 @@ class Results:
         self.dFzDz = dFzDz
 
     def getF(self):
-        """Return the field value at the supplied location.
+        """Return the field location.
 
-        return CylindricalVector f
+        Return the field location.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : CylindricalVector
+            Location in cylindrical field.
         """
         return self.f
 
     def getdFrDr(self):
-        """Return dFr/dr."""
+        """Return dFr/dr.
+        
+        Return dFr/dr.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            r-derivative of r-component of field.
+        """
         return self.dFrDr
 
     def getdFrDp(self):
-        """Return dFr/dp."""
+        """Return dFr/p.
+        
+        Return dFr/dp.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Angle-derivative of r-component of field.
+        """
         return self.dFrDp
 
     def getdFrDz(self):
-        """Return dFr/dz."""
+        """Return dFr/dz.
+        
+        Return dFr/dz.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            z-derivative of r-component of field.
+        """
         return self.dFrDz
 
     def getdFpDr(self):
-        """Return dFp/dr."""
+        """Return dFp/dr.
+        
+        Return dFp/dr.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            r-derivative of angle component of field.
+        """
         return self.dFpDr
 
     def getdFpDp(self):
-        """Return dFp/dp."""
+        """Return dFp/dp.
+        
+        Return dFp/dp.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Angle-derivative of angle component of field.
+        """
         return self.dFpDp
 
     def getdFpDz(self):
-        """Return dFp/dz."""
+        """Return dFp/dz.
+        
+        Return dFp/dz.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            z-derivative of angle component of field.
+        """
         return self.dFpDz
 
     def getdFzDr(self):
-        """Return dFz/dr."""
+        """Return dFz/dr.
+        
+        Return dFz/dr.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            r-derivative of z-component of field.
+        """
         return self.dFzDr
 
     def getdFzDp(self):
-        """Return dFz/dp."""
+        """Return dFz/dp.
+        
+        Return dFz/dp.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            Angle derivative of z-component of field.
+        """
         return self.dFzDp
 
     def getdFzDz(self):
-        """Return dFz/dz."""
+        """Return dFz/dz.
+        
+        Return dFz/dz.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : float
+            z-derivative of z-component of field.
+        """
         return self.dFzDz
 
 
@@ -103,27 +225,4 @@ class DifferentiableCylindricalVectorField(CylindricalVectorField):
 
     Represents the 9 spatial derivatives of a VectorField in cylindrical
     coordinates.
-
-    where r is the radius, &#952; is the co-latitude angle, and &#966; is the
-    longitude (or aziumuth) angle
-
-    author G.K.Stephens
     """
-
-    def __init__(self):
-        """Build a new object.
-
-        INTERFACE - DO NOT INSTANTIATE
-        """
-        raise Exception
-
-    def differentiate(self, location):
-        """Evaluate the field and derivatives at the given position.
-
-        INTERFACE - DO NOT INVOKE
-
-        param location CylindricalVector, often location
-        return the Results of the evaluation, which holds the value of the
-        function and the 9 spatial derivatives
-        """
-        raise Exception

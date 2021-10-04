@@ -1,4 +1,13 @@
-"""Create a set of TS07D static coefficients."""
+"""Create a set of TS07D static coefficients.
+
+Create a set of TS07D static coefficients.
+
+Authors
+-------
+Nicholas Sharp
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 import os
@@ -15,42 +24,124 @@ from emmpy.utilities.nones import nones
 
 
 class SymmetricCylindricalExpansionPair:
-    """Create a set of TS07D static coefficients.
+    """Wrap a pair of symmetric expansion coefficient sets.
 
-    author stephgk1
+    Wrap a pair of symmetric expansion coefficients.
+
+    Attributes
+    ----------
+    tailExpansion : Expansion1D
+        Coefficients for tail expansion.
+    waveExpansion : Expansion1D
+        Coefficients for wave expansion.
     """
 
     def __init__(self, tailExpansion, waveExpansion):
-        """Build a new object."""
+        """Initialize a new SymmetricCylindricalExpansionPair object.
+
+        Initialize a new SymmetricCylindricalExpansionPair object.
+
+        Parameters
+        ----------
+        tailExpansion : Expansion1D
+            Coefficients for tail expansion.
+        waveExpansion : Expansion1D
+            Coefficients for wave expansion.
+        """
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
     def getTailExpansion(self):
-        """Return the tail expansion."""
+        """Return the tail expansion.
+        
+        Return the tail expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Expansion1D
+            Coefficients for tail expansion.
+        """
         return self.tailExpansion
 
     def getWaveExpansion(self):
-        """Return the wave expansion."""
+        """Return the wave expansion.
+        
+        Return the wave expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Expansion1D
+            Coefficients for wave expansion.
+        """
         return self.waveExpansion
 
 
 class AsymmetricCylindricalExpansionPair:
-    """Wrapper for a pair of asymmetric cylindrical expansions.
+    """Wrap a pair of asymmetric expansion coefficient sets.
 
-    author stephgk1
+    Wrap a pair of asymmetric expansion coefficients.
+
+    Attributes
+    ----------
+    tailExpansion : Expansion1D
+        Coefficients for tail expansion.
+    waveExpansion : Expansion1D
+        Coefficients for wave expansion.
     """
 
     def __init__(self, tailExpansion, waveExpansion):
-        """Build a new object."""
+        """Initialize a new AsymmetricCylindricalExpansionPair object.
+
+        Initialize a new AsymmetricCylindricalExpansionPair object.
+
+        Parameters
+        ----------
+        tailExpansion : Expansion1D
+            Coefficients for tail expansion.
+        waveExpansion : Expansion1D
+            Coefficients for wave expansion.
+        """
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
     def getTailExpansion(self):
-        """Return the tail expansion."""
+        """Return the tail expansion.
+        
+        Return the tail expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Expansion1D
+            Coefficients for tail expansion.
+        """
         return self.tailExpansion
 
     def getWaveExpansion(self):
-        """Return the wave expnsion."""
+        """Return the wave expansion.
+        
+        Return the wave expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : Expansion1D
+            Coefficients for wave expansion.
+        """
         return self.waveExpansion
 
 
@@ -60,23 +151,38 @@ class TS07DStaticCoefficientsFactory:
     Use this class to construct ThinCurrentSheetShieldingCoefficients from
     the directory where the coefficients are located.
 
-    The coefficients must be in the format as located at the model webpage:
+    The coefficients must be in the format as located at the model
+    webpage:
+
     http://geomag_field.jhuapl.edu/model/TAIL_PAR.zip.
 
-    author Nicholas Sharp
-    author G.K.Stephens
+    Attributes
+    ----------
+    None
     """
 
     @staticmethod
     def create(*args):
-        """Create a new set of static coefficients."""
+        """Create a new set of static coefficients.
+        
+        Create a new set of static coefficients.
+        
+        Parameters
+        ----------
+        staticCoeffDirectory : str
+            Path to the directory where the static coefficients live.
+        numAzimuthalExpansions : int, optional
+            Number of azimuthal expansions.
+        numRadialExpansions : int, optional
+            Number of radial expansions.
+
+        Returns
+        -------
+        result : ThinCurrentSheetShieldingCoefficients
+            Coefficient set from files in the directory.
+        """
         if len(args) == 1:
             (staticCoeffDirectory,) = args
-            # Parses the static coefficients needed for the TS07D model from
-            # the directory where the coefficients live.
-            # param staticCoeffDirectory the directory where the static
-            # coefficients live, must be in the format that is on the webpage.
-            # return a new set of ThinCurrentSheetShieldingCoefficients
             numAzimuthalExpansions = 4
             numRadialExpansions = 5
             return TS07DStaticCoefficientsFactory.create(
@@ -101,27 +207,23 @@ class TS07DStaticCoefficientsFactory:
         else:
             raise Exception
 
-    # @staticmethod
-    # def createFromBuiltInNewSet(numAzimuthalExpansions, numRadialExpansions):
-    #     return TS07DStaticCoefficientsFactory.create(
-    #         TS07DStaticCoefficientsFactory.
-    #         retrieveNewBuiltInCoefficientsPath(),
-    #         numAzimuthalExpansions, numRadialExpansions)
-
-    # @staticmethod
-    # def createFromBuiltInOriginalSet(
-    #     numAzimuthalExpansions, numRadialExpansions):
-    #     return TS07DStaticCoefficientsFactory.create(
-    #         TS07DStaticCoefficientsFactory.
-    #         retrieveOriginalBuiltInCoefficientsPath(),
-    #         numAzimuthalExpansions, numRadialExpansions)
-
     @staticmethod
     def readTailS(staticCoeffDirectory, numRadialExpansions):
         """Read in tail shielding coefficients from a file.
 
-        param staticCoeffDirectory
-        return the coefficients
+        Read in tail shielding coefficients from a file.
+
+        Parameters
+        ----------
+        staticCoeffDirectory : str
+            Path to directory containing the coefficient files.
+        numRadialExpansions : int
+            The number of radial expansions.
+        
+        Returns
+        -------
+        result : SymmetricCylindricalExpansionPair
+            The coefficients.
         """
         numShieldAzimuthalExpansions = 15
         numShieldRadialExpansions = 5
@@ -161,7 +263,26 @@ class TS07DStaticCoefficientsFactory:
     @staticmethod
     def readTail(staticCoeffDirectory, numAzimuthalExpansions,
                  numRadialExpansions, fileName):
-        """Read in the tail coefficients from a file."""
+        """Read in tail coefficients from a file.
+
+        Read in tail coefficients from a file.
+
+        Parameters
+        ----------
+        staticCoeffDirectory : str
+            Path to directory containing the coefficient files.
+        numAzimuthalExpansions : int
+            Number of azimuthal expansions.
+        numRadialExpansions : int
+            The number of radial expansions.
+        fileName : str
+            Name of file containing coefficients.
+        
+        Returns
+        -------
+        result : AsymmetricCylindricalExpansionPair
+            The coefficients.
+        """
         numShieldAzimuthalExpansions = 15
         numShieldRadialExpansions = 5
         expansions = nones((numAzimuthalExpansions, numRadialExpansions))
@@ -198,61 +319,23 @@ class TS07DStaticCoefficientsFactory:
         )
 
     @staticmethod
-    def retrieveNewBuiltInCoefficientsPath():
-        """Retrieve static coefficients from the source code.
-
-        this method handles the details of grabbing the static coefficients
-        that are in the source code"""
-        raise Exception
-        # public static Path retrieveNewBuiltInCoefficientsPath() {
-        #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n40_m8/");
-        #     if (url == null) {
-        #     String me = ThinCurrentSheetShieldingCoefficients.class.getPackage().getName().replace(".", "/")
-        #         + "/staticcoefficients/coeffs_n40_m8/";
-        #     String jar = ThinCurrentSheetShieldingCoefficients.class.getProtectionDomain().getCodeSource().getLocation()
-        #         .getPath();
-        #     String urlString = "jar:file:" + jar + "!/" + me;
-        #     try {
-        #         url = new URL(urlString);
-        #     } catch (Exception e) {
-        #         throw new RuntimeException(e);
-        #     }
-        #     }
-        #     return RetrievePathFromUrl.retrieve(url);
-        # }
-
-    @staticmethod
     def retrieveOriginalBuiltInCoefficientsPath():
         """Fetch the static coefficients that are in the source code.
 
-        this method handles the details of grabbing the static coefficients
-        that are in the source code
+        This method handles the details of grabbing the static
+        coefficients that are in the source code.
 
         THIS IS A QUICK HACK FOR TESTING
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        path : str
+            Path to the coefficients file.
         """
         path = os.path.join(os.getenv('EMMPY_STATIC_COEFFICIENTS_PATH'),
                             'coeffs_n8_m6')
         return path
-        # return (
-        #     "/Users/winteel1/Library/Application Support/Code/User/"
-        #     "workspaceStorage/7d689292dbc4b95e32290e2fa94e6dcf/redhat.java/"
-        #     "jdt_ws/mag_e7ab7177/bin/geomagmodel/ts07/coefficientreader/"
-        #     "staticcoefficients/coeffs_n8_m6"
-        # )
-        #   public static Path retrieveOriginalBuiltInCoefficientsPath() {
-        #     URL url = ThinCurrentSheetShieldingCoefficients.class.getResource("staticcoefficients/coeffs_n8_m6/");
-        #     if (url == null) {
-        #       String me = ThinCurrentSheetShieldingCoefficients.class.getPackage().getName().replace(".", "/")
-        #           + "/staticcoefficients/coeffs_n8_m6/";
-        #       String jar = ThinCurrentSheetShieldingCoefficients.class.getProtectionDomain().getCodeSource().getLocation()
-        #           .getPath();
-        #       String urlString = "jar:file:" + jar + "!/" + me;
-        #       try {
-        #         url = new URL(urlString);
-        #       } catch (Exception e) {
-        #         throw new RuntimeException(e);
-        #       }
-        #     }
-        #     return RetrievePathFromUrl.retrieve(url);
-        #   }
-        # }

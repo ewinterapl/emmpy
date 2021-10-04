@@ -1,4 +1,13 @@
-"""A container class for a cylindrical coordinate and vector field value."""
+"""Vector field in a 3-D cylindrical space.
+
+A cylindrical vector field value contains a position in the vector field,
+and a value for the vector field, both in cylindrical coordinates.
+
+Authors
+-------
+Grant Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
@@ -7,15 +16,27 @@ from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
 
 
 class CylindricalVectorFieldValue(AbstractVectorFieldValue):
-    """A container class for a cylindrical coordinate and vector field value.
+    """Vector field in a 3-D Cartesian space.
 
-    @author G.K.Stephens
+    A cylindrical vector field value contains a position in the vector
+    field, and a value for the vector field, both in cylindrical
+    coordinates.
+
+    Attributes
+    ----------
+    None
     """
 
     def __init__(self, position, value):
-        """Build a new object.
+        """Initialize a new CylindricalVectorFieldValue object.
 
-        @param position a cylindrical coordinate
-        @param value a cylindrical vector field value at that coordinate
+        Initialize a new CylindricalVectorFieldValue object.
+
+        Parameters
+        ----------
+        position : CylindricalVector
+            Position in the vector field.
+        value : CylindricalVector
+            Value of the vector field at the position.
         """
         AbstractVectorFieldValue.__init__(self, position, value)

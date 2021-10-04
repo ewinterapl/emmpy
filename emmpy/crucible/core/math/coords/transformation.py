@@ -1,8 +1,18 @@
 """Base class for coordinate transformations.
 
-N.B. This class was created from a Java interface, and therefore most of these
+This class defines the methods needed for coordinate transformations.
+
+This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
 """
+
+
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class Transformation:
@@ -13,7 +23,7 @@ class Transformation:
     to another vector. In this package, it is meant to represent the first
     order partial derivatives of some coordinate system with respect to
     Cartesian. A Jacobian can obviously be identified with simply a
-    {@link MatrixIJK}, however, this eliminates all context.
+    MatrixIJK, however, this eliminates all context.
 
     Note: for a completely symmetric interface, getInverseJacobian would take a
     VectorIJK, however, this is not done, because it allows the implementor to
@@ -25,52 +35,97 @@ class Transformation:
     be thread safe, and in practice are so because they are stateless. Perhaps
     this restriction should be lifted, and the threading issues present in this
     package be solved in a more robust way.
-
-    @author G.K.Stephens
-    @param <C> an {@link AbstractVector} type
     """
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE."""
-        raise Exception
+        """Initialize a new Transformation object.
+
+        Initialize a new Transformation object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def getTransformation(self, coordPosition, buffer):
-        """Get the Jacobian from the Coordinate system to Cartesian.
+        """Get the Jacobian from the coordinate system to Cartesian.
 
-        INTERFACE - DO NOT INVOKE.
+        Get the Jacobian from the coordinate system to Cartesian at the
+        specified location.
 
-        @param coordPosition The coordinate position in which the Jacobian will
-        be calculated.
-        @param buffer A {@link MatrixIJK} containing the Jacobian from the
-        specified Coordinate system to Cartesian.
-        @return A {@link MatrixIJK} containing the Jacobian from the specified
-        Coordinate system to Cartesian.
+        Parameters
+        ----------
+        coordPosition : Vector3D
+            The coordinate position at which the Jacobian will be calculated.
+        buffer : MatrixIJK
+            The Jacobian from the specified coordinate system to Cartesian.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The Jacobian from the specified coordinate system to Cartesian.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
     def getInverseTransformation(self, coordPosition, buffer):
-        """Return the Jacobian from Cartesian to the Coordinate system.
+        """Get the Jacobian from Cartesian to the coordinate system.
 
-        INTERFACE - DO NOT INVOKE.
+        Get the Jacobian from Cartesian to the coordinate system at the
+        specified location.
 
-        Note, that this takes a coordinate position and not the Cartesian
-        position, allowing the implementor to leverage the other method.
+        Parameters
+        ----------
+        coordPosition : Vector3D
+            The coordinate position at which the Jacobian will be
+            calculated.
+        buffer : MatrixIJK
+            The Jacobian from Cartesian to the specified coordinate
+            system.
 
-        @param coordPosition The coordinate position in which the inverse
-        Jacobian will be calculated.
-        @param buffer A {@link MatrixIJK} containing the Jacobian from
-        Cartesian to the specified Coordinate system.
-        * @return A {@link MatrixIJK} containing the Jacobian from Cartesian
-        to the specified Coordinate system.
+        Returns
+        -------
+        buffer : MatrixIJK
+            The Jacobian from Cartesian to the specified coordinate
+            system.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
-    def mxv(self, *args):
-        """INTERFACE - DO NOT INVOKE.
+    def mxv(self, jacobian, vector):
+        """Multiply a vector by a matrix.
 
-        Arguments can be:
-        (UnwritableMatrixIJK jacobian, C coordVelocity)
-        (UnwritableMatrixIJK inverseTransformation,
-            UnwritableVectorIJK cartVelocity)
+        Multiply a vector by a matrix.
+
+        Parameters
+        ----------
+        jacobian : MatrixIJK
+            Jacobian matrix for conversion.
+        vector : Vector3D
+            Vector in original coordinates.
+
+        Returns
+        -------
+        converted_vector : Vector3D
+            Vector in converted coordinates.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException

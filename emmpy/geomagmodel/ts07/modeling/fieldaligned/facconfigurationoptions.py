@@ -1,33 +1,68 @@
-"""emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions"""
+"""Configuration options for field-aligned currents.
 
+Configuration options for field-aligned currents.
 
-from emmpy.utilities.doubletolongbits import doubleToLongBits
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 class FacConfigurationOptions:
-    """A set of configuration options that tells how to construct a magnetic
+    """Configuration options for field-aligned currents.
+    
+    A set of configuration options that tells how to construct a magnetic
     vector field for a Field Aligned Current.
 
-    author G.K.Stephens
+    Attributes
+    ----------
+    amplitudeScaling : float
+        The linear coefficient that determines the strength of the field.
+    region : FacRegion
+        Region-1 or region-2.
+    mode : int
+        FAC mode in sin(K*phi).
+    trigParity : TrigParity
+        The parity even-cos(k*phi) or odd-sin(k*phi).
+    theta0 : float
+        The center polar angle of the FAC system.
+    deltaTheta : float
+        The half thickness angle of FAC system.
+    smoothed : bool
+        True to smooth along theta.
+    shielded : bool
+        The magnetopause shielding fields should be evaluated, normally
+        you should shield the fields.
     """
 
     def __init__(
         self, amplitudeScaling, region, mode, trigParity, theta0, deltaTheta,
         smoothed, shielded
     ):
-        """Constructor
+        """Initialize a new FacConfigurationOptions object.
 
-        param amplitudeScaling the linear coefficient that determines the
-        strength of the field
-        param region region-1 or region-2
-        param mode the mode of the fac sin(k*phi)
-        param trigParity the parity even-cos(k*phi) or odd-sin(k*phi)
-        param theta0 the center polar angle of the FAC system
-        param deltaTheta the half thickness angle of FAC system
-        param smoothed smooth the field along theta, the original models were
-        not smoothed
-        param shielded the magnetopause shielding fields should be evaluated,
-        normally you should shield the fields
+        Initialize a new FacConfigurationOptions object.
+
+        Parameters
+        ----------
+        amplitudeScaling : float
+            The linear coefficient that determines the strength of the field.
+        region : FacRegion
+            Region-1 or region-2.
+        mode : int
+            FAC mode in sin(K*phi).
+        trigParity : TrigParity
+            The parity even-cos(k*phi) or odd-sin(k*phi).
+        theta0 : float
+            The center polar angle of the FAC system.
+        deltaTheta : float
+            The half thickness angle of FAC system.
+        smoothed : bool
+            True to smooth along theta.
+        shielded : bool
+            The magnetopause shielding fields should be evaluated, normally
+            you should shield the fields.
         """
         self.amplitudeScaling = float(amplitudeScaling)
         self.region = region
@@ -39,25 +74,129 @@ class FacConfigurationOptions:
         self.shielded = shielded
 
     def getAmplitudeScaling(self):
+        """Return the amplitude scaling.
+        
+        Return the amplitude scaling.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.amplitudeScaling : float
+            The amplitude scaling.
+        """
         return self.amplitudeScaling
 
     def getRegion(self):
+        """Return the FAC region code.
+
+        Return the FAC region code.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.region : FacRegion
+            The FAC region code.
+        """
         return self.region
 
     def getMode(self):
+        """Return the trig mode.
+        
+        Return the trig mode.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.mode : int
+            The trig mode.
+        """
         return self.mode
 
     def getTrigParity(self):
+        """Return the trig parity.
+        
+        Return the trig parity.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.trigParity : TrigParity
+            The trig parity.
+        """
         return self.trigParity
 
     def getTheta0(self):
+        """Return the polar angle of the FAC center.
+        
+        Return the polar angle of the FAC center.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.theta0 : float
+            The polar angle of the FAC center.
+        """
         return self.theta0
 
     def getDeltaTheta(self):
+        """Return the angular half-width of the FAC.
+        
+        Return the angular half-width of the FAC.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.deltaTheta : float
+            The angular half-width of the FAC.
+        """
         return self.deltaTheta
 
     def isSmoothed(self):
+        """Return the angular smoothing flag.
+        
+        Return the angular smoothing flag.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.smoothed : bool
+            The angular smoothing flag.
+        """
         return self.smoothed
 
     def isShielded(self):
+        """Return the shielding flag.
+        
+        Return the shielding flag.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        self.shielded : bool
+            The shielding flag.
+        """
         return self.shielded

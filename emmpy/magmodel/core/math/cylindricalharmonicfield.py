@@ -1,4 +1,12 @@
-"""A harmonic field in cylindrical coordinates."""
+"""A harmonic field in cylindrical coordinates.
+
+A harmonic field in cylindrical coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import cosh, sinh
@@ -18,102 +26,89 @@ from emmpy.utilities.nones import nones
 class CylindricalHarmonicField(BasisVectorField):
     """A harmonic field in cylindrical coordinates.
 
-    A vector field that is associated with the scalar potential solution of
-    Laplace's equation in Cylindrical coordinates.
+    A vector field that is associated with the scalar potential solution
+    of Laplace's equation in Ccylindrical coordinates.
 
-    Uses a Fourier-Bessel expansion representation, e.q. from TS07 eq. 20:
+    Uses a Fourier-Bessel expansion representation, from TS07 eq. 20.
 
-    Evaluates <b>F</b> = -&#x2207;U = &#931; &#931; <b>F</b><sub>mn</sub>=-&#931; &#931; &#x2207; U<sub>mn</sub>
-                        m n      m n
-
-    where:
-
-       U<sub>mn</sub> = c<sub>mn</sub>J<sub>m</sub>(k<sub>n</sub>&#961;){sin(m&#966;)}sinh(k<sub>n</sub>z)
-                     {cos(m&#966;)}
-
-       the cos(m&#966;) is even parity and sin(m&#966;) is odd parity
-       J<sub>m</sub> are Bessel functions
-
-    </pre>
-
-    author G.K.Stephens
+    Attributes
+    ----------
+    coefficientsExpansion : CoefficientExpansion2D
+    waveNumberExpansion : CoefficientExpansion1D
+    bessel : BesselFunctionEvaluator
+    firstM, lastM, firstN, lastN : int
+    trigParity : TrigParity
     """
 
-    # float invMaxVal
     invMaxVal = pow(10.0, 8.0)
 
     def __init__(self, coefficientsExpansion, waveNumberExpansion, bessel,
                  trigParity):
-        """Construct a shielding Fourier-Bessel expansion.
+        """Initialize a new CylindricalHarmonicField object.
 
-        <p>
-        <img src="doc-files/cylindricalHarmonicSol2.png" />
-        <p>
+        Initialize a new CylindricalHarmonicField object.
 
-        param CoefficientExpansion2D coefficientsExpansion an expansion
-        containing the linear scaling coefficients (c<sub>mn</sub>)
-        param CoefficientExpansion1D waveNumberExpansion an expansion
-        containing the non-linear wave numbers (k<sub>n</sub>)
-        param BesselFunctionEvaluator bessel evaluates the Bessel function
-        <J<sub>m</sub>
-        param TrigParity trigParity is this of the sine or cosine variety
+        Parameters
+        ----------
+        coefficientsExpansion : CoefficientExpansion2D
+            An expansion containing the linear scaling coefficients c_mn.
+        waveNumberExpansion : CoefficientExpansion1D
+            An expansion containing the non-linear wave numbers k_n.
+        bessel : BesselFunctionEvaluator (ignored)
+            Evaluates the Bessel function.
+        firstM, lastM, firstN, lastN : int
+            First and last indices in first and second dimensions.
+        trigParity : TrigParity
+            Even = cosine, odd = sine.
         """
-        # CoefficientExpansion2D coefficientsExpansion
         self.coefficientsExpansion = coefficientsExpansion
-        # CoefficientExpansion1D waveNumberExpansion
         self.waveNumberExpansion = waveNumberExpansion
-        # BesselFunctionEvaluator bessel
         self.bessel = bessel
-        # firstM, lastM, firstN, lastN
         self.firstM = coefficientsExpansion.getILowerBoundIndex()
         self.lastM = coefficientsExpansion.getIUpperBoundIndex()
         self.firstN = coefficientsExpansion.getJLowerBoundIndex()
         self.lastN = coefficientsExpansion.getJUpperBoundIndex()
-        # TrigParity trigParity
         self.trigParity = trigParity
 
     def evaluateExpansion2D(self, location):
         """Return the full expansion results.
 
-        param UnwritableVectorIJK location
-        return Expansion2D<UnwritableVectorIJK>
+        Return the full expansion results.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location to evaluate the expansion.
+        
+        Returns
+        -------
+        result : Expansion2D
+            Functions for the expansion.
         """
-        # UnwritableVectorIJK[][] expansions
         expansions = nones((self.coefficientsExpansion.iSize(),
                             self.coefficientsExpansion.jSize()))
-        # float x, y
         x = location.i
         y = location.j
-        # CylindricalVector cylindricalLocation
         cylindricalLocation = CoordConverters.convertToCylindrical(location)
-        # float rho, phi, z
         rho = cylindricalLocation.rho
         phi = cylindricalLocation.phi
         z = cylindricalLocation.z
 
-        # Precompute the sin(m*phi) and cos(m*phi), this greatly speeds up the
-        # code.
-        # float[] sinMphis, cosMphis
+        # Precompute the sin(m*phi) and cos(m*phi), for speed.
         sinMphis = nones((self.lastM + 1,))
         cosMphis = nones((self.lastM + 1,))
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
         for n in range(self.firstN, self.lastN + 1):
-
-            # the wave number
-            # float kn, rhoK, coshKZ, sinhKZ
+            # The wave number.
             kn = abs(self.waveNumberExpansion.getCoefficient(n))
             rhoK = rho*kn
             coshKZ = cosh(z*kn)
             sinhKZ = sinh(z*kn)
-
-            # Cap rho^-1 and (coA*rho)^-1 at 10^8
-            # float rhoKInv, rhoInv
+            # Cap rho^-1 and (coA*rho)^-1 at 10^8.
             rhoKInv = min(1/rhoK, CylindricalHarmonicField.invMaxVal)
             rhoInv = min(1/rho, CylindricalHarmonicField.invMaxVal)
-
-            # Calculate Bessel terms and their derivatives
-            # [float] jns, jnsDer
+            # Calculate Bessel terms and their derivatives.
             jns = []
             for i in range(self.lastM + 1):
                 jns.append(jv(i, rhoK))
@@ -123,13 +118,10 @@ class CylindricalHarmonicField(BasisVectorField):
             jnsDer[0] = -jns[1]
 
             for m in range(self.firstM, self.lastM + 1):
-                # sine if odd, -cosine if even
-                # float sinLPhi
+                # Sine if odd, -cosine if even.
                 sinLPhi = sinMphis[m - self.firstM]
-                # cosine if odd, sine if even
-                # float cosLPhi
+                # Cosine if odd, sine if even.
                 cosLPhi = cosMphis[m - self.firstM]
-                # float jM, jMDer, bRho, bPhi, bz, bx, by
                 jM = jns[m]
                 jMDer = jnsDer[m]
                 bRho = kn*jMDer*cosLPhi*sinhKZ
@@ -137,53 +129,30 @@ class CylindricalHarmonicField(BasisVectorField):
                 bz = kn*cosLPhi*coshKZ*jM
                 bx = x*rhoInv*bRho + y*rhoInv*bPhi
                 by = y*rhoInv*bRho - x*rhoInv*bPhi
-                # get the linear scaling coefficient
-                # float coeff
+                # Get the linear scaling coefficient.
                 coeff = self.coefficientsExpansion.getCoefficient(m, n)
-                # scale the vector, the minus sign comes from the B=-dell U
+                # Scale the vector, the minus sign comes from the
+                # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff
                 expansions[m - self.firstM][n - self.firstN] = vect
         return Expansion2Ds.createFromArray(
             expansions, self.firstM, self.firstN
         )
 
-    def getFirstAzimuthalExpansionNumber(self):
-        """Return the first azimuthal expansion number."""
-        return self.firstM
-
-    def getLastAzimuthalExpansionNumber(self):
-        """Return the last azimuthal expansion number."""
-        return self.lastM
-
-    def getFirstRadialExpansionNumber(self):
-        """Return the first radial expansion number."""
-        return self.firstN
-
-    def getLastRadialExpansionNumber(self):
-        """Return the last radial expansion number."""
-        return self.lastN
-
-    def getTrigParity(self):
-        """Return the trig parity."""
-        return self.trigParity
-
-    def getBessel(self):
-        """Return the Bessel function evaluator."""
-        return self.bessel
-
-    def getCoefficients(self):
-        """Return the array of coefficients."""
-        return self.coefficientsExpansion
-
-    def getWaveNumberExpansion(self):
-        """Return the number of wave expansions."""
-        return self.waveNumberExpansion
-
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.
 
-        param UnwritableVectorIJK location
-        return ImmutableList<UnwritableVectorIJK>
+        Evaluate the expansion at a location.
+
+        Parameters
+        ----------
+        location : VectorIJK
+            Cartesian location to evaluate the expansion.
+        
+        Returns
+        -------
+        functions : list of function
+            List of functions representing the expansion.
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
@@ -191,10 +160,3 @@ class CylindricalHarmonicField(BasisVectorField):
             for n in range(self.firstN, self.lastN + 1):
                 functions.append(expansions.getExpansion(m, n))
         return functions
-
-    def getNumberOfBasisFunctions(self):
-        """Return the number of basis functions."""
-        return (
-            self.coefficientsExpansion.iSize() *
-            self.coefficientsExpansion.jSize()
-        )

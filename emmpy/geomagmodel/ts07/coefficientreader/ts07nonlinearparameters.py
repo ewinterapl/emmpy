@@ -1,7 +1,12 @@
-"""Non-linear parameters for the TS07 geomagnetic field model."""
+"""Non-linear parameters for the TS07 geomagnetic field model.
 
+Non-linear parameters for the TS07 geomagnetic field model.
 
-# from emmpy.java.lang.double import Double
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 class Ts07NonLinearParameters:
@@ -11,14 +16,45 @@ class Ts07NonLinearParameters:
     current sheet thicknesses, hinge distance, warping parameter, region-1 FAC
     scaling, region-2 FAC scaling, and the twisting parameter.
 
-    author G.K.Stephens
+    Attributes
+    ----------
+    facRegion1Kappa : float
+        FAC region 1 kappa scaling factor.
+    facRegion2Kappa : float
+        FAC region 2 kappa scaling factor.
+    currThicks : list of float
+        Current sheet thicknesses.
+    hingeDist : float
+        Hinge distance,
+    warpParam : float
+        Warping parameter.
+    twistFact : float
+        Twist factor.
     """
 
     def __init__(
         self, facRegion1Kappa, facRegion2Kappa, currThicks, hingeDist,
         warpParam, twistFact
     ):
-        """Build a new object."""
+        """Initialize a new Ts07NonLinearParameters object.
+
+        Initialize a new Ts07NonLinearParameters object.
+
+        Parameters
+        ----------
+        facRegion1Kappa : float
+            FAC region 1 kappa scaling factor.
+        facRegion2Kappa : float
+            FAC region 2 kappa scaling factor.
+        currThicks : list of float
+            Current sheet thicknesses.
+        hingeDist : float
+            Hinge distance,
+        warpParam : float
+            Warping parameter.
+        twistFact : float
+            Twist factor.
+        """
         self.facRegion1Kappa = facRegion1Kappa
         self.facRegion2Kappa = facRegion2Kappa
         self.currThicks = currThicks
@@ -26,74 +62,18 @@ class Ts07NonLinearParameters:
         self.warpParam = warpParam
         self.twistFact = twistFact
 
-    # def getFacRegion1Kappa(self):
-    #     return self.facRegion1Kappa
-
-    # def getFacRegion2Kappa(self):
-    #     return self.facRegion2Kappa
-
     def getCurrentSheetThicknesses(self):
-        """Return the current sheet thicknesses."""
+        """Return the current sheet thicknesses.
+        
+        Return the current sheet thicknesses.
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : list of float
+            Thicknesses of current sheets.
+        """
         return self.currThicks
-
-    # def getHingeDist(self):
-    #     return self.hingeDist
-
-    # def getWarpParam(self):
-    #     return self.warpParam
-
-    # def getTwistFact(self):
-    #     return self.twistFact
-
-    # @staticmethod
-    # def average(paramsA, paramsB):
-    #     """Average the two sets of non-linear parameters."""
-
-    #     # average FAC kappas
-    #     facRegion1Kappa = (
-    #         (paramsA.getFacRegion1Kappa() + paramsB.getFacRegion1Kappa())/2
-    #     )
-    #     facRegion2Kappa = (
-    #         (paramsA.getFacRegion2Kappa() + paramsB.getFacRegion2Kappa())/2
-    #     )
-
-    #     currThicks = []
-    #     for i in range(len(paramsA.currThicks.size())):
-    #         currThickA = paramsA.getCurrentSheetThicknesses()[i]
-    #         currThickB = paramsB.getCurrentSheetThicknesses()[i]
-    #         currThick = (currThickA + currThickB)/2
-    #         currThicks.append(currThick)
-
-    #     hingeDist = (paramsA.getHingeDist() + paramsB.getHingeDist())/2
-    #     warpParam = (paramsA.getWarpParam() + paramsB.getWarpParam())/2
-    #     twistFact = (paramsA.getTwistFact() + paramsB.getTwistFact())/2
-
-    #     return Ts07NonLinearParameters(
-    #         facRegion1Kappa, facRegion2Kappa, currThicks, hingeDist, warpParam,
-    #         twistFact
-    #     )
-
-    # def asArray(self):
-    #     """Get all the non-linear parameters as an array of doubles. The order
-    #     of the array follows the order in the output .par files and is:
-
-    #     current sheet thicknesses (may be multiple)
-    #     hinge distance
-    #     warping parameter
-    #     region-1 scaling
-    #     region-2 scaling
-    #     twist factor
-
-    #     @return the array of non-linear parameters
-    #     """
-    #     # converting the non-linear params to an array
-    #     nonLinearParams = [None]*(len(self.currThicks) + 5)
-    #     for i in range(len(self.currThicks)):
-    #         nonLinearParams[i] = self.currThicks[i]
-    #     nonLinearParams[len(self.currThicks)] = self.hingeDist
-    #     nonLinearParams[len(self.currThicks) + 1] = self.warpParam
-    #     nonLinearParams[len(self.currThicks) + 2] = self.facRegion1Kappa
-    #     nonLinearParams[len(self.currThicks) + 3] = self.facRegion2Kappa
-    #     nonLinearParams[len(self.currThicks) + 4] = self.twistFact
-
-    #     return nonLinearParams

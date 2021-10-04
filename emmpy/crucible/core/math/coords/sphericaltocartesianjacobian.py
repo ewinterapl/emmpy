@@ -1,7 +1,15 @@
-"""Jacobian for spherical to Cartesian transformations."""
+"""Jacobian to convert vectors from spherical to Cartesian coordinates.
+
+Jacobian to convert vectors from spherical to Cartesian coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from math import cos, sin
 
 import numpy as np
@@ -9,75 +17,114 @@ import numpy as np
 from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
-from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
 class SphericalToCartesianJacobian(Transformation):
-    """Jacobian for spherical to Cartesian transformations."""
+    """Jacobian to convert vectors from spherical to Cartesian coordinates.
+
+    Jacobian to convert vectors from spherical to Cartesian coordinates.
+    """
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new SphericalToCartesianJacobian object.
+
+        Initialize a new SphericalToCartesianJacobian object.
+
+        Parameters
+        ----------
+        None
+        """
 
     def getTransformation(self, coordPosition, buffer):
-        """Get the transformation matrix.
+        """Return the spherical-to-Cartesian Jacobian.
 
-        from SPICE's routine in drdsph.f:
+        Return the spherical-to-Cartesian Jacobian at the specified
+        position.
 
-        CCOLAT = DCOS(COLAT)
-        SCOLAT = DSIN(COLAT)
-        CLONG = DCOS(LONG)
-        SLONG = DSIN(LONG)
-        JACOBI(DX, DR) = CLONG*SCOLAT
-        JACOBI(DY, DR) = SLONG*SCOLAT
-        JACOBI(DZ, DR) = CCOLAT
-        JACOBI(DX, DCOLAT) = R*CLONG*CCOLAT
-        JACOBI(DY, DCOLAT) = R*SLONG*CCOLAT
-        JACOBI(DZ, DCOLAT) = -R*SCOLAT
-        JACOBI(DX, DLON) = -R*SLONG*SCOLAT
-        JACOBI(DY, DLON) = R*CLONG*SCOLAT
-        JACOBI(DZ, DLON) = 0.0D0
+        Parameters
+        ----------
+        coordPosition : SphericalVector
+            Position in spherical coordinates.
+        buffer : MatrixIJK
+            Buffer to hold the spherical-to-Cartesian Jacobian.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The spherical-to-Cartesian Jacobian.
         """
         r = coordPosition.r
-        colat = coordPosition.theta
-        lon = coordPosition.phi
-        cosColat = cos(colat)
-        sinColat = sin(colat)
-        cosLong = cos(lon)
-        sinLong = sin(lon)
-        xByR = cosLong*sinColat
-        yByR = sinLong*sinColat
-        zByR = cosColat
-        xByColat = r*cosLong*cosColat
-        yByColat = r*sinLong*cosColat
-        zByColat = -r*sinColat
-        xByLong = -r*sinLong*sinColat
-        yByLong = r*cosLong*sinColat
-        zByLong = 0
-        buffer[:, :] = [[xByR, xByColat, xByLong],
-                        [yByR, yByColat, yByLong],
-                        [zByR, zByColat, zByLong]]
+        theta = coordPosition.theta
+        phi = coordPosition.phi
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+        cos_phi = cos(phi)
+        sin_phi = sin(phi)
+        xByR = cos_phi*sin_theta
+        yByR = sin_phi*sin_theta
+        zByR = cos_theta
+        xByTheta = r*cos_phi*cos_theta
+        yByTheta = r*sin_phi*cos_theta
+        zByTheta = -r*sin_theta
+        xByPhi = -r*sin_phi*sin_theta
+        yByPhi = r*cos_phi*sin_theta
+        zByPhi = 0
+        buffer[:, :] = [[xByR, xByTheta, xByPhi],
+                        [yByR, yByTheta, yByPhi],
+                        [zByR, zByTheta, zByPhi]]
         return buffer
 
     def getInverseTransformation(self, coordPosition, buffer):
-        """Get the inverse transformation matrix."""
+        """Return the Cartesian-to-spherical Jacobian.
+
+        Return the Cartesian-to-spherical Jacobian at the specified
+        position.
+
+        Parameters
+        ----------
+        coordPosition : SphericalVector
+            Position in spherical coordinates.
+        buffer : MatrixIJK
+            Buffer to hold the Cartesian-to-spherical Jacobian.
+
+        Returns
+        -------
+        buffer : MatrixIJK
+            The Cartesian-to-spherical Jacobian.
+        """
         try:
             self.getTransformation(coordPosition, buffer)
-            buffer[:] = np.linalg.inv(buffer)
+            buffer[:, :] = np.linalg.inv(buffer)
             return buffer
-        except Exception as e:
+        except np.linalg.LinAlgError as e:
             raise PointOnAxisException(e)
 
-    def mxv(self, *args):
-        """Multiply a vector by the Jacobian matrix."""
-        if isinstance(args[1], SphericalVector):
-            (jacobian, coordVelocity) = args
-            vect = VectorIJK()
-            vect[:] = jacobian.dot(coordVelocity)
-            return vect
+    def mxv(self, jacobian, vector):
+        """Transform a vector between spherical and Cartesian coordinates.
+
+        Transform a vector between spherical and Cartesian coordinates.
+        The transformation can go in either direction, and is computed
+        based on the input vector type.
+
+        Parameters
+        ----------
+        jacobian : MatrixIJK
+            Jacobian matrix for conversion.
+        vector : SphericalVector or VectorIJK
+            Vector in original coordinates.
+
+        Returns
+        -------
+        converted_vector : VectorIJK or SphericalVector
+            Vector in converted coordinates.
+        """
+        v = jacobian.dot(vector)
+        converted_vector = None
+        if isinstance(vector, SphericalVector):
+            converted_vector = VectorIJK(v)
         else:
-            (inverseJacobian, cartVelocity) = args
-            vect = VectorIJK()
-            vect[:] = inverseJacobian.dot(cartVelocity)
-            return SphericalVector(vect.i, vect.j, vect.k)
+            converted_vector = SphericalVector(v)
+        return converted_vector

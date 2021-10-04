@@ -1,4 +1,13 @@
-"""Convert between spherical and Cartesian coordinates."""
+"""Convert to and from spherical coordinates.
+
+This class provides methods that convert between spherical and Cartesian
+coordinates.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from math import atan2, cos, sin, sqrt
@@ -14,85 +23,74 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
 class SphericalCoordConverter(AbstractCoordConverter):
-    """Convert between spherical and Cartesian coordinates."""
+    """Convert to and from spherical coordinates.
 
+    Convert to and from spherical coordinates.
+
+    Attributes
+    ----------
+    JACOBIAN : 3x3 array-like of float
+        Jacobian matrix to convert from spherical to Cartesian
+        coordinates.
+    """
+
+    # Jacobian matrix to convert from spherical to Cartesian
+    # coordinates.
     JACOBIAN = SphericalToCartesianJacobian()
 
     def __init__(self):
-        """Build a new object."""
+        """Initialize a new SphericalCoordConverter object.
+
+        Initialize a new SphericalCoordConverter object.
+
+        Parameters
+        ----------
+        None
+        """
         AbstractCoordConverter.__init__(self, SphericalCoordConverter.JACOBIAN)
 
     def toCoordinate(self, cartesian):
-        """Convert Cartesian to spherical coordinates.
+        """Convert a Cartesian vector to spherical coordinates.
 
-        From the SPICE routine recsph.f,
+        Convert a Cartesian vector to spherical coordinates.
 
-        here is an algorithm for converting to spherical polar coordinates from
-        rectangular coordiantes:
-        C Store rectangular coordinates in temporary variables
-        BIG = MAX(DABS(RECTAN(1)), DABS(RECTAN(2)), DABS(RECTAN(3)))
-        IF (BIG .GT. 0) THEN
-          X = RECTAN(1)/BIG
-          Y = RECTAN(2)/BIG
-          Z = RECTAN(3)/BIG
-          R = BIG*DSQRT(X*X + Y*Y + Z*Z)
-          COLAT = DATAN2(DSQRT(X*X + Y*Y), Z)
-          X = RECTAN(1)
-          Y = RECTAN(2)
-          IF (X.EQ.0.0D0 .AND. Y.EQ.0.0D0) THEN
-            LONG = 0.0D0
-          ELSE
-            LONG = DATAN2 (Y, X)
-          END IF
-        ELSE
-          R = 0.0D0
-          COLAT = 0.0D0
-          LONG = 0.0D0
-        END IF
-        RETURN
-        END
+        Parameters
+        ----------
+        cartesian : VectorIJK
+            Vector in Cartesian coordinates.
+
+        Returns
+        -------
+        spherical : SphericalVector
+            Input vector converted to spherical coordinates.
         """
-        x = cartesian.i
-        y = cartesian.j
-        z = cartesian.k
-        radius = 0
-        colatitude = 0
-        longitude = 0
-        big = max(abs(x), abs(y), abs(z))
-        if big > 0:
-            x /= big
-            y /= big
-            z /= big
-            radius = big*sqrt(x*x + y*y + z*z)
-            colatitude = atan2(sqrt(x*x + y*y), z)
-            x = cartesian.i
-            y = cartesian.j
-            if x == 0 and y == 0:
-                longitude = 0
-            else:
-                longitude = atan2(y, x)
-        else:
-            radius = 0
-            colatitude = 0
-            longitude = 0
-        return SphericalVector(radius, colatitude, longitude)
+        (x, y, z) = (cartesian.i, cartesian.j, cartesian.k)
+        r = sqrt(x**2 + y**2 + z**2)
+        theta = atan2(sqrt(x**2 + y**2), z)
+        phi = atan2(y, x)
+        spherical = SphericalVector(r, theta, phi)
+        return spherical
 
-    def toCartesian(self, coordinate):
-        """Convert spherical to Cartesian coordinates.
+    def toCartesian(self, spherical):
+        """Convert a spherical vector to Cartesian coordinates.
 
-        From the SPICE routine sphrec.f, here is a formula for converting
-        from spherical polar coordinates to rectangular coordinates:
+        Convert a spherical vector to Cartesian coordinates.
 
-        X = R*DCOS(LONG)*DSIN(COLAT)
-        Y = R*DSIN(LONG)*DSIN(COLAT)
-        Z = R*DCOS(COLAT)
+        Parameters
+        ----------
+        spherical : SphericalVector
+            Vector in spherical coordinates.
+
+        Returns
+        -------
+        cartesian : VectorIJK
+            Input vector converted to Cartesian coordinates.
         """
-        r = coordinate.r
-        cosLong = cos(coordinate.phi)
-        sinLong = sin(coordinate.phi)
-        cosColat = cos(coordinate.theta)
-        sinColat = sin(coordinate.theta)
-        i = r * cosLong*sinColat
-        j = r*sinLong*sinColat
-        k = r*cosColat
-        return VectorIJK(i, j, k)
+        r = spherical.r
+        theta = spherical.theta
+        phi = spherical.phi
+        x = r*sin(theta)*cos(phi)
+        y = r*sin(theta)*sin(phi)
+        z = r*cos(theta)
+        cartesian = VectorIJK(x, y, z)
+        return cartesian

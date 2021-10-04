@@ -1,33 +1,65 @@
+"""Test code for the cylindricalcoordconverter module."""
+
+
+from math import atan2, cos, pi, sin, sqrt
 import unittest
+
+import numpy as np
 
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+
+
+# Test grids.
+n = 25
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+zs = np.linspace(-10, 10, n)
+rhos = np.linspace(0, 10, n)
+phis = np.linspace(0, 2*pi, n)
+zs = np.linspace(-10, 10, n)
 
 
 class TestBuilder(unittest.TestCase):
+    """Test code for the cylindricalcoordconverter module."""
 
     def test___init__(self):
+        """Test the __init__ method."""
         ccc = CylindricalCoordConverter()
-        self.assertIsNotNone(ccc)
+        self.assertIsInstance(ccc, CylindricalCoordConverter)
 
     def test_toCoordinate(self):
+        """Test the toCoordinate method."""
         ccc = CylindricalCoordConverter()
-        cart = VectorIJK(1, 2, 3)
-        cyl = ccc.toCoordinate(cart)
-        self.assertAlmostEqual(cyl.rho, 2.2360679774998)
-        self.assertAlmostEqual(cyl.phi, 1.1071487177941)
-        self.assertAlmostEqual(cyl.z, 3)
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = VectorIJK(x, y, z)
+                    rho = sqrt(x**2 + y**2)
+                    phi = atan2(y, x)
+                    if phi < 0:
+                        phi += 2*pi
+                    cylindrical = ccc.toCoordinate(cartesian)
+                    self.assertAlmostEqual(cylindrical.rho, rho)
+                    self.assertAlmostEqual(cylindrical.phi, phi)
+                    self.assertAlmostEqual(cylindrical.z, z)
 
     def test_toCartesian(self):
+        """Test the toCartesian method."""
         ccc = CylindricalCoordConverter()
-        cyl = CylindricalVector(1, 2, 3)
-        cart = ccc.toCartesian(cyl)
-        self.assertAlmostEqual(cart.i, -0.4161468365)
-        self.assertAlmostEqual(cart.j, 0.9092974268)
-        self.assertAlmostEqual(cart.k, 3)
+        for rho in rhos:
+            for phi in phis:
+                for z in zs:
+                    x = rho*cos(phi)
+                    y = rho*sin(phi)
+                    cylindrical = CylindricalVector(rho, phi, z)
+                    cartesian = ccc.toCartesian(cylindrical)
+                    self.assertAlmostEqual(cartesian.i, x)
+                    self.assertAlmostEqual(cartesian.j, y)
+                    self.assertAlmostEqual(cartesian.k, z)
 
 
 if __name__ == '__main__':

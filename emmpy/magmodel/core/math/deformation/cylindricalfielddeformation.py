@@ -1,26 +1,41 @@
-"""Deformation for a cylindrical field."""
+"""Deformation for a cylindrical field.
+
+Deformation for a cylindrical field.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 import sys
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+
+from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
     CylindricalVectorField
 )
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
 class CylindricalFieldDeformation(CylindricalVectorField):
     """Deformation for a cylindrical field.
 
-    author G.K.Stephens
+    Deformation for a cylindrical field.
     """
 
     def __init__(self, originalField, coordDeformation):
-        """Build a new object.
+        """Initialize a new CylindricalFieldDeformation object.
 
-        param CylindricalVectorField originalField
-        param DifferentiableCylindricalVectorField coordDeformation
+        Initialize a new CylindricalFieldDeformation object.
+
+        Parameters
+        ----------
+        originalField : CylindricalVectorField
+            Original field to deform.
+        coordDeformation : DifferentiableCylindricalVectorField
+            Vector field defining the deformation.
         """
         self.originalField = originalField
         self.coordDeformation = coordDeformation
@@ -28,27 +43,29 @@ class CylindricalFieldDeformation(CylindricalVectorField):
     def evaluate(self, originalCoordinate):
         """Evaluate the field.
 
-        param CylindricalVector originalCoordinate
-        return CylindricalVector
+        Evaluate the field.
+
+        Parameters
+        ----------
+        originalCoordinate : CylindricalVector
+            Location to evaluate the field.
+
+        Returns
+        -------
+        result : CylindricalVector
+            The deformed field value.
         """
-        # compute the derivatives at the given location
-        # DifferentiableCylindricalVectorField.Results deformed
+        # Compute the derivatives at the given location.
         deformed = self.coordDeformation.differentiate(originalCoordinate)
 
-        # compute the deformation matrix
-        # MatrixIJK trans
+        # Compute the deformation matrix.
         trans = self.computeMatrix(deformed, originalCoordinate)
 
-        # evaluate the field at the deformed location
-        # CylindricalVector bField
+        # Evaluate the field at the deformed location.
         bField = self.originalField.evaluate(deformed.getF())
 
-        # evaluate the deformed field
-        # VectorIJK v
-        v = trans.mxv(VectorIJK(
-            bField.rho, bField.getLongitude(),
-            bField.z)
-        )
+        # Evaluate the deformed field.
+        v = trans.mxv(VectorIJK(bField.rho, bField.phi, bField.z))
 
         return CylindricalVector(v.getI(), v.getJ(), v.getK())
 
@@ -56,11 +73,20 @@ class CylindricalFieldDeformation(CylindricalVectorField):
     def computeMatrix(deformed, originalCoordinate):
         """Compute the deformation matrix.
 
-        param DifferentiableCylindricalVectorField.Results deformed
-        param CylindricalVector originalCoordinate
-        return MatrixIJK
+        Compute the deformation matrix.
+
+        Parameters
+        ----------
+        deformed : DifferentiableCylindricalVectorField.Results
+            Derivatives of deformation field.
+        originalCoordinate : CylindricalVector 
+            Deformation matrix at the location.
+        
+        Returns
+        -------
+        trans : MatrixIJK
+            The transformation matrix for the deformation.
         """
-        # float r, hr, hp, hz, hrDef, hpDef, hzDef
         r = originalCoordinate.rho
         hr = 1.0
         hp = r
@@ -68,41 +94,26 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         hrDef = 1.0
         hpDef = deformed.getF().rho
         hzDef = 1.0
-
-        # float dFrDr, dFrDp, dFrDz
         dFrDr = deformed.getdFrDr()
         dFrDp = deformed.getdFrDp()
         dFrDz = deformed.getdFrDz()
-
-        # float dFpdr, dFpDp, dFpDz
         dFpDr = deformed.getdFpDr()
         dFpDp = deformed.getdFpDp()
         dFpDz = deformed.getdFpDz()
-
-        # float dFzDr, dFzDp, dFzDz
         dFzDr = deformed.getdFzDr()
         dFzDp = deformed.getdFzDp()
         dFzDz = deformed.getdFzDz()
-
-        # float trr, trp, trz
         trr = (hpDef*hzDef/(hp*hz))*(dFpDp*dFzDz - dFpDz*dFzDp)
         trp = (hrDef*hzDef/(hp*hz))*(dFrDz*dFzDp - dFrDp*dFzDz)
         trz = (hrDef*hpDef/(hp*hz))*(dFrDp*dFpDz - dFrDz*dFpDp)
-
-        # float tpr, tpp, tpz
         tpr = (hpDef*hzDef/(hr*hz))*(dFpDz*dFzDr - dFpDr*dFzDz)
         tpp = (hrDef*hzDef/(hr*hz))*(dFrDr*dFzDz - dFrDz*dFzDr)
         tpz = (hrDef*hpDef/(hr*hz))*(dFrDz*dFpDr - dFrDr*dFpDz)
-
-        # float tzr, tzp, tzz
         tzr = (hpDef*hzDef/(hr*hp))*(dFpDr*dFzDp - dFpDp*dFzDr)
         tzp = (hrDef*hzDef/(hr*hp))*(dFrDp*dFzDr - dFrDr*dFzDp)
         tzz = (hrDef*hpDef/(hr*hp))*(dFrDr*dFpDp - dFrDp*dFpDr)
-
-        # MatrixIJK trans
         trans = MatrixIJK(trr, tpr, tzr, trp, tpp, tzp, trz, tpz, tzz)
 
-        # TODO ugh, what do I do here
         if hp == 0:
             trr = (1*hzDef/(1*hz))*(dFpDp*dFzDz - dFpDz*dFzDp)
             trp = sys.float_info.max*(dFrDz*dFzDp - dFrDp*dFzDz)

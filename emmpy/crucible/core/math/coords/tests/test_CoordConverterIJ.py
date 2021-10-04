@@ -1,22 +1,28 @@
+"""Test code for the coordconverterij module."""
+
+
 import unittest
 
-from emmpy.crucible.core.math.coords.coordconverterij import (
-    CoordConverterIJ
-)
+from emmpy.crucible.core.math.coords.coordconverterij import CoordConverterIJ
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class TestBuilderIJ(unittest.TestCase):
+    """Test code for the coordconverterij module."""
 
     def test___init__(self):
-        with self.assertRaises(Exception):
+        """Test the __init__ method."""
+        with self.assertRaises(AbstractMethodException):
             CoordConverterIJ()
 
     def test_toCoordinate(self):
-        with self.assertRaises(Exception):
+        """Test the toCoordinate method."""
+        with self.assertRaises(AbstractMethodException):
             CoordConverterIJ.toCoordinate(None, None)
 
     def test_toCartesian(self):
-        with self.assertRaises(Exception):
+        """Test the toCartesian method."""
+        with self.assertRaises(AbstractMethodException):
             CoordConverterIJ.toCartesian(None, None)
 
 

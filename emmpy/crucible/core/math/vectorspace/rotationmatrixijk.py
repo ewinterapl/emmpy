@@ -67,3 +67,7 @@ class RotationMatrixIJK(MatrixIJK):
             raise ValueError
         checkRotation(self, ROTATION_NORM_TOLERANCE,
                       ROTATION_DETERMINANT_TOLERANCE)
+
+
+# Identity matrix (null rotation).
+IDENTITY = RotationMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)

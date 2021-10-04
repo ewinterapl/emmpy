@@ -1,31 +1,83 @@
-"""A vector location and field value there.
+"""Interface class for vector field values.
 
-N.B. This class was created from a Java interface, and therefore most of these
+This class was created from a Java interface, and therefore most of these
 methods will raise exceptions if invoked.
+
+Authors
+-------
+Grant Stephens
+Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+
+
 class VectorFieldValue:
-    """A vector location and field value there."""
+    """Interface class for vector field values.
+
+    This class was created from a Java interface, and therefore most of
+    these methods will raise exceptions if invoked.
+
+    Attributes
+    ----------
+    None
+    """
 
     def __init__(self):
-        """INTERFACE - DO NOT INSTANTIATE."""
-        raise Exception
+        """Initialize a new VectorFieldValue object.
+
+        Initialize a new VectorFieldValue object.
+
+        Parameters
+        ----------
+        None
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def getPosition(self):
-        """Get the position component.
+        """Return the position in the vector field.
 
-        INTERFACE - DO NOT INVOKE.
+        Return the position in the vector field.
 
-        @return the position component
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        position : Vector
+            Position in the vector field.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException
 
     def getValue(self):
-        """Get the value associated with that position.
+        """Return the value of the vector field.
 
-        INTERFACE - DO NOT INVOKE.
+        Return the value of the vector field.
 
-        @return the value associated with that position
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        value : Vector
+            Value of the vector field.
+
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
         """
-        raise Exception
+        raise AbstractMethodException

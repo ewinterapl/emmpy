@@ -1,4 +1,18 @@
-"""Interface for a 2-D expansion."""
+"""Interface for a 2-D expansion.
+
+Interface for a 2-D expansion.
+
+This class was created based on a Java interface, and therefore many of
+the methods will raise an exception if invoked.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
+
+from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
 class Expansion2D:
@@ -11,45 +25,122 @@ class Expansion2D:
     This is similar to a 2-D array or List of Ts, but with a non-zero
     starting index. If the object is a Double, the interface
     CoefficientExpansion2D can be used instead to avoid autoboxing.
-
-    author G.K.Stephens
-    param <T> some arbitrary object that is represented in the expansion
-    (common examples would include math objects like Vectors VectorIJK)
     """
 
     def iSize(self):
-        """Return count of elements in the 1st dimension of the expansion."""
+        """Return count of elements in the 1st dimension of the expansion.
+        
+        Return count of elements in the 1st dimension of the expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        size : int
+            Number of elements in 1st dimension.
+        """
         size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
         return size
 
     def jSize(self):
-        """Return count of elements in the 2nd dimension of the expansion."""
+        """Return count of elements in the 2nd dimension of the expansion.
+        
+        Return count of elements in the 2nd dimension of the expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        size : int
+            Number of elements in 2nd dimension.
+        """
         size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
         return size
 
     def getILowerBoundIndex(self):
-        """Return the lowest index along the 1st dimension."""
-        raise Exception
+        """Return the lowest index along the 1st dimension.
+        
+        Return the lowest index along the 1st dimension.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Lowest expansion index along 1st dimension.
+        
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def getIUpperBoundIndex(self):
-        """Return the highest index along the 1st dimension."""
-        raise Exception
+        """Return the highest index along the 1st dimension.
+        
+        Return the highest index along the 1st dimension.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Highest expansion index along 1st dimension.
+        
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def getJLowerBoundIndex(self):
-        """@return the lower bound index of the expansion (L<sub>j</sub>)"""
-        raise Exception
+        """Return the lowest index along the 2nd dimension.
+        
+        Return the lowest index along the 2nd dimension.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Lowest expansion index along 2nd dimension.
+        
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
+        raise AbstractMethodException
 
     def getJUpperBoundIndex(self):
-        """@return the upper bound index of the expansion (U<sub>j</sub>)"""
+        """Return the highest index along the 2nd dimension.
+        
+        Return the highest index along the 2nd dimension.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        result : int
+            Highest expansion index along 2nd dimension.
+        
+        Raises
+        ------
+        AbstractMethodException
+            When invoked.
+        """
         raise Exception
-
-    # def getExpansion(self, mIndex, nIndex):
-    #     """gets i-jth coefficient for the expansion T<sub>ij</sub> in &#8721;
-    #     T<sub>ij</sub>
-
-    #     @param iIndex the index i
-    #     @param jIndex the index j
-    #     @return the i-jth coefficient for the expansion corresponding to the
-    #     index T<sub>ij</sub>
-    #     """
-    #     raise Exception

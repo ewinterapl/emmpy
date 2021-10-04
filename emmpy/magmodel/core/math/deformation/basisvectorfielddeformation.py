@@ -1,4 +1,11 @@
-"""Deformation for a basis vector field."""
+"""Define a deformation for a basis vector field.
+
+Define a deformation for a basis vector field.
+
+Authors
+-------
+Eric Winter (eric.winter@jhuapl.edu)
+"""
 
 
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
@@ -11,23 +18,64 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 
 
 class BasisVectorFieldDeformation(BasisVectorField):
-    """Deformation for a basis vector field."""
+    """Define a deformation for a basis vector field.
+
+    Define a deformation for a basis vector field.
+    """
 
     def __init__(self, originalField, coordDeformation):
-        """Build a new object."""
+        """Initialize a new BasisVectorFieldDeformation object.
+
+        Initialize a new BasisVectorFieldDeformation object.
+
+        Parameters
+        ----------
+        originalField : BasisVectorField
+            Original basis vector field to deform.
+        coordDeformation : DifferentiableVectorField
+            Vector field defining the deformation.
+        """
         self.originalField = originalField
         self.coordDeformation = coordDeformation
 
     def evaluate(self, originalCoordinate, buffer):
-        """Evaluate the basis vector field deformation."""
+        """Evaluate the basis vector field deformation.
+        
+        Evaluate the basis vector field deformation.
+
+        Parameters
+        ----------
+        originalCoordinate : VectorIJK
+            Location to evaluate the deformed field.
+        buffer : VectorIJK
+            Buffer to hold the deformed vector field value.
+        
+        Returns
+        -------
+        buffer : VectorIJK
+            The deformed vector field value.
+        """
         deformed = self.coordDeformation.differentiate(originalCoordinate)
-        trans = VectorFieldDeformation.computeMatrix(deformed)   # STATIC?
+        trans = VectorFieldDeformation.computeMatrix(deformed)
         bField = self.originalField.evaluate(deformed.getF())
         v = trans.mxv(VectorIJK(bField.getI(), bField.getJ(), bField.getK()))
         return buffer.setTo(v.getI(), v.getJ(), v.getK())
 
     def evaluateExpansion(self, originalCoordinate):
-        """Evaluate the expansion at the specified location."""
+        """Evaluate and deform the expansion at the specified location.
+        
+        Evaluate and deform the expansion at the specified location.
+
+        Parameters
+        ----------
+        originalCoordinate : VectorIJK
+            Location for expansion evaluation.
+        
+        Returns
+        -------
+        bFieldExpansionDeformed : list of VectorIJK
+            Deformed expansion terms at location.
+        """
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         trans = VectorFieldDeformation.computeMatrix(deformed)
         bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
@@ -39,5 +87,17 @@ class BasisVectorFieldDeformation(BasisVectorField):
         return bFieldExpansionDeformed
 
     def getNumberOfBasisFunctions(self):
-        """Return the number of basis functions."""
+        """Return the number of basis functions.
+        
+        Return the number of basis functions.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        getNumberOfBasisFunctions() : int
+            The number of basis functions in the expansion.
+        """
         return self.originalField.getNumberOfBasisFunctions()

@@ -23,13 +23,20 @@ class Vector2D(Vector):
     system information is assumed.
     """
 
-    def __new__(cls, *args, **kargs):
+    def __new__(cls, *args, **kwargs):
         """Allocate a new Vector2D object.
 
         Allocate a new Vector2D object by allocating a new 2-element
         Vector object on which the Vector2D will expand.
 
         The initial contents of the Vector are undefined.
+
+        Parameters
+        ----------
+        args : tuple of object, optional
+            Additional positional arguments to pass to inherited methods.
+        kwargs : dictionary of str: object, optional
+            Additional keyword arguments to pass to inherited methods.
 
         Returns
         -------

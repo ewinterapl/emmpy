@@ -1,4 +1,4 @@
-"""Abstract base class for n-dimensional vectors.
+"""Abstract base class for n-dimensional floating-point vectors.
 
 Note that we use __new__ in addition to __init__ to enforce the specified
 size of the vector.
@@ -29,7 +29,7 @@ class Vector(np.ndarray):
     to subclasses of Vector.
     """
 
-    def __new__(cls, length, *args, **kargs):
+    def __new__(cls, length, *args, **kwargs):
         """Allocate a new Vector object.
 
         Allocate a new Vector object by allocating a new np.ndarray on
@@ -41,6 +41,10 @@ class Vector(np.ndarray):
         ----------
         length : integer
             Number of elements in vector.
+        args : tuple of object, optional
+            Additional positional arguments to pass to inherited methods.
+        kwargs : dictionary of str: object, optional
+            Additional keyword arguments to pass to inherited methods.
 
         Returns
         -------

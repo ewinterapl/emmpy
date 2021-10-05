@@ -10,7 +10,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 import numpy as np
 
 from emmpy.math.vectors.vector2d import Vector2D
-from emmpy.utilities.isrealnumber import isRealNumber
 
 
 # Map vector component names to indices.

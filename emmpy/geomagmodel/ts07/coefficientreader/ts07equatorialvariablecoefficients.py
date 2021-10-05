@@ -9,7 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.utilities.isrealnumber import isRealNumber
+import numbers
 
 
 class Ts07EquatorialVariableCoefficients:
@@ -55,7 +55,7 @@ class Ts07EquatorialVariableCoefficients:
         TypeError
             If invalid parameters are provided.
         """
-        if isRealNumber(currThicks):
+        if isinstance(currThicks, numbers.Real):
             self.currThicks = [currThicks]
         elif isinstance(currThicks, list):
             # The current sheet thickness and the number of sets of linear

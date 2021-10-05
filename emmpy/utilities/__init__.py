@@ -2,7 +2,6 @@
 
 Modules
 -------
-isrealnumber.py
 nones.py
 
 Packages

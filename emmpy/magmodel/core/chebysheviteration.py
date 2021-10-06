@@ -43,15 +43,22 @@ class ChebyshevIteration:
         where m is size - 1, and size is the length of sinMphi and cosMphi
         (which must be of identical length).
 
+        If 3 parameters are provided, then just copy the sine and cosine
+        components to the corresponding buffers.
+
+        If 4 parameters are provided, assign the expansions based on the
+        trigonometric parity:
+
+        ODD:  trigMphi = sinMphi, dTrigMphi =  cosMphi
+        EVEN: trigMphi = cosMphi, dTrigMphi = -sinMphi
+
         Parameters
         ----------
         phi : float
-            The angle to use for computing the expansion.
+            The angle to use for computing the expansions.
         sinMphi, cosMphi : ndarray of float
             Buffer arrays to hold sin() and cos() results.
         OR
-        phi : float
-            The angle to use for computing the expansion.
         trigMphi, dTrigMphi : ndarray of float
             Buffer arrays to store the results.
         trigParity : TrigParity
@@ -68,19 +75,22 @@ class ChebyshevIteration:
         """
         if len(args) == 3:
             (phi, sinMphi, cosMphi) = args
-            size = len(sinMphi)
-            sizes = np.array(range(0, size))
-            phis = phi*sizes
-            cosMphi[:] = np.cos(phis)
-            sinMphi[:] = np.sin(phis)
         elif len(args) == 4:
             (phi, trigMphi, dTrigMphi, trigParity) = args
-            if trigParity is TrigParity.ODD:
-                ChebyshevIteration.evaluateTrigExpansions(
-                    phi, trigMphi, dTrigMphi)
-            else:
-                ChebyshevIteration.evaluateTrigExpansions(
-                    phi, dTrigMphi, trigMphi)
-                dTrigMphi[:] = -dTrigMphi
         else:
             raise TypeError
+        size = len(args[1])
+        sizes = np.array(range(0, size))
+        phis = phi*sizes
+        sines = np.sin(phis)
+        cosines = np.cos(phis)
+        if len(args) == 3:
+            sinMphi[:] = sines
+            cosMphi[:] = cosines
+        else:
+            if trigParity is TrigParity.ODD:
+                trigMphi[:] = sines
+                dTrigMphi[:] = cosines
+            else:
+                trigMphi[:] = cosines
+                dTrigMphi[:] = -sines

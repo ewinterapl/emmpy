@@ -11,6 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cosh, sinh
 
+import numpy as np
 from scipy.special import jv
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
@@ -95,8 +96,8 @@ class CylindricalHarmonicField(BasisVectorField):
         z = cylindricalLocation.z
 
         # Precompute the sin(m*phi) and cos(m*phi), for speed.
-        sinMphis = nones((self.lastM + 1,))
-        cosMphis = nones((self.lastM + 1,))
+        sinMphis = np.empty(self.lastM + 1)
+        cosMphis = np.empty(self.lastM + 1)
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
         for n in range(self.firstN, self.lastN + 1):
@@ -109,13 +110,17 @@ class CylindricalHarmonicField(BasisVectorField):
             rhoKInv = min(1/rhoK, CylindricalHarmonicField.invMaxVal)
             rhoInv = min(1/rho, CylindricalHarmonicField.invMaxVal)
             # Calculate Bessel terms and their derivatives.
-            jns = []
-            for i in range(self.lastM + 1):
-                jns.append(jv(i, rhoK))
-            jnsDer = nones((len(jns),))
-            for m in range(1, self.lastM + 1):
-                jnsDer[m] = jns[m - 1] - m*jns[m]*rhoKInv
+            # jns = []
+            # for i in range(self.lastM + 1):
+            #     jns.append(jv(i, rhoK))
+            jns = jv(range(self.lastM + 1), rhoK)
+            # jnsDer = nones((len(jns),))
+            # for m in range(1, self.lastM + 1):
+            #     jnsDer[m] = jns[m - 1] - m*jns[m]*rhoKInv
+            # jnsDer[0] = -jns[1]
+            jnsDer = np.empty(self.lastM + 1)
             jnsDer[0] = -jns[1]
+            jnsDer[1:] = [jns[m - 1] - m*jns[m]*rhoKInv for m in range(1, self.lastM + 1)]
 
             for m in range(self.firstM, self.lastM + 1):
                 # Sine if odd, -cosine if even.

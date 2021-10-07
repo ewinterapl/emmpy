@@ -54,7 +54,7 @@ class SphericalVectorField(VectorField):
         sphere = SphericalVectorFieldValue(locSphere, fieldValue)
 
         # Convert the vector field value back to Cartesian.
-        valueSphere = VectorFieldValueConversions.convert(sphere).getValue()
+        valueSphere = VectorFieldValueConversions.convert(sphere).value
 
         # Return the value.
         buffer[:] = valueSphere

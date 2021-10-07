@@ -64,8 +64,8 @@ class VectorFieldValueConversions:
             # Convert a Cartesian vector field value to a cylindrical
             # vector field value.
             (cartesian,) = args
-            cartesianPosition = cartesian.getPosition()
-            cartesianValue = cartesian.getValue()
+            cartesianPosition = cartesian.position
+            cartesianValue = cartesian.value
         elif len(args) == 2:
             # Convert a Cartesian position vector and a Cartesian value
             # vector to a cylindrical vector field value.
@@ -113,8 +113,8 @@ class VectorFieldValueConversions:
             # Convert a Cartesian vector field value to a spherical
             # vector field value.
             (cartesian,) = args
-            cartesianPosition = cartesian.getPosition()
-            cartesianValue = cartesian.getValue()
+            cartesianPosition = cartesian.position
+            cartesianValue = cartesian.value
         elif len(args) == 2:
             # Convert a Cartesian position vector and a Cartesian value
             # vector to a spherical vector field value.
@@ -162,8 +162,8 @@ class VectorFieldValueConversions:
             # Convert a vector field value in cylindrical or spherical
             # coordinates to Cartesian.
             (vfv,) = args
-            position = vfv.getPosition()
-            value = vfv.getValue()
+            position = vfv.position
+            value = vfv.value
         elif len(args) == 2:
             # Convert an input position/value pair to a Cartesian
             # vector field value.

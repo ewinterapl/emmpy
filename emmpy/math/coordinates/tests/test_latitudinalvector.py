@@ -14,7 +14,7 @@ from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 class TestBuilder(unittest.TestCase):
-    """Tests for the sphericalvector module."""
+    """Tests for the latitudinalvector module."""
 
     def test___new__(self):
         """Test the __new__ method."""

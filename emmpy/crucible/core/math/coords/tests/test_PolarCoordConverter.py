@@ -9,10 +9,8 @@ import numpy as np
 from emmpy.crucible.core.math.coords.polarcoordconverter import (
     PolarCoordConverter
 )
-from emmpy.crucible.core.math.coords.polarvector import (
-    PolarVector
-)
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.coordinates.polarvector import PolarVector
 
 
 # Test grids.
@@ -40,8 +38,8 @@ class TestBuilder(unittest.TestCase):
                 radius = sqrt(x**2 + y**2)
                 angle = atan2(y, x)
                 polar = pcc.toCoordinate(cartesian)
-                self.assertAlmostEqual(polar.getRadius(), radius)
-                self.assertAlmostEqual(polar.getAngle(), angle)
+                self.assertAlmostEqual(polar.r, radius)
+                self.assertAlmostEqual(polar.phi, angle)
 
     def test_toCartesian(self):
         """Test the toCartesian method."""

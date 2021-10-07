@@ -18,7 +18,6 @@ test_latitudinaltocartesianjacobian.py
 test_pointonaxisexception.py
 test_polarcoordconverter.py
 test_polartocartesianjacobian.py
-test_polarvector.py
 test_radeccoordconverter.py
 test_sphericalcoordconverter.py
 test_sphericaltocartesianbasistransformation.py

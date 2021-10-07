@@ -7,13 +7,13 @@ import unittest
 import numpy as np
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
+from emmpy.math.coordinates.polarvector import PolarVector
 from emmpy.math.coordinates.radecvector import RaDecVector
 
 
@@ -80,8 +80,8 @@ class TestBuilder(unittest.TestCase):
                 radius = sqrt(x**2 + y**2)
                 angle = atan2(y, x)
                 cyl = CoordConverters.convertToPolar(cartesian)
-                self.assertAlmostEqual(cyl.getRadius(), radius)
-                self.assertAlmostEqual(cyl.getAngle(), angle)
+                self.assertAlmostEqual(cyl.r, radius)
+                self.assertAlmostEqual(cyl.phi, angle)
 
     def test_convertToRaDec(self):
         """Test the convertToRaDec method."""

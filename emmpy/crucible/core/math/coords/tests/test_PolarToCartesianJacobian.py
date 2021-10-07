@@ -6,9 +6,9 @@ import unittest
 from emmpy.crucible.core.math.coords.polartocartesianjacobian import (
     PolarToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.vectorspace.matrixij import MatrixIJ
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.coordinates.polarvector import PolarVector
 
 
 class TestBuilder(unittest.TestCase):

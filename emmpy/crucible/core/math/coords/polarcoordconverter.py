@@ -18,8 +18,8 @@ from emmpy.crucible.core.math.coords.abstractcoordconverterij import (
 from emmpy.crucible.core.math.coords.polartocartesianjacobian import (
     PolarToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.coordinates.polarvector import PolarVector
 
 
 class PolarCoordConverter(AbstractCoordConverterIJ):
@@ -85,7 +85,7 @@ class PolarCoordConverter(AbstractCoordConverterIJ):
         cartesian : VectorIJK
             Input vector converted to Cartesian coordinates.
         """
-        (radius, angle) = (polar.getRadius(), polar.getAngle())
+        (radius, angle) = (polar.r, polar.phi)
         x = radius*cos(angle)
         y = radius*sin(angle)
         cartesian = VectorIJ(x, y)

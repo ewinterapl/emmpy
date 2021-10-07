@@ -13,9 +13,9 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.coords.transformationij import TransformationIJ
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.coordinates.polarvector import PolarVector
 
 
 class PolarToCartesianJacobian(TransformationIJ):
@@ -55,8 +55,8 @@ class PolarToCartesianJacobian(TransformationIJ):
         buffer : MatrixIJ
             The polar-to-Cartesian Jacobian.
         """
-        r = coordPosition.getRadius()
-        angle = coordPosition.getAngle()
+        r = coordPosition.r
+        angle = coordPosition.phi
         cosAngle = cos(angle)
         sinAngle = sin(angle)
         buffer[:, :] = [[cosAngle, -r*sinAngle], [sinAngle, r*cosAngle]]

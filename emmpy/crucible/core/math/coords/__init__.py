@@ -68,7 +68,6 @@ latitudinaltocartesianjacobian.py
 pointonaxisexception.py
 polarcoordconverter.py
 polartocartesianjacobian.py
-polarvector.py
 radeccoordconverter.py
 sphericalcoordconverter.py
 sphericaltocartesianbasistransformation.py

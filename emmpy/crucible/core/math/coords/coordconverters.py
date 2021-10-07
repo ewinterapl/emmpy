@@ -18,7 +18,6 @@ from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
 from emmpy.crucible.core.math.coords.polarcoordconverter import (
     PolarCoordConverter
 )
-from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.coords.radeccoordconverter import (
     RaDecCoordConverter
 )
@@ -29,6 +28,7 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
+from emmpy.math.coordinates.polarvector import PolarVector
 from emmpy.math.coordinates.radecvector import RaDecVector
 
 

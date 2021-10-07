@@ -12,6 +12,7 @@ cartesianvector3d.py
 cylindricalvector.py
 latitudinalvector.py
 polarvector.py
+radecvector.py
 sphericalvector.py
 
 Packages

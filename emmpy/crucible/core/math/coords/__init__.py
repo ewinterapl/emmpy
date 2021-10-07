@@ -70,7 +70,6 @@ polarcoordconverter.py
 polartocartesianjacobian.py
 polarvector.py
 radeccoordconverter.py
-radecvector.py
 sphericalcoordconverter.py
 sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py

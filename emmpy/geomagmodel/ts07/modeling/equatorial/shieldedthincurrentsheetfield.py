@@ -66,7 +66,7 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         self.numRadialExpansions = thinCurrentSheet.getNumRadialExpansions()
 
     @staticmethod
-    def createUnity(currentSheetHalfThickness, tailLength, bessel,
+    def createUnity(currentSheetHalfThickness, tailLength,
                     staticCoefficients, includeShield):
         """The createUnity method.
 
@@ -78,8 +78,6 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
             currentSheetHalfThickness
         tailLength : float
             Tail length,
-        bessel : BesselFunctionEvaluator
-            Bessel function evaluator.
         staticCoefficients : ThinCurrentSheetShieldingCoefficients
             Static coefficients.
         includeShield : bool
@@ -94,10 +92,10 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
             ThinAsymmetricCurrentSheetBasisVectorField.createUnity(
                 tailLength, currentSheetHalfThickness,
                 staticCoefficients.getNumAzimuthalExpansions(),
-                staticCoefficients.getNumRadialExpansions(), bessel)
+                staticCoefficients.getNumRadialExpansions())
         )
         thinCurrentSheetShield = ThinAsymmetricCurrentSheetBasisVectorShieldingField(
-            staticCoefficients, bessel)
+            staticCoefficients)
         return ShieldedThinCurrentSheetField(
             thinCurrentSheet, thinCurrentSheetShield, includeShield)
 

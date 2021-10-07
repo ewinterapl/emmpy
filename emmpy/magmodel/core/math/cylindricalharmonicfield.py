@@ -36,14 +36,13 @@ class CylindricalHarmonicField(BasisVectorField):
     ----------
     coefficientsExpansion : CoefficientExpansion2D
     waveNumberExpansion : CoefficientExpansion1D
-    bessel : BesselFunctionEvaluator
     firstM, lastM, firstN, lastN : int
     trigParity : TrigParity
     """
 
     invMaxVal = pow(10.0, 8.0)
 
-    def __init__(self, coefficientsExpansion, waveNumberExpansion, bessel,
+    def __init__(self, coefficientsExpansion, waveNumberExpansion,
                  trigParity):
         """Initialize a new CylindricalHarmonicField object.
 
@@ -55,8 +54,6 @@ class CylindricalHarmonicField(BasisVectorField):
             An expansion containing the linear scaling coefficients c_mn.
         waveNumberExpansion : CoefficientExpansion1D
             An expansion containing the non-linear wave numbers k_n.
-        bessel : BesselFunctionEvaluator (ignored)
-            Evaluates the Bessel function.
         firstM, lastM, firstN, lastN : int
             First and last indices in first and second dimensions.
         trigParity : TrigParity
@@ -64,7 +61,6 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         self.coefficientsExpansion = coefficientsExpansion
         self.waveNumberExpansion = waveNumberExpansion
-        self.bessel = bessel
         self.firstM = coefficientsExpansion.getILowerBoundIndex()
         self.lastM = coefficientsExpansion.getIUpperBoundIndex()
         self.firstN = coefficientsExpansion.getJLowerBoundIndex()
@@ -110,14 +106,7 @@ class CylindricalHarmonicField(BasisVectorField):
             rhoKInv = min(1/rhoK, CylindricalHarmonicField.invMaxVal)
             rhoInv = min(1/rho, CylindricalHarmonicField.invMaxVal)
             # Calculate Bessel terms and their derivatives.
-            # jns = []
-            # for i in range(self.lastM + 1):
-            #     jns.append(jv(i, rhoK))
             jns = jv(range(self.lastM + 1), rhoK)
-            # jnsDer = nones((len(jns),))
-            # for m in range(1, self.lastM + 1):
-            #     jnsDer[m] = jns[m - 1] - m*jns[m]*rhoKInv
-            # jnsDer[0] = -jns[1]
             jnsDer = np.empty(self.lastM + 1)
             jnsDer[0] = -jns[1]
             jnsDer[1:] = [jns[m - 1] - m*jns[m]*rhoKInv for m in range(1, self.lastM + 1)]

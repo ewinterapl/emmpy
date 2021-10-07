@@ -67,8 +67,6 @@ class TS07DModelBuilder:
         includeEquatorialShielding
     staticCoefficients : ThinCurrentSheetShieldingCoefficients
         staticCoefficients
-    withAlbertBessel : bool
-        withAlbertBessel
     _withTA15deformation : float
         withTA15deformation
     _withMagnetopause : bool
@@ -106,10 +104,6 @@ class TS07DModelBuilder:
         # never called a withStaticCoeffs method), construct using the default
         # at that time.
         self.staticCoefficients = None
-
-        # By default, do not use Albert's Bessel function evaluator, use
-        # Tsyganenko's by default.
-        self.withAlbertBesselFunction = False
 
         # By default, we will be consistent with the original FORTRAN code and
         # will not check the magnetopause boundary.
@@ -308,46 +302,6 @@ class TS07DModelBuilder:
             This object.
         """
         self.includeEquatorialShielding = False
-        return self
-
-    def withAlbertBessel(self):
-        """Set the Albert Bessel function flag.
-
-        By default, the Bessel function evaluator will be Tsyganenko's, if
-        this is set, Jay Albert's Bessel function evaluator will be used
-        instead. Jay Albert's implementation is about 4 times faster,
-        although it gives slightly different, but negligible, differences.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : TS07DModelBuilder
-            This object.
-        """
-        self.withAlbertBesselFunction = True
-        return self
-
-    def withoutAlbertBessel(self):
-        """Clear the Albert Bessel function flag.
-
-        By default, the Bessel function evaluator will be Tsyganenko's, if
-        this is set, Jay Albert's Bessel function evaluator will be used
-        instead. Jay Albert's implementation is about 4 times faster,
-        although it gives slightly different, but negligible, differences.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : TS07DModelBuilder
-            This object.
-        """
-        self.withAlbertBesselFunction = False
         return self
 
     def withTA15deformation(self, bzIMF):
@@ -642,10 +596,6 @@ class TS07DModelBuilder:
             self.dipoleTiltAngle, self.dynamicPressure, currentCoeffs,
             self.tailLength, self.staticCoefficients
         )
-
-        # If true, use Jay Albert's Bessel function evaluator.
-        if self.withAlbertBesselFunction:
-            equatorialFieldBuilder.withAlbertBessel()
 
         # If true, the equatorial fields are shielded.
         if self.includeEquatorialShielding:

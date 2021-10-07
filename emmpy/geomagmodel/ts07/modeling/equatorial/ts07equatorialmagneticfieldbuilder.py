@@ -45,8 +45,6 @@ class Ts07EquatorialMagneticFieldBuilder:
         The tail length.
     shieldingCoeffs : ThinCurrentSheetShieldingCoefficients
         Shielding coefficients.
-    bessel : BesselFunctionEvaluator (ignored)
-        Bessel function evaluator.
     includeShield : bool
         True to include the shielding field.
     withTA15deformation : float
@@ -77,29 +75,8 @@ class Ts07EquatorialMagneticFieldBuilder:
         self.coeffs = coeffs
         self.tailLength = tailLength
         self.shieldingCoeffs = shieldingCoeffs
-        self.bessel = None
         self.includeShield = True
         self.withTA15deformation = 0.0
-
-    def withAlbertBessel(self):
-        """Use Jay Albert's faster Bessel function evaluator.
-
-        Use Jay Albert's faster Bessel function evaluator. By default, the
-        Bessel function evaluator will be Tsyganenko's, if this is set,
-        Jay Albert's Bessel function evaluator will be used instead. Jay
-        Albert's implementation is about 4 times faster, although it gives
-        slightly different, but negligible, differences.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : Ts07EquatorialMagneticFieldBuilder
-            This builder object.
-        """
-        return self
 
     def set_withTA15deformation(self, bzIMF):
         """Use the TA15 bending and warping deformation.
@@ -196,7 +173,7 @@ class Ts07EquatorialMagneticFieldBuilder:
     
             # Construct the shielded thin current sheet.
             thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
-                currentSheetHalfThickness, self.tailLength, self.bessel,
+                currentSheetHalfThickness, self.tailLength,
                 self.shieldingCoeffs, self.includeShield)
 
             # If the with TA15 deformation was called, apply the TA15

@@ -51,7 +51,7 @@ def runThinSheet():
 
     # now construct the thin sheet field model
     model = ThinAsymmetricCurrentSheetBasisVectorField(
-        tailLength, currentSheetHalfThickness, coeffs, None
+        tailLength, currentSheetHalfThickness, coeffs
     )
 
     # evaluate the model at r=(4,5,-2)

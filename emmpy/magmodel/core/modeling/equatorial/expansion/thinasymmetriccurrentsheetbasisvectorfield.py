@@ -51,15 +51,13 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         currentSheetHalfThickness
     coeffs : DifferentiableScalarFieldIJ
         Coefficients for expansion.
-    bessel : BesselFunctionEvaluator, ignored
-        Bessel function evaluator.
     numAzimuthalExpansions : int
         Number of azimuthal expansions.
     numRadialExpansions : int
         Number of radial expansions.
     """
 
-    def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
+    def __init__(self, tailLength, currentSheetHalfThickness, coeffs):
         """Initialize a new ThinAsymmetricCurrentSheetBasisVectorField object.
 
         Initialize a new ThinAsymmetricCurrentSheetBasisVectorField object.
@@ -72,20 +70,17 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             currentSheetHalfThickness
         coeffs : DifferentiableScalarFieldIJ
             Coefficients for expansion.
-        bessel : BesselFunctionEvaluator, ignored
-            Bessel function evaluator.
         """
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
         self.numRadialExpansions = coeffs.getNumRadialExpansions()
         self.tailLength = tailLength
         self.currentSheetHalfThickness = currentSheetHalfThickness
-        self.bessel = bessel
 
     @staticmethod
     def createUnity(
         tailLength, currentSheetHalfThickness, numAzimuthalExpansions,
-        numRadialExpansions, bessel
+        numRadialExpansions
     ):
         """Create a field where all coefficients are unity.
 
@@ -102,8 +97,6 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             Number of azimuthal expansions.
         numRadialExpansions : int
             Number of radial expansions.
-        bessel : BesselFunctionEvaluator, ignored
-            Bessel function evaluator.
         
         Returns
         -------
@@ -114,7 +107,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             numAzimuthalExpansions, numRadialExpansions
         )
         return ThinAsymmetricCurrentSheetBasisVectorField(
-            tailLength, currentSheetHalfThickness, coeffs, bessel)
+            tailLength, currentSheetHalfThickness, coeffs)
 
     def evaluate(self, location):
         """Evaluate the field.
@@ -180,7 +173,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             kn = n/self.tailLength
 
             symBasisFunction = TailSheetSymmetricExpansion(
-                kn, self.currentSheetHalfThickness, self.bessel
+                kn, self.currentSheetHalfThickness
             )
             a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
             symmetricExpansions[n - 1] = symBasisFunction.evaluate(location)*a
@@ -189,8 +182,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             for m in range(1, self.numAzimuthalExpansions + 1):
                 aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
                 oddBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
-                    self.bessel
+                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness
                 )
                 oddExpansions[m - 1][n - 1] = (
                     oddBasisFunction.evaluate(location)*aOdd)
@@ -198,8 +190,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
                 )
                 evenBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
-                    self.bessel
+                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness
                 )
                 evenExpansions[m - 1][n - 1] = (
                     evenBasisFunction.evaluate(location)*aEven)

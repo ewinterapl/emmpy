@@ -38,12 +38,10 @@ class TailSheetAsymmetricExpansion(VectorField):
     currentSheetHalfThickness : DifferentiableScalarFieldIJ
         A 2D scalar field representing the current sheet half thickness
         throughout the equatorial current system.
-    bessel : BesselFunctionEvaluator (ignored)
-        The Bessel function evaluator.
     """
 
     def __init__(self, waveNumber, azimuthalExpansionNumber, trigParity,
-                 currentSheetHalfThickness, bessel):
+                 currentSheetHalfThickness):
         """Initialize a new TailSheetAsymmetricExpansion object.
 
         Initialize a new TailSheetAsymmetricExpansion object.
@@ -59,14 +57,11 @@ class TailSheetAsymmetricExpansion(VectorField):
         currentSheetHalfThickness : DifferentiableScalarFieldIJ
             A 2D scalar field representing the current sheet half thickness
             throughout the equatorial current system.
-        bessel : BesselFunctionEvaluator (ignored)
-            The Bessel function evaluator.
         """
         self.waveNumber = waveNumber
         self.azimuthalExpansionNumber = azimuthalExpansionNumber
         self.trigParity = trigParity
         self.currentSheetHalfThickness = currentSheetHalfThickness
-        self.bessel = bessel
 
     def evaluate(self, *args):
         """Evaluate the expansion.

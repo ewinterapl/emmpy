@@ -28,9 +28,6 @@ class TestBuilder(unittest.TestCase):
     def test_getTrigParity(self):
         pass
 
-    def test_getBessel(self):
-        pass
-
     def test_getCoefficients(self):
         pass
 

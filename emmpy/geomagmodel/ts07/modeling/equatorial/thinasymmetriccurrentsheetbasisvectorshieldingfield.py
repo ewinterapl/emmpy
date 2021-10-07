@@ -34,15 +34,13 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
     ----------
     coeffs : ThinCurrentSheetShieldingCoefficients
         Shielding coefficients.
-    bessel : BesselFunctionEvaluator
-        Bessel function evaluator.
     numAzimuthalExpansions : int
         Number of azimuthal expansions
     numRadialExpansions : int
         Number of radial expansions.
     """
 
-    def __init__(self, coeffs, bessel):
+    def __init__(self, coeffs):
         """Initialize a new object.
 
         Initialize a new object.
@@ -51,11 +49,8 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         ----------
         coeffs : ThinCurrentSheetShieldingCoefficients
             Shielding coefficients.
-        bessel : BesselFunctionEvaluator
-            Bessel function evaluator.
         """
         self.coeffs = coeffs
-        self.bessel = bessel
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
         self.numRadialExpansions = coeffs.getNumRadialExpansions()
 
@@ -106,7 +101,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
             )
             buffer = VectorIJK()
             chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,
-                                           self.bessel, TrigParity.ODD)
+                                           TrigParity.ODD)
             chf.evaluate(location, buffer)
             symmetricExpansions[n - 1] = VectorIJK(
                 buffer.i, buffer.j, buffer.k
@@ -125,7 +120,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
-                    tailExpansion, waveNumberExpansion, self.bessel,
+                    tailExpansion, waveNumberExpansion,
                     TrigParity.ODD
                 )
                 chf.evaluate(location, buffer)
@@ -146,7 +141,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
-                    tailExpansion, waveNumberExpansion, self.bessel,
+                    tailExpansion, waveNumberExpansion,
                     TrigParity.EVEN
                 )
                 chf.evaluate(location, buffer)

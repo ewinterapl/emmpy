@@ -65,7 +65,6 @@ cylindricaltocartesianjacobian.py
 cylindricalvectorfieldvalue.py
 latitudinalcoordconverter.py
 latitudinaltocartesianjacobian.py
-latitudinalvector.py
 pointonaxisexception.py
 polarcoordconverter.py
 polartocartesianjacobian.py

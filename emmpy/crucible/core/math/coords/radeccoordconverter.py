@@ -16,10 +16,8 @@ from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
 )
-from emmpy.crucible.core.math.coords.latitudinalvector import (
-    LatitudinalVector
-)
 from emmpy.crucible.core.math.coords.radecvector import RaDecVector
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 class RaDecCoordConverter(CoordConverter):
@@ -57,9 +55,9 @@ class RaDecCoordConverter(CoordConverter):
             Input vector converted to celestial coordinates.
         """
         latitudinal = RaDecCoordConverter.LAT_CONVERTER.toCoordinate(cartesian)
-        r = latitudinal.getRadius()
-        ra = latitudinal.getLongitude()
-        dec = latitudinal.getLatitude()
+        r = latitudinal.r
+        ra = latitudinal.lon
+        dec = latitudinal.lat
         if ra < 0.0:
             ra += 2*pi
         return RaDecVector(r, ra, dec)

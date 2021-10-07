@@ -13,9 +13,9 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.crucible.core.math.coords.latitudinalvector import LatitudinalVector
 from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 class LatitudinalToCartesianJacobian(Transformation):
@@ -56,9 +56,9 @@ class LatitudinalToCartesianJacobian(Transformation):
         buffer : MatrixIJK
             The latitudinal-to-Cartesian Jacobian.
         """
-        r = coordPosition.getRadius()
-        lat = coordPosition.getLatitude()
-        lon = coordPosition.getLongitude()
+        r = coordPosition.r
+        lat = coordPosition.lat
+        lon = coordPosition.lon
         cos_lat = cos(lat)
         sin_lat = sin(lat)
         cos_lon = cos(lon)

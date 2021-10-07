@@ -7,7 +7,6 @@ import unittest
 import numpy as np
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.crucible.core.math.coords.latitudinalvector import LatitudinalVector
 from emmpy.crucible.core.math.coords.polarvector import PolarVector
 from emmpy.crucible.core.math.coords.radecvector import RaDecVector
 from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
@@ -15,6 +14,7 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 # Test grids.
@@ -68,9 +68,9 @@ class TestBuilder(unittest.TestCase):
                     lon = atan2(y, x)
                     latitudinal = CoordConverters.convertToLatitudinal(
                         cartesian)
-                    self.assertAlmostEqual(latitudinal.getRadius(), radius)
-                    self.assertAlmostEqual(latitudinal.getLatitude(), lat)
-                    self.assertAlmostEqual(latitudinal.getLongitude(), lon)
+                    self.assertAlmostEqual(latitudinal.r, radius)
+                    self.assertAlmostEqual(latitudinal.lat, lat)
+                    self.assertAlmostEqual(latitudinal.lon, lon)
 
     def test_convertToPolar(self):
         """Test the convertToPolar method."""

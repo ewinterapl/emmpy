@@ -9,9 +9,9 @@ import numpy as np
 from emmpy.crucible.core.math.coords.latitudinaltocartesianjacobian import (
     LatitudinalToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.latitudinalvector import LatitudinalVector
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 # Test grids.

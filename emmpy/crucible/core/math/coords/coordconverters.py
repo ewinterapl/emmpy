@@ -26,12 +26,10 @@ from emmpy.crucible.core.math.coords.radeccoordconverter import (
 from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
     SphericalCoordConverter
 )
-from emmpy.crucible.core.math.coords.latitudinalvector import (
-    LatitudinalVector
-)
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 class CoordConverters:

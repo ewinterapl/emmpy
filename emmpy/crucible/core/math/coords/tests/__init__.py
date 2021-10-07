@@ -15,7 +15,6 @@ test_cylindricaltocartesianjacobian.py
 test_cylindricalvectorfieldvalue.py
 test_latitudinalcoordconverter.py
 test_latitudinaltocartesianjacobian.py
-test_latitudinalvector.py
 test_pointonaxisexception.py
 test_polarcoordconverter.py
 test_polartocartesianjacobian.py

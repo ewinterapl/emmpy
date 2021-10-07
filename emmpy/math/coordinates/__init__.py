@@ -10,6 +10,7 @@ Modules
 cartesianvector2d.py
 cartesianvector3d.py
 cylindricalvector.py
+latitudinalvector.py
 polarvector.py
 sphericalvector.py
 

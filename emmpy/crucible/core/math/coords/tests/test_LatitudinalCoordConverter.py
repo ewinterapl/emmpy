@@ -9,10 +9,8 @@ import numpy as np
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
 )
-from emmpy.crucible.core.math.coords.latitudinalvector import (
-    LatitudinalVector
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 # Test grids.
@@ -44,10 +42,9 @@ class TestBuilder(unittest.TestCase):
                     latitude = atan2(z, sqrt(x**2 + y**2))
                     longitude = atan2(y, x)
                     latitudinal = lcc.toCoordinate(cartesian)
-                    self.assertAlmostEqual(latitudinal.getRadius(), radius)
-                    self.assertAlmostEqual(latitudinal.getLatitude(), latitude)
-                    self.assertAlmostEqual(latitudinal.getLongitude(),
-                                           longitude)
+                    self.assertAlmostEqual(latitudinal.r, radius)
+                    self.assertAlmostEqual(latitudinal.lat, latitude)
+                    self.assertAlmostEqual(latitudinal.lon, longitude)
 
     def test_toCartesian(self):
         """Test the toCartesian method."""

@@ -18,10 +18,8 @@ from emmpy.crucible.core.math.coords.abstractcoordconverter import (
 from emmpy.crucible.core.math.coords.latitudinaltocartesianjacobian import (
     LatitudinalToCartesianJacobian
 )
-from emmpy.crucible.core.math.coords.latitudinalvector import (
-    LatitudinalVector
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 class LatitudinalCoordConverter(AbstractCoordConverter):
@@ -90,9 +88,9 @@ class LatitudinalCoordConverter(AbstractCoordConverter):
         cartesian : VectorIJK
             Input vector converted to Cartesian coordinates.
         """
-        radius = latitudinal.getRadius()
-        latitude = latitudinal.getLatitude()
-        longitude = latitudinal.getLongitude()
+        radius = latitudinal.r
+        latitude = latitudinal.lat
+        longitude = latitudinal.lon
         x = radius*cos(latitude)*cos(longitude)
         y = radius*cos(latitude)*sin(longitude)
         z = radius*sin(latitude)

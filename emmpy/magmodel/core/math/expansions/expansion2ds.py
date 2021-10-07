@@ -9,14 +9,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import numbers
-
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
     ArrayExpansion2D
-)
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
 )
 from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
 from emmpy.utilities.nones import nones

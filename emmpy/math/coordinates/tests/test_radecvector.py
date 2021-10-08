@@ -6,11 +6,25 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, pi, sin, sqrt
 import unittest
 
 import numpy as np
 
-from emmpy.math.coordinates.radecvector import RaDecVector
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.radecvector import (
+    RaDecVector, raDecToCartesian, cartesianToRaDec
+)
+
+
+# Test grids.
+n = 33
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+zs = np.linspace(-10, 10, n)
+rs = np.linspace(0, 10, n)
+ras = np.linspace(0, 2*pi, n)
+decs = np.linspace(-pi/2, pi/2, n)
 
 
 class TestBuilder(unittest.TestCase):
@@ -47,6 +61,36 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.dec, dec)
         with self.assertRaises(KeyError):
             v.bad = 0
+
+    def test_raDecToCartesian(self):
+        """Test the raDecToCartesian function."""
+        for r in rs:
+            for ra in ras:
+                for dec in decs:
+                    celestial = RaDecVector(r, ra, dec)
+                    x = r*cos(dec)*cos(ra)
+                    y = r*cos(dec)*sin(ra)
+                    z = r*sin(dec)
+                    cartesian = raDecToCartesian(celestial)
+                    self.assertAlmostEqual(cartesian.x, x)
+                    self.assertAlmostEqual(cartesian.y, y)
+                    self.assertAlmostEqual(cartesian.z, z)
+
+    def test_cartesianToRaDec(self):
+        """Test the cartesianToRaDec function."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = CartesianVector3D(x, y, z)
+                    r = sqrt(x**2 + y**2 + z**2)
+                    ra = atan2(y, x)
+                    if ra < 0.0:
+                        ra += 2*pi
+                    dec = atan2(z, sqrt(x**2 + y**2))
+                    celestial = cartesianToRaDec(cartesian)
+                    self.assertAlmostEqual(celestial.r, r)
+                    self.assertAlmostEqual(celestial.ra, ra)
+                    self.assertAlmostEqual(celestial.dec, dec)
 
 
 if __name__ == '__main__':

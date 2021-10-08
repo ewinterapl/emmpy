@@ -6,6 +6,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, pi, sin, sqrt
+from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import CurrentSheetHalfThicknesses
+
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -24,11 +28,11 @@ class RaDecVector(Vector3D):
     Attributes
     ----------
     r : float
-        Value of radius coordinate (unspecified units).
+        Value of radius coordinate (unspecified units). r >= 0.
     ra : float
-        Right ascension (radians).
+        Right ascension (radians), 0 <= ra < 2*pi.
     dec : float
-        Declination (radians).
+        Declination (radians), -pi/2 <= dec <= pi/2
     """
 
     def __new__(cls, r, ra, dec):
@@ -80,3 +84,53 @@ class RaDecVector(Vector3D):
         None
         """
         self[components[name]] = value
+
+
+def raDecToCartesian(celestial):
+    """Convert a celestial coordinate vector to Cartesian coordinates.
+
+    Convert a celestial coordinate vector to Cartesian coordinates.
+
+    Parameters
+    ----------
+    celestial : RaDecVector
+        Celestial coordinate vector to convert to Cartesian coordinates.
+
+    Returns
+    -------
+    cartesian : CartesianVector3D
+        Input celestial coordinate vector converted to Cartesian coordinates.
+    """
+    (r, ra, dec) = (celestial.r, celestial.ra, celestial.dec)
+    x = r*cos(dec)*cos(ra)
+    y = r*cos(dec)*sin(ra)
+    z = r*sin(dec)
+    cartesian = CartesianVector3D(x, y, z)
+    return cartesian
+
+
+def cartesianToRaDec(cartesian):
+    """Convert a Cartesian vector to celestial coordinates.
+
+    Convert a Cartesian vector to celestial coordinates.
+
+    The declination is guaranteed to be in the range [0, 2*pi).
+
+    Parameters
+    ----------
+    cartesian : CartesianVector3D
+        Cartesian vector to convert to celestial coordinates.
+
+    Returns
+    -------
+    celestial : RaDecVector
+        Input Cartesian vector converted to celestial coordinates.
+    """
+    (x, y, z) = (cartesian.x, cartesian.y, cartesian.z)
+    r = sqrt(x**2 + y**2 + z**2)
+    ra = atan2(y, x)
+    if ra < 0.0:
+        ra += 2*pi
+    dec = atan2(z, sqrt(x**2 + y**2))
+    celestial = RaDecVector(r, ra, dec)
+    return celestial

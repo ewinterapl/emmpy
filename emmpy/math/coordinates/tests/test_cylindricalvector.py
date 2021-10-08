@@ -17,6 +17,15 @@ from emmpy.math.coordinates.cylindricalvector import (
 )
 
 
+# Test grids. Includes the origin and on-axis points.
+n = 33
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+zs = np.linspace(-10, 10, n)
+rhos = np.linspace(0, 10, n)
+phis = np.linspace(0, 2*pi, n)
+
+
 class TestBuilder(unittest.TestCase):
     """Tests for the cylindricalvector module."""
 
@@ -60,40 +69,31 @@ class TestBuilder(unittest.TestCase):
 
     def test_cylindricalToCartesian(self):
         """Test the cylindricalToCartesian function."""
-        (rho, phi, z) = (1.1, 2.2, 3.3)
-        cylindrical = CylindricalVector(rho, phi, z)
-        cartesian = cylindricalToCartesian(cylindrical)
-        x = rho*cos(phi)
-        y = rho*sin(phi)
-        # z is unchanged.
-        self.assertAlmostEqual(cartesian.x, x)
-        self.assertAlmostEqual(cartesian.y, y)
-        self.assertAlmostEqual(cartesian.z, z)
+        for rho in rhos:
+            for phi in phis:
+                for z in zs:
+                    x = rho*cos(phi)
+                    y = rho*sin(phi)
+                    cylindrical = CylindricalVector(rho, phi, z)
+                    cartesian = cylindricalToCartesian(cylindrical)
+                    self.assertAlmostEqual(cartesian.x, x)
+                    self.assertAlmostEqual(cartesian.y, y)
+                    self.assertAlmostEqual(cartesian.z, z)
 
     def test_cartesianToCylindrical(self):
         """Test the cartesianToCylindrical function."""
-        # Test at the origin.
-        (x, y, z) = (0, 0, 0)
-        cartesian = CartesianVector3D(x, y, z)
-        cylindrical = cartesianToCylindrical(cartesian)
-        rho = 0
-        phi = 0
-        # z is unchanged.
-        self.assertAlmostEqual(cylindrical.rho, rho)
-        self.assertAlmostEqual(cylindrical.phi, phi)
-        self.assertAlmostEqual(cylindrical.z, z)
-        # Test a typical point.
-        (x, y, z) = (1.1, 2.2, 3.3)
-        cartesian = CartesianVector3D(x, y, z)
-        cylindrical = cartesianToCylindrical(cartesian)
-        rho = sqrt(x**2 + y**2)
-        phi = atan2(y, x)
-        if phi < 0:
-            phi += 2*pi
-        # z is unchanged.
-        self.assertAlmostEqual(cylindrical.rho, rho)
-        self.assertAlmostEqual(cylindrical.phi, phi)
-        self.assertAlmostEqual(cylindrical.z, z)
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = CartesianVector3D(x, y, z)
+                    rho = sqrt(x**2 + y**2)
+                    phi = atan2(y, x)
+                    if phi < 0:
+                        phi += 2*pi
+                    cylindrical = cartesianToCylindrical(cartesian)
+                    self.assertAlmostEqual(cylindrical.rho, rho)
+                    self.assertAlmostEqual(cylindrical.phi, phi)
+                    self.assertAlmostEqual(cylindrical.z, z)
 
 
 if __name__ == '__main__':

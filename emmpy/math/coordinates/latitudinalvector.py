@@ -6,6 +6,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, sin, sqrt
+
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -80,3 +83,51 @@ class LatitudinalVector(Vector3D):
         None
         """
         self[components[name]] = value
+
+
+def latitudinalToCartesian(latitudinal):
+    """Convert a latitudinal vector to Cartesian coordinates.
+
+    Convert a latitudinal vector to Cartesian coordinates.
+
+    Parameters
+    ----------
+    latitudinal : LatitudinalVector
+        Latitudinal vector to convert to Cartesian coordinates.
+
+    Returns
+    -------
+    cartesian : CartesianVector3D
+        Input latitudinal vector converted to Cartesian coordinates.
+    """
+    (r, lat, lon) = (latitudinal.r, latitudinal.lat, latitudinal.lon)
+    x = r*cos(lat)*cos(lon)
+    y = r*cos(lat)*sin(lon)
+    z = r*sin(lat)
+    cartesian = CartesianVector3D(x, y, z)
+    return cartesian
+
+
+def cartesianToLatitudinal(cartesian):
+    """Convert a Cartesian vector to latitudinal coordinates.
+
+    Convert a Cartesian vector to latitudinal coordinates.
+
+    The longitude is guaranteed to be in the range [-pi, pi).
+
+    Parameters
+    ----------
+    cartesian : CartesianVector3D
+        Cartesian vector to convert to latitudinal coordinates.
+
+    Returns
+    -------
+    latitudinal : LatitudinalVector
+        Input Cartesian vector converted to latitudinal coordinates.
+    """
+    (x, y, z) = (cartesian.x, cartesian.y, cartesian.z)
+    r = sqrt(x**2 + y**2 + z**2)
+    lat = atan2(z, sqrt(x**2 + y**2))
+    lon = atan2(y, x)
+    latitudinal = LatitudinalVector(r, lat, lon)
+    return latitudinal

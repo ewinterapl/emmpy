@@ -6,11 +6,25 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, pi, sin, sqrt
 import unittest
 
 import numpy as np
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 
-from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
+from emmpy.math.coordinates.latitudinalvector import (
+    LatitudinalVector, latitudinalToCartesian, cartesianToLatitudinal
+)
+
+
+# Test grids.
+n = 33
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+zs = np.linspace(-10, 10, n)
+rs = np.linspace(0, 10, n)
+lats = np.linspace(-pi/2, pi/2, n)
+lons = np.linspace(-pi, pi, n)
 
 
 class TestBuilder(unittest.TestCase):
@@ -47,6 +61,34 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.lon, lon)
         with self.assertRaises(KeyError):
             v.bad = 0
+
+    def test_latitudinalToCartesian(self):
+        """Test the latitudinalToCartesian function."""
+        for r in rs:
+            for lat in lats:
+                for lon in lons:
+                    latitudinal = LatitudinalVector(r, lat, lon)
+                    x = r*cos(lat)*cos(lon)
+                    y = r*cos(lat)*sin(lon)
+                    z = r*sin(lat)
+                    cartesian = latitudinalToCartesian(latitudinal)
+                    self.assertAlmostEqual(cartesian.x, x)
+                    self.assertAlmostEqual(cartesian.y, y)
+                    self.assertAlmostEqual(cartesian.z, z)
+
+    def test_cartesianToLatitudinal(self):
+        """Test the cartesianToLatitudinal function."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesian = CartesianVector3D(x, y, z)
+                    r = sqrt(x**2 + y**2 + z**2)
+                    lat = atan2(z, sqrt(x**2 + y**2))
+                    lon = atan2(y, x)
+                    latitudinal = cartesianToLatitudinal(cartesian)
+                    self.assertAlmostEqual(latitudinal.r, r)
+                    self.assertAlmostEqual(latitudinal.lat, lat)
+                    self.assertAlmostEqual(latitudinal.lon, lon)
 
 
 if __name__ == '__main__':

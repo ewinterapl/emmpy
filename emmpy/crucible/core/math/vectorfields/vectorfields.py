@@ -179,7 +179,7 @@ def scaleLocation(field, scaleFactor):
     # This custom evaluate() method dynamically scales the location of the
     # original vector field and stores the result in the buffer.
     def my_evaluate(location, buffer):
-        v = VectorIJK(scaleFactor, location)
+        v = scaleFactor*VectorIJK(location)
         field.evaluate(v, buffer)
         return buffer
 

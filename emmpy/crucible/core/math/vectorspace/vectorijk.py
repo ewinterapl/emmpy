@@ -58,10 +58,10 @@ class VectorIJK(Vector3D):
             # Array-like of 3 floats for the components.
             (data,) = args
             self[:] = list(data)
-        elif len(args) == 2:
-            # Scale factor and array-like of 3 float to scale.
-            (scale, data) = args
-            self[:] = scale*np.array(data)
+        # elif len(args) == 2:
+        #     # Scale factor and array-like of 3 float to scale.
+        #     (scale, data) = args
+        #     self[:] = scale*np.array(data)
         elif len(args) == 3:
             # Scalar values (3) for the components.
             self[:] = args

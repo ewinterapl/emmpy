@@ -67,11 +67,11 @@ class BasisVectorFields:
         bvf = BasisVectorField()
         bvf.evaluate = (
             lambda location, buffer:
-            field.evaluate(VectorIJK(scaleFactor, location), buffer)
+            field.evaluate(scaleFactor*VectorIJK(location), buffer)
         )
         bvf.evaluateExpansion = (
             lambda location:
-            field.evaluateExpansion(VectorIJK(scaleFactor, location))
+            field.evaluateExpansion(scaleFactor*VectorIJK(location))
         )
         bvf.getNumberOfBasisFunctions = (
             lambda: field.getNumberOfBasisFunctions()

@@ -50,35 +50,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.i, i)
         self.assertAlmostEqual(v2.j, j)
         self.assertAlmostEqual(v2.k, k)
-        # 2-argument forms
-        # scale and list
-        scale = -2.2
-        data = [i, j, k]
-        v2 = VectorIJK(scale, data)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, scale*i)
-        self.assertAlmostEqual(v2.j, scale*j)
-        self.assertAlmostEqual(v2.k, scale*k)
-        # scale and tuple
-        data = (i, j, k)
-        v2 = VectorIJK(scale, data)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, scale*i)
-        self.assertAlmostEqual(v2.j, scale*j)
-        self.assertAlmostEqual(v2.k, scale*k)
-        # scale and np.ndarray
-        data = np.array([i, j, k])
-        v2 = VectorIJK(scale, data)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, scale*i)
-        self.assertAlmostEqual(v2.j, scale*j)
-        self.assertAlmostEqual(v2.k, scale*k)
-        # scale and vector
-        v2 = VectorIJK(scale, v)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, scale*i)
-        self.assertAlmostEqual(v2.j, scale*j)
-        self.assertAlmostEqual(v2.k, scale*k)
         # 3-argument form
         v = VectorIJK(i, j, k)
         self.assertIsInstance(v, VectorIJK)

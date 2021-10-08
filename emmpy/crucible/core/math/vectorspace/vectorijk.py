@@ -25,45 +25,6 @@ components = {'i': 0, 'j': 1, 'k': 2}
 class VectorIJK(Vector3D):
     """A 3-D vector in Cartesian (i, j, k) coordinates."""
 
-    def __init__(self, *args):
-        """Initialize a new VectorIJK object.
-
-        Initialize a new VectorIJK object.
-
-        Parameters
-        ----------
-        data : array-like of 3 float, optional, default (None, None, None)
-            Values for (i, j, k) coordinates.
-        OR
-        scale : float
-            Scale factor for components to copy.
-        data : array-like of 3 float
-            Vector components to copy and scale.
-        OR
-        i, j, k : float
-            Values for vector elements.
-
-        Returns
-        -------
-        None
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-        """
-        if len(args) == 0:
-            self[:] = np.array([None, None, None])
-        elif len(args) == 1:
-            # Array-like of 3 floats for the components.
-            (data,) = args
-            self[:] = list(data)
-        elif len(args) == 3:
-            # Scalar values (3) for the components.
-            self[:] = args
-        else:
-            raise ValueError
-
     def __getattr__(self, name):
         """Return the value of a computed attribute.
 

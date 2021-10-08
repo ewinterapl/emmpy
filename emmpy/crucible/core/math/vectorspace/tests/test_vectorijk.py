@@ -14,52 +14,6 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 class TestBuilder(unittest.TestCase):
     """Tests for the vectorijk module."""
 
-    def test___init__(self):
-        """Test the __init__ method."""
-        # 0-argument form.
-        v = VectorIJK()
-        self.assertIsInstance(v, VectorIJK)
-        for x in v:
-            self.assertTrue(np.isnan(x))
-        # 1-argument forms
-        (i, j, k) = (1.1, 2.2, 3.3)
-        # list
-        data = [i, j, k]
-        v = VectorIJK(data)
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
-        # tuple
-        data = (i, j, k)
-        v = VectorIJK(data)
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
-        # np.ndarray
-        data = np.array([i, j, k])
-        v = VectorIJK(data)
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
-        # vector
-        v2 = VectorIJK(v)
-        self.assertIsInstance(v2, VectorIJK)
-        self.assertAlmostEqual(v2.i, i)
-        self.assertAlmostEqual(v2.j, j)
-        self.assertAlmostEqual(v2.k, k)
-        # 3-argument form
-        v = VectorIJK(i, j, k)
-        self.assertIsInstance(v, VectorIJK)
-        self.assertAlmostEqual(v.i, i)
-        self.assertAlmostEqual(v.j, j)
-        self.assertAlmostEqual(v.k, k)
-        # >= 4 args is invalid
-        with self.assertRaises(ValueError):
-            v = VectorIJK(0, i, j, k)
-
     def test___getattr__(self):
         """Test the __getattr__ method."""
         (i, j, k) = (1.1, 2.2, 3.3)

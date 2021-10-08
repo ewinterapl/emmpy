@@ -6,6 +6,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, pi, sin, sqrt
+
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -86,3 +89,55 @@ class CylindricalVector(Vector3D):
         None
         """
         self[components[name]] = value
+
+
+def cylindricalToCartesian(cylindrical):
+    """Convert a cylindrical vector to Cartesian coordinates.
+
+    Convert a cylindrical vector to Cartesian coordinates.
+
+    Parameters
+    ----------
+    cylindrical : CylindricalVector
+        Cylindrical vector to convert to Cartesian coordinates.
+
+    Returns
+    -------
+    cartesian : CartesianVector3D
+        Input cylindrical vector converted to Cartesian coordinates.
+    """
+    (rho, phi, z) = (cylindrical.rho, cylindrical.phi, cylindrical.z)
+    x = rho*cos(phi)
+    y = rho*sin(phi)
+    cartesian = CartesianVector3D(x, y, z)
+    return cartesian
+
+
+def cartesianToCylindrical(cartesian):
+    """Convert a Cartesian vector to cylindrical coordinates.
+
+    Convert a Cartesian vector to cylindrical.
+
+    The angle phi is guaranteed to be in the range [0, 2*pi).
+
+    Parameters
+    ----------
+    cartesian : CartesianVector3D
+        Cartesian vector to convert to cylindrical coordinates.
+
+    Returns
+    -------
+    cylindrical : CylindricalVector
+        Input Cartesian vector converted to cylindrical coordinates.
+    """
+    (x, y, z) = (cartesian.x, cartesian.y, cartesian.z)
+    if x == y == 0:
+        rho = 0
+        phi = 0
+    else:
+        rho = sqrt(x**2 + y**2)
+        phi = atan2(y, x)
+        if phi < 0:
+            phi += 2*pi
+    cylindrical = CylindricalVector(rho, phi, z)
+    return cylindrical

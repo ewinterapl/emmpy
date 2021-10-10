@@ -15,9 +15,6 @@ from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
 from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
     LatitudinalCoordConverter
 )
-from emmpy.crucible.core.math.coords.polarcoordconverter import (
-    PolarCoordConverter
-)
 from emmpy.crucible.core.math.coords.radeccoordconverter import (
     RaDecCoordConverter
 )
@@ -29,12 +26,11 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian
 )
+from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
+from emmpy.math.coordinates.radecvector import RaDecVector
 from emmpy.math.coordinates.sphericalvector import (
     SphericalVector, sphericalToCartesian
 )
-from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
-from emmpy.math.coordinates.polarvector import PolarVector
-from emmpy.math.coordinates.radecvector import RaDecVector
 
 
 class CoordConverters:
@@ -50,8 +46,6 @@ class CoordConverters:
         Converts between Cartesian and latitudinal coordinates.
     raDecCoordConverter : RaDecCoordConverter
         Converts between Cartesian and ra-dec coordinates.
-    polarCoordConverter : PolarCoordConverter
-        Converts between Cartesian and polar coordinates.
     sphericalCoordConverter : SphericalCoordConverter
         Converts between Cartesian and spherical coordinates.
     """
@@ -59,7 +53,6 @@ class CoordConverters:
     # Create the standard converters.
     cylindricalCoordConverter = CylindricalCoordConverter()
     latitudinalCoordConverter = LatitudinalCoordConverter()
-    polarCoordConverter = PolarCoordConverter()
     raDecCoordConverter = RaDecCoordConverter()
     sphericalCoordConverter = SphericalCoordConverter()
 
@@ -122,25 +115,6 @@ class CoordConverters:
         return latitudinal
 
     @staticmethod
-    def convertToPolar(cartesian):
-        """Convert a 2-D Cartesian vector to a polar vector.
-
-        Convert a 2-D Cartesian vector to a polar vector.
-
-        Parameters
-        ----------
-        cartesian : VectorIJ
-            A Cartesian vector.
-
-        Returns
-        -------
-        polar : PolarVector
-            The input vector converted to polar coordinates.
-        """
-        polar = CoordConverters.polarCoordConverter.toCoordinate(cartesian)
-        return polar
-
-    @staticmethod
     def convertToRaDec(cartesian):
         """Convert a 3-D Cartesian vector to a RA/DEC vector.
 
@@ -186,7 +160,7 @@ class CoordConverters:
     def convert(position):
         """Convert an input vector to Cartesian coordinates.
 
-        Convert a cylindrical, latitudinal, polar, RA/DEC, or spherical
+        Convert a cylindrical, latitudinal, RA/DEC, or spherical
         vector to Cartesian coordinates.
 
         Parameters
@@ -204,9 +178,6 @@ class CoordConverters:
             cartesian = VectorIJK(cylindricalToCartesian(position))
         elif isinstance(position, LatitudinalVector):
             cartesian = CoordConverters.latitudinalCoordConverter.toCartesian(
-                position)
-        elif isinstance(position, PolarVector):
-            cartesian = CoordConverters.polarCoordConverter.toCartesian(
                 position)
         elif isinstance(position, RaDecVector):
             cartesian = CoordConverters.raDecCoordConverter.toCartesian(

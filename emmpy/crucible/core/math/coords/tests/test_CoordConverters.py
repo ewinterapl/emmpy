@@ -13,7 +13,6 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
-from emmpy.math.coordinates.polarvector import PolarVector
 from emmpy.math.coordinates.radecvector import RaDecVector
 
 
@@ -141,15 +140,6 @@ class TestBuilder(unittest.TestCase):
                     self.assertAlmostEqual(cartesian.i, x)
                     self.assertAlmostEqual(cartesian.j, y)
                     self.assertAlmostEqual(cartesian.k, z)
-        # Polar to Cartesian
-        for radius in radiuss:
-            for angle in angles:
-                x = radius*cos(angle)
-                y = radius*sin(angle)
-                polar = PolarVector(radius, angle)
-                cartesian = CoordConverters.convert(polar)
-                self.assertAlmostEqual(cartesian.i, x)
-                self.assertAlmostEqual(cartesian.j, y)
         # RA/DEC to Cartesian
         # for radius in radiuss:
         #     for ra in ras:

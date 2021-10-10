@@ -53,11 +53,9 @@ For developers
 Modules
 -------
 abstractcoordconverter.py
-abstractcoordconverterij.py
 abstractvectorfieldvalue.py
 cartesianvectorfieldvalue.py
 coordconverter.py
-coordconverterij.py
 coordconverters.py
 cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py

@@ -56,12 +56,10 @@ abstractcoordconverter.py
 abstractvectorfieldvalue.py
 cartesianvectorfieldvalue.py
 coordconverters.py
-cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvectorfieldvalue.py
 pointonaxisexception.py
-sphericalcoordconverter.py
 sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py
 sphericalvectorfieldvalue.py

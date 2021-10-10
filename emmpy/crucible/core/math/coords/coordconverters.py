@@ -9,19 +9,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
-    CylindricalCoordConverter
-)
-from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
-    SphericalCoordConverter
-)
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.coordinates.cylindricalvector import (
-    CylindricalVector, cylindricalToCartesian
+    CylindricalVector, cylindricalToCartesian, cartesianToCylindrical
 )
 from emmpy.math.coordinates.sphericalvector import (
-    SphericalVector, sphericalToCartesian
+    SphericalVector, sphericalToCartesian, cartesianToSpherical
 )
 
 
@@ -32,15 +26,8 @@ class CoordConverters:
 
     Attributes
     ----------
-    cylindricalCoordConverter : CylindricalCoordConverter
-        Converts between Cartesian and cylindrical coordinates.
-    sphericalCoordConverter : SphericalCoordConverter
-        Converts between Cartesian and spherical coordinates.
+    None
     """
-
-    # Create the standard converters.
-    cylindricalCoordConverter = CylindricalCoordConverter()
-    sphericalCoordConverter = SphericalCoordConverter()
 
     @staticmethod
     def convertToCylindrical(cartesian):
@@ -58,9 +45,7 @@ class CoordConverters:
         cylindrical : CylindricalVector
             The input vector converted to cylindrical coordinates.
         """
-        cylindrical = CoordConverters.cylindricalCoordConverter.toCoordinate(
-            cartesian
-        )
+        cylindrical = cartesianToCylindrical(CartesianVector3D(cartesian))
         return cylindrical
 
     @staticmethod
@@ -79,9 +64,7 @@ class CoordConverters:
         spherical : SphericalVector
             The input vector converted to spherical coordinates.
         """
-        spherical = CoordConverters.sphericalCoordConverter.toCoordinate(
-            cartesian
-        )
+        spherical = cartesianToSpherical(CartesianVector3D(cartesian))
         return spherical
 
     @staticmethod

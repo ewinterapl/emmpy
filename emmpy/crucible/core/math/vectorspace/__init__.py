@@ -4,7 +4,6 @@ Modules
 -------
 internaloperations.py
 malformedrotationexception.py
-matrixij.py
 matrixijk.py
 rotationmatrixijk.py
 vectorij.py

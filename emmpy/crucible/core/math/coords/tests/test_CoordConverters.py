@@ -13,7 +13,6 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
-from emmpy.math.coordinates.radecvector import RaDecVector
 
 
 # Test grids.
@@ -82,22 +81,6 @@ class TestBuilder(unittest.TestCase):
                 self.assertAlmostEqual(cyl.r, radius)
                 self.assertAlmostEqual(cyl.phi, angle)
 
-    def test_convertToRaDec(self):
-        """Test the convertToRaDec method."""
-        for x in xs:
-            for y in ys:
-                for z in zs:
-                    cartesian = VectorIJK(x, y, z)
-                    radius = sqrt(x**2 + y**2 + z**2)
-                    rightAscension = atan2(y, x)
-                    if rightAscension < 0:
-                        rightAscension += 2*pi
-                    declination = atan2(z, sqrt(x**2 + y**2))
-                    radec = CoordConverters.convertToRaDec(cartesian)
-                    self.assertAlmostEqual(radec.r, radius)
-                    self.assertAlmostEqual(radec.ra, rightAscension)
-                    self.assertAlmostEqual(radec.dec, declination)
-
     def test_convertToSpherical(self):
         """Test the convertToSpherical method."""
         for x in xs:
@@ -140,18 +123,6 @@ class TestBuilder(unittest.TestCase):
                     self.assertAlmostEqual(cartesian.i, x)
                     self.assertAlmostEqual(cartesian.j, y)
                     self.assertAlmostEqual(cartesian.k, z)
-        # RA/DEC to Cartesian
-        # for radius in radiuss:
-        #     for ra in ras:
-        #         for dec in decs:
-        #             x = radius*cos(dec)*cos(ra)
-        #             y = radius*cos(dec)*sin(ra)
-        #             z = radius*sin(dec)
-        #             radec = RaDecVector(radius, ra, dec)
-        #             cartesian = CoordConverters.convert(radec)
-        #             self.assertAlmostEqual(cartesian.i, x)
-        #             self.assertAlmostEqual(cartesian.j, y)
-        #             self.assertAlmostEqual(cartesian.k, z)
         # Spherical to Cartesian
         for r in rs:
             for theta in thetas:
@@ -159,8 +130,8 @@ class TestBuilder(unittest.TestCase):
                     x = r*sin(theta)*cos(phi)
                     y = r*sin(theta)*sin(phi)
                     z = r*cos(theta)
-                    radec = SphericalVector(r, theta, phi)
-                    cartesian = CoordConverters.convert(radec)
+                    spherical = SphericalVector(r, theta, phi)
+                    cartesian = CoordConverters.convert(spherical)
                     self.assertAlmostEqual(cartesian.i, x)
                     self.assertAlmostEqual(cartesian.j, y)
                     self.assertAlmostEqual(cartesian.k, z)

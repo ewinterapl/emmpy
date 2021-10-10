@@ -16,7 +16,6 @@ test_cylindricalvectorfieldvalue.py
 test_latitudinalcoordconverter.py
 test_latitudinaltocartesianjacobian.py
 test_pointonaxisexception.py
-test_radeccoordconverter.py
 test_sphericalcoordconverter.py
 test_sphericaltocartesianbasistransformation.py
 test_sphericaltocartesianjacobian.py

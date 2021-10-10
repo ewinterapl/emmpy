@@ -34,11 +34,6 @@ thetas = np.linspace(0, pi, n)
 class TestBuilder(unittest.TestCase):
     """Tests for the coordconverters module."""
 
-    def test___init__(self):
-        """Test the __init__ method."""
-        with self.assertRaises(AbstractMethodException):
-            CoordConverters()
-
     def test_convertToCylindrical(self):
         """Test the convertToCylindrical method."""
         for x in xs:

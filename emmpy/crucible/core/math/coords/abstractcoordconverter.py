@@ -9,10 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.coordconverter import CoordConverter
-
-
-class AbstractCoordConverter(CoordConverter):
+class AbstractCoordConverter:
     """Abstract base class for 3-D coordinate converters.
 
     Attributes

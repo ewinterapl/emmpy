@@ -5,7 +5,6 @@ Modules
 test_abstractcoordconverter.py
 test_abstractvectorfieldvalue.py
 test_cartesianvectorfieldvalue.py
-test_coordconverter.py
 test_coordconverters.py
 test_cylindricalcoordconverter.py
 test_cylindricaltocartesianbasistransformation.py

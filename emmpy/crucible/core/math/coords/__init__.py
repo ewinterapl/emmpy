@@ -55,7 +55,6 @@ Modules
 abstractcoordconverter.py
 abstractvectorfieldvalue.py
 cartesianvectorfieldvalue.py
-coordconverter.py
 coordconverters.py
 cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py

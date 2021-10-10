@@ -6,6 +6,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, sin, sqrt
+
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -86,3 +89,51 @@ class SphericalVector(Vector3D):
         None
         """
         self[components[name]] = value
+
+
+def sphericalToCartesian(spherical):
+    """Convert a spherical coordinate vector to Cartesian coordinates.
+
+    Convert a spherical coordinate vector to Cartesian coordinates.
+
+    Parameters
+    ----------
+    spherical : SphericalVector
+        Spherical coordinate vector to convert to Cartesian coordinates.
+
+    Returns
+    -------
+    cartesian : CartesianVector3D
+        Input spherical coordinate vector converted to Cartesian coordinates.
+    """
+    (r, theta, phi) = (spherical.r, spherical.theta, spherical.phi)
+    x = r*sin(theta)*cos(phi)
+    y = r*sin(theta)*sin(phi)
+    z = r*cos(theta)
+    cartesian = CartesianVector3D(x, y, z)
+    return cartesian
+
+
+def cartesianToSpherical(cartesian):
+    """Convert a Cartesian vector to spherical coordinates.
+
+    Convert a Cartesian vector to spherical coordinates.
+
+    The angle phi is guaranteed to be in the range [-pi, pi).
+
+    Parameters
+    ----------
+    cartesian : CartesianVector3D
+        Cartesian vector to convert to spherical coordinates.
+
+    Returns
+    -------
+    spherical : SphericalVector
+        Input Cartesian vector converted to spherical coordinates.
+    """
+    (x, y, z) = (cartesian.x, cartesian.y, cartesian.z)
+    r = sqrt(x**2 + y**2 + z**2)
+    theta = atan2(sqrt(x**2 + y**2), z)
+    phi = atan2(y, x)
+    spherical = SphericalVector(r, theta, phi)
+    return spherical

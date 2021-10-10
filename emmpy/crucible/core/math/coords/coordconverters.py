@@ -24,8 +24,11 @@ from emmpy.crucible.core.math.coords.radeccoordconverter import (
 from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
     SphericalCoordConverter
 )
+from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.cylindricalvector import (
+    CylindricalVector, cylindricalToCartesian
+)
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 from emmpy.math.coordinates.polarvector import PolarVector
@@ -196,8 +199,7 @@ class CoordConverters:
             Input vector converted to Cartesian coordinates.
         """
         if isinstance(position, CylindricalVector):
-            cartesian = CoordConverters.cylindricalCoordConverter.toCartesian(
-                position)
+            cartesian = VectorIJK(cylindricalToCartesian(position))
         elif isinstance(position, LatitudinalVector):
             cartesian = CoordConverters.latitudinalCoordConverter.toCartesian(
                 position)

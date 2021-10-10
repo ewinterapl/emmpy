@@ -42,22 +42,6 @@ class CoordConverters:
     cylindricalCoordConverter = CylindricalCoordConverter()
     sphericalCoordConverter = SphericalCoordConverter()
 
-    def __init__(self):
-        """Initialize a new CoordConverters object.
-
-        Initialize a new CoordConverters object.
-
-        Parameters
-        ----------
-        None
-
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException
-
     @staticmethod
     def convertToCylindrical(cartesian):
         """Convert a 3-D Cartesian vector to a cylindrical vector.

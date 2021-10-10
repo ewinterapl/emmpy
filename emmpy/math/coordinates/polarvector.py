@@ -6,6 +6,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, sin, sqrt
+
+from emmpy.math.coordinates.cartesianvector2d import CartesianVector2D
 from emmpy.math.vectors.vector2d import Vector2D
 
 
@@ -81,3 +84,46 @@ class PolarVector(Vector2D):
         None
         """
         self[components[name]] = value
+
+
+def polarToCartesian(polar):
+    """Convert a polar coordinate vector to Cartesian coordinates.
+
+    Convert a polar coordinate vector to Cartesian coordinates.
+
+    Parameters
+    ----------
+    polar : PolarVector
+        Polar coordinate vector to convert to Cartesian coordinates.
+
+    Returns
+    -------
+    cartesian : CartesianVector2D
+        Input polar coordinate vector converted to Cartesian coordinates.
+    """
+    (r, phi) = (polar.r, polar.phi)
+    x = r*cos(phi)
+    y = r*sin(phi)
+    cartesian = CartesianVector2D(x, y)
+    return cartesian
+
+def cartesianToPolar(cartesian):
+    """Convert a Cartesian vector to polar coordinates.
+
+    Convert a Cartesian vector to polar coordinates.
+
+    Parameters
+    ----------
+    cartesian : CartesianVector2D
+        Vector in Cartesian coordinates.
+
+    Returns
+    -------
+    polar : polar
+        Input vector converted to polar coordinates.
+    """
+    (x, y) = (cartesian.x, cartesian.y)
+    r = sqrt(x**2 + y**2)
+    phi = atan2(y, x)
+    polar = PolarVector(r, phi)
+    return polar

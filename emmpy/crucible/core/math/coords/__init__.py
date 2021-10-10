@@ -63,8 +63,6 @@ cylindricalcoordconverter.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvectorfieldvalue.py
-latitudinalcoordconverter.py
-latitudinaltocartesianjacobian.py
 pointonaxisexception.py
 sphericalcoordconverter.py
 sphericaltocartesianbasistransformation.py

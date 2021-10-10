@@ -12,7 +12,6 @@ from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
-from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 
 
 # Test grids.
@@ -55,21 +54,6 @@ class TestBuilder(unittest.TestCase):
                     self.assertAlmostEqual(cyl.phi, phi)
                     self.assertAlmostEqual(cyl.z, z)
 
-    def test_convertToLatitudinal(self):
-        """Test the convertToLatitudinal method."""
-        for x in xs:
-            for y in ys:
-                for z in zs:
-                    cartesian = VectorIJK(x, y, z)
-                    radius = sqrt(x**2 + y**2 + z**2)
-                    lat = atan2(z, sqrt(x**2 + y**2))
-                    lon = atan2(y, x)
-                    latitudinal = CoordConverters.convertToLatitudinal(
-                        cartesian)
-                    self.assertAlmostEqual(latitudinal.r, radius)
-                    self.assertAlmostEqual(latitudinal.lat, lat)
-                    self.assertAlmostEqual(latitudinal.lon, lon)
-
     def test_convertToPolar(self):
         """Test the convertToPolar method."""
         for x in xs:
@@ -108,18 +92,6 @@ class TestBuilder(unittest.TestCase):
                     y = rho*sin(phi)
                     cylindrical = CylindricalVector(rho, phi, z)
                     cartesian = CoordConverters.convert(cylindrical)
-                    self.assertAlmostEqual(cartesian.i, x)
-                    self.assertAlmostEqual(cartesian.j, y)
-                    self.assertAlmostEqual(cartesian.k, z)
-        # Latitudinal to Cartesian
-        for radius in radiuss:
-            for lat in lats:
-                for lon in lons:
-                    x = radius*cos(lat)*cos(lon)
-                    y = radius*cos(lat)*sin(lon)
-                    z = radius*sin(lat)
-                    latitudinal = LatitudinalVector(radius, lat, lon)
-                    cartesian = CoordConverters.convert(latitudinal)
                     self.assertAlmostEqual(cartesian.i, x)
                     self.assertAlmostEqual(cartesian.j, y)
                     self.assertAlmostEqual(cartesian.k, z)

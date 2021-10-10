@@ -12,9 +12,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.coords.cylindricalcoordconverter import (
     CylindricalCoordConverter
 )
-from emmpy.crucible.core.math.coords.latitudinalcoordconverter import (
-    LatitudinalCoordConverter
-)
 from emmpy.crucible.core.math.coords.sphericalcoordconverter import (
     SphericalCoordConverter
 )
@@ -23,7 +20,6 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian
 )
-from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 from emmpy.math.coordinates.sphericalvector import (
     SphericalVector, sphericalToCartesian
 )
@@ -38,15 +34,12 @@ class CoordConverters:
     ----------
     cylindricalCoordConverter : CylindricalCoordConverter
         Converts between Cartesian and cylindrical coordinates.
-    latitudinalCoordConverter : LatitudinalCoordConverter
-        Converts between Cartesian and latitudinal coordinates.
     sphericalCoordConverter : SphericalCoordConverter
         Converts between Cartesian and spherical coordinates.
     """
 
     # Create the standard converters.
     cylindricalCoordConverter = CylindricalCoordConverter()
-    latitudinalCoordConverter = LatitudinalCoordConverter()
     sphericalCoordConverter = SphericalCoordConverter()
 
     def __init__(self):
@@ -87,27 +80,6 @@ class CoordConverters:
         return cylindrical
 
     @staticmethod
-    def convertToLatitudinal(cartesian):
-        """Convert a 3-D Cartesian vector to a latitudinal vector.
-
-        Convert a 3-D Cartesian vector to a latitudinal vector.
-
-        Parameters
-        ----------
-        cartesian : VectorIJK
-            A Cartesian vector.
-
-        Returns
-        -------
-        latitudinal : LatitudinalVector
-            The input vector converted to latitudinal coordinates.
-        """
-        latitudinal = CoordConverters.latitudinalCoordConverter.toCoordinate(
-            cartesian
-        )
-        return latitudinal
-
-    @staticmethod
     def convertToSpherical(cartesian):
         """Convert a 3-D Cartesian vector to a spherical vector.
 
@@ -132,14 +104,13 @@ class CoordConverters:
     def convert(position):
         """Convert an input vector to Cartesian coordinates.
 
-        Convert a cylindrical, latitudinal, RA/DEC, or spherical
-        vector to Cartesian coordinates.
+        Convert a cylindrical or spherical vector to Cartesian
+        coordinates.
 
         Parameters
         -----------
         position : Vector
-            A vector in cylindrical, latitudinal, polar, RA/DEC, or spherical
-            coordinates.
+            A vector in cylindrical or spherical coordinates.
 
         Returns
         -------
@@ -148,9 +119,6 @@ class CoordConverters:
         """
         if isinstance(position, CylindricalVector):
             cartesian = VectorIJK(cylindricalToCartesian(position))
-        elif isinstance(position, LatitudinalVector):
-            cartesian = CoordConverters.latitudinalCoordConverter.toCartesian(
-                position)
         elif isinstance(position, SphericalVector):
             cartesian = VectorIJK(sphericalToCartesian(position))
         else:

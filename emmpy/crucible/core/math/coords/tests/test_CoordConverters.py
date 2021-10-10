@@ -49,17 +49,6 @@ class TestBuilder(unittest.TestCase):
                     self.assertAlmostEqual(cyl.phi, phi)
                     self.assertAlmostEqual(cyl.z, z)
 
-    def test_convertToPolar(self):
-        """Test the convertToPolar method."""
-        for x in xs:
-            for y in ys:
-                cartesian = VectorIJ(x, y)
-                radius = sqrt(x**2 + y**2)
-                angle = atan2(y, x)
-                cyl = CoordConverters.convertToPolar(cartesian)
-                self.assertAlmostEqual(cyl.r, radius)
-                self.assertAlmostEqual(cyl.phi, angle)
-
     def test_convertToSpherical(self):
         """Test the convertToSpherical method."""
         for x in xs:

@@ -29,9 +29,11 @@ class LatitudinalVector(Vector3D):
     r : float
         Value of radius coordinate (unspecified units).
     lat : float
-        Latitude (radians).
+        Latitude (radians). The value is guaranteed to be in the range
+        [-pi/2, pi/2].
     lon : float
-        Longitude (radians).
+        Longitude (radians). The value is guaranteed to be in the range
+        [-pi, pi].
     """
 
     def __new__(cls, r, lat, lon):

@@ -30,10 +30,12 @@ class SphericalVector(Vector3D):
         Value of radius coordinate (unspecified units).
     theta : float
         Value of the polar angle (radians). The name is specified
-        in ISO standard 31-11.
+        in ISO standard 31-11. The value is guaranteed to be in the range
+        [0, pi].
     phi : float
         Value of azimuthal angle (radians). The name is specified
-        in ISO standard 31-11.
+        in ISO standard 31-11. The value is guaranteed to be in the range
+        [-pi, pi].
 
     References
     ----------

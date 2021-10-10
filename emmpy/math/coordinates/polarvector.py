@@ -48,7 +48,8 @@ class PolarVector(Vector2D):
         r : float (optional)
             Value of radius coordinate (unspecified units).
         phi : float (optional)
-            Value of angle coordinate (radians).
+            Value of angle coordinate (radians). The value is guaranteed
+            to be in the range [-pi, pi].
 
         Returns
         -------

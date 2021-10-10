@@ -30,7 +30,8 @@ class CylindricalVector(Vector3D):
         Value of radius coordinate (unspecified units).
     phi : float
         Value of azimuthal angle (radians). The name is specified
-        in ISO standard 31-11.
+        in ISO standard 31-11. The value is guaranteed to be in the range
+        [-pi, pi].
     z : float
         Value of the axial position (unspecified units). The name is
         specified in ISO standard 31-11.

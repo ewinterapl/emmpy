@@ -30,9 +30,11 @@ class RaDecVector(Vector3D):
     r : float
         Value of radius coordinate (unspecified units). r >= 0.
     ra : float
-        Right ascension (radians), 0 <= ra < 2*pi.
+        Right ascension (radians), 0 <= ra < 2*pi. The value is guaranteed
+        to be in the range [0, 2*pi].
     dec : float
-        Declination (radians), -pi/2 <= dec <= pi/2
+        Declination (radians). The value is guaranteed to be in the range
+        [-pi/2, pi/2].
     """
 
     def __new__(cls, r, ra, dec):

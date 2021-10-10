@@ -29,7 +29,9 @@ from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian
 )
-from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import (
+    SphericalVector, sphericalToCartesian
+)
 from emmpy.math.coordinates.latitudinalvector import LatitudinalVector
 from emmpy.math.coordinates.polarvector import PolarVector
 from emmpy.math.coordinates.radecvector import RaDecVector
@@ -210,8 +212,7 @@ class CoordConverters:
             cartesian = CoordConverters.raDecCoordConverter.toCartesian(
                 position)
         elif isinstance(position, SphericalVector):
-            cartesian = CoordConverters.sphericalCoordConverter.toCartesian(
-                position)
+            cartesian = VectorIJK(sphericalToCartesian(position))
         else:
             raise ValueError
         return cartesian

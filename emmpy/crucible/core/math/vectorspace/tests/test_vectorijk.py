@@ -47,23 +47,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.i, 0)
         self.assertAlmostEqual(v2.j, 1)
         self.assertAlmostEqual(v2.k, 0)
-        # 4-argument form
-        v = VectorIJK()
-        angle = pi/3
-        v2 = VectorIJK.rotate(v1, z_axis, angle, v)
-        self.assertIs(v2, v)
-        self.assertAlmostEqual(v2.i, 0.5)
-        self.assertAlmostEqual(v2.j, sqrt(3)/2)
-        self.assertAlmostEqual(v2.k, 0)
-        # Invalid forms.
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate()
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate(None)
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate(None, None)
-        with self.assertRaises(ValueError):
-            VectorIJK.rotate(None, None, None, None, None)
 
     def test_project(self):
         """Test the project method."""

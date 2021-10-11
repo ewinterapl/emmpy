@@ -65,7 +65,7 @@ class VectorIJK(Vector3D):
         self[components[name]] = value
 
     @staticmethod
-    def rotate(*args):
+    def rotate(vector, axis, angle):
         """Rotate a copy of a vector.
 
         Make a copy of the vector, and rotate the copy by the specified
@@ -103,14 +103,7 @@ class VectorIJK(Vector3D):
         ( 1, 0, 0 )   ( 0, 1, 0 )
         ( 0, 1, 0 )   ( -1, 0, 0 )
         """
-        if len(args) == 3:
-            # Create the buffer, then rotate the vector.
-            (vector, axis, angle) = args
-            buffer = VectorIJK()
-        elif len(args) == 4:
-            (vector, axis, angle, buffer) = args
-        else:
-            raise ValueError
+        buffer = VectorIJK()
 
         # Rotate one vector about another by a specified angle.
 

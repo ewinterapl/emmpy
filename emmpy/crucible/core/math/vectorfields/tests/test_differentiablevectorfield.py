@@ -67,39 +67,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(AbstractMethodException):
             DifferentiableVectorField.differentiate(None, None)
 
-    def test_Results___init__(self):
-        """Test the Results.__init__ method."""
-
-    def test_Results_getF(self):
-        """Test the Results.getF method."""
-
-    def test_Results_getdFxDx(self):
-        """Test the Results.getdFxDx method."""
-
-    def test_Results_getdFxDy(self):
-        """Test the Results.getdFxDy method."""
-
-    def test_Results_getdFxDz(self):
-        """Test the Results.getdFxDz method."""
-
-    def test_Results_getdFyDx(self):
-        """Test the Results.getdFyDx method."""
-
-    def test_Results_getdFyDy(self):
-        """Test the Results.getdFyDy method."""
-
-    def test_Results_getdFyDz(self):
-        """Test the Results.getdFyDz method."""
-
-    def test_Results_getdFzDx(self):
-        """Test the Results.getdFzDx method."""
-
-    def test_Results_getdFzDy(self):
-        """Test the Results.getdFzDy method."""
-
-    def test_Results_getdFzDz(self):
-        """Test the Results.getdFzDz method."""
-
 
 if __name__ == '__main__':
     unittest.main()

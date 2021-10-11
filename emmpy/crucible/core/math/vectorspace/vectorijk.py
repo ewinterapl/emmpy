@@ -125,7 +125,7 @@ class VectorIJK(Vector3D):
         # At this point, we are going to build a basis that is
         # convenient for computing the rotated vector. Start by
         # projecting vector onto axis, one of the axes in our basis.
-        VectorIJK.project(vector, axis, buffer)
+        buffer[:] = VectorIJK.project(vector, axis)
 
         # Normalize the rotation axis.
         norm = np.linalg.norm(a)
@@ -151,7 +151,7 @@ class VectorIJK(Vector3D):
         return v
 
     @staticmethod
-    def project(*args):
+    def project(vector, onto):
         """Compute the projection of one vector onto another.
 
         Compute the projection of the vector onto another.
@@ -162,20 +162,16 @@ class VectorIJK(Vector3D):
             The vector to project.
         onto : VectorIJK
             The vector onto which the first vector will be projected.
-        buffer : VectorIJK (optional)
-            Buffer to receive the projected vector.
 
         Returns
         -------
-        buffer : VectorIJK
+        v : VectorIJK
             The projected vector.
 
         Raises
         ------
         BugException
             If the rotation axis is zero.
-        ValueError:
-            If incorrect arguments are provided.
 
         Notes
         -----
@@ -189,14 +185,7 @@ class VectorIJK(Vector3D):
         For numeric precision reasons the implementation may vary slightly
         from the above prescription.
         """
-        if len(args) == 2:
-            # Create a buffer, then perform the projection.
-            (vector, onto) = args
-            buffer = VectorIJK()
-        elif len(args) == 3:
-            (vector, onto, buffer) = args
-        else:
-            raise ValueError
+        buffer = VectorIJK()
 
         # Scale and project the vector.
         maxVector = absMaxComponent(*vector)

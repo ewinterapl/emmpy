@@ -74,26 +74,12 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v3.i, 1)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
-        # 3-argument form.
-        v4 = VectorIJK()
-        v5 = VectorIJK.project(v1, v2, v4)
-        self.assertIs(v5, v4)
-        self.assertAlmostEqual(v5.i, 1)
-        self.assertAlmostEqual(v5.j, 0)
-        self.assertAlmostEqual(v5.k, 0)
         # Projection of 0 is 0.
         v1 = VectorIJK(0, 0, 0)
         v3 = VectorIJK.project(v1, v2)
         self.assertAlmostEqual(v3.i, 0)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
-        # Invalid forms.
-        with self.assertRaises(ValueError):
-            v3 = VectorIJK.project()
-        with self.assertRaises(ValueError):
-            v3 = VectorIJK.project(None)
-        with self.assertRaises(ValueError):
-            v3 = VectorIJK.project(None, None, None, None)
         # Can't project onto 0 vector.
         with self.assertRaises(BugException):
             v3 = VectorIJK.project(v2, v1)

@@ -11,7 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import math
 
-from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
@@ -121,7 +120,7 @@ class FDerivatives:
         return self.dF_dy
 
 
-class Ffunction(ScalarField):
+class Ffunction:
     """A stretch transformation for the magnetic field.
 
     From Tsyganenko 2002, A model of the near magnetosphere with a

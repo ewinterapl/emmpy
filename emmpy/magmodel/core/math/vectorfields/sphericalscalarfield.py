@@ -13,11 +13,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
-class SphericalScalarField(ScalarField):
+class SphericalScalarField:
     """A scalar field in spherical coordinates.
 
     A scalar field in spherical coordinates.

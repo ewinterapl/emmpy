@@ -30,44 +30,6 @@ class CoordConverters:
     """
 
     @staticmethod
-    def convertToCylindrical(cartesian):
-        """Convert a 3-D Cartesian vector to a cylindrical vector.
-
-        Convert a 3-D Cartesian vector to a cylindrical vector.
-
-        Parameters
-        ----------
-        cartesian : VectorIJK
-            A Cartesian vector.
-
-        Returns
-        -------
-        cylindrical : CylindricalVector
-            The input vector converted to cylindrical coordinates.
-        """
-        cylindrical = cartesianToCylindrical(CartesianVector3D(cartesian))
-        return cylindrical
-
-    @staticmethod
-    def convertToSpherical(cartesian):
-        """Convert a 3-D Cartesian vector to a spherical vector.
-
-        Convert a 3-D Cartesian vector to a spherical vector.
-
-        Parameters
-        ----------
-        cartesian : VectorIJK
-            A Cartesian vector.
-
-        Returns
-        -------
-        spherical : SphericalVector
-            The input vector converted to spherical coordinates.
-        """
-        spherical = cartesianToSpherical(CartesianVector3D(cartesian))
-        return spherical
-
-    @staticmethod
     def convert(position):
         """Convert an input vector to Cartesian coordinates.
 

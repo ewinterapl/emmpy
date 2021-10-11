@@ -34,38 +34,6 @@ thetas = np.linspace(0, pi, n)
 class TestBuilder(unittest.TestCase):
     """Tests for the coordconverters module."""
 
-    def test_convertToCylindrical(self):
-        """Test the convertToCylindrical method."""
-        for x in xs:
-            for y in ys:
-                for z in zs:
-                    cartesian = VectorIJK(x, y, z)
-                    rho = sqrt(x**2 + y**2)
-                    phi = atan2(y, x)
-                    if phi < 0:
-                        phi += 2*pi
-                    cyl = CoordConverters.convertToCylindrical(cartesian)
-                    self.assertAlmostEqual(cyl.rho, rho)
-                    self.assertAlmostEqual(cyl.phi, phi)
-                    self.assertAlmostEqual(cyl.z, z)
-
-    def test_convertToSpherical(self):
-        """Test the convertToSpherical method."""
-        for x in xs:
-            for y in ys:
-                for z in zs:
-                    cartesian = VectorIJK(x, y, z)
-                    r = sqrt(x**2 + y**2 + z**2)
-                    if x == y == z == 0:
-                        theta = 0
-                    else:
-                        theta = pi/2 - atan2(z, sqrt(x**2 + y**2))
-                    phi = atan2(y, x)
-                    spherical = CoordConverters.convertToSpherical(cartesian)
-                    self.assertAlmostEqual(spherical.r, r)
-                    self.assertAlmostEqual(spherical.theta, theta)
-                    self.assertAlmostEqual(spherical.phi, phi)
-
     def test_convert(self):
         """Test the convert method."""
         # Cylindrical to Cartesian

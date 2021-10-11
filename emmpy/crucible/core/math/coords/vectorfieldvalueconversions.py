@@ -11,7 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue)
@@ -25,6 +24,11 @@ from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue)
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cylindricalvector import (
+    cartesianToCylindrical, CylindricalVector
+)
+from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
 
 
 class VectorFieldValueConversions:
@@ -74,8 +78,9 @@ class VectorFieldValueConversions:
             raise TypeError
 
         # Convert the Cartesian position to cylindrical.
-        cylindricalPosition = CoordConverters.convertToCylindrical(
-            cartesianPosition)
+        cylindricalPosition = cartesianToCylindrical(
+            CartesianVector3D(cartesianPosition)
+        )
 
         # Get the Cartesian-to-cylindrical transformation matrix at
         # the current cylindrical position.
@@ -123,8 +128,9 @@ class VectorFieldValueConversions:
             raise TypeError
 
         # Convert the Cartesian position to spherical.
-        sphericalPosition = CoordConverters.convertToSpherical(
-            cartesianPosition)
+        sphericalPosition = cartesianToSpherical(
+            CartesianVector3D(cartesianPosition)
+        )
 
         # Get the Cartesian-to-spherical transformation matrix at
         # the current spherical position.

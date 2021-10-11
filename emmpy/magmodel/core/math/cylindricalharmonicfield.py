@@ -14,13 +14,14 @@ from math import cosh, sinh
 import numpy as np
 from scipy.special import jv
 
-from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cylindricalvector import cartesianToCylindrical
 from emmpy.utilities.nones import nones
 
 
@@ -86,7 +87,7 @@ class CylindricalHarmonicField(BasisVectorField):
                             self.coefficientsExpansion.jSize()))
         x = location.i
         y = location.j
-        cylindricalLocation = CoordConverters.convertToCylindrical(location)
+        cylindricalLocation = cartesianToCylindrical(CartesianVector3D(location))
         rho = cylindricalLocation.rho
         phi = cylindricalLocation.phi
         z = cylindricalLocation.z

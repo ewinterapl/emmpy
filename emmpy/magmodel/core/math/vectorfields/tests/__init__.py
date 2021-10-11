@@ -7,7 +7,6 @@ test_BasisVectorFields.py
 test_CylindricalBasisVectorField.py
 test_DifferentiableCylindricalVectorField.py
 test_DifferentiableSphericalVectorField.py
-test_SphericalScalarField.py
 test_SphericalVectorField.py
 
 Packages

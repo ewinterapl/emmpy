@@ -7,7 +7,6 @@ basisvectorfields.py
 cylindricalbasisvectorfield.py
 differentiablecylindricalvectorfield.py
 differentiablesphericalvectorfield.py
-sphericalscalarfield.py
 sphericalvectorfield.py
 
 Packages

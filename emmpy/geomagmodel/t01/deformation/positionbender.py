@@ -12,7 +12,7 @@ from math import sin, sqrt
 import numpy as np
 
 from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
-    DifferentiableVectorField, Results
+    Results
 )
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
@@ -27,7 +27,7 @@ RH2 = -5.2
 EPSILON = 3
 
 
-class PositionBender(DifferentiableVectorField):
+class PositionBender:
     """Compute deformation in the X-Z plane related to the dipole tilt.
 
     From Tsyganeneko's code, an implementation of Tsyganenko [1998]

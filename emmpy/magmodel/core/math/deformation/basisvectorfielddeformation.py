@@ -78,7 +78,7 @@ class BasisVectorFieldDeformation(BasisVectorField):
         """
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         trans = VectorFieldDeformation.computeMatrix(deformed)
-        bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
+        bFieldExpansion = self.originalField.evaluateExpansion(deformed.f)
         bFieldExpansionDeformed = []
         for bField in bFieldExpansion:
             v = VectorIJK()

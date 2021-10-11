@@ -83,15 +83,15 @@ class VectorFieldDeformation(VectorField):
         trans : MatrixIJK
             The deformation matrix.
         """
-        dFxDx = deformed.getdFxDx()
-        dFxDy = deformed.getdFxDy()
-        dFxDz = deformed.getdFxDz()
-        dFyDx = deformed.getdFyDx()
-        dFyDy = deformed.getdFyDy()
-        dFyDz = deformed.getdFyDz()
-        dFzDx = deformed.getdFzDx()
-        dFzDy = deformed.getdFzDy()
-        dFzDz = deformed.getdFzDz()
+        dFxDx = deformed.dFxDx
+        dFxDy = deformed.dFxDy
+        dFxDz = deformed.dFxDz
+        dFyDx = deformed.dFyDx
+        dFyDy = deformed.dFyDy
+        dFyDz = deformed.dFyDz
+        dFzDx = deformed.dFzDx
+        dFzDy = deformed.dFzDy
+        dFzDz = deformed.dFzDz
         txx = dFyDy*dFzDz - dFyDz*dFzDy
         txy = dFxDz*dFzDy - dFxDy*dFzDz
         txz = dFxDy*dFyDz - dFxDz*dFyDy

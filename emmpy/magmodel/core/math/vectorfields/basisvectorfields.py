@@ -110,13 +110,6 @@ class BasisVectorFields:
                                  for field in fields])
         )
 
-        def my_toString():
-            s = ""
-            for field in fields:
-                s += field.toString()
-                s += " "
-            return s
-        bvf.toString = my_toString
         return bvf
 
     @staticmethod

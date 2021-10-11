@@ -48,11 +48,8 @@ def checkRotation(*args):
 
     Parameters
     ----------
-    m : array-like, 2x2 or 3x3 of float
+    m : array-like, 3x3 of float
         Matrix to check.
-    OR
-    ii, ji, ij, jj : float
-        2-D matrix components in column-major order.
     OR
     ii, ji, ki, ij, jj, kj, ik, jk, kk : float
         3-D matrix components in column-major order.
@@ -76,11 +73,6 @@ def checkRotation(*args):
     if len(args) == 3:
         (data, normTolerance, detTolerance) = args
         a = np.array(data)
-    elif len(args) == 6:
-        # 2-D matrix
-        (ii, ji, ij, jj, normTolerance, detTolerance) = args
-        # Convert the individual values to a 2x2 np.ndarray.
-        a = np.array([ii, ij, ji, jj]).reshape(2, 2)
     elif len(args) == 11:
         # 3-D matrix.
         (ii, ji, ki, ij, jj, kj, ik, jk, kk,
@@ -95,7 +87,7 @@ def checkRotation(*args):
     if abs(det) > 1 + detTolerance:
         raise MalformedRotationException
 
-    # Verify each column has unit norm.
+    # Verify each column has unit norm, within tolerance.
     for col in range(len(a)):
         norm = np.linalg.norm(a[:, col])
         if abs(norm) > 1 + normTolerance:

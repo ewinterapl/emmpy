@@ -236,9 +236,9 @@ class Ffunction:
             )
             return FDerivatives(phiStretched, dF_dPhi, dF_dRho, dF_dy)
         elif isinstance(location, VectorIJK):
-            x = location.getI()
-            y = location.getJ()
-            z = location.getK()
+            x = location.i
+            y = location.j
+            z = location.k
 
             # Convert to spherical and cylindrical.
             rho2 = x*x + z*z

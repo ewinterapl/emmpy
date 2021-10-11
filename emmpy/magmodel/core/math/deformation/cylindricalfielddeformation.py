@@ -64,7 +64,7 @@ class CylindricalFieldDeformation:
         # Evaluate the deformed field.
         v = trans.mxv(VectorIJK(bField.rho, bField.phi, bField.z))
 
-        return CylindricalVector(v.getI(), v.getJ(), v.getK())
+        return CylindricalVector(v.i, v.j, v.k)
 
     @staticmethod
     def computeMatrix(deformed, originalCoordinate):

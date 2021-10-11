@@ -62,10 +62,10 @@ class VectorFieldDeformation(VectorField):
         bField = self.originalField.evaluate(deformed.getF())
 
         # Evaluate the deformed field.
-        v = trans.mxv(VectorIJK(bField.getI(), bField.getJ(), bField.getK()))
+        v = trans.mxv(VectorIJK(bField.i, bField.j, bField.k))
 
         # Return the updated buffer.
-        return buffer.setTo(v.getI(), v.getJ(), v.getK())
+        return buffer.setTo(v.i, v.j, v.k)
 
     @staticmethod
     def computeMatrix(deformed):

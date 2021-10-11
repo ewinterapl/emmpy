@@ -58,8 +58,8 @@ class BasisVectorFieldDeformation(BasisVectorField):
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         trans = VectorFieldDeformation.computeMatrix(deformed)
         bField = self.originalField.evaluate(deformed.getF())
-        v = trans.mxv(VectorIJK(bField.getI(), bField.getJ(), bField.getK()))
-        return buffer.setTo(v.getI(), v.getJ(), v.getK())
+        v = trans.mxv(VectorIJK(bField.i, bField.j, bField.k))
+        return buffer.setTo(v.i, v.j, v.k)
 
     def evaluateExpansion(self, originalCoordinate):
         """Evaluate and deform the expansion at the specified location.

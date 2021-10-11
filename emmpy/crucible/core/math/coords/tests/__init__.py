@@ -13,7 +13,6 @@ test_sphericaltocartesianbasistransformation.py
 test_sphericaltocartesianjacobian.py
 test_sphericalvectorfieldvalue.py
 test_transformation.py
-test_transformationij.py
 test_vectorfieldvalue.py
 test_vectorfieldvalueconversions.py
 

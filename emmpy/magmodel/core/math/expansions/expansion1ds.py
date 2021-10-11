@@ -116,8 +116,8 @@ class Expansion1Ds:
             e1d : Expansion1D
                 Wrapper object for expansion sum.
             """
-            firstExpansion = a.getLowerBoundIndex()
-            lastExpansion = a.getUpperBoundIndex()
+            firstExpansion = a.firstRadialExpansionNumber
+            lastExpansion = a.lastRadialExpansionNumber
             array = nones((lastExpansion - firstExpansion + 1,))
             e1d = Expansion1D()
             e1d.getLowerBoundIndex = lambda: firstExpansion

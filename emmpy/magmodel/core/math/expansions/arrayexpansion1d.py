@@ -44,38 +44,6 @@ class ArrayExpansion1D(Expansion1D):
             firstRadialExpansionNumber + len(array) - 1
         )
 
-    def getLowerBoundIndex(self):
-        """Return the lowest expansion value index.
-
-        Return the lowest expansion value index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.firstRadialExpansionNumber : int
-            Index of first expansion value.
-        """
-        return self.firstRadialExpansionNumber
-
-    def getUpperBoundIndex(self):
-        """Return the highest expansion value index.
-
-        Return the highest expansion value index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.lastRadialExpansionNumber : int
-            Index of last expansion value.
-        """
-        return self.lastRadialExpansionNumber
-
     def getExpansion(self, radialExpansion):
         """Return the the specified expansion value.
         

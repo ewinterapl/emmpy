@@ -13,13 +13,10 @@ import sys
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
-    CylindricalVectorField
-)
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
-class CylindricalFieldDeformation(CylindricalVectorField):
+class CylindricalFieldDeformation:
     """Deformation for a cylindrical field.
 
     Deformation for a cylindrical field.

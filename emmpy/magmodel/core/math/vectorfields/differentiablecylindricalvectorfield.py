@@ -9,11 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
-    CylindricalVectorField
-)
-
-
 class Results:
     """The spatial derivatives of a cylindrical VectorField.
 
@@ -220,7 +215,7 @@ class Results:
         return self.dFzDz
 
 
-class DifferentiableCylindricalVectorField(CylindricalVectorField):
+class DifferentiableCylindricalVectorField:
     """A differentiable vector field in cylindrical coordinates.
 
     Represents the 9 spatial derivatives of a VectorField in cylindrical

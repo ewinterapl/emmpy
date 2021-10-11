@@ -6,5 +6,4 @@ hierarchy.
 Modules
 -------
 test_crucibleexception.py
-test_crucibleruntimeexception.py
 """

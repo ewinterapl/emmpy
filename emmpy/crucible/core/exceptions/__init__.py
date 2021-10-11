@@ -20,7 +20,6 @@ exceptions specific to crucible itself without much difficulty.
 Modules
 -------
 crucibleexception.py
-crucibleruntimeexception.py
 
 Packages
 --------

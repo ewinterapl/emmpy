@@ -10,12 +10,12 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.exceptions.crucibleruntimeexception import (
-    CrucibleRuntimeException
+from emmpy.crucible.core.exceptions.crucibleexception import (
+    CrucibleException
 )
 
 
-class PointOnAxisException(CrucibleRuntimeException):
+class PointOnAxisException(CrucibleException):
     """Exception for detecting a point on an axis.
 
     This exception should be raised when a point on an axis is detected
@@ -42,7 +42,7 @@ class PointOnAxisException(CrucibleRuntimeException):
             pass
         elif len(args) == 1:
             # args[0] can be message or cause
-            CrucibleRuntimeException.__init__(self, args[0])
+            CrucibleException.__init__(self, args[0])
         elif len(args) == 2:
             (message, cause) = args
-            CrucibleRuntimeException.__init__(self, message, cause)
+            CrucibleException.__init__(self, message, cause)

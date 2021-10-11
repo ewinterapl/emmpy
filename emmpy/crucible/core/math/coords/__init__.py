@@ -52,7 +52,6 @@ For developers
 
 Modules
 -------
-abstractcoordconverter.py
 abstractvectorfieldvalue.py
 cartesianvectorfieldvalue.py
 coordconverters.py

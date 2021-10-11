@@ -5,5 +5,4 @@ hierarchy.
 
 Modules
 -------
-test_crucibleexception.py
 """

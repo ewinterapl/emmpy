@@ -4,7 +4,7 @@
 import unittest
 
 from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
-    DifferentiableSphericalVectorField
+    Results
 )
 
 

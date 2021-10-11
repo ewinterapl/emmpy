@@ -59,7 +59,7 @@ class SphericalFieldDeformation(SphericalVectorField):
         trans = self.computeMatrix(deformed, originalCoordinate)
 
         # Evaluate the field at the deformed location.
-        bField = self.originalField.evaluate(deformed.getF())
+        bField = self.originalField.evaluate(deformed.f)
 
         # Evaluate the deformed field.
         v = VectorIJK()
@@ -91,17 +91,17 @@ class SphericalFieldDeformation(SphericalVectorField):
         ht = r
         hp = r*sin(theta)
         hrDef = 1
-        htDef = deformed.getF().r
-        hpDef = deformed.getF().r*sin(deformed.getF().theta)
-        dFrDr = deformed.getdFrDr()
-        dFrDt = deformed.getdFrDt()
-        dFrDp = deformed.getdFrDp()
-        dFtDr = deformed.getdFtDr()
-        dFtDt = deformed.getdFtDt()
-        dFtDp = deformed.getdFtDp()
-        dFpDr = deformed.getdFpDr()
-        dFpDt = deformed.getdFpDt()
-        dFpDp = deformed.getdFpDp()
+        htDef = deformed.f.r
+        hpDef = deformed.f.r*sin(deformed.f.theta)
+        dFrDr = deformed.dFrDr
+        dFrDt = deformed.dFrDt
+        dFrDp = deformed.dFrDp
+        dFtDr = deformed.dFtDr
+        dFtDt = deformed.dFtDt
+        dFtDp = deformed.dFtDp
+        dFpDr = deformed.dFpDr
+        dFpDt = deformed.dFpDt
+        dFpDp = deformed.dFpDp
         trr = (htDef*hpDef/(ht*hp))*(dFtDt*dFpDp - dFtDp*dFpDt)
         trt = (hrDef*hpDef/(ht*hp))*(dFrDp*dFpDt - dFrDt*dFpDp)
         trp = (hrDef*htDef/(ht*hp))*(dFrDt*dFtDp - dFrDp*dFtDt)

@@ -12,12 +12,12 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import cos, sin, sqrt
 
 from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
-    Results, DifferentiableSphericalVectorField
+    Results
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 
-class BirkelandDeformationFunction(DifferentiableSphericalVectorField):
+class BirkelandDeformationFunction:
     """Deformation to model a Birkeland current sheet.
 
     Represents the analytical deformation of spherical coordinates to

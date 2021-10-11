@@ -25,16 +25,6 @@ class CylindricalBasisVectorField(CylindricalVectorField):
     conversion from a CylindricalVector field to a Cartesian vector field.
     """
 
-    def __init__(self):
-        """Initialize a new CylindricalBasisVectorField object.
-
-        Initialize a new CylindricalBasisVectorField object.
-
-        Parameters
-        ----------
-        None
-        """
-
     def evaluateExpansion(self, location):
         """Evaluate the expansion.
 

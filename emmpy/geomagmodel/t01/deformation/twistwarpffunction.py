@@ -18,12 +18,12 @@ from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation impor
     CylindricalBasisFieldDeformation
 )
 from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
-    DifferentiableCylindricalVectorField, Results
+    Results
 )
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
-class TwistWarpFfunction(DifferentiableCylindricalVectorField):
+class TwistWarpFfunction:
     """A polar angle transformation for twisting and warping.
 
     Defines a transformation that deforms the polar angle to introduce a

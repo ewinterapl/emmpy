@@ -59,7 +59,7 @@ class CylindricalBasisFieldDeformation(CylindricalBasisVectorField):
         trans = CylindricalFieldDeformation.computeMatrix(
             deformed, originalCoordinate
         )
-        bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
+        bFieldExpansion = self.originalField.evaluateExpansion(deformed.f)
         bFieldExpansionDeformed = []
         for bField in bFieldExpansion:
             v = VectorIJK()

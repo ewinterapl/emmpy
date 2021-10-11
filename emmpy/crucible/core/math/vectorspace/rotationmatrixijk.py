@@ -12,9 +12,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     checkRotation
 )
-from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
-    MalformedRotationException
-)
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 
 
@@ -46,10 +43,11 @@ class RotationMatrixIJK(MatrixIJK):
         Raises
         ------
         MalformedRotationException
-            If the matrix is not a valid rotation matrix.
+            If the matrix is not a valid rotation matrix. Raised by
+            checkRotation().
         """
         if len(args) == 0:
-            # Creates an identity rotation matrix.
+            # Create an identity rotation matrix.
             MatrixIJK.__init__(self, IDENTITY)
         else:
             MatrixIJK.__init__(self, *args)

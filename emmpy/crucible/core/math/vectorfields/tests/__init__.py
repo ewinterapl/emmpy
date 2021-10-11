@@ -4,7 +4,6 @@ Modules
 -------
 test_differentiablevectorField.py
 test_scalarfield.py
-test_scalarfield2d.py
 test_vectorfield.py
 test_vectorfields.py
 

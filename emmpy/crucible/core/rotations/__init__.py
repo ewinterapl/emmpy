@@ -5,7 +5,6 @@ Modules
 axisandangle.py
 privilegedrotationmatrixijk.py
 rotation.py
-unwritablerotation.py
 
 Packages
 --------

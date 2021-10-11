@@ -2,7 +2,6 @@
 
 Modules
 -------
-test_abstractvectorfieldvalue.py
 test_cartesianvectorfieldvalue.py
 test_coordconverters.py
 test_cylindricaltocartesianbasistransformation.py

@@ -52,7 +52,6 @@ For developers
 
 Modules
 -------
-abstractvectorfieldvalue.py
 cartesianvectorfieldvalue.py
 coordconverters.py
 cylindricaltocartesianbasistransformation.py

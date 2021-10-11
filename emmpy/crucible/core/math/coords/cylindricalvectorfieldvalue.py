@@ -10,12 +10,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.abstractvectorfieldvalue import (
-    AbstractVectorFieldValue
-)
-
-
-class CylindricalVectorFieldValue(AbstractVectorFieldValue):
+class CylindricalVectorFieldValue:
     """Vector field in a 3-D Cartesian space.
 
     A cylindrical vector field value contains a position in the vector
@@ -39,4 +34,5 @@ class CylindricalVectorFieldValue(AbstractVectorFieldValue):
         value : CylindricalVector
             Value of the vector field at the position.
         """
-        AbstractVectorFieldValue.__init__(self, position, value)
+        self.position = position
+        self.value = value

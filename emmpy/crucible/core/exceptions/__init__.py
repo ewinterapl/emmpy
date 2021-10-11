@@ -19,7 +19,6 @@ exceptions specific to crucible itself without much difficulty.
 
 Modules
 -------
-bugexception.py
 crucibleexception.py
 crucibleruntimeexception.py
 

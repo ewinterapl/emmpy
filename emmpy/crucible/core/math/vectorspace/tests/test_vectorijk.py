@@ -7,7 +7,6 @@ import warnings
 
 import numpy as np
 
-from emmpy.crucible.core.exceptions.bugexception import BugException
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 
@@ -64,7 +63,7 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
         # Can't project onto 0 vector.
-        with self.assertRaises(BugException):
+        with self.assertRaises(Exception):
             v3 = VectorIJK.project(v2, v1)
 
 

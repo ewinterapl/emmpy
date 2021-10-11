@@ -11,9 +11,6 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    absMaxComponent
-)
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -180,8 +177,8 @@ class VectorIJK(Vector3D):
         buffer = VectorIJK()
 
         # Scale and project the vector.
-        maxVector = absMaxComponent(*vector)
-        maxOnto = absMaxComponent(*onto)
+        maxVector = max(abs(vector))
+        maxOnto = max(abs(onto))
         if maxOnto == 0:
             raise Exception("Unable to project vector onto zero vector.")
 

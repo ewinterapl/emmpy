@@ -6,8 +6,7 @@ from math import cos, pi, sin
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
-    absMaxComponent,
-    checkRotation,
+    checkRotation
 )
 from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
@@ -16,15 +15,6 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 
 class TestBuilder(unittest.TestCase):
     """Tests for the internaloperations module."""
-
-    def test_absMaxComponent(self):
-        """Test the absMaxComponent function."""
-        self.assertEqual(absMaxComponent(0), 0)
-        self.assertEqual(absMaxComponent(0, 0), 0)
-        self.assertEqual(absMaxComponent(1, -2), 2)
-        self.assertEqual(absMaxComponent(2, -2), 2)
-        self.assertEqual(absMaxComponent(0, 0, 0), 0)
-        self.assertEqual(absMaxComponent(1, 2, -3), 3)
 
     def test_checkRotation(self):
         """Test the checkRotation function."""

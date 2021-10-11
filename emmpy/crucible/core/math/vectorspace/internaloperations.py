@@ -17,25 +17,6 @@ from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
 )
 
 
-def absMaxComponent(*args):
-    """Compute the absolute value of the largest of a group of numbers.
-
-    Determine the largest component by magnitude, and return its absolute
-    value.
-
-    Parameters
-    ----------
-    *args : float
-        Arbitrary number of floats.
-
-    Returns
-    -------
-    max(abs(x)) : float
-        Absolute value of the largest number in args.
-    """
-    return max(abs(x) for x in args)
-
-
 def checkRotation(*args):
     """Determine if the values of matrix are a rotation.
 

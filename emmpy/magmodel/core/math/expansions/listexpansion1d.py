@@ -42,38 +42,6 @@ class ListExpansion1D(Expansion1D):
             firstRadialExpansionNumber + len(aList) - 1
         )
 
-    def getLowerBoundIndex(self):
-        """Return the lowest expansion index.
-        
-        Return the lowest expansionindex.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Lowest expansion index.
-        """
-        return self.firstRadialExpansionNumber
-
-    def getUpperBoundIndex(self):
-        """Return the highest expansion index.
-        
-        Return the highest expansionindex.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Higest expansion index.
-        """
-        return self.lastRadialExpansionNumber
-
     def getExpansion(self, radialExpansion):
         """Return the specified expansion value.
         

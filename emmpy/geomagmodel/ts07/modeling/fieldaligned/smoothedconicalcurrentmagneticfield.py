@@ -17,7 +17,6 @@ from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
@@ -25,6 +24,7 @@ from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 

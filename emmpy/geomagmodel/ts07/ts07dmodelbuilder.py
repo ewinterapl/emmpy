@@ -9,7 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
@@ -34,6 +33,7 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TS07DModelBuilder:

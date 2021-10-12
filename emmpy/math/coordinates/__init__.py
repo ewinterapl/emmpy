@@ -15,6 +15,7 @@ polarvector.py
 radecvector.py
 sphericalvector.py
 vectorij.py
+vectorijk.py
 
 Packages
 --------

@@ -11,9 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 # from math import atan2, pi
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import (
-    I, J, K, VectorIJK
-)
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     IDENTITY
 )
@@ -21,7 +18,9 @@ from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK
 )
 from emmpy.crucible.core.rotations.rotation import Rotation
-
+from emmpy.math.coordinates.vectorijk import  (
+    I, J, K, VectorIJK
+)
 
 class AxisAndAngle(Rotation):
     """A rotation axis and angle.

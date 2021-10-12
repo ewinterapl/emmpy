@@ -9,7 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import TrigParity
@@ -28,6 +27,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions impor
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 

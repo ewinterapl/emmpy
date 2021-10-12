@@ -14,10 +14,10 @@ import numpy as np
 from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
     Results
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
     BasisVectorFieldDeformation
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 # WHAT ARE THESE CONSTANTS?

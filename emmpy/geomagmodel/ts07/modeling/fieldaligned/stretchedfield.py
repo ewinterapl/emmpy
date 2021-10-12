@@ -13,9 +13,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import atan2, cos, sin, sqrt
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.ffunction import Ffunction
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class StretchedField(VectorField):

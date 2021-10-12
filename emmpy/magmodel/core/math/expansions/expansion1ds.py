@@ -8,7 +8,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.expansions.arrayexpansion1d import (
     ArrayExpansion1D
 )
@@ -17,6 +16,7 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
 )
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 from emmpy.magmodel.core.math.expansions.listexpansion1d import ListExpansion1D
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 

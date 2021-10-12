@@ -12,8 +12,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 import sys
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class CylindricalFieldDeformation:

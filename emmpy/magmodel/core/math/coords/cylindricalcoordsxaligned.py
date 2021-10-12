@@ -3,7 +3,6 @@
 
 from math import atan2, cos, pi, sin, sqrt
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -11,9 +10,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
     CylindricalBasisVectorField
 )
-# from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
-#     CylindricalVectorField
-# )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class CylindricalCoordsXAligned:

@@ -12,7 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.matrices.matrix3d import Matrix3D
 
 

@@ -9,7 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian, cartesianToCylindrical
@@ -17,6 +16,7 @@ from emmpy.math.coordinates.cylindricalvector import (
 from emmpy.math.coordinates.sphericalvector import (
     SphericalVector, sphericalToCartesian, cartesianToSpherical
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class CoordConverters:

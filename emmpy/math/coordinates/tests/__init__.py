@@ -10,6 +10,7 @@ test_polarvector.py
 test_radecvector.py
 test_sphericalvector.py
 test_vectorij.py
+test_vectorijk.py
 
 Packages
 --------

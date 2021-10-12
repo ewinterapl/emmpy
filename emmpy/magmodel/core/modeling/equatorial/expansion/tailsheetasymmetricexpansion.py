@@ -15,7 +15,7 @@ from scipy.special import jv
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.math.coordinates.vectorij import VectorIJ
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TailSheetAsymmetricExpansion(VectorField):

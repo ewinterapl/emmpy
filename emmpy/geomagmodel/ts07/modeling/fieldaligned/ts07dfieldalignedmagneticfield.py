@@ -10,7 +10,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
 )
@@ -21,6 +20,7 @@ from emmpy.magmodel.core.math.trigparity import TrigParity
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class Ts07DFieldAlignedMagneticField(BasisVectorField):

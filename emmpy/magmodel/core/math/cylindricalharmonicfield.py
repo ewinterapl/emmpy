@@ -14,7 +14,6 @@ from math import cosh, sinh
 import numpy as np
 from scipy.special import jv
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
@@ -22,6 +21,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 )
 from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.coordinates.cylindricalvector import cartesianToCylindrical
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 

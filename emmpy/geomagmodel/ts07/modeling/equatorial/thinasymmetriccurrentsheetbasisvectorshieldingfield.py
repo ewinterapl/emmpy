@@ -9,7 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
@@ -22,6 +21,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 

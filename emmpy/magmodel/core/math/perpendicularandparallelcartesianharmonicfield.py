@@ -13,7 +13,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import (J, VectorIJK)
 from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
 
 from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
@@ -28,6 +27,9 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
+)
+from emmpy.math.coordinates.vectorijk import (
+    VectorIJK, I, J, K
 )
 from emmpy.math.vectors.vector import Vector
 

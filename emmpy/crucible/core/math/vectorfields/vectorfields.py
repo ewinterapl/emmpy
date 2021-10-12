@@ -13,13 +13,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 import numpy as np
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 def add(a, b):

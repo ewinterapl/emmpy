@@ -12,11 +12,11 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import sin
 
 from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class SphericalFieldDeformation(SphericalVectorField):

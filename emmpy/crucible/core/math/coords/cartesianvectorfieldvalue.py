@@ -10,7 +10,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-class CartesianVectorFieldValue:
+from .vectorfieldvalue import VectorFieldValue
+
+
+class CartesianVectorFieldValue(VectorFieldValue):
     """Vector field in a 3-D Cartesian space.
 
     A Cartesian vector field value contains a position in the vector
@@ -22,17 +25,17 @@ class CartesianVectorFieldValue:
     None
     """
 
-    def __init__(self, position, value):
-        """Initialize a new CartesianVectorFieldValue object.
+    # def __init__(self, position, value):
+    #     """Initialize a new CartesianVectorFieldValue object.
 
-        Initialize a new CartesianVectorFieldValue object.
+    #     Initialize a new CartesianVectorFieldValue object.
 
-        Parameters
-        ----------
-        position : VectorIJK
-            Position in the vector field.
-        value : VectorIJK
-            Value of the vector field at the position.
-        """
-        self.position = position
-        self.value = value
+    #     Parameters
+    #     ----------
+    #     position : VectorIJK
+    #         Position in the vector field.
+    #     value : VectorIJK
+    #         Value of the vector field at the position.
+    #     """
+    #     self.position = position
+    #     self.value = value

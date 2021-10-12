@@ -10,29 +10,12 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-class CylindricalVectorFieldValue:
+from .vectorfieldvalue import VectorFieldValue
+
+class CylindricalVectorFieldValue(VectorFieldValue):
     """Vector field in a 3-D Cartesian space.
 
     A cylindrical vector field value contains a position in the vector
     field, and a value for the vector field, both in cylindrical
     coordinates.
-
-    Attributes
-    ----------
-    None
     """
-
-    def __init__(self, position, value):
-        """Initialize a new CylindricalVectorFieldValue object.
-
-        Initialize a new CylindricalVectorFieldValue object.
-
-        Parameters
-        ----------
-        position : CylindricalVector
-            Position in the vector field.
-        value : CylindricalVector
-            Value of the vector field at the position.
-        """
-        self.position = position
-        self.value = value

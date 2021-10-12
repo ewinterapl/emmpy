@@ -9,6 +9,7 @@ test_latitudinalvector.py
 test_polarvector.py
 test_radecvector.py
 test_sphericalvector.py
+test_vectorij.py
 
 Packages
 --------

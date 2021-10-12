@@ -6,7 +6,6 @@ test_internaloperations.py
 test_malformedrotationexception.py
 test_matrixijk.py
 test_rotationmatrixijk.py
-test_vectorij.py
 test_vectorijk.py
 
 Packages

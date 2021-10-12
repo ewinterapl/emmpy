@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.coordinates.vectorij import VectorIJ
 
 
 class TestBuilder(unittest.TestCase):

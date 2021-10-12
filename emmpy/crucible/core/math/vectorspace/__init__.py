@@ -6,7 +6,6 @@ internaloperations.py
 malformedrotationexception.py
 matrixijk.py
 rotationmatrixijk.py
-vectorij.py
 vectorijk.py
 
 Packages

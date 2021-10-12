@@ -14,7 +14,7 @@ from math import atan2, exp, sqrt
 from scipy.special import jv
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.vectorij import VectorIJ
+from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 
 

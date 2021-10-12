@@ -8,10 +8,10 @@ import numpy as np
 
 from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
 from emmpy.math.coordinates.vectorij import VectorIJ
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 # Test grids.

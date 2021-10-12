@@ -13,7 +13,7 @@ from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue)
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions)
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):

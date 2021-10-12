@@ -7,7 +7,7 @@ from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorfields.vectorfields import (
     add, addAll, negate, scale, scaleLocation
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 # Create vector fields for testing.

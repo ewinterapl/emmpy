@@ -4,10 +4,10 @@
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 import unittest
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):

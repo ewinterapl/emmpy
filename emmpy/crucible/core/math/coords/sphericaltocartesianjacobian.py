@@ -18,8 +18,8 @@ from emmpy.crucible.core.math.coords.pointonaxisexception import (
     PointOnAxisException
 )
 from emmpy.crucible.core.math.coords.transformation import Transformation
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class SphericalToCartesianJacobian(Transformation):

@@ -9,9 +9,8 @@ import numpy as np
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
     SphericalToCartesianBasisTransformation
 )
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-# from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
 # Test grids.

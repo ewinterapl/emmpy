@@ -12,7 +12,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.matrices.matrix3d import Matrix3D
 
 
@@ -56,17 +55,18 @@ class MatrixIJK(Matrix3D):
         """
         if len(args) == 0:
             # Construct an empty matrix (all NaN).
-            self[:, :] = np.array((None,)*9).reshape((3, 3))
+            data = np.array((None,)*9).reshape((3, 3))
         elif len(args) == 1:
             # Initialize matrix from a 3x3 array-like of floats.
             (a,) = args
-            self[:, :] = np.array(a)
+            data = np.array(a)
         elif len(args) == 9:
             # Matrix elements in column-major order.
             (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            self[:, :] = [[ii, ij, ik], [ji, jj, jk], [ki, kj, kk]]
+            data = np.array([[ii, ij, ik], [ji, jj, jk], [ki, kj, kk]])
         else:
             raise ValueError
+        self[:] = data[:]
 
     def __getattr__(self, name):
         """Return the value of an attribute.

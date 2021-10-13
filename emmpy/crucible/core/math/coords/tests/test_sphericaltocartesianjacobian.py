@@ -13,7 +13,7 @@ from emmpy.crucible.core.math.coords.sphericaltocartesianjacobian import (
     SphericalToCartesianJacobian
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
 # Test grids.

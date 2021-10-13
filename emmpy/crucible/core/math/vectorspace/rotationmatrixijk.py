@@ -12,7 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     checkRotation
 )
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
+from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
 # Tolerances for determinant and column norms, relative to unity, for a

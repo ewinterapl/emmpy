@@ -23,12 +23,12 @@ from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation imp
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue)
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.coordinates.cylindricalvector import (
     cartesianToCylindrical, CylindricalVector
 )
 from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
+from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
 class VectorFieldValueConversions:

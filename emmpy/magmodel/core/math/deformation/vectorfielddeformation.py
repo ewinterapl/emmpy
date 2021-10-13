@@ -10,8 +10,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
 class VectorFieldDeformation(VectorField):

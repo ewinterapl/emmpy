@@ -47,40 +47,6 @@ class ArrayCoefficientExpansion2D:
         self.jUpperBoundIndex = self.jLowerBoundIndex + len(self.data[0]) - 1
         self.jSize = self.jUpperBoundIndex - self.jLowerBoundIndex + 1
 
-    # def iSize(self):
-    #     """Return the element count in the 1st dimension of the expansion.
-        
-    #     Return the element count in the 1st dimension of the expansion.
-
-    #     Parameters
-    #     ----------
-    #     None
-
-    #     Returns
-    #     -------
-    #     size : int
-    #         Number of elements in 1st dimension of expansion.
-    #     """
-    #     size = self.iUpperBoundIndex - self.iLowerBoundIndex + 1
-    #     return size
-
-    # def jSize(self):
-    #     """Return the element count in the 2nd dimension of the expansion.
-        
-    #     Return the element count in the 2nd dimension of the expansion.
-
-    #     Parameters
-    #     ----------
-    #     None
-
-    #     Returns
-    #     -------
-    #     size : int
-    #         Number of elements in 2nd dimension of expansion.
-    #     """
-    #     size = self.jUpperBoundIndex - self.jLowerBoundIndex + 1
-    #     return size
-
     def getCoefficient(self, azimuthalExpansion, radialExpansion):
         """Return the specified coefficient.
         

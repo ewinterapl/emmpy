@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
+from emmpy.math.vectorfields.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue
 )
 

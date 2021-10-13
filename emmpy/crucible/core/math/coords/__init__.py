@@ -57,7 +57,6 @@ cylindricaltocartesianjacobian.py
 pointonaxisexception.py
 sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py
-sphericalvectorfieldvalue.py
 transformation.py
 vectorfieldvalueconversions.py
 

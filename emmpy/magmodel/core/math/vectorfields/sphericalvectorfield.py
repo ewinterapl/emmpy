@@ -9,15 +9,15 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
-    SphericalVectorFieldValue
-)
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
 from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
 from emmpy.math.vectorfields.vectorfield import VectorField
+from emmpy.math.vectorfields.sphericalvectorfieldvalue import (
+    SphericalVectorFieldValue
+)
 
 
 class SphericalVectorField(VectorField):

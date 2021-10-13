@@ -7,7 +7,6 @@ test_cylindricaltocartesianjacobian.py
 test_pointonaxisexception.py
 test_sphericaltocartesianbasistransformation.py
 test_sphericaltocartesianjacobian.py
-test_sphericalvectorfieldvalue.py
 test_transformation.py
 test_vectorfieldvalueconversions.py
 

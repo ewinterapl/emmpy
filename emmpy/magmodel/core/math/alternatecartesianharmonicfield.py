@@ -98,7 +98,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         self.firstI = aikCoeffs.iLowerBoundIndex
         self.lastI = aikCoeffs.iUpperBoundIndex
         self.firstK = aikCoeffs.jLowerBoundIndex
-        self.lastK = aikCoeffs.getJUpperBoundIndex()
+        self.lastK = aikCoeffs.jUpperBoundIndex
 
     def evaluateExpansion2D(self, location):
         """Return the full expansion results.

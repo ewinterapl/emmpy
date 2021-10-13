@@ -177,7 +177,7 @@ class CoefficientExpansions:
             firstAzimuthalExpansion = a.iLowerBoundIndex
             lastAzimuthalExpansion = a.iUpperBoundIndex
             firstRadialExpansion = a.jLowerBoundIndex
-            lastRadialExpansion = a.getJUpperBoundIndex()
+            lastRadialExpansion = a.jUpperBoundIndex
             n_az = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
             n_r = lastRadialExpansion - firstRadialExpansion + 1
             data = [[a.data[i][j] + b.data[i][j] for j in range(n_r)] for i in range(n_az)]

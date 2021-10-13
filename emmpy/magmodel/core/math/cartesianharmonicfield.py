@@ -89,7 +89,7 @@ class CartesianHarmonicField(BasisVectorField):
         self.firstI = aikCoeffs.iLowerBoundIndex
         self.lastI = aikCoeffs.iUpperBoundIndex
         self.firstK = aikCoeffs.jLowerBoundIndex
-        self.lastK = aikCoeffs.getJUpperBoundIndex()
+        self.lastK = aikCoeffs.jUpperBoundIndex
 
     def evaluate(self, location, buffer):
         """Evaluate the field.

@@ -22,7 +22,7 @@ class TestTailSheetCoefficients(unittest.TestCase):
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
         c = TailSheetCoefficients(tailSym, tailOdd, tailEven)
-        self.assertAlmostEqual(c.tailSheetSymmetricValues, tailSym)
+        self.assertIs(c.tailSheetSymmetricValues, tailSym)
         self.assertAlmostEqual(c.tailSheetOddValues, tailOdd)
         self.assertAlmostEqual(c.tailSheetEvenValues, tailEven)
 

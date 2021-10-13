@@ -50,7 +50,7 @@ class CoefficientExpansions:
         param p the set of coefficients p<sub>i</sub> to invert
         return the inverted set of coefficients p'<sub>i</sub>
         """
-        data = [1/x for x in p.array]
+        data = [1/x for x in p]
         ace1d = ArrayCoefficientExpansion1D(data, p.firstExpansionNumber)
         return ace1d
 
@@ -59,7 +59,7 @@ class CoefficientExpansions:
         """Return a negated view of the expansion."""
         v = None
         if isinstance(a, ArrayCoefficientExpansion1D):
-            data = [-x for x in a.array]
+            data = [-x for x in a]
             ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
@@ -114,7 +114,7 @@ class CoefficientExpansions:
             Scale factor for scaled copy of expansion.
         """
         if isinstance(a, ArrayCoefficientExpansion1D):
-            data = [scaleFactor*x for x in a.array]
+            data = [scaleFactor*x for x in a]
             ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
@@ -170,7 +170,7 @@ class CoefficientExpansions:
         # Replace the getCoefficient() method with a method that always returns
         # the sum, as a closure.
         if isinstance(a, ArrayCoefficientExpansion1D):
-            data = [aa + bb for (aa, bb) in zip(a.array, b.array)]
+            data = [aa + bb for (aa, bb) in zip(a, b)]
             ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
@@ -194,7 +194,7 @@ class CoefficientExpansions:
 
         Assumes a.array and b.array are np.array.
         """
-        data = np.hstack([a.array, b.array])
+        data = np.hstack([a, b])
         lowerBoundIndex = a.firstExpansionNumber
         ace1d = ArrayCoefficientExpansion1D(data, lowerBoundIndex)
         return ace1d

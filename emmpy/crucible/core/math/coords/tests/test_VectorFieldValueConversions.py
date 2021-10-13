@@ -4,8 +4,6 @@
 import unittest
 
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
-from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
-    CylindricalVectorFieldValue)
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue)
@@ -14,6 +12,9 @@ from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
+)
+from emmpy.math.vectorfields.cylindricalvectorfieldvalue import (
+    CylindricalVectorFieldValue
 )
 
 

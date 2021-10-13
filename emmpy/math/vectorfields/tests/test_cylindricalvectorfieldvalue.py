@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
+from emmpy.math.vectorfields.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue
 )
 

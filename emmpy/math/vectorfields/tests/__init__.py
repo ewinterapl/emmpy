@@ -3,6 +3,7 @@
 Modules
 -------
 test_cartesianvectorfieldvalue.py
+test_cylindricalvectorfieldvalue.py
 test_vectorfield.py
 test_vectorfieldvalue.py
 

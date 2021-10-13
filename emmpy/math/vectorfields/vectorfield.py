@@ -1,8 +1,8 @@
 """A vector field in a space of arbitrary dimension.
 
 This class represents a vector field in a space of arbitrary dimension.
-A vector field is defined as a mapping from a vector location in the
-field to a vector value in the field. The location and value vectors are
+A vector field is defined as a mapping from a vector position in the
+field to a vector value in the field. The position and value vectors are
 assumed to have the same dimensionality as the space.
 
 Authors
@@ -20,8 +20,8 @@ class VectorField:
     """A vector field in a space of arbitrary dimension.
 
     This class represents a vector field in a space of arbitrary dimension.
-    A vector field is defined as a mapping from a vector location in the
-    field to a vector value in the field. The location and value vectors are
+    A vector field is defined as a mapping from a vector position in the
+    field to a vector value in the field. The position and value vectors are
     assumed to have the same dimensionality as the space.
 
     Attributes

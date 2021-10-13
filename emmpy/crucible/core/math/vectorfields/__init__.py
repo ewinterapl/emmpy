@@ -3,8 +3,6 @@
 Modules
 -------
 differentiablevectorfield.py
-scalarfield.py
-vectorfield.py
 vectorfields.py
 
 Packages

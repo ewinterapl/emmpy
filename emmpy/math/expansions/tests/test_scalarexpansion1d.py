@@ -44,12 +44,12 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(se1d.getUpperBoundIndex(),
                          firstExpansionNumber + len(data) - 1)
 
-    def test_getCoefficient(self):
+    def test_getComponent(self):
         """Test the getCoefficient method."""
         se1d = ScalarExpansion1D(data, firstExpansionNumber)
         for i in range(firstExpansionNumber,
                        firstExpansionNumber + len(data)):
-            self.assertAlmostEqual(se1d.getCoefficient(i),
+            self.assertAlmostEqual(se1d.getComponent(i),
                                    data[i - firstExpansionNumber])
 
 

@@ -2,7 +2,7 @@
 
 Modules
 -------
-test_expansion1d.py
+test_scalarexpansion1d.py
 
 Packages
 --------

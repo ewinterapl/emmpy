@@ -2,7 +2,7 @@
 
 Modules
 -------
-expansion1d.py
+scalarexpansion1d.py
 
 Packages
 --------

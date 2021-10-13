@@ -10,7 +10,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.math.vectorfields.vectorfieldvalue import VectorFieldValue
+from .vectorfieldvalue import VectorFieldValue
 
 
 class CartesianVectorFieldValue(VectorFieldValue):

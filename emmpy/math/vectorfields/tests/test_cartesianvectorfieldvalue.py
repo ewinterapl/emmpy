@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
+from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
 

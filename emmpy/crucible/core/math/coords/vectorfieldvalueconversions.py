@@ -11,8 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
-    CartesianVectorFieldValue)
 from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
     CylindricalToCartesianBasisTransformation)
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
@@ -29,7 +27,9 @@ from emmpy.math.coordinates.cylindricalvector import (
 from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.matrices.matrixijk import MatrixIJK
-
+from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
+    CartesianVectorFieldValue
+)
 
 class VectorFieldValueConversions:
     """Useful vector field value conversions.

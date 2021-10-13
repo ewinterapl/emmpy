@@ -52,7 +52,6 @@ For developers
 
 Modules
 -------
-cartesianvectorfieldvalue.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvectorfieldvalue.py

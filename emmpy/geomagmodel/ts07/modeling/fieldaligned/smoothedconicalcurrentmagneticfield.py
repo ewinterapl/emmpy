@@ -9,9 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
-    CartesianVectorFieldValue
-)
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions
 )
@@ -24,6 +21,9 @@ from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
+    CartesianVectorFieldValue
+)
 from emmpy.utilities.nones import nones
 
 

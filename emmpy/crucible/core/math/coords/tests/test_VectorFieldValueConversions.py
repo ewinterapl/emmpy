@@ -3,8 +3,6 @@
 
 import unittest
 
-from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
-    CartesianVectorFieldValue)
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue)
@@ -14,6 +12,9 @@ from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions)
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
+    CartesianVectorFieldValue
+)
 
 
 class TestBuilder(unittest.TestCase):

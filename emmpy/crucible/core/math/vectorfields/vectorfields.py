@@ -12,7 +12,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )
@@ -20,6 +19,7 @@ from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 def add(a, b):

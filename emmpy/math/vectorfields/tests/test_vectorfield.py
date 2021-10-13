@@ -3,8 +3,8 @@
 
 import unittest
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class TestBuilder(unittest.TestCase):
@@ -14,9 +14,7 @@ class TestBuilder(unittest.TestCase):
         """Test the evaluate method."""
         with self.assertRaises(AbstractMethodException):
             VectorField.evaluate(None, None)
-        with self.assertRaises(AbstractMethodException):
-            VectorField.evaluate(None, None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

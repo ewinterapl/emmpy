@@ -14,8 +14,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class DifferentiableVectorField(VectorField):

@@ -13,9 +13,9 @@ from math import exp, sqrt
 
 import scipy.special as sps
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class TailSheetSymmetricExpansion(VectorField):

@@ -3,11 +3,11 @@
 
 import unittest
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.crucible.core.math.vectorfields.vectorfields import (
     add, addAll, negate, scale, scaleLocation
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 # Create vector fields for testing.

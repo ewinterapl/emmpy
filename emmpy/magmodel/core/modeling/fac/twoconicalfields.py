@@ -10,11 +10,11 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
     XYPlaneReflectedField
 )
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class TwoConicalFields(VectorField):

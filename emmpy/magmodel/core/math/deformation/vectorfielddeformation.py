@@ -9,9 +9,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.matrices.matrixijk import MatrixIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class VectorFieldDeformation(VectorField):

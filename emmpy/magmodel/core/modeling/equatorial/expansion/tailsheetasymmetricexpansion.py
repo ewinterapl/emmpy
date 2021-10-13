@@ -13,9 +13,9 @@ from math import atan2, exp, sqrt
 
 from scipy.special import jv
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class TailSheetAsymmetricExpansion(VectorField):

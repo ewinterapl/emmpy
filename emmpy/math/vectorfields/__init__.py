@@ -6,6 +6,7 @@ Modules
 -------
 cartesianvectorfield.py
 cartesianvectorfieldvalue.py
+cylindricalvectorfield.py
 cylindricalvectorfieldvalue.py
 sphericalvectorfieldvalue.py
 vectorfield.py

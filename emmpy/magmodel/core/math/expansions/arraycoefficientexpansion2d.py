@@ -97,22 +97,22 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
     #     """
     #     return self.iLowerBoundIndex
 
-    def getIUpperBoundIndex(self):
-        """Return the highest index in the first dimension.
+    # def getIUpperBoundIndex(self):
+    #     """Return the highest index in the first dimension.
         
-        Return the highest index in the first dimension.
+    #     Return the highest index in the first dimension.
 
-        Parameters
-        ----------
-        None
+    #     Parameters
+    #     ----------
+    #     None
 
-        Returns
-        -------
-        iUpperBoundIndex : int
-            Index of last coefficient in 1st dimension.
-        """
-        iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
-        return iUpperBoundIndex
+    #     Returns
+    #     -------
+    #     iUpperBoundIndex : int
+    #         Index of last coefficient in 1st dimension.
+    #     """
+    #     iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
+    #     return iUpperBoundIndex
 
     def getJLowerBoundIndex(self):
         """Return the lowest index in the second dimension.

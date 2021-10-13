@@ -175,7 +175,7 @@ class CoefficientExpansions:
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
             firstAzimuthalExpansion = a.iLowerBoundIndex
-            lastAzimuthalExpansion = a.getIUpperBoundIndex()
+            lastAzimuthalExpansion = a.iUpperBoundIndex
             firstRadialExpansion = a.getJLowerBoundIndex()
             lastRadialExpansion = a.getJUpperBoundIndex()
             n_az = lastAzimuthalExpansion - firstAzimuthalExpansion + 1

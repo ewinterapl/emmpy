@@ -9,6 +9,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
@@ -41,7 +43,7 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
         jLowerBoundIndex : int
             Index of first coefficient in 2nd dimension.
         """
-        self.data = data
+        self.data = np.array(data)
         self.iLowerBoundIndex = iLowerBoundIndex
         self.iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
         self.jLowerBoundIndex = jLowerBoundIndex

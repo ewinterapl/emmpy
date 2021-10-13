@@ -25,7 +25,7 @@ class TestBuilder(unittest.TestCase):
     def test_invert(self):
         e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
         ei = CoefficientExpansions.invert(e)
-        self.assertEqual(ei.getLowerBoundIndex(), 1)
+        self.assertEqual(ei.firstExpansionNumber, 1)
         self.assertEqual(ei.getUpperBoundIndex(), 3)
         self.assertAlmostEqual(ei.getCoefficient(1), 1)
         self.assertAlmostEqual(ei.getCoefficient(2), 1/2)
@@ -34,7 +34,7 @@ class TestBuilder(unittest.TestCase):
     def test_negate(self):
         e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
         en = CoefficientExpansions.negate(e)
-        self.assertEqual(en.getLowerBoundIndex(), 1)
+        self.assertEqual(en.firstExpansionNumber, 1)
         self.assertEqual(en.getUpperBoundIndex(), 3)
         self.assertAlmostEqual(en.getCoefficient(1), -1)
         self.assertAlmostEqual(en.getCoefficient(2), -2)
@@ -58,7 +58,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_createUnity(self):
         eu = CoefficientExpansions.createUnity(1, 3)
-        self.assertEqual(eu.getLowerBoundIndex(), 1)
+        self.assertEqual(eu.firstExpansionNumber, 1)
         self.assertEqual(eu.getUpperBoundIndex(), 3)
         self.assertAlmostEqual(eu.getCoefficient(1), 1)
         self.assertAlmostEqual(eu.getCoefficient(2), 1)
@@ -81,7 +81,7 @@ class TestBuilder(unittest.TestCase):
     def test_scale(self):
         e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
         es = CoefficientExpansions.scale(e, 2)
-        self.assertEqual(es.getLowerBoundIndex(), 1)
+        self.assertEqual(es.firstExpansionNumber, 1)
         self.assertEqual(es.getUpperBoundIndex(), 3)
         self.assertAlmostEqual(es.getCoefficient(1), 2)
         self.assertAlmostEqual(es.getCoefficient(2), 4)
@@ -105,7 +105,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_createConstant(self):
         e = CoefficientExpansions.createConstant(1, 3, 99)
-        self.assertEqual(e.getLowerBoundIndex(), 1)
+        self.assertEqual(e.firstExpansionNumber, 1)
         self.assertEqual(e.getUpperBoundIndex(), 3)
         self.assertAlmostEqual(e.getCoefficient(1), 99)
         self.assertAlmostEqual(e.getCoefficient(2), 99)
@@ -129,7 +129,7 @@ class TestBuilder(unittest.TestCase):
         e1 = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
         e2 = CoefficientExpansions.createExpansionFromArray([4, 5, 6], 1)
         e3 = CoefficientExpansions.add(e1, e2)
-        self.assertEqual(e3.getLowerBoundIndex(), 1)
+        self.assertEqual(e3.firstExpansionNumber, 1)
         self.assertEqual(e3.getUpperBoundIndex(), 3)
         self.assertAlmostEqual(e3.getCoefficient(1), 5)
         self.assertAlmostEqual(e3.getCoefficient(2), 7)
@@ -159,7 +159,7 @@ class TestBuilder(unittest.TestCase):
         e1 = CoefficientExpansions.createExpansionFromArray([0, 1, 2, 3], 1)
         e2 = CoefficientExpansions.createExpansionFromArray([4, 5, 6, 7, 8], 1)
         e3 = CoefficientExpansions.concat(e1, e2)
-        self.assertEqual(e3.getLowerBoundIndex(), 1)
+        self.assertEqual(e3.firstExpansionNumber, 1)
         self.assertEqual(e3.getUpperBoundIndex(), 9)
         self.assertAlmostEqual(e3.getCoefficient(1), 0)
         self.assertAlmostEqual(e3.getCoefficient(2), 1)

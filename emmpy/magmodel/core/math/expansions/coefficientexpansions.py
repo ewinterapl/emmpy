@@ -49,7 +49,7 @@ class CoefficientExpansions:
         return the inverted set of coefficients p'<sub>i</sub>
         """
         data = [1/x for x in p.array]
-        ace1d = ArrayCoefficientExpansion1D(data, p.getLowerBoundIndex())
+        ace1d = ArrayCoefficientExpansion1D(data, p.firstExpansionNumber)
         return ace1d
 
     @staticmethod
@@ -58,7 +58,7 @@ class CoefficientExpansions:
         v = None
         if isinstance(a, ArrayCoefficientExpansion1D):
             data = [-x for x in a.array]
-            ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
+            ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
             data = [[-x for x in row] for row in a.data]
@@ -113,7 +113,7 @@ class CoefficientExpansions:
         """
         if isinstance(a, ArrayCoefficientExpansion1D):
             data = [scaleFactor*x for x in a.array]
-            ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
+            ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
             data = [[scaleFactor*x for x in row] for row in a.data]
@@ -169,7 +169,7 @@ class CoefficientExpansions:
         # the sum, as a closure.
         if isinstance(a, ArrayCoefficientExpansion1D):
             data = [aa + bb for (aa, bb) in zip(a.array, b.array)]
-            ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
+            ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
             firstAzimuthalExpansion = a.getILowerBoundIndex()
@@ -193,6 +193,6 @@ class CoefficientExpansions:
         Assumes a.array and b.array are python lists of float.
         """
         data = a.array + b.array
-        lowerBoundIndex = a.getLowerBoundIndex()
+        lowerBoundIndex = a.firstExpansionNumber
         ace1d = ArrayCoefficientExpansion1D(data, lowerBoundIndex)
         return ace1d

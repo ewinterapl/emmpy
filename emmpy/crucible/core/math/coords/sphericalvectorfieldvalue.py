@@ -10,7 +10,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from .vectorfieldvalue import VectorFieldValue
+from emmpy.math.vectorfields.vectorfieldvalue import VectorFieldValue
 
 
 class SphericalVectorFieldValue(VectorFieldValue):

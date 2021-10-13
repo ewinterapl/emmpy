@@ -3,6 +3,7 @@
 Modules
 -------
 test_vectorfield.py
+test_vectorfieldvalue.py
 
 Packages
 --------

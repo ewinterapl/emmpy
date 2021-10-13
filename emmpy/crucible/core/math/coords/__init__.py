@@ -61,7 +61,6 @@ sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py
 sphericalvectorfieldvalue.py
 transformation.py
-vectorfieldvalue.py
 vectorfieldvalueconversions.py
 
 Packages

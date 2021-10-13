@@ -10,7 +10,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from .vectorfieldvalue import VectorFieldValue
+from emmpy.math.vectorfields.vectorfieldvalue import VectorFieldValue
+
 
 class CylindricalVectorFieldValue(VectorFieldValue):
     """Vector field in a 3-D Cartesian space.

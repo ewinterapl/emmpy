@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.coords.vectorfieldvalue import VectorFieldValue
+from emmpy.math.vectorfields.vectorfieldvalue import VectorFieldValue
 from emmpy.math.vectors.vector3d import Vector3D
 
 

@@ -4,6 +4,8 @@ These modules provide a variety of vector field classes.
 
 Modules
 -------
+vectorfield.py
+vectorfieldvalue.py
 
 Packages
 --------

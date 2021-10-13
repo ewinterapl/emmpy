@@ -1,7 +1,7 @@
 """Base class for vector field values.
 
-This class represents a generic vector field in an arbitrary coordinate
-system.
+This class represents a generic vector field value in an arbitrary
+coordinate system.
 
 Authors
 -------
@@ -13,7 +13,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 class VectorFieldValue:
     """Base class for vector field values.
 
-    This class represents a generic vector field in an arbitrary
+    This class represents a generic vector field value in an arbitrary
     coordinate system. A vector field value is defined as a position
     vector and a value vector.
 

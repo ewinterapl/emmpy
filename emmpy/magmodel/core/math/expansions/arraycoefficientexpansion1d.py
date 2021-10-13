@@ -11,16 +11,14 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.math.vectors.vector import Vector
 
-
-class ArrayCoefficientExpansion1D(Vector):
+class ArrayCoefficientExpansion1D(np.ndarray):
     """A 1-D array for a coefficient expansion.
 
     A 1-D array for a coefficient expansion.
     """
 
-    def __new__(cls, array, firstExpansionNumber):
+    def __new__(cls, data, firstExpansionNumber):
         """Allocate a new ArrayCoefficientExpansion1D object.
 
         Allocate a new ArrayCoefficientExpansion1D object by allocating a
@@ -28,18 +26,19 @@ class ArrayCoefficientExpansion1D(Vector):
 
         Parameters
         ----------
-        array : list of double
+        data : array-like of float
             List of expansion coefficients.
         firstExpansionNumber : int
             Index of first expansion coefficient.
 
         Returns
         -------
-        v : Vector3D
+        ace1d : ArrayCoefficientExpansion1D
             The newly-created object.
         """
-        v = super().__new__(cls, length=len(array))
-        return v
+        nrows = len(data)
+        ace1d = super().__new__(cls, shape=(nrows,), dtype=float)
+        return ace1d
 
     def __init__(self, array, firstExpansionNumber):
         """Initialize a new ArrayCoefficientExpansion1D object.

@@ -27,26 +27,6 @@ class CoefficientExpansion1D:
     index.
     """
 
-    def toArray(self):
-        """Create a list containing the elements of the expansion.
-        
-        Create a list containing the elements of the expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        anArray : list of float
-            Copy of values of expansion coefficients.
-        """
-        size = self.size()
-        anArray = nones((size,))
-        for i in range(size):
-            anArray[i] = self.getCoefficient(i + self.getLowerBoundIndex())
-        return anArray
-
     def size(self):
         """Return the number of elements of the expansion.
         

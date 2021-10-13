@@ -27,11 +27,11 @@ class TestBuilder(unittest.TestCase):
     #     )
     #     self.assertEqual(e.getIUpperBoundIndex(), 3)
 
-    def test_getJLowerBoundIndex(self):
-        e = ArrayCoefficientExpansion2D(
-            [[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1
-        )
-        self.assertEqual(e.getJLowerBoundIndex(), 1)
+    # def test_getJLowerBoundIndex(self):
+    #     e = ArrayCoefficientExpansion2D(
+    #         [[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1
+    #     )
+    #     self.assertEqual(e.getJLowerBoundIndex(), 1)
 
     def test_getJUpperBoundIndex(self):
         e = ArrayCoefficientExpansion2D(

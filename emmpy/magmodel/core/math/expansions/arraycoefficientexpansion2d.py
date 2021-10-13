@@ -114,21 +114,21 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
     #     iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
     #     return iUpperBoundIndex
 
-    def getJLowerBoundIndex(self):
-        """Return the lowest index in the second dimension.
+    # def getJLowerBoundIndex(self):
+    #     """Return the lowest index in the second dimension.
         
-        Return the lowest index in the second dimension.
+    #     Return the lowest index in the second dimension.
 
-        Parameters
-        ----------
-        None
+    #     Parameters
+    #     ----------
+    #     None
 
-        Returns
-        -------
-        self.jLowerBoundIndex : int
-            Index of first coefficient in 2nd dimension.
-        """
-        return self.jLowerBoundIndex
+    #     Returns
+    #     -------
+    #     self.jLowerBoundIndex : int
+    #         Index of first coefficient in 2nd dimension.
+    #     """
+    #     return self.jLowerBoundIndex
 
     def getJUpperBoundIndex(self):
         """Return the highest index in the second dimension.

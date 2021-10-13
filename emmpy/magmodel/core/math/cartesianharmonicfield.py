@@ -88,7 +88,7 @@ class CartesianHarmonicField(BasisVectorField):
         self.trigParityK = trigParityK
         self.firstI = aikCoeffs.iLowerBoundIndex
         self.lastI = aikCoeffs.iUpperBoundIndex
-        self.firstK = aikCoeffs.getJLowerBoundIndex()
+        self.firstK = aikCoeffs.jLowerBoundIndex
         self.lastK = aikCoeffs.getJUpperBoundIndex()
 
     def evaluate(self, location, buffer):

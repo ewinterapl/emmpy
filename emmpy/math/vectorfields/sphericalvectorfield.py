@@ -1,7 +1,7 @@
 """A vector field in spherical coordinates.
 
 This class represents a vector field in spherical coordinates.
-A vector field is defined as a mapping from a vector location in the
+A vector field is defined as a mapping from a vector position in the
 field to a vector value in the field.
 
 Authors
@@ -19,7 +19,7 @@ class SphericalVectorField(VectorField):
     """A vector field in spherical coordinates.
 
     This class represents a vector field in spherical coordinates.
-    A vector field is defined as a mapping from a vector location in the
+    A vector field is defined as a mapping from a vector position in the
     field to a vector value in the field.
 
     Attributes

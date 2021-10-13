@@ -1,4 +1,4 @@
-"""A vector field in 3-D Cartesian coordinatea.
+"""A vector field in 3-D Cartesian coordinates.
 
 This class represents a vector field in 3-D Cartesian coordinates.
 A vector field is defined as a mapping from a vector location in the

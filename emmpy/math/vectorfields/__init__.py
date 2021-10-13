@@ -4,6 +4,7 @@ These modules provide a variety of vector field classes.
 
 Modules
 -------
+cartesianvectorfield.py
 cartesianvectorfieldvalue.py
 cylindricalvectorfieldvalue.py
 sphericalvectorfieldvalue.py

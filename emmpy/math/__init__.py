@@ -10,5 +10,7 @@ Modules
 Packages
 --------
 coordinates
+matrices
+vectorfields
 vectors
 """

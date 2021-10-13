@@ -43,12 +43,14 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
         """
         self.data = data
         self.iLowerBoundIndex = iLowerBoundIndex
+        self.iUpperBoundIndex = self.iLowerBoundIndex + len(self.data) - 1
         self.jLowerBoundIndex = jLowerBoundIndex
+        self.jUpperBoundIndex = self.jLowerBoundIndex + len(self.data[0]) - 1
 
-    def getILowerBoundIndex(self):
-        """Return the lowest index in the first dimension.
+    def iSize(self):
+        """Return the element count in the 1st dimension of the expansion.
         
-        Return the lowest index in the first dimension.
+        Return the element count in the 1st dimension of the expansion.
 
         Parameters
         ----------
@@ -56,10 +58,44 @@ class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
 
         Returns
         -------
-        self.iLowerBoundIndex : int
-            Index of first coefficient in 1st dimension.
+        size : int
+            Number of elements in 1st dimension of expansion.
         """
-        return self.iLowerBoundIndex
+        size = self.iUpperBoundIndex - self.iLowerBoundIndex + 1
+        return size
+
+    def jSize(self):
+        """Return the element count in the 2nd dimension of the expansion.
+        
+        Return the element count in the 2nd dimension of the expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        size : int
+            Number of elements in 2nd dimension of expansion.
+        """
+        size = self.jUpperBoundIndex - self.jLowerBoundIndex + 1
+        return size
+
+    # def getILowerBoundIndex(self):
+    #     """Return the lowest index in the first dimension.
+        
+    #     Return the lowest index in the first dimension.
+
+    #     Parameters
+    #     ----------
+    #     None
+
+    #     Returns
+    #     -------
+    #     self.iLowerBoundIndex : int
+    #         Index of first coefficient in 1st dimension.
+    #     """
+    #     return self.iLowerBoundIndex
 
     def getIUpperBoundIndex(self):
         """Return the highest index in the first dimension.

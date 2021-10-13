@@ -62,7 +62,7 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         self.coefficientsExpansion = coefficientsExpansion
         self.waveNumberExpansion = waveNumberExpansion
-        self.firstM = coefficientsExpansion.getILowerBoundIndex()
+        self.firstM = coefficientsExpansion.iLowerBoundIndex
         self.lastM = coefficientsExpansion.getIUpperBoundIndex()
         self.firstN = coefficientsExpansion.getJLowerBoundIndex()
         self.lastN = coefficientsExpansion.getJUpperBoundIndex()

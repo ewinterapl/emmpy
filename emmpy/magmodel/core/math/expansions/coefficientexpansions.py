@@ -9,9 +9,6 @@ from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-    CoefficientExpansion1D
-)
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
@@ -63,7 +60,7 @@ class CoefficientExpansions:
     def negate(a):
         """Return a negated view of the expansion."""
         v = None
-        if isinstance(a, CoefficientExpansion1D):
+        if isinstance(a, ArrayCoefficientExpansion1D):
             data = [-x for x in a.array]
             ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
             return ace1d
@@ -206,7 +203,7 @@ class CoefficientExpansions:
         # Create a view object to wrap the expansion.
         # Replace the getCoefficient() method with a method that always returns
         # the sum, as a closure.
-        if isinstance(a, CoefficientExpansion1D):
+        if isinstance(a, ArrayCoefficientExpansion1D):
             data = [aa + bb for (aa, bb) in zip(a.array, b.array)]
             ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
             return ace1d

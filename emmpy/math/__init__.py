@@ -10,6 +10,7 @@ Modules
 Packages
 --------
 coordinates
+expansions
 matrices
 vectorfields
 vectors

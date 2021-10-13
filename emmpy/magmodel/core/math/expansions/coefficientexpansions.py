@@ -3,6 +3,8 @@
 
 from math import floor
 
+import numpy as np
+
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
@@ -190,9 +192,9 @@ class CoefficientExpansions:
     def concat(a, b):
         """Wrap 2 CoefficientExpansion1D by concatenating them.
 
-        Assumes a.array and b.array are python lists of float.
+        Assumes a.array and b.array are np.array.
         """
-        data = a.array + b.array
+        data = np.hstack([a.array, b.array])
         lowerBoundIndex = a.firstExpansionNumber
         ace1d = ArrayCoefficientExpansion1D(data, lowerBoundIndex)
         return ace1d

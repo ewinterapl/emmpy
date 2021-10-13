@@ -9,6 +9,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
     CoefficientExpansion1D
 )
@@ -32,7 +34,7 @@ class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
         firstExpansionNumber : int
             Index of first expansion coefficient.
         """
-        self.array = array
+        self.array = np.array(array)
         self.firstExpansionNumber = firstExpansionNumber
         self.lastExpansionNumber = firstExpansionNumber + len(array) - 1
 

@@ -63,7 +63,7 @@ class CoefficientExpansions:
             ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
-            data = [[-x for x in row] for row in a.data]
+            data = -a
             iLowerBoundIndex = a.iLowerBoundIndex
             jLowerBoundIndex = a.jLowerBoundIndex
             ace2d = ArrayCoefficientExpansion2D(
@@ -118,7 +118,7 @@ class CoefficientExpansions:
             ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
             return ace1d
         elif isinstance(a, ArrayCoefficientExpansion2D):
-            data = [[scaleFactor*x for x in row] for row in a.data]
+            data = scaleFactor*a
             iLowerBoundIndex = a.iLowerBoundIndex
             jLowerBoundIndex = a.jLowerBoundIndex
             ace2d = ArrayCoefficientExpansion2D(
@@ -180,7 +180,7 @@ class CoefficientExpansions:
             lastRadialExpansion = a.jUpperBoundIndex
             n_az = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
             n_r = lastRadialExpansion - firstRadialExpansion + 1
-            data = [[a.data[i][j] + b.data[i][j] for j in range(n_r)] for i in range(n_az)]
+            data = a + b
             ace2d = ArrayCoefficientExpansion2D(
                 data, firstAzimuthalExpansion, firstRadialExpansion
             )

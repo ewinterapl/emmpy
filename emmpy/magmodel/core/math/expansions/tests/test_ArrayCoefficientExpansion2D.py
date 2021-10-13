@@ -12,7 +12,7 @@ class TestBuilder(unittest.TestCase):
         e = ArrayCoefficientExpansion2D(data, 1, 1)
         for row in range(len(data)):
             for col in range(len(data[row])):
-                self.assertAlmostEqual(e.data[row][col], data[row][col])
+                self.assertAlmostEqual(e[row][col], data[row][col])
         self.assertEqual(e.iLowerBoundIndex, 1)
         self.assertEqual(e.jLowerBoundIndex, 1)
 

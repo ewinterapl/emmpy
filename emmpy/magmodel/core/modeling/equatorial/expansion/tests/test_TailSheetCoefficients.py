@@ -23,8 +23,8 @@ class TestTailSheetCoefficients(unittest.TestCase):
         )
         c = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         self.assertIs(c.tailSheetSymmetricValues, tailSym)
-        self.assertAlmostEqual(c.tailSheetOddValues, tailOdd)
-        self.assertAlmostEqual(c.tailSheetEvenValues, tailEven)
+        self.assertIs(c.tailSheetOddValues, tailOdd)
+        self.assertIs(c.tailSheetEvenValues, tailEven)
 
     def test_createUnity(self):
         e = TailSheetCoefficients.createUnity(3, 3)

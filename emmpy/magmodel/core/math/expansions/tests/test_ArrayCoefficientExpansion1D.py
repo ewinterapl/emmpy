@@ -14,9 +14,9 @@ class TestBuilder(unittest.TestCase):
     #     c = ArrayCoefficientExpansion1D([0], 0)
     #     self.assertEqual(c.getLowerBoundIndex(), 0)
 
-    def test_getUpperBoundIndex(self):
-        c = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
-        self.assertEqual(c.getUpperBoundIndex(), 4)
+    # def test_getUpperBoundIndex(self):
+    #     c = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
+    #     self.assertEqual(c.getUpperBoundIndex(), 4)
 
     def test_getCoefficient(self):
         c = ArrayCoefficientExpansion1D([0.0, 1.1, 2.2, 3.3], 1)

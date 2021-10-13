@@ -112,9 +112,9 @@ class CartesianHarmonicField(BasisVectorField):
         y = location.j
         z = location.k
         firstI = self.piCoeffs.firstExpansionNumber
-        lastI = self.piCoeffs.getUpperBoundIndex()
+        lastI = self.piCoeffs.lastExpansionNumber
         firstK = self.pkCoeffs.firstExpansionNumber
-        lastK = self.pkCoeffs.getUpperBoundIndex()
+        lastK = self.pkCoeffs.lastExpansionNumber
         bx = 0.0
         by = 0.0
         bz = 0.0

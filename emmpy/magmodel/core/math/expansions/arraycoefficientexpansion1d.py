@@ -11,12 +11,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-    CoefficientExpansion1D
-)
 
-
-class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
+class ArrayCoefficientExpansion1D:
     """A 1-D array for a coefficient expansion.
 
     A 1-D array for a coefficient expansion.

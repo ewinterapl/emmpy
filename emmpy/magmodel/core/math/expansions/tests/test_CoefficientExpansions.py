@@ -155,47 +155,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(e3.getCoefficient(3, 2), 17)
         self.assertAlmostEqual(e3.getCoefficient(3, 3), 9)
 
-    def test_createNullExpansion(self):
-        e = CoefficientExpansions.createNullExpansion(1, 1, 3)
-        with self.assertRaises(Exception):
-            e.getCoefficient(1, 1)
-
-    def test_convertTo1D(self):
-        e2 = CoefficientExpansions.createExpansionFromArray(
-            [[2, 3, 4], [5, 6, 7], [8, 9, 0]], 1, 1
-        )
-        e1 = CoefficientExpansions.convertTo1D(e2, 1)
-        self.assertEqual(e1.getLowerBoundIndex(), 1)
-        self.assertEqual(e1.getUpperBoundIndex(), 9)
-        self.assertAlmostEqual(e1.getCoefficient(1), 2)
-        self.assertAlmostEqual(e1.getCoefficient(2), 3)
-        self.assertAlmostEqual(e1.getCoefficient(3), 4)
-        self.assertAlmostEqual(e1.getCoefficient(4), 5)
-        self.assertAlmostEqual(e1.getCoefficient(5), 6)
-        self.assertAlmostEqual(e1.getCoefficient(6), 7)
-        self.assertAlmostEqual(e1.getCoefficient(7), 8)
-        self.assertAlmostEqual(e1.getCoefficient(8), 9)
-        self.assertAlmostEqual(e1.getCoefficient(9), 0)
-
-    def test_convertTo2D(self):
-        e1 = CoefficientExpansions.createExpansionFromArray(
-            [0, 1, 2, 3, 4, 5, 6, 7, 8], 1
-        )
-        e2 = CoefficientExpansions.convertTo2D(e1, 1, 3, 1, 3)
-        self.assertEqual(e2.getILowerBoundIndex(), 1)
-        self.assertEqual(e2.getIUpperBoundIndex(), 3)
-        self.assertEqual(e2.getJLowerBoundIndex(), 1)
-        self.assertEqual(e2.getJUpperBoundIndex(), 3)
-        self.assertAlmostEqual(e2.getCoefficient(1, 1), 0)
-        self.assertAlmostEqual(e2.getCoefficient(1, 2), 1)
-        self.assertAlmostEqual(e2.getCoefficient(1, 3), 2)
-        self.assertAlmostEqual(e2.getCoefficient(2, 1), 3)
-        self.assertAlmostEqual(e2.getCoefficient(2, 2), 4)
-        self.assertAlmostEqual(e2.getCoefficient(2, 3), 5)
-        self.assertAlmostEqual(e2.getCoefficient(3, 1), 6)
-        self.assertAlmostEqual(e2.getCoefficient(3, 2), 7)
-        self.assertAlmostEqual(e2.getCoefficient(3, 3), 8)
-
     def test_concat(self):
         e1 = CoefficientExpansions.createExpansionFromArray([0, 1, 2, 3], 1)
         e2 = CoefficientExpansions.createExpansionFromArray([4, 5, 6, 7, 8], 1)

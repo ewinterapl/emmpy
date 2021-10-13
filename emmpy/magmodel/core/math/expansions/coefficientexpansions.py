@@ -55,22 +55,18 @@ class CoefficientExpansions:
         param p the set of coefficients p<sub>i</sub> to invert
         return the inverted set of coefficients p'<sub>i</sub>
         """
-        ce1d = CoefficientExpansion1D()
-        # These lambdas are not bound methods
-        ce1d.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-        ce1d.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-        ce1d.getCoefficient = lambda index: 1/p.getCoefficient(index)
-        return ce1d
+        data = [1/x for x in p.array]
+        ace1d = ArrayCoefficientExpansion1D(data, p.getLowerBoundIndex())
+        return ace1d
 
     @staticmethod
     def negate(a):
         """Return a negated view of the expansion."""
         v = None
         if isinstance(a, CoefficientExpansion1D):
-            v = CoefficientExpansion1D()
-            v.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
-            v.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
-            v.getCoefficient = lambda index: -a.getCoefficient(index)
+            data = [-x for x in a.array]
+            ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
+            return ace1d
         elif isinstance(a, CoefficientExpansion2D):
             v = CoefficientExpansion2D()
             v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
@@ -93,13 +89,10 @@ class CoefficientExpansions:
         """Create an expansion of unit coefficients."""
         if len(args) == 2:
             (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-            # int firstRadialExpansionNumber, lastRadialExpansionNumber
-            ce1d = CoefficientExpansion1D()
-            # These lambdas are not bound methods.
-            ce1d.getLowerBoundIndex = lambda: firstRadialExpansionNumber
-            ce1d.getUpperBoundIndex = lambda: lastRadialExpansionNumber
-            ce1d.getCoefficient = lambda radialExpansion: 1.0
-            return ce1d
+            length = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+            data = [1.0 for i in range(length)]
+            ace1d = ArrayCoefficientExpansion1D(data, firstRadialExpansionNumber)
+            return ace1d
         elif len(args) == 4:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber) = args
@@ -120,20 +113,21 @@ class CoefficientExpansions:
 
     @staticmethod
     def scale(a, scaleFactor):
-        """Scale the expansion."""
-        # Create a view object to wrap the expansion.
-        # Replace the getCoefficient() method with a method that always returns
-        # the scaled value, as a closure.
-        if isinstance(a, CoefficientExpansion1D):
-            ce1d = CoefficientExpansion1D()
-            ce1d.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
-            ce1d.getUpperBoundIndex = lambda: a.getUpperBoundIndex()
-            ce1d.getCoefficient = (
-                lambda radialExpansion: (
-                    scaleFactor*a.getCoefficient(radialExpansion)
-                )
-            )
-            return ce1d
+        """Create a scaled copy of the expansion.
+
+        Create a scaled copy of the expansion.
+
+        Parameters
+        ----------
+        a : CoefficientExpansion1D or CoefficientExpansion2D
+            The expansion to copy and scale.
+        scaleFactor : float
+            Scale factor for scaled copy of expansion.
+        """
+        if isinstance(a, ArrayCoefficientExpansion1D):
+            data = [scaleFactor*x for x in a.array]
+            ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
+            return ace1d
         elif isinstance(a, CoefficientExpansion2D):
             v = CoefficientExpansion2D()
             v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
@@ -164,16 +158,10 @@ class CoefficientExpansions:
         if len(args) == 3:
             (firstRadialExpansionNumber, lastRadialExpansionNumber,
              constant) = args
-
-            # Create a dummy expansion of the appropriate size.
-            n = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            p = ArrayCoefficientExpansion1D(
-                nones((n,)), firstRadialExpansionNumber
-            )
-            v = CoefficientExpansion1D()
-            v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-            v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-            v.getCoefficient = lambda index: constant
+            length = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+            data = [constant for i in range(length)]
+            ace1d = ArrayCoefficientExpansion1D(data, firstRadialExpansionNumber)
+            return ace1d
         elif len(args) == 5:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber,
@@ -219,19 +207,9 @@ class CoefficientExpansions:
         # Replace the getCoefficient() method with a method that always returns
         # the sum, as a closure.
         if isinstance(a, CoefficientExpansion1D):
-            firstExpansion = a.getLowerBoundIndex()
-            lastExpansion = a.getUpperBoundIndex()
-            n = lastExpansion - firstExpansion + 1
-            p = ArrayCoefficientExpansion1D(nones((n,)), firstExpansion)
-            v = CoefficientExpansion1D()
-            v.getLowerBoundIndex = lambda: p.getLowerBoundIndex()
-            v.getUpperBoundIndex = lambda: p.getUpperBoundIndex()
-            v.getCoefficient = (
-                lambda radialExpansion:
-                a.getCoefficient(radialExpansion) +
-                b.getCoefficient(radialExpansion)
-            )
-            return v
+            data = [aa + bb for (aa, bb) in zip(a.array, b.array)]
+            ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
+            return ace1d
         elif isinstance(a, CoefficientExpansion2D):
             firstAzimuthalExpansion = a.getILowerBoundIndex()
             lastAzimuthalExpansion = a.getIUpperBoundIndex()
@@ -252,134 +230,12 @@ class CoefficientExpansions:
             raise Exception
 
     @staticmethod
-    def createNullExpansion(
-        firstAzimuthalExpansionNumber, firstRadialExpansionNumber,
-        lastRadialExpansionNumber):
-        """Create an uninitialized expansion.
-
-        NOTE: THE JAVA SOURCE FOR THIS METHOD IS INCORRECT, BUT REPRODUCED
-        IN PYTHON BELOW.
-
-        @param data
-        @param firstAzimuthalExpansionNumber
-        @param firstRadialExpansionNumber
-        @return
-        """
-        # Create a dummy expansion of the appropriate size.
-        nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-        na = abs(firstAzimuthalExpansionNumber)
-        arr = nones((na, nr))
-        p = ArrayCoefficientExpansion2D(
-            arr, firstAzimuthalExpansionNumber,
-            firstRadialExpansionNumber
-        )
-
-        # Create a view object to wrap the expansion.
-        v = CoefficientExpansion2D()
-        v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-        v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex() - 1
-        v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
-        v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
-        v.iSize = lambda: p.iSize()
-        v.jSize = lambda: p.jSize()
-
-        # Replace the getCoefficient method.
-        # NOTE: This funky syntax was needed in order to get a raise to work
-        # inside a lambda.
-        v.getCoefficient = (
-            lambda iIndex, jIndex:
-            (_ for _ in ()).throw(Exception())
-        )
-
-        # Return the wrapper object.
-        return v
-
-    @staticmethod
-    def convertTo1D(data, lowerBoundIndex):
-        """Convert a 2D coefficient expansion to a 1D coefficient expansion.
-
-        The fast index is the second index.
-
-        @param data
-        @param lowerBoundIndex
-        @return
-        """
-        v = CoefficientExpansion1D()
-        v.getLowerBoundIndex = lambda: lowerBoundIndex
-        v.getUpperBoundIndex = lambda: (
-            lowerBoundIndex + data.iSize() * data.jSize() - 1
-        )
-
-        # Replace the getCoefficient method.
-        # NOTE: JAVA DOES C-STYLE INTEGER DIVISION! Hence the floor().
-        v.getCoefficient = lambda index: (
-            data.getCoefficient(
-                data.getILowerBoundIndex() +
-                floor((index - lowerBoundIndex)/data.jSize()),
-                data.getJLowerBoundIndex() +
-                (index - lowerBoundIndex) % data.jSize()
-            )
-        )
-
-        # Return the wrapper.
-        return v
-
-    @staticmethod
-    def convertTo2D(
-        data, iLowerBoundIndex, iUpperBoundIndex, jLowerBoundIndex,
-        jUpperBoundIndex):
-        """Convert a 1D coefficient expansion to a 2D coefficient expansion.
-
-        The fast index is the second index.
-
-        This is not view friendly, as the size of the returned
-        {@link CoefficientExpansion2D} is determined at construction time
-        (although the values are view friendly).
-
-        @param data
-        @param iLowerBoundIndex
-        @param jLowerBoundIndex
-        @return
-        """
-        # Create a 2-D wrapper for the 1-D expansion.
-        v = CoefficientExpansion2D()
-
-        # Replace the bounds methods.
-        v.getILowerBoundIndex = lambda: iLowerBoundIndex
-        v.getIUpperBoundIndex = lambda: iUpperBoundIndex
-        v.getJLowerBoundIndex = lambda: jLowerBoundIndex
-        v.getJUpperBoundIndex = lambda: jUpperBoundIndex
-
-        # Replace the getCoefficient() method.
-        v.getCoefficient = lambda iIndex, jIndex: (
-            data.getCoefficient(
-                (iIndex - iLowerBoundIndex) *
-                (jUpperBoundIndex - jLowerBoundIndex + 1) +
-                jIndex - jLowerBoundIndex + data.getLowerBoundIndex())
-        )
-
-        # Return the wrapper.
-        return v
-
-    @staticmethod
     def concat(a, b):
         """Wrap 2 CoefficientExpansion1D by concatenating them.
 
-        @param a
-        @param b
-        @return
+        Assumes a.array and b.array are python lists of float.
         """
-        v = CoefficientExpansion1D()
-        v.getLowerBoundIndex = lambda: a.getLowerBoundIndex()
-        v.getUpperBoundIndex = lambda: (
-            a.getLowerBoundIndex() + a.size() + b.size() - 1
-        )
-        v.getCoefficient = lambda index: (
-            b.getCoefficient(index - a.getUpperBoundIndex() +
-                             b.getLowerBoundIndex() - 1)
-            if index > a.getUpperBoundIndex()
-            else a.getCoefficient(index)
-        )
-
-        # Return the wrapper.
-        return v
+        data = a.array + b.array
+        lowerBoundIndex = a.getLowerBoundIndex()
+        ace1d = ArrayCoefficientExpansion1D(data, lowerBoundIndex)
+        return ace1d

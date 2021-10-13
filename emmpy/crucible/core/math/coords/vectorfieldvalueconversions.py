@@ -11,7 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
 from emmpy.crucible.core.math.coords.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue)
 from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
@@ -20,14 +19,15 @@ from emmpy.crucible.core.math.coords.cylindricalvectorfieldvalue import (
     CylindricalVectorFieldValue)
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
     SphericalToCartesianBasisTransformation)
-from emmpy.math.coordinates.sphericalvector import SphericalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector, sphericalToCartesian
 from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue)
 from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 from emmpy.math.coordinates.cylindricalvector import (
-    cartesianToCylindrical, CylindricalVector
+    cartesianToCylindrical, CylindricalVector, cylindricalToCartesian
 )
 from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
@@ -37,7 +37,6 @@ class VectorFieldValueConversions:
     This class provides conversions from Cartesian coordinates and vector
     field values to cylindrical and spherical coordinates and vector field
     values, and vice versa.
-
     """
 
     # Create the cylindrical and spherical converters.
@@ -178,7 +177,12 @@ class VectorFieldValueConversions:
             raise TypeError
 
         # Convert the input position to Cartesian.
-        cartesianPosition = CoordConverters.convert(position)
+        if isinstance(position, CylindricalVector):
+            cartesianPosition = VectorIJK(cylindricalToCartesian(position))
+        elif isinstance(position, SphericalVector):
+            cartesianPosition = VectorIJK(sphericalToCartesian(position))
+        else:
+            raise TypeError
 
         # Convert the input vector value to Cartesian.
         toCartMatrix = MatrixIJK()

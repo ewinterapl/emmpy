@@ -53,7 +53,6 @@ For developers
 Modules
 -------
 cartesianvectorfieldvalue.py
-coordconverters.py
 cylindricaltocartesianbasistransformation.py
 cylindricaltocartesianjacobian.py
 cylindricalvectorfieldvalue.py

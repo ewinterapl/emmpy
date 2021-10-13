@@ -3,7 +3,6 @@
 Modules
 -------
 test_cartesianvectorfieldvalue.py
-test_coordconverters.py
 test_cylindricaltocartesianbasistransformation.py
 test_cylindricaltocartesianjacobian.py
 test_cylindricalvectorfieldvalue.py

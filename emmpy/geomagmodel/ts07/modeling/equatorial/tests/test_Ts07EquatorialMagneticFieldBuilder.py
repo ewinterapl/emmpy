@@ -12,7 +12,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
     Ts07EquatorialMagneticFieldBuilder
 )
-from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
+from emmpy.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (

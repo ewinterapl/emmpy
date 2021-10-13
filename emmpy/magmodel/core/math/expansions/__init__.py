@@ -7,7 +7,6 @@ dimensions, such as solutions to Laplace's equation.
 
 Modules
 -------
-arraycoefficientexpansion1d.py
 arraycoefficientexpansion2d.py
 arrayexpansion1d.py
 arrayexpansion2d.py

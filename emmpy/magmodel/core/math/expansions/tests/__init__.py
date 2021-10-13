@@ -2,7 +2,6 @@
 
 Modules
 -------
-test_ArrayCoefficientExpansion1D.py
 test_ArrayCoefficientExpansion2D.py
 test_ArrayExpansion1D.py
 test_ArrayExpansion2D.py

@@ -2,6 +2,7 @@
 
 Modules
 -------
+test_arraycoefficientexpansion1d.py
 test_scalarexpansion1d.py
 
 Packages

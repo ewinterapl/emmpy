@@ -9,10 +9,6 @@ from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion1d import (
 from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
-)
-from emmpy.utilities.nones import nones
 
 
 class CoefficientExpansions:
@@ -64,17 +60,14 @@ class CoefficientExpansions:
             data = [-x for x in a.array]
             ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
             return ace1d
-        elif isinstance(a, CoefficientExpansion2D):
-            v = CoefficientExpansion2D()
-            v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
-            v.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
-            v.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
-            v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
-            v.iSize = lambda: a.iSize()
-            v.jSize = lambda: a.jSize()
-            v.getCoefficient = lambda iExpansion, kExpansion: (
-                -a.getCoefficient(iExpansion, kExpansion)
+        elif isinstance(a, ArrayCoefficientExpansion2D):
+            data = [[-x for x in row] for row in a.data]
+            iLowerBoundIndex = a.getILowerBoundIndex()
+            jLowerBoundIndex = a.getJLowerBoundIndex()
+            ace2d = ArrayCoefficientExpansion2D(
+                data, iLowerBoundIndex, jLowerBoundIndex
             )
+            return ace2d
         else:
             raise Exception
 
@@ -93,18 +86,15 @@ class CoefficientExpansions:
         elif len(args) == 4:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-            # int firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
-            # firstRadialExpansionNumber, lastRadialExpansionNumber
-            ce2d = CoefficientExpansion2D()
-            # These lambdas are not bound methods.
-            ce2d.getILowerBoundIndex = lambda: firstAzimuthalExpansionNumber
-            ce2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansionNumber
-            ce2d.getJLowerBoundIndex = lambda: firstRadialExpansionNumber
-            ce2d.getJUpperBoundIndex = lambda: lastRadialExpansionNumber
-            ce2d.getCoefficient = (
-                lambda azimuthalExpansion, radialExpansion: 1.0
+            n_az = (
+                lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber + 1
             )
-            return ce2d
+            n_r = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+            data = [[1 for j in range(n_r)] for i in range(n_az)]
+            ace2d = ArrayCoefficientExpansion2D(
+                data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
+            )
+            return ace2d
         else:
             raise Exception
 
@@ -125,21 +115,14 @@ class CoefficientExpansions:
             data = [scaleFactor*x for x in a.array]
             ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
             return ace1d
-        elif isinstance(a, CoefficientExpansion2D):
-            v = CoefficientExpansion2D()
-            v.getILowerBoundIndex = lambda: a.getILowerBoundIndex()
-            v.getIUpperBoundIndex = lambda: a.getIUpperBoundIndex()
-            v.getJLowerBoundIndex = lambda: a.getJLowerBoundIndex()
-            v.getJUpperBoundIndex = lambda: a.getJUpperBoundIndex()
-            v.iSize = lambda: a.iSize()
-            v.jSize = lambda: a.jSize()
-            v.getCoefficient = (
-                lambda azimuthalExpansion, radialExpansion: (
-                    scaleFactor*a.getCoefficient(azimuthalExpansion,
-                                                 radialExpansion)
-                )
+        elif isinstance(a, ArrayCoefficientExpansion2D):
+            data = [[scaleFactor*x for x in row] for row in a.data]
+            iLowerBoundIndex = a.getILowerBoundIndex()
+            jLowerBoundIndex = a.getJLowerBoundIndex()
+            ace2d = ArrayCoefficientExpansion2D(
+                data, iLowerBoundIndex, jLowerBoundIndex
             )
-            return v
+            return ace2d
         else:
             raise Exception
 
@@ -163,32 +146,13 @@ class CoefficientExpansions:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber,
              constant) = args
-
-            # Create a dummy expansion of the appropriate size.
-            nr = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            na = (
-                lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber
-                + 1
+            n_az = lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber + 1
+            n_r = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+            data = [[constant for j in range(n_r)] for i in range(n_az)]
+            ace2d = ArrayCoefficientExpansion2D(
+                data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
             )
-            arr = nones((na, nr))
-            p = ArrayCoefficientExpansion2D(
-                arr, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-            )
-
-            # Create a view object to wrap the expansion.
-            v = CoefficientExpansion2D()
-            v.getILowerBoundIndex = lambda: p.getILowerBoundIndex()
-            v.getIUpperBoundIndex = lambda: p.getIUpperBoundIndex()
-            v.getJLowerBoundIndex = lambda: p.getJLowerBoundIndex()
-            v.getJUpperBoundIndex = lambda: p.getJUpperBoundIndex()
-            v.iSize = lambda: p.iSize()
-            v.jSize = lambda: p.jSize()
-
-            # Replace the getCoefficient() method with a method that always
-            # returns the constant, as a closure.
-            v.getCoefficient = (
-                lambda azimuthalExpansion, radialExpansion: constant
-            )
+            return ace2d
         else:
             raise Exception
 
@@ -207,22 +171,18 @@ class CoefficientExpansions:
             data = [aa + bb for (aa, bb) in zip(a.array, b.array)]
             ace1d = ArrayCoefficientExpansion1D(data, a.getLowerBoundIndex())
             return ace1d
-        elif isinstance(a, CoefficientExpansion2D):
+        elif isinstance(a, ArrayCoefficientExpansion2D):
             firstAzimuthalExpansion = a.getILowerBoundIndex()
             lastAzimuthalExpansion = a.getIUpperBoundIndex()
             firstRadialExpansion = a.getJLowerBoundIndex()
             lastRadialExpansion = a.getJUpperBoundIndex()
-            ce2d = CoefficientExpansion2D()
-            ce2d.getILowerBoundIndex = lambda: firstAzimuthalExpansion
-            ce2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansion
-            ce2d.getJLowerBoundIndex = lambda: firstRadialExpansion
-            ce2d.getJUpperBoundIndex = lambda: lastRadialExpansion
-            ce2d.getCoefficient = (
-                lambda azimuthalExpansion, radialExpansion:
-                a.getCoefficient(azimuthalExpansion, radialExpansion) +
-                b.getCoefficient(azimuthalExpansion, radialExpansion)
+            n_az = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
+            n_r = lastRadialExpansion - firstRadialExpansion + 1
+            data = [[a.data[i][j] + b.data[i][j] for j in range(n_r)] for i in range(n_az)]
+            ace2d = ArrayCoefficientExpansion2D(
+                data, firstAzimuthalExpansion, firstRadialExpansion
             )
-            return ce2d
+            return ace2d
         else:
             raise Exception
 

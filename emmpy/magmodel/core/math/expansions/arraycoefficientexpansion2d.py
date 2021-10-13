@@ -11,12 +11,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
-)
 
-
-class ArrayCoefficientExpansion2D(CoefficientExpansion2D):
+class ArrayCoefficientExpansion2D:
     """A 2-D array of expansion coefficients.
     
     A 2-D array of expansion coefficients.

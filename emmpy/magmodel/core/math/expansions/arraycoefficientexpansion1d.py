@@ -36,31 +36,6 @@ class ArrayCoefficientExpansion1D(CoefficientExpansion1D):
         self.firstExpansionNumber = firstExpansionNumber
         self.lastExpansionNumber = firstExpansionNumber + len(array) - 1
 
-    # def getLowerBoundIndex(self):
-    #     """Return the lower index bound for the expansion.
-        
-    #     Return the lower index bound for the expansion.
-
-    #     Returns
-    #     -------
-    #     self.firstExpansionNumber : int
-    #         Index of first expansion coefficient.
-    #     """
-    #     return self.firstExpansionNumber
-
-    # def getUpperBoundIndex(self):
-    #     """Return the upper index bound for the expansion.
-        
-    #     Return the upper index bound for the expansion.
-
-    #     Returns
-    #     -------
-    #     lastExpansionNumber : int
-    #         Index of last expansion coefficient.
-    #     """
-    #     lastExpansionNumber = self.firstExpansionNumber + len(self.array) - 1
-    #     return lastExpansionNumber
-
     def getCoefficient(self, index):
         """Return the coefficient at the specified index.
 

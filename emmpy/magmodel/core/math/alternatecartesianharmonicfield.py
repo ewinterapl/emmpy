@@ -118,7 +118,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
-        expansions = nones((self.aikCoeffs.iSize(), self.aikCoeffs.jSize()))
+        expansions = nones((self.aikCoeffs.iSize, self.aikCoeffs.jSize))
         for i in range(self.firstI, self.lastI + 1):
             pi = self.piCoeffs.getCoefficient(i)
             sinYpi = self.trigParityI.evaluate(pi*y)

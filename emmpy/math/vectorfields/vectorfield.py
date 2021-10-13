@@ -29,7 +29,7 @@ class VectorField:
     None
     """
 
-    def evaluate(self, location):
+    def evaluate(self, position):
         """Evaluate the vector field at a position.
 
         This abstract method must be overridden in a subclass.
@@ -39,13 +39,13 @@ class VectorField:
 
         Parameters
         ----------
-        location : Vector
-            The location for evaluation in the vector space.
+        position : Vector
+            The position for evaluation in the vector space.
 
         Returns
         -------
-        v : Vector
-            Value of vector field at the specified location.
+        value : Vector
+            Value of vector field at the specified position.
 
         Raises
         ------

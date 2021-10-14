@@ -3,7 +3,7 @@ import unittest
 from emmpy.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
-from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (

@@ -1,6 +1,6 @@
 import unittest
 
-from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
 

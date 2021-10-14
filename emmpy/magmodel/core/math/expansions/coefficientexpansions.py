@@ -8,7 +8,7 @@ import numpy as np
 from emmpy.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
-from emmpy.magmodel.core.math.expansions.arraycoefficientexpansion2d import (
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
 

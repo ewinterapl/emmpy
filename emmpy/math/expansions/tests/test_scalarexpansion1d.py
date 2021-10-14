@@ -31,13 +31,6 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(se1d.firstExpansionNumber, firstExpansionNumber)
         self.assertEqual(se1d.lastExpansionNumber, lastExpansionNumber)
 
-    def test_getComponent(self):
-        """Test the getCoefficient method."""
-        se1d = ScalarExpansion1D(data, firstExpansionNumber)
-        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(se1d.getComponent(i),
-                                   data[i - firstExpansionNumber])
-
 
 if __name__ == "__main__":
     unittest.main()

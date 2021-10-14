@@ -78,20 +78,3 @@ class ScalarExpansion1D(np.ndarray):
         self[firstExpansionNumber:] = np.array(data)
         self.firstExpansionNumber = firstExpansionNumber
         self.lastExpansionNumber = self.firstExpansionNumber + len(data) - 1
-
-    def getComponent(self, index):
-        """Return the component at the specified index.
-
-        Return the component at the specified index.
-
-        Parameters
-        ----------
-        index : int
-            Index of component to return.
-        
-        Returns
-        -------
-        result : float
-            Desired expansion component.
-        """
-        return self[index]

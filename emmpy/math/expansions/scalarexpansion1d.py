@@ -1,49 +1,57 @@
 """A 1-D array of scalar expansion components.
 
-A 1-D array of scalar expansion components. In effect, this class provides
-an n-dimensional vector with a starting index that is logically not 0.
+A 1-D array of scalar expansion components. The index of the first valid
+component (firstExpansionNumber) is not required to be 0. Component access
+by index is adjusted from the logical index to the physical index.
 
 Authors
 -------
-G.K. Stephens
 Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
 import numpy as np
 
-from emmpy.math.vectors.vector import Vector
 
-
-class ScalarExpansion1D(Vector):
+class ScalarExpansion1D(np.ndarray):
     """A 1-D array of scalar expansion components.
 
     This class represents a series expansion of scalars that starts at
     a lower bound index (L) and ends at an upper bound index (U).
-    L represents index 0 in the array, and U the index (len-1), where
-    len = U - L + 1. In effect, this class provides an n-dimensional
-    vector with a starting index that is not 0.
+    The index of the first valid component (firstExpansionNumber) is not
+    required to be 0. Component access by index is adjusted from the
+    logical index to the physical index.
+
+    Attributes
+    ----------
+    firstExpansionNumber : int
+        Logical index of first expansion coefficient. Maps to physical
+        index 0 in the stored array.
+    lastExpansionNumber : int
+        Logical index of last expansion coefficient. Maps to last physical
+        index in the stored array.
     """
 
-    def __new__(cls, array, firstExpansionNumber):
+    def __new__(cls, data, firstExpansionNumber):
         """Allocate a new ScalarExpansion1D object.
 
-        Allocate a new ScalarExpansion1D object by allocating a new Vector
-        object on which this class will expand.
+        Allocate a new ScalarExpansion1D object by allocating a new
+        np.ndarray object on which this class will expand.
 
         Parameters
         ----------
-        array : array-like of float
+        data : array-like of float
             1-D array of scalar expansion components.
         firstExpansionNumber : int
-            Index of first expansion coefficient.
+            Logical index of first expansion coefficient.
 
         Returns
         -------
         se1d : ScalarExpansion1D
-            The newly-created object.
+            The newly-allocated object.
         """
-        se1d = super().__new__(cls, length=len(array))
+        size = len(data)
+        se1d = super().__new__(cls, shape=(size,))
         return se1d
 
     def __init__(self, data, firstExpansionNumber):
@@ -58,33 +66,9 @@ class ScalarExpansion1D(Vector):
         firstExpansionNumber : int
             Index of first expansion coefficient.
         """
-        self[:] = np.array(data)[:]
+        self[:] = np.array(data)
         self.firstExpansionNumber = firstExpansionNumber
-
-    def getLowerBoundIndex(self):
-        """Return the lower index bound for the expansion.
-        
-        Return the lower index bound for the expansion.
-
-        Returns
-        -------
-        self.firstExpansionNumber : int
-            Index of first expansion coefficient.
-        """
-        return self.firstExpansionNumber
-
-    def getUpperBoundIndex(self):
-        """Return the upper index bound for the expansion.
-        
-        Return the upper index bound for the expansion.
-
-        Returns
-        -------
-        lastExpansionNumber : int
-            Index of last expansion coefficient.
-        """
-        lastExpansionNumber = self.firstExpansionNumber + len(self) - 1
-        return lastExpansionNumber
+        self.lastExpansionNumber = self.firstExpansionNumber + len(self) - 1
 
     def getComponent(self, index):
         """Return the component at the specified index.

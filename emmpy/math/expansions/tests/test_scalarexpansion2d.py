@@ -15,6 +15,7 @@ iUpperBoundIndex = iLowerBoundIndex + len(data) - 1
 jLowerBoundIndex = 1
 jUpperBoundIndex = jLowerBoundIndex + len(data[0]) - 1
 
+
 class TestBuilder(unittest.TestCase):
     """Tests for the scalarexpansion2d module."""
 

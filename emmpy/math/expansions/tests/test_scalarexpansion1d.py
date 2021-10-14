@@ -13,6 +13,7 @@ data = np.array([1.1, 2.2, 3.3, 4.4, 5.5])
 firstExpansionNumber = 1
 lastExpansionNumber = firstExpansionNumber + len(data) - 1
 
+
 class TestBuilder(unittest.TestCase):
     """Tests for the scalarexpansion1d module."""
 

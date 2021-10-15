@@ -56,23 +56,6 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         self.firstExpansionNumber = firstExpansionNumber
         self.lastExpansionNumber = firstExpansionNumber + len(array) - 1
 
-    def getCoefficient(self, index):
-        """Return the coefficient at the specified index.
-
-        Return the coefficient at the specified index.
-
-        Parameters
-        ----------
-        index : int
-            Index of coefficient to return.
-        
-        Returns
-        -------
-        result : float
-            Desired expansion coefficient.
-        """
-        return self[index - self.firstExpansionNumber]
-
     def invert(self):
         """Return an inverted copy of the expansion.
 
@@ -91,6 +74,42 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         data = 1/self
         inverse = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return inverse
+
+    def scale(self, scaleFactor):
+        """Create a scaled copy of the expansion.
+
+        Create a scaled copy of the expansion.
+
+        Parameters
+        ----------
+        scaleFactor : float
+            Scale factor to apply to expansion.
+
+        Returns
+        -------
+        scaled : ArrayCoefficientExpansion1D
+            Scaled copy of the expansion.
+        """
+        data = scaleFactor*self
+        scaled = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
+        return scaled
+
+    def getCoefficient(self, index):
+        """Return the coefficient at the specified index.
+
+        Return the coefficient at the specified index.
+
+        Parameters
+        ----------
+        index : int
+            Index of coefficient to return.
+        
+        Returns
+        -------
+        result : float
+            Desired expansion coefficient.
+        """
+        return self[index - self.firstExpansionNumber]
 
 
 def createUnity(i_min, i_max):

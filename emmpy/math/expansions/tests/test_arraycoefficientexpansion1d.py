@@ -43,9 +43,20 @@ class TestBuilder(unittest.TestCase):
         """Test the inverse method."""
         ace1d = ArrayCoefficientExpansion1D(data, firstExpansionNumber)
         inverse = ace1d.invert()
+        self.assertIsInstance(inverse, ArrayCoefficientExpansion1D)
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
             self.assertAlmostEqual(inverse.getCoefficient(i),
                                    1/data[i - firstExpansionNumber])
+
+    def test_scale(self):
+        """Test the inverse method."""
+        scaleFactor = 6.6
+        ace1d = ArrayCoefficientExpansion1D(data, firstExpansionNumber)
+        scaled = ace1d.scale(scaleFactor)
+        self.assertIsInstance(scaled, ArrayCoefficientExpansion1D)
+        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
+            self.assertAlmostEqual(scaled.getCoefficient(i),
+                                   scaleFactor*data[i - firstExpansionNumber])
 
     def test_getCoefficient(self):
         """Test the getCoefficient method."""

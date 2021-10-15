@@ -22,15 +22,6 @@ class TestBuilder(unittest.TestCase):
             [[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
         self.assertIsInstance(e, ArrayCoefficientExpansion2D)
 
-    def test_invert(self):
-        e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
-        ei = CoefficientExpansions.invert(e)
-        self.assertEqual(ei.firstExpansionNumber, 1)
-        self.assertEqual(ei.lastExpansionNumber, 3)
-        self.assertAlmostEqual(ei.getCoefficient(1), 1)
-        self.assertAlmostEqual(ei.getCoefficient(2), 1/2)
-        self.assertAlmostEqual(ei.getCoefficient(3), 1/3)
-
     def test_negate(self):
         e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
         en = CoefficientExpansions.negate(e)

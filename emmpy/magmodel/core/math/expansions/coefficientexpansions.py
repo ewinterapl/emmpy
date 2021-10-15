@@ -41,18 +41,18 @@ class CoefficientExpansions:
         else:
             raise Exception
 
-    @staticmethod
-    def invert(p):
-        """Return an inverted view of the supplied expansion coefficients.
+    # @staticmethod
+    # def invert(p):
+    #     """Return an inverted view of the supplied expansion coefficients.
 
-        p[i] = 1/p[i]
+    #     p[i] = 1/p[i]
 
-        param p the set of coefficients p<sub>i</sub> to invert
-        return the inverted set of coefficients p'<sub>i</sub>
-        """
-        data = [1/x for x in p]
-        ace1d = ArrayCoefficientExpansion1D(data, p.firstExpansionNumber)
-        return ace1d
+    #     param p the set of coefficients p<sub>i</sub> to invert
+    #     return the inverted set of coefficients p'<sub>i</sub>
+    #     """
+    #     data = [1/x for x in p]
+    #     ace1d = ArrayCoefficientExpansion1D(data, p.firstExpansionNumber)
+    #     return ace1d
 
     @staticmethod
     def negate(a):

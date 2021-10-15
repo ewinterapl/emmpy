@@ -296,26 +296,14 @@ class FieldAlignedCurrentShiedingBuilder:
             )
         psiT1 = self.dipoleTilt*T1[self.region - 1][self.mode - 1]
         psiT2 = self.dipoleTilt*T2[self.region - 1][self.mode - 1]
-        pExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                p[self.region - 1][self.mode - 1], 1
-            )
-        )
-        qExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                q[self.region - 1][self.mode - 1], 1
-            )
-        )
-        rExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                r[self.region - 1][self.mode - 1], 1
-            )
-        )
-        sExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                s[self.region - 1][self.mode - 1], 1
-            )
-        )
+        pExpansion = CoefficientExpansions.createExpansionFromArray(
+            p[self.region - 1][self.mode - 1], 1).invert()
+        qExpansion = CoefficientExpansions.createExpansionFromArray(
+                q[self.region - 1][self.mode - 1], 1).invert()
+        rExpansion = CoefficientExpansions.createExpansionFromArray(
+                r[self.region - 1][self.mode - 1], 1).invert()
+        sExpansion = CoefficientExpansions.createExpansionFromArray(
+                s[self.region - 1][self.mode - 1], 1).invert()
         f = vectorfields.scale(
             PerpendicularAndParallelCartesianHarmonicField.createWithRotation(
                 self.trigParityI, psiT1, pExpansion, rExpansion,

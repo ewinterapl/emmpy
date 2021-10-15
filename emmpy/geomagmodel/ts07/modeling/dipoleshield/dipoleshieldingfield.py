@@ -121,12 +121,12 @@ class DipoleShieldingField:
         ppchf = PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
             TrigParity.EVEN,
             dipoleTiltAngle*DipoleShieldingField.kappaPerp,
-            CoefficientExpansions.invert(DipoleShieldingField.p),
-            CoefficientExpansions.invert(DipoleShieldingField.r),
+            DipoleShieldingField.p.invert(),
+            DipoleShieldingField.r.invert(),
             perpCoeffs,
             dipoleTiltAngle*DipoleShieldingField.kappaParallel,
-            CoefficientExpansions.invert(DipoleShieldingField.q),
-            CoefficientExpansions.invert(DipoleShieldingField.s),
+            DipoleShieldingField.q.invert(),
+            DipoleShieldingField.s.invert(),
             parrCoeffs)
         pDynScale3 = pDynScale*pDynScale*pDynScale
         dipoleShieldingField = (vectorfields.scale(

@@ -181,10 +181,7 @@ class Ts07EquatorialLinearCoefficients:
         """
         pDyn0 = 2.0
         pDynNormalized = sqrt(dynamicPressure/pDyn0) - 1
-        symPdynDependent = CoefficientExpansions.scale(
-            self.pdynDependentCoeffs.getTailSheetSymmetricValues(),
-            pDynNormalized
-        )
+        symPdynDependent = self.pdynDependentCoeffs.getTailSheetSymmetricValues().scale(pDynNormalized)
         aOddPdynDependent = CoefficientExpansions.scale(
             self.pdynDependentCoeffs.getTailSheetOddValues(), pDynNormalized
         )

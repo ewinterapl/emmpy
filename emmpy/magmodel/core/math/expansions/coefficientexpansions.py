@@ -100,9 +100,7 @@ class CoefficientExpansions:
             Scale factor for scaled copy of expansion.
         """
         if isinstance(a, ArrayCoefficientExpansion1D):
-            data = [scaleFactor*x for x in a]
-            ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
-            return ace1d
+            raise Exception
         elif isinstance(a, ArrayCoefficientExpansion2D):
             data = scaleFactor*a
             iLowerBoundIndex = a.iLowerBoundIndex

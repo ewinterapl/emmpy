@@ -57,13 +57,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(eu.getCoefficient(3, 3), 1)
 
     def test_scale(self):
-        e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
-        es = CoefficientExpansions.scale(e, 2)
-        self.assertEqual(es.firstExpansionNumber, 1)
-        self.assertEqual(es.lastExpansionNumber, 3)
-        self.assertAlmostEqual(es.getCoefficient(1), 2)
-        self.assertAlmostEqual(es.getCoefficient(2), 4)
-        self.assertAlmostEqual(es.getCoefficient(3), 6)
         e = CoefficientExpansions.createExpansionFromArray(
             [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 1)
         es = CoefficientExpansions.scale(e, 2)

@@ -41,12 +41,12 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(en.getCoefficient(3, 3), -9)
 
     def test_createUnity(self):
-        eu = CoefficientExpansions.createUnity(1, 3)
-        self.assertEqual(eu.firstExpansionNumber, 1)
-        self.assertEqual(eu.lastExpansionNumber, 3)
-        self.assertAlmostEqual(eu.getCoefficient(1), 1)
-        self.assertAlmostEqual(eu.getCoefficient(2), 1)
-        self.assertAlmostEqual(eu.getCoefficient(3), 1)
+        # eu = CoefficientExpansions.createUnity(1, 3)
+        # self.assertEqual(eu.firstExpansionNumber, 1)
+        # self.assertEqual(eu.lastExpansionNumber, 3)
+        # self.assertAlmostEqual(eu.getCoefficient(1), 1)
+        # self.assertAlmostEqual(eu.getCoefficient(2), 1)
+        # self.assertAlmostEqual(eu.getCoefficient(3), 1)
         eu = CoefficientExpansions.createUnity(1, 3, 1, 3)
         self.assertEqual(eu.iLowerBoundIndex, 1)
         self.assertEqual(eu.iUpperBoundIndex, 3)

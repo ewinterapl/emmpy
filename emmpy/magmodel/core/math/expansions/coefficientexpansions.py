@@ -65,11 +65,12 @@ class CoefficientExpansions:
     def createUnity(*args):
         """Create an expansion of unit coefficients."""
         if len(args) == 2:
-            (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-            length = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            data = [1.0 for i in range(length)]
-            ace1d = ArrayCoefficientExpansion1D(data, firstRadialExpansionNumber)
-            return ace1d
+            raise Exception
+            # (firstRadialExpansionNumber, lastRadialExpansionNumber) = args
+            # length = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
+            # data = [1.0 for i in range(length)]
+            # ace1d = ArrayCoefficientExpansion1D(data, firstRadialExpansionNumber)
+            # return ace1d
         elif len(args) == 4:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber) = args

@@ -187,14 +187,3 @@ class CoefficientExpansions:
             return ace2d
         else:
             raise Exception
-
-    @staticmethod
-    def concat(a, b):
-        """Wrap 2 CoefficientExpansion1D by concatenating them.
-
-        Assumes a.array and b.array are np.array.
-        """
-        data = np.hstack([a, b])
-        lowerBoundIndex = a.firstExpansionNumber
-        ace1d = ArrayCoefficientExpansion1D(data, lowerBoundIndex)
-        return ace1d

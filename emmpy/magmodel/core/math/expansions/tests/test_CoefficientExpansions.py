@@ -155,22 +155,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(e3.getCoefficient(3, 2), 17)
         self.assertAlmostEqual(e3.getCoefficient(3, 3), 9)
 
-    def test_concat(self):
-        e1 = CoefficientExpansions.createExpansionFromArray([0, 1, 2, 3], 1)
-        e2 = CoefficientExpansions.createExpansionFromArray([4, 5, 6, 7, 8], 1)
-        e3 = CoefficientExpansions.concat(e1, e2)
-        self.assertEqual(e3.firstExpansionNumber, 1)
-        self.assertEqual(e3.lastExpansionNumber, 9)
-        self.assertAlmostEqual(e3.getCoefficient(1), 0)
-        self.assertAlmostEqual(e3.getCoefficient(2), 1)
-        self.assertAlmostEqual(e3.getCoefficient(3), 2)
-        self.assertAlmostEqual(e3.getCoefficient(4), 3)
-        self.assertAlmostEqual(e3.getCoefficient(5), 4)
-        self.assertAlmostEqual(e3.getCoefficient(6), 5)
-        self.assertAlmostEqual(e3.getCoefficient(7), 6)
-        self.assertAlmostEqual(e3.getCoefficient(8), 7)
-        self.assertAlmostEqual(e3.getCoefficient(9), 8)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

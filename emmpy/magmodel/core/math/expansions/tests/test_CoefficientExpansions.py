@@ -23,13 +23,6 @@ class TestBuilder(unittest.TestCase):
         self.assertIsInstance(e, ArrayCoefficientExpansion2D)
 
     def test_negate(self):
-        e = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
-        en = CoefficientExpansions.negate(e)
-        self.assertEqual(en.firstExpansionNumber, 1)
-        self.assertEqual(en.lastExpansionNumber, 3)
-        self.assertAlmostEqual(en.getCoefficient(1), -1)
-        self.assertAlmostEqual(en.getCoefficient(2), -2)
-        self.assertAlmostEqual(en.getCoefficient(3), -3)
         e = CoefficientExpansions.createExpansionFromArray(
             [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 1)
         en = CoefficientExpansions.negate(e)

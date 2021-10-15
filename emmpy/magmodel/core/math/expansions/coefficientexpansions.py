@@ -46,9 +46,7 @@ class CoefficientExpansions:
         """Return a negated view of the expansion."""
         v = None
         if isinstance(a, ArrayCoefficientExpansion1D):
-            data = [-x for x in a]
-            ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
-            return ace1d
+            raise Exception
         elif isinstance(a, ArrayCoefficientExpansion2D):
             data = -a
             iLowerBoundIndex = a.iLowerBoundIndex

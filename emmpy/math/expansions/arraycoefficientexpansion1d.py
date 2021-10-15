@@ -91,3 +91,21 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         data = 1/self
         inverse = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return inverse
+
+    def negate(self):
+        """Return a negated copy of the expansion.
+
+        Return a negated copy of the expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        negation : ArrayCoefficientExpansion1D
+            Expansion containing the negative of each original component.
+        """
+        data = -self
+        negation = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
+        return negation

@@ -16,9 +16,6 @@ class TestBuilder(unittest.TestCase):
     def test_scaleLocation(self):
         pass
 
-    def test_concat(self):
-        pass
-
     def test_concatAll(self):
         pass
 

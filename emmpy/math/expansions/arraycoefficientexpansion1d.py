@@ -72,3 +72,22 @@ class ArrayCoefficientExpansion1D(np.ndarray):
             Desired expansion coefficient.
         """
         return self[index - self.firstExpansionNumber]
+
+    def invert(self):
+        """Return an inverted copy of the expansion.
+
+        Return an inverted copy of the expansion. Note that no checks for
+        0 coefficients are performed.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        inverse : ArrayCoefficientExpansion1D
+            Expansion containing the inverse of each original component.
+        """
+        data = 1/self
+        inverse = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
+        return inverse

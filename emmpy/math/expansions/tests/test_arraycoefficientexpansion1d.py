@@ -10,7 +10,7 @@ import unittest
 import numpy as np
 
 from emmpy.math.expansions.arraycoefficientexpansion1d import (
-    ArrayCoefficientExpansion1D
+    ArrayCoefficientExpansion1D, createUnity
 )
 
 
@@ -53,6 +53,12 @@ class TestBuilder(unittest.TestCase):
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
             self.assertAlmostEqual(ace1d.getCoefficient(i),
                                    data[i - firstExpansionNumber])
+
+    def test_createUnity(self):
+        """Test the createUnity function."""
+        unity = createUnity(firstExpansionNumber, lastExpansionNumber)
+        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
+            self.assertAlmostEqual(unity.getCoefficient(i), 1.0)
 
 
 if __name__ == "__main__":

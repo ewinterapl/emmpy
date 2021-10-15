@@ -91,3 +91,25 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         data = 1/self
         inverse = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return inverse
+
+
+def createUnity(i_min, i_max):
+    """Create an expansion of unit coefficients.
+
+    Create an expansion of unit coefficients using the specified logical
+    index limits.
+
+    Parameters
+    ----------
+    i_min, i_max : int
+        Lowest and highest logical indices for expansion.
+
+    Returns
+    -------
+    unity : ArrayCoefficientExpansion1D
+        An expansion with unit coefficients.
+    """
+    length = i_max - i_min + 1
+    data = np.ones(length)
+    unity = ArrayCoefficientExpansion1D(data, i_min)
+    return unity

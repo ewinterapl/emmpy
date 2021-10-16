@@ -25,10 +25,10 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        se1d = ArrayCoefficientExpansion1D.__new__(
+        ace1d = ArrayCoefficientExpansion1D.__new__(
             ArrayCoefficientExpansion1D, data, firstExpansionNumber
         )
-        self.assertEqual(len(se1d), len(data))
+        self.assertEqual(len(ace1d), len(data))
 
     def test___init__(self):
         """Test the __init__ method."""

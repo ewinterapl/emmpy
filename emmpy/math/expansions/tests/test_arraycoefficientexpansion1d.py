@@ -28,14 +28,13 @@ class TestBuilder(unittest.TestCase):
         ace1d = ArrayCoefficientExpansion1D.__new__(
             ArrayCoefficientExpansion1D, data, firstExpansionNumber
         )
-        self.assertEqual(len(ace1d), len(data))
+        self.assertEqual(len(ace1d), len(data) + firstExpansionNumber)
 
     def test___init__(self):
         """Test the __init__ method."""
         ace1d = ArrayCoefficientExpansion1D(data, firstExpansionNumber)
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(ace1d[i - firstExpansionNumber],
-                                   data[i - firstExpansionNumber])
+            self.assertAlmostEqual(ace1d[i], data[i - firstExpansionNumber])
         self.assertEqual(ace1d.firstExpansionNumber, firstExpansionNumber)
         self.assertEqual(ace1d.lastExpansionNumber, lastExpansionNumber)
 

@@ -1,8 +1,9 @@
 """A 1-D array for a coefficient expansion.
 
-A 1-D array of scalar expansion coefficients. The index of the first valid
-coefficient (firstExpansionNumber) is not required to be 0. Indexing is
-adjusted to account for a non-0 first index.
+A 1-D array of scalar expansion components. The index of the first valid
+component (firstExpansionNumber) is not required to be 0. The stored array
+is padded with unused elements at the head of the array, to allow for the
+desired indexing to work properly.
 
 Authors
 -------
@@ -17,9 +18,18 @@ import numpy as np
 class ArrayCoefficientExpansion1D(np.ndarray):
     """A 1-D array for a coefficient expansion.
 
-    A 1-D array of scalar expansion coefficients. The index of the first
-    valid coefficient (firstExpansionNumber) is not required to be 0.
-    Indexing is adjusted to account for a non-0 first index.
+    This class represents a series expansion of scalars that starts at
+    a lower bound index (L) and ends at an upper bound index (U).
+    The index of the first valid component (firstExpansionNumber) is not
+    required to be 0. To permit this, the stored array is padded with
+    unused elements at the head of the array. For example, if
+    firstExpansionNumber is 2, then elements 0 and 1 in the array are
+    allocated, but ignored. This is more efficient than recomputing
+    the index on every access, since firstExpansionNumber is usually a
+    small integer. It also allows the expansion to be used directly as a
+    numpy array, by using slicing of the form:
+
+    valid_components = expansion[firstExpansionNumber:]
 
     Attributes
     ----------
@@ -30,8 +40,10 @@ class ArrayCoefficientExpansion1D(np.ndarray):
     def __new__(cls, data, firstExpansionNumber):
         """Allocate a new ArrayCoefficientExpansion1D object.
 
-        Allocate a new ArrayCoefficientExpansion1D object by allocating a
-        new np.ndarray object with the same length.
+        Allocate a new ScalarExpansion1D object by allocating a new
+        np.ndarray object on which this class will expand. Extra, unused
+        elements are padded at the head of the array to allow for non-0-
+        based indexing.
 
         Parameters
         ----------
@@ -43,16 +55,18 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         Returns
         -------
         ace1d : ArrayCoefficientExpansion1D
-            The newly-created object.
+            The newly-allocated object.
         """
-        nrows = len(data)
+        nrows = len(data) + firstExpansionNumber
         ace1d = super().__new__(cls, shape=(nrows,), dtype=float)
         return ace1d
 
-    def __init__(self, array, firstExpansionNumber):
+    def __init__(self, data, firstExpansionNumber):
         """Initialize a new ArrayCoefficientExpansion1D object.
 
-        Initialize a new ArrayCoefficientExpansion1D object.
+        Initialize a new ArrayCoefficientExpansion1D object. Note that the
+        padding elements (equal to firstExpansionNumber elements) are
+        ignored.
 
         Parameters
         ----------
@@ -61,9 +75,9 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         firstExpansionNumber : int
             Logical index of first expansion coefficient.
         """
-        self[:] = array
+        self[firstExpansionNumber:] = np.array(data)
         self.firstExpansionNumber = firstExpansionNumber
-        self.lastExpansionNumber = firstExpansionNumber + len(array) - 1
+        self.lastExpansionNumber = firstExpansionNumber + len(data) - 1
 
     def invert(self):
         """Return an inverted copy of the expansion.
@@ -80,7 +94,7 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         inverse : ArrayCoefficientExpansion1D
             Expansion containing the inverse of each original component.
         """
-        data = 1/self
+        data = 1/self[self.firstExpansionNumber:]
         inverse = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return inverse
 
@@ -99,7 +113,7 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         scaled : ArrayCoefficientExpansion1D
             Scaled copy of the expansion.
         """
-        data = scaleFactor*self
+        data = scaleFactor*self[self.firstExpansionNumber:]
         scaled = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return scaled
 
@@ -118,7 +132,7 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         result : float
             Desired expansion coefficient.
         """
-        return self[index - self.firstExpansionNumber]
+        return self[index]
 
 
 def createUnity(firstExpansionNumber, lastExpansionNumber):

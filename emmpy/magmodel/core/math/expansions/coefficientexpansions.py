@@ -41,27 +41,6 @@ class CoefficientExpansions:
         else:
             raise Exception
 
-    # @staticmethod
-    # def createUnity(*args):
-    #     """Create an expansion of unit coefficients."""
-    #     if len(args) == 2:
-    #         raise Exception
-    #     elif len(args) == 4:
-    #         raise Exception
-            # (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
-            #  firstRadialExpansionNumber, lastRadialExpansionNumber) = args
-            # n_az = (
-            #     lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber + 1
-            # )
-            # n_r = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            # data = [[1 for j in range(n_r)] for i in range(n_az)]
-            # ace2d = ArrayCoefficientExpansion2D(
-            #     data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-            # )
-            # return ace2d
-        # else:
-        #     raise Exception
-
     @staticmethod
     def scale(a, scaleFactor):
         """Create a scaled copy of the expansion.

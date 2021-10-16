@@ -10,7 +10,7 @@ import unittest
 import numpy as np
 
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
-    ArrayCoefficientExpansion2D, createUnity
+    ArrayCoefficientExpansion2D, add, createUnity
 )
 
 
@@ -93,8 +93,25 @@ class TestBuilder(unittest.TestCase):
                     data[row - iLowerBoundIndex, col - jLowerBoundIndex]
         )
 
+    def test_add(self):
+        """Test the add function."""
+        a = ArrayCoefficientExpansion2D(
+            data, iLowerBoundIndex, jLowerBoundIndex
+        )
+        b = ArrayCoefficientExpansion2D(
+            data + 1.0, iLowerBoundIndex, jLowerBoundIndex
+        )
+        sum = add(a, b)
+        self.assertIsInstance(sum, ArrayCoefficientExpansion2D)
+        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
+            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
+                self.assertAlmostEqual(
+                    sum.getCoefficient(row, col),
+                    a.getCoefficient(row, col) + b.getCoefficient(row, col)
+                )
+
     def test_createUnity(self):
-        """Test the createUnity method."""
+        """Test the createUnity function."""
         unity = createUnity(iLowerBoundIndex, iUpperBoundIndex,
                             jLowerBoundIndex, jUpperBoundIndex
         )

@@ -40,28 +40,3 @@ class CoefficientExpansions:
                                                firstJexpansionNumber)
         else:
             raise Exception
-
-    @staticmethod
-    def add(a, b):
-        """Add 2 expansions."""
-        # Make sure the expansions are compatible.
-        # Create a dummy expansion of the appropriate size.
-        # Create a view object to wrap the expansion.
-        # Replace the getCoefficient() method with a method that always returns
-        # the sum, as a closure.
-        if isinstance(a, ArrayCoefficientExpansion1D):
-            raise Exception("Use arraycoefficientexpansion1d.add()!")
-        elif isinstance(a, ArrayCoefficientExpansion2D):
-            firstAzimuthalExpansion = a.iLowerBoundIndex
-            lastAzimuthalExpansion = a.iUpperBoundIndex
-            firstRadialExpansion = a.jLowerBoundIndex
-            lastRadialExpansion = a.jUpperBoundIndex
-            n_az = lastAzimuthalExpansion - firstAzimuthalExpansion + 1
-            n_r = lastRadialExpansion - firstRadialExpansion + 1
-            data = a + b
-            ace2d = ArrayCoefficientExpansion2D(
-                data, firstAzimuthalExpansion, firstRadialExpansion
-            )
-            return ace2d
-        else:
-            raise Exception

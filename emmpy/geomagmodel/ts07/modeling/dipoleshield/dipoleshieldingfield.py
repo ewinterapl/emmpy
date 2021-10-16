@@ -20,6 +20,7 @@ from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield imp
     PerpendicularAndParallelCartesianHarmonicField
 )
 from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.math.expansions.arraycoefficientexpansion2d import add
 
 
 class DipoleShieldingField:
@@ -109,11 +110,11 @@ class DipoleShieldingField:
             The dipole shielding field.
         """
         pDynScale = pow(dynamicPressure/2, 0.155)
-        perpCoeffs = CoefficientExpansions.add(
+        perpCoeffs = add(
             DipoleShieldingField.a,
             DipoleShieldingField.b.scale(cos(dipoleTiltAngle))
         )
-        parrCoeffs = CoefficientExpansions.add(
+        parrCoeffs = add(
             DipoleShieldingField.c.scale(sin(dipoleTiltAngle)),
             DipoleShieldingField.d.scale(sin(2*dipoleTiltAngle))
         )

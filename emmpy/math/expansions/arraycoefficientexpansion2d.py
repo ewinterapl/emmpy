@@ -151,6 +151,31 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         )
 
 
+def add(a, b):
+    """Compute the sum of two expansions.
+
+    Compute the sum of two expansions. The expansions are assumed to have
+    the same shape and logical index limits.
+
+    Parameters
+    ----------
+    a, b : ArrayCoefficientExpansion2D
+        Expansions to add.
+
+    Returns
+    -------
+    sum : ArrayCoefficientExpansion2D
+        Sum of the two expansions.
+    """
+    data = a + b
+    iLowerBoundIndex = a.iLowerBoundIndex
+    jLowerBoundIndex = a.jLowerBoundIndex
+    sum = ArrayCoefficientExpansion2D(
+        data, iLowerBoundIndex, jLowerBoundIndex
+    )
+    return sum
+
+
 def createUnity(row_min, row_max, col_min, col_max):
     """Create an expansion of unit coefficients.
 

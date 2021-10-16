@@ -9,11 +9,14 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 import emmpy.math.expansions.arraycoefficientexpansion1d as arraycoefficientexpansion1d
+from emmpy.math.expansions.arraycoefficientexpansion1d import (
+    ArrayCoefficientExpansion1D
+)
 import emmpy.math.expansions.arraycoefficientexpansion2d as arraycoefficientexpansion2d
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D, createNullExpansion
+)
 from emmpy.utilities.nones import nones
 
 
@@ -133,17 +136,19 @@ class TailSheetCoefficients:
 
         if numAzimuthalExpansions == 0:
             return TailSheetCoefficients(
-                CoefficientExpansions.createExpansionFromArray(sym, 1),
-                CoefficientExpansions.createNullExpansion(
-                    1, 1, numRadialExpansions),
-                CoefficientExpansions.createNullExpansion(
-                    1, 1, numRadialExpansions)
+                ArrayCoefficientExpansion1D(sym, 1),
+                createNullExpansion(
+                    1, numAzimuthalExpansions,
+                    1, numRadialExpansions),
+                createNullExpansion(
+                    1, numAzimuthalExpansions,
+                    1, numRadialExpansions)
             )
 
         return TailSheetCoefficients(
-            CoefficientExpansions.createExpansionFromArray(sym, 1),
-            CoefficientExpansions.createExpansionFromArray(odd, 1, 1),
-            CoefficientExpansions.createExpansionFromArray(even, 1, 1))
+            ArrayCoefficientExpansion1D(sym, 1),
+            ArrayCoefficientExpansion2D(odd, 1, 1),
+            ArrayCoefficientExpansion2D(even, 1, 1))
 
     def getTailSheetSymmetricValues(self):
         """Return the symmetric coefficients a_n^s.
@@ -229,7 +234,7 @@ class TailSheetCoefficients:
                 coeffs[count] = self.tailSheetEvenValues.getCoefficient(m, n)
                 count += 1
 
-        return CoefficientExpansions.createExpansionFromArray(coeffs, 1)
+        return arraycoefficientexpansion1d.ArrayCoefficientExpansion1D(coeffs, 1)
 
     def getNumAzimuthalExpansions(self):
         """Return the number of azimuthal expansions.

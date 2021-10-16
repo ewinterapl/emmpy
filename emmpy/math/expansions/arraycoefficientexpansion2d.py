@@ -13,6 +13,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
+from emmpy.utilities.nones import nones
+
 
 class ArrayCoefficientExpansion2D(np.ndarray):
     """A 2-D array of expansion coefficients.
@@ -174,6 +176,30 @@ def add(a, b):
         data, iLowerBoundIndex, jLowerBoundIndex
     )
     return sum
+
+
+def createNullExpansion(row_min, row_max, col_min, col_max):
+    """Create an expansion of null coefficients.
+
+    Create an expansion of null coefficients using the specified logical
+    index limits.
+
+    Parameters
+    ----------
+    row_min, row_max, col_min, col_max : int
+        Lowest and highest logical indices for rows and columns.
+
+    Returns
+    -------
+    null : ArrayCoefficientExpansion2D
+        An expansion with null coefficients.
+    """
+    n_rows = row_max - row_min + 1
+    n_cols = col_max - col_min + 1
+    nulls = nones((n_rows, n_cols))
+    data = np.array(nulls)
+    null = ArrayCoefficientExpansion2D(data, row_min, col_min)
+    return null
 
 
 def createUnity(row_min, row_max, col_min, col_max):

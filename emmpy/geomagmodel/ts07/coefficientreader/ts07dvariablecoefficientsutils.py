@@ -29,8 +29,11 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
     Ts07FacVariableCoefficients
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
+from emmpy.math.expansions.arraycoefficientexpansion1d import (
+    ArrayCoefficientExpansion1D
+)
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
 )
 from emmpy.utilities.nones import nones
 
@@ -384,29 +387,17 @@ class TS07DVariableCoefficientsUtils:
                         coeffs[index + numHalfExpansions +
                                numAsymmetricExpansions]
                     )
-            aSymExpansion = (
-                CoefficientExpansions.createExpansionFromArray(aSym, 1)
+            aSymExpansion = ArrayCoefficientExpansion1D(aSym, 1)
+            aSymPdynDependentExpansion = ArrayCoefficientExpansion1D(
+                aSymPdynDependent, 1
             )
-            aSymPdynDependentExpansion = (
-                CoefficientExpansions.createExpansionFromArray(
-                    aSymPdynDependent, 1
-                )
+            aOddExpansion = ArrayCoefficientExpansion2D(aOdd, 1, 1)
+            aOddPdynDependentExpansion = ArrayCoefficientExpansion2D(
+                aOddPdynDependent, 1, 1
             )
-            aOddExpansion = (
-                CoefficientExpansions.createExpansionFromArray(aOdd, 1, 1)
-            )
-            aOddPdynDependentExpansion = (
-                CoefficientExpansions.createExpansionFromArray(
-                    aOddPdynDependent, 1, 1
-                )
-            )
-            aEvenExpansion = (
-                CoefficientExpansions.createExpansionFromArray(aEven, 1, 1)
-            )
-            aEvenPdynDependentExpansion = (
-                CoefficientExpansions.createExpansionFromArray(
-                    aEvenPdynDependent, 1, 1
-                )
+            aEvenExpansion = ArrayCoefficientExpansion2D(aEven, 1, 1)
+            aEvenPdynDependentExpansion = ArrayCoefficientExpansion2D(
+                aEvenPdynDependent, 1, 1
             )
             equatorialLinearCoeffs = (
                 Ts07EquatorialLinearCoefficients.create(

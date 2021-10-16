@@ -12,13 +12,16 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import cos, sin
 
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
 from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.math.expansions.arraycoefficientexpansion1d import (
+    ArrayCoefficientExpansion1D
+)
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
+)
 from emmpy.utilities.nones import nones
 
 
@@ -273,9 +276,9 @@ class FieldAlignedCurrentShiedingBuilder:
             q = FieldAlignedCurrentShiedingBuilder.qSym
             r = FieldAlignedCurrentShiedingBuilder.rSym
             s = FieldAlignedCurrentShiedingBuilder.sSym
-            aPerpendicular = CoefficientExpansions.createExpansionFromArray(
-                    aPerpenValues, 1, 1).negate()
-            aParallel = CoefficientExpansions.createExpansionFromArray(
+            aPerpendicular = ArrayCoefficientExpansion2D(
+                aPerpenValues, 1, 1).negate()
+            aParallel = ArrayCoefficientExpansion2D(
                     aParallValues, 1, 1).negate()
         else:
             T1 = FieldAlignedCurrentShiedingBuilder.T1ASym
@@ -284,22 +287,14 @@ class FieldAlignedCurrentShiedingBuilder:
             q = FieldAlignedCurrentShiedingBuilder.qASym
             r = FieldAlignedCurrentShiedingBuilder.rASym
             s = FieldAlignedCurrentShiedingBuilder.sASym
-            aPerpendicular = CoefficientExpansions.createExpansionFromArray(
-                aPerpenValues, 1, 1
-            )
-            aParallel = CoefficientExpansions.createExpansionFromArray(
-                aParallValues, 1, 1
-            )
+            aPerpendicular = ArrayCoefficientExpansion2D(aPerpenValues, 1, 1)
+            aParallel = ArrayCoefficientExpansion2D(aParallValues, 1, 1)
         psiT1 = self.dipoleTilt*T1[self.region - 1][self.mode - 1]
         psiT2 = self.dipoleTilt*T2[self.region - 1][self.mode - 1]
-        pExpansion = CoefficientExpansions.createExpansionFromArray(
-            p[self.region - 1][self.mode - 1], 1).invert()
-        qExpansion = CoefficientExpansions.createExpansionFromArray(
-                q[self.region - 1][self.mode - 1], 1).invert()
-        rExpansion = CoefficientExpansions.createExpansionFromArray(
-                r[self.region - 1][self.mode - 1], 1).invert()
-        sExpansion = CoefficientExpansions.createExpansionFromArray(
-                s[self.region - 1][self.mode - 1], 1).invert()
+        pExpansion = ArrayCoefficientExpansion1D(p[self.region - 1][self.mode - 1], 1).invert()
+        qExpansion = ArrayCoefficientExpansion1D(q[self.region - 1][self.mode - 1], 1).invert()
+        rExpansion = ArrayCoefficientExpansion1D(r[self.region - 1][self.mode - 1], 1).invert()
+        sExpansion = ArrayCoefficientExpansion1D(s[self.region - 1][self.mode - 1], 1).invert()
         f = vectorfields.scale(
             PerpendicularAndParallelCartesianHarmonicField.createWithRotation(
                 self.trigParityI, psiT1, pExpansion, rExpansion,

@@ -15,11 +15,14 @@ import os
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.math.expansions.arraycoefficientexpansion1d import (
+    ArrayCoefficientExpansion1D
+)
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
+)
 from emmpy.utilities.nones import nones
 
 
@@ -247,12 +250,9 @@ class TS07DStaticCoefficientsFactory:
                     line = f.readline()
                     val = float(line.split()[0])
                     waveNumberValues[k - 1] = val
-            expansions[i - 1] = (
-                CoefficientExpansions.createExpansionFromArray(values, 0, 1)
-            )
-            waveExpansions[i - 1] = (
-                CoefficientExpansions.createExpansionFromArray(
-                    waveNumberValues, 1)
+            expansions[i - 1] = ArrayCoefficientExpansion2D(values, 0, 1)
+            waveExpansions[i - 1] = ArrayCoefficientExpansion1D(
+                waveNumberValues, 1
             )
 
         return SymmetricCylindricalExpansionPair(
@@ -305,13 +305,11 @@ class TS07DStaticCoefficientsFactory:
                         line = f.readline()
                         val = float(line.split()[0])
                         waveNumberValues[k - 1] = val
-                expansions[m - 1][n - 1] = (
-                    CoefficientExpansions.createExpansionFromArray(
-                        values, 0, 1)
+                expansions[m - 1][n - 1] = ArrayCoefficientExpansion2D(
+                    values, 0, 1
                 )
-                waveExpansions[m - 1][n - 1] = (
-                    CoefficientExpansions.createExpansionFromArray(
-                        waveNumberValues, 1)
+                waveExpansions[m - 1][n - 1] = ArrayCoefficientExpansion1D(
+                    waveNumberValues, 1
                 )
         return AsymmetricCylindricalExpansionPair(
             Expansion2Ds.createFromArray(expansions, 1, 1),

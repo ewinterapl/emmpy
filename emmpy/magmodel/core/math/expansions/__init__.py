@@ -7,12 +7,10 @@ dimensions, such as solutions to Laplace's equation.
 
 Modules
 -------
-arraycoefficientexpansion2d.py
 arrayexpansion1d.py
 arrayexpansion2d.py
 coefficientexpansion1d.py
 coefficientexpansion2d.py
-coefficientexpansions.py
 expansion1d.py
 expansion1ds.py
 expansion2d.py

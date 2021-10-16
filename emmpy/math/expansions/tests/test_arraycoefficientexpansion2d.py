@@ -10,7 +10,7 @@ import unittest
 import numpy as np
 
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
-    ArrayCoefficientExpansion2D, add, createUnity
+    ArrayCoefficientExpansion2D, add, createNullExpansion, createUnity
 )
 
 
@@ -109,6 +109,17 @@ class TestBuilder(unittest.TestCase):
                     sum.getCoefficient(row, col),
                     a.getCoefficient(row, col) + b.getCoefficient(row, col)
                 )
+
+    def test_createNullExpansion(self):
+        """Test the createNullExpansion function."""
+        null = createNullExpansion(
+            iLowerBoundIndex, iUpperBoundIndex,
+            jLowerBoundIndex, jUpperBoundIndex
+        )
+        self.assertIsInstance(null, ArrayCoefficientExpansion2D)
+        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
+            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
+                self.assertTrue(np.isnan(null.getCoefficient(row, col)))
 
     def test_createUnity(self):
         """Test the createUnity function."""

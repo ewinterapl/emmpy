@@ -1,6 +1,8 @@
-"""A 2-D array of expansion coefficients.
+"""A 2-D array for a coefficient expansion.
 
-A 2-D array of expansion coefficients.
+A 2-D array of scalar expansion coefficients. The index of the first valid
+row (iLowerBoundIndex) and column (jLowerBoundIndex) is not required to be 0.
+Indexing is adjusted to account for a non-0 first index.
 
 Authors
 -------
@@ -15,7 +17,16 @@ import numpy as np
 class ArrayCoefficientExpansion2D(np.ndarray):
     """A 2-D array of expansion coefficients.
     
-    A 2-D array of expansion coefficients.
+    A 2-D array of expansion coefficients. The index of the first valid
+    row (iLowerBoundIndex) and column (jLowerBoundIndex) is not required
+    to be 0. Indexing is adjusted to account for a non-0 first index.
+
+    Attributes
+    ----------
+    iLowerBoundIndex, iUpperBoundIndex : int
+        Logical index of first and last valid rows.
+    jLowerBoundIndex, jUpperBoundIndex : int
+        Logical index of first and last valid columns.
     """
 
     def __new__(cls, data, iLowerBoundIndex, jLowerBoundIndex):
@@ -26,17 +37,17 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
         Parameters
         ----------
-        data : 2-D rectangular array of float
+        data : 2-D rectangular array-like of float
             The array of expansion coefficients.
         iLowerBoundIndex : int
-            Index of first coefficient in 1st dimension.
+            Logical index of first valid row of coefficients.
         jLowerBoundIndex : int
-            Index of first coefficient in 2nd dimension.
+            Logical index of first valid column of coefficients.
 
         Returns
         -------
         ace2d : Matrix
-            The newly-created object.
+            The newly-allocated object.
         """
         nrows = len(data)
         ncols = len(data[0])
@@ -71,6 +82,28 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         self.jLowerBoundIndex = jLowerBoundIndex
         self.jUpperBoundIndex = self.jLowerBoundIndex + len(data[0]) - 1
         self.jSize = self.jUpperBoundIndex - self.jLowerBoundIndex + 1
+
+    def negate(self):
+        """Return a negated copy of the expansion.
+        
+        Return a negated copy of the expansion.
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        negation : ArrayCoefficientExpansion2D
+            A negated copy of this expansion.
+        """
+        data = -self
+        iLowerBoundIndex = self.iLowerBoundIndex
+        jLowerBoundIndex = self.jLowerBoundIndex
+        negation = ArrayCoefficientExpansion2D(
+            data, iLowerBoundIndex, jLowerBoundIndex
+        )
+        return negation
 
     def getCoefficient(self, azimuthalExpansion, radialExpansion):
         """Return the specified coefficient.

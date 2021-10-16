@@ -42,26 +42,6 @@ class CoefficientExpansions:
             raise Exception
 
     @staticmethod
-    def negate(a):
-        """Return a negated view of the expansion."""
-        v = None
-        if isinstance(a, ArrayCoefficientExpansion1D):
-            raise Exception
-        elif isinstance(a, ArrayCoefficientExpansion2D):
-            data = -a
-            iLowerBoundIndex = a.iLowerBoundIndex
-            jLowerBoundIndex = a.jLowerBoundIndex
-            ace2d = ArrayCoefficientExpansion2D(
-                data, iLowerBoundIndex, jLowerBoundIndex
-            )
-            return ace2d
-        else:
-            raise Exception
-
-        # Return the view.
-        return v
-
-    @staticmethod
     def createUnity(*args):
         """Create an expansion of unit coefficients."""
         if len(args) == 2:

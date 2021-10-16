@@ -22,24 +22,6 @@ class TestBuilder(unittest.TestCase):
             [[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
         self.assertIsInstance(e, ArrayCoefficientExpansion2D)
 
-    def test_negate(self):
-        e = CoefficientExpansions.createExpansionFromArray(
-            [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 1)
-        en = CoefficientExpansions.negate(e)
-        self.assertEqual(en.iLowerBoundIndex, 1)
-        self.assertEqual(en.iUpperBoundIndex, 3)
-        self.assertEqual(en.jLowerBoundIndex, 1)
-        self.assertEqual(en.jUpperBoundIndex, 3)
-        self.assertAlmostEqual(en.getCoefficient(1, 1), -1)
-        self.assertAlmostEqual(en.getCoefficient(1, 2), -2)
-        self.assertAlmostEqual(en.getCoefficient(1, 3), -3)
-        self.assertAlmostEqual(en.getCoefficient(2, 1), -4)
-        self.assertAlmostEqual(en.getCoefficient(2, 2), -5)
-        self.assertAlmostEqual(en.getCoefficient(2, 3), -6)
-        self.assertAlmostEqual(en.getCoefficient(3, 1), -7)
-        self.assertAlmostEqual(en.getCoefficient(3, 2), -8)
-        self.assertAlmostEqual(en.getCoefficient(3, 3), -9)
-
     def test_createUnity(self):
         eu = CoefficientExpansions.createUnity(1, 3, 1, 3)
         self.assertEqual(eu.iLowerBoundIndex, 1)

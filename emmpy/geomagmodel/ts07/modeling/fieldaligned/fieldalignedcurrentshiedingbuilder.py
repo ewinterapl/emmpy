@@ -273,14 +273,10 @@ class FieldAlignedCurrentShiedingBuilder:
             q = FieldAlignedCurrentShiedingBuilder.qSym
             r = FieldAlignedCurrentShiedingBuilder.rSym
             s = FieldAlignedCurrentShiedingBuilder.sSym
-            aPerpendicular = CoefficientExpansions.negate(
-                CoefficientExpansions.createExpansionFromArray(
-                    aPerpenValues, 1, 1)
-            )
-            aParallel = CoefficientExpansions.negate(
-                CoefficientExpansions.createExpansionFromArray(
-                    aParallValues, 1, 1)
-            )
+            aPerpendicular = CoefficientExpansions.createExpansionFromArray(
+                    aPerpenValues, 1, 1).negate()
+            aParallel = CoefficientExpansions.createExpansionFromArray(
+                    aParallValues, 1, 1).negate()
         else:
             T1 = FieldAlignedCurrentShiedingBuilder.T1ASym
             T2 = FieldAlignedCurrentShiedingBuilder.T2ASym

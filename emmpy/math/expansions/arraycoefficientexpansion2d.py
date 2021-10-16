@@ -85,9 +85,9 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
     def negate(self):
         """Return a negated copy of the expansion.
-        
+
         Return a negated copy of the expansion.
-        
+
         Parameters
         ----------
         None
@@ -107,9 +107,9 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
     def getCoefficient(self, azimuthalExpansion, radialExpansion):
         """Return the specified coefficient.
-        
+
         Return the specified coefficient.
-        
+
         Parameters
         ----------
         azimuthalExpansion : int
@@ -126,3 +126,26 @@ class ArrayCoefficientExpansion2D(np.ndarray):
             self[azimuthalExpansion - self.iLowerBoundIndex]
                 [radialExpansion - self.jLowerBoundIndex]
         )
+
+
+def createUnity(row_min, row_max, col_min, col_max):
+    """Create an expansion of unit coefficients.
+
+    Create an expansion of unit coefficients using the specified logical
+    index limits.
+
+    Parameters
+    ----------
+    row_min, row_max, col_min, col_max : int
+        Lowest and highest logical indices for rows and columns.
+
+    Returns
+    -------
+    unity : ArrayCoefficientExpansion2D
+        An expansion with unit coefficients.
+    """
+    n_rows = row_max - row_min + 1
+    n_cols = col_max - col_min + 1
+    data = np.ones((n_rows, n_cols))
+    unity = ArrayCoefficientExpansion2D(data, row_min, col_min)
+    return unity

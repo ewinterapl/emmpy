@@ -12,7 +12,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
     CoefficientExpansions
 )
-import emmpy.math.expansions.arraycoefficientexpansion1d as arraycoefficientexpansions1d
+import emmpy.math.expansions.arraycoefficientexpansion1d as arraycoefficientexpansion1d
+import emmpy.math.expansions.arraycoefficientexpansion2d as arraycoefficientexpansion2d
 from emmpy.utilities.nones import nones
 
 
@@ -79,11 +80,12 @@ class TailSheetCoefficients:
             Expansion of unit value in all components.
         """
         return TailSheetCoefficients(
-            arraycoefficientexpansions1d.createUnity(1, numRadialExpansions),
-            CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
-                                              numRadialExpansions),
-            CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
-                                              numRadialExpansions)
+            arraycoefficientexpansion1d.createUnity(1, numRadialExpansions),
+            arraycoefficientexpansion2d.createUnity(
+                1, numAzimuthalExpansions, 1, numRadialExpansions
+            ),
+            arraycoefficientexpansion2d.createUnity(
+                1, numAzimuthalExpansions, 1, numRadialExpansions)
         )
 
     @staticmethod

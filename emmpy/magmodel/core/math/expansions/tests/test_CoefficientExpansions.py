@@ -22,21 +22,21 @@ class TestBuilder(unittest.TestCase):
             [[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
         self.assertIsInstance(e, ArrayCoefficientExpansion2D)
 
-    def test_createUnity(self):
-        eu = CoefficientExpansions.createUnity(1, 3, 1, 3)
-        self.assertEqual(eu.iLowerBoundIndex, 1)
-        self.assertEqual(eu.iUpperBoundIndex, 3)
-        self.assertEqual(eu.jLowerBoundIndex, 1)
-        self.assertEqual(eu.jUpperBoundIndex, 3)
-        self.assertAlmostEqual(eu.getCoefficient(1, 1), 1)
-        self.assertAlmostEqual(eu.getCoefficient(1, 2), 1)
-        self.assertAlmostEqual(eu.getCoefficient(1, 3), 1)
-        self.assertAlmostEqual(eu.getCoefficient(2, 1), 1)
-        self.assertAlmostEqual(eu.getCoefficient(2, 2), 1)
-        self.assertAlmostEqual(eu.getCoefficient(2, 3), 1)
-        self.assertAlmostEqual(eu.getCoefficient(3, 1), 1)
-        self.assertAlmostEqual(eu.getCoefficient(3, 2), 1)
-        self.assertAlmostEqual(eu.getCoefficient(3, 3), 1)
+    # def test_createUnity(self):
+    #     eu = CoefficientExpansions.createUnity(1, 3, 1, 3)
+    #     self.assertEqual(eu.iLowerBoundIndex, 1)
+    #     self.assertEqual(eu.iUpperBoundIndex, 3)
+    #     self.assertEqual(eu.jLowerBoundIndex, 1)
+    #     self.assertEqual(eu.jUpperBoundIndex, 3)
+    #     self.assertAlmostEqual(eu.getCoefficient(1, 1), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(1, 2), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(1, 3), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(2, 1), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(2, 2), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(2, 3), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(3, 1), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(3, 2), 1)
+    #     self.assertAlmostEqual(eu.getCoefficient(3, 3), 1)
 
     def test_scale(self):
         e = CoefficientExpansions.createExpansionFromArray(

@@ -10,7 +10,7 @@ import unittest
 import numpy as np
 
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
-    ArrayCoefficientExpansion2D
+    ArrayCoefficientExpansion2D, createUnity
 )
 
 
@@ -76,6 +76,17 @@ class TestBuilder(unittest.TestCase):
                     ace2d.getCoefficient(row, col),
                     data[row - iLowerBoundIndex, col - jLowerBoundIndex]
         )
+
+    def test_createUnity(self):
+        """Test the createUnity method."""
+        n_rows = iUpperBoundIndex - iLowerBoundIndex + 1
+        n_cols = jUpperBoundIndex - jLowerBoundIndex + 1
+        unity = createUnity(iLowerBoundIndex, iUpperBoundIndex,
+                            jLowerBoundIndex, jUpperBoundIndex
+        )
+        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
+            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
+                self.assertAlmostEqual(unity.getCoefficient(row, col), 1.0)
 
 
 if __name__ == "__main__":

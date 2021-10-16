@@ -42,34 +42,6 @@ class CoefficientExpansions:
             raise Exception
 
     @staticmethod
-    def createConstant(*args):
-        """Create a constant expansion.
-
-        @param firstRadialExpansionNumber
-        @param lastRadialExpansionNumber
-        @param constant
-        @return
-        """
-        if len(args) == 3:
-            raise Exception
-        elif len(args) == 5:
-            (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
-             firstRadialExpansionNumber, lastRadialExpansionNumber,
-             constant) = args
-            n_az = lastAzimuthalExpansionNumber - firstAzimuthalExpansionNumber + 1
-            n_r = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            data = [[constant for j in range(n_r)] for i in range(n_az)]
-            ace2d = ArrayCoefficientExpansion2D(
-                data, firstAzimuthalExpansionNumber, firstRadialExpansionNumber
-            )
-            return ace2d
-        else:
-            raise Exception
-
-        # Return the view.
-        return v
-
-    @staticmethod
     def add(a, b):
         """Add 2 expansions."""
         # Make sure the expansions are compatible.

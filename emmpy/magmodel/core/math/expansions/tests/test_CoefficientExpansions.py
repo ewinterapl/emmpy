@@ -22,22 +22,6 @@ class TestBuilder(unittest.TestCase):
             [[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
         self.assertIsInstance(e, ArrayCoefficientExpansion2D)
 
-    def test_createConstant(self):
-        e = CoefficientExpansions.createConstant(1, 3, 1, 3, 99)
-        self.assertEqual(e.iLowerBoundIndex, 1)
-        self.assertEqual(e.iUpperBoundIndex, 3)
-        self.assertEqual(e.jLowerBoundIndex, 1)
-        self.assertEqual(e.jUpperBoundIndex, 3)
-        self.assertAlmostEqual(e.getCoefficient(1, 1), 99)
-        self.assertAlmostEqual(e.getCoefficient(1, 2), 99)
-        self.assertAlmostEqual(e.getCoefficient(1, 3), 99)
-        self.assertAlmostEqual(e.getCoefficient(2, 1), 99)
-        self.assertAlmostEqual(e.getCoefficient(2, 2), 99)
-        self.assertAlmostEqual(e.getCoefficient(2, 3), 99)
-        self.assertAlmostEqual(e.getCoefficient(3, 1), 99)
-        self.assertAlmostEqual(e.getCoefficient(3, 2), 99)
-        self.assertAlmostEqual(e.getCoefficient(3, 3), 99)
-
     def test_add(self):
         e1 = CoefficientExpansions.createExpansionFromArray(
             [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 1

@@ -122,12 +122,7 @@ class CoefficientExpansions:
         @return
         """
         if len(args) == 3:
-            (firstRadialExpansionNumber, lastRadialExpansionNumber,
-             constant) = args
-            length = lastRadialExpansionNumber - firstRadialExpansionNumber + 1
-            data = [constant for i in range(length)]
-            ace1d = ArrayCoefficientExpansion1D(data, firstRadialExpansionNumber)
-            return ace1d
+            raise Exception
         elif len(args) == 5:
             (firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber,
              firstRadialExpansionNumber, lastRadialExpansionNumber,

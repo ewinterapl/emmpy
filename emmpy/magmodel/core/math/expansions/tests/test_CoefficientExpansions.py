@@ -75,12 +75,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(es.getCoefficient(3, 3), 18)
 
     def test_createConstant(self):
-        e = CoefficientExpansions.createConstant(1, 3, 99)
-        self.assertEqual(e.firstExpansionNumber, 1)
-        self.assertEqual(e.lastExpansionNumber, 3)
-        self.assertAlmostEqual(e.getCoefficient(1), 99)
-        self.assertAlmostEqual(e.getCoefficient(2), 99)
-        self.assertAlmostEqual(e.getCoefficient(3), 99)
         e = CoefficientExpansions.createConstant(1, 3, 1, 3, 99)
         self.assertEqual(e.iLowerBoundIndex, 1)
         self.assertEqual(e.iUpperBoundIndex, 3)

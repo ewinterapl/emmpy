@@ -149,9 +149,7 @@ class CoefficientExpansions:
         # Replace the getCoefficient() method with a method that always returns
         # the sum, as a closure.
         if isinstance(a, ArrayCoefficientExpansion1D):
-            data = [aa + bb for (aa, bb) in zip(a, b)]
-            ace1d = ArrayCoefficientExpansion1D(data, a.firstExpansionNumber)
-            return ace1d
+            raise Exception("Use arraycoefficientexpansion1d.add()!")
         elif isinstance(a, ArrayCoefficientExpansion2D):
             firstAzimuthalExpansion = a.iLowerBoundIndex
             lastAzimuthalExpansion = a.iUpperBoundIndex

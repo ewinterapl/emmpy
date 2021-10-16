@@ -91,14 +91,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(e.getCoefficient(3, 3), 99)
 
     def test_add(self):
-        e1 = CoefficientExpansions.createExpansionFromArray([1, 2, 3], 1)
-        e2 = CoefficientExpansions.createExpansionFromArray([4, 5, 6], 1)
-        e3 = CoefficientExpansions.add(e1, e2)
-        self.assertEqual(e3.firstExpansionNumber, 1)
-        self.assertEqual(e3.lastExpansionNumber, 3)
-        self.assertAlmostEqual(e3.getCoefficient(1), 5)
-        self.assertAlmostEqual(e3.getCoefficient(2), 7)
-        self.assertAlmostEqual(e3.getCoefficient(3), 9)
         e1 = CoefficientExpansions.createExpansionFromArray(
             [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1, 1
         )

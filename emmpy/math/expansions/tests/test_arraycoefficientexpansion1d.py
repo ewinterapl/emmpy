@@ -68,6 +68,7 @@ class TestBuilder(unittest.TestCase):
     def test_createUnity(self):
         """Test the createUnity function."""
         unity = createUnity(firstExpansionNumber, lastExpansionNumber)
+        self.assertIsInstance(unity, ArrayCoefficientExpansion1D)
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
             self.assertAlmostEqual(unity.getCoefficient(i), 1.0)
 

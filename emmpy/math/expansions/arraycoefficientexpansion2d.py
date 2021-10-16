@@ -105,6 +105,29 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         )
         return negation
 
+    def scale(self, scale_factor):
+        """Return a scaled copy of the expansion.
+
+        Return a scaled copy of the expansion.
+
+        Parameters
+        ----------
+        scale_factor : float
+            Scale factor to apply to expansion.
+
+        Returns
+        -------
+        scaled : ArrayCoefficientExpansion2D
+            A scaled copy of this expansion.
+        """
+        data = scale_factor*self
+        iLowerBoundIndex = self.iLowerBoundIndex
+        jLowerBoundIndex = self.jLowerBoundIndex
+        scaled = ArrayCoefficientExpansion2D(
+            data, iLowerBoundIndex, jLowerBoundIndex
+        )
+        return scaled
+
     def getCoefficient(self, azimuthalExpansion, radialExpansion):
         """Return the specified coefficient.
 

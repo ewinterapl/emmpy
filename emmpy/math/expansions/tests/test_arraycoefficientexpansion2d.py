@@ -58,11 +58,27 @@ class TestBuilder(unittest.TestCase):
             data, iLowerBoundIndex, jLowerBoundIndex
         )
         negation = ace2d.negate()
+        self.assertIsInstance(negation, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
                 self.assertAlmostEqual(
                     negation.getCoefficient(row, col),
                     -ace2d.getCoefficient(row, col)
+        )
+
+    def test_scale(self):
+        """Test the scale method."""
+        scale_factor = 1.1
+        ace2d = ArrayCoefficientExpansion2D(
+            data, iLowerBoundIndex, jLowerBoundIndex
+        )
+        scaled = ace2d.scale(scale_factor)
+        self.assertIsInstance(scaled, ArrayCoefficientExpansion2D)
+        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
+            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
+                self.assertAlmostEqual(
+                    scaled.getCoefficient(row, col),
+                    scale_factor*ace2d.getCoefficient(row, col)
         )
 
     def test_getCoefficient(self):
@@ -79,11 +95,10 @@ class TestBuilder(unittest.TestCase):
 
     def test_createUnity(self):
         """Test the createUnity method."""
-        n_rows = iUpperBoundIndex - iLowerBoundIndex + 1
-        n_cols = jUpperBoundIndex - jLowerBoundIndex + 1
         unity = createUnity(iLowerBoundIndex, iUpperBoundIndex,
                             jLowerBoundIndex, jUpperBoundIndex
         )
+        self.assertIsInstance(unity, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
                 self.assertAlmostEqual(unity.getCoefficient(row, col), 1.0)

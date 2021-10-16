@@ -42,32 +42,6 @@ class CoefficientExpansions:
             raise Exception
 
     @staticmethod
-    def scale(a, scaleFactor):
-        """Create a scaled copy of the expansion.
-
-        Create a scaled copy of the expansion.
-
-        Parameters
-        ----------
-        a : CoefficientExpansion1D or CoefficientExpansion2D
-            The expansion to copy and scale.
-        scaleFactor : float
-            Scale factor for scaled copy of expansion.
-        """
-        if isinstance(a, ArrayCoefficientExpansion1D):
-            raise Exception
-        elif isinstance(a, ArrayCoefficientExpansion2D):
-            data = scaleFactor*a
-            iLowerBoundIndex = a.iLowerBoundIndex
-            jLowerBoundIndex = a.jLowerBoundIndex
-            ace2d = ArrayCoefficientExpansion2D(
-                data, iLowerBoundIndex, jLowerBoundIndex
-            )
-            return ace2d
-        else:
-            raise Exception
-
-    @staticmethod
     def createConstant(*args):
         """Create a constant expansion.
 

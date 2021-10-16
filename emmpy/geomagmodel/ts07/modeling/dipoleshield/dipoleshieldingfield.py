@@ -111,13 +111,12 @@ class DipoleShieldingField:
         pDynScale = pow(dynamicPressure/2, 0.155)
         perpCoeffs = CoefficientExpansions.add(
             DipoleShieldingField.a,
-            CoefficientExpansions.scale(DipoleShieldingField.b,
-                                        cos(dipoleTiltAngle)))
+            DipoleShieldingField.b.scale(cos(dipoleTiltAngle))
+        )
         parrCoeffs = CoefficientExpansions.add(
-            CoefficientExpansions.scale(DipoleShieldingField.c,
-                                        sin(dipoleTiltAngle)),
-            CoefficientExpansions.scale(DipoleShieldingField.d,
-                                        sin(2*dipoleTiltAngle)))
+            DipoleShieldingField.c.scale(sin(dipoleTiltAngle)),
+            DipoleShieldingField.d.scale(sin(2*dipoleTiltAngle))
+        )
         ppchf = PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
             TrigParity.EVEN,
             dipoleTiltAngle*DipoleShieldingField.kappaPerp,

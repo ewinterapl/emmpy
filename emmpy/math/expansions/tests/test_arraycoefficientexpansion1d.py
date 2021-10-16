@@ -48,15 +48,6 @@ class TestBuilder(unittest.TestCase):
             self.assertAlmostEqual(inverse.getCoefficient(i),
                                    1/data[i - firstExpansionNumber])
 
-    def test_negate(self):
-        """Test the negate method."""
-        ace1d = ArrayCoefficientExpansion1D(data, firstExpansionNumber)
-        negation = ace1d.negate()
-        self.assertIsInstance(negation, ArrayCoefficientExpansion1D)
-        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(negation.getCoefficient(i),
-                                   -data[i - firstExpansionNumber])
-
     def test_scale(self):
         """Test the inverse method."""
         scaleFactor = 6.6

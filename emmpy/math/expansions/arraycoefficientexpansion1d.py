@@ -75,24 +75,6 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         inverse = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return inverse
 
-    def negate(self):
-        """Return a negated copy of the expansion.
-
-        Return a negated copy of the expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        negation : ArrayCoefficientExpansion1D
-            Expansion containing the negation of each original component.
-        """
-        data = -self
-        negation = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
-        return negation
-
     def scale(self, scaleFactor):
         """Create a scaled copy of the expansion.
 

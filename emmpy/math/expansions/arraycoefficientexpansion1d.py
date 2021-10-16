@@ -1,6 +1,8 @@
 """A 1-D array for a coefficient expansion.
 
-A 1-D array for a coefficient expansion.
+A 1-D array of scalar expansion coefficients. The index of the first valid
+coefficient (firstExpansionNumber) is not required to be 0. Indexing is
+adjusted to account for a non-0 first index.
 
 Authors
 -------
@@ -15,21 +17,28 @@ import numpy as np
 class ArrayCoefficientExpansion1D(np.ndarray):
     """A 1-D array for a coefficient expansion.
 
-    A 1-D array for a coefficient expansion.
+    A 1-D array of scalar expansion coefficients. The index of the first
+    valid coefficient (firstExpansionNumber) is not required to be 0.
+    Indexing is adjusted to account for a non-0 first index.
+
+    Attributes
+    ----------
+    firstExpansionNumber, lastExpansionNumber : int
+        Logical index of first and last expansion coefficients.
     """
 
     def __new__(cls, data, firstExpansionNumber):
         """Allocate a new ArrayCoefficientExpansion1D object.
 
         Allocate a new ArrayCoefficientExpansion1D object by allocating a
-        new Vector object with the same length.
+        new np.ndarray object with the same length.
 
         Parameters
         ----------
         data : array-like of float
-            List of expansion coefficients.
+            Array of expansion coefficients.
         firstExpansionNumber : int
-            Index of first expansion coefficient.
+            Logical index of first expansion coefficient.
 
         Returns
         -------
@@ -47,10 +56,10 @@ class ArrayCoefficientExpansion1D(np.ndarray):
 
         Parameters
         ----------
-        array : list of double
-            List of expansion coefficients.
+        data : 1-D array-like of float
+            Array of expansion coefficients.
         firstExpansionNumber : int
-            Index of first expansion coefficient.
+            Logical index of first expansion coefficient.
         """
         self[:] = array
         self.firstExpansionNumber = firstExpansionNumber
@@ -95,14 +104,14 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         return scaled
 
     def getCoefficient(self, index):
-        """Return the coefficient at the specified index.
+        """Return the coefficient at the specified logical index.
 
-        Return the coefficient at the specified index.
+        Return the coefficient at the specified logical index.
 
         Parameters
         ----------
         index : int
-            Index of coefficient to return.
+            Logical index of coefficient to return.
         
         Returns
         -------
@@ -112,7 +121,7 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         return self[index - self.firstExpansionNumber]
 
 
-def createUnity(i_min, i_max):
+def createUnity(firstExpansionNumber, lastExpansionNumber):
     """Create an expansion of unit coefficients.
 
     Create an expansion of unit coefficients using the specified logical
@@ -120,7 +129,7 @@ def createUnity(i_min, i_max):
 
     Parameters
     ----------
-    i_min, i_max : int
+    firstExpansionNumber, lastExpansionNumber : int
         Lowest and highest logical indices for expansion.
 
     Returns
@@ -128,7 +137,7 @@ def createUnity(i_min, i_max):
     unity : ArrayCoefficientExpansion1D
         An expansion with unit coefficients.
     """
-    length = i_max - i_min + 1
+    length = lastExpansionNumber - firstExpansionNumber + 1
     data = np.ones(length)
-    unity = ArrayCoefficientExpansion1D(data, i_min)
+    unity = ArrayCoefficientExpansion1D(data, firstExpansionNumber)
     return unity

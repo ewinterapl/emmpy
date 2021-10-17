@@ -5,7 +5,6 @@ Modules
 test_cylindricaltocartesianbasistransformation.py
 test_pointonaxisexception.py
 test_sphericaltocartesianbasistransformation.py
-test_sphericaltocartesianjacobian.py
 test_transformation.py
 test_vectorfieldvalueconversions.py
 

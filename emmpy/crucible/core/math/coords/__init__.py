@@ -55,7 +55,6 @@ Modules
 cylindricaltocartesianbasistransformation.py
 pointonaxisexception.py
 sphericaltocartesianbasistransformation.py
-sphericaltocartesianjacobian.py
 transformation.py
 vectorfieldvalueconversions.py
 

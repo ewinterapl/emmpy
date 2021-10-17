@@ -53,7 +53,6 @@ For developers
 Modules
 -------
 cylindricaltocartesianbasistransformation.py
-cylindricaltocartesianjacobian.py
 pointonaxisexception.py
 sphericaltocartesianbasistransformation.py
 sphericaltocartesianjacobian.py

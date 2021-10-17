@@ -3,7 +3,6 @@
 Modules
 -------
 test_cylindricaltocartesianbasistransformation.py
-test_cylindricaltocartesianjacobian.py
 test_pointonaxisexception.py
 test_sphericaltocartesianbasistransformation.py
 test_sphericaltocartesianjacobian.py

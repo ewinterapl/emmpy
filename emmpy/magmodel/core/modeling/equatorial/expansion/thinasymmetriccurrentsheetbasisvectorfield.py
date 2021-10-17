@@ -175,7 +175,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             symBasisFunction = TailSheetSymmetricExpansion(
                 kn, self.currentSheetHalfThickness
             )
-            a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
+            a = self.coeffs.getTailSheetSymmetricValues()[n]
             symmetricExpansions[n - 1] = symBasisFunction.evaluate(location)*a
 
             # m is the azimuthal expansion number.

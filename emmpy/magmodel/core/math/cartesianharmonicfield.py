@@ -119,11 +119,11 @@ class CartesianHarmonicField(BasisVectorField):
         by = 0.0
         bz = 0.0
         for i in range(firstI, lastI + 1):
-            pi = self.piCoeffs.getCoefficient(i)
+            pi = self.piCoeffs[i]
             sinYpi = self.trigParityI.evaluate(pi*y)
             cosYpi = self.trigParityI.differentiate(pi*y)
             for k in range(firstK, lastK + 1):
-                pk = self.pkCoeffs.getCoefficient(k)
+                pk = self.pkCoeffs[k]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
                 sinZpk = self.trigParityK.evaluate(pk*z)

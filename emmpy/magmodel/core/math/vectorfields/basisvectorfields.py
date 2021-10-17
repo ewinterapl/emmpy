@@ -143,16 +143,12 @@ class BasisVectorFields:
             scaledExpansions = []
             expansionIndex = coeffs.firstExpansionNumber
             for expansion in expansions:
-                scaledExpansions.append(
-                    expansion*coeffs.getCoefficient(expansionIndex)
-                )
+                scaledExpansions.append(expansion*coeffs[expansionIndex])
                 expansionIndex += 1
             for c in moreCoeffs:
                 expansionIndex = coeffs.firstExpansionNumber
                 for expansion in expansions:
-                    scaledExpansions.append(
-                        expansion*c.getCoefficient(expansionIndex)
-                    )
+                    scaledExpansions.append(expansion*c[expansionIndex])
                     expansionIndex += 1
             return scaledExpansions
         bvf.evaluateExpansion = my_evaluateExpansion

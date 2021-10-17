@@ -117,23 +117,6 @@ class ArrayCoefficientExpansion1D(np.ndarray):
         scaled = ArrayCoefficientExpansion1D(data, self.firstExpansionNumber)
         return scaled
 
-    def getCoefficient(self, index):
-        """Return the coefficient at the specified logical index.
-
-        Return the coefficient at the specified logical index.
-
-        Parameters
-        ----------
-        index : int
-            Logical index of coefficient to return.
-        
-        Returns
-        -------
-        result : float
-            Desired expansion coefficient.
-        """
-        return self[index]
-
 
 def createUnity(firstExpansionNumber, lastExpansionNumber):
     """Create an expansion of unit coefficients.

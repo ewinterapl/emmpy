@@ -44,7 +44,7 @@ class TestBuilder(unittest.TestCase):
         inverse = ace1d.invert()
         self.assertIsInstance(inverse, ArrayCoefficientExpansion1D)
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(inverse.getCoefficient(i),
+            self.assertAlmostEqual(inverse[i],
                                    1/data[i - firstExpansionNumber])
 
     def test_scale(self):
@@ -54,22 +54,15 @@ class TestBuilder(unittest.TestCase):
         scaled = ace1d.scale(scaleFactor)
         self.assertIsInstance(scaled, ArrayCoefficientExpansion1D)
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(scaled.getCoefficient(i),
+            self.assertAlmostEqual(scaled[i],
                                    scaleFactor*data[i - firstExpansionNumber])
-
-    def test_getCoefficient(self):
-        """Test the getCoefficient method."""
-        ace1d = ArrayCoefficientExpansion1D(data, firstExpansionNumber)
-        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(ace1d.getCoefficient(i),
-                                   data[i - firstExpansionNumber])
 
     def test_createUnity(self):
         """Test the createUnity function."""
         unity = createUnity(firstExpansionNumber, lastExpansionNumber)
         self.assertIsInstance(unity, ArrayCoefficientExpansion1D)
         for i in range(firstExpansionNumber, lastExpansionNumber + 1):
-            self.assertAlmostEqual(unity.getCoefficient(i), 1.0)
+            self.assertAlmostEqual(unity[i], 1.0)
 
 
 if __name__ == "__main__":

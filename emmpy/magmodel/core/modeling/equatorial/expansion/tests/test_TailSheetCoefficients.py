@@ -28,9 +28,9 @@ class TestTailSheetCoefficients(unittest.TestCase):
 
     def test_createUnity(self):
         e = TailSheetCoefficients.createUnity(3, 3)
-        self.assertAlmostEqual(e.tailSheetSymmetricValues.getCoefficient(1), 1)
-        self.assertAlmostEqual(e.tailSheetOddValues.getCoefficient(1, 1), 1)
-        self.assertAlmostEqual(e.tailSheetEvenValues.getCoefficient(1, 1), 1)
+        self.assertAlmostEqual(e.tailSheetSymmetricValues[1], 1)
+        self.assertAlmostEqual(e.tailSheetOddValues[1, 1], 1)
+        self.assertAlmostEqual(e.tailSheetEvenValues[1, 1], 1)
 
     def test_createFromArray(self):
         nr = 2
@@ -38,20 +38,20 @@ class TestTailSheetCoefficients(unittest.TestCase):
         n = nr + 2*nr*na
         a = list(range(n + 1))
         c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertAlmostEqual(c.tailSheetSymmetricValues.getCoefficient(1), 0)
-        self.assertAlmostEqual(c.tailSheetSymmetricValues.getCoefficient(2), 1)
-        self.assertAlmostEqual(c.tailSheetOddValues.getCoefficient(1, 1), 2)
-        self.assertAlmostEqual(c.tailSheetOddValues.getCoefficient(1, 2), 5)
-        self.assertAlmostEqual(c.tailSheetOddValues.getCoefficient(2, 1), 3)
-        self.assertAlmostEqual(c.tailSheetOddValues.getCoefficient(2, 2), 6)
-        self.assertAlmostEqual(c.tailSheetOddValues.getCoefficient(3, 1), 4)
-        self.assertAlmostEqual(c.tailSheetOddValues.getCoefficient(3, 2), 7)
-        self.assertAlmostEqual(c.tailSheetEvenValues.getCoefficient(1, 1), 8)
-        self.assertAlmostEqual(c.tailSheetEvenValues.getCoefficient(1, 2), 11)
-        self.assertAlmostEqual(c.tailSheetEvenValues.getCoefficient(2, 1), 9)
-        self.assertAlmostEqual(c.tailSheetEvenValues.getCoefficient(2, 2), 12)
-        self.assertAlmostEqual(c.tailSheetEvenValues.getCoefficient(3, 1), 10)
-        self.assertAlmostEqual(c.tailSheetEvenValues.getCoefficient(3, 2), 13)
+        self.assertAlmostEqual(c.tailSheetSymmetricValues[1], 0)
+        self.assertAlmostEqual(c.tailSheetSymmetricValues[2], 1)
+        self.assertAlmostEqual(c.tailSheetOddValues[1, 1], 2)
+        self.assertAlmostEqual(c.tailSheetOddValues[1, 2], 5)
+        self.assertAlmostEqual(c.tailSheetOddValues[2, 1], 3)
+        self.assertAlmostEqual(c.tailSheetOddValues[2, 2], 6)
+        self.assertAlmostEqual(c.tailSheetOddValues[3, 1], 4)
+        self.assertAlmostEqual(c.tailSheetOddValues[3, 2], 7)
+        self.assertAlmostEqual(c.tailSheetEvenValues[1, 1], 8)
+        self.assertAlmostEqual(c.tailSheetEvenValues[1, 2], 11)
+        self.assertAlmostEqual(c.tailSheetEvenValues[2, 1], 9)
+        self.assertAlmostEqual(c.tailSheetEvenValues[2, 2], 12)
+        self.assertAlmostEqual(c.tailSheetEvenValues[3, 1], 10)
+        self.assertAlmostEqual(c.tailSheetEvenValues[3, 2], 13)
 
     def test_getTailSheetSymmetricValues(self):
         nr = 2
@@ -60,10 +60,10 @@ class TestTailSheetCoefficients(unittest.TestCase):
         a = list(range(n + 1))
         c = TailSheetCoefficients.createFromArray(a, na, nr)
         self.assertAlmostEqual(
-            c.getTailSheetSymmetricValues().getCoefficient(1), 0
+            c.getTailSheetSymmetricValues()[1], 0
         )
         self.assertAlmostEqual(
-            c.getTailSheetSymmetricValues().getCoefficient(2), 1
+            c.getTailSheetSymmetricValues()[2], 1
         )
 
     def test_getTailSheetOddValues(self):
@@ -112,7 +112,7 @@ class TestTailSheetCoefficients(unittest.TestCase):
         c = TailSheetCoefficients.createFromArray(a, na, nr)
         e = c.getAsSingleExpansion()
         for i in range(n):
-            self.assertAlmostEqual(e.getCoefficient(i + 1), i)
+            self.assertAlmostEqual(e[i + 1], i)
 
     def test_getNumAzimuthalExpansions(self):
         nr = 2

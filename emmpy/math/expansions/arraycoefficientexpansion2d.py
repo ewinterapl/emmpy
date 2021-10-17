@@ -1,8 +1,13 @@
 """A 2-D array for a coefficient expansion.
 
-A 2-D array of scalar expansion coefficients. The index of the first valid
-row (iLowerBoundIndex) and column (jLowerBoundIndex) is not required to be 0.
-Indexing is adjusted to account for a non-0 first index.
+A 2-D array of scalar expansion components. The index of the first valid
+row (iLowerBoundIndex) and the first valid column (jLowerBoundIndex) are
+not required to be 0. The stored array is padded with unused rows before
+the first valid row, and unused columns in each row before the first valid
+column. This allows the non-0-based indexing to work directly, at the
+expense of some unused memory. This approach is faster than indexing with
+offsets at each access, and allows the expansion to be used as a numpy
+array directly using slicing, e.g.
 
 Authors
 -------
@@ -19,9 +24,16 @@ from emmpy.utilities.nones import nones
 class ArrayCoefficientExpansion2D(np.ndarray):
     """A 2-D array of expansion coefficients.
     
-    A 2-D array of expansion coefficients. The index of the first valid
-    row (iLowerBoundIndex) and column (jLowerBoundIndex) is not required
-    to be 0. Indexing is adjusted to account for a non-0 first index.
+    A 2-D array of scalar expansion components. The index of the first
+    valid row (iLowerBoundIndex) and the first valid column
+    (jLowerBoundIndex) are not required to be 0. The stored array is
+    padded with unused rows before the first valid row, and unused
+    columns in each row before the first valid column. This allows the
+    non-0-based indexing to work directly, at the expense of some unused
+    memory. This approach is faster than indexing with offsets at each
+    access, and allows the expansion to be used as a numpy array directly
+    using slicing, e.g.
+    expansion[iJlowerBoundIndex:, jLowerBoundIndex:.]
 
     Attributes
     ----------
@@ -29,6 +41,8 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         Logical index of first and last valid rows.
     jLowerBoundIndex, jUpperBoundIndex : int
         Logical index of first and last valid columns.
+    iSize, jSize : int
+        Number of logical rows and columns, respectively.
     """
 
     def __new__(cls, data, iLowerBoundIndex, jLowerBoundIndex):
@@ -48,42 +62,35 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
         Returns
         -------
-        ace2d : Matrix
+        ace2d : ArrayCoefficientExpansion2D
             The newly-allocated object.
         """
-        nrows = len(data)
-        ncols = len(data[0])
+        nrows = len(data) + iLowerBoundIndex
+        ncols = len(data[0]) + jLowerBoundIndex
         ace2d = super().__new__(cls, shape=(nrows, ncols), dtype=float)
         return ace2d
 
     def __init__(self,  data, iLowerBoundIndex, jLowerBoundIndex):
         """Initialize a new ArrayCoefficientExpansion2D object.
 
-        Converts a 2D double array into a CoefficientExpansion2D by
-        wrapping the array. Note, this is a view friendly implementation, so
-        the returned CoefficientExpansion2D will change as the array changes.
-
-        Note, the supplied array must be rectangular (not ragged). This check
-        is performed on construction but not on subsequent retrievals. This
-        makes this a potentially unsafe implementation, if the supplied array
-        becomes ragged after construction.
+        Initialize a ArrayCoefficient2D object.
 
         Parameters
         ----------
         data : 2-D rectangular array of float
             The array of expansion coefficients.
         iLowerBoundIndex : int
-            Index of first coefficient in 1st dimension.
+            Index of first valid row of coefficients.
         jLowerBoundIndex : int
-            Index of first coefficient in 2nd dimension.
+            Index of first valid column of coefficients.
         """
-        self[:] = data
+        self[iLowerBoundIndex:, jLowerBoundIndex:] = data
         self.iLowerBoundIndex = iLowerBoundIndex
-        self.iUpperBoundIndex = self.iLowerBoundIndex + len(data) - 1
-        self.iSize = self.iUpperBoundIndex - self.iLowerBoundIndex + 1
+        self.iSize = len(data)
+        self.iUpperBoundIndex = self.iLowerBoundIndex + self.iSize - 1
         self.jLowerBoundIndex = jLowerBoundIndex
-        self.jUpperBoundIndex = self.jLowerBoundIndex + len(data[0]) - 1
-        self.jSize = self.jUpperBoundIndex - self.jLowerBoundIndex + 1
+        self.jSize = len(data[0])
+        self.jUpperBoundIndex = self.jLowerBoundIndex + self.jSize - 1
 
     def negate(self):
         """Return a negated copy of the expansion.
@@ -99,9 +106,9 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         negation : ArrayCoefficientExpansion2D
             A negated copy of this expansion.
         """
-        data = -self
         iLowerBoundIndex = self.iLowerBoundIndex
         jLowerBoundIndex = self.jLowerBoundIndex
+        data = -self[iLowerBoundIndex:, jLowerBoundIndex:]
         negation = ArrayCoefficientExpansion2D(
             data, iLowerBoundIndex, jLowerBoundIndex
         )
@@ -122,9 +129,9 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         scaled : ArrayCoefficientExpansion2D
             A scaled copy of this expansion.
         """
-        data = scale_factor*self
         iLowerBoundIndex = self.iLowerBoundIndex
         jLowerBoundIndex = self.jLowerBoundIndex
+        data = scale_factor*self[iLowerBoundIndex:, jLowerBoundIndex:]
         scaled = ArrayCoefficientExpansion2D(
             data, iLowerBoundIndex, jLowerBoundIndex
         )
@@ -147,10 +154,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         result : float
             Coefficient at specified index.
         """
-        return (
-            self[azimuthalExpansion - self.iLowerBoundIndex]
-                [radialExpansion - self.jLowerBoundIndex]
-        )
+        return self[azimuthalExpansion, radialExpansion]
 
 
 def add(a, b):
@@ -166,16 +170,17 @@ def add(a, b):
 
     Returns
     -------
-    sum : ArrayCoefficientExpansion2D
+    exp_sum : ArrayCoefficientExpansion2D
         Sum of the two expansions.
     """
-    data = a + b
     iLowerBoundIndex = a.iLowerBoundIndex
     jLowerBoundIndex = a.jLowerBoundIndex
-    sum = ArrayCoefficientExpansion2D(
-        data, iLowerBoundIndex, jLowerBoundIndex
+    data = (
+        a[iLowerBoundIndex:, jLowerBoundIndex:] +
+        b[iLowerBoundIndex:, jLowerBoundIndex:]
     )
-    return sum
+    exp_sum = ArrayCoefficientExpansion2D(data, iLowerBoundIndex, jLowerBoundIndex)
+    return exp_sum
 
 
 def createNullExpansion(row_min, row_max, col_min, col_max):

@@ -33,8 +33,8 @@ class TestBuilder(unittest.TestCase):
             ArrayCoefficientExpansion2D,
             data, iLowerBoundIndex, jLowerBoundIndex
         )
-        self.assertEqual(ace2d.shape[0], n_rows)
-        self.assertEqual(ace2d.shape[1], n_cols)
+        self.assertEqual(ace2d.shape[0], n_rows + iLowerBoundIndex)
+        self.assertEqual(ace2d.shape[1], n_cols + jLowerBoundIndex)
 
     def test___init__(self):
         """Test the __init__ method."""
@@ -44,13 +44,15 @@ class TestBuilder(unittest.TestCase):
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
                 self.assertAlmostEqual(
-                    ace2d[row - iLowerBoundIndex, col - jLowerBoundIndex],
+                    ace2d[row, col],
                     data[row - iLowerBoundIndex, col - jLowerBoundIndex]
         )
         self.assertEqual(ace2d.iLowerBoundIndex, iLowerBoundIndex)
         self.assertEqual(ace2d.iUpperBoundIndex, iUpperBoundIndex)
         self.assertEqual(ace2d.jLowerBoundIndex, jLowerBoundIndex)
         self.assertEqual(ace2d.jUpperBoundIndex, jUpperBoundIndex)
+        self.assertEqual(ace2d.iSize, iUpperBoundIndex - iLowerBoundIndex + 1)
+        self.assertEqual(ace2d.jSize, jUpperBoundIndex - jLowerBoundIndex + 1)
 
     def test_negate(self):
         """Test the negate method."""
@@ -61,10 +63,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsInstance(negation, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(
-                    negation.getCoefficient(row, col),
-                    -ace2d.getCoefficient(row, col)
-        )
+                self.assertAlmostEqual(negation[row, col], -ace2d[row, col])
 
     def test_scale(self):
         """Test the scale method."""
@@ -77,9 +76,8 @@ class TestBuilder(unittest.TestCase):
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
                 self.assertAlmostEqual(
-                    scaled.getCoefficient(row, col),
-                    scale_factor*ace2d.getCoefficient(row, col)
-        )
+                    scaled[row, col], scale_factor*ace2d[row, col]
+                )
 
     def test_getCoefficient(self):
         """Test the getCoefficient method."""
@@ -101,13 +99,12 @@ class TestBuilder(unittest.TestCase):
         b = ArrayCoefficientExpansion2D(
             data + 1.0, iLowerBoundIndex, jLowerBoundIndex
         )
-        sum = add(a, b)
-        self.assertIsInstance(sum, ArrayCoefficientExpansion2D)
+        exp_sum = add(a, b)
+        self.assertIsInstance(exp_sum, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
                 self.assertAlmostEqual(
-                    sum.getCoefficient(row, col),
-                    a.getCoefficient(row, col) + b.getCoefficient(row, col)
+                    exp_sum[row, col], a[row, col] + b[row, col]
                 )
 
     def test_createNullExpansion(self):
@@ -119,7 +116,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsInstance(null, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertTrue(np.isnan(null.getCoefficient(row, col)))
+                self.assertTrue(np.isnan(null[row, col]))
 
     def test_createUnity(self):
         """Test the createUnity function."""
@@ -129,7 +126,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsInstance(unity, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(unity.getCoefficient(row, col), 1.0)
+                self.assertAlmostEqual(unity[row, col], 1.0)
 
 
 if __name__ == "__main__":

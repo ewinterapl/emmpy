@@ -180,15 +180,13 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
             # m is the azimuthal expansion number.
             for m in range(1, self.numAzimuthalExpansions + 1):
-                aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
+                aOdd = self.coeffs.getTailSheetOddValues()[m, n]
                 oddBasisFunction = TailSheetAsymmetricExpansion(
                     kn, m, TrigParity.ODD, self.currentSheetHalfThickness
                 )
                 oddExpansions[m - 1][n - 1] = (
                     oddBasisFunction.evaluate(location)*aOdd)
-                aEven = (
-                    self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
-                )
+                aEven = self.coeffs.getTailSheetEvenValues()[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
                     kn, m, TrigParity.EVEN, self.currentSheetHalfThickness
                 )

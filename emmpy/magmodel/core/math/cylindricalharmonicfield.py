@@ -125,7 +125,7 @@ class CylindricalHarmonicField(BasisVectorField):
                 bx = x*rhoInv*bRho + y*rhoInv*bPhi
                 by = y*rhoInv*bRho - x*rhoInv*bPhi
                 # Get the linear scaling coefficient.
-                coeff = self.coefficientsExpansion.getCoefficient(m, n)
+                coeff = self.coefficientsExpansion[m, n]
                 # Scale the vector, the minus sign comes from the
                 # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff

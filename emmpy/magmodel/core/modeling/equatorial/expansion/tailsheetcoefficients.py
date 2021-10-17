@@ -226,12 +226,12 @@ class TailSheetCoefficients:
 
         for n in range(firstN, lastN + 1):
             for m in range(firstM, lastM + 1):
-                coeffs[count] = self.tailSheetOddValues.getCoefficient(m, n)
+                coeffs[count] = self.tailSheetOddValues[m, n]
                 count += 1
 
         for n in range(firstN, lastN + 1):
             for m in range(firstM, lastM + 1):
-                coeffs[count] = self.tailSheetEvenValues.getCoefficient(m, n)
+                coeffs[count] = self.tailSheetEvenValues[m, n]
                 count += 1
 
         return arraycoefficientexpansion1d.ArrayCoefficientExpansion1D(coeffs, 1)

@@ -129,7 +129,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
                 exp_ = exp(x*sqrtP)
                 sinZpk = self.trigParityK.evaluate(pk*z)
                 cosZpk = self.trigParityK.differentiate(pk*z)
-                aik = self.aikCoeffs.getCoefficient(i, k)
+                aik = self.aikCoeffs[i, k]
                 if k == self.lastK:
                     bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +
                           sinZpk*pk*(x + 1.0/sqrtP)))

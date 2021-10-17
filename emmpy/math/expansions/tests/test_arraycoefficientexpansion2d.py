@@ -79,18 +79,6 @@ class TestBuilder(unittest.TestCase):
                     scaled[row, col], scale_factor*ace2d[row, col]
                 )
 
-    def test_getCoefficient(self):
-        """Test the getCoefficient method."""
-        ace2d = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
-        )
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(
-                    ace2d.getCoefficient(row, col),
-                    data[row - iLowerBoundIndex, col - jLowerBoundIndex]
-        )
-
     def test_add(self):
         """Test the add function."""
         a = ArrayCoefficientExpansion2D(

@@ -128,7 +128,7 @@ class CartesianHarmonicField(BasisVectorField):
                 exp_ = exp(x*sqrtP)
                 sinZpk = self.trigParityK.evaluate(pk*z)
                 cosZpk = self.trigParityK.differentiate(pk*z)
-                aik = self.aikCoeffs.getCoefficient(i, k)
+                aik = self.aikCoeffs[i, k]
                 bx += aik*exp_*sqrtP*sinYpi*sinZpk
                 by += aik*exp_*pi*cosYpi*sinZpk
                 bz += aik*exp_*pk*sinYpi*cosZpk

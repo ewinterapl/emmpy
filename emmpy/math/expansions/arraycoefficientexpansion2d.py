@@ -137,25 +137,6 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         )
         return scaled
 
-    def getCoefficient(self, azimuthalExpansion, radialExpansion):
-        """Return the specified coefficient.
-
-        Return the specified coefficient.
-
-        Parameters
-        ----------
-        azimuthalExpansion : int
-            Index of first dimension of coefficient.
-        radialExpansion : int
-            Index of second dimension of coefficient.
-        
-        Returns
-        -------
-        result : float
-            Coefficient at specified index.
-        """
-        return self[azimuthalExpansion, radialExpansion]
-
 
 def add(a, b):
     """Compute the sum of two expansions.

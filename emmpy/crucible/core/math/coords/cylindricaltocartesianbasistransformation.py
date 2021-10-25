@@ -100,30 +100,3 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         m = m.T
         buffer[:] = m[:]
         return buffer
-
-    def mxv(self, jacobian, vector):
-        """Transform a basis vector between cylindrical and Cartesian coordinates.
-
-        Transform a basis vector between cylindrical and Cartesian
-        coordinates. The transformation can go in either direction, and is
-        computed based on the input vector type.
-
-        Parameters
-        ----------
-        jacobian : MatrixIJK
-            Jacobian matrix for conversion.
-        vector : CylindricalVector or CartesianVector3D
-            Vector in original coordinates.
-
-        Returns
-        -------
-        converted_vector : CartesianVector3D or CylindricalVector
-            Vector in converted coordinates.
-        """
-        v = jacobian.dot(vector)
-        converted_vector = None
-        if isinstance(vector, CylindricalVector):
-            converted_vector = CartesianVector3D(v)
-        else:
-            converted_vector = CylindricalVector(v)
-        return converted_vector

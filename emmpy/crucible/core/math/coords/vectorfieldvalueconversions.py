@@ -91,8 +91,7 @@ class VectorFieldValueConversions:
             cylindricalPosition, cartToCylMatrix)
 
         # Convert the Cartesian vector value to cylindrical.
-        cylindricalValue = VectorFieldValueConversions.CYLINDRICAL.mxv(
-            cartToCylMatrix, cartesianValue)
+        cylindricalValue = CylindricalVector(cartToCylMatrix.dot(cartesianValue))
 
         # Create and return the new cylindrical vector field value.
         cylindrical = CylindricalVectorFieldValue(
@@ -198,7 +197,7 @@ class VectorFieldValueConversions:
         else:
             raise TypeError
         coordSys.getTransformation(position, toCartMatrix)
-        cartesianValue = VectorIJK(coordSys.mxv(toCartMatrix, value))
+        cartesianValue = VectorIJK(toCartMatrix.dot(value))
 
         # Create and return the new Cartesian vector field value.
         cartesian = CartesianVectorFieldValue(

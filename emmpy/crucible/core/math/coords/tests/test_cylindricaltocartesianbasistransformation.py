@@ -76,29 +76,6 @@ class TestBuilder(unittest.TestCase):
                                                    m_ref[row, col]
                             )
 
-    def test_mxv(self):
-        """Test the mxv method."""
-        c2cbt = CylindricalToCartesianBasisTransformation()
-        for rho in rhos:
-            for phi in phis:
-                for z in zs:
-                    # Transform a cylindrical basis vector to Cartesian,
-                    # then back to cylindrical.
-                    cyl = CylindricalVector(1, 1, 1)
-                    cos_phi = cos(phi)
-                    sin_phi = sin(phi)
-                    jac = np.array([[cos_phi, -sin_phi, 0],
-                                    [sin_phi, cos_phi, 0],
-                                    [0, 0, 1]])
-                    cart = c2cbt.mxv(jac, cyl)
-                    cart_ref = [row.dot(cyl) for row in jac]
-                    for i in range(3):
-                        self.assertAlmostEqual(cart[i], cart_ref[i])
-                    jac_inv = np.linalg.inv(jac)
-                    new_cyl = c2cbt.mxv(jac_inv, cart)
-                    for i in range(3):
-                        self.assertAlmostEqual(new_cyl[i], cyl[i])
-
 
 if __name__ == "__main__":
     unittest.main()

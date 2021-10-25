@@ -14,8 +14,12 @@ from math import cos, sin
 import numpy as np
 
 from emmpy.crucible.core.math.coords.transformation import Transformation
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
-from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.coordinates.cylindricalvector import (
+    CylindricalVector, cylindricalToCartesian,
+    getCylindricalBasisToCartesianBasisTransformation,
+    getCartesianBasisToCylindricalBasisTransformation
+)
+from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 
 
 class CylindricalToCartesianBasisTransformation(Transformation):
@@ -33,21 +37,25 @@ class CylindricalToCartesianBasisTransformation(Transformation):
 
         Initialize a new CylindricalToCartesianBasisTransformation object.
 
+        This dummy __init__ is needed to override the inherited abstract
+        __init__, which raises an exception when invoked.
+
         Parameters
         ----------
         None
         """
 
     def getTransformation(self, cylindrical, buffer):
-        """Return the cylindrical-to-Cartesian basis transformation matrix.
+        """Compute the cylindrical-to-Cartesian basis transformation matrix.
 
-        Return the cylindrical-to-Cartesian basis transformation matrix at
-        the specified position.
+        Compute the cylindrical-to-Cartesian basis transformation matrix at
+        the specified cylindrical position.
 
         Parameters
         ----------
         cylindrical : CylindricalVector
-            Position in cylindrical coordinates.
+            Position in cylindrical coordinates for computing
+            the transformation matrix.
         buffer : MatrixIJK
             Buffer to hold the cylindrical-to-Cartesian basis
             transformation matrix.
@@ -55,24 +63,25 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         Returns
         -------
         buffer : MatrixIJK
-            The cylindrical-to-Cartesian basis transformation matrix.
+            The cylindrical-to-Cartesian basis transformation matrix
+            computed at the specified position.
         """
-        phi = cylindrical.phi
-        cos_phi = cos(phi)
-        sin_phi = sin(phi)
-        buffer[:, :] = [[cos_phi, -sin_phi, 0],
-                        [sin_phi, cos_phi, 0],
-                        [0, 0, 1]]
+        m = getCylindricalBasisToCartesianBasisTransformation(cylindrical)
+        buffer[:] = m[:]
         return buffer
 
     def getInverseTransformation(self, cylindrical, buffer):
         """Return the Cartesian-to-cylindrical basis transformation matrix.
 
         Return the Cartesian-to-cylindrical basis transformation matrix at
-        the specified position.
+        the specified *cylindrical* position.
 
         The Cartesian-to-cylindrical basis transformation matrix is the
-        inverse of the cylindrical-to-Cartesian transformation matrix.
+        inverse (and transpose) of the cylindrical-to-Cartesian
+        transformation matrix. This is computed using the cylindrical
+        position, since computing the inverse transformation directly for
+        Cartesian positions on the z-axis results in the wrong
+        transformation matrix: [[0, 0, 0], [0, 0, 0], [0, 0, 1]]
 
         Parameters
         ----------
@@ -87,8 +96,9 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         buffer : MatrixIJK
             The Cartesian-to-cylindrical basis transformation matrix.
         """
-        self.getTransformation(cylindrical, buffer)
-        buffer[:, :] = np.linalg.inv(buffer)
+        m = getCylindricalBasisToCartesianBasisTransformation(cylindrical)
+        m = m.T
+        buffer[:] = m[:]
         return buffer
 
     def mxv(self, jacobian, vector):
@@ -102,18 +112,18 @@ class CylindricalToCartesianBasisTransformation(Transformation):
         ----------
         jacobian : MatrixIJK
             Jacobian matrix for conversion.
-        vector : CylindricalVector or VectorIJK
+        vector : CylindricalVector or CartesianVector3D
             Vector in original coordinates.
 
         Returns
         -------
-        converted_vector : VectorIJK or CylindricalVector
+        converted_vector : CartesianVector3D or CylindricalVector
             Vector in converted coordinates.
         """
         v = jacobian.dot(vector)
         converted_vector = None
         if isinstance(vector, CylindricalVector):
-            converted_vector = VectorIJK(v)
+            converted_vector = CartesianVector3D(v)
         else:
             converted_vector = CylindricalVector(v)
         return converted_vector

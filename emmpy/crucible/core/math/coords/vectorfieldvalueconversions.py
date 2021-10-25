@@ -198,7 +198,7 @@ class VectorFieldValueConversions:
         else:
             raise TypeError
         coordSys.getTransformation(position, toCartMatrix)
-        cartesianValue = coordSys.mxv(toCartMatrix, value)
+        cartesianValue = VectorIJK(coordSys.mxv(toCartMatrix, value))
 
         # Create and return the new Cartesian vector field value.
         cartesian = CartesianVectorFieldValue(

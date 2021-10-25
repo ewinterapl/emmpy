@@ -10,7 +10,7 @@ from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation i
     CylindricalToCartesianBasisTransformation
 )
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
-from emmpy.math.matrices.matrixijk import MatrixIJK
+from emmpy.math.matrices.matrix3d import Matrix3D
 
 
 # Test grids.
@@ -34,19 +34,22 @@ class TestBuilder(unittest.TestCase):
         for rho in rhos:
             for phi in phis:
                 for z in zs:
-                    cylindrical = CylindricalVector(rho, phi, z)
-                    buffer = MatrixIJK()
-                    jac = c2cbt.getTransformation(cylindrical, buffer)
-                    self.assertIs(jac, buffer)
+                    cylindricalPosition = CylindricalVector(rho, phi, z)
+                    buffer = Matrix3D()
+                    m = c2cbt.getTransformation(cylindricalPosition, buffer)
+                    self.assertIs(m, buffer)
                     cos_phi = cos(phi)
                     sin_phi = sin(phi)
-                    jac_ref = [[cos_phi, -sin_phi, 0],
-                               [sin_phi, cos_phi, 0],
-                               [0, 0, 1]]
-                    for row in range(3):
-                        for col in range(3):
-                            self.assertAlmostEqual(jac[row][col],
-                                                   jac_ref[row][col])
+                    m_ref = Matrix3D(
+                        [[cos_phi, -sin_phi, 0],
+                         [sin_phi, cos_phi, 0],
+                         [0, 0, 1]]
+                    )
+                    for row in range(len(m)):
+                        for col in range(len(m[0])):
+                            self.assertAlmostEqual(m[row, col],
+                                                   m_ref[row, col]
+                            )
 
     def test_getInverseTransformation(self):
         """Test the getInverseTransformation method."""
@@ -54,20 +57,24 @@ class TestBuilder(unittest.TestCase):
         for rho in rhos:
             for phi in phis:
                 for z in zs:
-                    cylindrical = CylindricalVector(rho, phi, z)
-                    buffer = MatrixIJK()
-                    jac = c2cbt.getInverseTransformation(
-                        cylindrical, buffer)
-                    self.assertIs(jac, buffer)
+                    # Note that the inverse transformation is computed
+                    # at a cylindrical position, not a Cartesian position.
+                    cylindricalPosition = CylindricalVector(rho, phi, z)
+                    buffer = Matrix3D()
+                    m = c2cbt.getInverseTransformation(cylindricalPosition, buffer)
+                    self.assertIs(m, buffer)
                     cos_phi = cos(phi)
                     sin_phi = sin(phi)
-                    jac_ref = [[cos_phi, sin_phi, 0],
-                               [-sin_phi, cos_phi, 0],
-                               [0, 0, 1]]
-                    for row in range(3):
-                        for col in range(3):
-                            self.assertAlmostEqual(jac[row][col],
-                                                   jac_ref[row][col])
+                    m_ref = Matrix3D(
+                        [[cos_phi, sin_phi, 0],
+                         [-sin_phi, cos_phi, 0],
+                         [0, 0, 1]]
+                    )
+                    for row in range(len(m)):
+                        for col in range(len(m[0])):
+                            self.assertAlmostEqual(m[row, col],
+                                                   m_ref[row, col]
+                            )
 
     def test_mxv(self):
         """Test the mxv method."""
@@ -93,5 +100,5 @@ class TestBuilder(unittest.TestCase):
                         self.assertAlmostEqual(new_cyl[i], cyl[i])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

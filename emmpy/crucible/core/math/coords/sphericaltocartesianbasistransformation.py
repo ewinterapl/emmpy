@@ -13,8 +13,8 @@ from math import cos, sin
 
 import numpy as np
 
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.sphericalvector import SphericalVector
-from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class SphericalToCartesianBasisTransformation:
@@ -113,18 +113,18 @@ class SphericalToCartesianBasisTransformation:
         ----------
         jacobian : MatrixIJK
             Jacobian matrix for conversion.
-        vector : SphericalVector or VectorIJK
+        vector : SphericalVector or CartesianVector
             Vector in original coordinates.
 
         Returns
         -------
-        converted_vector : VectorIJK or SphericalVector
+        converted_vector : CartesianVector or SphericalVector
             Vector in converted coordinates.
         """
         v = jacobian.dot(vector)
         converted_vector = None
         if isinstance(vector, SphericalVector):
-            converted_vector = VectorIJK(v)
+            converted_vector = CartesianVector(v)
         else:
             converted_vector = SphericalVector(v)
         return converted_vector

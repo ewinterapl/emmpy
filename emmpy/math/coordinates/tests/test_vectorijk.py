@@ -7,7 +7,9 @@ import warnings
 
 import numpy as np
 
-from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import (
+    VectorIJK, rotate
+)
 
 
 class TestBuilder(unittest.TestCase):
@@ -37,12 +39,12 @@ class TestBuilder(unittest.TestCase):
             v.bad = 0
 
     def test_rotate(self):
-        """Test the rotate method."""
+        """Test the rotate function."""
         v1 = VectorIJK(1, 0, 0)
         z_axis = VectorIJK(0, 0, 1)
         angle = pi/2
         # 3-argument form
-        v2 = VectorIJK.rotate(v1, z_axis, angle)
+        v2 = rotate(v1, z_axis, angle)
         self.assertAlmostEqual(v2.i, 0)
         self.assertAlmostEqual(v2.j, 1)
         self.assertAlmostEqual(v2.k, 0)

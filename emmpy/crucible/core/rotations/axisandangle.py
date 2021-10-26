@@ -19,7 +19,7 @@ from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
 )
 from emmpy.crucible.core.rotations.rotation import Rotation
 from emmpy.math.coordinates.vectorijk import  (
-    I, J, K, VectorIJK
+    I, J, K, VectorIJK, rotate
 )
 
 class AxisAndAngle(Rotation):
@@ -91,9 +91,9 @@ class AxisAndAngle(Rotation):
             buffer.setToWithoutCheck(IDENTITY)
         else:
             matrix = PrivilegedRotationMatrixIJK()
-            vi = VectorIJK.rotate(I, self.axis, self.angle)
-            vj = VectorIJK.rotate(J, self.axis, self.angle)
-            vk = VectorIJK.rotate(K, self.axis, self.angle)
+            vi = rotate(I, self.axis, self.angle)
+            vj = rotate(J, self.axis, self.angle)
+            vk = rotate(K, self.axis, self.angle)
             matrix.setToWithoutCheck(vi, vj, vk)
             buffer[:, :] = matrix
         return buffer

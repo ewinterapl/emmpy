@@ -61,85 +61,6 @@ class VectorIJK(Vector3D):
         self[components[name]] = value
 
     @staticmethod
-    def rotate(vector, axis, angle):
-        """Rotate a copy of a vector.
-
-        Make a copy of the vector, and rotate the copy by the specified
-        angle around the specified axis vector.
-
-        Parameters
-        ----------
-        vector : VectorIJK
-            Vector to rotate
-        axis : VectorIJK
-            Veector defining the rotation axis.
-        angle : float
-            Rotation angle (radians).
-        buffer : VectorIJK (optional)
-            Buffer to receive the rotated vector.
-
-        Returns
-        -------
-        v : VectorIJK
-            A rotated copy of the original vector.
-
-        Raises
-        ------
-        ValueError
-            If incorrect arguments are provided.
-
-        Notes
-        -----
-        An example is perhaps the most straightforward means to explain
-        computation. Given an axis (0,0,1) and a rotation angle of pi/2,
-        this method does the following:
-
-          vector         buffer
-        ( 1, 2, 3 )   ( -2, 1, 3 )
-        ( 1, 0, 0 )   ( 0, 1, 0 )
-        ( 0, 1, 0 )   ( -1, 0, 0 )
-        """
-        buffer = VectorIJK()
-
-        # Rotate one vector about another by a specified angle.
-
-        # There is one exceptional case, namely if we try to rotate
-        # about the zero vector. We can check this by using the project
-        # method, as it will throw the desired runtime exception. First
-        # cache the contents of vector and axis as input, since we do
-        # not know if buffer is equivalent to either of them.
-        v = np.array(vector)
-        a = np.array(axis)
-
-        # At this point, we are going to build a basis that is
-        # convenient for computing the rotated vector. Start by
-        # projecting vector onto axis, one of the axes in our basis.
-        buffer[:] = VectorIJK.project(vector, axis)
-
-        # Normalize the rotation axis.
-        norm = np.linalg.norm(a)
-        a /= norm
-
-        # Store the contents of buffer as this is one of the
-        # components of our rotated vector in the new basis.
-        p = np.array(buffer)
-
-        # To determine one of the other vectors in the basis, simply
-        # subtract buffer from vector.
-        v -= buffer
-
-        # Now determine the third basis vector by computing the cross
-        # product of a unit vector in the direction of axis with
-        # buffer.
-        buffer[:] = np.cross(a, v)
-
-        # The desired vector projection against this new basis is:
-        # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
-        buffer[:] = p + cos(angle)*v + sin(angle)*buffer
-        v = buffer
-        return v
-
-    @staticmethod
     def project(vector, onto):
         """Compute the projection of one vector onto another.
 
@@ -202,3 +123,82 @@ J = VectorIJK(0, 1, 0)
 
 # The K basis vector: (0,0,1).
 K = VectorIJK(0, 0, 1)
+
+
+def rotate(vector, axis, angle):
+    """Rotate a copy of a vector.
+
+    Make a copy of the vector, and rotate the copy by the specified
+    angle around the specified axis vector.
+
+    Parameters
+    ----------
+    vector : VectorIJK
+        Vector to rotate
+    axis : VectorIJK
+        Veector defining the rotation axis.
+    angle : float
+        Rotation angle (radians).
+    buffer : VectorIJK (optional)
+        Buffer to receive the rotated vector.
+
+    Returns
+    -------
+    v : VectorIJK
+        A rotated copy of the original vector.
+
+    Raises
+    ------
+    ValueError
+        If incorrect arguments are provided.
+
+    Notes
+    -----
+    An example is perhaps the most straightforward means to explain
+    computation. Given an axis (0,0,1) and a rotation angle of pi/2,
+    this method does the following:
+
+        vector         buffer
+    ( 1, 2, 3 )   ( -2, 1, 3 )
+    ( 1, 0, 0 )   ( 0, 1, 0 )
+    ( 0, 1, 0 )   ( -1, 0, 0 )
+    """
+    buffer = VectorIJK()
+
+    # Rotate one vector about another by a specified angle.
+
+    # There is one exceptional case, namely if we try to rotate
+    # about the zero vector. We can check this by using the project
+    # method, as it will throw the desired runtime exception. First
+    # cache the contents of vector and axis as input, since we do
+    # not know if buffer is equivalent to either of them.
+    v = np.array(vector)
+    a = np.array(axis)
+
+    # At this point, we are going to build a basis that is
+    # convenient for computing the rotated vector. Start by
+    # projecting vector onto axis, one of the axes in our basis.
+    buffer[:] = VectorIJK.project(vector, axis)
+
+    # Normalize the rotation axis.
+    norm = np.linalg.norm(a)
+    a /= norm
+
+    # Store the contents of buffer as this is one of the
+    # components of our rotated vector in the new basis.
+    p = np.array(buffer)
+
+    # To determine one of the other vectors in the basis, simply
+    # subtract buffer from vector.
+    v -= buffer
+
+    # Now determine the third basis vector by computing the cross
+    # product of a unit vector in the direction of axis with
+    # buffer.
+    buffer[:] = np.cross(a, v)
+
+    # The desired vector projection against this new basis is:
+    # {pi,pj,pk} + cos(theta)*{v1i,v1j,v1k} + sin(theta)*buffer
+    buffer[:] = p + cos(angle)*v + sin(angle)*buffer
+    v = buffer
+    return v

@@ -8,7 +8,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import atan2, cos, sin, sqrt
 
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -105,14 +105,14 @@ def sphericalToCartesian(spherical):
 
     Returns
     -------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Input spherical coordinate vector converted to Cartesian coordinates.
     """
     (r, theta, phi) = (spherical.r, spherical.theta, spherical.phi)
     x = r*sin(theta)*cos(phi)
     y = r*sin(theta)*sin(phi)
     z = r*cos(theta)
-    cartesian = CartesianVector3D(x, y, z)
+    cartesian = CartesianVector(x, y, z)
     return cartesian
 
 
@@ -125,7 +125,7 @@ def cartesianToSpherical(cartesian):
 
     Parameters
     ----------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Cartesian vector to convert to spherical coordinates.
 
     Returns

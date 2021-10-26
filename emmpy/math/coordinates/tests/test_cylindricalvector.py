@@ -11,7 +11,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian, cartesianToCylindrical,
     getCylindricalBasisToCartesianBasisTransformation,
@@ -89,7 +89,7 @@ class TestBuilder(unittest.TestCase):
         for x in xs:
             for y in ys:
                 for z in zs:
-                    cartesian = CartesianVector3D(x, y, z)
+                    cartesian = CartesianVector(x, y, z)
                     rho = sqrt(x**2 + y**2)
                     phi = atan2(y, x)
                     if phi < 0:
@@ -124,7 +124,7 @@ class TestBuilder(unittest.TestCase):
         for x in xs:
             for y in ys:
                 for z in zs:
-                    cartesianPosition = CartesianVector3D(x, y, z)
+                    cartesianPosition = CartesianVector(x, y, z)
                     m = getCartesianBasisToCylindricalBasisTransformation(
                         cartesianPosition
                     )
@@ -156,7 +156,7 @@ class TestBuilder(unittest.TestCase):
                     m = Matrix3D([[cos_phi, -sin_phi, 0],
                                   [sin_phi, cos_phi, 0],
                                   [0, 0, 1]])
-                    cartesianValue_ref = CartesianVector3D(
+                    cartesianValue_ref = CartesianVector(
                         m.dot(cylindricalValue)
                     )
                     for row in range(len(cartesianValue)):
@@ -169,9 +169,9 @@ class TestBuilder(unittest.TestCase):
         for x in xs:
             for y in ys:
                 for z in zs:
-                    cartesianPosition = CartesianVector3D(x, y, z)
+                    cartesianPosition = CartesianVector(x, y, z)
                     (a, b, c) = (1.1, 2.2, 3.3)
-                    cartesianValue = CartesianVector3D(a, b, c)
+                    cartesianValue = CartesianVector(a, b, c)
                     cylindricalValue = cartesianBasisToCylindricalBasis(
                         cartesianPosition, cartesianValue
                     )

@@ -14,11 +14,9 @@ from math import cos, sin
 import numpy as np
 
 from emmpy.math.coordinates.cylindricalvector import (
-    CylindricalVector, cylindricalToCartesian,
-    getCylindricalBasisToCartesianBasisTransformation,
-    getCartesianBasisToCylindricalBasisTransformation
+    CylindricalVector,
+    getCylindricalBasisToCartesianBasisTransformation
 )
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 
 
 class CylindricalToCartesianBasisTransformation:

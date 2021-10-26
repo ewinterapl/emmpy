@@ -10,7 +10,7 @@ from math import atan2, cos, pi, sin, sqrt
 import unittest
 
 import numpy as np
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 from emmpy.math.coordinates.sphericalvector import (
     SphericalVector, sphericalToCartesian, cartesianToSpherical
@@ -87,7 +87,7 @@ class TestBuilder(unittest.TestCase):
         for x in xs:
             for y in ys:
                 for z in zs:
-                    cartesian = CartesianVector3D(x, y, z)
+                    cartesian = CartesianVector(x, y, z)
                     r = sqrt(x**2 + y**2 + z**2)
                     theta = atan2(sqrt(x**2 + y**2), z)
                     phi = atan2(y, x)

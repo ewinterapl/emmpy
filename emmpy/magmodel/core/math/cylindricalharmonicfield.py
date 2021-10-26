@@ -19,7 +19,7 @@ from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import cartesianToCylindrical
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
@@ -87,7 +87,7 @@ class CylindricalHarmonicField(BasisVectorField):
                             self.coefficientsExpansion.jSize))
         x = location.i
         y = location.j
-        cylindricalLocation = cartesianToCylindrical(CartesianVector3D(location))
+        cylindricalLocation = cartesianToCylindrical(CartesianVector(location))
         rho = cylindricalLocation.rho
         phi = cylindricalLocation.phi
         z = cylindricalLocation.z

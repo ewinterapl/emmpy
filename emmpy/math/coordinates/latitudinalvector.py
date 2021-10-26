@@ -8,7 +8,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import atan2, cos, sin, sqrt
 
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -99,14 +99,14 @@ def latitudinalToCartesian(latitudinal):
 
     Returns
     -------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Input latitudinal vector converted to Cartesian coordinates.
     """
     (r, lat, lon) = (latitudinal.r, latitudinal.lat, latitudinal.lon)
     x = r*cos(lat)*cos(lon)
     y = r*cos(lat)*sin(lon)
     z = r*sin(lat)
-    cartesian = CartesianVector3D(x, y, z)
+    cartesian = CartesianVector(x, y, z)
     return cartesian
 
 
@@ -119,7 +119,7 @@ def cartesianToLatitudinal(cartesian):
 
     Parameters
     ----------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Cartesian vector to convert to latitudinal coordinates.
 
     Returns

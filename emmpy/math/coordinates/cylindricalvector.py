@@ -104,7 +104,7 @@ from math import atan2, cos, pi, sin, sqrt
 
 import numpy as np
 
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.matrices.matrix3d import Matrix3D
 from emmpy.math.vectors.vector3d import Vector3D
 
@@ -201,13 +201,13 @@ def cylindricalToCartesian(cylindrical):
 
     Returns
     -------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Input cylindrical vector converted to Cartesian coordinates.
     """
     (rho, phi, z) = (cylindrical.rho, cylindrical.phi, cylindrical.z)
     x = rho*cos(phi)
     y = rho*sin(phi)
-    cartesian = CartesianVector3D(x, y, z)
+    cartesian = CartesianVector(x, y, z)
     return cartesian
 
 
@@ -220,7 +220,7 @@ def cartesianToCylindrical(cartesian):
 
     Parameters
     ----------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Cartesian vector to convert to cylindrical coordinates.
 
     Returns
@@ -275,7 +275,7 @@ def getCartesianBasisToCylindricalBasisTransformation(cartesianPosition):
 
     Parameters
     ----------
-    cartesianPosition : CartesianVector3D
+    cartesianPosition : CartesianVector
         Cartesian position vector to define the transformation matrix.
 
     Returns
@@ -310,12 +310,12 @@ def cylindricalBasisToCartesianBasis(cylindricalPosition, cylindricalValue):
 
     Returns
     -------
-    cartesianValue : CartesianVector3D
+    cartesianValue : CartesianVector
         Input cylindrical value vector converted to Cartesian basis at
         the specified cylindrical position.
     """
     m = getCylindricalBasisToCartesianBasisTransformation(cylindricalPosition)
-    cartesianValue = CartesianVector3D(m.dot(cylindricalValue))
+    cartesianValue = CartesianVector(m.dot(cylindricalValue))
     return cartesianValue
 
 
@@ -328,9 +328,9 @@ def cartesianBasisToCylindricalBasis(cartesianPosition, cartesianValue):
 
     Parameters
     ----------
-    cartesianPosition : CartesianVector3D
+    cartesianPosition : CartesianVector
         Cartesian position vector to define the transformation matrix.
-    cartesianlValue : CartesianVector3D
+    cartesianlValue : CartesianVector
         Cartesian value vector to convert to cylindrical basis at the
         Cartesian position.
 

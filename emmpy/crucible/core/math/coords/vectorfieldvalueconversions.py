@@ -16,7 +16,7 @@ from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation i
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
     SphericalToCartesianBasisTransformation)
 from emmpy.math.coordinates.sphericalvector import SphericalVector, sphericalToCartesian
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import (
     cartesianToCylindrical, CylindricalVector, cylindricalToCartesian
 )
@@ -81,7 +81,7 @@ class VectorFieldValueConversions:
 
         # Convert the Cartesian position to cylindrical.
         cylindricalPosition = cartesianToCylindrical(
-            CartesianVector3D(cartesianPosition)
+            CartesianVector(cartesianPosition)
         )
 
         # Get the Cartesian-to-cylindrical transformation matrix at
@@ -130,7 +130,7 @@ class VectorFieldValueConversions:
 
         # Convert the Cartesian position to spherical.
         sphericalPosition = cartesianToSpherical(
-            CartesianVector3D(cartesianPosition)
+            CartesianVector(cartesianPosition)
         )
 
         # Get the Cartesian-to-spherical transformation matrix at

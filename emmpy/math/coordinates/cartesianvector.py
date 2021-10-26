@@ -13,7 +13,7 @@ from emmpy.math.vectors.vector3d import Vector3D
 components = {'x': 0, 'y': 1, 'z': 2}
 
 
-class CartesianVector3D(Vector3D):
+class CartesianVector(Vector3D):
     """A 3-dimensional vector in Cartesian (x, y, z) coordinates.
 
     This class implements a 3-dimensional vector in Cartesian (x, y, z)
@@ -32,9 +32,9 @@ class CartesianVector3D(Vector3D):
     """
 
     def __new__(cls, x=None, y=None, z=None):
-        """Create a new CartesianVector3D object.
+        """Create a new CartesianVector object.
 
-        Allocate a new CartesianVector3D object by allocating a Vector3D
+        Allocate a new CartesianVector object by allocating a Vector3D
         object which will be expanded upon.
 
         Parameters
@@ -48,7 +48,7 @@ class CartesianVector3D(Vector3D):
 
         Returns
         -------
-        v : CartesianVector3D
+        v : CartesianVector
             The newly-created object.
         """
         v = Vector3D.__new__(cls, x, y, z)

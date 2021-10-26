@@ -9,7 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import atan2, cos, pi, sin, sqrt
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import CurrentSheetHalfThicknesses
 
-from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.vectors.vector3d import Vector3D
 
 
@@ -100,14 +100,14 @@ def raDecToCartesian(celestial):
 
     Returns
     -------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Input celestial coordinate vector converted to Cartesian coordinates.
     """
     (r, ra, dec) = (celestial.r, celestial.ra, celestial.dec)
     x = r*cos(dec)*cos(ra)
     y = r*cos(dec)*sin(ra)
     z = r*sin(dec)
-    cartesian = CartesianVector3D(x, y, z)
+    cartesian = CartesianVector(x, y, z)
     return cartesian
 
 
@@ -120,7 +120,7 @@ def cartesianToRaDec(cartesian):
 
     Parameters
     ----------
-    cartesian : CartesianVector3D
+    cartesian : CartesianVector
         Cartesian vector to convert to celestial coordinates.
 
     Returns

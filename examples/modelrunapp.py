@@ -19,7 +19,6 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentshee
     ThinAsymmetricCurrentSheetBasisVectorField
 )
 from emmpy.math.coordinates.cartesianvector import CartesianVector
-from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 def ModelRunApp(coeffsFile):
@@ -56,7 +55,6 @@ def runThinSheet():
 
     # evaluate the model at r=(4,5,-2)
     pos = CartesianVector(4.0, 5.0, -2.0)
-    # REBUILD AS VectorIJK?
 
     # evaluate the magnetic field
     bVect = model.evaluate(pos)
@@ -90,7 +88,6 @@ def runTs07D(coeffsFile):
 
     # evaluate the model at r=(4,5,-2)
     pos = CartesianVector(4.0, 5.0, -2.0)
-    # REBUILD AS VectorIJK?
 
     # evaluate the magnetic field
     bVect = model.evaluate(pos)

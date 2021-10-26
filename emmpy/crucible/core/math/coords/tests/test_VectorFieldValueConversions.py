@@ -3,11 +3,11 @@
 
 import unittest
 
-from emmpy.math.coordinates.cylindricalvector import CylindricalVector
-from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
     VectorFieldValueConversions)
-from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.coordinates.cartesianvector import CartesianVector
+from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
 )
@@ -29,8 +29,8 @@ class TestBuilder(unittest.TestCase):
         (rho_ref, phi_ref, z_ref) = (2.2360679774998, 1.1071487177941, 3)
         (vrho_ref, vphi_ref, vz_ref) = (
             6.260990336999412, -1.3416407864998732, 6)
-        cartesianPosition = VectorIJK(x, y, z)
-        cartesianValue = VectorIJK(vx, vy, vz)
+        cartesianPosition = CartesianVector(x, y, z)
+        cartesianValue = CartesianVector(vx, vy, vz)
         # Test conversion of a CartesianVectorFieldValue.
         cartesian = CartesianVectorFieldValue(
             cartesianPosition, cartesianValue)
@@ -68,8 +68,8 @@ class TestBuilder(unittest.TestCase):
             3.741657386773941, 0.64052231267943, 1.1071487177941)
         (vr_ref, vtheta_ref, vphi_ref) = (
             8.55235974119758, 1.4342743312012725, -1.3416407864998732)
-        cartesianPosition = VectorIJK(x, y, z)
-        cartesianValue = VectorIJK(vx, vy, vz)
+        cartesianPosition = CartesianVector(x, y, z)
+        cartesianValue = CartesianVector(vx, vy, vz)
         # Test conversion of a CartesianVectorFieldValue.
         cartesian = CartesianVectorFieldValue(
             cartesianPosition, cartesianValue)
@@ -114,22 +114,22 @@ class TestBuilder(unittest.TestCase):
             cylindricalPosition, cylindricalValue)
         cartesian = VectorFieldValueConversions.convert(cylindrical)
         self.assertIsInstance(cartesian, CartesianVectorFieldValue)
-        self.assertAlmostEqual(cartesian.position.i, cx_ref)
-        self.assertAlmostEqual(cartesian.position.j, cy_ref)
-        self.assertAlmostEqual(cartesian.position.k, cz_ref)
-        self.assertAlmostEqual(cartesian.value.i, cvx_ref)
-        self.assertAlmostEqual(cartesian.value.j, cvy_ref)
-        self.assertAlmostEqual(cartesian.value.k, cvz_ref)
+        self.assertAlmostEqual(cartesian.position.x, cx_ref)
+        self.assertAlmostEqual(cartesian.position.y, cy_ref)
+        self.assertAlmostEqual(cartesian.position.z, cz_ref)
+        self.assertAlmostEqual(cartesian.value.x, cvx_ref)
+        self.assertAlmostEqual(cartesian.value.y, cvy_ref)
+        self.assertAlmostEqual(cartesian.value.z, cvz_ref)
         # Convert separate cylindrical position and value vectors to Cartesian.
         cartesian = VectorFieldValueConversions.convert(
             cylindricalPosition, cylindricalValue)
         self.assertIsInstance(cartesian, CartesianVectorFieldValue)
-        self.assertAlmostEqual(cartesian.position.i, cx_ref)
-        self.assertAlmostEqual(cartesian.position.j, cy_ref)
-        self.assertAlmostEqual(cartesian.position.k, cz_ref)
-        self.assertAlmostEqual(cartesian.value.i, cvx_ref)
-        self.assertAlmostEqual(cartesian.value.j, cvy_ref)
-        self.assertAlmostEqual(cartesian.value.k, cvz_ref)
+        self.assertAlmostEqual(cartesian.position.x, cx_ref)
+        self.assertAlmostEqual(cartesian.position.y, cy_ref)
+        self.assertAlmostEqual(cartesian.position.z, cz_ref)
+        self.assertAlmostEqual(cartesian.value.x, cvx_ref)
+        self.assertAlmostEqual(cartesian.value.y, cvy_ref)
+        self.assertAlmostEqual(cartesian.value.z, cvz_ref)
 
         # Spherical position, value, and Cartesian equivalents.
         (sr, stheta, sphi) = (1, 2, 3)
@@ -145,22 +145,22 @@ class TestBuilder(unittest.TestCase):
             sphericalPosition, sphericalValue)
         cartesian = VectorFieldValueConversions.convert(spherical)
         self.assertIsInstance(cartesian, CartesianVectorFieldValue)
-        self.assertAlmostEqual(cartesian.position.i, sx_ref)
-        self.assertAlmostEqual(cartesian.position.j, sy_ref)
-        self.assertAlmostEqual(cartesian.position.k, sz_ref)
-        self.assertAlmostEqual(cartesian.value.i, svx_ref)
-        self.assertAlmostEqual(cartesian.value.j, svy_ref)
-        self.assertAlmostEqual(cartesian.value.k, svz_ref)
+        self.assertAlmostEqual(cartesian.position.x, sx_ref)
+        self.assertAlmostEqual(cartesian.position.y, sy_ref)
+        self.assertAlmostEqual(cartesian.position.z, sz_ref)
+        self.assertAlmostEqual(cartesian.value.x, svx_ref)
+        self.assertAlmostEqual(cartesian.value.y, svy_ref)
+        self.assertAlmostEqual(cartesian.value.z, svz_ref)
         # Convert separate spherical position and value vectors to Cartesian.
         cartesian = VectorFieldValueConversions.convert(
             sphericalPosition, sphericalValue)
         self.assertIsInstance(cartesian, CartesianVectorFieldValue)
-        self.assertAlmostEqual(cartesian.position.i, sx_ref)
-        self.assertAlmostEqual(cartesian.position.j, sy_ref)
-        self.assertAlmostEqual(cartesian.position.k, sz_ref)
-        self.assertAlmostEqual(cartesian.value.i, svx_ref)
-        self.assertAlmostEqual(cartesian.value.j, svy_ref)
-        self.assertAlmostEqual(cartesian.value.k, svz_ref)
+        self.assertAlmostEqual(cartesian.position.x, sx_ref)
+        self.assertAlmostEqual(cartesian.position.y, sy_ref)
+        self.assertAlmostEqual(cartesian.position.z, sz_ref)
+        self.assertAlmostEqual(cartesian.value.x, svx_ref)
+        self.assertAlmostEqual(cartesian.value.y, svy_ref)
+        self.assertAlmostEqual(cartesian.value.z, svz_ref)
         # Catch bad cases.
         sizes = (0, 3)
         for s in sizes:

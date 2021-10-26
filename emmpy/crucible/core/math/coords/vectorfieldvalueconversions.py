@@ -21,7 +21,6 @@ from emmpy.math.coordinates.cylindricalvector import (
     cartesianToCylindrical, CylindricalVector, cylindricalToCartesian
 )
 from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
-from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.matrices.matrixijk import MatrixIJK
 from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
@@ -58,7 +57,7 @@ class VectorFieldValueConversions:
         cartesian : CartesianVectorFieldValue
             Vector field value to convert.
         OR
-        cartesianPosition, cartesianValue : VectorIJK
+        cartesianPosition, cartesianValue : CartesianVector
             Cartesian position and vector value.
 
         Returns
@@ -107,7 +106,7 @@ class VectorFieldValueConversions:
         cartesian : CartesianVectorFieldValue
             Vector field value to convert.
         OR
-        cartesianPosition, cartesianValue : VectorIJK
+        cartesianPosition, cartesianValue : CartesianVector
             Cartesian position and vector value.
 
         Returns
@@ -180,9 +179,9 @@ class VectorFieldValueConversions:
 
         # Convert the input position to Cartesian.
         if isinstance(position, CylindricalVector):
-            cartesianPosition = VectorIJK(cylindricalToCartesian(position))
+            cartesianPosition = cylindricalToCartesian(position)
         elif isinstance(position, SphericalVector):
-            cartesianPosition = VectorIJK(sphericalToCartesian(position))
+            cartesianPosition = sphericalToCartesian(position)
         else:
             raise TypeError
 
@@ -197,7 +196,7 @@ class VectorFieldValueConversions:
         else:
             raise TypeError
         coordSys.getTransformation(position, toCartMatrix)
-        cartesianValue = VectorIJK(toCartMatrix.dot(value))
+        cartesianValue = CartesianVector(toCartMatrix.dot(value))
 
         # Create and return the new Cartesian vector field value.
         cartesian = CartesianVectorFieldValue(

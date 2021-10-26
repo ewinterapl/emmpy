@@ -23,11 +23,6 @@ zs = np.linspace(-10, 10, n)
 class TestBuilder(unittest.TestCase):
     """Tests for the cylindricaltocartesianbasistransformation module."""
 
-    def test___init__(self):
-        """Test the __init__ method."""
-        c2cbt = CylindricalToCartesianBasisTransformation()
-        self.assertIsInstance(c2cbt, CylindricalToCartesianBasisTransformation)
-
     def test_getTransformation(self):
         """Test the getTransformation method."""
         c2cbt = CylindricalToCartesianBasisTransformation()

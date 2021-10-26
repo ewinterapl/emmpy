@@ -31,19 +31,6 @@ class CylindricalToCartesianBasisTransformation:
     None
     """
 
-    def __init__(self):
-        """Initialize a new CylindricalToCartesianBasisTransformation object.
-
-        Initialize a new CylindricalToCartesianBasisTransformation object.
-
-        This dummy __init__ is needed to override the inherited abstract
-        __init__, which raises an exception when invoked.
-
-        Parameters
-        ----------
-        None
-        """
-
     def getTransformation(self, cylindrical, buffer):
         """Compute the cylindrical-to-Cartesian basis transformation matrix.
 

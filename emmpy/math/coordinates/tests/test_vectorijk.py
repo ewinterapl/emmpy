@@ -8,7 +8,7 @@ import warnings
 import numpy as np
 
 from emmpy.math.coordinates.vectorijk import (
-    VectorIJK, rotate
+    VectorIJK, project, rotate
 )
 
 
@@ -50,23 +50,23 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v2.k, 0)
 
     def test_project(self):
-        """Test the project method."""
+        """Test the project function."""
         v1 = VectorIJK(1, 1, 1)
         v2 = VectorIJK(1, 0, 0)
         # 2-argument form.
-        v3 = VectorIJK.project(v1, v2)
+        v3 = project(v1, v2)
         self.assertAlmostEqual(v3.i, 1)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
         # Projection of 0 is 0.
         v1 = VectorIJK(0, 0, 0)
-        v3 = VectorIJK.project(v1, v2)
+        v3 = project(v1, v2)
         self.assertAlmostEqual(v3.i, 0)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
         # Can't project onto 0 vector.
         with self.assertRaises(Exception):
-            v3 = VectorIJK.project(v2, v1)
+            v3 = project(v2, v1)
 
 
 if __name__ == '__main__':

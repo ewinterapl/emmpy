@@ -60,60 +60,6 @@ class VectorIJK(Vector3D):
         """
         self[components[name]] = value
 
-    @staticmethod
-    def project(vector, onto):
-        """Compute the projection of one vector onto another.
-
-        Compute the projection of the vector onto another.
-
-        Parameters
-        ----------
-        vector : VectorIJK
-            The vector to project.
-        onto : VectorIJK
-            The vector onto which the first vector will be projected.
-
-        Returns
-        -------
-        v : VectorIJK
-            The projected vector.
-
-        Raises
-        ------
-        BugException
-            If the rotation axis is zero.
-
-        Notes
-        -----
-        Algebraically, this routine effectively computes:
-
-        <vector, onto> * onto
-        ---------------------
-             || onto ||
-
-        where <> denotes the standard scalar product and ||x|| the norm of x.
-        For numeric precision reasons the implementation may vary slightly
-        from the above prescription.
-        """
-        buffer = VectorIJK()
-
-        # Scale and project the vector.
-        maxVector = max(abs(vector))
-        maxOnto = max(abs(onto))
-        if maxOnto == 0:
-            raise Exception("Unable to project vector onto zero vector.")
-
-        # If the vector to project is 0, so is the projection.
-        if maxVector == 0:
-            buffer[:] = (0, 0, 0)
-        else:
-            r = onto/maxOnto
-            t = vector/maxVector
-            scaleFactor = sum(t*r)*maxVector/sum(r*r)
-            buffer[:] = r
-            buffer *= scaleFactor
-        return buffer
-
 
 # The I basis vector: (1,0,0).
 I = VectorIJK(1, 0, 0)
@@ -178,7 +124,7 @@ def rotate(vector, axis, angle):
     # At this point, we are going to build a basis that is
     # convenient for computing the rotated vector. Start by
     # projecting vector onto axis, one of the axes in our basis.
-    buffer[:] = VectorIJK.project(vector, axis)
+    buffer[:] = project(vector, axis)
 
     # Normalize the rotation axis.
     norm = np.linalg.norm(a)
@@ -202,3 +148,57 @@ def rotate(vector, axis, angle):
     buffer[:] = p + cos(angle)*v + sin(angle)*buffer
     v = buffer
     return v
+
+
+def project(vector, onto):
+    """Compute the projection of one vector onto another.
+
+    Compute the projection of the vector onto another.
+
+    Parameters
+    ----------
+    vector : VectorIJK
+        The vector to project.
+    onto : VectorIJK
+        The vector onto which the first vector will be projected.
+
+    Returns
+    -------
+    v : VectorIJK
+        The projected vector.
+
+    Raises
+    ------
+    BugException
+        If the rotation axis is zero.
+
+    Notes
+    -----
+    Algebraically, this routine effectively computes:
+
+    <vector, onto> * onto
+    ---------------------
+            || onto ||
+
+    where <> denotes the standard scalar product and ||x|| the norm of x.
+    For numeric precision reasons the implementation may vary slightly
+    from the above prescription.
+    """
+    buffer = VectorIJK()
+
+    # Scale and project the vector.
+    maxVector = max(abs(vector))
+    maxOnto = max(abs(onto))
+    if maxOnto == 0:
+        raise Exception("Unable to project vector onto zero vector.")
+
+    # If the vector to project is 0, so is the projection.
+    if maxVector == 0:
+        buffer[:] = (0, 0, 0)
+    else:
+        r = onto/maxOnto
+        t = vector/maxVector
+        scaleFactor = sum(t*r)*maxVector/sum(r*r)
+        buffer[:] = r
+        buffer *= scaleFactor
+    return buffer

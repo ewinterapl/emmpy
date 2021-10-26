@@ -101,5 +101,7 @@ class VectorFieldDeformation(VectorField):
         tzx = dFyDx*dFzDy - dFyDy*dFzDx
         tzy = dFxDy*dFzDx - dFxDx*dFzDy
         tzz = dFxDx*dFyDy - dFxDy*dFyDx
-        trans = MatrixIJK(txx, tyx, tzx, txy, tyy, tzy, txz, tyz, tzz)
+        trans = MatrixIJK([[txx, txy, txz],
+                           [tyx, tyy, tyz],
+                           [tzx, tzy, tzz]])
         return trans

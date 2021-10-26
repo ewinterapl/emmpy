@@ -44,9 +44,6 @@ class MatrixIJK(Matrix3D):
         ----------
         a : 3x3 array-like of float, optional, default 3x3 None
             Values for matrix elements.
-        OR
-        ii, ji, ki, ij, jj, kj, ik, jk, kk : float
-            Elements of new matrix in column-major order.
 
         Raises
         ------
@@ -60,10 +57,6 @@ class MatrixIJK(Matrix3D):
             # Initialize matrix from a 3x3 array-like of floats.
             (a,) = args
             data = np.array(a)
-        elif len(args) == 9:
-            # Matrix elements in column-major order.
-            (ii, ji, ki, ij, jj, kj, ik, jk, kk) = args
-            data = np.array([[ii, ij, ik], [ji, jj, jk], [ki, kj, kk]])
         else:
             raise ValueError
         self[:] = data[:]

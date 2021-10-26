@@ -56,4 +56,6 @@ class RotationMatrixIJK(MatrixIJK):
 
 
 # Identity matrix (null rotation).
-IDENTITY = RotationMatrixIJK(1, 0, 0, 0, 1, 0, 0, 0, 1)
+IDENTITY = RotationMatrixIJK([[1, 0, 0],
+                              [0, 1, 0],
+                              [0, 0, 1]])

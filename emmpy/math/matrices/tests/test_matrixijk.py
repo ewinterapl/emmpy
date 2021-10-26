@@ -41,13 +41,6 @@ class TestBuilder(unittest.TestCase):
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m1[row, col], data[row][col])
-        # 9 args - element values in column-major order
-        flat_data = data[0] + data[1] + data[2]
-        m1 = MatrixIJK(*flat_data)
-        for row in range(3):
-            for col in range(3):
-                k = row + col*3
-                self.assertAlmostEqual(m1[row, col], flat_data[k])
         # Invalid forms
         sizes = (2, 3, 4, 5, 6, 7, 8, 10)
         for s in sizes:

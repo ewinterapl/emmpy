@@ -109,7 +109,9 @@ class CylindricalFieldDeformation:
         tzr = (hpDef*hzDef/(hr*hp))*(dFpDr*dFzDp - dFpDp*dFzDr)
         tzp = (hrDef*hzDef/(hr*hp))*(dFrDp*dFzDr - dFrDr*dFzDp)
         tzz = (hrDef*hpDef/(hr*hp))*(dFrDr*dFpDp - dFrDp*dFpDr)
-        trans = MatrixIJK(trr, tpr, tzr, trp, tpp, tzp, trz, tpz, tzz)
+        trans = MatrixIJK([[trr, trp, trz],
+                           [tpr, tpp, tpz],
+                           [tzr, tzp, tzz]])
 
         if hp == 0:
             trr = (1*hzDef/(1*hz))*(dFpDp*dFzDz - dFpDz*dFzDp)

@@ -111,5 +111,7 @@ class SphericalFieldDeformation(SphericalVectorField):
         tpr = (htDef*hpDef/(hr*ht))*(dFtDr*dFpDt - dFtDt*dFpDr)
         tpt = (hrDef*hpDef/(hr*ht))*(dFrDt*dFpDr - dFrDr*dFpDt)
         tpp = (hrDef*htDef/(hr*ht))*(dFrDr*dFtDt - dFrDt*dFtDr)
-        trans = MatrixIJK(trr, ttr, tpr, trt, ttt, tpt, trp, ttp, tpp)
+        trans = MatrixIJK([[trr, trt, trp],
+                           [ttr, ttt, ttp],
+                           [tpr, tpt, tpp]])
         return trans

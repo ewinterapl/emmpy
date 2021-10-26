@@ -50,14 +50,7 @@ class TestBuilder(unittest.TestCase):
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m2[row, col], data1[row][col])
-        # 9 args
-        # Individual matrix elements in column-major order.
-        flat_data1 = data1[0] + data1[1] + data1[2]
-        m = RotationMatrixIJK(*flat_data1)
-        for row in range(3):
-            for col in range(3):
-                self.assertAlmostEqual(m2[row, col], data1[row][col])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -220,7 +220,7 @@ class DifferentiableVectorField(VectorField):
 
         Parameters
         ----------
-        location : VectorIJK
+        location : CartesianVector
 
         Returns
         -------
@@ -241,7 +241,7 @@ class Results:
 
     Attributes
     ----------
-    f : VectorIJK
+    f : CartesianVector
         Value of vector field at a specific location.
     dFxDx, dFxDy, dFxDz : float
         Gradient components of x-component of f
@@ -259,7 +259,7 @@ class Results:
 
         Attributes
         ----------
-        f : VectorIJK
+        f : CartesianVector
             Value of vector field at a specific location.
         dFxDx, dFxDy, dFxDz : float
             Gradient components of x-component of f

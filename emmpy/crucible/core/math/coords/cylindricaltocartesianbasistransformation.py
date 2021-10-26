@@ -13,7 +13,6 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian,
     getCylindricalBasisToCartesianBasisTransformation,
@@ -22,7 +21,7 @@ from emmpy.math.coordinates.cylindricalvector import (
 from emmpy.math.coordinates.cartesianvector3d import CartesianVector3D
 
 
-class CylindricalToCartesianBasisTransformation(Transformation):
+class CylindricalToCartesianBasisTransformation:
     """Convert basis vectors between Cartesian and cylindrical coordinates.
 
     Convert basis vectors between Cartesian and cylindrical coordinates.

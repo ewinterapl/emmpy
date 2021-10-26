@@ -13,12 +13,11 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.crucible.core.math.coords.transformation import Transformation
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
-class SphericalToCartesianBasisTransformation(Transformation):
+class SphericalToCartesianBasisTransformation:
     """Convert basis vectors between Cartesian and spherical coordinates.
 
     Convert basis vectors between Cartesian and spherical coordinates.

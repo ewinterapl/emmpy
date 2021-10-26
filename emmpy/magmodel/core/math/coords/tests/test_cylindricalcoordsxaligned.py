@@ -1,6 +1,7 @@
 """Tests for the cylindricalcoordsxaligned module."""
 
 
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 import unittest
 
@@ -17,7 +18,7 @@ class TestBuilder(unittest.TestCase):
         """Test the convert method."""
         # Test Cartesian->x-aligned cylindrical.
         (x, y, z) = (1, 2, 3)
-        cartesian = VectorIJK(x, y, z)
+        cartesian = CartesianVector(x, y, z)
         cylindrical = CylindricalCoordsXAligned.convert(cartesian)
         self.assertIsInstance(cylindrical, CylindricalVector)
         self.assertAlmostEqual(cylindrical.rho, 3.6055512754639896)
@@ -25,10 +26,10 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(cylindrical.z, 1)
         # Test x-aligned cylindrical->Cartesian.
         cartesian = CylindricalCoordsXAligned.convert(cylindrical)
-        self.assertIsInstance(cartesian, VectorIJK)
-        self.assertAlmostEqual(cartesian.i, 1)
-        self.assertAlmostEqual(cartesian.j, 2)
-        self.assertAlmostEqual(cartesian.k, 3)
+        self.assertIsInstance(cartesian, CartesianVector)
+        self.assertAlmostEqual(cartesian.x, 1)
+        self.assertAlmostEqual(cartesian.y, 2)
+        self.assertAlmostEqual(cartesian.z, 3)
         # Invalid cases.
         with self.assertRaises(TypeError):
             CylindricalCoordsXAligned.convert(None)
@@ -38,8 +39,8 @@ class TestBuilder(unittest.TestCase):
         # Test Cartesian->x-aligned cylindrical.
         (x, y, z) = (1, 2, 3)
         (vx, vy, vz) = (4, 5, 6)
-        cartesianPosition = VectorIJK(x, y, z)
-        cartesianValue = VectorIJK(vx, vy, vz)
+        cartesianPosition = CartesianVector(x, y, z)
+        cartesianValue = CartesianVector(vx, vy, vz)
         cylindricalValue = CylindricalCoordsXAligned.convertFieldValue(
             cartesianPosition, cartesianValue
         )

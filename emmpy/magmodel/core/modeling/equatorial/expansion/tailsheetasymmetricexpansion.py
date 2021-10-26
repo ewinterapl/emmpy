@@ -13,6 +13,7 @@ from math import atan2, exp, sqrt
 
 from scipy.special import jv
 
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.vectorfield import VectorField
@@ -88,13 +89,13 @@ class TailSheetAsymmetricExpansion(VectorField):
         if len(args) == 1:
             (location,) = args
             buffer = VectorIJK([0, 0, 0])
-            self.evaluate(location, buffer)
+            self.evaluate(CartesianVector(location), buffer)
         elif len(args) == 2:
             (location, buffer) = args
             m = self.azimuthalExpansionNumber
-            x = location.i
-            y = location.j
-            z = location.k
+            x = location.x
+            y = location.y
+            z = location.z
             locationIJ = VectorIJ(x, y)
 
             # Get the current sheet half thickness.

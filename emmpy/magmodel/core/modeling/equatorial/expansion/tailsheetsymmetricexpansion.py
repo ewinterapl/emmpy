@@ -12,6 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import exp, sqrt
 
 import scipy.special as sps
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.math.coordinates.vectorijk import VectorIJK
@@ -74,13 +75,13 @@ class TailSheetSymmetricExpansion(VectorField):
         """
         if len(args) == 1:
             (location,) = args
-            buffer = VectorIJK()
+            buffer = CartesianVector()
             self.evaluate(location, buffer)
         elif len(args) == 2:
             (location, buffer) = args
-            x = location.i
-            y = location.j
-            z = location.k
+            x = location.x
+            y = location.y
+            z = location.z
             locationIJ = VectorIJ(x, y)
 
             # Get the current sheet half thickness.

@@ -162,9 +162,9 @@ class TailSheetExpansions:
         # n is the radial expansion number.
         for n in range(1, self.numRadialExpansions + 1):
             basisFunction = self.tailSheetSymmetricValues.getExpansion(n)
-            bxSum += basisFunction.i
-            bySum += basisFunction.j
-            bzSum += basisFunction.k
+            bxSum += basisFunction.x
+            bySum += basisFunction.y
+            bzSum += basisFunction.z
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.

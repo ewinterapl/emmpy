@@ -2,6 +2,7 @@
 
 
 from math import atan2, cos, pi, sin, sqrt
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
@@ -10,6 +11,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
 from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
     CylindricalBasisVectorField
 )
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
@@ -39,11 +41,11 @@ class CylindricalCoordsXAligned:
         TypeError
             If invalid parameters are provided.
         """
-        if isinstance(vector, VectorIJK):
+        if isinstance(vector, CartesianVector):
             # Convert from Cartesian coordinates ...
-            x = vector.i
-            y = vector.j
-            z = vector.k
+            x = vector.x
+            y = vector.y
+            z = vector.z
             # ... to x-aligned cylindrical coordinates.
             rho = sqrt(y**2 + z**2)
             phi = atan2(z, y)
@@ -60,7 +62,7 @@ class CylindricalCoordsXAligned:
             x = cyl_z
             y = rho*cos(phi)
             z = rho*sin(phi)
-            convertedVector = VectorIJK(x, y, z)
+            convertedVector = CartesianVector(x, y, z)
         else:
             raise TypeError
         return convertedVector
@@ -89,13 +91,13 @@ class CylindricalCoordsXAligned:
         TypeError
             If incorrect parameters are provided.
         """
-        if isinstance(position, VectorIJK):
+        if isinstance(position, CartesianVector):
             # Convert from Cartesian coordinates ...
-            y = position.j
-            z = position.k
-            vx = value.i
-            vy = value.j
-            vz = value.k
+            y = position.y
+            z = position.z
+            vx = value.x
+            vy = value.y
+            vz = value.z
             # ... to x-aligned cylindrical coordinates.
             rho = sqrt(y**2 + z**2)
             if rho == 0:
@@ -154,7 +156,7 @@ class CylindricalCoordsXAligned:
             cart_bvf = BasisVectorField()
 
             def my_evaluateExpansion(location):
-                locCyl = CylindricalCoordsXAligned.convert(location)
+                locCyl = CylindricalCoordsXAligned.convert(CartesianVector(location))
                 fieldCylExpansion = cyl_bvf.evaluateExpansion(locCyl)
                 fieldExpansion = []
                 for fieldCyl in fieldCylExpansion:
@@ -195,7 +197,7 @@ class CylindricalCoordsXAligned:
                 for fieldCart in cartesianExpansion:
                     cylindricalExpansion.append(
                         CylindricalCoordsXAligned.convertFieldValue(
-                            cartesianLocation, fieldCart))
+                            CartesianVector(cartesianLocation), CartesianVector(fieldCart)))
                 return cylindricalExpansion
             cyl_bvf.evaluateExpansion = my_evaluateExpansion
             cyl_bvf.getNumberOfBasisFunctions = (

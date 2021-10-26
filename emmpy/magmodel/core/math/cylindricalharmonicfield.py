@@ -85,8 +85,8 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         expansions = nones((self.coefficientsExpansion.iSize,
                             self.coefficientsExpansion.jSize))
-        x = location.i
-        y = location.j
+        x = location.x
+        y = location.y
         cylindricalLocation = cartesianToCylindrical(CartesianVector(location))
         rho = cylindricalLocation.rho
         phi = cylindricalLocation.phi

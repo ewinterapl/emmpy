@@ -27,6 +27,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions impor
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
@@ -176,7 +177,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 kn, self.currentSheetHalfThickness
             )
             a = self.coeffs.getTailSheetSymmetricValues()[n]
-            symmetricExpansions[n - 1] = symBasisFunction.evaluate(location)*a
+            symmetricExpansions[n - 1] = symBasisFunction.evaluate(CartesianVector(location))*a
 
             # m is the azimuthal expansion number.
             for m in range(1, self.numAzimuthalExpansions + 1):
@@ -185,7 +186,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     kn, m, TrigParity.ODD, self.currentSheetHalfThickness
                 )
                 oddExpansions[m - 1][n - 1] = (
-                    oddBasisFunction.evaluate(location)*aOdd)
+                    oddBasisFunction.evaluate(CartesianVector(location))*aOdd)
                 aEven = self.coeffs.getTailSheetEvenValues()[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
                     kn, m, TrigParity.EVEN, self.currentSheetHalfThickness

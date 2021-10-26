@@ -167,38 +167,17 @@ def project(vector, onto):
     v : VectorIJK
         The projected vector.
 
-    Raises
-    ------
-    BugException
-        If the rotation axis is zero.
-
     Notes
     -----
     Algebraically, this routine effectively computes:
 
     <vector, onto> * onto
     ---------------------
-            || onto ||
+           onto ||
 
     where <> denotes the standard scalar product and ||x|| the norm of x.
     For numeric precision reasons the implementation may vary slightly
     from the above prescription.
     """
-    buffer = VectorIJK()
-
-    # Scale and project the vector.
-    maxVector = max(abs(vector))
-    maxOnto = max(abs(onto))
-    if maxOnto == 0:
-        raise Exception("Unable to project vector onto zero vector.")
-
-    # If the vector to project is 0, so is the projection.
-    if maxVector == 0:
-        buffer[:] = (0, 0, 0)
-    else:
-        r = onto/maxOnto
-        t = vector/maxVector
-        scaleFactor = sum(t*r)*maxVector/sum(r*r)
-        buffer[:] = r
-        buffer *= scaleFactor
-    return buffer
+    projection = vector.dot(onto)/onto.dot(onto)*onto
+    return VectorIJK(projection)

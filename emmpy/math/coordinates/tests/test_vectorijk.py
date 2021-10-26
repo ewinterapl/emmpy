@@ -64,9 +64,6 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v3.i, 0)
         self.assertAlmostEqual(v3.j, 0)
         self.assertAlmostEqual(v3.k, 0)
-        # Can't project onto 0 vector.
-        with self.assertRaises(Exception):
-            v3 = project(v2, v1)
 
 
 if __name__ == '__main__':

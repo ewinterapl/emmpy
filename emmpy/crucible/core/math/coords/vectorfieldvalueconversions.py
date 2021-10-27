@@ -1,8 +1,8 @@
 """Useful vector field value conversions.
 
 This class provides conversions from Cartesian coordinates and vector
-field values to cylindrical and spherical coordinates and vector field
-values, and vice versa.
+field values to spherical coordinates and vector field values, and vice
+versa.
 
 Authors
 -------
@@ -13,10 +13,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from emmpy.math.coordinates.sphericalvector import SphericalVector, sphericalToCartesian
 from emmpy.math.coordinates.cartesianvector import CartesianVector
-from emmpy.math.coordinates.cylindricalvector import (
-    CylindricalVector, cylindricalToCartesian, cartesianToCylindrical,
-    getCylindricalBasisToCartesianBasisTransformation
-)
 from emmpy.math.coordinates.sphericalvector import (
     SphericalVector, sphericalToCartesian, cartesianToSpherical,
     getSphericalBasisToCartesianBasisTransformation
@@ -24,9 +20,6 @@ from emmpy.math.coordinates.sphericalvector import (
 from emmpy.math.matrices.matrixijk import MatrixIJK
 from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
-)
-from emmpy.math.vectorfields.cylindricalvectorfieldvalue import (
-    CylindricalVectorFieldValue
 )
 from emmpy.math.vectorfields.sphericalvectorfieldvalue import (
     SphericalVectorFieldValue
@@ -37,8 +30,8 @@ class VectorFieldValueConversions:
     """Useful vector field value conversions.
 
     This class provides conversions from Cartesian coordinates and vector
-    field values to cylindrical and spherical coordinates and vector field
-    values, and vice versa.
+    field values to spherical coordinates and vector field values, and
+    vice versa.
     """
 
     @staticmethod
@@ -90,15 +83,15 @@ class VectorFieldValueConversions:
 
     @staticmethod
     def convert(*args):
-        """Convert a cylindrical or spherical vector field value to Cartesian.
+        """Convert a spherical vector field value to Cartesian.
 
         Parameters
         ----------
-        vfv : CylindricalVectorFieldValue or SphericalVectorFieldValue
+        vfv : SphericalVectorFieldValue
             Vector field value to convert.
         OR
-        position, value : CylindricalVector or SphericalVector
-            Cylindrical or spherical position and vector value.
+        position, value : SphericalVector
+            Spherical position and vector value.
 
         Returns
         -------
@@ -106,8 +99,8 @@ class VectorFieldValueConversions:
             Input vector field value converted to Cartesian coordinates.
         """
         if len(args) == 1:
-            # Convert a vector field value in cylindrical or spherical
-            # coordinates to Cartesian.
+            # Convert a vector field value in spherical coordinates to
+            # Cartesian.
             (vfv,) = args
             position = vfv.position
             value = vfv.value
@@ -119,20 +112,14 @@ class VectorFieldValueConversions:
             raise TypeError
 
         # Convert the input position to Cartesian.
-        if isinstance(position, CylindricalVector):
-            raise Exception
-        elif isinstance(position, SphericalVector):
+        if isinstance(position, SphericalVector):
             cartesianPosition = sphericalToCartesian(position)
         else:
             raise TypeError
 
         # Convert the input vector value to Cartesian.
         toCartMatrix = MatrixIJK()
-        if (isinstance(args[0], (CylindricalVectorFieldValue,
-                                 CylindricalVector))):
-            raise Exception
-        elif (isinstance(args[0], (SphericalVectorFieldValue,
-                                   SphericalVector))):
+        if (isinstance(args[0], (SphericalVectorFieldValue, SphericalVector))):
             toCartMatrix = getSphericalBasisToCartesianBasisTransformation(position)
         else:
             raise TypeError

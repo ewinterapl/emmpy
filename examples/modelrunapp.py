@@ -9,7 +9,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils imp
     TS07DVariableCoefficientsUtils
 )
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-    CurrentSheetHalfThicknesses
+    createConstant
 )
 from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
@@ -41,9 +41,7 @@ def runThinSheet():
     currSheetThick = 2.3
 
     # Construct a constant current sheet half thickness
-    currentSheetHalfThickness = (
-        CurrentSheetHalfThicknesses.createConstant(currSheetThick)
-    )
+    currentSheetHalfThickness = createConstant(currSheetThick)
 
     # Set all the linear coeffs to 1.0
     coeffs = TailSheetCoefficients.createUnity(numAz, numRad)

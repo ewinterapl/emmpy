@@ -17,7 +17,7 @@ from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
     TwistWarpFfunction
 )
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-    CurrentSheetHalfThicknesses
+    createConstant
 )
 from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield import (
     ShieldedThinCurrentSheetField
@@ -167,9 +167,7 @@ class Ts07EquatorialMagneticFieldBuilder:
             linearCoeffs = self.coeffs.getLinearCoeffs()[currSheetIndex]
 
             # Construct a constant current sheet half thickness.
-            currentSheetHalfThickness = (
-                CurrentSheetHalfThicknesses.createConstant(currSheetThick)
-            )
+            currentSheetHalfThickness = createConstant(currSheetThick)
     
             # Construct the shielded thin current sheet.
             thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(

@@ -1,6 +1,6 @@
-"""Utility class to help construct different current sheet thicknesses.
+"""Utility function to help construct different current sheet thicknesses.
 
-Utility class to help construct different current sheet thicknesses.
+Utility function to help construct different current sheet thicknesses.
 
 Authors
 -------
@@ -14,35 +14,24 @@ from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
 )
 
 
-class CurrentSheetHalfThicknesses:
-    """Utility class to help construct different current sheet thicknesses.
+def createConstant(currentSheetHalfThickness):
+    """Return a constant current sheet half thickness.
 
-    Utility class to help construct different current sheet thicknesses.
+    Return a constant current sheet half thickness.
 
-    Attributes
+    Parameters
     ----------
-    None
+    currentSheetHalfThickness : float
+        The current sheet half thickness (in R_E).
+    
+    Returns
+    -------
+    dsfij : DifferentiableScalarFieldIJ
+        The constant half thickness field.
     """
-
-    @staticmethod
-    def createConstant(currentSheetHalfThickness):
-        """Return a constant current sheet half thickness.
-
-        Return a constant current sheet half thickness.
-
-        Parameters
-        ----------
-        currentSheetHalfThickness : float
-            The current sheet half thickness (in R_E).
-        
-        Returns
-        -------
-        dsfij : DifferentiableScalarFieldIJ
-            The constant half thickness field.
-        """
-        dsfij = DifferentiableScalarFieldIJ()
-        # These lambdas are not bound methods.
-        dsfij.differentiateFDi = lambda location: 0
-        dsfij.differentiateFDj = lambda location: 0
-        dsfij.evaluate = lambda location: currentSheetHalfThickness
-        return dsfij
+    dsfij = DifferentiableScalarFieldIJ()
+    # These lambdas are not bound methods.
+    dsfij.differentiateFDi = lambda location: 0
+    dsfij.differentiateFDj = lambda location: 0
+    dsfij.evaluate = lambda location: currentSheetHalfThickness
+    return dsfij

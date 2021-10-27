@@ -1,17 +1,18 @@
+"""Tests for the currentsheethalfthicknesses module."""
+
+
 import unittest
 
 from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-    CurrentSheetHalfThicknesses
+    createConstant
 )
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        self.assertIsNotNone(CurrentSheetHalfThicknesses())
+    """Tests for the currentsheethalfthicknesses module."""
 
     def test_createConstant(self):
-        dsfij = CurrentSheetHalfThicknesses.createConstant(1.9)
+        dsfij = createConstant(1.9)
         self.assertAlmostEqual(dsfij.evaluate(None), 1.9)
 
 

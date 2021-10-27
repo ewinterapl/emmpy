@@ -29,3 +29,25 @@ class DifferentiableScalarFieldIJ:
         ----------
         None
         """
+
+
+def createConstant(constant):
+    """Create a constant differentiable scalar field.
+
+    Return a constant differentiable scalar field.
+
+    Parameters
+    ----------
+    constant : float
+        The constant field value.
+    
+    Returns
+    -------
+    dsfij : DifferentiableScalarFieldIJ
+        The constant differentiable scalar field.
+    """
+    dsfij = DifferentiableScalarFieldIJ()
+    dsfij.differentiateFDi = lambda location: 0
+    dsfij.differentiateFDj = lambda location: 0
+    dsfij.evaluate = lambda location: constant
+    return dsfij

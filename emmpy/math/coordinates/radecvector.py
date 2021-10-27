@@ -7,7 +7,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from math import atan2, cos, pi, sin, sqrt
-from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import CurrentSheetHalfThicknesses
 
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.vectors.vector3d import Vector3D

@@ -2,7 +2,6 @@
 
 Modules
 -------
-test_cylindricaltocartesianbasistransformation.py
 test_sphericaltocartesianbasistransformation.py
 test_vectorfieldvalueconversions.py
 

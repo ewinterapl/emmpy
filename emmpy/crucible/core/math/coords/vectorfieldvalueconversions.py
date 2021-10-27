@@ -11,14 +11,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.cylindricaltocartesianbasistransformation import (
-    CylindricalToCartesianBasisTransformation)
 from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
     SphericalToCartesianBasisTransformation)
 from emmpy.math.coordinates.sphericalvector import SphericalVector, sphericalToCartesian
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import (
-    cartesianToCylindrical, CylindricalVector, cylindricalToCartesian
+    CylindricalVector, cylindricalToCartesian, cartesianToCylindrical,
+    getCylindricalBasisToCartesianBasisTransformation
 )
 from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
 from emmpy.math.matrices.matrixijk import MatrixIJK
@@ -41,12 +40,8 @@ class VectorFieldValueConversions:
     values, and vice versa.
     """
 
-    # Create the cylindrical and spherical converters.
-    CYLINDRICAL = CylindricalToCartesianBasisTransformation()
+    # Create the spherical converter.
     SPHERICAL = SphericalToCartesianBasisTransformation()
-
-    # def __init__(self):
-    #     """Build a new object."""
 
     @staticmethod
     def convertToCylindrical(*args):
@@ -85,9 +80,7 @@ class VectorFieldValueConversions:
 
         # Get the Cartesian-to-cylindrical transformation matrix at
         # the current cylindrical position.
-        cartToCylMatrix = MatrixIJK()
-        VectorFieldValueConversions.CYLINDRICAL.getInverseTransformation(
-            cylindricalPosition, cartToCylMatrix)
+        cartToCylMatrix = getCylindricalBasisToCartesianBasisTransformation(cylindricalPosition).T
 
         # Convert the Cartesian vector value to cylindrical.
         cylindricalValue = CylindricalVector(cartToCylMatrix.dot(cartesianValue))
@@ -189,13 +182,13 @@ class VectorFieldValueConversions:
         toCartMatrix = MatrixIJK()
         if (isinstance(args[0], (CylindricalVectorFieldValue,
                                  CylindricalVector))):
-            coordSys = VectorFieldValueConversions.CYLINDRICAL
+            toCartMatrix = getCylindricalBasisToCartesianBasisTransformation(position)
         elif (isinstance(args[0], (SphericalVectorFieldValue,
                                    SphericalVector))):
             coordSys = VectorFieldValueConversions.SPHERICAL
+            coordSys.getTransformation(position, toCartMatrix)
         else:
             raise TypeError
-        coordSys.getTransformation(position, toCartMatrix)
         cartesianValue = CartesianVector(toCartMatrix.dot(value))
 
         # Create and return the new Cartesian vector field value.

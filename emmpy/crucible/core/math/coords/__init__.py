@@ -52,7 +52,6 @@ For developers
 
 Modules
 -------
-cylindricaltocartesianbasistransformation.py
 sphericaltocartesianbasistransformation.py
 vectorfieldvalueconversions.py
 

@@ -11,9 +11,12 @@ import unittest
 
 import numpy as np
 from emmpy.math.coordinates.cartesianvector import CartesianVector
-
+from emmpy.math.matrices.matrix3d import Matrix3D
 from emmpy.math.coordinates.sphericalvector import (
-    SphericalVector, sphericalToCartesian, cartesianToSpherical
+    SphericalVector, sphericalToCartesian, cartesianToSpherical,
+    getSphericalBasisToCartesianBasisTransformation,
+    getCartesianBasisToSphericalBasisTransformation,
+    sphericalBasisToCartesianBasis, cartesianBasisToSphericalBasis
 )
 
 
@@ -96,6 +99,112 @@ class TestBuilder(unittest.TestCase):
                     self.assertAlmostEqual(spherical.theta, theta)
                     self.assertAlmostEqual(spherical.phi, phi)
 
+    def test_getSphericalBasisToCartesianBasisTransformation(self):
+        """Test the getSphericalBasisToCartesianBasisTransformation function."""
+        for r in rs:
+            for theta in thetas:
+                for phi in phis:
+                    sphericalPosition = SphericalVector(r, theta, phi)
+                    m = getSphericalBasisToCartesianBasisTransformation(
+                        sphericalPosition
+                    )
+                    sin_theta = sin(theta)
+                    cos_theta = cos(theta)
+                    sin_phi = sin(phi)
+                    cos_phi = cos(phi)
+                    m_ref = Matrix3D(
+                        [[sin_theta*cos_phi, cos_theta*cos_phi, -sin_phi],
+                         [sin_theta*sin_phi, cos_theta*sin_phi,  cos_phi],
+                         [cos_theta,         -sin_theta,         0]]
+                    )
+                    for row in range(len(m)):
+                        for col in range(len(m[0])):
+                            self.assertAlmostEqual(m[row, col],
+                                                   m_ref[row, col]
+                            )
 
-if __name__ == '__main__':
+    def test_getCartesianBasisToSphericalBasisTransformation(self):
+        """Test the getCartesianBasisToSphericalBasisTransformation function."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesianPosition = CartesianVector(x, y, z)
+                    m = getCartesianBasisToSphericalBasisTransformation(
+                        cartesianPosition
+                    )
+                    theta = atan2(sqrt(x**2 + y**2), z)
+                    phi = atan2(y, x)
+                    sin_theta = sin(theta)
+                    cos_theta = cos(theta)
+                    sin_phi = sin(phi)
+                    cos_phi = cos(phi)
+                    m_ref = Matrix3D(
+                        [[sin_theta*cos_phi, sin_theta*sin_phi,  cos_theta],
+                         [cos_theta*cos_phi, cos_theta*sin_phi, -sin_theta],
+                         [-sin_phi,          cos_phi,            0]]
+                    )
+                    for row in range(len(m)):
+                        for col in range(len(m[0])):
+                            self.assertAlmostEqual(m[row, col],
+                                                   m_ref[row, col]
+                            )
+
+    def test_sphericalBasisToCartesianBasis(self):
+        """Test the sphericalBasisToCartesianBasis function."""
+        for r in rs:
+            for theta in thetas:
+                for phi in phis:
+                    sphericalPosition = SphericalVector(r, theta, phi)
+                    (a, b, c) = (1.1, 2.2, 3.3)
+                    sphericalValue = SphericalVector(a, b, c)
+                    cartesianValue = sphericalBasisToCartesianBasis(
+                        sphericalPosition, sphericalValue
+                    )
+                    sin_theta = sin(theta)
+                    cos_theta = cos(theta)
+                    sin_phi = sin(phi)
+                    cos_phi = cos(phi)
+                    m = Matrix3D(
+                        [[sin_theta*cos_phi, cos_theta*cos_phi, -sin_phi],
+                         [sin_theta*sin_phi, cos_theta*sin_phi,  cos_phi],
+                         [cos_theta,         -sin_theta,         0]]
+                    )
+                    cartesianValue_ref = CartesianVector(
+                        m.dot(sphericalValue)
+                    )
+                    for row in range(len(cartesianValue)):
+                        self.assertAlmostEqual(cartesianValue[row],
+                                               cartesianValue_ref[row]
+                        )
+
+    def test_cartesianBasisToSphericalBasis(self):
+        """Test the cartesianBasisToSphericalBasis function."""
+        for x in xs:
+            for y in ys:
+                for z in zs:
+                    cartesianPosition = CartesianVector(x, y, z)
+                    (a, b, c) = (1.1, 2.2, 3.3)
+                    cartesianValue = CartesianVector(a, b, c)
+                    sphericalValue = cartesianBasisToSphericalBasis(
+                        cartesianPosition, cartesianValue
+                    )
+                    theta = atan2(sqrt(x**2 + y**2), z)
+                    phi = atan2(y, x)
+                    sin_theta = sin(theta)
+                    cos_theta = cos(theta)
+                    sin_phi = sin(phi)
+                    cos_phi = cos(phi)
+                    m = Matrix3D(
+                        [[sin_theta*cos_phi, sin_theta*sin_phi,  cos_theta],
+                         [cos_theta*cos_phi, cos_theta*sin_phi, -sin_theta],
+                         [-sin_phi,        cos_phi,            0]]
+                    )
+                    sphericalValue_ref = m.dot(cartesianValue)
+                    for row in range(len(sphericalValue)):
+                        self.assertAlmostEqual(sphericalValue[row],
+                                               sphericalValue_ref[row]
+                        )
+
+
+if __name__ == "__main__":
     unittest.main()

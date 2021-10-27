@@ -13,26 +13,26 @@ Position vectors (i.e. vectors relative to the origin) are converted from
 cylindrical (rho, phi, z) to Cartesian (x, y, z) coordinates using the
 transformation:
 
-x = rho*cos(phi)
-y = rho*sin(phi)
-z = z
+    x = rho*cos(phi)
+(1) y = rho*sin(phi)
+    z = z
 
 To convert from Cartesian (x, y, z) to cylindrical (rho, phi, z)
 coordinates:
 
-rho = sqrt(x**2 + y**2)
-phi = atan2(y, x)
-z   = z
+    rho = sqrt(x**2 + y**2)
+(2) phi = atan2(y, x)
+    z   = z
 
 A value vector is a vector relative to an arbitrary position. This type of
 vector is converted between cylindrical and Cartesian coordinates using a
 set of rotations, resulting in a basis vector transformation:
 
-(1) A_cyl = A_rho*u_rho + A_phi*u_phi + A_z*u_z
+(3) A_cyl = A_rho*u_rho + A_phi*u_phi + A_z*u_z
 
 to or from:
 
-(2) A_car = A_x*u_x + A_y*u_y + A_z*u_z
+(4) A_car = A_x*u_x + A_y*u_y + A_z*u_z
 
 where u_rho, u_phi, and u_z are the unit vectors in the cylindrical rho,
 phi, and z directions at the base of the value vector, and u_x, u_y, and
@@ -41,58 +41,58 @@ vector. The cylindrical basis vectors can be written in terms of the
 Cartesian basis vectors using:
 
     u_rho =  cos(phi)*u_x + sin(phi)*u_y
-(3) u_phi = -sin(phi)*u_x + cos(phi)*u_y
+(5) u_phi = -sin(phi)*u_x + cos(phi)*u_y
     u_z   = u_z
 
 or:
 
     | u_rho |     | u_x |
-(4) | u_phi | = T | u_y |
+(6) | u_phi | = T | u_y |
     | u_z   |     | u_z |
 
 where:
 
         |  cos(phi) sin(phi) 0 |
-(5) T = | -sin(phi) cos(phi) 0 |
+(7) T = | -sin(phi) cos(phi) 0 |
         |     0        0     1 |
 
 The cylindrical-to-Cartesian basis vector transformation is the transpose
 of T:
 
-| u_x |                | u_rho |
-| u_y | = TRANSPOSE(T) | u_phi |
-| u_z |                | u_z   |
+    | u_x |                | u_rho |
+(8) | u_y | = TRANSPOSE(T) | u_phi |
+    | u_z |                | u_z   |
 
 To convert from a Cartesian to cylindrical basis, apply the transformation
 T to the Cartesian basis vectors:
 
-A_cyl =   A_rho*( cos(phi)*u_x + sin(phi)*u_y)
-        + A_phi*(-sin(phi)*u_x + cos(phi)*u_y)
-        + A_z*u_z
-      =   (A_rho*cos(phi) - A_phi*sin(phi))*u_x
-        + (A_rho*sin(phi) + A_phi*cos(phi))*u_y
-        + A_z*u_z
-      = A_car
-      = A_x*u_x + A_y*u_y + A_z*u_z
+(9) A_cyl =   A_rho*( cos(phi)*u_x + sin(phi)*u_y)
+            + A_phi*(-sin(phi)*u_x + cos(phi)*u_y)
+            + A_z*u_z
+          =   (A_rho*cos(phi) - A_phi*sin(phi))*u_x
+            + (A_rho*sin(phi) + A_phi*cos(phi))*u_y
+            + A_z*u_z
+          = A_car
+          = A_x*u_x + A_y*u_y + A_z*u_z
 
 and so:
 
-A_x = A_rho*cos(phi) - A_phi*sin(phi)
-A_y = A_rho*sin(phi) + A_phi*cos(phi)
-A_z = A_z
+     A_x = A_rho*cos(phi) - A_phi*sin(phi)
+(10) A_y = A_rho*sin(phi) + A_phi*cos(phi)
+     A_z = A_z
 
 or:
 
-| A_x |                | A_rho |
-| A_y | = TRANSPOSE(T) | A_phi |
-| A_z |                | A_z   |
+     | A_x |                | A_rho |
+(11) | A_y | = TRANSPOSE(T) | A_phi |
+     | A_z |                | A_z   |
 
 The Cartesian-to-cylindrical basis transformation is the inverse
 transformation, and thus the transpose of the transformation matrix:
 
-| A_rho |     | A_x |
-| A_phi | = T | A_y |
-| u_z   |     | A_z |
+     | A_rho |     | A_x |
+(12) | A_phi | = T | A_y |
+     | u_z   |     | A_z |
 
 Authors
 -------

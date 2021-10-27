@@ -36,7 +36,7 @@ to or from:
 
 where u_rho, u_phi, and u_z are the unit vectors in the cylindrical rho,
 phi, and z directions at the base of the value vector, and u_x, u_y, and
-u_z are the equivalent Cartesian basis vectors at the vase of the value
+u_z are the equivalent Cartesian basis vectors at the base of the value
 vector. The cylindrical basis vectors can be written in terms of the
 Cartesian basis vectors using:
 
@@ -101,8 +101,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from math import atan2, cos, pi, sin, sqrt
-
-import numpy as np
 
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.matrices.matrix3d import Matrix3D
@@ -284,12 +282,9 @@ def getCartesianBasisToCylindricalBasisTransformation(cartesianPosition):
         Transformation matrix for Cartesian-to-cylindrical basis
         transformation.
     """
-    phi = atan2(cartesianPosition.y, cartesianPosition.x)
-    cos_phi = cos(phi)
-    sin_phi = sin(phi)
-    m = Matrix3D([[ cos_phi, sin_phi, 0],
-                  [-sin_phi, cos_phi, 0],
-                  [0, 0, 1]])
+    cylindricalPosition = cartesianToCylindrical(cartesianPosition)
+    m = getCylindricalBasisToCartesianBasisTransformation(cylindricalPosition)
+    m = Matrix3D(m.T)
     return m
 
 

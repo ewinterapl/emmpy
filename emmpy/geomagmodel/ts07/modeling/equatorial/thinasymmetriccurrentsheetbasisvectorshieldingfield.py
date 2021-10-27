@@ -14,7 +14,7 @@ from emmpy.magmodel.core.math.cylindricalharmonicfield import (
 )
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -101,7 +101,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
             )
             buffer = VectorIJK()
             chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,
-                                           TrigParity.ODD)
+                                           ODD)
             chf.evaluate(location, buffer)
             symmetricExpansions[n - 1] = VectorIJK(
                 buffer.i, buffer.j, buffer.k
@@ -120,9 +120,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
-                    tailExpansion, waveNumberExpansion,
-                    TrigParity.ODD
-                )
+                    tailExpansion, waveNumberExpansion, ODD)
                 chf.evaluate(location, buffer)
                 buffer *= negateConst
                 oddExpansions[m - 1][n - 1] = (
@@ -141,9 +139,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
-                    tailExpansion, waveNumberExpansion,
-                    TrigParity.EVEN
-                )
+                    tailExpansion, waveNumberExpansion, EVEN)
                 chf.evaluate(location, buffer)
                 buffer *= negateConst
                 evenExpansions[m - 1][n - 1] = (

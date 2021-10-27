@@ -1,9 +1,12 @@
+"""Tests for the trigparity module."""
+
+
 import unittest
 
 from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
     DifferentiableUnivariateFunction
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 
 
 # Helper functions
@@ -16,23 +19,8 @@ def df_dx(x):
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        duf = DifferentiableUnivariateFunction()
-        duf.evaluate = f
-        duf.differentiate = df_dx
-        tp = TrigParity(duf)
-        self.assertIsNotNone(tp)
-        self.assertIs(tp.function, duf)
-
-    def test_evaluate(self):
-        duf = DifferentiableUnivariateFunction()
-        duf.evaluate = f
-        duf.differentiate = df_dx
-        tp = TrigParity(duf)
-        self.assertAlmostEqual(tp.evaluate(0), f(0))
-        self.assertAlmostEqual(tp.differentiate(0), df_dx(0))
+    """Tests for the trigparity module."""
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

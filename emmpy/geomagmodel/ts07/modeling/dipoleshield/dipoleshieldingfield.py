@@ -16,7 +16,7 @@ import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
@@ -121,7 +121,7 @@ class DipoleShieldingField:
             DipoleShieldingField.d.scale(sin(2*dipoleTiltAngle))
         )
         ppchf = PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
-            TrigParity.EVEN,
+            EVEN,
             dipoleTiltAngle*DipoleShieldingField.kappaPerp,
             DipoleShieldingField.p.invert(),
             DipoleShieldingField.r.invert(),

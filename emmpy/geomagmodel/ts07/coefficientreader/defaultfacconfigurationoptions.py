@@ -18,7 +18,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
     FacConfigurationOptions
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 
 
 class DefaultFacConfigurationOptions(FacConfiguration):
@@ -123,14 +123,14 @@ class DefaultFacConfigurationOptions(FacConfiguration):
 
         # region 1
         region1Mode1Asym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_1, 1, TrigParity.ODD,
+            coeffs[count], FacRegion.REGION_1, 1, ODD,
             DefaultFacConfigurationOptions.r1_m1_theta0,
             DefaultFacConfigurationOptions.r1_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
         )
         count += 1
         region1Mode2Asym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_1, 2, TrigParity.ODD,
+            coeffs[count], FacRegion.REGION_1, 2, ODD,
             DefaultFacConfigurationOptions.r1_m2_theta0,
             DefaultFacConfigurationOptions.r1_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
@@ -139,14 +139,14 @@ class DefaultFacConfigurationOptions(FacConfiguration):
 
         # region 2
         region2Mode1Asym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_2, 1, TrigParity.ODD,
+            coeffs[count], FacRegion.REGION_2, 1, ODD,
             DefaultFacConfigurationOptions.r2_m1_theta0,
             DefaultFacConfigurationOptions.r2_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
         )
         count += 1
         region2Mode1Sym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_2, 1, TrigParity.EVEN,
+            coeffs[count], FacRegion.REGION_2, 1, EVEN,
             DefaultFacConfigurationOptions.r2_m1_theta0,
             DefaultFacConfigurationOptions.r2_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded

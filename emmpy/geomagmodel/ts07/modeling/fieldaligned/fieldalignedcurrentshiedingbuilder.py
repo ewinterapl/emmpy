@@ -15,7 +15,7 @@ import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )
@@ -269,7 +269,7 @@ class FieldAlignedCurrentShiedingBuilder:
             self.region, self.mode, self.dipoleTilt, xScale, self.trigParityI,
             aPerpenValues, aParallValues
         )
-        if self.trigParityI is TrigParity.ODD:
+        if self.trigParityI is ODD:
             T1 = FieldAlignedCurrentShiedingBuilder.T1Sym
             T2 = FieldAlignedCurrentShiedingBuilder.T2Sym
             p = FieldAlignedCurrentShiedingBuilder.pSym
@@ -341,7 +341,7 @@ class FieldAlignedCurrentShiedingBuilder:
                     coeff2 = 0.0
                     coeff3 = 0.0
                     coeff4 = 0.0
-                    if trigParityI is TrigParity.ODD:
+                    if trigParityI is ODD:
                         coeff = FieldAlignedCurrentShiedingBuilder.shieldingAmpSym[region - 1][mode - 1][loop]
                         loop += 1
                         coeff2 = FieldAlignedCurrentShiedingBuilder.shieldingAmpSym[region - 1][mode - 1][loop]

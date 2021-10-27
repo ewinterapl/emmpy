@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -183,13 +183,13 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             for m in range(1, self.numAzimuthalExpansions + 1):
                 aOdd = self.coeffs.getTailSheetOddValues()[m, n]
                 oddBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness
+                    kn, m, ODD, self.currentSheetHalfThickness
                 )
                 oddExpansions[m - 1][n - 1] = (
                     oddBasisFunction.evaluate(CartesianVector(location))*aOdd)
                 aEven = self.coeffs.getTailSheetEvenValues()[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness
+                    kn, m, EVEN, self.currentSheetHalfThickness
                 )
                 evenExpansions[m - 1][n - 1] = (
                     evenBasisFunction.evaluate(location)*aEven)

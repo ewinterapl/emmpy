@@ -13,7 +13,7 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 
 
 class ChebyshevIteration:
@@ -88,7 +88,7 @@ class ChebyshevIteration:
             sinMphi[:] = sines
             cosMphi[:] = cosines
         else:
-            if trigParity is TrigParity.ODD:
+            if trigParity is ODD:
                 trigMphi[:] = sines
                 dTrigMphi[:] = cosines
             else:

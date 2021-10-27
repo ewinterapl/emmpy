@@ -21,7 +21,7 @@ from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
 from emmpy.magmodel.core.math.cartesianharmonicfield import (
     CartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -110,9 +110,9 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         """
         # Construct the unrotated fields.
         perpField = CartesianHarmonicField(
-            p, r, perpCoeffs, trigParityI, TrigParity.ODD)
+            p, r, perpCoeffs, trigParityI, ODD)
         paraField = CartesianHarmonicField(
-            q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
+            q, s, parrCoeffs, trigParityI, EVEN)
 
         # The rotation matrices about Y axis.
         aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)
@@ -170,9 +170,9 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         """
         # Construct the unrotated fields.
         perpField = AlternateCartesianHarmonicField(
-            p, r, perpCoeffs, trigParityI, TrigParity.ODD)
+            p, r, perpCoeffs, trigParityI, ODD)
         paraField = CartesianHarmonicField(
-            q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
+            q, s, parrCoeffs, trigParityI, EVEN)
 
         # The rotation matrices about Y axis.
         aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)

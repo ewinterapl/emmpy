@@ -16,7 +16,7 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder imp
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder import (
     FieldAlignedCurrentShiedingBuilder
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -100,11 +100,11 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             kappa = region1KappaScaling
             if region == 2:
                 kappa = region2KappaScaling
-            shieldingParity = TrigParity.EVEN
+            shieldingParity = EVEN
             scaleFactor = amp*scaling
-            if option.getTrigParity() is TrigParity.EVEN:
+            if option.getTrigParity() is EVEN:
                 scaleFactor = -scaleFactor
-                shieldingParity = TrigParity.ODD
+                shieldingParity = ODD
 
             builder = FieldAlignedCurrentBuilder(
                 option.getRegion(), option.getMode(), option.getTrigParity(),

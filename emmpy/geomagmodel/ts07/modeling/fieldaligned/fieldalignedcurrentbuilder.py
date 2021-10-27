@@ -153,7 +153,7 @@ class FieldAlignedCurrentBuilder:
             self.smoothed = options.isSmoothed()
             self.theta0 = options.getTheta0()
             self.deltaTheta = options.getDeltaTheta()
-            self.trigParity = options.getTrigParity()
+            self.trigParity = options.trigParity
             # Needed to deform the conical field, eq. 18 & 19 T02.
             self.a = A[region - 1][self.mode - 1]
             self.b = B[region - 1][self.mode - 1]

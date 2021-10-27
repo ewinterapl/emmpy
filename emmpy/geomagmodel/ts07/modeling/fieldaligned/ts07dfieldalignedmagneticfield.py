@@ -102,12 +102,12 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                 kappa = region2KappaScaling
             shieldingParity = EVEN
             scaleFactor = amp*scaling
-            if option.getTrigParity() is EVEN:
+            if option.trigParity is EVEN:
                 scaleFactor = -scaleFactor
                 shieldingParity = ODD
 
             builder = FieldAlignedCurrentBuilder(
-                option.getRegion(), option.getMode(), option.getTrigParity(),
+                option.getRegion(), option.getMode(), option.trigParity,
                 dipoleTiltAngle, dynamicPressure, kappa, scaleFactor)
             builder.withTheta0(option.getTheta0())
             builder.withDeltaTheta(option.getDeltaTheta())

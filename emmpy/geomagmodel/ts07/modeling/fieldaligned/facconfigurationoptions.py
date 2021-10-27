@@ -121,22 +121,6 @@ class FacConfigurationOptions:
         """
         return self.mode
 
-    def getTrigParity(self):
-        """Return the trig parity.
-        
-        Return the trig parity.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.trigParity : TrigParity
-            The trig parity.
-        """
-        return self.trigParity
-
     def getTheta0(self):
         """Return the polar angle of the FAC center.
         

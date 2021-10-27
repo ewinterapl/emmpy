@@ -40,12 +40,6 @@ class TestBuilder(unittest.TestCase):
         )
         self.assertEqual(fco.getMode(), 2)
 
-    def test_getTrigParity(self):
-        fco = FacConfigurationOptions(
-            0.1, FacRegion.REGION_1, 2, EVEN, 4.4, 5.5, True, False
-        )
-        self.assertEqual(fco.getTrigParity(), EVEN)
-
     def test_getTheta0(self):
         fco = FacConfigurationOptions(
             0.1, FacRegion.REGION_1, 2, EVEN, 4.4, 5.5, True, False

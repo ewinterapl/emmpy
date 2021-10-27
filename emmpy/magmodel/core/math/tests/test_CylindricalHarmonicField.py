@@ -25,9 +25,6 @@ class TestBuilder(unittest.TestCase):
     def test_getLastRadialExpansionNumber(self):
         pass
 
-    def test_getTrigParity(self):
-        pass
-
     def test_getCoefficients(self):
         pass
 

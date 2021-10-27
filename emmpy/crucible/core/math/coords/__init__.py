@@ -53,7 +53,6 @@ For developers
 Modules
 -------
 cylindricaltocartesianbasistransformation.py
-pointonaxisexception.py
 sphericaltocartesianbasistransformation.py
 vectorfieldvalueconversions.py
 

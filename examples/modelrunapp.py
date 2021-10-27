@@ -5,11 +5,11 @@ import sys
 
 import numpy as np
 
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    createConstant
+)
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
-)
-from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-    createConstant
 )
 from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (

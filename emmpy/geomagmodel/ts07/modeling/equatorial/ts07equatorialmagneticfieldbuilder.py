@@ -10,14 +10,14 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    createConstant
+)
 from emmpy.geomagmodel.t01.deformation.positionbender import (
     PositionBender
 )
 from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
     TwistWarpFfunction
-)
-from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-    createConstant
 )
 from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield import (
     ShieldedThinCurrentSheetField

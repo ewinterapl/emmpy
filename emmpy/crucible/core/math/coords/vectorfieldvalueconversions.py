@@ -42,53 +42,6 @@ class VectorFieldValueConversions:
     """
 
     @staticmethod
-    def convertToCylindrical(*args):
-        """Convert a Cartesian vector field value to cylindrical.
-
-        Parameters
-        ----------
-        cartesian : CartesianVectorFieldValue
-            Vector field value to convert.
-        OR
-        cartesianPosition, cartesianValue : CartesianVector
-            Cartesian position and vector value.
-
-        Returns
-        -------
-        cylindrical : CylindricalVectorFieldValue
-            Input vector field value converted to cylindrical coordinates.
-        """
-        if len(args) == 1:
-            # Convert a Cartesian vector field value to a cylindrical
-            # vector field value.
-            (cartesian,) = args
-            cartesianPosition = cartesian.position
-            cartesianValue = cartesian.value
-        elif len(args) == 2:
-            # Convert a Cartesian position vector and a Cartesian value
-            # vector to a cylindrical vector field value.
-            (cartesianPosition, cartesianValue) = args
-        else:
-            raise TypeError
-
-        # Convert the Cartesian position to cylindrical.
-        cylindricalPosition = cartesianToCylindrical(
-            CartesianVector(cartesianPosition)
-        )
-
-        # Get the Cartesian-to-cylindrical transformation matrix at
-        # the current cylindrical position.
-        cartToCylMatrix = getCylindricalBasisToCartesianBasisTransformation(cylindricalPosition).T
-
-        # Convert the Cartesian vector value to cylindrical.
-        cylindricalValue = CylindricalVector(cartToCylMatrix.dot(cartesianValue))
-
-        # Create and return the new cylindrical vector field value.
-        cylindrical = CylindricalVectorFieldValue(
-            cylindricalPosition, cylindricalValue)
-        return cylindrical
-
-    @staticmethod
     def convertToSpherical(*args):
         """Convert a Cartesian vector field value to spherical.
 
@@ -167,7 +120,7 @@ class VectorFieldValueConversions:
 
         # Convert the input position to Cartesian.
         if isinstance(position, CylindricalVector):
-            cartesianPosition = cylindricalToCartesian(position)
+            raise Exception
         elif isinstance(position, SphericalVector):
             cartesianPosition = sphericalToCartesian(position)
         else:
@@ -177,7 +130,7 @@ class VectorFieldValueConversions:
         toCartMatrix = MatrixIJK()
         if (isinstance(args[0], (CylindricalVectorFieldValue,
                                  CylindricalVector))):
-            toCartMatrix = getCylindricalBasisToCartesianBasisTransformation(position)
+            raise Exception
         elif (isinstance(args[0], (SphericalVectorFieldValue,
                                    SphericalVector))):
             toCartMatrix = getSphericalBasisToCartesianBasisTransformation(position)

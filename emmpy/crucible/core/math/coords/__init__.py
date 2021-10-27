@@ -52,7 +52,6 @@ For developers
 
 Modules
 -------
-sphericaltocartesianbasistransformation.py
 vectorfieldvalueconversions.py
 
 Packages

@@ -11,15 +11,16 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.sphericaltocartesianbasistransformation import (
-    SphericalToCartesianBasisTransformation)
 from emmpy.math.coordinates.sphericalvector import SphericalVector, sphericalToCartesian
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector, cylindricalToCartesian, cartesianToCylindrical,
     getCylindricalBasisToCartesianBasisTransformation
 )
-from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
+from emmpy.math.coordinates.sphericalvector import (
+    SphericalVector, sphericalToCartesian, cartesianToSpherical,
+    getSphericalBasisToCartesianBasisTransformation
+)
 from emmpy.math.matrices.matrixijk import MatrixIJK
 from emmpy.math.vectorfields.cartesianvectorfieldvalue import (
     CartesianVectorFieldValue
@@ -39,9 +40,6 @@ class VectorFieldValueConversions:
     field values to cylindrical and spherical coordinates and vector field
     values, and vice versa.
     """
-
-    # Create the spherical converter.
-    SPHERICAL = SphericalToCartesianBasisTransformation()
 
     @staticmethod
     def convertToCylindrical(*args):
@@ -127,13 +125,10 @@ class VectorFieldValueConversions:
 
         # Get the Cartesian-to-spherical transformation matrix at
         # the current spherical position.
-        cartToSphMatrix = MatrixIJK()
-        VectorFieldValueConversions.SPHERICAL.getInverseTransformation(
-            sphericalPosition, cartToSphMatrix)
+        cartToSphMatrix = getSphericalBasisToCartesianBasisTransformation(sphericalPosition).T
 
         # Convert the Cartesian vector value to spherical.
-        sphericalValue = VectorFieldValueConversions.SPHERICAL.mxv(
-            cartToSphMatrix, cartesianValue)
+        sphericalValue = SphericalVector(cartToSphMatrix.dot(cartesianValue))
 
         # Create and return the new spherical vector field value.
         spherical = SphericalVectorFieldValue(
@@ -185,8 +180,7 @@ class VectorFieldValueConversions:
             toCartMatrix = getCylindricalBasisToCartesianBasisTransformation(position)
         elif (isinstance(args[0], (SphericalVectorFieldValue,
                                    SphericalVector))):
-            coordSys = VectorFieldValueConversions.SPHERICAL
-            coordSys.getTransformation(position, toCartMatrix)
+            toCartMatrix = getSphericalBasisToCartesianBasisTransformation(position)
         else:
             raise TypeError
         cartesianValue = CartesianVector(toCartMatrix.dot(value))

@@ -35,13 +35,13 @@ class TrigParity(DifferentiableUnivariateFunction):
 
     # The even trigonometric parity, the cosine function.
     EVEN = DifferentiableUnivariateFunction()
-    EVEN.evaluate = lambda t: cos(t)
+    EVEN.evaluate = cos
     EVEN.differentiate = lambda t: -sin(t)
 
     # The odd trigonometric parity, the sine function.
     ODD = DifferentiableUnivariateFunction()
-    ODD.evaluate = lambda t: sin(t)
-    ODD.differentiate = lambda t: cos(t)
+    ODD.evaluate = sin
+    ODD.differentiate = cos
 
     def __init__(self, function):
         """Initialize a new TrigParity object.

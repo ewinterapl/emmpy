@@ -17,19 +17,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import cos, sin
-
-from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
-    DifferentiableUnivariateFunction
-)
-
-
 # The even trigonometric parity, the cosine function.
-EVEN = DifferentiableUnivariateFunction()
-EVEN.evaluate = cos
-EVEN.differentiate = lambda t: -sin(t)
+EVEN = object()
 
 # The odd trigonometric parity, the sine function.
-ODD = DifferentiableUnivariateFunction()
-ODD.evaluate = sin
-ODD.differentiate = cos
+ODD = object()

@@ -4,7 +4,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.facregion import FacRegion
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
     FacConfigurationOptions
 )
-from emmpy.magmodel.core.math.trigparity import EVEN, ODD
+from emmpy.magmodel.core.math.trigparity import EVEN
 
 
 class TestBuilder(unittest.TestCase):

@@ -9,10 +9,11 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import atan2, exp, sqrt
+from math import atan2, cos, exp, sin, sqrt
 
 from scipy.special import jv
 
+from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.math.coordinates.vectorijk import VectorIJK
@@ -119,10 +120,12 @@ class TailSheetAsymmetricExpansion(VectorField):
             zDist = sqrt(z*z + thick*thick)
 
             # Sine if odd, -cosine if even.
-            sinMPhi = self.trigParity.evaluate(m*phi)
-
-            # Cosine if odd, sine if even.
-            cosMPhi = self.trigParity.differentiate(m*phi)
+            if self.trigParity is ODD:
+                sinMPhi = sin(m*phi)
+                cosMPhi = cos(m*phi)
+            else:
+                sinMPhi = cos(m*phi)
+                cosMPhi = -sin(m*phi)
 
             kn = self.waveNumber
             ex = exp(-kn*zDist)

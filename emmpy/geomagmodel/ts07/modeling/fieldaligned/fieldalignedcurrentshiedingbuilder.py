@@ -15,7 +15,7 @@ import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import EVEN, ODD
+from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.math.expansions.arraycoefficientexpansion1d import (
     ArrayCoefficientExpansion1D
 )

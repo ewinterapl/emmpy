@@ -9,9 +9,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import exp, sqrt
+from math import cos, exp, sin, sqrt
 
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -118,17 +119,29 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
+        if self.trigParityI is ODD:
+            itrig = sin
+            idtrig = cos
+        else:
+            itrig = cos
+            idtrig = lambda x: -sin(x)
+        if self.trigParityK is ODD:
+            ktrig = sin
+            kdtrig = cos
+        else:
+            ktrig = cos
+            kdtrig = lambda x: -sin(x)
         expansions = nones((self.aikCoeffs.iSize, self.aikCoeffs.jSize))
         for i in range(self.firstI, self.lastI + 1):
             pi = self.piCoeffs[i]
-            sinYpi = self.trigParityI.evaluate(pi*y)
-            cosYpi = self.trigParityI.differentiate(pi*y)
+            sinYpi = itrig(pi*y)
+            cosYpi = idtrig(pi*y)
             for k in range(self.firstK, self.lastK + 1):
                 pk = self.pkCoeffs[k]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
-                sinZpk = self.trigParityK.evaluate(pk*z)
-                cosZpk = self.trigParityK.differentiate(pk*z)
+                sinZpk = ktrig(pk*z)
+                cosZpk = kdtrig(pk*z)
                 aik = self.aikCoeffs[i, k]
                 if k == self.lastK:
                     bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +

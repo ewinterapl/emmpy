@@ -13,7 +13,7 @@ from math import cos, sin
 
 import numpy as np
 
-from emmpy.magmodel.core.math.trigparity import EVEN, ODD
+from emmpy.magmodel.core.math.trigparity import ODD
 
 
 class ChebyshevIteration:

@@ -13,7 +13,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import (
     CylindricalVector,
-    cartesianToCylindrical,
+    cartesianToCylindrical, cylindricalToCartesian,
     getCylindricalBasisToCartesianBasisTransformation
 )
 from .cartesianvectorfieldvalue import CartesianVectorFieldValue

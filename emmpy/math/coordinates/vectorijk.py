@@ -173,7 +173,7 @@ def project(vector, onto):
 
     <vector, onto> * onto
     ---------------------
-           onto ||
+         || onto ||
 
     where <> denotes the standard scalar product and ||x|| the norm of x.
     For numeric precision reasons the implementation may vary slightly

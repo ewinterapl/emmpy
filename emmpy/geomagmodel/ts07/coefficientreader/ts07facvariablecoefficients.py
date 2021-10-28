@@ -43,22 +43,6 @@ class Ts07FacVariableCoefficients:
         self.region2KappaScaling = region2KappaScaling
         self.facConfigurations = facConfigurations
 
-    def getRegion2KappaScaling(self):
-        """Return the kappa scaling factor for region 2.
-        
-        Return the kappa scaling factor for region 2.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        result : float
-            FAC region 2 kappa scaling factor.
-        """
-        return self.region2KappaScaling
-
     def getFacConfigurations(self):
         """Return the field-aligned current configurations.
         

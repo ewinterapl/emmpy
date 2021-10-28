@@ -553,8 +553,7 @@ class TS07DModelBuilder:
             self.variableCoefficients.getFacCoefficients().region1KappaScaling
         )
         region2KappaScaling = (
-            self.variableCoefficients.getFacCoefficients().
-            getRegion2KappaScaling()
+            self.variableCoefficients.getFacCoefficients().region2KappaScaling
         )
 
         # Current sheet thickness.

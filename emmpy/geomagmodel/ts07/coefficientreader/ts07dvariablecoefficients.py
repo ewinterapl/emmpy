@@ -66,7 +66,7 @@ class TS07DVariableCoefficients:
         twistFact = equatorialCoeffs.twistParam
         self.nonLinearParameters = Ts07NonLinearParameters(
             facCoeffs.region1KappaScaling,
-            facCoeffs.getRegion2KappaScaling(),
+            facCoeffs.region2KappaScaling,
             currThicks, hingeDist, warpParam, twistFact
         )
 

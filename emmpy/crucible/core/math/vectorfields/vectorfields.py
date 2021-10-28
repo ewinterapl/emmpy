@@ -10,8 +10,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import numpy as np
-
 from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )

@@ -15,10 +15,6 @@ class TestBuilder(unittest.TestCase):
         with self.assertRaises(Exception):
             FacConfiguration.createFromCoeffs(None, None)
 
-    def test_getNumberOfFields(self):
-        with self.assertRaises(Exception):
-            FacConfiguration.getNumberOfFields(None)
-
 
 if __name__ == '__main__':
     unittest.main()

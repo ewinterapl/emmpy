@@ -61,23 +61,3 @@ class FacConfiguration:
             When invoked.
         """
         raise AbstractMethodException
-
-    def getNumberOfFields(self):
-        """Get the number of fields.
-
-        Get the number of fields.
-
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        None
-        
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException

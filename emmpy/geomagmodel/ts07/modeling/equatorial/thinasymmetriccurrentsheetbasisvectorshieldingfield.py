@@ -132,7 +132,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         for n in range(1, self.numRadialExpansions + 1):
             for m in range(1, self.numAzimuthalExpansions + 1):
                 tailExpansion = (
-                    self.coeffs.getEvenTailExpansion().getExpansion(m, n)
+                    self.coeffs.evenTailExpansion.getExpansion(m, n)
                 )
                 waveNumberExpansion = (
                     self.coeffs.getEvenTailWaveExpansion().getExpansion(m, n)

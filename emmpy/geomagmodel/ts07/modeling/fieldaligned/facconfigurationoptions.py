@@ -73,22 +73,6 @@ class FacConfigurationOptions:
         self.smoothed = smoothed
         self.shielded = shielded
 
-    def getTheta0(self):
-        """Return the polar angle of the FAC center.
-        
-        Return the polar angle of the FAC center.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.theta0 : float
-            The polar angle of the FAC center.
-        """
-        return self.theta0
-
     def getDeltaTheta(self):
         """Return the angular half-width of the FAC.
         

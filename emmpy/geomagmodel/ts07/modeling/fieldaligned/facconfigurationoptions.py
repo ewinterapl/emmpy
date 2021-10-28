@@ -73,22 +73,6 @@ class FacConfigurationOptions:
         self.smoothed = smoothed
         self.shielded = shielded
 
-    def getRegion(self):
-        """Return the FAC region code.
-
-        Return the FAC region code.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.region : FacRegion
-            The FAC region code.
-        """
-        return self.region
-
     def getMode(self):
         """Return the trig mode.
         

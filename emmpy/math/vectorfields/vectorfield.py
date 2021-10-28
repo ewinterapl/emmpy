@@ -14,6 +14,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class VectorField:
@@ -78,7 +79,8 @@ def negate(vectorField):
 
     # This custom evaluate() method dynamically negates the original vector
     # field and stores the result in the buffer.
-    def my_evaluate(location, buffer):
+    def my_evaluate(location):
+        buffer = VectorIJK()
         vectorField.evaluate(location, buffer)
         buffer[:] = -buffer
         return buffer

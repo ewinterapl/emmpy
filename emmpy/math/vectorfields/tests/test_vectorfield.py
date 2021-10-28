@@ -32,9 +32,7 @@ class TestBuilder(unittest.TestCase):
         (x, y, z) = (1, 2, 3)
         location = VectorIJK(x, y, z)
         neg = -location
-        buffer = VectorIJK()
-        v = vf.evaluate(location, buffer)
-        self.assertIs(v, buffer)
+        v = vf.evaluate(location)
         for i in range(3):
             self.assertAlmostEqual(v[i], neg[i])
 

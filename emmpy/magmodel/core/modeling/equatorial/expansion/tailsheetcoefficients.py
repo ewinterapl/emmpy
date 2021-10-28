@@ -150,22 +150,6 @@ class TailSheetCoefficients:
             ArrayCoefficientExpansion2D(odd, 1, 1),
             ArrayCoefficientExpansion2D(even, 1, 1))
 
-    def getTailSheetEvenValues(self):
-        """Return the even coefficients a_n^e.
-
-        Return the even coefficients a_n^e.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : CoefficientExpansion2D
-            Tail sheet even values.
-        """
-        return self.tailSheetEvenValues
-
     def getAsSingleExpansion(self):
         """Return the coefficients as a single 1D expansion.
         

@@ -53,19 +53,6 @@ class TestTailSheetCoefficients(unittest.TestCase):
         self.assertAlmostEqual(c.tailSheetEvenValues[3, 1], 10)
         self.assertAlmostEqual(c.tailSheetEvenValues[3, 2], 13)
 
-    def test_getTailSheetEvenValues(self):
-        nr = 2
-        na = 3
-        n = nr + 2*nr*na
-        a = list(range(n + 1))
-        c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertAlmostEqual(c.getTailSheetEvenValues()[1, 1], 8)
-        self.assertAlmostEqual(c.getTailSheetEvenValues()[1, 2], 11)
-        self.assertAlmostEqual(c.getTailSheetEvenValues()[2, 1], 9)
-        self.assertAlmostEqual(c.getTailSheetEvenValues()[2, 2], 12)
-        self.assertAlmostEqual(c.getTailSheetEvenValues()[3, 1], 10)
-        self.assertAlmostEqual(c.getTailSheetEvenValues()[3, 2], 13)
-
     def test_getAsSingleExpansion(self):
         nr = 2
         na = 3

@@ -114,7 +114,7 @@ class StretchedField(VectorField):
         # The derivatives.
         dF_dPhi = fValues.dF_dPhi
         dF_dRho = fValues.dF_dRho
-        dF_dy = fValues.getdF_dy()
+        dF_dy = fValues.dF_dy
         sinF = sin(fValues.f)
         cosF = cos(fValues.f)
         xStar = rho*cosF

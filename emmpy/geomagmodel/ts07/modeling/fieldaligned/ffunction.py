@@ -55,22 +55,6 @@ class FDerivatives:
         self.dF_dRho = dF_dRho
         self.dF_dy = dF_dy
 
-    def getdF_dy(self):
-        """Return the value of dF_dy.
-        
-        Return the value of dF_dy.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.dF_dy : float
-            Valule of the partial derivative of F wrt y.
-        """
-        return self.dF_dy
-
 
 class Ffunction:
     """A stretch transformation for the magnetic field.

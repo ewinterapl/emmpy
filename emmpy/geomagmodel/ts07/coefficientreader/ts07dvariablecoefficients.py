@@ -69,19 +69,3 @@ class TS07DVariableCoefficients:
             facCoeffs.region2KappaScaling,
             currThicks, hingeDist, warpParam, twistFact
         )
-
-    def getNonLinearParameters(self):
-        """Return all the non-linear parameters in the TS07D model.
-
-        Return all the non-linear parameters in the TS07D model.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Ts07NonLinearParameters
-            The nonlinear parameters.
-        """
-        return self.nonLinearParameters

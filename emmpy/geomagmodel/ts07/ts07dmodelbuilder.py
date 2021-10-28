@@ -558,7 +558,7 @@ class TS07DModelBuilder:
 
         # Current sheet thickness.
         currentSheetThicknesses = (
-            self.variableCoefficients.getNonLinearParameters().currThicks
+            self.variableCoefficients.nonLinearParameters.currThicks
         )
 
         # The parameters have been updated.

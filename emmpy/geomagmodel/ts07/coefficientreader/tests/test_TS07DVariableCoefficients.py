@@ -19,9 +19,6 @@ class TestBuilder(unittest.TestCase):
     def test_getFacCoefficients(self):
         pass
 
-    def test_getNonLinearParameters(self):
-        pass
-
     def test_getTotalNumberOfParameters(self):
         pass
 

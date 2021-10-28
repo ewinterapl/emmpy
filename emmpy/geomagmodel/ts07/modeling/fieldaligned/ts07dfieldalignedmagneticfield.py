@@ -21,7 +21,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
-from emmpy.math.vectorfields.vectorfield import add
+from emmpy.math.vectorfields.vectorfield import add, addAll
 
 
 class Ts07DFieldAlignedMagneticField(BasisVectorField):
@@ -130,10 +130,10 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
 
         self.internalFields = internalFieldsBuilder
         self.shieldingFields = shieldingFieldsBuilder
-        self.internalField = vectorfields.addAll(self.internalFields)
+        self.internalField = addAll(self.internalFields)
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4).
-        self.shieldingField = vectorfields.addAll(self.shieldingFields)
+        self.shieldingField = addAll(self.shieldingFields)
 
         self.basisFunctions = basisFunctionsBuilder
         self.basisCoefficients = basisCoefficientsBuilder

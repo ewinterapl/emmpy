@@ -13,6 +13,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.vectorijk import VectorIJK
 
@@ -85,6 +87,39 @@ def add(a, b):
 
     sumVectorField.evaluate = my_evaluate
     return sumVectorField
+
+
+def addAll(fields):
+    """Create a vector field by adding multiple vector fields.
+
+    Create a vector field by adding multiple vector fields. The fields
+    maintain their separate nature, and are only added when this sum field
+    is evaluated.
+
+    Parameters
+    ----------
+    fields : array-like of VectorField
+        The vector fields to add.
+    
+    Returns
+    -------
+    vf : VectorField
+        A VectorField that computes the component-wise sum of the fields.
+    """
+    vf = VectorField()
+
+    # This custom evaluate() method dynamically sums the individual vector
+    # fields and stores the sum in the buffer.
+    def my_evaluate(location, buffer):
+        vsum = np.zeros((3,))
+        for field in fields:
+            field.evaluate(location, buffer)
+            vsum[:] += buffer
+        buffer[:] = vsum
+        return buffer
+
+    vf.evaluate = my_evaluate
+    return vf
 
 
 def negate(vectorField):

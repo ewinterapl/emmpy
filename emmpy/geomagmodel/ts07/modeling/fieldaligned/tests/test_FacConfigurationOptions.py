@@ -22,12 +22,6 @@ class TestBuilder(unittest.TestCase):
         self.assertTrue(fco.smoothed)
         self.assertFalse(fco.shielded)
 
-    def test_getAmplitudeScaling(self):
-        fco = FacConfigurationOptions(
-            0.1, FacRegion.REGION_1, 2, EVEN, 4.4, 5.5, True, False
-        )
-        self.assertAlmostEqual(fco.getAmplitudeScaling(), 0.1)
-
     def test_getRegion(self):
         fco = FacConfigurationOptions(
             0.1, FacRegion.REGION_1, 2, EVEN, 4.4, 5.5, True, False

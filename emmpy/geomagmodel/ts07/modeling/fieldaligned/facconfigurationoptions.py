@@ -73,22 +73,6 @@ class FacConfigurationOptions:
         self.smoothed = smoothed
         self.shielded = shielded
 
-    def getAmplitudeScaling(self):
-        """Return the amplitude scaling.
-        
-        Return the amplitude scaling.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.amplitudeScaling : float
-            The amplitude scaling.
-        """
-        return self.amplitudeScaling
-
     def getRegion(self):
         """Return the FAC region code.
 

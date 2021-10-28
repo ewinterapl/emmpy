@@ -95,7 +95,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         # Construct all the fields, unlike in the original TS07D, instead of 4
         # FAC systems, this now supports any number.
         for option in options:
-            amp = option.getAmplitudeScaling()
+            amp = option.amplitudeScaling
             basisCoefficientsBuilder.append(amp)
             region = option.getRegion()
             kappa = region1KappaScaling

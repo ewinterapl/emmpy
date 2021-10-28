@@ -199,22 +199,6 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         v = VectorIJK.addAll([internal, shield], buffer)
         return v
 
-    def getBasisCoefficients(self):
-        """Return the list of basis coefficients.
-
-        Return the list of basis coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.basisCoefficients : list of float
-            The basis coefficients for the field.
-        """
-        return self.basisCoefficients
-
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.
 

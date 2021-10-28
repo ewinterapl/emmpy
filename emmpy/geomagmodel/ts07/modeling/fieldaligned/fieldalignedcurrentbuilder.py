@@ -205,24 +205,6 @@ class FieldAlignedCurrentBuilder:
         self.smoothed = True
         return self
 
-    def setSmoothing(self, smoothing):
-        """Set the FAC smoothing flag to the specified value.
-
-        Set the FAC smoothing flag to the specified value.
-
-        Parameters
-        ----------
-        smoothing : bool
-            True for smoothing, False if not.
-
-        Returns
-        -------
-        self : FieldAlignedCurrentBuilder
-            The current object.
-        """
-        self.smoothed = smoothing
-        return self
-
     def withTheta0(self, theta0):
         """Set the FAC central angle.
 

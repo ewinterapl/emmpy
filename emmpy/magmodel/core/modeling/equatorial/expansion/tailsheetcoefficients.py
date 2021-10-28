@@ -150,22 +150,6 @@ class TailSheetCoefficients:
             ArrayCoefficientExpansion2D(odd, 1, 1),
             ArrayCoefficientExpansion2D(even, 1, 1))
 
-    def getTailSheetSymmetricValues(self):
-        """Return the symmetric coefficients a_n^s.
-        
-        Return the symmetric coefficients a_n^s.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        result : CoefficientExpansion1D
-            Symmetric coefficients a_n^s.
-        """
-        return self.tailSheetSymmetricValues
-
     def getTailSheetOddValues(self):
         """Return the odd coefficients a_mn^o.
 

@@ -53,19 +53,6 @@ class TestTailSheetCoefficients(unittest.TestCase):
         self.assertAlmostEqual(c.tailSheetEvenValues[3, 1], 10)
         self.assertAlmostEqual(c.tailSheetEvenValues[3, 2], 13)
 
-    def test_getTailSheetSymmetricValues(self):
-        nr = 2
-        na = 3
-        n = nr + 2*nr*na
-        a = list(range(n + 1))
-        c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertAlmostEqual(
-            c.getTailSheetSymmetricValues()[1], 0
-        )
-        self.assertAlmostEqual(
-            c.getTailSheetSymmetricValues()[2], 1
-        )
-
     def test_getTailSheetOddValues(self):
         nr = 2
         na = 3

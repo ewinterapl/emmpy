@@ -12,10 +12,6 @@ class TestBuilder(unittest.TestCase):
         self.assertIsNotNone(fr)
         self.assertEqual(fr.number, FacRegion.REGION_1)
 
-    def test_getAsInt(self):
-        fr = FacRegion(FacRegion.REGION_1)
-        self.assertEqual(fr.getAsInt(), FacRegion.REGION_1)
-
 
 if __name__ == '__main__':
     unittest.main()

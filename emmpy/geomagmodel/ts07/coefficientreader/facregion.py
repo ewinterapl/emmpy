@@ -35,20 +35,3 @@ class FacRegion:
             Code for the the FAC region.
         """
         self.number = number
-
-    def getAsInt(self):
-        """Return the region as an integer.
-
-        Return the region as an integer.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Code associated with the FAC configuration (1 = region-1,
-            2 = region-2)
-        """
-        return self.number

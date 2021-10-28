@@ -523,7 +523,7 @@ class TS07DModelBuilder:
             BasisVectorFields.asBasisField(
                 DipoleShieldingField.createScaled(
                     self.dipoleTiltAngle, self.dynamicPressure,
-                    self.variableCoefficients.getDipoleShieldingAmplitude()
+                    self.variableCoefficients.cfAmplitude
                 )
             )
         )

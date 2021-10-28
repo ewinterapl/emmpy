@@ -70,22 +70,6 @@ class TS07DVariableCoefficients:
             currThicks, hingeDist, warpParam, twistFact
         )
 
-    def getDipoleShieldingAmplitude(self):
-        """Return the dipole shielding amplitude.
-
-        Return the dipole shielding amplitude.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            The dipole shielding amplitude.
-        """
-        return self.cfAmplitude
-
     def getFacCoefficients(self):
         """Return the field-aligned current coefficients.
 

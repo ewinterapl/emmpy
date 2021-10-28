@@ -150,22 +150,6 @@ class TailSheetCoefficients:
             ArrayCoefficientExpansion2D(odd, 1, 1),
             ArrayCoefficientExpansion2D(even, 1, 1))
 
-    def getTailSheetOddValues(self):
-        """Return the odd coefficients a_mn^o.
-
-        Return the odd coefficients a_mn^o.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : CoefficientExpansion2D
-            Tail sheet odd values.
-        """
-        return self.tailSheetOddValues
-
     def getTailSheetEvenValues(self):
         """Return the even coefficients a_n^e.
 

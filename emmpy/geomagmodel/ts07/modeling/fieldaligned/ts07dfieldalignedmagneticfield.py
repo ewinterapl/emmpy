@@ -240,22 +240,6 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         """
         return self.basisFunctions.size()
 
-    def getInternalFields(self):
-        """Return the list of internal fields.
-
-        Return the list of internal fields.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.internalFields : list of VectorField
-            Internal fields for the overall field.
-        """
-        return self.internalFields
-
     def getShieldingFields(self):
         """Return the list of shielding fields.
 

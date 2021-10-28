@@ -116,7 +116,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     self.coeffs.oddTailExpansion.getExpansion(m, n)
                 )
                 waveNumberExpansion = (
-                    self.coeffs.getOddTailWaveExpansion().getExpansion(m, n)
+                    self.coeffs.oddTailWaveExpansion.getExpansion(m, n)
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(

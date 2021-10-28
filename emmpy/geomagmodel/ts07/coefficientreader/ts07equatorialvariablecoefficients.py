@@ -68,22 +68,6 @@ class Ts07EquatorialVariableCoefficients:
         self.twistParam = twistParam
         self.equatorialLinearCoeffs = equatorialLinearCoeffs
 
-    def getCurrThicks(self):
-        """Return the current sheet thicknesses.
-
-        Return the current sheet thicknesses.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : list of float
-            Current sheet thicknesses.
-        """
-        return self.currThicks
-
     def getWarpingParam(self):
         """Return the warping parameter.
 

@@ -60,7 +60,7 @@ class TS07DVariableCoefficients:
         self.cfAmplitude = cfAmplitude
         self.equatorialCoeffs = equatorialCoeffs
         self.facCoeffs = facCoeffs
-        currThicks = equatorialCoeffs.getCurrThicks()
+        currThicks = equatorialCoeffs.currThicks
         hingeDist = equatorialCoeffs.hingeDist
         warpParam = equatorialCoeffs.getWarpingParam()
         twistFact = equatorialCoeffs.getTwistParam()

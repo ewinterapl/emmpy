@@ -155,7 +155,7 @@ class Ts07EquatorialMagneticFieldBuilder:
         result : BasisVectorField
             The magnetic field components.
         """
-        numCurrSheets = len(self.coeffs.getCurrThicks())
+        numCurrSheets = len(self.coeffs.currThicks)
         hingeDistance = self.coeffs.hingeDist
         warpingParam = self.coeffs.getWarpingParam()
         twistParam = self.coeffs.getTwistParam()
@@ -163,7 +163,7 @@ class Ts07EquatorialMagneticFieldBuilder:
 
         # Loop through each of the current sheets.
         for currSheetIndex in range(numCurrSheets):
-            currSheetThick = self.coeffs.getCurrThicks()[currSheetIndex]
+            currSheetThick = self.coeffs.currThicks[currSheetIndex]
             linearCoeffs = self.coeffs.getLinearCoeffs()[currSheetIndex]
 
             # Construct a constant current sheet half thickness.

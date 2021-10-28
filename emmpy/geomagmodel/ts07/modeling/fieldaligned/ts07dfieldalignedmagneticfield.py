@@ -199,22 +199,6 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         v = VectorIJK.addAll([internal, shield], buffer)
         return v
 
-    def getBasisFunctions(self):
-        """Return the list of basis functions.
-
-        Return the list of basis functions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.basisFunctions : list of VectorField
-            The basis functions for the field.
-        """
-        return self.basisFunctions
-
     def getBasisCoefficients(self):
         """Return the list of basis coefficients.
 

@@ -61,31 +61,6 @@ class TestBuilder(unittest.TestCase):
         )
         self.assertIsNotNone(c)
 
-    def test_getNumAzimuthalExpansions(self):
-        sym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
-        symPdynDependent = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
-        aOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
-        )
-        aOddPdynDependent = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
-        )
-        aEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
-        )
-        aEvenPdynDependent = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
-        )
-        na = 4
-        nr = 4
-        c = Ts07EquatorialLinearCoefficients.create(
-            sym, symPdynDependent,
-            aOdd, aOddPdynDependent,
-            aEven, aEvenPdynDependent,
-            na, nr
-        )
-        self.assertEqual(c.getNumAzimuthalExpansions(), na)
-
     def test_getCoeffs(self):
         sym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
         symPdynDependent = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)

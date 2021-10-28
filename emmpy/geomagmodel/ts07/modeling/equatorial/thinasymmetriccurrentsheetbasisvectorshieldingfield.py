@@ -51,7 +51,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
             Shielding coefficients.
         """
         self.coeffs = coeffs
-        self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
+        self.numAzimuthalExpansions = coeffs.numAzimuthalExpansions
         self.numRadialExpansions = coeffs.numRadialExpansions
 
     def evaluateExpansion(self, location):

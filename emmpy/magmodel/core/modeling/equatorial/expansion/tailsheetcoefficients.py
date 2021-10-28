@@ -236,22 +236,6 @@ class TailSheetCoefficients:
 
         return arraycoefficientexpansion1d.ArrayCoefficientExpansion1D(coeffs, 1)
 
-    def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions.
-        
-        Return the number of azimuthal expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of azimuthal expansions.
-        """
-        return self.numAzimuthalExpansions
-
     def getNumberOfExpansions(self):
         """Return the total number of expansions.
 

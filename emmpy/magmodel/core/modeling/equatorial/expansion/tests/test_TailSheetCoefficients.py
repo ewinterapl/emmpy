@@ -102,14 +102,6 @@ class TestTailSheetCoefficients(unittest.TestCase):
         for i in range(n):
             self.assertAlmostEqual(e[i + 1], i)
 
-    def test_getNumAzimuthalExpansions(self):
-        nr = 2
-        na = 3
-        n = nr + 2*nr*na
-        a = list(range(n + 1))
-        c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertEqual(c.getNumAzimuthalExpansions(), na)
-
     def test_getNumberOfExpansions(self):
         nr = 2
         na = 3

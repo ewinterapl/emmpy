@@ -167,7 +167,7 @@ class Ts07EquatorialVariableCoefficients:
 
         # Loop through all the linear parameters and add them up.
         for lin in self.equatorialLinearCoeffs:
-            m = lin.getNumAzimuthalExpansions()
+            m = lin.numAzimuthalExpansions
             n = lin.numRadialExpansions
             numLinear += 2 * (n + 2 * (n * m))
         return numLinear

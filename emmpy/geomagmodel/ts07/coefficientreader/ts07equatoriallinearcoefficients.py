@@ -97,22 +97,6 @@ class Ts07EquatorialLinearCoefficients:
             numRadialExpansions
         )
 
-    def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions.
-        
-        Return the number of azimuthal expansions.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of azimuthal expansions.
-        """
-        return self.numAzimuthalExpansions
-
     def getCoeffs(self):
         """Return the coefficients.
         

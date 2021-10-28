@@ -173,19 +173,3 @@ class ThinCurrentSheetShieldingCoefficients:
             Coefficients for even tail wave expansion.
         """
         return self.evenTailWaveExpansion
-
-    def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expanions.
-        
-        Return the number of azimuthal expanions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of azimuthal expansions.
-        """
-        return self.numAzimuthalExpansions

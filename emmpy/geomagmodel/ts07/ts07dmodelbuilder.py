@@ -547,8 +547,7 @@ class TS07DModelBuilder:
             self.variableCoefficients.getEquatorialCoefficients().warpingParam
         )
         twistFact = (
-            self.variableCoefficients.getEquatorialCoefficients().
-            getTwistParam()
+            self.variableCoefficients.getEquatorialCoefficients().twistParam
         )
         region1KappaScaling = (
             self.variableCoefficients.getFacCoefficients().

@@ -158,7 +158,7 @@ class Ts07EquatorialMagneticFieldBuilder:
         numCurrSheets = len(self.coeffs.currThicks)
         hingeDistance = self.coeffs.hingeDist
         warpingParam = self.coeffs.warpingParam
-        twistParam = self.coeffs.getTwistParam()
+        twistParam = self.coeffs.twistParam
         equatorialFields = nones((numCurrSheets,))
 
         # Loop through each of the current sheets.

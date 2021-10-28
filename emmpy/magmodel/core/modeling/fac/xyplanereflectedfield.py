@@ -59,7 +59,6 @@ class XYPlaneReflectedField(VectorField):
         reflectedLocation = VectorIJK(
             location.i, location.j, -location.k
         )
-        result = self.delgate.evaluate(reflectedLocation)
-        buffer[:] = result
+        self.delgate.evaluate(reflectedLocation, buffer)
         buffer.k = -buffer.k
         return buffer

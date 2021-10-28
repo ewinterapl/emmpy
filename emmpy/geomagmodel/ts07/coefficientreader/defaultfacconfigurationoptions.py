@@ -91,22 +91,6 @@ class DefaultFacConfigurationOptions(FacConfiguration):
         else:
             raise TypeError
 
-    def getNumberOfFields(self):
-        """Get the number of fields.
-        
-        Get the number of fields.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            The number of fields.
-        """
-        return self.numberOfFields
-
     @staticmethod
     def getTs07(coeffs):
         """Get the TS07 field-aligned currents.

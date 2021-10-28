@@ -135,7 +135,7 @@ class TS07DVariableCoefficientsUtils:
 
             totalNumberOfCoefficients = (
                 1 + numExpansions + numCurrentSheets + 5 +
-                facConfiguration.getNumberOfFields()
+                facConfiguration.numberOfFields
             )
 
             coeffs = nones((totalNumberOfCoefficients,))
@@ -409,7 +409,7 @@ class TS07DVariableCoefficientsUtils:
             )
             eqLinearCoeffs.append(equatorialLinearCoeffs)
 
-        numFacFields = facConfiguration.getNumberOfFields()
+        numFacFields = facConfiguration.numberOfFields
 
         # The field aligned current amplitudes.
         facAmps = nones((numFacFields,))

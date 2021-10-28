@@ -201,7 +201,7 @@ class Ts07EquatorialMagneticFieldBuilder:
                 pdynScaling = pow(self.dynamicPressure/2.0, 0.155)
                 scaledBentWarpedField = BasisVectorFields.scaleLocation(
                     bentWarpedField, pdynScaling)
-                coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion()
+                coeffs = linearCoeffs.coeffs.getAsSingleExpansion()
                 pdsc = linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure)
                 pdynCoeffs = pdsc.getAsSingleExpansion()
 

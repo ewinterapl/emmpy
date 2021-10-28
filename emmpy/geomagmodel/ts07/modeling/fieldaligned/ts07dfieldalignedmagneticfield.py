@@ -21,6 +21,7 @@ from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import add
 
 
 class Ts07DFieldAlignedMagneticField(BasisVectorField):
@@ -123,7 +124,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                     amp).build()
                 shieldingFieldsBuilder.append(shieldingField)
                 basisFunctionsBuilder.append(
-                    vectorfields.scale(vectorfields.add(field, shieldingField), 1.0/amp))
+                    vectorfields.scale(add(field, shieldingField), 1.0/amp))
             else:
                 basisFunctionsBuilder.append(vectorfields.scale(field, 1.0/amp))
 

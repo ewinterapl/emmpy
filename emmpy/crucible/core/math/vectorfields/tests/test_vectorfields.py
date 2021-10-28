@@ -4,7 +4,7 @@
 import unittest
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import (
-    add, addAll, scale, scaleLocation
+    addAll, scale, scaleLocation
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.vectorfield import VectorField
@@ -36,18 +36,6 @@ vf3.evaluate = my_eval3
 
 class TestBuilder(unittest.TestCase):
     """Tests for the vectorfields module."""
-
-    def test_add(self):
-        """Test the add method."""
-        vf = add(vf1, vf2)
-        (x, y, z) = (1, 2, 3)
-        location = VectorIJK(x, y, z)
-        sum = location + 1
-        buffer = VectorIJK()
-        v = vf.evaluate(location, buffer)
-        self.assertIs(v, buffer)
-        for i in range(3):
-            self.assertAlmostEqual(v[i], sum[i])
 
     def test_addAll(self):
         """Test the addAll method."""

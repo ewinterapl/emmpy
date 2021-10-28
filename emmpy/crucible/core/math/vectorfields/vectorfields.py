@@ -22,37 +22,6 @@ from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.vectorfield import VectorField
 
 
-def add(a, b):
-    """Create a vector field by adding the two vector fields.
-
-    Create a vector field by adding the two vector fields. The two fields
-    maintain their separate nature, and are only added when this sum field
-    is evaluated.
-
-    Parameters
-    ----------
-    a, b : VectorField
-        The vector fields to add.
-    
-    Returns
-    -------
-    vf : VectorField
-        A VectorField that computes the component-wise sum (a + b).
-    """
-    vf = VectorField()
-
-    # This custom evaluate() method dynamically sums the individual vector
-    # fields and stores the sum in the buffer.
-    def my_evaluate(location, buffer):
-        va = a.evaluate(location, VectorIJK())
-        vb = b.evaluate(location, VectorIJK())
-        buffer[:] = va + vb
-        return buffer
-
-    vf.evaluate = my_evaluate
-    return vf
-
-
 def addAll(fields):
     """Create a vector field by adding multiple vector fields.
 

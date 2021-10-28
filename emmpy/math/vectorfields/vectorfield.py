@@ -14,6 +14,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class VectorField:
@@ -53,6 +54,38 @@ class VectorField:
             When invoked.
         """
         raise AbstractMethodException
+
+
+def add(a, b):
+    """Create a vector field by adding two vector fields.
+
+    Create a vector field by adding two vector fields. The two fields
+    maintain their separate nature, and are only added when this sum field
+    is evaluated.
+
+    Parameters
+    ----------
+    a, b : VectorField
+        The vector fields to add.
+    
+    Returns
+    -------
+    sumVectorField : VectorField
+        A VectorField that computes the component-wise sum (a + b).
+    """
+    sumVectorField = VectorField()
+
+    # This custom evaluate() method dynamically sums the individual vector
+    # fields and stores the sum in the buffer.
+    def my_evaluate(location, buffer):
+        va = a.evaluate(location, VectorIJK())
+        vb = b.evaluate(location, VectorIJK())
+        buffer[:] = va + vb
+        return buffer
+
+    sumVectorField.evaluate = my_evaluate
+    return sumVectorField
+
 
 def negate(vectorField):
     """Create the negation of a vector field.

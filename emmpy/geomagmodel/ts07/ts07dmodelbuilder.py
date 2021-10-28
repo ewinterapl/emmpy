@@ -607,7 +607,7 @@ class TS07DModelBuilder:
 
         # The field aligned current.
         fc = self.variableCoefficients.getFacCoefficients()
-        fcs = fc.getFacConfigurations()
+        fcs = fc.facConfigurations
         fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
             self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
             region2KappaScaling, fcs, True)

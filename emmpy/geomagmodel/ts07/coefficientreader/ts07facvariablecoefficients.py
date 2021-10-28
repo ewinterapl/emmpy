@@ -42,19 +42,3 @@ class Ts07FacVariableCoefficients:
         self.region1KappaScaling = region1KappaScaling
         self.region2KappaScaling = region2KappaScaling
         self.facConfigurations = facConfigurations
-
-    def getFacConfigurations(self):
-        """Return the field-aligned current configurations.
-        
-        Return the field-aligned current configurations.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : list of FacConfigurationOptions
-            FAC configuration options.
-        """
-        return self.facConfigurations

@@ -70,22 +70,6 @@ class TS07DVariableCoefficients:
             currThicks, hingeDist, warpParam, twistFact
         )
 
-    def getFacCoefficients(self):
-        """Return the field-aligned current coefficients.
-
-        Return the field-aligned current coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Ts07FacVariableCoefficients
-            The field-aligned current coefficients.
-        """
-        return self.facCoeffs
-
     def getNonLinearParameters(self):
         """Return all the non-linear parameters in the TS07D model.
 

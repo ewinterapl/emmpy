@@ -550,10 +550,10 @@ class TS07DModelBuilder:
             self.variableCoefficients.equatorialCoeffs.twistParam
         )
         region1KappaScaling = (
-            self.variableCoefficients.getFacCoefficients().region1KappaScaling
+            self.variableCoefficients.facCoeffs.region1KappaScaling
         )
         region2KappaScaling = (
-            self.variableCoefficients.getFacCoefficients().region2KappaScaling
+            self.variableCoefficients.facCoeffs.region2KappaScaling
         )
 
         # Current sheet thickness.
@@ -604,7 +604,7 @@ class TS07DModelBuilder:
             )
 
         # The field aligned current.
-        fc = self.variableCoefficients.getFacCoefficients()
+        fc = self.variableCoefficients.facCoeffs
         fcs = fc.facConfigurations
         fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
             self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,

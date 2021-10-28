@@ -78,22 +78,6 @@ class ThinCurrentSheetShieldingCoefficients:
         self.evenTailExpansion = evenTailExpansion
         self.evenTailWaveExpansion = evenTailWaveExpansion
 
-    def getSymmetricTailWaveExpansion(self):
-        """Return the symmetric tail wave expansion.
-        
-        Return the symmetric tail wave expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : CoefficientExpansion1D
-            Coefficients for symmetric tail wave expansion.
-        """
-        return self.symmetricTailWaveExpansion
-
     def getOddTailExpansion(self):
         """Return the odd tail expansion.
         

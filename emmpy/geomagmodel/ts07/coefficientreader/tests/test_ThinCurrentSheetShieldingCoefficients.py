@@ -29,23 +29,6 @@ class TestBuilder(unittest.TestCase):
             evenTail, evenTailWave
         )
 
-    def test_getSymmetricTailWaveExpansion(self):
-        na = 3
-        nr = 2
-        symTail = CoefficientExpansion2D()
-        symTailWave = CoefficientExpansion1D()
-        oddTail = CoefficientExpansion2D()
-        oddTailWave = CoefficientExpansion1D()
-        evenTail = CoefficientExpansion2D()
-        evenTailWave = CoefficientExpansion1D()
-        c = ThinCurrentSheetShieldingCoefficients(
-            na, nr,
-            symTail, symTailWave,
-            oddTail, oddTailWave,
-            evenTail, evenTailWave
-        )
-        self.assertTrue(c.getSymmetricTailWaveExpansion(), symTailWave)
-
     def test_getOddTailExpansion(self):
         na = 3
         nr = 2

@@ -55,22 +55,6 @@ class FDerivatives:
         self.dF_dRho = dF_dRho
         self.dF_dy = dF_dy
 
-    def getF(self):
-        """Return the value of F.
-        
-        Return the value of F.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.f : float
-            Valule of the deformed coordinate F.
-        """
-        return self.f
-
     def getdF_dPhi(self):
         """Return the value of dF_dPhi.
         

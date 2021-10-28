@@ -115,8 +115,8 @@ class StretchedField(VectorField):
         dF_dPhi = fValues.getdF_dPhi()
         dF_dRho = fValues.getdF_dRho()
         dF_dy = fValues.getdF_dy()
-        sinF = sin(fValues.getF())
-        cosF = cos(fValues.getF())
+        sinF = sin(fValues.f)
+        cosF = cos(fValues.f)
         xStar = rho*cosF
         yStar = y
         zStar = -rho*sinF

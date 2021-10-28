@@ -544,8 +544,7 @@ class TS07DModelBuilder:
             self.variableCoefficients.getEquatorialCoefficients().hingeDist
         )
         warpingParam = (
-            self.variableCoefficients.getEquatorialCoefficients().
-            getWarpingParam()
+            self.variableCoefficients.getEquatorialCoefficients().warpingParam
         )
         twistFact = (
             self.variableCoefficients.getEquatorialCoefficients().

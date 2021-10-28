@@ -68,22 +68,6 @@ class Ts07EquatorialVariableCoefficients:
         self.twistParam = twistParam
         self.equatorialLinearCoeffs = equatorialLinearCoeffs
 
-    def getWarpingParam(self):
-        """Return the warping parameter.
-
-        Return the warping parameter.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            Warping parameter.
-        """
-        return self.warpingParam
-
     def getTwistParam(self):
         """Return the twist parameter.
 

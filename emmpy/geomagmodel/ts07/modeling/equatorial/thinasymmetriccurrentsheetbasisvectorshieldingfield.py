@@ -94,7 +94,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         # n is the radial expansion number.
         for n in range(1, self.numRadialExpansions + 1):
             tailExpansion = (
-                self.coeffs.getSymmetricTailExpansion().getExpansion(n)
+                self.coeffs.symmetricTailExpansion.getExpansion(n)
             )
             waveNumberExpansion = (
                 self.coeffs.getSymmetricTailWaveExpansion().getExpansion(n)

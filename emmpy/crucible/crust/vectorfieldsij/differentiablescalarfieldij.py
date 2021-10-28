@@ -16,20 +16,6 @@ class DifferentiableScalarFieldIJ:
     Represents the Cartesian spatial derivatives of a 2-D scalar field.
     """
 
-    def __init__(self):
-        """Initialize a DifferentiableScalarFieldIJ object.
-
-        Initialize a DifferentiableScalarFieldIJ object.
-
-        This constructor does a pass instead of raise an Exception since this
-        class is instantiated in some other classes, such as
-        CurrentSheetHalfThicknesses.
-
-        Parameters
-        ----------
-        None
-        """
-
 
 def createConstant(constant):
     """Create a constant differentiable scalar field.

@@ -11,12 +11,8 @@ from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
 class TestBuilder(unittest.TestCase):
     """Tests for the differentiablescalarfieldij module."""
 
-    def test___init__(self):
-        """Test the __init__ method."""
-        dsfij = DifferentiableScalarFieldIJ()
-        self.assertIsInstance(dsfij, DifferentiableScalarFieldIJ)
-
     def test_createConstant(self):
+        """Test the createConstant function."""
         a = 1.9
         dsfij = createConstant(a)
         self.assertAlmostEqual(dsfij.evaluate(None), a)
@@ -24,5 +20,5 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(dsfij.differentiateFDj(None), 0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

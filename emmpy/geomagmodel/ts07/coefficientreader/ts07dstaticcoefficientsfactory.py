@@ -83,22 +83,6 @@ class AsymmetricCylindricalExpansionPair:
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
-    def getWaveExpansion(self):
-        """Return the wave expansion.
-        
-        Return the wave expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion1D
-            Coefficients for wave expansion.
-        """
-        return self.waveExpansion
-
 
 class TS07DStaticCoefficientsFactory:
     """Build shielding coefficients from a directory of files.
@@ -157,8 +141,8 @@ class TS07DStaticCoefficientsFactory:
             return ThinCurrentSheetShieldingCoefficients(
                 numAzimuthalExpansions, numRadialExpansions,
                 tailS.tailExpansion, tailS.waveExpansion,
-                tailO.tailExpansion, tailO.getWaveExpansion(),
-                tailE.tailExpansion, tailE.getWaveExpansion())
+                tailO.tailExpansion, tailO.waveExpansion,
+                tailE.tailExpansion, tailE.waveExpansion)
         else:
             raise Exception
 

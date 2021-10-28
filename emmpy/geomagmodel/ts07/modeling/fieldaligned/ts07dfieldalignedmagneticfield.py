@@ -239,19 +239,3 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             Number of basis functions.
         """
         return self.basisFunctions.size()
-
-    def getShieldingFields(self):
-        """Return the list of shielding fields.
-
-        Return the list of shielding fields.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.shieldingFields : list of VectorField
-            Shielding fields for the overall field.
-        """
-        return self.shieldingFields

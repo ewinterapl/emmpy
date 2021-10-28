@@ -65,9 +65,6 @@ class TestBuilder(unittest.TestCase):
     def test_getNumAzimuthalExpansions(self):
         pass
 
-    def test_getNumRadialExpansions(self):
-        pass
-
     def test_getNumberOfBasisFunctions(self):
         pass
 

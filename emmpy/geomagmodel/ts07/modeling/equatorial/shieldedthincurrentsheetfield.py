@@ -63,7 +63,7 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         self.thinCurrentSheetShield = thinCurrentSheetShield
         self.includeShield = includeShield
         self.numAzimuthalExpansions = thinCurrentSheet.getNumAzimuthalExpansions()
-        self.numRadialExpansions = thinCurrentSheet.getNumRadialExpansions()
+        self.numRadialExpansions = thinCurrentSheet.numRadialExpansions
 
     @staticmethod
     def createUnity(currentSheetHalfThickness, tailLength,
@@ -92,7 +92,7 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
             ThinAsymmetricCurrentSheetBasisVectorField.createUnity(
                 tailLength, currentSheetHalfThickness,
                 staticCoefficients.getNumAzimuthalExpansions(),
-                staticCoefficients.getNumRadialExpansions())
+                staticCoefficients.numRadialExpansions)
         )
         thinCurrentSheetShield = ThinAsymmetricCurrentSheetBasisVectorShieldingField(
             staticCoefficients)

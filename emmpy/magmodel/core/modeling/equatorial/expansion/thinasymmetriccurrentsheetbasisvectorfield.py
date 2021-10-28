@@ -74,7 +74,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         """
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
-        self.numRadialExpansions = coeffs.getNumRadialExpansions()
+        self.numRadialExpansions = coeffs.numRadialExpansions
         self.tailLength = tailLength
         self.currentSheetHalfThickness = currentSheetHalfThickness
 
@@ -221,22 +221,6 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             Number of azimuthal expansions.
         """
         return self.numAzimuthalExpansions
-
-    def getNumRadialExpansions(self):
-        """Return the number of radial expansions.
-        
-        Return the number of radial expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of radial expansions.
-        """
-        return self.numRadialExpansions
 
     def getNumberOfBasisFunctions(self):
         """Return the number of basis functions.

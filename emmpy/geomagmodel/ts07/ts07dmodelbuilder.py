@@ -378,7 +378,7 @@ class TS07DModelBuilder:
         )
         numRadialExpansions = (
             self.variableCoefficients.getEquatorialCoefficients().
-            getLinearCoeffs().get(0).getNumRadialExpansions()
+            getLinearCoeffs().get(0).numRadialExpansions
         )
         self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
             TS07DStaticCoefficientsFactory.retrieveNewBuiltInCoefficientsPath(),

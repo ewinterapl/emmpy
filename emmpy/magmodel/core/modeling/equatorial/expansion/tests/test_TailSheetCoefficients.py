@@ -110,14 +110,6 @@ class TestTailSheetCoefficients(unittest.TestCase):
         c = TailSheetCoefficients.createFromArray(a, na, nr)
         self.assertEqual(c.getNumAzimuthalExpansions(), na)
 
-    def test_getNumRadialExpansions(self):
-        nr = 2
-        na = 3
-        n = nr + 2*nr*na
-        a = list(range(n + 1))
-        c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertEqual(c.getNumRadialExpansions(), nr)
-
     def test_getNumberOfExpansions(self):
         nr = 2
         na = 3

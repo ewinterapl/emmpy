@@ -174,22 +174,6 @@ class ThinCurrentSheetShieldingCoefficients:
         """
         return self.evenTailWaveExpansion
 
-    def getNumRadialExpansions(self):
-        """Return the number of radial expanions.
-        
-        Return the number of radial expanions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of radial expansions.
-        """
-        return self.numRadialExpansions
-
     def getNumAzimuthalExpansions(self):
         """Return the number of azimuthal expanions.
         

@@ -52,7 +52,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         """
         self.coeffs = coeffs
         self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
-        self.numRadialExpansions = coeffs.getNumRadialExpansions()
+        self.numRadialExpansions = coeffs.numRadialExpansions
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.

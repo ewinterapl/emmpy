@@ -582,7 +582,7 @@ class TS07DModelBuilder:
 
         currentCoeffs = Ts07EquatorialVariableCoefficients(
             currentSheetThicknesses, hingeDistance, warpingParam, twistFact,
-            self.variableCoefficients.equatorialCoeffs.getLinearCoeffs()
+            self.variableCoefficients.equatorialCoeffs.equatorialLinearCoeffs
         )
 
         equatorialFieldBuilder = Ts07EquatorialMagneticFieldBuilder(

@@ -164,7 +164,7 @@ class Ts07EquatorialMagneticFieldBuilder:
         # Loop through each of the current sheets.
         for currSheetIndex in range(numCurrSheets):
             currSheetThick = self.coeffs.currThicks[currSheetIndex]
-            linearCoeffs = self.coeffs.getLinearCoeffs()[currSheetIndex]
+            linearCoeffs = self.coeffs.equatorialLinearCoeffs[currSheetIndex]
 
             # Construct a constant current sheet half thickness.
             currentSheetHalfThickness = createConstant(currSheetThick)

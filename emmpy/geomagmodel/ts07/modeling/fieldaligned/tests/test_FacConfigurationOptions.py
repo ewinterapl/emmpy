@@ -22,12 +22,6 @@ class TestBuilder(unittest.TestCase):
         self.assertTrue(fco.smoothed)
         self.assertFalse(fco.shielded)
 
-    def test_getDeltaTheta(self):
-        fco = FacConfigurationOptions(
-            0.1, FacRegion.REGION_1, 2, EVEN, 4.4, 5.5, True, False
-        )
-        self.assertAlmostEqual(fco.getDeltaTheta(), 5.5)
-
     def test_isSmoothed(self):
         fco = FacConfigurationOptions(
             0.1, FacRegion.REGION_1, 2, EVEN, 4.4, 5.5, True, False

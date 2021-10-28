@@ -73,22 +73,6 @@ class FacConfigurationOptions:
         self.smoothed = smoothed
         self.shielded = shielded
 
-    def getDeltaTheta(self):
-        """Return the angular half-width of the FAC.
-        
-        Return the angular half-width of the FAC.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.deltaTheta : float
-            The angular half-width of the FAC.
-        """
-        return self.deltaTheta
-
     def isSmoothed(self):
         """Return the angular smoothing flag.
         

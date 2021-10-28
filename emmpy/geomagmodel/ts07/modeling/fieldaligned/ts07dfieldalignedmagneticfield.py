@@ -111,7 +111,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                 option.region, option.mode, option.trigParity,
                 dipoleTiltAngle, dynamicPressure, kappa, scaleFactor)
             builder.withTheta0(option.theta0)
-            builder.withDeltaTheta(option.getDeltaTheta())
+            builder.withDeltaTheta(option.deltaTheta)
             builder.setSmoothing(option.isSmoothed())
 
             field = builder.build()

@@ -2,7 +2,6 @@
 
 Modules
 -------
-t96magnetopause.py
 
 Packages
 --------

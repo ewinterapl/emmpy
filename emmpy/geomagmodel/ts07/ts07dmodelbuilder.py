@@ -541,13 +541,13 @@ class TS07DModelBuilder:
 
         # These are constant across all the current sheets.
         hingeDistance = (
-            self.variableCoefficients.getEquatorialCoefficients().hingeDist
+            self.variableCoefficients.equatorialCoeffs.hingeDist
         )
         warpingParam = (
-            self.variableCoefficients.getEquatorialCoefficients().warpingParam
+            self.variableCoefficients.equatorialCoeffs.warpingParam
         )
         twistFact = (
-            self.variableCoefficients.getEquatorialCoefficients().twistParam
+            self.variableCoefficients.equatorialCoeffs.twistParam
         )
         region1KappaScaling = (
             self.variableCoefficients.getFacCoefficients().region1KappaScaling
@@ -582,8 +582,7 @@ class TS07DModelBuilder:
 
         currentCoeffs = Ts07EquatorialVariableCoefficients(
             currentSheetThicknesses, hingeDistance, warpingParam, twistFact,
-            self.variableCoefficients.getEquatorialCoefficients().
-            getLinearCoeffs()
+            self.variableCoefficients.equatorialCoeffs.getLinearCoeffs()
         )
 
         equatorialFieldBuilder = Ts07EquatorialMagneticFieldBuilder(

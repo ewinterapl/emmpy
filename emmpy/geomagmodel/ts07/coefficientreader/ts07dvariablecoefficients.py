@@ -70,22 +70,6 @@ class TS07DVariableCoefficients:
             currThicks, hingeDist, warpParam, twistFact
         )
 
-    def getEquatorialCoefficients(self):
-        """Return the equatorial coefficients.
-
-        Return the equatorial coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Ts07EquatorialVariableCoefficients
-            The equatorial coefficients.
-        """
-        return self.equatorialCoeffs
-
     def getDipoleShieldingAmplitude(self):
         """Return the dipole shielding amplitude.
 

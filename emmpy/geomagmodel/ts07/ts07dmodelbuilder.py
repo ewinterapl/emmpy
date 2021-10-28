@@ -550,8 +550,7 @@ class TS07DModelBuilder:
             self.variableCoefficients.getEquatorialCoefficients().twistParam
         )
         region1KappaScaling = (
-            self.variableCoefficients.getFacCoefficients().
-            getRegion1KappaScaling()
+            self.variableCoefficients.getFacCoefficients().region1KappaScaling
         )
         region2KappaScaling = (
             self.variableCoefficients.getFacCoefficients().

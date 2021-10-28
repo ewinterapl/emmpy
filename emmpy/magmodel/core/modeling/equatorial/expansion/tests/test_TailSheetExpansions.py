@@ -10,9 +10,6 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         pass
 
-    def test_getTailSheetSymmetricValues(self):
-        pass
-
     def test_getTailSheetOddValues(self):
         pass
 

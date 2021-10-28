@@ -97,22 +97,6 @@ class Ts07EquatorialLinearCoefficients:
             numRadialExpansions
         )
 
-    def getPdynDependentCoeffs(self):
-        """Return the coefficients dependent on the dynamic pressure.
-
-        Return the coefficients dependent on the dynamic pressure.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : TailSheetCoefficients
-            The coefficients which are dependent on dynamic pressure.
-        """
-        return self.pdynDependentCoeffs
-
     def getPdynScaledCoeffs(self, dynamicPressure):
         """Return the coefficients scaled by the dynamic pressure.
         

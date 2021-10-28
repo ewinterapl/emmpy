@@ -86,36 +86,6 @@ def addAll(fields):
     return vf
 
 
-def negate(field):
-    """Create a vector field by negating a vector field.
-
-    Create a vector field by negating a vector field. The original field
-    maintains its separate nature, and is only negated when this negated
-    field is evaluated.
-
-    Parameters
-    ----------
-    field : VectorField
-        The vector field to negate.
-    
-    Returns
-    -------
-    vf : VectorField
-        A VectorField that computes the negation of the original field
-    """
-    vf = VectorField()
-
-    # This custom evaluate() method dynamically negates the original vector
-    # field and stores the result in the buffer.
-    def my_evaluate(location, buffer):
-        field.evaluate(location, buffer)
-        buffer *= -1
-        return buffer
-
-    vf.evaluate = my_evaluate
-    return vf
-
-
 def scale(field, scaleFactor):
     """Create a vector field by scaling a vector field.
 

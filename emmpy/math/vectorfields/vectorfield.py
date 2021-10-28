@@ -53,3 +53,35 @@ class VectorField:
             When invoked.
         """
         raise AbstractMethodException
+
+def negate(vectorField):
+    """Create the negation of a vector field.
+
+    Create the negation of a vector field. The original field maintains
+    its separate nature, and is only negated when this negated field is
+    evaluated.
+
+    This method works on any VectorField-based object in any coordinate
+    system.
+
+    Parameters
+    ----------
+    vectorField : VectorField
+        The vector field to negate.
+    
+    Returns
+    -------
+    negation : VectorField
+        A VectorField that computes the negation of the original field.
+    """
+    negation = VectorField()
+
+    # This custom evaluate() method dynamically negates the original vector
+    # field and stores the result in the buffer.
+    def my_evaluate(location, buffer):
+        vectorField.evaluate(location, buffer)
+        buffer[:] = -buffer
+        return buffer
+
+    negation.evaluate = my_evaluate
+    return negation

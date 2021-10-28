@@ -4,7 +4,7 @@
 import unittest
 
 from emmpy.crucible.core.math.vectorfields.vectorfields import (
-    add, addAll, negate, scale, scaleLocation
+    add, addAll, scale, scaleLocation
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.vectorfield import VectorField
@@ -60,18 +60,6 @@ class TestBuilder(unittest.TestCase):
         self.assertIs(v, buffer)
         for i in range(3):
             self.assertAlmostEqual(v[i], sum[i])
-
-    def test_negate(self):
-        """Test the negate method."""
-        vf = negate(vf1)
-        (x, y, z) = (1, 2, 3)
-        location = VectorIJK(x, y, z)
-        neg = -location
-        buffer = VectorIJK()
-        v = vf.evaluate(location, buffer)
-        self.assertIs(v, buffer)
-        for i in range(3):
-            self.assertAlmostEqual(v[i], neg[i])
 
     def test_scale(self):
         """Test the scale method."""

@@ -108,7 +108,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                 shieldingParity = ODD
 
             builder = FieldAlignedCurrentBuilder(
-                option.region, option.getMode(), option.trigParity,
+                option.region, option.mode, option.trigParity,
                 dipoleTiltAngle, dynamicPressure, kappa, scaleFactor)
             builder.withTheta0(option.getTheta0())
             builder.withDeltaTheta(option.getDeltaTheta())
@@ -119,7 +119,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
 
             if option.isShielded():
                 shieldingField = FieldAlignedCurrentShiedingBuilder(
-                    option.region, option.getMode(),
+                    option.region, option.mode,
                     shieldingParity, dipoleTiltAngle, dynamicPressure, kappa,
                     amp).build()
                 shieldingFieldsBuilder.append(shieldingField)

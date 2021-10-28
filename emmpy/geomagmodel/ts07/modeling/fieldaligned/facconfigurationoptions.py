@@ -73,22 +73,6 @@ class FacConfigurationOptions:
         self.smoothed = smoothed
         self.shielded = shielded
 
-    def getMode(self):
-        """Return the trig mode.
-        
-        Return the trig mode.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.mode : int
-            The trig mode.
-        """
-        return self.mode
-
     def getTheta0(self):
         """Return the polar angle of the FAC center.
         

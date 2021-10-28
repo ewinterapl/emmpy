@@ -3,9 +3,6 @@
 
 import unittest
 
-from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
-    DifferentiableUnivariateFunction
-)
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 
 

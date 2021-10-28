@@ -2,7 +2,6 @@
 
 Modules
 -------
-test_differentiableunivariatefunction.py
 test_univariatefunction.py
 
 Packages

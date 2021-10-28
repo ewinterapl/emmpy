@@ -2,7 +2,6 @@
 
 Modules
 -------
-differentiableunivariatefunction.py
 univariatefunction.py
 
 Packages

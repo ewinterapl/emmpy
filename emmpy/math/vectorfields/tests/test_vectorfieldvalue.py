@@ -22,17 +22,6 @@ class TestBuilder(unittest.TestCase):
         for i in range(len(value_data)):
             self.assertAlmostEqual(vectorFieldValue.value[i], value[i])
 
-    def test_getPosition(self):
-        """Test the getPosition method."""
-        position_data = [0, 1, 2]
-        value_data = [3, 4, 5]
-        position = Vector3D(position_data)
-        value = Vector3D(value_data)
-        vectorFieldValue = VectorFieldValue(position, value)
-        new_position = vectorFieldValue.getPosition()
-        for i in range(len(position_data)):
-            self.assertAlmostEqual(new_position[i], position[i])
-
     def test_getValue(self):
         """Test the getValue method."""
         position_data = [0, 1, 2]

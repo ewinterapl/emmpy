@@ -44,22 +44,6 @@ class VectorFieldValue:
         self.position = position
         self.value = value
 
-    def getPosition(self):
-        """Return the position in the vector field.
-
-        Return the position in the vector field.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.position : Vector
-            Position in the vector field, coordinate system undefined.
-        """
-        return self.position
-
     def getValue(self):
         """Return the value of the vector field.
 

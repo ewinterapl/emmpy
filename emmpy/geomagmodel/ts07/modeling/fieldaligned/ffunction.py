@@ -55,22 +55,6 @@ class FDerivatives:
         self.dF_dRho = dF_dRho
         self.dF_dy = dF_dy
 
-    def getdF_dPhi(self):
-        """Return the value of dF_dPhi.
-        
-        Return the value of dF_dPhi.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.dF_dPhi : float
-            Valule of the partial derivative of F wrt phi.
-        """
-        return self.dF_dPhi
-
     def getdF_dRho(self):
         """Return the value of dF_dRho.
         

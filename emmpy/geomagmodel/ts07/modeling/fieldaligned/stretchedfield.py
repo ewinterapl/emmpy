@@ -112,7 +112,7 @@ class StretchedField(VectorField):
         fValues = self.fFunction.evaluate(CylindricalVector(rho, phi, y))
 
         # The derivatives.
-        dF_dPhi = fValues.getdF_dPhi()
+        dF_dPhi = fValues.dF_dPhi
         dF_dRho = fValues.getdF_dRho()
         dF_dy = fValues.getdF_dy()
         sinF = sin(fValues.f)

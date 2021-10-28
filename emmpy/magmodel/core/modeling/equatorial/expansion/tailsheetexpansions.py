@@ -53,22 +53,6 @@ class TailSheetExpansions:
         self.numAzimuthalExpansions = tailSheetOddValues.iSize()
         self.numRadialExpansions = tailSheetOddValues.jSize()
 
-    def getTailSheetOddValues(self):
-        """Return the odd expansion values.
-        
-        Return the odd expansion values.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion2D
-            tailSheetOddValues
-        """
-        return self.tailSheetOddValues
-
     def getTailSheetEvenValues(self):
         """Return the even expansion values.
         

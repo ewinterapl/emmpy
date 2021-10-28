@@ -120,7 +120,7 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
 
         # Calculate the field expansions.
         tailSheetSymmetricValues = equatorialExpansions.tailSheetSymmetricValues
-        tailSheetOddValues = equatorialExpansions.getTailSheetOddValues()
+        tailSheetOddValues = equatorialExpansions.tailSheetOddValues
         tailSheetEvenValues = equatorialExpansions.getTailSheetEvenValues()
 
         # This is the most expensive lines of the module, If you don't need the
@@ -129,7 +129,7 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         if self.includeShield:
             shield = self.thinCurrentSheetShield.evaluateExpansions(position)
             tailSheetSymmetricShieldValues = shield.tailSheetSymmetricValues
-            tailSheetOddShieldValues = shield.getTailSheetOddValues()
+            tailSheetOddShieldValues = shield.tailSheetOddValues
             tailSheetEvenShieldValues = shield.getTailSheetEvenValues()
             tailSheetSymmetricValues = (
                 Expansion1Ds.Vectors.add(tailSheetSymmetricValues,

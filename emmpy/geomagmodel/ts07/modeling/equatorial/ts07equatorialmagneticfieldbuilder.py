@@ -78,28 +78,6 @@ class Ts07EquatorialMagneticFieldBuilder:
         self.includeShield = True
         self.withTA15deformation = 0.0
 
-    def set_withTA15deformation(self, bzIMF):
-        """Use the TA15 bending and warping deformation.
-
-        Use the TA15 bending and warping deformation instead of the T01
-        bending and warping deformation.
-
-        By default, the model uses the T01 bending and warping deformation.
-
-        Parameters
-        ----------
-        bzIMF : float
-            The z-component of the IMF (interplanetary magnetic field)
-             averaged over the previous 30 minutes.
-        
-        Returns
-        -------
-        self : Ts07EquatorialMagneticFieldBuilder
-            This builder object.
-        """
-        self.withTA15deformation = bzIMF
-        return self
-
     def withEquatorialShielding(self):
         """Turn on equatorial shielding.
 

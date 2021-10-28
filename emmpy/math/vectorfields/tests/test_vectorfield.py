@@ -6,7 +6,7 @@ import unittest
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.vectorfield import (
-    VectorField, add, addAll, negate
+    VectorField, add, addAll, negate, scaleLocation
 )
 
 
@@ -75,6 +75,20 @@ class TestBuilder(unittest.TestCase):
         self.assertIs(v, buffer)
         for i in range(3):
             self.assertAlmostEqual(v[i], neg[i])
+
+    def test_scaleLocation(self):
+        """Test the scaleLocation method."""
+        scaleFactor = -1.1
+        vf = scaleLocation(vf1, scaleFactor)
+        (x, y, z) = (1, 2, 3)
+        location = VectorIJK(x, y, z)
+        location_scaled = VectorIJK(x, y, z)*scaleFactor
+        vs = location_scaled
+        buffer = VectorIJK()
+        v = vf.evaluate(location, buffer)
+        self.assertIs(v, buffer)
+        for i in range(3):
+            self.assertAlmostEqual(v[i], vs[i])
 
 
 if __name__ == "__main__":

@@ -153,3 +153,33 @@ def negate(vectorField):
 
     negation.evaluate = my_evaluate
     return negation
+
+
+def scaleLocation(vectorField, scaleFactor):
+    """Create a vector field by scaling the location of a field.
+
+    Create a vector field by scaling the location of a field.
+
+    Parameters
+    ----------
+    vectorField : VectorField
+        The vector field for which to scale locations.
+     scaleFactor : float
+        Scale factor for vector field locations.
+    
+    Returns
+    -------
+    scaledLocationField : VectorField
+        A vector field that computes the value at a scaled location.
+    """
+    scaledLocationField = VectorField()
+
+    # This custom evaluate() method dynamically scales the location of the
+    # original vector field and stores the result in the buffer.
+    def my_evaluate(location, buffer):
+        scaledLocation = scaleFactor*VectorIJK(location)
+        vectorField.evaluate(scaledLocation, buffer)
+        return buffer
+
+    scaledLocationField.evaluate = my_evaluate
+    return scaledLocationField

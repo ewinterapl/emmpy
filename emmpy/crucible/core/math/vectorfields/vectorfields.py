@@ -61,33 +61,3 @@ def scale(field, scaleFactor):
 
     vf.evaluate = my_evaluate
     return vf
-
-
-def scaleLocation(field, scaleFactor):
-    """Create a vector field by scaling the location of a field.
-
-    Create a vector field by scaling the location of a field.
-
-    Parameters
-    ----------
-    field : VectorField
-        The vector field for which to scale locations.
-     scaleFactor : float
-        Scale factor for vector field locations.
-    
-    Returns
-    -------
-    vf : VectorField
-        A vector field that computes the value at a scaled location.
-    """
-    vf = VectorField()
-
-    # This custom evaluate() method dynamically scales the location of the
-    # original vector field and stores the result in the buffer.
-    def my_evaluate(location, buffer):
-        v = scaleFactor*VectorIJK(location)
-        field.evaluate(v, buffer)
-        return buffer
-
-    vf.evaluate = my_evaluate
-    return vf

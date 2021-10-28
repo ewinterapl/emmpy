@@ -28,6 +28,7 @@ from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
 from emmpy.magmodel.core.modeling.fac.twoconicalfields import TwoConicalFields
+from emmpy.math.vectorfields.vectorfield import scaleLocation
 
 
 # Below are the TS07 values, if you don't overrride these, this is what will
@@ -316,8 +317,6 @@ class FieldAlignedCurrentBuilder:
         )
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4).
-        pDynScaledField = vectorfields.scaleLocation(
-            stretchedField, dynamicPressureScalingFactor
-        )
+        pDynScaledField = scaleLocation(stretchedField, dynamicPressureScalingFactor)
 
         return pDynScaledField

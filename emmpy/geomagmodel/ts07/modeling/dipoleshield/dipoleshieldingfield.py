@@ -23,6 +23,7 @@ from emmpy.math.expansions.arraycoefficientexpansion1d import (
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D, add
 )
+from emmpy.math.vectorfields.vectorfield import scaleLocation
 
 
 class DipoleShieldingField:
@@ -131,8 +132,7 @@ class DipoleShieldingField:
             DipoleShieldingField.s.invert(),
             parrCoeffs)
         pDynScale3 = pDynScale*pDynScale*pDynScale
-        dipoleShieldingField = (vectorfields.scale(
-            vectorfields.scaleLocation(ppchf, pDynScale), pDynScale3))
+        dipoleShieldingField = vectorfields.scale(scaleLocation(ppchf, pDynScale), pDynScale3)
 
         return dipoleShieldingField
 

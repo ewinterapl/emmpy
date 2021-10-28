@@ -22,6 +22,7 @@ from emmpy.math.expansions.arraycoefficientexpansion1d import (
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
+from emmpy.math.vectorfields.vectorfield import scaleLocation
 from emmpy.utilities.nones import nones
 
 
@@ -300,7 +301,7 @@ class FieldAlignedCurrentShiedingBuilder:
                 self.trigParityI, psiT1, pExpansion, rExpansion,
                 aPerpendicular, psiT2, qExpansion, sExpansion, aParallel),
                 self.scalingCoefficient)
-        return vectorfields.scaleLocation(f, dynamicPressureScalingFactor)
+        return scaleLocation(f, dynamicPressureScalingFactor)
 
     @staticmethod
     def fillShieldingCoeffs(region, mode, dipoleTilt, xScale, trigParityI,

@@ -3,9 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.vectorfields.vectorfields import (
-    scale, scaleLocation
-)
+from emmpy.crucible.core.math.vectorfields.vectorfields import scale
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.vectorfield import VectorField
 
@@ -44,20 +42,6 @@ class TestBuilder(unittest.TestCase):
         (x, y, z) = (1, 2, 3)
         location = VectorIJK(x, y, z)
         vs = location*scaleFactor
-        buffer = VectorIJK()
-        v = vf.evaluate(location, buffer)
-        self.assertIs(v, buffer)
-        for i in range(3):
-            self.assertAlmostEqual(v[i], vs[i])
-
-    def test_scaleLocation(self):
-        """Test the scaleLocation method."""
-        scaleFactor = -1.1
-        vf = scaleLocation(vf1, scaleFactor)
-        (x, y, z) = (1, 2, 3)
-        location = VectorIJK(x, y, z)
-        location_scaled = VectorIJK(x, y, z)*scaleFactor
-        vs = location_scaled
         buffer = VectorIJK()
         v = vf.evaluate(location, buffer)
         self.assertIs(v, buffer)

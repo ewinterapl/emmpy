@@ -84,22 +84,6 @@ class Ts07EquatorialVariableCoefficients:
         """
         return self.currThicks
 
-    def getHingeDistance(self):
-        """Return the hinge distance.
-
-        Return the hinge distance.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            Hinge distance.
-        """
-        return self.hingeDist
-
     def getWarpingParam(self):
         """Return the warping parameter.
 

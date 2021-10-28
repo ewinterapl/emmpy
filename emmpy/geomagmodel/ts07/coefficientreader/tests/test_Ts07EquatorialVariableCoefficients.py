@@ -61,24 +61,6 @@ class TestBuilder(unittest.TestCase):
         c = Ts07EquatorialVariableCoefficients(1, 1, 2, 3, [ts07elc])
         self.assertAlmostEqual(c.getCurrThicks(), [1])
 
-    def test_getHingeDistance(self):
-        tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
-        tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
-        )
-        tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
-        )
-        coeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
-        pdynDependentCoeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
-        na = 3
-        nr = 2
-        ts07elc = Ts07EquatorialLinearCoefficients(
-            coeffs, pdynDependentCoeffs, na, nr
-        )
-        c = Ts07EquatorialVariableCoefficients(1, 1, 2, 3, [ts07elc])
-        self.assertAlmostEqual(c.getHingeDistance(), 1)
-
     def test_getWarpingParam(self):
         tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
         tailOdd = ArrayCoefficientExpansion2D(

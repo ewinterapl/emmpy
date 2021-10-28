@@ -541,8 +541,7 @@ class TS07DModelBuilder:
 
         # These are constant across all the current sheets.
         hingeDistance = (
-            self.variableCoefficients.getEquatorialCoefficients().
-            getHingeDistance()
+            self.variableCoefficients.getEquatorialCoefficients().hingeDist
         )
         warpingParam = (
             self.variableCoefficients.getEquatorialCoefficients().

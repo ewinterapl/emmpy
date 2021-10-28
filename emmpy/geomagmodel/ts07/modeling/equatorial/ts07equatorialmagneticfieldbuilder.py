@@ -156,7 +156,7 @@ class Ts07EquatorialMagneticFieldBuilder:
             The magnetic field components.
         """
         numCurrSheets = len(self.coeffs.getCurrThicks())
-        hingeDistance = self.coeffs.getHingeDistance()
+        hingeDistance = self.coeffs.hingeDist
         warpingParam = self.coeffs.getWarpingParam()
         twistParam = self.coeffs.getTwistParam()
         equatorialFields = nones((numCurrSheets,))

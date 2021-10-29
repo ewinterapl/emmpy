@@ -17,6 +17,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
+from emmpy.utilities.nones import nones
+
 
 class ScalarExpansion2D(np.ndarray):
     """A 2-D array of scalar expansion components.
@@ -94,3 +96,121 @@ using slicing, e.g. expansion[iJlowerBoundIndex:, jLowerBoundIndex:.]
         self.iUpperBoundIndex = iLowerBoundIndex + len(data) - 1
         self.jLowerBoundIndex = jLowerBoundIndex
         self.jUpperBoundIndex = jLowerBoundIndex + len(data[0]) - 1
+
+    def negate(self):
+        """Return a negated copy of the expansion.
+
+        Return a negated copy of the expansion.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        negation : ScalarExpansion2D
+            A negated copy of this expansion.
+        """
+        iLowerBoundIndex = self.iLowerBoundIndex
+        jLowerBoundIndex = self.jLowerBoundIndex
+        data = -self[iLowerBoundIndex:, jLowerBoundIndex:]
+        negation = ScalarExpansion2D(
+            data, iLowerBoundIndex, jLowerBoundIndex
+        )
+        return negation
+
+    def scale(self, scale_factor):
+        """Return a scaled copy of the expansion.
+
+        Return a scaled copy of the expansion.
+
+        Parameters
+        ----------
+        scale_factor : float
+            Scale factor to apply to expansion.
+
+        Returns
+        -------
+        scaled : ScalarExpansion2D
+            A scaled copy of this expansion.
+        """
+        iLowerBoundIndex = self.iLowerBoundIndex
+        jLowerBoundIndex = self.jLowerBoundIndex
+        data = scale_factor*self[iLowerBoundIndex:, jLowerBoundIndex:]
+        scaled = ScalarExpansion2D(
+            data, iLowerBoundIndex, jLowerBoundIndex
+        )
+        return scaled
+
+
+def add(a, b):
+    """Compute the sum of two expansions.
+
+    Compute the sum of two expansions. The expansions are assumed to have
+    the same shape and logical index limits.
+
+    Parameters
+    ----------
+    a, b : ScalarExpansion2D
+        Expansions to add.
+
+    Returns
+    -------
+    exp_sum : ScalarExpansion2D
+        Sum of the two expansions.
+    """
+    iLowerBoundIndex = a.iLowerBoundIndex
+    jLowerBoundIndex = a.jLowerBoundIndex
+    data = (
+        a[iLowerBoundIndex:, jLowerBoundIndex:] +
+        b[iLowerBoundIndex:, jLowerBoundIndex:]
+    )
+    exp_sum = ScalarExpansion2D(data, iLowerBoundIndex, jLowerBoundIndex)
+    return exp_sum
+
+
+def createNullExpansion(row_min, row_max, col_min, col_max):
+    """Create an expansion of null coefficients.
+
+    Create an expansion of null coefficients using the specified logical
+    index limits.
+
+    Parameters
+    ----------
+    row_min, row_max, col_min, col_max : int
+        Lowest and highest logical indices for rows and columns.
+
+    Returns
+    -------
+    null : ScalarExpansion2D
+        An expansion with null coefficients.
+    """
+    n_rows = row_max - row_min + 1
+    n_cols = col_max - col_min + 1
+    nulls = nones((n_rows, n_cols))
+    data = np.array(nulls)
+    null = ScalarExpansion2D(data, row_min, col_min)
+    return null
+
+
+def createUnity(row_min, row_max, col_min, col_max):
+    """Create an expansion of unit coefficients.
+
+    Create an expansion of unit coefficients using the specified logical
+    index limits.
+
+    Parameters
+    ----------
+    row_min, row_max, col_min, col_max : int
+        Lowest and highest logical indices for rows and columns.
+
+    Returns
+    -------
+    unity : ScalarExpansion2D
+        An expansion with unit coefficients.
+    """
+    n_rows = row_max - row_min + 1
+    n_cols = col_max - col_min + 1
+    data = np.ones((n_rows, n_cols))
+    unity = ScalarExpansion2D(data, row_min, col_min)
+    return unity

@@ -65,35 +65,22 @@ class TailSheetAsymmetricExpansion(VectorField):
         self.trigParity = trigParity
         self.currentSheetHalfThickness = currentSheetHalfThickness
 
-    def evaluate(self, *args):
+    def evaluate(self, location):
         """Evaluate the expansion.
-        
+
         Evaluate the expansion.
-        
+
         Parameters
         ----------
         location : VectorIJK
             Cartesian location to evaluate expansion.
-        buffer : VectorIJK, optional
-            Buffer to hold result.
 
         Returns
         -------
         buffer : VectorIJK
             Value of expansion at location.
-        
-        Raises
-        ------
-        TypeError
-            If invalid parameters are provided.
         """
-        if len(args) == 1:
-            (location,) = args
-            buffer = VectorIJK([0, 0, 0])
-        elif len(args) == 2:
-            (location, buffer) = args
-        else:
-            raise TypeError
+        buffer = VectorIJK([0, 0, 0])
 
         m = self.azimuthalExpansionNumber
         x = location.x

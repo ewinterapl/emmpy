@@ -24,22 +24,6 @@ class FacConfiguration:
     None
     """
 
-    def __init__(self):
-        """Initialize a new FacConfiguration object.
-
-        Initialize a new FacConfiguration object.
-
-        Parameters
-        ----------
-        None
-        
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException
-
     def createFromCoeffs(self, coeffs):
         """Create a FacConfiguration object from a set of coefficients.
 

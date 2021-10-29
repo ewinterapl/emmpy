@@ -1,3 +1,6 @@
+"""Tests for the facconfiguration module."""
+
+
 import unittest
 
 from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
@@ -6,15 +9,13 @@ from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        with self.assertRaises(Exception):
-            FacConfiguration()
+    """Tests for the facconfiguration module."""
 
     def test_createFromCoeffs(self):
+        """Test the createFromCoeffs method."""
         with self.assertRaises(Exception):
             FacConfiguration.createFromCoeffs(None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

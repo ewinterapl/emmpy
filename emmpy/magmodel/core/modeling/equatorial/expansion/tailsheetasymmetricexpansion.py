@@ -90,7 +90,6 @@ class TailSheetAsymmetricExpansion(VectorField):
         if len(args) == 1:
             (location,) = args
             buffer = VectorIJK([0, 0, 0])
-            # self.evaluate(CartesianVector(location), buffer)
         elif len(args) == 2:
             (location, buffer) = args
         else:

@@ -76,45 +76,45 @@ class TailSheetSymmetricExpansion(VectorField):
         if len(args) == 1:
             (location,) = args
             buffer = CartesianVector()
-            self.evaluate(location, buffer)
         elif len(args) == 2:
             (location, buffer) = args
-            x = location.x
-            y = location.y
-            z = location.z
-            locationIJ = VectorIJ(x, y)
-
-            # Get the current sheet half thickness.
-            thick = self.currentSheetHalfThickness.evaluate(locationIJ)
-
-            # Now get the current sheet half thickness derivatives.
-            dThickdx = self.currentSheetHalfThickness.differentiateFDi(
-                locationIJ)
-            dThickdy = self.currentSheetHalfThickness.differentiateFDj(
-                locationIJ)
-
-            # Convert to polar.
-            rho = sqrt(x*x + y*y)
-            dThickdRho = (x*dThickdx + y*dThickdy)/rho
-            cosPhi = x/rho
-            sinPhi = y/rho
-
-            # Introduce a finite thickness in z by replacing z with this value.
-            zDist = sqrt(z*z + thick*thick)
-
-            # kn is the wave number.
-            kn = self.waveNumber
-
-            # Evaluate the Bessel function.
-            j0 = sps.jv(0, kn*rho)
-            j1 = sps.jv(1, kn*rho)
-
-            ex = exp(-kn*zDist)
-            bx = kn*z*j1*cosPhi*ex/zDist
-            by = kn*z*j1*sinPhi*ex/zDist
-            bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
-
-            buffer[:] = [bx, by, bz]
         else:
             raise TypeError
+
+        x = location.x
+        y = location.y
+        z = location.z
+        locationIJ = VectorIJ(x, y)
+
+        # Get the current sheet half thickness.
+        thick = self.currentSheetHalfThickness.evaluate(locationIJ)
+
+        # Now get the current sheet half thickness derivatives.
+        dThickdx = self.currentSheetHalfThickness.differentiateFDi(
+            locationIJ)
+        dThickdy = self.currentSheetHalfThickness.differentiateFDj(
+            locationIJ)
+
+        # Convert to polar.
+        rho = sqrt(x*x + y*y)
+        dThickdRho = (x*dThickdx + y*dThickdy)/rho
+        cosPhi = x/rho
+        sinPhi = y/rho
+
+        # Introduce a finite thickness in z by replacing z with this value.
+        zDist = sqrt(z*z + thick*thick)
+
+        # kn is the wave number.
+        kn = self.waveNumber
+
+        # Evaluate the Bessel function.
+        j0 = sps.jv(0, kn*rho)
+        j1 = sps.jv(1, kn*rho)
+
+        ex = exp(-kn*zDist)
+        bx = kn*z*j1*cosPhi*ex/zDist
+        by = kn*z*j1*sinPhi*ex/zDist
+        bz = kn*ex*(j0 - thick*dThickdRho*j1/zDist)
+
+        buffer[:] = [bx, by, bz]
         return buffer

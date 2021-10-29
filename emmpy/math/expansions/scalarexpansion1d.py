@@ -78,3 +78,63 @@ class ScalarExpansion1D(np.ndarray):
         self[firstExpansionNumber:] = np.array(data)
         self.firstExpansionNumber = firstExpansionNumber
         self.lastExpansionNumber = self.firstExpansionNumber + len(data) - 1
+
+    def invert(self):
+        """Return an inverted copy of the expansion.
+
+        Return an inverted copy of the expansion. Note that no checks for
+        0 coefficients are performed.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        inverse : ScalarExpansion1D
+            Expansion containing the inverse of each original component.
+        """
+        data = 1/self[self.firstExpansionNumber:]
+        inverse = ScalarExpansion1D(data, self.firstExpansionNumber)
+        return inverse
+
+    def scale(self, scaleFactor):
+        """Create a scaled copy of the expansion.
+
+        Create a scaled copy of the expansion.
+
+        Parameters
+        ----------
+        scaleFactor : float
+            Scale factor to apply to expansion.
+
+        Returns
+        -------
+        scaled : ScalarExpansion1D
+            Scaled copy of the expansion.
+        """
+        data = scaleFactor*self[self.firstExpansionNumber:]
+        scaled = ScalarExpansion1D(data, self.firstExpansionNumber)
+        return scaled
+
+
+def createUnity(firstExpansionNumber, lastExpansionNumber):
+    """Create an expansion of unit scalars.
+
+    Create an expansion of unit scalars using the specified logical
+    index limits.
+
+    Parameters
+    ----------
+    firstExpansionNumber, lastExpansionNumber : int
+        Lowest and highest logical indices for expansion.
+
+    Returns
+    -------
+    unity : ScalarExpansion1D
+        An expansion with unit coefficients.
+    """
+    length = lastExpansionNumber - firstExpansionNumber + 1
+    data = np.ones(length)
+    unity = ScalarExpansion1D(data, firstExpansionNumber)
+    return unity

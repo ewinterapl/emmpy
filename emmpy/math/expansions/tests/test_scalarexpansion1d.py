@@ -5,7 +5,9 @@ import unittest
 
 import numpy as np
 
-from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
+from emmpy.math.expansions.scalarexpansion1d import (
+    ScalarExpansion1D, createUnity
+)
 
 
 # Test data.
@@ -31,6 +33,32 @@ class TestBuilder(unittest.TestCase):
             self.assertAlmostEqual(se1d[i], data[i - firstExpansionNumber])
         self.assertEqual(se1d.firstExpansionNumber, firstExpansionNumber)
         self.assertEqual(se1d.lastExpansionNumber, lastExpansionNumber)
+
+    def test_invert(self):
+        """Test the invert method."""
+        se1d = ScalarExpansion1D(data, firstExpansionNumber)
+        inverse = se1d.invert()
+        self.assertIsInstance(inverse, ScalarExpansion1D)
+        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
+            self.assertAlmostEqual(inverse[i],
+                                   1/data[i - firstExpansionNumber])
+
+    def test_scale(self):
+        """Test the scale method."""
+        scaleFactor = 6.6
+        se1d = ScalarExpansion1D(data, firstExpansionNumber)
+        scaled = se1d.scale(scaleFactor)
+        self.assertIsInstance(scaled, ScalarExpansion1D)
+        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
+            self.assertAlmostEqual(scaled[i],
+                                   scaleFactor*data[i - firstExpansionNumber])
+
+    def test_createUnity(self):
+        """Test the createUnity function."""
+        unity = createUnity(firstExpansionNumber, lastExpansionNumber)
+        self.assertIsInstance(unity, ScalarExpansion1D)
+        for i in range(firstExpansionNumber, lastExpansionNumber + 1):
+            self.assertAlmostEqual(unity[i], 1.0)
 
 
 if __name__ == "__main__":

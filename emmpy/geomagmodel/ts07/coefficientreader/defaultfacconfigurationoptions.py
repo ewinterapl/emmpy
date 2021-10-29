@@ -9,9 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
-    FacConfiguration
-)
 from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
     FacRegion
 )
@@ -21,7 +18,7 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 
 
-class DefaultFacConfigurationOptions(FacConfiguration):
+class DefaultFacConfigurationOptions:
     """Default configuration options for field-aligned currents.
 
     Default configuration options for field-aligned currents.

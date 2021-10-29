@@ -1,3 +1,6 @@
+"""Tests for the coefficientexpansion1d module."""
+
+
 import unittest
 
 from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
@@ -6,25 +9,16 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the coefficientexpansion1d module."""
 
     def test_toArray(self):
+        """Test the toArray() method."""
         pass
 
     def test_size(self):
+        """Test the size() method."""
         pass
 
-    def test_getUpperBoundIndex(self):
-        with self.assertRaises(Exception):
-            CoefficientExpansion1D.getUpperBoundIndex(None)
 
-    def test_getLowerBoundIndex(self):
-        with self.assertRaises(Exception):
-            CoefficientExpansion1D.getLowerBoundIndex(None)
-
-    def test_getCoefficient(self):
-        with self.assertRaises(Exception):
-            CoefficientExpansion1D.getCoefficient(None, 0)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

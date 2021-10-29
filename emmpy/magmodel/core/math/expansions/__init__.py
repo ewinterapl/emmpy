@@ -15,7 +15,6 @@ expansion1d.py
 expansion1ds.py
 expansion2d.py
 expansion2ds.py
-listexpansion1d.py
 
 Packages
 --------

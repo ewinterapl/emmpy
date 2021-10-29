@@ -15,7 +15,6 @@ from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
     CoefficientExpansion1D
 )
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
-from emmpy.magmodel.core.math.expansions.listexpansion1d import ListExpansion1D
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 

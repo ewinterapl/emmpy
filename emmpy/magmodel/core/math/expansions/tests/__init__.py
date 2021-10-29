@@ -10,7 +10,6 @@ test_Expansion1D.py
 test_Expansion1Ds.py
 test_Expansion2D.py
 test_Expansion2Ds.py
-test_ListExpansion1D.py
 
 Packages
 --------

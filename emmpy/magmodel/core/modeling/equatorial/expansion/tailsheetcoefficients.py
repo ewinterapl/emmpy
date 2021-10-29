@@ -9,10 +9,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import emmpy.math.expansions.arraycoefficientexpansion1d as arraycoefficientexpansion1d
-from emmpy.math.expansions.arraycoefficientexpansion1d import (
-    ArrayCoefficientExpansion1D
-)
+import emmpy.math.expansions.scalarexpansion1d as scalarexpansion1d
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 import emmpy.math.expansions.arraycoefficientexpansion2d as arraycoefficientexpansion2d
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D, createNullExpansion
@@ -83,7 +81,7 @@ class TailSheetCoefficients:
             Expansion of unit value in all components.
         """
         return TailSheetCoefficients(
-            arraycoefficientexpansion1d.createUnity(1, numRadialExpansions),
+            scalarexpansion1d.createUnity(1, numRadialExpansions),
             arraycoefficientexpansion2d.createUnity(
                 1, numAzimuthalExpansions, 1, numRadialExpansions
             ),
@@ -136,7 +134,7 @@ class TailSheetCoefficients:
 
         if numAzimuthalExpansions == 0:
             return TailSheetCoefficients(
-                ArrayCoefficientExpansion1D(sym, 1),
+                ScalarExpansion1D(sym, 1),
                 createNullExpansion(
                     1, numAzimuthalExpansions,
                     1, numRadialExpansions),
@@ -146,7 +144,7 @@ class TailSheetCoefficients:
             )
 
         return TailSheetCoefficients(
-            ArrayCoefficientExpansion1D(sym, 1),
+            ScalarExpansion1D(sym, 1),
             ArrayCoefficientExpansion2D(odd, 1, 1),
             ArrayCoefficientExpansion2D(even, 1, 1))
 
@@ -186,7 +184,7 @@ class TailSheetCoefficients:
                 coeffs[count] = self.tailSheetEvenValues[m, n]
                 count += 1
 
-        return arraycoefficientexpansion1d.ArrayCoefficientExpansion1D(coeffs, 1)
+        return ScalarExpansion1D(coeffs, 1)
 
     def getNumberOfExpansions(self):
         """Return the total number of expansions.

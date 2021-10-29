@@ -29,9 +29,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
     Ts07FacVariableCoefficients
 )
-from emmpy.math.expansions.arraycoefficientexpansion1d import (
-    ArrayCoefficientExpansion1D
-)
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
@@ -387,8 +385,8 @@ class TS07DVariableCoefficientsUtils:
                         coeffs[index + numHalfExpansions +
                                numAsymmetricExpansions]
                     )
-            aSymExpansion = ArrayCoefficientExpansion1D(aSym, 1)
-            aSymPdynDependentExpansion = ArrayCoefficientExpansion1D(
+            aSymExpansion = ScalarExpansion1D(aSym, 1)
+            aSymPdynDependentExpansion = ScalarExpansion1D(
                 aSymPdynDependent, 1
             )
             aOddExpansion = ArrayCoefficientExpansion2D(aOdd, 1, 1)

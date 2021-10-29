@@ -12,9 +12,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuilder import (
     Ts07EquatorialMagneticFieldBuilder
 )
-from emmpy.math.expansions.arraycoefficientexpansion1d import (
-    ArrayCoefficientExpansion1D
-)
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
@@ -35,7 +33,7 @@ class TestBuilder(unittest.TestCase):
 
         # Build the tail sheet coefficients for the equatorial linear
         # coefficients.
-        tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -101,7 +99,7 @@ class TestBuilder(unittest.TestCase):
 
         # Build the tail sheet coefficients for the equatorial linear
         # coefficients.
-        tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -167,7 +165,7 @@ class TestBuilder(unittest.TestCase):
 
         # Build the tail sheet coefficients for the equatorial linear
         # coefficients.
-        tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -233,7 +231,7 @@ class TestBuilder(unittest.TestCase):
 
         # Build the tail sheet coefficients for the equatorial linear
         # coefficients.
-        tailSym = ArrayCoefficientExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )

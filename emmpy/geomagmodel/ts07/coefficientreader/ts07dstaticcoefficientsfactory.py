@@ -17,9 +17,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficie
 )
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.math.expansions.arraycoefficientexpansion1d import (
-    ArrayCoefficientExpansion1D
-)
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
@@ -187,9 +185,7 @@ class TS07DStaticCoefficientsFactory:
                     val = float(line.split()[0])
                     waveNumberValues[k - 1] = val
             expansions[i - 1] = ArrayCoefficientExpansion2D(values, 0, 1)
-            waveExpansions[i - 1] = ArrayCoefficientExpansion1D(
-                waveNumberValues, 1
-            )
+            waveExpansions[i - 1] = ScalarExpansion1D(waveNumberValues, 1)
 
         return SymmetricCylindricalExpansionPair(
             Expansion1Ds.createFromArray(expansions, 1),
@@ -244,9 +240,7 @@ class TS07DStaticCoefficientsFactory:
                 expansions[m - 1][n - 1] = ArrayCoefficientExpansion2D(
                     values, 0, 1
                 )
-                waveExpansions[m - 1][n - 1] = ArrayCoefficientExpansion1D(
-                    waveNumberValues, 1
-                )
+                waveExpansions[m - 1][n - 1] = ScalarExpansion1D(waveNumberValues, 1)
         return AsymmetricCylindricalExpansionPair(
             Expansion2Ds.createFromArray(expansions, 1, 1),
             Expansion2Ds.createFromArray(waveExpansions, 1, 1)

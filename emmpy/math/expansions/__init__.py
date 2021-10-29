@@ -2,7 +2,6 @@
 
 Modules
 -------
-arraycoefficientexpansion1d.py
 arraycoefficientexpansion2d.py
 scalarexpansion1d.py
 

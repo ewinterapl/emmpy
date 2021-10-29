@@ -17,9 +17,7 @@ from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield imp
     PerpendicularAndParallelCartesianHarmonicField
 )
 from emmpy.magmodel.core.math.trigparity import EVEN
-from emmpy.math.expansions.arraycoefficientexpansion1d import (
-    ArrayCoefficientExpansion1D
-)
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D, add
 )
@@ -62,10 +60,10 @@ class DipoleShieldingField:
     kappaParallel = .3477844929  # Previously T2
 
     # These coefficients were determined in Tsyganenko 2002-1 referenced above.
-    p = ArrayCoefficientExpansion1D([9.620648151, 6.082014949, 27.75216226], 1)
-    r = ArrayCoefficientExpansion1D([12.44199571, 5.122226936, 6.982039615], 1)
-    q = ArrayCoefficientExpansion1D([20.12149582, 6.150973118, 4.663639687], 1)
-    s = ArrayCoefficientExpansion1D([15.73319647, 2.303504968, 5.840511214], 1)
+    p = ScalarExpansion1D([9.620648151, 6.082014949, 27.75216226], 1)
+    r = ScalarExpansion1D([12.44199571, 5.122226936, 6.982039615], 1)
+    q = ScalarExpansion1D([20.12149582, 6.150973118, 4.663639687], 1)
+    s = ScalarExpansion1D([15.73319647, 2.303504968, 5.840511214], 1)
     a = ArrayCoefficientExpansion2D(
         [[-901.2327248, 817.6208321, -83.73539535],
          [336.8781402, -311.2947120, 31.94469304],

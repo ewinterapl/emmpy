@@ -27,26 +27,6 @@ class Expansion1Ds:
     """
 
     @staticmethod
-    def createFromList(aList, firstRadialExpansionNumber):
-        """Create an expansion from a list.
-
-        Create an expansion from a list.
-
-        Parameters
-        ----------
-        aList : list of float
-            List of values for expansion.
-        firstRadialExpansionNumber : int
-            Index of first expansion.
-        
-        Returns
-        -------
-        result : ListExpansion1D
-            New expansion object.
-        """
-        return ListExpansion1D(list, firstRadialExpansionNumber)
-
-    @staticmethod
     def createFromArray(array, firstRadialExpansionNumber):
         """Create an expansion from an array.
 

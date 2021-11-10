@@ -16,8 +16,8 @@ import numpy as np
 class ScalarExpansion1D(np.ndarray):
     """A 1-D array of scalar expansion components.
 
-    This class represents a series expansion of scalars. This class can
-    be used directly as an np.ndarray.
+    This class represents a 1-D expansion of scalars. This class can be
+    used directly as an np.ndarray.
 
     Attributes
     ----------

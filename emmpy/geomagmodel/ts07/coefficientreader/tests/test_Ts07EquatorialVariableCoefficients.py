@@ -18,7 +18,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -42,7 +42,7 @@ class TestBuilder(unittest.TestCase):
         self.assertIsNotNone(c)
 
     def test_getTotalNumberOfParameters(self):
-        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -61,7 +61,7 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(c.getTotalNumberOfParameters(), np)
 
     def test_getTotalNumberOfLinearParameters(self):
-        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -80,7 +80,7 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(c.getTotalNumberOfLinearParameters(), np)
 
     def test_getTotalNumberOfNonLinearParameters(self):
-        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )

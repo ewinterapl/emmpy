@@ -15,7 +15,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -35,8 +35,8 @@ class TestBuilder(unittest.TestCase):
         self.assertEqual(c.numRadialExpansions, nr)
 
     def test_create(self):
-        sym = ScalarExpansion1D([0, 1, 2, 3], 1)
-        symPdynDependent = ScalarExpansion1D([0, 1, 2, 3], 1)
+        sym = ScalarExpansion1D([0, 1, 2, 3])
+        symPdynDependent = ScalarExpansion1D([0, 1, 2, 3])
         aOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -60,8 +60,8 @@ class TestBuilder(unittest.TestCase):
         self.assertIsNotNone(c)
 
     def test_getPdynScaledCoeffs(self):
-        sym = ScalarExpansion1D([0, 1, 2, 3], 1)
-        symPdynDependent = ScalarExpansion1D([0, 1, 2, 3], 1)
+        sym = ScalarExpansion1D([0, 1, 2, 3])
+        symPdynDependent = ScalarExpansion1D([0, 1, 2, 3])
         aOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )

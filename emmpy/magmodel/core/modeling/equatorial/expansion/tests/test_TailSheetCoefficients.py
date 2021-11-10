@@ -12,7 +12,7 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients imp
 class TestTailSheetCoefficients(unittest.TestCase):
 
     def test___init__(self):
-        tailSym = ScalarExpansion1D([0, 1, 2, 3], 1)
+        tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
             [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
         )
@@ -36,8 +36,8 @@ class TestTailSheetCoefficients(unittest.TestCase):
         n = nr + 2*nr*na
         a = list(range(n + 1))
         c = TailSheetCoefficients.createFromArray(a, na, nr)
-        self.assertAlmostEqual(c.tailSheetSymmetricValues[1], 0)
-        self.assertAlmostEqual(c.tailSheetSymmetricValues[2], 1)
+        self.assertAlmostEqual(c.tailSheetSymmetricValues[0], 0)
+        self.assertAlmostEqual(c.tailSheetSymmetricValues[1], 1)
         self.assertAlmostEqual(c.tailSheetOddValues[1, 1], 2)
         self.assertAlmostEqual(c.tailSheetOddValues[1, 2], 5)
         self.assertAlmostEqual(c.tailSheetOddValues[2, 1], 3)
@@ -59,7 +59,7 @@ class TestTailSheetCoefficients(unittest.TestCase):
         c = TailSheetCoefficients.createFromArray(a, na, nr)
         e = c.getAsSingleExpansion()
         for i in range(n):
-            self.assertAlmostEqual(e[i + 1], i)
+            self.assertAlmostEqual(e[i], i)
 
     def test_getNumberOfExpansions(self):
         nr = 2

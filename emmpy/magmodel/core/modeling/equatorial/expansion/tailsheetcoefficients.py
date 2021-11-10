@@ -81,7 +81,7 @@ class TailSheetCoefficients:
             Expansion of unit value in all components.
         """
         return TailSheetCoefficients(
-            scalarexpansion1d.createUnity(1, numRadialExpansions),
+            ScalarExpansion1D.createUnity(numRadialExpansions),
             arraycoefficientexpansion2d.createUnity(
                 1, numAzimuthalExpansions, 1, numRadialExpansions
             ),
@@ -144,7 +144,7 @@ class TailSheetCoefficients:
             )
 
         return TailSheetCoefficients(
-            ScalarExpansion1D(sym, 1),
+            ScalarExpansion1D(sym),
             ArrayCoefficientExpansion2D(odd, 1, 1),
             ArrayCoefficientExpansion2D(even, 1, 1))
 
@@ -170,7 +170,7 @@ class TailSheetCoefficients:
         count = 0
 
         # The pressure independent terms.
-        for n in range(firstN, lastN + 1):
+        for n in range(lastN):
             coeffs[count] = self.tailSheetSymmetricValues[n]
             count += 1
 
@@ -184,7 +184,7 @@ class TailSheetCoefficients:
                 coeffs[count] = self.tailSheetEvenValues[m, n]
                 count += 1
 
-        return ScalarExpansion1D(coeffs, 1)
+        return ScalarExpansion1D(coeffs)
 
     def getNumberOfExpansions(self):
         """Return the total number of expansions.

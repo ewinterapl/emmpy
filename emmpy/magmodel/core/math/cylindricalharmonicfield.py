@@ -99,7 +99,7 @@ class CylindricalHarmonicField(BasisVectorField):
                                                   self.trigParity)
         for n in range(self.firstN, self.lastN + 1):
             # The wave number.
-            kn = abs(self.waveNumberExpansion[n])
+            kn = abs(self.waveNumberExpansion[n - self.firstN])
             rhoK = rho*kn
             coshKZ = cosh(z*kn)
             sinhKZ = sinh(z*kn)

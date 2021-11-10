@@ -290,10 +290,10 @@ class FieldAlignedCurrentShiedingBuilder:
             aParallel = ArrayCoefficientExpansion2D(aParallValues, 1, 1)
         psiT1 = self.dipoleTilt*T1[self.region - 1][self.mode - 1]
         psiT2 = self.dipoleTilt*T2[self.region - 1][self.mode - 1]
-        pExpansion = ScalarExpansion1D(p[self.region - 1][self.mode - 1], 1).invert()
-        qExpansion = ScalarExpansion1D(q[self.region - 1][self.mode - 1], 1).invert()
-        rExpansion = ScalarExpansion1D(r[self.region - 1][self.mode - 1], 1).invert()
-        sExpansion = ScalarExpansion1D(s[self.region - 1][self.mode - 1], 1).invert()
+        pExpansion = ScalarExpansion1D(p[self.region - 1][self.mode - 1]).invert()
+        qExpansion = ScalarExpansion1D(q[self.region - 1][self.mode - 1]).invert()
+        rExpansion = ScalarExpansion1D(r[self.region - 1][self.mode - 1]).invert()
+        sExpansion = ScalarExpansion1D(s[self.region - 1][self.mode - 1]).invert()
         f = vectorfields.scale(
             PerpendicularAndParallelCartesianHarmonicField.createWithRotation(
                 self.trigParityI, psiT1, pExpansion, rExpansion,

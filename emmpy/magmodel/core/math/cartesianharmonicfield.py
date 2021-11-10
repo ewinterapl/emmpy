@@ -112,10 +112,10 @@ class CartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
-        firstI = self.piCoeffs.firstExpansionNumber
-        lastI = self.piCoeffs.lastExpansionNumber
-        firstK = self.pkCoeffs.firstExpansionNumber
-        lastK = self.pkCoeffs.lastExpansionNumber
+        firstI = 1
+        lastI = len(self.piCoeffs)
+        firstK = 1
+        lastK = len(self.pkCoeffs)
         bx = 0.0
         by = 0.0
         bz = 0.0
@@ -132,11 +132,11 @@ class CartesianHarmonicField(BasisVectorField):
             ktrig = cos
             kdtrig = lambda x: -sin(x)
         for i in range(firstI, lastI + 1):
-            pi = self.piCoeffs[i]
+            pi = self.piCoeffs[i - firstI]
             sinYpi = itrig(pi*y)
             cosYpi = idtrig(pi*y)
             for k in range(firstK, lastK + 1):
-                pk = self.pkCoeffs[k]
+                pk = self.pkCoeffs[k - firstK]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
                 sinZpk = ktrig(pk*z)

@@ -133,11 +133,11 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             kdtrig = lambda x: -sin(x)
         expansions = nones((self.aikCoeffs.iSize, self.aikCoeffs.jSize))
         for i in range(self.firstI, self.lastI + 1):
-            pi = self.piCoeffs[i]
+            pi = self.piCoeffs[i - self.firstI]
             sinYpi = itrig(pi*y)
             cosYpi = idtrig(pi*y)
             for k in range(self.firstK, self.lastK + 1):
-                pk = self.pkCoeffs[k]
+                pk = self.pkCoeffs[k - self.firstK]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
                 sinZpk = ktrig(pk*z)

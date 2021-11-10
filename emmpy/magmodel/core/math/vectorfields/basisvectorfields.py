@@ -141,12 +141,12 @@ class BasisVectorFields:
         def my_evaluateExpansion(location):
             expansions = field.evaluateExpansion(location)
             scaledExpansions = []
-            expansionIndex = coeffs.firstExpansionNumber
+            expansionIndex = 0
             for expansion in expansions:
                 scaledExpansions.append(expansion*coeffs[expansionIndex])
                 expansionIndex += 1
             for c in moreCoeffs:
-                expansionIndex = coeffs.firstExpansionNumber
+                expansionIndex = 0
                 for expansion in expansions:
                     scaledExpansions.append(expansion*c[expansionIndex])
                     expansionIndex += 1

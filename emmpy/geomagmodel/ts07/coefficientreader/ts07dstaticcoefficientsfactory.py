@@ -185,7 +185,7 @@ class TS07DStaticCoefficientsFactory:
                     val = float(line.split()[0])
                     waveNumberValues[k - 1] = val
             expansions[i - 1] = ArrayCoefficientExpansion2D(values, 0, 1)
-            waveExpansions[i - 1] = ScalarExpansion1D(waveNumberValues, 1)
+            waveExpansions[i - 1] = ScalarExpansion1D(waveNumberValues)
 
         return SymmetricCylindricalExpansionPair(
             Expansion1Ds.createFromArray(expansions, 1),
@@ -240,7 +240,7 @@ class TS07DStaticCoefficientsFactory:
                 expansions[m - 1][n - 1] = ArrayCoefficientExpansion2D(
                     values, 0, 1
                 )
-                waveExpansions[m - 1][n - 1] = ScalarExpansion1D(waveNumberValues, 1)
+                waveExpansions[m - 1][n - 1] = ScalarExpansion1D(waveNumberValues)
         return AsymmetricCylindricalExpansionPair(
             Expansion2Ds.createFromArray(expansions, 1, 1),
             Expansion2Ds.createFromArray(waveExpansions, 1, 1)

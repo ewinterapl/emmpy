@@ -385,10 +385,8 @@ class TS07DVariableCoefficientsUtils:
                         coeffs[index + numHalfExpansions +
                                numAsymmetricExpansions]
                     )
-            aSymExpansion = ScalarExpansion1D(aSym, 1)
-            aSymPdynDependentExpansion = ScalarExpansion1D(
-                aSymPdynDependent, 1
-            )
+            aSymExpansion = ScalarExpansion1D(aSym)
+            aSymPdynDependentExpansion = ScalarExpansion1D(aSymPdynDependent)
             aOddExpansion = ArrayCoefficientExpansion2D(aOdd, 1, 1)
             aOddPdynDependentExpansion = ArrayCoefficientExpansion2D(
                 aOddPdynDependent, 1, 1

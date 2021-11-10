@@ -11,11 +11,9 @@ from emmpy.math.expansions.scalarexpansion2d import (
 
 
 # Test data.
-data = np.arange(12).reshape(3, 4)
-iLowerBoundIndex = 1
-iUpperBoundIndex = iLowerBoundIndex + len(data) - 1
-jLowerBoundIndex = 1
-jUpperBoundIndex = jLowerBoundIndex + len(data[0]) - 1
+n_rows = 3
+n_cols = 4
+data = np.linspace(1.0, 2.0, n_rows*n_cols).reshape(n_rows, n_cols)
 
 
 class TestBuilder(unittest.TestCase):
@@ -23,87 +21,50 @@ class TestBuilder(unittest.TestCase):
 
     def test___new__(self):
         """Test the __new__ method."""
-        se2d = ScalarExpansion2D.__new__(
-            ScalarExpansion2D, data, iLowerBoundIndex, jLowerBoundIndex
-        )
-        n_rows = iLowerBoundIndex + len(data)
-        n_cols = jLowerBoundIndex + len(data[0])
-        self.assertEqual(se2d.shape[0], n_rows)
-        self.assertEqual(se2d.shape[1], n_cols)
+        se2d = ScalarExpansion2D.__new__(ScalarExpansion2D, data)
+        self.assertEqual(se2d.shape, data.shape)
 
     def test___init__(self):
         """Test the __init__ method."""
-        se2d = ScalarExpansion2D(data, iLowerBoundIndex, jLowerBoundIndex)
-        for i in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for j in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(
-                    se2d[i, j], data[i - iLowerBoundIndex, j - jLowerBoundIndex])
-        self.assertEqual(se2d.iLowerBoundIndex, iLowerBoundIndex)
-        self.assertEqual(se2d.iUpperBoundIndex, iUpperBoundIndex)
-        self.assertEqual(se2d.jLowerBoundIndex, jLowerBoundIndex)
-        self.assertEqual(se2d.jUpperBoundIndex, jUpperBoundIndex)
+        se2d = ScalarExpansion2D(data)
+        self.assertTrue(np.isclose(se2d, data).all())
 
     def test_negate(self):
         """Test the negate method."""
-        ace2d = ScalarExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
-        )
-        negation = ace2d.negate()
+        se2d = ScalarExpansion2D(data)
+        negation = se2d.negate()
         self.assertIsInstance(negation, ScalarExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(negation[row, col], -ace2d[row, col])
+        self.assertTrue(np.isclose(negation, -data).all())
 
     def test_scale(self):
         """Test the scale method."""
-        scale_factor = 1.1
-        ace2d = ScalarExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
-        )
-        scaled = ace2d.scale(scale_factor)
+        scaleFactor = 6.6
+        se2d = ScalarExpansion2D(data)
+        scaled = se2d.scale(scaleFactor)
         self.assertIsInstance(scaled, ScalarExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(
-                    scaled[row, col], scale_factor*ace2d[row, col]
-                )
+        self.assertTrue(np.isclose(scaled, scaleFactor*data).all())
 
     def test_add(self):
         """Test the add function."""
-        a = ScalarExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
-        )
-        b = ScalarExpansion2D(
-            data + 1.0, iLowerBoundIndex, jLowerBoundIndex
-        )
-        exp_sum = add(a, b)
-        self.assertIsInstance(exp_sum, ScalarExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(
-                    exp_sum[row, col], a[row, col] + b[row, col]
-                )
+        a = ScalarExpansion2D(data)
+        b = ScalarExpansion2D(data + 1.0)
+        expansionSum = add(a, b)
+        self.assertIsInstance(expansionSum, ScalarExpansion2D)
+        self.assertTrue(np.isclose(expansionSum, a + b).all())
 
     def test_createNullExpansion(self):
         """Test the createNullExpansion function."""
-        null = createNullExpansion(
-            iLowerBoundIndex, iUpperBoundIndex,
-            jLowerBoundIndex, jUpperBoundIndex
-        )
+        null = createNullExpansion(n_rows, n_cols)
         self.assertIsInstance(null, ScalarExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertTrue(np.isnan(null[row, col]))
+        self.assertEqual(null.shape, (n_rows, n_cols))
+        self.assertTrue(np.isnan(null).all())
 
     def test_createUnity(self):
         """Test the createUnity function."""
-        unity = createUnity(iLowerBoundIndex, iUpperBoundIndex,
-                            jLowerBoundIndex, jUpperBoundIndex
-        )
+        unity = createUnity(n_rows, n_cols)
         self.assertIsInstance(unity, ScalarExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
-                self.assertAlmostEqual(unity[row, col], 1.0)
+        self.assertEqual(unity.shape, (n_rows, n_cols))
+        self.assertTrue(np.isclose(unity, 1.0).all())
 
 
 if __name__ == "__main__":

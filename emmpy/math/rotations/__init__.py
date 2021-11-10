@@ -2,6 +2,7 @@
 
 Modules
 -------
+rotationmatrix2d.py
 
 Packages
 --------

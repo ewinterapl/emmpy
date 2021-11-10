@@ -2,6 +2,7 @@
 
 Modules
 -------
+test_rotationmatrix2d.py
 
 Packages
 --------

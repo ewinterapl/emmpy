@@ -12,6 +12,7 @@ Packages
 coordinates
 expansions
 matrices
+rotations
 vectorfields
 vectors
 """

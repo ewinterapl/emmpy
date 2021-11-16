@@ -97,9 +97,11 @@ class CylindricalHarmonicField(BasisVectorField):
         cosMphis = np.empty(self.lastM + 1)
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
-        for n in range(self.firstN, self.lastN + 1):
+        # for n in range(self.firstN, self.lastN + 1):
+        for n in range(self.lastN - self.firstN + 1):
             # The wave number.
-            kn = abs(self.waveNumberExpansion[n - self.firstN])
+            # kn = abs(self.waveNumberExpansion[n - self.firstN])
+            kn = abs(self.waveNumberExpansion[n])
             rhoK = rho*kn
             coshKZ = cosh(z*kn)
             sinhKZ = sinh(z*kn)
@@ -125,14 +127,14 @@ class CylindricalHarmonicField(BasisVectorField):
                 bx = x*rhoInv*bRho + y*rhoInv*bPhi
                 by = y*rhoInv*bRho - x*rhoInv*bPhi
                 # Get the linear scaling coefficient.
-                coeff = self.coefficientsExpansion[m, n]
+                # coeff = self.coefficientsExpansion[m, n]
+                coeff = self.coefficientsExpansion[m, n + self.firstN]
                 # Scale the vector, the minus sign comes from the
                 # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff
-                expansions[m - self.firstM][n - self.firstN] = vect
-        return Expansion2Ds.createFromArray(
-            expansions, self.firstM, self.firstN
-        )
+                # expansions[m - self.firstM][n - self.firstN] = vect
+                expansions[m - self.firstM][n] = vect
+        return Expansion2Ds.createFromArray(expansions, self.firstM, self.firstN)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.
@@ -151,7 +153,9 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        for m in range(self.firstM, self.lastM + 1):
-            for n in range(self.firstN, self.lastN + 1):
-                functions.append(expansions.getExpansion(m, n))
+        # for m in range(self.firstM, self.lastM + 1):
+        for m in range(self.lastM - self.firstM + 1):
+            # for n in range(self.firstN, self.lastN + 1):
+            for n in range(self.lastN - self.firstN + 1):
+                functions.append(expansions.getExpansion(m + self.firstM, n + self.firstN))
         return functions

@@ -189,5 +189,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         for i in range(self.lastI - self.firstI + 1):
             # for k in range(self.firstK, self.lastK + 1):
             for k in range(self.lastK - self.firstK + 1):
+                # functions.append(expansions.getExpansion(i, k))
                 functions.append(expansions.getExpansion(i + self.firstI, k + self.firstK))
         return functions

@@ -11,10 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import emmpy.math.expansions.scalarexpansion1d as scalarexpansion1d
 from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
-import emmpy.math.expansions.arraycoefficientexpansion2d as arraycoefficientexpansion2d
-from emmpy.math.expansions.arraycoefficientexpansion2d import (
-    ArrayCoefficientExpansion2D, createNullExpansion
-)
+from emmpy.math.expansions.arraycoefficientexpansion2d import ArrayCoefficientExpansion2D
 from emmpy.utilities.nones import nones
 
 
@@ -82,10 +79,10 @@ class TailSheetCoefficients:
         """
         return TailSheetCoefficients(
             ScalarExpansion1D.createUnity(numRadialExpansions),
-            arraycoefficientexpansion2d.createUnity(
+            ArrayCoefficientExpansion2D.createUnity(
                 1, numAzimuthalExpansions, 1, numRadialExpansions
             ),
-            arraycoefficientexpansion2d.createUnity(
+            ArrayCoefficientExpansion2D.createUnity(
                 1, numAzimuthalExpansions, 1, numRadialExpansions)
         )
 
@@ -135,10 +132,10 @@ class TailSheetCoefficients:
         if numAzimuthalExpansions == 0:
             return TailSheetCoefficients(
                 ScalarExpansion1D(sym, 1),
-                createNullExpansion(
+                ArrayCoefficientExpansion2D.createNullExpansion(
                     1, numAzimuthalExpansions,
                     1, numRadialExpansions),
-                createNullExpansion(
+                ArrayCoefficientExpansion2D.createNullExpansion(
                     1, numAzimuthalExpansions,
                     1, numRadialExpansions)
             )

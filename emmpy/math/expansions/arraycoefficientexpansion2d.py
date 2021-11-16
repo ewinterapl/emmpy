@@ -137,75 +137,75 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         )
         return scaled
 
+    @staticmethod
+    def add(a, b):
+        """Compute the sum of two expansions.
 
-def add(a, b):
-    """Compute the sum of two expansions.
+        Compute the sum of two expansions. The expansions are assumed to have
+        the same shape and logical index limits.
 
-    Compute the sum of two expansions. The expansions are assumed to have
-    the same shape and logical index limits.
+        Parameters
+        ----------
+        a, b : ArrayCoefficientExpansion2D
+            Expansions to add.
 
-    Parameters
-    ----------
-    a, b : ArrayCoefficientExpansion2D
-        Expansions to add.
+        Returns
+        -------
+        exp_sum : ArrayCoefficientExpansion2D
+            Sum of the two expansions.
+        """
+        iLowerBoundIndex = a.iLowerBoundIndex
+        jLowerBoundIndex = a.jLowerBoundIndex
+        data = (
+            a[iLowerBoundIndex:, jLowerBoundIndex:] +
+            b[iLowerBoundIndex:, jLowerBoundIndex:]
+        )
+        exp_sum = ArrayCoefficientExpansion2D(data, iLowerBoundIndex, jLowerBoundIndex)
+        return exp_sum
 
-    Returns
-    -------
-    exp_sum : ArrayCoefficientExpansion2D
-        Sum of the two expansions.
-    """
-    iLowerBoundIndex = a.iLowerBoundIndex
-    jLowerBoundIndex = a.jLowerBoundIndex
-    data = (
-        a[iLowerBoundIndex:, jLowerBoundIndex:] +
-        b[iLowerBoundIndex:, jLowerBoundIndex:]
-    )
-    exp_sum = ArrayCoefficientExpansion2D(data, iLowerBoundIndex, jLowerBoundIndex)
-    return exp_sum
+    @staticmethod
+    def createNullExpansion(row_min, row_max, col_min, col_max):
+        """Create an expansion of null coefficients.
 
+        Create an expansion of null coefficients using the specified logical
+        index limits.
 
-def createNullExpansion(row_min, row_max, col_min, col_max):
-    """Create an expansion of null coefficients.
+        Parameters
+        ----------
+        row_min, row_max, col_min, col_max : int
+            Lowest and highest logical indices for rows and columns.
 
-    Create an expansion of null coefficients using the specified logical
-    index limits.
+        Returns
+        -------
+        null : ArrayCoefficientExpansion2D
+            An expansion with null coefficients.
+        """
+        n_rows = row_max - row_min + 1
+        n_cols = col_max - col_min + 1
+        nulls = nones((n_rows, n_cols))
+        data = np.array(nulls)
+        null = ArrayCoefficientExpansion2D(data, row_min, col_min)
+        return null
 
-    Parameters
-    ----------
-    row_min, row_max, col_min, col_max : int
-        Lowest and highest logical indices for rows and columns.
+    @staticmethod
+    def createUnity(row_min, row_max, col_min, col_max):
+        """Create an expansion of unit coefficients.
 
-    Returns
-    -------
-    null : ArrayCoefficientExpansion2D
-        An expansion with null coefficients.
-    """
-    n_rows = row_max - row_min + 1
-    n_cols = col_max - col_min + 1
-    nulls = nones((n_rows, n_cols))
-    data = np.array(nulls)
-    null = ArrayCoefficientExpansion2D(data, row_min, col_min)
-    return null
+        Create an expansion of unit coefficients using the specified logical
+        index limits.
 
+        Parameters
+        ----------
+        row_min, row_max, col_min, col_max : int
+            Lowest and highest logical indices for rows and columns.
 
-def createUnity(row_min, row_max, col_min, col_max):
-    """Create an expansion of unit coefficients.
-
-    Create an expansion of unit coefficients using the specified logical
-    index limits.
-
-    Parameters
-    ----------
-    row_min, row_max, col_min, col_max : int
-        Lowest and highest logical indices for rows and columns.
-
-    Returns
-    -------
-    unity : ArrayCoefficientExpansion2D
-        An expansion with unit coefficients.
-    """
-    n_rows = row_max - row_min + 1
-    n_cols = col_max - col_min + 1
-    data = np.ones((n_rows, n_cols))
-    unity = ArrayCoefficientExpansion2D(data, row_min, col_min)
-    return unity
+        Returns
+        -------
+        unity : ArrayCoefficientExpansion2D
+            An expansion with unit coefficients.
+        """
+        n_rows = row_max - row_min + 1
+        n_cols = col_max - col_min + 1
+        data = np.ones((n_rows, n_cols))
+        unity = ArrayCoefficientExpansion2D(data, row_min, col_min)
+        return unity

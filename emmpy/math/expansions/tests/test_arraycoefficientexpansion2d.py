@@ -9,9 +9,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.math.expansions.arraycoefficientexpansion2d import (
-    ArrayCoefficientExpansion2D, add, createNullExpansion, createUnity
-)
+from emmpy.math.expansions.arraycoefficientexpansion2d import ArrayCoefficientExpansion2D
 
 
 # Test data.
@@ -87,7 +85,7 @@ class TestBuilder(unittest.TestCase):
         b = ArrayCoefficientExpansion2D(
             data + 1.0, iLowerBoundIndex, jLowerBoundIndex
         )
-        exp_sum = add(a, b)
+        exp_sum = ArrayCoefficientExpansion2D.add(a, b)
         self.assertIsInstance(exp_sum, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
@@ -97,7 +95,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_createNullExpansion(self):
         """Test the createNullExpansion function."""
-        null = createNullExpansion(
+        null = ArrayCoefficientExpansion2D.createNullExpansion(
             iLowerBoundIndex, iUpperBoundIndex,
             jLowerBoundIndex, jUpperBoundIndex
         )
@@ -108,8 +106,9 @@ class TestBuilder(unittest.TestCase):
 
     def test_createUnity(self):
         """Test the createUnity function."""
-        unity = createUnity(iLowerBoundIndex, iUpperBoundIndex,
-                            jLowerBoundIndex, jUpperBoundIndex
+        unity = ArrayCoefficientExpansion2D.createUnity(
+            iLowerBoundIndex, iUpperBoundIndex,
+            jLowerBoundIndex, jUpperBoundIndex
         )
         self.assertIsInstance(unity, ArrayCoefficientExpansion2D)
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):

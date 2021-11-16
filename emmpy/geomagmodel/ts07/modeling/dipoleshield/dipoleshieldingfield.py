@@ -18,9 +18,7 @@ from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield imp
 )
 from emmpy.magmodel.core.math.trigparity import EVEN
 from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
-from emmpy.math.expansions.arraycoefficientexpansion2d import (
-    ArrayCoefficientExpansion2D, add
-)
+from emmpy.math.expansions.arraycoefficientexpansion2d import ArrayCoefficientExpansion2D
 from emmpy.math.vectorfields.vectorfield import scaleLocation
 
 
@@ -111,11 +109,11 @@ class DipoleShieldingField:
             The dipole shielding field.
         """
         pDynScale = pow(dynamicPressure/2, 0.155)
-        perpCoeffs = add(
+        perpCoeffs = ArrayCoefficientExpansion2D.add(
             DipoleShieldingField.a,
             DipoleShieldingField.b.scale(cos(dipoleTiltAngle))
         )
-        parrCoeffs = add(
+        parrCoeffs = ArrayCoefficientExpansion2D.add(
             DipoleShieldingField.c.scale(sin(dipoleTiltAngle)),
             DipoleShieldingField.d.scale(sin(2*dipoleTiltAngle))
         )

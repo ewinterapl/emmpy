@@ -142,8 +142,10 @@ class TailSheetCoefficients:
 
         return TailSheetCoefficients(
             ScalarExpansion1D(sym),
-            ArrayCoefficientExpansion2D(odd, 1, 1),
-            ArrayCoefficientExpansion2D(even, 1, 1))
+            # ArrayCoefficientExpansion2D(odd, 1, 1),
+            ArrayCoefficientExpansion2D(odd, 0, 1),
+            # ArrayCoefficientExpansion2D(even, 1, 1))
+            ArrayCoefficientExpansion2D(even, 0, 1))
 
     def getAsSingleExpansion(self):
         """Return the coefficients as a single 1D expansion.
@@ -159,8 +161,10 @@ class TailSheetCoefficients:
         result : CoefficientExpansion1D
             Expansion with all coefficients collapsed to 1 dimension.
         """
-        firstM = 1
-        lastM = self.numAzimuthalExpansions
+        # firstM = 1
+        firstM = 0
+        # lastM = self.numAzimuthalExpansions
+        lastM = self.numAzimuthalExpansions - 1
         firstN = 1
         lastN = self.numRadialExpansions
         coeffs = nones((self.getNumberOfExpansions(),))

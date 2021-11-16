@@ -187,7 +187,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             # for m in range(1, self.numAzimuthalExpansions + 1):
             for m in range(self.numAzimuthalExpansions):
                 # aOdd = self.coeffs.tailSheetOddValues[m, n]
-                aOdd = self.coeffs.tailSheetOddValues[m + 1, n + 1]
+                aOdd = self.coeffs.tailSheetOddValues[m, n]
                 oddBasisFunction = TailSheetAsymmetricExpansion(
                     # kn, m, ODD, self.currentSheetHalfThickness
                     kn, m + 1, ODD, self.currentSheetHalfThickness
@@ -196,7 +196,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 oddExpansions[m][n] = (
                     oddBasisFunction.evaluate(CartesianVector(location))*aOdd)
                 # aEven = self.coeffs.tailSheetEvenValues[m, n]
-                aEven = self.coeffs.tailSheetEvenValues[m + 1, n + 1]
+                aEven = self.coeffs.tailSheetEvenValues[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
                     # kn, m, EVEN, self.currentSheetHalfThickness
                     kn, m + 1, EVEN, self.currentSheetHalfThickness

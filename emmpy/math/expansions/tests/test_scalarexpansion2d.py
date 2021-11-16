@@ -5,9 +5,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.math.expansions.scalarexpansion2d import (
-    ScalarExpansion2D, add, createNullExpansion, createUnity
-)
+from emmpy.math.expansions.scalarexpansion2d import ScalarExpansion2D
 
 
 # Test data.
@@ -48,20 +46,20 @@ class TestBuilder(unittest.TestCase):
         """Test the add function."""
         a = ScalarExpansion2D(data)
         b = ScalarExpansion2D(data + 1.0)
-        expansionSum = add(a, b)
+        expansionSum = ScalarExpansion2D.add(a, b)
         self.assertIsInstance(expansionSum, ScalarExpansion2D)
         self.assertTrue(np.isclose(expansionSum, a + b).all())
 
     def test_createNullExpansion(self):
         """Test the createNullExpansion function."""
-        null = createNullExpansion(n_rows, n_cols)
+        null = ScalarExpansion2D.createNullExpansion(n_rows, n_cols)
         self.assertIsInstance(null, ScalarExpansion2D)
         self.assertEqual(null.shape, (n_rows, n_cols))
         self.assertTrue(np.isnan(null).all())
 
     def test_createUnity(self):
         """Test the createUnity function."""
-        unity = createUnity(n_rows, n_cols)
+        unity = ScalarExpansion2D.createUnity(n_rows, n_cols)
         self.assertIsInstance(unity, ScalarExpansion2D)
         self.assertEqual(unity.shape, (n_rows, n_cols))
         self.assertTrue(np.isclose(unity, 1.0).all())

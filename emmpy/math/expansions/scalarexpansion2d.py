@@ -92,65 +92,65 @@ class ScalarExpansion2D(np.ndarray):
         scaled = ScalarExpansion2D(scaleFactor*self)
         return scaled
 
+    @staticmethod
+    def add(a, b):
+        """Compute the sum of two expansions.
 
-def add(a, b):
-    """Compute the sum of two expansions.
+        Compute the sum of two expansions. The expansions are assumed to have
+        the same shape.
 
-    Compute the sum of two expansions. The expansions are assumed to have
-    the same shape.
+        Parameters
+        ----------
+        a, b : ScalarExpansion2D
+            Expansions to add.
 
-    Parameters
-    ----------
-    a, b : ScalarExpansion2D
-        Expansions to add.
+        Returns
+        -------
+        exp_sum : ScalarExpansion2D
+            Sum of the two expansions.
+        """
+        data = a + b
+        expansionSum = ScalarExpansion2D(a + b)
+        return expansionSum
 
-    Returns
-    -------
-    exp_sum : ScalarExpansion2D
-        Sum of the two expansions.
-    """
-    data = a + b
-    expansionSum = ScalarExpansion2D(a + b)
-    return expansionSum
+    @staticmethod
+    def createNullExpansion(n_rows, n_cols):
+        """Create an expansion of null coefficients.
 
+        Create an expansion of null coefficients using the specified shape.
 
-def createNullExpansion(n_rows, n_cols):
-    """Create an expansion of null coefficients.
+        Parameters
+        ----------
+        n_rows, n_cols : int
+            Counts for rows and columns.
 
-    Create an expansion of null coefficients using the specified shape.
+        Returns
+        -------
+        null : ScalarExpansion2D
+            An expansion with null coefficients.
+        """
+        nulls = nones((n_rows, n_cols))
+        data = np.array(nulls)
+        null = ScalarExpansion2D(data)
+        return null
 
-    Parameters
-    ----------
-    n_rows, n_cols : int
-        Counts for rows and columns.
+    @staticmethod
+    def createUnity(n_rows, n_cols):
+        """Create an expansion of unit coefficients.
 
-    Returns
-    -------
-    null : ScalarExpansion2D
-        An expansion with null coefficients.
-    """
-    nulls = nones((n_rows, n_cols))
-    data = np.array(nulls)
-    null = ScalarExpansion2D(data)
-    return null
+        Create an expansion of unit coefficients using the specified shape.
 
+        Parameters
+        ----------
+        n_rows, n_cols : int
+            Counts for rows and columns.
 
-def createUnity(n_rows, n_cols):
-    """Create an expansion of unit coefficients.
-
-    Create an expansion of unit coefficients using the specified shape.
-
-    Parameters
-    ----------
-    n_rows, n_cols : int
-        Counts for rows and columns.
-
-    Returns
-    -------
-    unity : ScalarExpansion2D
-        An expansion with unit coefficients.
-    """
-    ones = np.ones((n_rows, n_cols))
-    data = np.array(ones)
-    unity = ScalarExpansion2D(data)
-    return unity
+        Returns
+        -------
+        unity : ScalarExpansion2D
+            An expansion with unit coefficients.
+        """
+        ones = np.ones((n_rows, n_cols))
+        data = np.array(ones)
+        unity = ScalarExpansion2D(data)
+        return unity

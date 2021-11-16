@@ -208,8 +208,10 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         if self.numAzimuthalExpansions == 0:
             return TailSheetExpansions(
                 Expansion1Ds.createFromArray(symmetricExpansions, 1),
-                Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
-                Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
+                # Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
+                Expansion2Ds.createNull(0, 1, self.numRadialExpansions),
+                # Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
+                Expansion2Ds.createNull(0, 1, self.numRadialExpansions)
             )
         return TailSheetExpansions(
             Expansion1Ds.createFromArray(symmetricExpansions, 1),

@@ -133,10 +133,12 @@ class TailSheetCoefficients:
             return TailSheetCoefficients(
                 ScalarExpansion1D(sym, 1),
                 ArrayCoefficientExpansion2D.createNullExpansion(
-                    1, numAzimuthalExpansions,
+                    # 1, numAzimuthalExpansions,
+                    0, numAzimuthalExpansions,
                     1, numRadialExpansions),
                 ArrayCoefficientExpansion2D.createNullExpansion(
-                    1, numAzimuthalExpansions,
+                    # 1, numAzimuthalExpansions,
+                    0, numAzimuthalExpansions,
                     1, numRadialExpansions)
             )
 

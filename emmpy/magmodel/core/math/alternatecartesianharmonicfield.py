@@ -132,18 +132,23 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             ktrig = cos
             kdtrig = lambda x: -sin(x)
         expansions = nones((self.aikCoeffs.iSize, self.aikCoeffs.jSize))
-        for i in range(self.firstI, self.lastI + 1):
-            pi = self.piCoeffs[i - self.firstI]
+        # for i in range(self.firstI, self.lastI + 1):
+        for i in range(self.lastI - self.firstI + 1):
+            # pi = self.piCoeffs[i - self.firstI]
+            pi = self.piCoeffs[i]
             sinYpi = itrig(pi*y)
             cosYpi = idtrig(pi*y)
-            for k in range(self.firstK, self.lastK + 1):
-                pk = self.pkCoeffs[k - self.firstK]
+            # for k in range(self.firstK, self.lastK + 1):
+            for k in range(self.lastK - self.firstK + 1):
+                # pk = self.pkCoeffs[k - self.firstK]
+                pk = self.pkCoeffs[k]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
                 sinZpk = ktrig(pk*z)
                 cosZpk = kdtrig(pk*z)
-                aik = self.aikCoeffs[i, k]
-                if k == self.lastK:
+                # aik = self.aikCoeffs[i, k]
+                aik = self.aikCoeffs[i + self.firstI, k + self.firstK]
+                if (k + self.firstK) == self.lastK:
                     bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +
                           sinZpk*pk*(x + 1.0/sqrtP)))
                     by = -aik*exp_*pi*cosYpi*(z*cosZpk + x*pk*sinZpk/sqrtP)
@@ -151,16 +156,17 @@ class AlternateCartesianHarmonicField(BasisVectorField):
                                             - z*pk*sinZpk))
                     # Scale the vector, the minus sign comes from the B=-del U.
                     vect = VectorIJK(bx, by, bz)
-                    expansions[i - self.firstI][k - self.firstK] = vect
+                    # expansions[i - self.firstI][k - self.firstK] = vect
+                    expansions[i][k] = vect
                 else:
                     bx = -aik*exp_*sqrtP*sinYpi*sinZpk
                     by = -aik*exp_*pi*cosYpi*sinZpk
                     bz = -aik*exp_*pk*sinYpi*cosZpk
                     # Scale the vector, the minus sign comes from the B=-del U.
                     vect = VectorIJK(bx, by, bz)
-                    expansions[i - self.firstI][k - self.firstK] = vect
-        return Expansion2Ds.createFromArray(expansions, self.firstI,
-                                            self.firstK)
+                    # expansions[i - self.firstI][k - self.firstK] = vect
+                    expansions[i][k] = vect
+        return Expansion2Ds.createFromArray(expansions, self.firstI, self.firstK)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion.
@@ -179,7 +185,9 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        for i in range(self.firstI, self.lastI + 1):
-            for k in range(self.firstK, self.lastK + 1):
-                functions.append(expansions.getExpansion(i, k))
+        # for i in range(self.firstI, self.lastI + 1):
+        for i in range(self.lastI - self.firstI + 1):
+            # for k in range(self.firstK, self.lastK + 1):
+            for k in range(self.lastK - self.firstK + 1):
+                functions.append(expansions.getExpansion(i + self.firstI, k + self.firstK))
         return functions

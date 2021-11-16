@@ -92,57 +92,71 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         evenExpansions = nones((self.numAzimuthalExpansions,
                                 self.numRadialExpansions))
         # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
+        # for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
             tailExpansion = (
-                self.coeffs.symmetricTailExpansion.getExpansion(n)
+                # self.coeffs.symmetricTailExpansion.getExpansion(n)
+                self.coeffs.symmetricTailExpansion.getExpansion(n + 1)
             )
             waveNumberExpansion = (
-                self.coeffs.symmetricTailWaveExpansion.getExpansion(n)
+                # self.coeffs.symmetricTailWaveExpansion.getExpansion(n)
+                self.coeffs.symmetricTailWaveExpansion.getExpansion(n + 1)
             )
             buffer = VectorIJK()
             chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,
                                            ODD)
             chf.evaluate(location, buffer)
-            symmetricExpansions[n - 1] = VectorIJK(
+            # symmetricExpansions[n - 1] = VectorIJK(
+            symmetricExpansions[n] = VectorIJK(
                 buffer.i, buffer.j, buffer.k
             )
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
         negateConst = 1.0
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
+        # for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
+            # for m in range(1, self.numAzimuthalExpansions + 1):
+            for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.oddTailExpansion.getExpansion(m, n)
+                    # self.coeffs.oddTailExpansion.getExpansion(m, n)
+                    self.coeffs.oddTailExpansion.getExpansion(m + 1, n + 1)
                 )
                 waveNumberExpansion = (
-                    self.coeffs.oddTailWaveExpansion.getExpansion(m, n)
+                    # self.coeffs.oddTailWaveExpansion.getExpansion(m, n)
+                    self.coeffs.oddTailWaveExpansion.getExpansion(m + 1, n + 1)
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
                     tailExpansion, waveNumberExpansion, ODD)
                 chf.evaluate(location, buffer)
                 buffer *= negateConst
-                oddExpansions[m - 1][n - 1] = (
+                # oddExpansions[m - 1][n - 1] = (
+                oddExpansions[m][n] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
         negateConst = -1.0
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
+        # for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
+            # for m in range(1, self.numAzimuthalExpansions + 1):
+            for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.evenTailExpansion.getExpansion(m, n)
+                    # self.coeffs.evenTailExpansion.getExpansion(m, n)
+                    self.coeffs.evenTailExpansion.getExpansion(m + 1, n + 1)
                 )
                 waveNumberExpansion = (
-                    self.coeffs.evenTailWaveExpansion.getExpansion(m, n)
+                    # self.coeffs.evenTailWaveExpansion.getExpansion(m, n)
+                    self.coeffs.evenTailWaveExpansion.getExpansion(m + 1, n + 1)
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
                     tailExpansion, waveNumberExpansion, EVEN)
                 chf.evaluate(location, buffer)
                 buffer *= negateConst
-                evenExpansions[m - 1][n - 1] = (
+                # evenExpansions[m - 1][n - 1] = (
+                evenExpansions[m][n] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
         return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions, 1),

@@ -174,6 +174,9 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         # Precompute the wavenumbers for each radial expansion.
         kn = np.arange(1, self.numRadialExpansions + 1)/self.tailLength
 
+        # Make a CartesianVector for the location.
+        cartesianLocation = CartesianVector(location)
+
         # n is the radial expansion number.
         for n in range(self.numRadialExpansions):
 
@@ -181,23 +184,22 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 kn[n], self.currentSheetHalfThickness
             )
             a = self.coeffs.tailSheetSymmetricValues[n]
-            symmetricExpansions[n] = symBasisFunction.evaluate(CartesianVector(location))*a
+            symmetricExpansions[n] = symBasisFunction.evaluate(cartesianLocation)*a
 
             # m is the azimuthal expansion number.
             for m in range(self.numAzimuthalExpansions):
                 aOdd = self.coeffs.tailSheetOddValues[m, n]
                 oddBasisFunction = TailSheetAsymmetricExpansion(
-                    # kn, m, ODD, self.currentSheetHalfThickness
                     kn[n], m + 1, ODD, self.currentSheetHalfThickness
                 )
                 oddExpansions[m][n] = (
-                    oddBasisFunction.evaluate(CartesianVector(location))*aOdd)
+                    oddBasisFunction.evaluate(cartesianLocation)*aOdd)
                 aEven = self.coeffs.tailSheetEvenValues[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
                     kn[n], m + 1, EVEN, self.currentSheetHalfThickness
                 )
                 evenExpansions[m][n] = (
-                    evenBasisFunction.evaluate(location)*aEven)
+                    evenBasisFunction.evaluate(cartesianLocation)*aEven)
 
         if self.numAzimuthalExpansions == 0:
             return TailSheetExpansions(

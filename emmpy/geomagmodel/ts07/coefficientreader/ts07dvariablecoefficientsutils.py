@@ -108,7 +108,7 @@ class TS07DVariableCoefficientsUtils:
                 numAzimuthalExpansions, numRadialExpansions, facConfiguration
             )
         elif len(args) == 4:
-            raise Exception
+            raise TypeError
         elif len(args) == 5:
             (variableCoefficientsFile, numCurrentSheets,
              numAzimuthalExpansions, numRadialExpansions,

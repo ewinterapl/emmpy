@@ -9,6 +9,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+import numpy as np
+
+
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
@@ -167,50 +170,39 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                                self.numRadialExpansions))
         evenExpansions = nones((self.numAzimuthalExpansions,
                                 self.numRadialExpansions))
+
+        # Precompute the wavenumbers for each radial expansion.
+        kn = np.arange(1, self.numRadialExpansions + 1)/self.tailLength
+
         # n is the radial expansion number.
-        # for n in range(1, self.numRadialExpansions + 1):
         for n in range(self.numRadialExpansions):
 
-            # Calculate the wave number (kn = n/rho0).
-            # kn = n/self.tailLength
-            kn = (n + 1)/self.tailLength
-
             symBasisFunction = TailSheetSymmetricExpansion(
-                kn, self.currentSheetHalfThickness
+                kn[n], self.currentSheetHalfThickness
             )
-            # a = self.coeffs.tailSheetSymmetricValues[n - 1]
             a = self.coeffs.tailSheetSymmetricValues[n]
-            # symmetricExpansions[n - 1] = symBasisFunction.evaluate(CartesianVector(location))*a
             symmetricExpansions[n] = symBasisFunction.evaluate(CartesianVector(location))*a
 
             # m is the azimuthal expansion number.
-            # for m in range(1, self.numAzimuthalExpansions + 1):
             for m in range(self.numAzimuthalExpansions):
-                # aOdd = self.coeffs.tailSheetOddValues[m, n]
                 aOdd = self.coeffs.tailSheetOddValues[m, n]
                 oddBasisFunction = TailSheetAsymmetricExpansion(
                     # kn, m, ODD, self.currentSheetHalfThickness
-                    kn, m + 1, ODD, self.currentSheetHalfThickness
+                    kn[n], m + 1, ODD, self.currentSheetHalfThickness
                 )
-                # oddExpansions[m - 1][n - 1] = (
                 oddExpansions[m][n] = (
                     oddBasisFunction.evaluate(CartesianVector(location))*aOdd)
-                # aEven = self.coeffs.tailSheetEvenValues[m, n]
                 aEven = self.coeffs.tailSheetEvenValues[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
-                    # kn, m, EVEN, self.currentSheetHalfThickness
-                    kn, m + 1, EVEN, self.currentSheetHalfThickness
+                    kn[n], m + 1, EVEN, self.currentSheetHalfThickness
                 )
-                # evenExpansions[m - 1][n - 1] = (
                 evenExpansions[m][n] = (
                     evenBasisFunction.evaluate(location)*aEven)
 
         if self.numAzimuthalExpansions == 0:
             return TailSheetExpansions(
                 Expansion1Ds.createFromArray(symmetricExpansions, 1),
-                # Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
                 Expansion2Ds.createNull(0, 1, self.numRadialExpansions),
-                # Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
                 Expansion2Ds.createNull(0, 1, self.numRadialExpansions)
             )
         return TailSheetExpansions(

@@ -11,6 +11,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, exp, sin, sqrt
 
+import numpy as np
+
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
@@ -120,52 +122,59 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         y = location.j
         z = location.k
         if self.trigParityI is ODD:
-            itrig = sin
-            idtrig = cos
+            itrig = np.sin
+            idtrig = np.cos
         else:
-            itrig = cos
-            idtrig = lambda x: -sin(x)
+            itrig = np.cos
+            idtrig = lambda x: -np.sin(x)
         if self.trigParityK is ODD:
-            ktrig = sin
-            kdtrig = cos
+            ktrig = np.sin
+            kdtrig = np.cos
         else:
-            ktrig = cos
-            kdtrig = lambda x: -sin(x)
+            ktrig = np.cos
+            kdtrig = lambda x: -np.sin(x)
         expansions = nones((self.aikCoeffs.iSize, self.aikCoeffs.jSize))
-        # for i in range(self.firstI, self.lastI + 1):
-        for i in range(self.lastI - self.firstI + 1):
-            # pi = self.piCoeffs[i - self.firstI]
-            pi = self.piCoeffs[i]
-            sinYpi = itrig(pi*y)
-            cosYpi = idtrig(pi*y)
-            # for k in range(self.firstK, self.lastK + 1):
-            for k in range(self.lastK - self.firstK + 1):
-                # pk = self.pkCoeffs[k - self.firstK]
-                pk = self.pkCoeffs[k]
-                sqrtP = sqrt(pi*pi + pk*pk)
-                exp_ = exp(x*sqrtP)
-                sinZpk = ktrig(pk*z)
-                cosZpk = kdtrig(pk*z)
-                # aik = self.aikCoeffs[i, k]
-                aik = self.aikCoeffs[i + self.firstI, k + self.firstK]
-                if (k + self.firstK) == self.lastK:
-                    bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +
-                          sinZpk*pk*(x + 1.0/sqrtP)))
-                    by = -aik*exp_*pi*cosYpi*(z*cosZpk + x*pk*sinZpk/sqrtP)
-                    bz = (-aik*exp_*sinYpi*(cosZpk*(1.0 + x*pk*pk/sqrtP)
-                                            - z*pk*sinZpk))
-                    # Scale the vector, the minus sign comes from the B=-del U.
-                    vect = VectorIJK(bx, by, bz)
-                    # expansions[i - self.firstI][k - self.firstK] = vect
-                    expansions[i][k] = vect
-                else:
-                    bx = -aik*exp_*sqrtP*sinYpi*sinZpk
-                    by = -aik*exp_*pi*cosYpi*sinZpk
-                    bz = -aik*exp_*pk*sinYpi*cosZpk
-                    # Scale the vector, the minus sign comes from the B=-del U.
-                    vect = VectorIJK(bx, by, bz)
-                    # expansions[i - self.firstI][k - self.firstK] = vect
-                    expansions[i][k] = vect
+        # <HACK>
+        sinYpi = itrig(self.piCoeffs*y)
+        cosYpi = idtrig(self.piCoeffs*y)
+        sinZpk = ktrig(self.pkCoeffs*z)
+        cosZpk = kdtrig(self.pkCoeffs*z)
+        sqrtP = np.sqrt(np.array([[pi**2 + pk**2 for pk in self.pkCoeffs] for pi in self.piCoeffs]))
+        exp_ = np.exp(x*sqrtP)
+        aik = np.array(self.aikCoeffs[:, self.firstK:])
+        pi = np.array(self.piCoeffs)
+        pk = np.array(self.pkCoeffs)
+        sinYpiXsinZpk = np.outer(sinYpi, sinZpk)
+        sinYpiXcosZpk = np.outer(sinYpi, cosZpk)
+        cosYpiXsinZpk = np.outer(cosYpi, sinZpk)
+        ni = len(self.piCoeffs)
+        nk = len(self.pkCoeffs)
+        bx = np.empty((ni, nk))
+        bx[:, :-1] = -aik[:, :-1]*exp_[:, :-1]*sqrtP[:, :-1]*sinYpiXsinZpk[:, :-1]
+        bx[:, -1] = (
+            -aik[:, -1]*exp_[:, -1]*sinYpi *
+            (sqrtP[:, -1]*z*cosZpk[-1] + sinZpk[-1]*pk[-1]*(x + 1.0/sqrtP[:, -1]))
+        )
+        by = np.empty((ni, nk))
+        by[:, :-1] = (
+            -aik[:, :-1]*exp_[:, :-1]*np.broadcast_to(pi, (nk, ni)).T[:, :-1]*cosYpiXsinZpk[:, :-1]
+        )
+        by[:, -1] = (
+            -aik[:, -1]*exp_[:, -1]*np.broadcast_to(pi, (nk, ni)).T[:, -1] *
+            np.broadcast_to(cosYpi, (nk, ni)).T[:, -1] *
+            (z*cosZpk[-1] + x*pk[-1]*sinZpk[-1]/sqrtP[:, -1])
+        )
+        bz = np.empty((ni, nk))
+        bz[:, :-1] = -aik[:, :-1]*exp_[:, :-1]*pk[:-1]*sinYpiXcosZpk[:, :-1]
+        bz[:, -1] = (
+            -aik[:, -1]*exp_[:, -1] * sinYpi * 
+            (cosZpk[-1]*(1.0 + x*pk[-1]*pk[-1]/sqrtP[:, -1]) - z*pk[-1]*sinZpk[-1])
+        )
+        # </HACK>
+        for i in range(ni):
+            for k in range(nk):
+                vect = VectorIJK(bx[i, k], by[i, k], bz[i, k])
+                expansions[i][k] = vect
         return Expansion2Ds.createFromArray(expansions, self.firstI, self.firstK)
 
     def evaluateExpansion(self, location):

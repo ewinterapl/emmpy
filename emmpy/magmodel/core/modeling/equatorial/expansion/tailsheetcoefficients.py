@@ -142,8 +142,8 @@ class TailSheetCoefficients:
 
         return TailSheetCoefficients(
             ScalarExpansion1D(sym),
-            ArrayCoefficientExpansion2D(odd, 1),
-            ArrayCoefficientExpansion2D(even, 1))
+            ArrayCoefficientExpansion2D(odd),
+            ArrayCoefficientExpansion2D(even))
 
     def getAsSingleExpansion(self):
         """Return the coefficients as a single 1D expansion.
@@ -175,12 +175,12 @@ class TailSheetCoefficients:
         coeffs[i1:i2] = self.tailSheetSymmetricValues[...]
 
         count = i2
-        for n in range(firstN, lastN + 1):
+        for n in range(lastN):
             for m in range(firstM, lastM + 1):
                 coeffs[count] = self.tailSheetOddValues[m, n]
                 count += 1
 
-        for n in range(firstN, lastN + 1):
+        for n in range(lastN):
             for m in range(firstM, lastM + 1):
                 coeffs[count] = self.tailSheetEvenValues[m, n]
                 count += 1

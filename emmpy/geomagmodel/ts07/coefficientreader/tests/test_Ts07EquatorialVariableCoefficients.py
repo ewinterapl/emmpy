@@ -20,10 +20,10 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         coeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         pdynDependentCoeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
@@ -44,10 +44,10 @@ class TestBuilder(unittest.TestCase):
     def test_getTotalNumberOfParameters(self):
         tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         coeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         pdynDependentCoeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
@@ -63,10 +63,10 @@ class TestBuilder(unittest.TestCase):
     def test_getTotalNumberOfLinearParameters(self):
         tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         coeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         pdynDependentCoeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
@@ -82,10 +82,10 @@ class TestBuilder(unittest.TestCase):
     def test_getTotalNumberOfNonLinearParameters(self):
         tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         coeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         pdynDependentCoeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)

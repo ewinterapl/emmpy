@@ -17,10 +17,10 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         coeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         pdynDependentCoeffs = TailSheetCoefficients(tailSym, tailOdd, tailEven)
@@ -38,16 +38,16 @@ class TestBuilder(unittest.TestCase):
         sym = ScalarExpansion1D([0, 1, 2, 3])
         symPdynDependent = ScalarExpansion1D([0, 1, 2, 3])
         aOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         aOddPdynDependent = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         aEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         aEvenPdynDependent = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         na = 4
         nr = 4
@@ -63,16 +63,16 @@ class TestBuilder(unittest.TestCase):
         sym = ScalarExpansion1D([0, 1, 2, 3])
         symPdynDependent = ScalarExpansion1D([0, 1, 2, 3])
         aOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         aOddPdynDependent = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         aEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         aEvenPdynDependent = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]]
         )
         na = 4
         nr = 4

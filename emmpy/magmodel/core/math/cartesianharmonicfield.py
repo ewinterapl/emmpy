@@ -112,7 +112,7 @@ class CartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
-        firstK = 1
+        firstK = 0
         bx = 0.0
         by = 0.0
         bz = 0.0

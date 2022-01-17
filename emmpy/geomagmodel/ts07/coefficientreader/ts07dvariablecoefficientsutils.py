@@ -380,13 +380,13 @@ class TS07DVariableCoefficientsUtils:
                     )
             aSymExpansion = ScalarExpansion1D(aSym)
             aSymPdynDependentExpansion = ScalarExpansion1D(aSymPdynDependent)
-            aOddExpansion = ArrayCoefficientExpansion2D(aOdd, 1)
+            aOddExpansion = ArrayCoefficientExpansion2D(aOdd)
             aOddPdynDependentExpansion = ArrayCoefficientExpansion2D(
-                aOddPdynDependent, 1
+                aOddPdynDependent
             )
-            aEvenExpansion = ArrayCoefficientExpansion2D(aEven, 1)
+            aEvenExpansion = ArrayCoefficientExpansion2D(aEven)
             aEvenPdynDependentExpansion = ArrayCoefficientExpansion2D(
-               aEvenPdynDependent, 1
+               aEvenPdynDependent
             )
             equatorialLinearCoeffs = (
                 Ts07EquatorialLinearCoefficients.create(

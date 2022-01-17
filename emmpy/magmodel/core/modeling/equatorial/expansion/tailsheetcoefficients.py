@@ -80,10 +80,10 @@ class TailSheetCoefficients:
         return TailSheetCoefficients(
             ScalarExpansion1D.createUnity(numRadialExpansions),
             ArrayCoefficientExpansion2D.createUnity(
-                0, numAzimuthalExpansions - 1, 0, numRadialExpansions - 1
+                numAzimuthalExpansions, 0, numRadialExpansions - 1
             ),
             ArrayCoefficientExpansion2D.createUnity(
-                0, numAzimuthalExpansions - 1, 0, numRadialExpansions - 1)
+                numAzimuthalExpansions, 0, numRadialExpansions - 1)
         )
 
     @staticmethod

@@ -107,11 +107,11 @@ class TestBuilder(unittest.TestCase):
     def test_createUnity(self):
         """Test the createUnity function."""
         unity = ArrayCoefficientExpansion2D.createUnity(
-            iLowerBoundIndex, iUpperBoundIndex,
+            n_rows,
             jLowerBoundIndex, jUpperBoundIndex
         )
         self.assertIsInstance(unity, ArrayCoefficientExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
+        for row in range(n_rows):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
                 self.assertAlmostEqual(unity[row, col], 1.0)
 

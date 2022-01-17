@@ -184,7 +184,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         return null
 
     @staticmethod
-    def createUnity(row_min, row_max, col_min, col_max):
+    def createUnity(n_rows, col_min, col_max):
         """Create an expansion of unit coefficients.
 
         Create an expansion of unit coefficients using the specified logical
@@ -192,15 +192,14 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
         Parameters
         ----------
-        row_min, row_max, col_min, col_max : int
-            Lowest and highest logical indices for rows and columns.
+        n_rows, col_min, col_max : int
+            Row count, and lowest/highest logical indices for columns.
 
         Returns
         -------
         unity : ArrayCoefficientExpansion2D
             An expansion with unit coefficients.
         """
-        n_rows = row_max - row_min + 1
         n_cols = col_max - col_min + 1
         data = np.ones((n_rows, n_cols))
         unity = ArrayCoefficientExpansion2D(data, col_min)

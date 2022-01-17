@@ -79,11 +79,6 @@ class TailSheetCoefficients:
         """
         return TailSheetCoefficients(
             ScalarExpansion1D.createUnity(numRadialExpansions),
-            # ArrayCoefficientExpansion2D.createUnity(
-            #     1, numAzimuthalExpansions, 1, numRadialExpansions
-            # ),
-            # ArrayCoefficientExpansion2D.createUnity(
-            #     1, numAzimuthalExpansions, 1, numRadialExpansions)
             ArrayCoefficientExpansion2D.createUnity(
                 0, numAzimuthalExpansions - 1, 0, numRadialExpansions - 1
             ),
@@ -138,20 +133,16 @@ class TailSheetCoefficients:
             return TailSheetCoefficients(
                 ScalarExpansion1D(sym, 1),
                 ArrayCoefficientExpansion2D.createNullExpansion(
-                    # 1, numAzimuthalExpansions,
                     0, numAzimuthalExpansions,
                     1, numRadialExpansions),
                 ArrayCoefficientExpansion2D.createNullExpansion(
-                    # 1, numAzimuthalExpansions,
                     0, numAzimuthalExpansions,
                     1, numRadialExpansions)
             )
 
         return TailSheetCoefficients(
             ScalarExpansion1D(sym),
-            # ArrayCoefficientExpansion2D(odd, 1, 1),
             ArrayCoefficientExpansion2D(odd, 0, 1),
-            # ArrayCoefficientExpansion2D(even, 1, 1))
             ArrayCoefficientExpansion2D(even, 0, 1))
 
     def getAsSingleExpansion(self):
@@ -168,9 +159,7 @@ class TailSheetCoefficients:
         result : CoefficientExpansion1D
             Expansion with all coefficients collapsed to 1 dimension.
         """
-        # firstM = 1
         firstM = 0
-        # lastM = self.numAzimuthalExpansions
         lastM = self.numAzimuthalExpansions - 1
         firstN = 1
         lastN = self.numRadialExpansions

@@ -96,7 +96,7 @@ class TestBuilder(unittest.TestCase):
     def test_createNullExpansion(self):
         """Test the createNullExpansion function."""
         null = ArrayCoefficientExpansion2D.createNullExpansion(
-            iLowerBoundIndex, iUpperBoundIndex,
+            n_rows,
             jLowerBoundIndex, jUpperBoundIndex
         )
         self.assertIsInstance(null, ArrayCoefficientExpansion2D)

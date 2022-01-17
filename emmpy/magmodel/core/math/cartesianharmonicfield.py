@@ -112,9 +112,7 @@ class CartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
-        # firstI = 1
         firstI = 0
-        # lastI = len(self.piCoeffs)
         lastI = len(self.piCoeffs) - 1
         firstK = 1
         lastK = len(self.pkCoeffs)
@@ -133,21 +131,16 @@ class CartesianHarmonicField(BasisVectorField):
         else:
             ktrig = cos
             kdtrig = lambda x: -sin(x)
-        # for i in range(firstI, lastI + 1):
         for i in range(lastI - firstI + 1):
-            # pi = self.piCoeffs[i - firstI]
             pi = self.piCoeffs[i]
             sinYpi = itrig(pi*y)
             cosYpi = idtrig(pi*y)
-            # for k in range(firstK, lastK + 1):
             for k in range(lastK - firstK + 1):
-                # pk = self.pkCoeffs[k - firstK]
                 pk = self.pkCoeffs[k]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
                 sinZpk = ktrig(pk*z)
                 cosZpk = kdtrig(pk*z)
-                # aik = self.aikCoeffs[i, k]
                 aik = self.aikCoeffs[i + firstI, k + firstK]
                 bx += aik*exp_*sqrtP*sinYpi*sinZpk
                 by += aik*exp_*pi*cosYpi*sinZpk
@@ -186,28 +179,22 @@ class CartesianHarmonicField(BasisVectorField):
             ktrig = cos
             kdtrig = lambda x: -sin(x)
         expansions = nones((self.aikCoeffs.iSize(), self.aikCoeffs.jSize()))
-        # for i in range(self.firstI, self.lastI + 1):
         for i in range(self.lastI - self.firstI + 1):
-            # pi = self.piCoeffs.getCoefficient(i)
             pi = self.piCoeffs.getCoefficient(i + self.firstI)
             sinYpi = itrig(pi*y)
             cosYpi = idtrig(pi*y)
-            # for k in range(self.firstK, self.lastK + 1):
             for k in range(self.lastK - self.firstK + 1):
-                # pk = self.pkCoeffs.getCoefficient(k)
                 pk = self.pkCoeffs.getCoefficient(k + self.firstK)
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
                 sinZpk = ktrig(pk*z)
                 cosZpk = kdtrig(pk*z)
-                # aik = self.aikCoeffs.getCoefficient(i, k)
                 aik = self.aikCoeffs.getCoefficient(i + self.firstI, k + self.firstK)
                 bx = -aik*exp_*sqrtP*sinYpi*sinZpk
                 by = -aik*exp_*pi*cosYpi*sinZpk
                 bz = -aik*exp_*pk*sinYpi*cosZpk
                 # scale the vector, the minus sign comes from the B=-dell U
                 vect = VectorIJK(bx, by, bz)
-                # expansions[i - self.firstI][k - self.firstK] = vect
                 expansions[i][k] = vect
         return Expansion2Ds.createFromArray(expansions, self.firstI, self.firstK)
 
@@ -228,10 +215,7 @@ class CartesianHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        # for i in range(self.firstI, self.lastI + 1):
         for i in range(self.lastI - self.firstI + 1):
-            # for k in range(self.firstK, self.lastK + 1):
             for k in range(self.lastK - self.firstK + 1):
-                # functions.append(expansions.getExpansion(i, k))
                 functions.append(expansions.getExpansion(i + self.firstI, k + self.firstK))
         return functions

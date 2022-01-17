@@ -95,13 +95,10 @@ class TestBuilder(unittest.TestCase):
 
     def test_createNullExpansion(self):
         """Test the createNullExpansion function."""
-        null = ArrayCoefficientExpansion2D.createNullExpansion(
-            n_rows,
-            jLowerBoundIndex, jUpperBoundIndex
-        )
+        null = ArrayCoefficientExpansion2D.createNullExpansion(n_rows, n_cols)
         self.assertIsInstance(null, ArrayCoefficientExpansion2D)
-        for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
-            for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
+        for row in range(n_rows):
+            for col in range(n_cols):
                 self.assertTrue(np.isnan(null[row, col]))
 
     def test_createUnity(self):

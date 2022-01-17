@@ -160,7 +160,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         return exp_sum
 
     @staticmethod
-    def createNullExpansion(n_rows, col_min, col_max):
+    def createNullExpansion(n_rows, n_cols):
         """Create an expansion of null coefficients.
 
         Create an expansion of null coefficients using the specified logical
@@ -168,17 +168,17 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
         Parameters
         ----------
-        n_rows, col_min, col_max : int
-            Row count, and lowest/highest logical indices for columns.
+        n_rows, n_cols : int
+            Numbers of rows and columns.
 
         Returns
         -------
         null : ArrayCoefficientExpansion2D
             An expansion with null coefficients.
         """
-        n_cols = col_max - col_min + 1
-        nulls = nones((n_rows, n_cols))
-        data = np.array(nulls)
+        data = np.empty((n_rows, n_cols))
+        data[...] = np.nan
+        col_min = 0
         null = ArrayCoefficientExpansion2D(data, col_min)
         return null
 

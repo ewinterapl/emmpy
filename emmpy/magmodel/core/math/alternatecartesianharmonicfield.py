@@ -134,7 +134,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             ktrig = np.cos
             kdtrig = lambda x: -np.sin(x)
         expansions = nones((self.aikCoeffs.iSize, self.aikCoeffs.jSize))
-        # <HACK>
         sinYpi = itrig(self.piCoeffs*y)
         cosYpi = idtrig(self.piCoeffs*y)
         sinZpk = ktrig(self.pkCoeffs*z)
@@ -170,7 +169,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             -aik[:, -1]*exp_[:, -1] * sinYpi * 
             (cosZpk[-1]*(1.0 + x*pk[-1]*pk[-1]/sqrtP[:, -1]) - z*pk[-1]*sinZpk[-1])
         )
-        # </HACK>
         for i in range(ni):
             for k in range(nk):
                 vect = VectorIJK(bx[i, k], by[i, k], bz[i, k])
@@ -194,10 +192,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        # for i in range(self.firstI, self.lastI + 1):
         for i in range(self.lastI - self.firstI + 1):
-            # for k in range(self.firstK, self.lastK + 1):
             for k in range(self.lastK - self.firstK + 1):
-                # functions.append(expansions.getExpansion(i, k))
                 functions.append(expansions.getExpansion(i + self.firstI, k + self.firstK))
         return functions

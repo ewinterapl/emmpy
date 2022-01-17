@@ -184,7 +184,7 @@ class TS07DStaticCoefficientsFactory:
                     line = f.readline()
                     val = float(line.split()[0])
                     waveNumberValues[k] = val
-            expansions[i] = ArrayCoefficientExpansion2D(values, 0, 1)
+            expansions[i] = ArrayCoefficientExpansion2D(values, 0, 0)
             waveExpansions[i] = ScalarExpansion1D(waveNumberValues)
 
         return SymmetricCylindricalExpansionPair(
@@ -237,7 +237,7 @@ class TS07DStaticCoefficientsFactory:
                         val = float(line.split()[0])
                         waveNumberValues[k] = val
                 expansions[m][n] = ArrayCoefficientExpansion2D(
-                    values, 0, 1
+                    values, 0, 0
                 )
                 waveExpansions[m][n] = ScalarExpansion1D(waveNumberValues)
         return AsymmetricCylindricalExpansionPair(

@@ -111,22 +111,22 @@ class TailSheetCoefficients:
         even = nones((numAzimuthalExpansions, numRadialExpansions))
         # n is the radial expansion number.
         count = 0
-        for n in range(1, numRadialExpansions + 1):
-            sym[n - 1] = array[count]
+        for n in range(numRadialExpansions):
+            sym[n] = array[count]
             count += 1
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
-        for n in range(1, numRadialExpansions + 1):
-            for m in range(1, numAzimuthalExpansions + 1):
-                odd[m - 1][n - 1] = array[count]
+        for n in range(numRadialExpansions):
+            for m in range(numAzimuthalExpansions):
+                odd[m][n] = array[count]
                 count += 1
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
-        for n in range(1, numRadialExpansions + 1):
-            for m in range(1, numAzimuthalExpansions + 1):
-                even[m - 1][n - 1] = array[count]
+        for n in range(numRadialExpansions):
+            for m in range(numAzimuthalExpansions):
+                even[m][n] = array[count]
                 count += 1
 
         if numAzimuthalExpansions == 0:
@@ -167,10 +167,14 @@ class TailSheetCoefficients:
         count = 0
 
         # The pressure independent terms.
-        for n in range(lastN):
-            coeffs[count] = self.tailSheetSymmetricValues[n]
-            count += 1
+        # for n in range(len(self.tailSheetSymmetricValues)):
+        #     coeffs[count] = self.tailSheetSymmetricValues[n]
+        #     count += 1
+        i1 = 0
+        i2 = len(self.tailSheetSymmetricValues)
+        coeffs[i1:i2] = self.tailSheetSymmetricValues[...]
 
+        count = i2
         for n in range(firstN, lastN + 1):
             for m in range(firstM, lastM + 1):
                 coeffs[count] = self.tailSheetOddValues[m, n]

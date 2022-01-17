@@ -45,7 +45,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         Number of logical rows and columns, respectively.
     """
 
-    def __new__(cls, data, iLowerBoundIndex, jLowerBoundIndex):
+    def __new__(cls, data, jLowerBoundIndex):
         """Allocate a new ArrayCoefficient2D object.
 
         Allocate a new ArrayCoefficient2D object by allocating a new
@@ -55,8 +55,6 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         ----------
         data : 2-D rectangular array-like of float
             The array of expansion coefficients.
-        iLowerBoundIndex : int
-            Logical index of first valid row of coefficients.
         jLowerBoundIndex : int
             Logical index of first valid column of coefficients.
 
@@ -65,12 +63,12 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         ace2d : ArrayCoefficientExpansion2D
             The newly-allocated object.
         """
-        nrows = len(data) + iLowerBoundIndex
+        nrows = len(data)
         ncols = len(data[0]) + jLowerBoundIndex
         ace2d = super().__new__(cls, shape=(nrows, ncols), dtype=float)
         return ace2d
 
-    def __init__(self,  data, iLowerBoundIndex, jLowerBoundIndex):
+    def __init__(self,  data, jLowerBoundIndex):
         """Initialize a new ArrayCoefficientExpansion2D object.
 
         Initialize a ArrayCoefficient2D object.
@@ -79,13 +77,11 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         ----------
         data : 2-D rectangular array of float
             The array of expansion coefficients.
-        iLowerBoundIndex : int
-            Index of first valid row of coefficients.
         jLowerBoundIndex : int
             Index of first valid column of coefficients.
         """
-        self[iLowerBoundIndex:, jLowerBoundIndex:] = data
-        self.iLowerBoundIndex = iLowerBoundIndex
+        self[:, jLowerBoundIndex:] = data
+        self.iLowerBoundIndex = 0
         self.iSize = len(data)
         self.iUpperBoundIndex = self.iLowerBoundIndex + self.iSize - 1
         self.jLowerBoundIndex = jLowerBoundIndex
@@ -110,7 +106,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         jLowerBoundIndex = self.jLowerBoundIndex
         data = -self[iLowerBoundIndex:, jLowerBoundIndex:]
         negation = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         return negation
 
@@ -133,7 +129,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         jLowerBoundIndex = self.jLowerBoundIndex
         data = scale_factor*self[iLowerBoundIndex:, jLowerBoundIndex:]
         scaled = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         return scaled
 
@@ -160,7 +156,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
             a[iLowerBoundIndex:, jLowerBoundIndex:] +
             b[iLowerBoundIndex:, jLowerBoundIndex:]
         )
-        exp_sum = ArrayCoefficientExpansion2D(data, iLowerBoundIndex, jLowerBoundIndex)
+        exp_sum = ArrayCoefficientExpansion2D(data, jLowerBoundIndex)
         return exp_sum
 
     @staticmethod
@@ -184,7 +180,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         n_cols = col_max - col_min + 1
         nulls = nones((n_rows, n_cols))
         data = np.array(nulls)
-        null = ArrayCoefficientExpansion2D(data, row_min, col_min)
+        null = ArrayCoefficientExpansion2D(data, col_min)
         return null
 
     @staticmethod
@@ -207,5 +203,5 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         n_rows = row_max - row_min + 1
         n_cols = col_max - col_min + 1
         data = np.ones((n_rows, n_cols))
-        unity = ArrayCoefficientExpansion2D(data, row_min, col_min)
+        unity = ArrayCoefficientExpansion2D(data, col_min)
         return unity

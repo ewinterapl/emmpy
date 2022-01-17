@@ -276,11 +276,9 @@ class FieldAlignedCurrentShiedingBuilder:
             r = FieldAlignedCurrentShiedingBuilder.rSym
             s = FieldAlignedCurrentShiedingBuilder.sSym
             aPerpendicular = ArrayCoefficientExpansion2D(
-                # aPerpenValues, 1, 1).negate()
-                aPerpenValues, 0, 1).negate()
+                aPerpenValues, 1).negate()
             aParallel = ArrayCoefficientExpansion2D(
-                    # aParallValues, 1, 1).negate()
-                    aParallValues, 0, 1).negate()
+                    aParallValues, 1).negate()
         else:
             T1 = FieldAlignedCurrentShiedingBuilder.T1ASym
             T2 = FieldAlignedCurrentShiedingBuilder.T2ASym
@@ -288,10 +286,8 @@ class FieldAlignedCurrentShiedingBuilder:
             q = FieldAlignedCurrentShiedingBuilder.qASym
             r = FieldAlignedCurrentShiedingBuilder.rASym
             s = FieldAlignedCurrentShiedingBuilder.sASym
-            # aPerpendicular = ArrayCoefficientExpansion2D(aPerpenValues, 1, 1)
-            aPerpendicular = ArrayCoefficientExpansion2D(aPerpenValues, 0, 1)
-            # aParallel = ArrayCoefficientExpansion2D(aParallValues, 1, 1)
-            aParallel = ArrayCoefficientExpansion2D(aParallValues, 0, 1)
+            aPerpendicular = ArrayCoefficientExpansion2D(aPerpenValues, 1)
+            aParallel = ArrayCoefficientExpansion2D(aParallValues, 1)
         psiT1 = self.dipoleTilt*T1[self.region - 1][self.mode - 1]
         psiT2 = self.dipoleTilt*T2[self.region - 1][self.mode - 1]
         pExpansion = ScalarExpansion1D(p[self.region - 1][self.mode - 1]).invert()

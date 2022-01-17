@@ -14,10 +14,10 @@ class TestTailSheetCoefficients(unittest.TestCase):
     def test___init__(self):
         tailSym = ScalarExpansion1D([0, 1, 2, 3])
         tailOdd = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
         )
         tailEven = ArrayCoefficientExpansion2D(
-            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1, 1
+            [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 0, 1], [2, 3, 4, 5]], 1
         )
         c = TailSheetCoefficients(tailSym, tailOdd, tailEven)
         self.assertIs(c.tailSheetSymmetricValues, tailSym)

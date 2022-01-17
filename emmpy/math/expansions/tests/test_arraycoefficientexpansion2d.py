@@ -16,7 +16,7 @@ from emmpy.math.expansions.arraycoefficientexpansion2d import ArrayCoefficientEx
 n_rows = 3
 n_cols = 4
 data = np.arange(n_rows*n_cols).reshape(n_rows, n_cols)
-iLowerBoundIndex = 1
+iLowerBoundIndex = 0
 iUpperBoundIndex = iLowerBoundIndex + n_rows - 1
 jLowerBoundIndex = 2
 jUpperBoundIndex = jLowerBoundIndex + n_cols - 1
@@ -29,7 +29,7 @@ class TestBuilder(unittest.TestCase):
         """Test the __new__ method."""
         ace2d = ArrayCoefficientExpansion2D.__new__(
             ArrayCoefficientExpansion2D,
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         self.assertEqual(ace2d.shape[0], n_rows + iLowerBoundIndex)
         self.assertEqual(ace2d.shape[1], n_cols + jLowerBoundIndex)
@@ -37,7 +37,7 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         """Test the __init__ method."""
         ace2d = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         for row in range(iLowerBoundIndex, iUpperBoundIndex + 1):
             for col in range(jLowerBoundIndex, jUpperBoundIndex + 1):
@@ -55,7 +55,7 @@ class TestBuilder(unittest.TestCase):
     def test_negate(self):
         """Test the negate method."""
         ace2d = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         negation = ace2d.negate()
         self.assertIsInstance(negation, ArrayCoefficientExpansion2D)
@@ -67,7 +67,7 @@ class TestBuilder(unittest.TestCase):
         """Test the scale method."""
         scale_factor = 1.1
         ace2d = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         scaled = ace2d.scale(scale_factor)
         self.assertIsInstance(scaled, ArrayCoefficientExpansion2D)
@@ -80,10 +80,10 @@ class TestBuilder(unittest.TestCase):
     def test_add(self):
         """Test the add function."""
         a = ArrayCoefficientExpansion2D(
-            data, iLowerBoundIndex, jLowerBoundIndex
+            data, jLowerBoundIndex
         )
         b = ArrayCoefficientExpansion2D(
-            data + 1.0, iLowerBoundIndex, jLowerBoundIndex
+            data + 1.0, jLowerBoundIndex
         )
         exp_sum = ArrayCoefficientExpansion2D.add(a, b)
         self.assertIsInstance(exp_sum, ArrayCoefficientExpansion2D)

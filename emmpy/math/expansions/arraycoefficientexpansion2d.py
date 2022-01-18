@@ -77,9 +77,8 @@ class ArrayCoefficientExpansion2D(np.ndarray):
             The array of expansion coefficients.
         """
         self[...] = data
-        self.iLowerBoundIndex = 0
         self.iSize = len(data)
-        self.iUpperBoundIndex = self.iLowerBoundIndex + self.iSize - 1
+        self.iUpperBoundIndex = self.iSize - 1
         self.jLowerBoundIndex = 0
         self.jSize = len(data[0])
         self.jUpperBoundIndex = self.jLowerBoundIndex + self.jSize - 1
@@ -98,9 +97,8 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         negation : ArrayCoefficientExpansion2D
             A negated copy of this expansion.
         """
-        iLowerBoundIndex = self.iLowerBoundIndex
         jLowerBoundIndex = self.jLowerBoundIndex
-        data = -self[iLowerBoundIndex:, jLowerBoundIndex:]
+        data = -self[:, jLowerBoundIndex:]
         negation = ArrayCoefficientExpansion2D(data)
         return negation
 
@@ -119,9 +117,8 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         scaled : ArrayCoefficientExpansion2D
             A scaled copy of this expansion.
         """
-        iLowerBoundIndex = self.iLowerBoundIndex
         jLowerBoundIndex = self.jLowerBoundIndex
-        data = scale_factor*self[iLowerBoundIndex:, jLowerBoundIndex:]
+        data = scale_factor*self[:, jLowerBoundIndex:]
         scaled = ArrayCoefficientExpansion2D(data)
         return scaled
 
@@ -142,11 +139,10 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         exp_sum : ArrayCoefficientExpansion2D
             Sum of the two expansions.
         """
-        iLowerBoundIndex = a.iLowerBoundIndex
         jLowerBoundIndex = a.jLowerBoundIndex
         data = (
-            a[iLowerBoundIndex:, jLowerBoundIndex:] +
-            b[iLowerBoundIndex:, jLowerBoundIndex:]
+            a[:, jLowerBoundIndex:] +
+            b[:, jLowerBoundIndex:]
         )
         exp_sum = ArrayCoefficientExpansion2D(data)
         return exp_sum

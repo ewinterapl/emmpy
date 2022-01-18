@@ -62,7 +62,6 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         self.coefficientsExpansion = coefficientsExpansion
         self.waveNumberExpansion = waveNumberExpansion
-        self.lastM = len(coefficientsExpansion) - 1
         self.firstN = 0
         self.lastN = len(coefficientsExpansion[0]) - 1
         self.trigParity = trigParity
@@ -92,8 +91,8 @@ class CylindricalHarmonicField(BasisVectorField):
         z = cylindricalLocation.z
 
         # Precompute the sin(m*phi) and cos(m*phi), for speed.
-        sinMphis = np.empty(self.lastM + 1)
-        cosMphis = np.empty(self.lastM + 1)
+        sinMphis = np.empty(len(self.coefficientsExpansion))
+        cosMphis = np.empty(len(self.coefficientsExpansion))
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
         for n in range(self.lastN - self.firstN + 1):
@@ -106,12 +105,12 @@ class CylindricalHarmonicField(BasisVectorField):
             rhoKInv = min(1/rhoK, CylindricalHarmonicField.invMaxVal)
             rhoInv = min(1/rho, CylindricalHarmonicField.invMaxVal)
             # Calculate Bessel terms and their derivatives.
-            jns = jv(range(self.lastM + 1), rhoK)
-            jnsDer = np.empty(self.lastM + 1)
+            jns = jv(range(len(self.coefficientsExpansion)), rhoK)
+            jnsDer = np.empty(len(self.coefficientsExpansion))
             jnsDer[0] = -jns[1]
-            jnsDer[1:] = [jns[m - 1] - m*jns[m]*rhoKInv for m in range(1, self.lastM + 1)]
+            jnsDer[1:] = [jns[m - 1] - m*jns[m]*rhoKInv for m in range(1, len(self.coefficientsExpansion))]
 
-            for m in range(self.lastM + 1):
+            for m in range(len(self.coefficientsExpansion)):
                 # Sine if odd, -cosine if even.
                 sinLPhi = sinMphis[m]
                 # Cosine if odd, sine if even.

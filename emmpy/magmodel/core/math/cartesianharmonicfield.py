@@ -88,7 +88,7 @@ class CartesianHarmonicField(BasisVectorField):
         self.trigParityI = trigParityI
         self.trigParityK = trigParityK
         self.firstI = 0
-        self.lastI = aikCoeffs.iUpperBoundIndex
+        self.lastI = len(aikCoeffs) - 1
         self.firstK = 0
         self.lastK = aikCoeffs.jUpperBoundIndex
 

@@ -61,9 +61,9 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         ace2d : ArrayCoefficientExpansion2D
             The newly-allocated object.
         """
-        nrows = len(data)
-        ncols = len(data[0])
-        ace2d = super().__new__(cls, shape=(nrows, ncols), dtype=float)
+        n_rows = len(data)
+        n_cols = len(data[0])
+        ace2d = super().__new__(cls, shape=(n_rows, n_cols), dtype=float)
         return ace2d
 
     def __init__(self,  data):
@@ -78,7 +78,6 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         """
         self[...] = data
         self.iSize = len(data)
-        self.iUpperBoundIndex = self.iSize - 1
         self.jSize = len(data[0])
         self.jUpperBoundIndex = self.jSize - 1
 

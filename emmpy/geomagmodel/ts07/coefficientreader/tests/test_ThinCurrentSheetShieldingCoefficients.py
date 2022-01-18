@@ -1,8 +1,5 @@
 import unittest
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansion1d import (
-    CoefficientExpansion1D
-)
 from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
     CoefficientExpansion2D
 )
@@ -17,11 +14,11 @@ class TestBuilder(unittest.TestCase):
         na = 3
         nr = 2
         symTail = CoefficientExpansion2D()
-        symTailWave = CoefficientExpansion1D()
+        symTailWave = None
         oddTail = CoefficientExpansion2D()
-        oddTailWave = CoefficientExpansion1D()
+        oddTailWave = None
         evenTail = CoefficientExpansion2D()
-        evenTailWave = CoefficientExpansion1D()
+        evenTailWave = None
         ThinCurrentSheetShieldingCoefficients(
             na, nr,
             symTail, symTailWave,

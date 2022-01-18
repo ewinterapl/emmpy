@@ -145,7 +145,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 evenExpansions[m][n] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
-        return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions, 1),
+        return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions),
             Expansion2Ds.createFromArray(oddExpansions, 1, 1),
             Expansion2Ds.createFromArray(evenExpansions, 1, 1))
 

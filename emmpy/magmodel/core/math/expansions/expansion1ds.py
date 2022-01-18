@@ -23,7 +23,7 @@ class Expansion1Ds:
     """
 
     @staticmethod
-    def createFromArray(array, firstRadialExpansionNumber):
+    def createFromArray(array):
         """Create an expansion from an array.
 
         Create an expansion from an array.
@@ -32,8 +32,6 @@ class Expansion1Ds:
         ----------
         array : list of float
             List of values for expansion.
-        firstRadialExpansionNumber : int
-            Index of first expansion.
         
         Returns
         -------

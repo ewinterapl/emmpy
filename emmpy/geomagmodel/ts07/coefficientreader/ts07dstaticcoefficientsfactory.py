@@ -188,8 +188,8 @@ class TS07DStaticCoefficientsFactory:
             waveExpansions[i] = ScalarExpansion1D(waveNumberValues)
 
         return SymmetricCylindricalExpansionPair(
-            Expansion1Ds.createFromArray(expansions, 1),
-            Expansion1Ds.createFromArray(waveExpansions, 1)
+            Expansion1Ds.createFromArray(expansions),
+            Expansion1Ds.createFromArray(waveExpansions)
         )
 
     @staticmethod

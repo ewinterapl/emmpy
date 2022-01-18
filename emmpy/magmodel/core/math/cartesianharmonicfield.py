@@ -182,25 +182,3 @@ class CartesianHarmonicField(BasisVectorField):
                 vect = VectorIJK(bx, by, bz)
                 expansions[i][k] = vect
         return Expansion2Ds.createFromArray(expansions, self.firstI, self.firstK)
-
-    def evaluateExpansion(self, location):
-        """Evaluate the expansion at a location.
-        
-        Evaluate the expansion at a location.
-        
-        Parameters
-        ----------
-        location : VectorIJK
-            Location to evaluate the expansion.
-        
-        Returns
-        -------
-        functions : list of functions
-            Functions which make up the harmonic field.
-        """
-        functions = []
-        expansions = self.evaluateExpansion2D(location)
-        for i in range(self.lastI - self.firstI + 1):
-            for k in range(self.lastK - self.firstK + 1):
-                functions.append(expansions.getExpansion(i + self.firstI, k + self.firstK))
-        return functions

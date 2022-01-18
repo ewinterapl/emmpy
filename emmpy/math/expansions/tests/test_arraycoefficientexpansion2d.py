@@ -40,7 +40,6 @@ class TestBuilder(unittest.TestCase):
             for col in range(n_cols):
                 self.assertAlmostEqual(ace2d[row, col], data[row, col])
         self.assertEqual(ace2d.iUpperBoundIndex, iUpperBoundIndex)
-        self.assertEqual(ace2d.jLowerBoundIndex, jLowerBoundIndex)
         self.assertEqual(ace2d.jUpperBoundIndex, jUpperBoundIndex)
         self.assertEqual(ace2d.iSize, iUpperBoundIndex - iLowerBoundIndex + 1)
         self.assertEqual(ace2d.jSize, jUpperBoundIndex - jLowerBoundIndex + 1)

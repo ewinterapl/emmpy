@@ -39,7 +39,6 @@ class TestBuilder(unittest.TestCase):
         for row in range(n_rows):
             for col in range(n_cols):
                 self.assertAlmostEqual(ace2d[row, col], data[row, col])
-        self.assertEqual(ace2d.iSize, iUpperBoundIndex - iLowerBoundIndex + 1)
         self.assertEqual(ace2d.jSize, jUpperBoundIndex - jLowerBoundIndex + 1)
 
     def test_negate(self):

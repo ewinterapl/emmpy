@@ -77,7 +77,6 @@ class ArrayCoefficientExpansion2D(np.ndarray):
             The array of expansion coefficients.
         """
         self[...] = data
-        self.iSize = len(data)
         self.jSize = len(data[0])
 
     def negate(self):

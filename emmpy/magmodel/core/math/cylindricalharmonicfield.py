@@ -83,7 +83,7 @@ class CylindricalHarmonicField(BasisVectorField):
         result : Expansion2D
             Functions for the expansion.
         """
-        expansions = nones((self.coefficientsExpansion.iSize,
+        expansions = nones((len(self.coefficientsExpansion),
                             self.coefficientsExpansion.jSize))
         x = location.x
         y = location.y

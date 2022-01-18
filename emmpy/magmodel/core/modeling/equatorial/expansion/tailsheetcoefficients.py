@@ -56,7 +56,7 @@ class TailSheetCoefficients:
         self.tailSheetSymmetricValues = tailSheetSymmetricValues
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
-        self.numAzimuthalExpansions = tailSheetOddValues.iSize
+        self.numAzimuthalExpansions = len(tailSheetOddValues)
         self.numRadialExpansions = tailSheetOddValues.jSize
 
     @staticmethod

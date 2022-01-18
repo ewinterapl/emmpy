@@ -9,8 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import cos, exp, sin, sqrt
-
 import numpy as np
 
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
@@ -41,9 +39,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
     by an unlimited growth of the corresponding linear coefficients in the
     course of the iterative minimization of Bn^2"
 
-    TODO Using SVD to solve for the coefficients may alleviate the issue
-    described above.
-
     Attributes
     ----------
     piCoeffs : CoefficientExpansion1D
@@ -56,14 +51,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         trigParityI
     trigParityK : TrigParity
         trigParityK
-    firstI : int
-        firstI
-    lastI : int
-        lastI
-    firstK : int
-        firstK
-    lastK : int
-        lastK
     """
 
     def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
@@ -84,14 +71,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             trigParityI
         trigParityK : TrigParity
             trigParityK
-        firstI : int
-            firstI
-        lastI : int
-            lastI
-        firstK : int
-            firstK
-        lastK : int
-            lastK
         """
         self.piCoeffs = piCoeffs
         self.pkCoeffs = pkCoeffs

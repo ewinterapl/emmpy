@@ -1,13 +1,6 @@
 """A 2-D array for a coefficient expansion.
 
-A 2-D array of scalar expansion components. The index of the first valid
-row (iLowerBoundIndex) and the first valid column (jLowerBoundIndex) are
-not required to be 0. The stored array is padded with unused rows before
-the first valid row, and unused columns in each row before the first valid
-column. This allows the non-0-based indexing to work directly, at the
-expense of some unused memory. This approach is faster than indexing with
-offsets at each access, and allows the expansion to be used as a numpy
-array directly using slicing, e.g.
+A 2-D array of scalar expansion components.
 
 Authors
 -------
@@ -24,25 +17,11 @@ from emmpy.utilities.nones import nones
 class ArrayCoefficientExpansion2D(np.ndarray):
     """A 2-D array of expansion coefficients.
     
-    A 2-D array of scalar expansion components. The index of the first
-    valid row (iLowerBoundIndex) and the first valid column
-    (jLowerBoundIndex) are not required to be 0. The stored array is
-    padded with unused rows before the first valid row, and unused
-    columns in each row before the first valid column. This allows the
-    non-0-based indexing to work directly, at the expense of some unused
-    memory. This approach is faster than indexing with offsets at each
-    access, and allows the expansion to be used as a numpy array directly
-    using slicing, e.g.
-    expansion[iJlowerBoundIndex:, jLowerBoundIndex:.]
+    A 2-D array of scalar expansion components.
 
     Attributes
     ----------
-    iLowerBoundIndex, iUpperBoundIndex : int
-        Logical index of first and last valid rows.
-    jLowerBoundIndex, jUpperBoundIndex : int
-        Logical index of first and last valid columns.
-    iSize, jSize : int
-        Number of logical rows and columns, respectively.
+    None
     """
 
     def __new__(cls, data):
@@ -53,7 +32,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
         Parameters
         ----------
-        data : 2-D rectangular array-like of float
+        data : 2-D array-like of float
             The array of expansion coefficients.
 
         Returns
@@ -67,13 +46,13 @@ class ArrayCoefficientExpansion2D(np.ndarray):
         return ace2d
 
     def __init__(self,  data):
-        """Initialize a new ArrayCoefficientExpansion2D object.
+        """Initialize an ArrayCoefficientExpansion2D object.
 
         Initialize a ArrayCoefficient2D object.
 
         Parameters
         ----------
-        data : 2-D rectangular array of float
+        data : 2-D array-like of float
             The array of expansion coefficients.
         """
         self[...] = data
@@ -117,8 +96,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
     def add(a, b):
         """Compute the sum of two expansions.
 
-        Compute the sum of two expansions. The expansions are assumed to have
-        the same shape and logical index limits.
+        Compute the sum of two expansions.
 
         Parameters
         ----------
@@ -127,18 +105,17 @@ class ArrayCoefficientExpansion2D(np.ndarray):
 
         Returns
         -------
-        exp_sum : ArrayCoefficientExpansion2D
+        sum : ArrayCoefficientExpansion2D
             Sum of the two expansions.
         """
-        exp_sum = ArrayCoefficientExpansion2D(a + b)
-        return exp_sum
+        sum = ArrayCoefficientExpansion2D(a + b)
+        return sum
 
     @staticmethod
     def createNullExpansion(n_rows, n_cols):
         """Create an expansion of null coefficients.
 
-        Create an expansion of null coefficients using the specified logical
-        index limits.
+        Create an expansion of null coefficients using the specified shape.
 
         Parameters
         ----------
@@ -159,8 +136,7 @@ class ArrayCoefficientExpansion2D(np.ndarray):
     def createUnity(n_rows, n_cols):
         """Create an expansion of unit coefficients.
 
-        Create an expansion of unit coefficients using the specified logical
-        index limits.
+        Create an expansion of unit coefficients using the specified shape.
 
         Parameters
         ----------

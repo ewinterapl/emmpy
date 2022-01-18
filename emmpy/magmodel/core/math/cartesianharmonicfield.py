@@ -51,8 +51,6 @@ class CartesianHarmonicField(BasisVectorField):
     trigParityK : TrigParity
         The TrigParity associated with the Z terms (odd=sine,
         even=cosine).
-    firstK : int
-        Lowest index in 2nd dimension of aik.
     lastK : int
         Highest index in 2nd dimension of aik.
     """
@@ -83,7 +81,6 @@ class CartesianHarmonicField(BasisVectorField):
         self.aikCoeffs = aikCoeffs
         self.trigParityI = trigParityI
         self.trigParityK = trigParityK
-        self.firstK = 0
         self.lastK = len(aikCoeffs[0]) - 1
 
     def evaluate(self, location, buffer):

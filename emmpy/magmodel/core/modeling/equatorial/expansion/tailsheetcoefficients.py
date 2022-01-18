@@ -57,7 +57,7 @@ class TailSheetCoefficients:
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
         self.numAzimuthalExpansions = len(tailSheetOddValues)
-        self.numRadialExpansions = tailSheetOddValues.jSize
+        self.numRadialExpansions = len(tailSheetOddValues[0])
 
     @staticmethod
     def createUnity(numAzimuthalExpansions, numRadialExpansions):

@@ -37,7 +37,6 @@ class CylindricalHarmonicField(BasisVectorField):
     ----------
     coefficientsExpansion : CoefficientExpansion2D
     waveNumberExpansion : CoefficientExpansion1D
-    firstM, lastM, firstN, lastN : int
     trigParity : TrigParity
     """
 
@@ -55,14 +54,11 @@ class CylindricalHarmonicField(BasisVectorField):
             An expansion containing the linear scaling coefficients c_mn.
         waveNumberExpansion : CoefficientExpansion1D
             An expansion containing the non-linear wave numbers k_n.
-        firstM, lastM, firstN, lastN : int
-            First and last indices in first and second dimensions.
         trigParity : TrigParity
             Even = cosine, odd = sine.
         """
         self.coefficientsExpansion = coefficientsExpansion
         self.waveNumberExpansion = waveNumberExpansion
-        self.lastN = len(coefficientsExpansion[0]) - 1
         self.trigParity = trigParity
 
     def evaluateExpansion2D(self, location):
@@ -94,7 +90,7 @@ class CylindricalHarmonicField(BasisVectorField):
         cosMphis = np.empty(len(self.coefficientsExpansion))
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
-        for n in range(self.lastN + 1):
+        for n in range(len(self.coefficientsExpansion[0])):
             # The wave number.
             kn = abs(self.waveNumberExpansion[n])
             rhoK = rho*kn
@@ -147,6 +143,6 @@ class CylindricalHarmonicField(BasisVectorField):
         functions = []
         expansions = self.evaluateExpansion2D(location)
         for m in range(len(self.coefficientsExpansion)):
-            for n in range(self.lastN + 1):
+            for n in range(len(self.coefficientsExpansion[0])):
                 functions.append(expansions.getExpansion(m, n))
         return functions

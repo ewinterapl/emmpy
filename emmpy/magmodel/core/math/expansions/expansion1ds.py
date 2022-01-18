@@ -93,8 +93,6 @@ class Expansion1Ds:
             lastExpansion = len(a.array)
             array = nones((lastExpansion + 1,))
             e1d = Expansion1D()
-            # e1d.getLowerBoundIndex = lambda: 0
-            # e1d.getUpperBoundIndex = lambda: lastExpansion
 
             def my_getExpansion(radialExpansion):
                 value = array[radialExpansion]

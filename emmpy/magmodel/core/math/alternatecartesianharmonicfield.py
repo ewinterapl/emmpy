@@ -98,7 +98,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         self.aikCoeffs = aikCoeffs
         self.trigParityI = trigParityI
         self.trigParityK = trigParityK
-        self.firstI = 0
         self.lastI = len(aikCoeffs) - 1
         self.firstK = 0
         self.lastK = len(aikCoeffs[0]) - 1
@@ -173,7 +172,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             for k in range(nk):
                 vect = VectorIJK(bx[i, k], by[i, k], bz[i, k])
                 expansions[i][k] = vect
-        return Expansion2Ds.createFromArray(expansions, self.firstI, self.firstK)
+        return Expansion2Ds.createFromArray(expansions, 0, self.firstK)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion.
@@ -192,7 +191,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        for i in range(self.lastI - self.firstI + 1):
+        for i in range(len(self.aikCoeffs)):
             for k in range(self.lastK - self.firstK + 1):
-                functions.append(expansions.getExpansion(i + self.firstI, k + self.firstK))
+                functions.append(expansions.getExpansion(i, k + self.firstK))
         return functions

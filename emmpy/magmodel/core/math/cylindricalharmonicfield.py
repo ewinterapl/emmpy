@@ -97,10 +97,8 @@ class CylindricalHarmonicField(BasisVectorField):
         cosMphis = np.empty(self.lastM + 1)
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
-        # for n in range(self.firstN, self.lastN + 1):
         for n in range(self.lastN - self.firstN + 1):
             # The wave number.
-            # kn = abs(self.waveNumberExpansion[n - self.firstN])
             kn = abs(self.waveNumberExpansion[n])
             rhoK = rho*kn
             coshKZ = cosh(z*kn)
@@ -114,17 +112,12 @@ class CylindricalHarmonicField(BasisVectorField):
             jnsDer[0] = -jns[1]
             jnsDer[1:] = [jns[m - 1] - m*jns[m]*rhoKInv for m in range(1, self.lastM + 1)]
 
-            # for m in range(self.firstM, self.lastM + 1):
             for m in range(self.lastM - self.firstM + 1):
                 # Sine if odd, -cosine if even.
-                # sinLPhi = sinMphis[m - self.firstM]
                 sinLPhi = sinMphis[m]
                 # Cosine if odd, sine if even.
-                # cosLPhi = cosMphis[m - self.firstM]
                 cosLPhi = cosMphis[m]
-                # jM = jns[m]
                 jM = jns[m + self.firstM]
-                # jMDer = jnsDer[m]
                 jMDer = jnsDer[m + self.firstM]
                 bRho = kn*jMDer*cosLPhi*sinhKZ
                 bPhi = rhoInv*m*jM*sinLPhi*sinhKZ
@@ -132,12 +125,10 @@ class CylindricalHarmonicField(BasisVectorField):
                 bx = x*rhoInv*bRho + y*rhoInv*bPhi
                 by = y*rhoInv*bRho - x*rhoInv*bPhi
                 # Get the linear scaling coefficient.
-                # coeff = self.coefficientsExpansion[m, n]
                 coeff = self.coefficientsExpansion[m + self.firstM, n + self.firstN]
                 # Scale the vector, the minus sign comes from the
                 # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff
-                # expansions[m - self.firstM][n - self.firstN] = vect
                 expansions[m][n] = vect
         return Expansion2Ds.createFromArray(expansions, self.firstM, self.firstN)
 
@@ -158,9 +149,7 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        # for m in range(self.firstM, self.lastM + 1):
         for m in range(self.lastM - self.firstM + 1):
-            # for n in range(self.firstN, self.lastN + 1):
             for n in range(self.lastN - self.firstN + 1):
                 functions.append(expansions.getExpansion(m + self.firstM, n + self.firstN))
         return functions

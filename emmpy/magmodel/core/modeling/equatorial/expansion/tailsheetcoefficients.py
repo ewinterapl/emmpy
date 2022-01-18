@@ -167,9 +167,6 @@ class TailSheetCoefficients:
         count = 0
 
         # The pressure independent terms.
-        # for n in range(len(self.tailSheetSymmetricValues)):
-        #     coeffs[count] = self.tailSheetSymmetricValues[n]
-        #     count += 1
         i1 = 0
         i2 = len(self.tailSheetSymmetricValues)
         coeffs[i1:i2] = self.tailSheetSymmetricValues[...]

@@ -21,27 +21,3 @@ class CylindricalBasisVectorField:
     Represents a VectorField in cylindrical coordinates and provides the
     conversion from a CylindricalVector field to a Cartesian vector field.
     """
-
-    # def evaluateExpansion(self, location):
-    #     """Evaluate the expansion.
-
-    #     Evaluate the field expansion at the given position, and returns an
-    #     ImmutableList results of each individual field in the expansion
-    #     in cylindrical coordinates
-
-    #     Parameters
-    #     ----------
-    #     location : CylindricalVector
-    #         Cylindrical location for field evaluation.
-
-    #     Returns
-    #     -------
-    #     result : Expansion
-    #         Expansion evaluated at the location.
-
-    #     Raises
-    #     ------
-    #     AbstractMethodException
-    #         When invoked.
-    #     """
-    #     raise AbstractMethodException

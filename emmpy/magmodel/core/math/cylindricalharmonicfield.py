@@ -62,7 +62,6 @@ class CylindricalHarmonicField(BasisVectorField):
         """
         self.coefficientsExpansion = coefficientsExpansion
         self.waveNumberExpansion = waveNumberExpansion
-        self.firstN = 0
         self.lastN = len(coefficientsExpansion[0]) - 1
         self.trigParity = trigParity
 
@@ -95,7 +94,7 @@ class CylindricalHarmonicField(BasisVectorField):
         cosMphis = np.empty(len(self.coefficientsExpansion))
         ChebyshevIteration.evaluateTrigExpansions(phi, sinMphis, cosMphis,
                                                   self.trigParity)
-        for n in range(self.lastN - self.firstN + 1):
+        for n in range(self.lastN + 1):
             # The wave number.
             kn = abs(self.waveNumberExpansion[n])
             rhoK = rho*kn
@@ -123,12 +122,12 @@ class CylindricalHarmonicField(BasisVectorField):
                 bx = x*rhoInv*bRho + y*rhoInv*bPhi
                 by = y*rhoInv*bRho - x*rhoInv*bPhi
                 # Get the linear scaling coefficient.
-                coeff = self.coefficientsExpansion[m, n + self.firstN]
+                coeff = self.coefficientsExpansion[m, n]
                 # Scale the vector, the minus sign comes from the
                 # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff
                 expansions[m][n] = vect
-        return Expansion2Ds.createFromArray(expansions, 0, self.firstN)
+        return Expansion2Ds.createFromArray(expansions, 0, 0)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.
@@ -148,6 +147,6 @@ class CylindricalHarmonicField(BasisVectorField):
         functions = []
         expansions = self.evaluateExpansion2D(location)
         for m in range(len(self.coefficientsExpansion)):
-            for n in range(self.lastN - self.firstN + 1):
-                functions.append(expansions.getExpansion(m, n + self.firstN))
+            for n in range(self.lastN + 1):
+                functions.append(expansions.getExpansion(m, n))
         return functions

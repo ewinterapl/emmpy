@@ -18,15 +18,11 @@ class ArrayExpansion1D(Expansion1D):
 
     Attributes
     ----------
-    array : list of float
+    array : array-like of float
         Expansion values.
-    firstRadialExpansionNumber : int
-        Index of first value in expansion.
-    lastRadialExpansionNumber : int
-        Index of last value in expansion.
     """
 
-    def __init__(self, array, firstRadialExpansionNumber):
+    def __init__(self, array):
         """Initialize a new ArrayEpansion1D object.
 
         Initialize a new ArrayEpansion1D object.
@@ -35,14 +31,8 @@ class ArrayExpansion1D(Expansion1D):
         ----------
         array : list of float
             Expansion values.
-        firstRadialExpansionNumber : int
-            Index of first value in expansion.
         """
         self.array = array
-        self.firstRadialExpansionNumber = firstRadialExpansionNumber
-        self.lastRadialExpansionNumber = (
-            firstRadialExpansionNumber + len(array) - 1
-        )
 
     def getExpansion(self, radialExpansion):
         """Return the the specified expansion value.
@@ -59,4 +49,4 @@ class ArrayExpansion1D(Expansion1D):
         result : float
             Value of expansion at specified index.
         """
-        return self.array[radialExpansion - self.firstRadialExpansionNumber]
+        return self.array[radialExpansion]

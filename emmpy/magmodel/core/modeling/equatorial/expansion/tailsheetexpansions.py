@@ -70,7 +70,7 @@ class TailSheetExpansions:
         basisFunctions = []
 
         # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
             basisFunctions.append(
                 self.tailSheetSymmetricValues.getExpansion(n)
             )
@@ -112,7 +112,7 @@ class TailSheetExpansions:
         bzSum = 0.0
 
         # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
             basisFunction = self.tailSheetSymmetricValues.getExpansion(n)
             bxSum += basisFunction.x
             bySum += basisFunction.y

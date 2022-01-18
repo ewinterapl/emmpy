@@ -43,7 +43,7 @@ class Expansion1Ds:
         result : ArrayExpansion1D
             New expansion object.
         """
-        return ArrayExpansion1D(array, firstRadialExpansionNumber)
+        return ArrayExpansion1D(array)
 
     class Vectors:
         """Internal class for vectors.
@@ -95,19 +95,18 @@ class Expansion1Ds:
             e1d : Expansion1D
                 Wrapper object for expansion sum.
             """
-            firstExpansion = a.firstRadialExpansionNumber
-            lastExpansion = a.lastRadialExpansionNumber
-            array = nones((lastExpansion - firstExpansion + 1,))
+            lastExpansion = len(a.array)
+            array = nones((lastExpansion + 1,))
             e1d = Expansion1D()
-            e1d.getLowerBoundIndex = lambda: firstExpansion
-            e1d.getUpperBoundIndex = lambda: lastExpansion
+            # e1d.getLowerBoundIndex = lambda: 0
+            # e1d.getUpperBoundIndex = lambda: lastExpansion
 
             def my_getExpansion(radialExpansion):
-                value = array[radialExpansion - firstExpansion]
+                value = array[radialExpansion]
                 if value is None:
                     value = (a.getExpansion(radialExpansion) +
                              b.getExpansion(radialExpansion))
-                    array[radialExpansion - firstExpansion] = value
+                    array[radialExpansion] = value
                     return value
                 return value
             e1d.getExpansion = my_getExpansion

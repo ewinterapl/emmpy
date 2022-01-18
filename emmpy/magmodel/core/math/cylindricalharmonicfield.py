@@ -65,7 +65,7 @@ class CylindricalHarmonicField(BasisVectorField):
         self.firstM = 0
         self.lastM = len(coefficientsExpansion) - 1
         self.firstN = 0
-        self.lastN = coefficientsExpansion.jUpperBoundIndex
+        self.lastN = len(coefficientsExpansion[0]) - 1
         self.trigParity = trigParity
 
     def evaluateExpansion2D(self, location):

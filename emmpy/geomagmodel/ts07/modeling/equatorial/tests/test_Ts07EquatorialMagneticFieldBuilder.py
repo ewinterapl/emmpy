@@ -16,9 +16,6 @@ from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
-)
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
@@ -67,11 +64,11 @@ class TestBuilder(unittest.TestCase):
 
         # Build the thin current sheet shielding coefficients object needed by
         # the builder object.
-        symTail = CoefficientExpansion2D()
+        symTail = None
         symTailWave = None
-        oddTail = CoefficientExpansion2D()
+        oddTail = None
         oddTailWave = None
-        evenTail = CoefficientExpansion2D()
+        evenTail = None
         evenTailWave = None
         tcssc = ThinCurrentSheetShieldingCoefficients(
             na, nr,
@@ -133,11 +130,11 @@ class TestBuilder(unittest.TestCase):
 
         # Build the thin current sheet shielding coefficients object needed by
         # the builder object.
-        symTail = CoefficientExpansion2D()
+        symTail = None
         symTailWave = None
-        oddTail = CoefficientExpansion2D()
+        oddTail = None
         oddTailWave = None
-        evenTail = CoefficientExpansion2D()
+        evenTail = None
         evenTailWave = None
         tcssc = ThinCurrentSheetShieldingCoefficients(
             na, nr,
@@ -199,11 +196,11 @@ class TestBuilder(unittest.TestCase):
 
         # Build the thin current sheet shielding coefficients object needed by
         # the builder object.
-        symTail = CoefficientExpansion2D()
+        symTail = None
         symTailWave = None
-        oddTail = CoefficientExpansion2D()
+        oddTail = None
         oddTailWave = None
-        evenTail = CoefficientExpansion2D()
+        evenTail = None
         evenTailWave = None
         tcssc = ThinCurrentSheetShieldingCoefficients(
             na, nr,
@@ -265,11 +262,11 @@ class TestBuilder(unittest.TestCase):
 
         # Build the thin current sheet shielding coefficients object needed by
         # the builder object.
-        symTail = CoefficientExpansion2D()
+        symTail = None
         symTailWave = None
-        oddTail = CoefficientExpansion2D()
+        oddTail = None
         oddTailWave = None
-        evenTail = CoefficientExpansion2D()
+        evenTail = None
         evenTailWave = None
         tcssc = ThinCurrentSheetShieldingCoefficients(
             na, nr,

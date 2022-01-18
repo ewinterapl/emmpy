@@ -1,8 +1,5 @@
 import unittest
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansion2d import (
-    CoefficientExpansion2D
-)
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
@@ -13,11 +10,11 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         na = 3
         nr = 2
-        symTail = CoefficientExpansion2D()
+        symTail = None
         symTailWave = None
-        oddTail = CoefficientExpansion2D()
+        oddTail = None
         oddTailWave = None
-        evenTail = CoefficientExpansion2D()
+        evenTail = None
         evenTailWave = None
         ThinCurrentSheetShieldingCoefficients(
             na, nr,

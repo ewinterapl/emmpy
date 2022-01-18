@@ -98,7 +98,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         self.aikCoeffs = aikCoeffs
         self.trigParityI = trigParityI
         self.trigParityK = trigParityK
-        self.lastI = len(aikCoeffs) - 1
         self.firstK = 0
         self.lastK = len(aikCoeffs[0]) - 1
 

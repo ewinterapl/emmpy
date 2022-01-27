@@ -164,10 +164,11 @@ class TailSheetCoefficients:
         ).T
 
         # Create the new coefficients object.
+        tailSheetSymmetricValues = ScalarExpansion1D(sym)
+        tailSheetOddValues = ArrayCoefficientExpansion2D(odd)
+        tailSheetEvenValues = ArrayCoefficientExpansion2D(even)
         tsc = TailSheetCoefficients(
-            ScalarExpansion1D(sym),
-            ArrayCoefficientExpansion2D(odd),
-            ArrayCoefficientExpansion2D(even)
+            tailSheetSymmetricValues, tailSheetOddValues, tailSheetEvenValues
         )
 
         return tsc

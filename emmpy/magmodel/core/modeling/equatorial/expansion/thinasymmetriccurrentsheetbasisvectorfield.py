@@ -201,12 +201,6 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                 evenExpansions[m][n] = (
                     evenBasisFunction.evaluate(cartesianLocation)*aEven)
 
-        if self.numAzimuthalExpansions == 0:
-            return TailSheetExpansions(
-                Expansion1Ds.createFromArray(symmetricExpansions, 1),
-                Expansion2Ds.createNull(0, 1, self.numRadialExpansions),
-                Expansion2Ds.createNull(0, 1, self.numRadialExpansions)
-            )
         return TailSheetExpansions(
             Expansion1Ds.createFromArray(symmetricExpansions),
             Expansion2Ds.createFromArray(oddExpansions, 1, 1),

@@ -6,7 +6,7 @@ import sys
 import numpy as np
 
 from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
-    createConstant
+    DifferentiableScalarFieldIJ
 )
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (
     TS07DVariableCoefficientsUtils
@@ -41,7 +41,9 @@ def runThinSheet():
     currSheetThick = 2.3
 
     # Construct a constant current sheet half thickness
-    currentSheetHalfThickness = createConstant(currSheetThick)
+    currentSheetHalfThickness = DifferentiableScalarFieldIJ.createConstant(
+        currSheetThick
+    )
 
     # Set all the linear coeffs to 1.0
     coeffs = TailSheetCoefficients.createUnity(numAz, numRad)

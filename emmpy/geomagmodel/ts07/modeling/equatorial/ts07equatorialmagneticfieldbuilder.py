@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
-    createConstant
+    DifferentiableScalarFieldIJ
 )
 from emmpy.geomagmodel.t01.deformation.positionbender import (
     PositionBender
@@ -145,7 +145,9 @@ class Ts07EquatorialMagneticFieldBuilder:
             linearCoeffs = self.coeffs.equatorialLinearCoeffs[currSheetIndex]
 
             # Construct a constant current sheet half thickness.
-            currentSheetHalfThickness = createConstant(currSheetThick)
+            currentSheetHalfThickness = DifferentiableScalarFieldIJ.createConstant(
+                currSheetThick
+            )
     
             # Construct the shielded thin current sheet.
             thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(

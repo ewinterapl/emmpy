@@ -79,21 +79,3 @@ class Vector(np.ndarray):
         else:
             data = args
         self[:] = data
-
-    def unitize(self):
-        """Unitize the vector in-place.
-
-        Normalize the vector to unit length in-place.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : Vector
-            The current object.
-        """
-        length = np.linalg.norm(self)
-        self[:] /= length
-        return self

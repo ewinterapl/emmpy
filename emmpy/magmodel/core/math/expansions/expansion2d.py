@@ -58,50 +58,8 @@ class Expansion2D:
         size : int
             Number of elements in 2nd dimension.
         """
-        size = self.getJUpperBoundIndex() - self.getJLowerBoundIndex() + 1
+        size = self.getJUpperBoundIndex() - self.firstRadialExpansionNumber + 1
         return size
-
-    def getILowerBoundIndex(self):
-        """Return the lowest index along the 1st dimension.
-        
-        Return the lowest index along the 1st dimension.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Lowest expansion index along 1st dimension.
-        
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException
-
-    def getJLowerBoundIndex(self):
-        """Return the lowest index along the 2nd dimension.
-        
-        Return the lowest index along the 2nd dimension.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Lowest expansion index along 2nd dimension.
-        
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException
 
     def getJUpperBoundIndex(self):
         """Return the highest index along the 2nd dimension.

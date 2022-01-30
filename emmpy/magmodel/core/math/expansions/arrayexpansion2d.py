@@ -51,22 +51,6 @@ class ArrayExpansion2D(Expansion2D):
             firstRadialExpansionNumber + len(data[0]) - 1
         )
 
-    def getJLowerBoundIndex(self):
-        """Return the lowest second index.
-        
-        Return the lowest second index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.firstRadialExpansionNumber : int
-            Lowest index of 2nd expansion dimension.
-        """
-        return self.firstRadialExpansionNumber
-
     def getJUpperBoundIndex(self):
         """Return the highest second index.
         

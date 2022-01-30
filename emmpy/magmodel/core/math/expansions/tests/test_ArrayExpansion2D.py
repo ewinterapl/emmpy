@@ -21,11 +21,7 @@ class TestBuilder(unittest.TestCase):
 
     def test_getJUpperBoundIndex(self):
         e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
-        self.assertEqual(e.getIUpperBoundIndex(), 3)
-
-    def test_getIUpperBoundIndex(self):
-        e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
-        self.assertEqual(e.getIUpperBoundIndex(), 3)
+        self.assertEqual(e.getJUpperBoundIndex(), 3)
 
     def test_getExpansion(self):
         e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)

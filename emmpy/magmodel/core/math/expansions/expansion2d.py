@@ -41,7 +41,7 @@ class Expansion2D:
         size : int
             Number of elements in 1st dimension.
         """
-        size = self.getIUpperBoundIndex() - self.firstAzimuthalExpansionNumber + 1
+        size = self.lastAzimuthalExpansionNumber - self.firstAzimuthalExpansionNumber + 1
         return size
 
     def jSize(self):
@@ -74,27 +74,6 @@ class Expansion2D:
         -------
         result : int
             Lowest expansion index along 1st dimension.
-        
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise AbstractMethodException
-
-    def getIUpperBoundIndex(self):
-        """Return the highest index along the 1st dimension.
-        
-        Return the highest index along the 1st dimension.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Highest expansion index along 1st dimension.
         
         Raises
         ------

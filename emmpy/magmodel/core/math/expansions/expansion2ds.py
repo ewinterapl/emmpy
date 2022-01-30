@@ -23,7 +23,7 @@ class Expansion2Ds:
     """
 
     @staticmethod
-    def createFromArray(data, firstRadialExpansionNumber):
+    def createFromArray(data):
         """Create an expansion from a 2-D array.
         
         Create an expansion from a 2-D array.
@@ -32,15 +32,13 @@ class Expansion2Ds:
         ----------
         data : 2-D list of VectorIJK
             Values to use for expansion.
-        firstRadialExpansionNumber : int
-            First expansion index in 2nd dimension.
         
         Returns
         -------
         result : ArrayExpansion2D
             Expansion for the specified inputs.
         """
-        return ArrayExpansion2D(data, firstRadialExpansionNumber)
+        return ArrayExpansion2D(data)
 
     class Vectors:
         """Internal helper class."""
@@ -62,26 +60,19 @@ class Expansion2Ds:
                 Wrapper object for expansion sum.
             """
             lastAzimuthalExpansion = a.lastAzimuthalExpansionNumber
-            firstRadialExpansion = a.firstRadialExpansionNumber
             lastRadialExpansion = a.lastRadialExpansionNumber
-            array = nones(
-                (lastAzimuthalExpansion + 1,
-                 lastRadialExpansion - firstRadialExpansion + 1))
+            array = nones((lastAzimuthalExpansion + 1, lastRadialExpansion + 1))
             e2d = Expansion2D()
             e2d.lastAzimuthalExpansionNumber = lastAzimuthalExpansion
-            e2d.firstRadialExpansionNumber = firstRadialExpansion
             e2d.lastRadialExpansionNumber = lastRadialExpansion
 
             def my_getExpansion(azimuthalExpansion, radialExpansion):
-                value = (
-                    array[azimuthalExpansion]
-                         [radialExpansion - firstRadialExpansion]
-                )
+                value = array[azimuthalExpansion][radialExpansion]
                 if value is None:
                     value = (
                         a.getExpansion(azimuthalExpansion, radialExpansion) +
                         b.getExpansion(azimuthalExpansion, radialExpansion))
-                    array[azimuthalExpansion][radialExpansion - firstRadialExpansion] = value
+                    array[azimuthalExpansion][radialExpansion] = value
                     return value
                 return value
             e2d.getExpansion = my_getExpansion

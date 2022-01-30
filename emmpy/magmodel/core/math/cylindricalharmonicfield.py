@@ -123,7 +123,7 @@ class CylindricalHarmonicField(BasisVectorField):
                 # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff
                 expansions[m][n] = vect
-        return Expansion2Ds.createFromArray(expansions, 0)
+        return Expansion2Ds.createFromArray(expansions)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.

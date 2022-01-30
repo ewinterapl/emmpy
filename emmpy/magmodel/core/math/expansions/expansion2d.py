@@ -58,5 +58,5 @@ class Expansion2D:
         size : int
             Number of elements in 2nd dimension.
         """
-        size = self.lastRadialExpansionNumber - self.firstRadialExpansionNumber + 1
+        size = self.lastRadialExpansionNumber + 1
         return size

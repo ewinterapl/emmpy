@@ -203,8 +203,8 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
 
         return TailSheetExpansions(
             Expansion1Ds.createFromArray(symmetricExpansions),
-            Expansion2Ds.createFromArray(oddExpansions, 1),
-            Expansion2Ds.createFromArray(evenExpansions, 1)
+            Expansion2Ds.createFromArray(oddExpansions),
+            Expansion2Ds.createFromArray(evenExpansions)
         )
 
     def getNumberOfBasisFunctions(self):

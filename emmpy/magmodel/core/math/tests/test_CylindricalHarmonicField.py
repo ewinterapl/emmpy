@@ -16,9 +16,6 @@ class TestBuilder(unittest.TestCase):
     def test_getLastAzimuthalExpansionNumber(self):
         pass
 
-    def test_getFirstRadialExpansionNumber(self):
-        pass
-
     def test_getLastRadialExpansionNumber(self):
         pass
 

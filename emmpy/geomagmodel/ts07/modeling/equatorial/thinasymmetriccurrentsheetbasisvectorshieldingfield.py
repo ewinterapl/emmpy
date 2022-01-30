@@ -113,10 +113,10 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.oddTailExpansion.getExpansion(m, n + 1)
+                    self.coeffs.oddTailExpansion.getExpansion(m, n)
                 )
                 waveNumberExpansion = (
-                    self.coeffs.oddTailWaveExpansion.getExpansion(m, n + 1)
+                    self.coeffs.oddTailWaveExpansion.getExpansion(m, n)
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
@@ -132,10 +132,10 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.evenTailExpansion.getExpansion(m, n + 1)
+                    self.coeffs.evenTailExpansion.getExpansion(m, n)
                 )
                 waveNumberExpansion = (
-                    self.coeffs.evenTailWaveExpansion.getExpansion(m, n + 1)
+                    self.coeffs.evenTailWaveExpansion.getExpansion(m, n)
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
@@ -146,8 +146,8 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
         return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions),
-            Expansion2Ds.createFromArray(oddExpansions, 1),
-            Expansion2Ds.createFromArray(evenExpansions, 1))
+            Expansion2Ds.createFromArray(oddExpansions),
+            Expansion2Ds.createFromArray(evenExpansions))
 
     def getNumberOfBasisFunctions(self):
         """Return the number of basis functions.

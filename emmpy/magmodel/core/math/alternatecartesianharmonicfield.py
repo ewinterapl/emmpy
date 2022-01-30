@@ -148,7 +148,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             for k in range(nk):
                 vect = VectorIJK(bx[i, k], by[i, k], bz[i, k])
                 expansions[i][k] = vect
-        return Expansion2Ds.createFromArray(expansions, 0)
+        return Expansion2Ds.createFromArray(expansions)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion.

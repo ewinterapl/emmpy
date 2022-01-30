@@ -66,7 +66,7 @@ class Expansion2Ds:
             e2d : Expansion2D
                 Wrapper object for expansion sum.
             """
-            firstAzimuthalExpansion = a.getILowerBoundIndex()
+            firstAzimuthalExpansion = a.firstAzimuthalExpansionNumber
             lastAzimuthalExpansion = a.getIUpperBoundIndex()
             firstRadialExpansion = a.getJLowerBoundIndex()
             lastRadialExpansion = a.getJUpperBoundIndex()
@@ -74,7 +74,7 @@ class Expansion2Ds:
                 (lastAzimuthalExpansion - firstAzimuthalExpansion + 1,
                  lastRadialExpansion - firstRadialExpansion + 1))
             e2d = Expansion2D()
-            e2d.getILowerBoundIndex = lambda: firstAzimuthalExpansion
+            e2d.firstAzimuthalExpansionNumber = firstAzimuthalExpansion
             e2d.getIUpperBoundIndex = lambda: lastAzimuthalExpansion
             e2d.getJLowerBoundIndex = lambda: firstRadialExpansion
             e2d.getJUpperBoundIndex = lambda: lastRadialExpansion

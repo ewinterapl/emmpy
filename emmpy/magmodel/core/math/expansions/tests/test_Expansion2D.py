@@ -11,10 +11,6 @@ class TestBuilder(unittest.TestCase):
     def test_jSize(self):
         pass
 
-    def test_getILowerBoundIndex(self):
-        with self.assertRaises(Exception):
-            Expansion2D.getILowerBoundIndex(None)
-
     def test_getIUpperBoundIndex(self):
         with self.assertRaises(Exception):
             Expansion2D.getIUpperBoundIndex(None)

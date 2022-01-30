@@ -83,22 +83,6 @@ class ArrayExpansion2D(Expansion2D):
         """
         return self.lastRadialExpansionNumber
 
-    def getILowerBoundIndex(self):
-        """Return the lowest first index.
-        
-        Return the lowest first index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.firstAzimuthalExpansionNumber : int
-            Lowest index of first expansion dimension.
-        """
-        return self.firstAzimuthalExpansionNumber
-
     def getIUpperBoundIndex(self):
         """Return the highest first index.
         

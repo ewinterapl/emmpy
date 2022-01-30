@@ -41,7 +41,7 @@ class Expansion2D:
         size : int
             Number of elements in 1st dimension.
         """
-        size = self.getIUpperBoundIndex() - self.getILowerBoundIndex() + 1
+        size = self.getIUpperBoundIndex() - self.firstAzimuthalExpansionNumber + 1
         return size
 
     def jSize(self):

@@ -58,26 +58,5 @@ class Expansion2D:
         size : int
             Number of elements in 2nd dimension.
         """
-        size = self.getJUpperBoundIndex() - self.firstRadialExpansionNumber + 1
+        size = self.lastRadialExpansionNumber - self.firstRadialExpansionNumber + 1
         return size
-
-    def getJUpperBoundIndex(self):
-        """Return the highest index along the 2nd dimension.
-        
-        Return the highest index along the 2nd dimension.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Highest expansion index along 2nd dimension.
-        
-        Raises
-        ------
-        AbstractMethodException
-            When invoked.
-        """
-        raise Exception

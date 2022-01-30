@@ -51,22 +51,6 @@ class ArrayExpansion2D(Expansion2D):
             firstRadialExpansionNumber + len(data[0]) - 1
         )
 
-    def getJUpperBoundIndex(self):
-        """Return the highest second index.
-        
-        Return the highest second index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.lastRadialExpansionNumber : int
-            Highest index of 2nd expansion dimension.
-        """
-        return self.lastRadialExpansionNumber
-
     def getExpansion(self, azimuthalExpansion, radialExpansion):
         """Return the specified expansion component.
         

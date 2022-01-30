@@ -69,7 +69,7 @@ class Expansion2Ds:
             firstAzimuthalExpansion = a.firstAzimuthalExpansionNumber
             lastAzimuthalExpansion = a.lastAzimuthalExpansionNumber
             firstRadialExpansion = a.firstRadialExpansionNumber
-            lastRadialExpansion = a.getJUpperBoundIndex()
+            lastRadialExpansion = a.lastRadialExpansionNumber
             array = nones(
                 (lastAzimuthalExpansion - firstAzimuthalExpansion + 1,
                  lastRadialExpansion - firstRadialExpansion + 1))
@@ -77,7 +77,7 @@ class Expansion2Ds:
             e2d.firstAzimuthalExpansionNumber = firstAzimuthalExpansion
             e2d.lastAzimuthalExpansionNumber = lastAzimuthalExpansion
             e2d.firstRadialExpansionNumber = firstRadialExpansion
-            e2d.getJUpperBoundIndex = lambda: lastRadialExpansion
+            e2d.lastRadialExpansionNumber = lastRadialExpansion
 
             def my_getExpansion(azimuthalExpansion, radialExpansion):
                 value = (

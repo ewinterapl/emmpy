@@ -13,9 +13,6 @@ class TestBuilder(unittest.TestCase):
     def test_evaluateExpansion2D(self):
         pass
 
-    def test_getFirstAzimuthalExpansionNumber(self):
-        pass
-
     def test_getLastAzimuthalExpansionNumber(self):
         pass
 

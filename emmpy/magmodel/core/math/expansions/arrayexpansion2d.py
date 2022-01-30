@@ -20,14 +20,13 @@ class ArrayExpansion2D(Expansion2D):
     ----------
     data : 2-D list of float
         Expansion values.
-    firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber : int
+    lastAzimuthalExpansionNumber : int
         First and last index of expansion values in 1st dimension.
     firstRadialExpansionNumber, lastRadialExpansionNumber : int
         First and last index of expansion values in 2nd dimension.
     """
 
-    def __init__(self, data, firstAzimuthalExpansionNumber,
-                 firstRadialExpansionNumber):
+    def __init__(self, data, firstRadialExpansionNumber):
         """Initialize a new ArrayExpansion2D object.
 
         Initialize a new ArrayExpansion2D object.
@@ -36,16 +35,11 @@ class ArrayExpansion2D(Expansion2D):
         ----------
         data : 2-D list of float
             Expansion values.
-        firstAzimuthalExpansionNumber : int
-            First index of expansion values in 1st dimension.
         firstRadialExpansionNumber : int
             First index of expansion values in 2nd dimension.
         """
         self.data = data
-        self.firstAzimuthalExpansionNumber = firstAzimuthalExpansionNumber
-        self.lastAzimuthalExpansionNumber = (
-            firstAzimuthalExpansionNumber + len(data) - 1
-        )
+        self.lastAzimuthalExpansionNumber = len(data) - 1
         self.firstRadialExpansionNumber = firstRadialExpansionNumber
         self.lastRadialExpansionNumber = (
             firstRadialExpansionNumber + len(data[0]) - 1
@@ -69,6 +63,5 @@ class ArrayExpansion2D(Expansion2D):
             Value of expansion at specified index.
         """
         return (
-            self.data[azimuthalExpansion - self.firstAzimuthalExpansionNumber]
-            [radialExpansion - self.firstRadialExpansionNumber]
+            self.data[azimuthalExpansion][radialExpansion - self.firstRadialExpansionNumber]
         )

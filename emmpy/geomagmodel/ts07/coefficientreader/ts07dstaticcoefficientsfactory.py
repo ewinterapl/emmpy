@@ -239,8 +239,8 @@ class TS07DStaticCoefficientsFactory:
                 expansions[m][n] = ArrayCoefficientExpansion2D(values)
                 waveExpansions[m][n] = ScalarExpansion1D(waveNumberValues)
         return AsymmetricCylindricalExpansionPair(
-            Expansion2Ds.createFromArray(expansions, 1, 1),
-            Expansion2Ds.createFromArray(waveExpansions, 1, 1)
+            Expansion2Ds.createFromArray(expansions, 1),
+            Expansion2Ds.createFromArray(waveExpansions, 1)
         )
 
     @staticmethod

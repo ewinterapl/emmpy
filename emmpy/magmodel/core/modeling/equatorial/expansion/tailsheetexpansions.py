@@ -51,7 +51,7 @@ class TailSheetExpansions:
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
         self.numAzimuthalExpansions = len(tailSheetOddValues)
-        self.numRadialExpansions = tailSheetOddValues.lastRadialExpansionNumber + 1
+        self.numRadialExpansions = len(tailSheetOddValues[0])
 
     def getExpansionsAsList(self):
         """Return the basis functions in a list.

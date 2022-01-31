@@ -8,12 +8,11 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.utilities.nones import nones
 
 
-class ArrayExpansion2D(Expansion2D):
+class ArrayExpansion2D:
     """A 2-D array of expansion values.
     
     A 2-D array of expansion values.

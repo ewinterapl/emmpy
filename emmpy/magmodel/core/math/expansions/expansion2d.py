@@ -26,20 +26,3 @@ class Expansion2D:
     starting index. If the object is a Double, the interface
     CoefficientExpansion2D can be used instead to avoid autoboxing.
     """
-
-    def jSize(self):
-        """Return count of elements in the 2nd dimension of the expansion.
-        
-        Return count of elements in the 2nd dimension of the expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        size : int
-            Number of elements in 2nd dimension.
-        """
-        size = self.lastRadialExpansionNumber + 1
-        return size

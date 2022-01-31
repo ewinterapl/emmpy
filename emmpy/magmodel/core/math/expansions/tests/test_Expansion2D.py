@@ -1,17 +1,13 @@
+"""Tests for the expansion2d module."""
+
+
 import unittest
 
 from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the expansion2d module."""
 
-    def test_jSize(self):
-        pass
-
-    def test_getExpansion(self):
-        with self.assertRaises(Exception):
-            Expansion2D.getExpansion(None, 0, 0)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

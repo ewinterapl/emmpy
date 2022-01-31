@@ -43,31 +43,3 @@ class Expansion2Ds:
 
     class Vectors:
         """Internal helper class."""
-
-        @staticmethod
-        def add(a, b):
-            """Add two expansions using a wrapper object.
-
-            Add two expansions using a wrapper object.
-
-            Parameters
-            ----------
-            a, b : Expansion2D
-                Expansions to add.
-
-            Returns
-            -------
-            ae2d : ArrayExpansion2D
-                Object for expansion sum.
-            """
-            numAzimuthalExpansions = len(a.data)
-            numRadialExpansions = len(a.data[0])
-            array = nones((numAzimuthalExpansions, numRadialExpansions))
-            for i in range(numAzimuthalExpansions):
-                for j in range(numRadialExpansions):
-                    array[i][j] = CartesianVector(
-                        a.data[i][j] + b.data[i][j]
-                    )
-            ae2d = ArrayExpansion2D(array)
-
-            return ae2d

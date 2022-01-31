@@ -113,10 +113,10 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.oddTailExpansion.getExpansion(m, n)
+                    self.coeffs.oddTailExpansion.data[m][n]
                 )
                 waveNumberExpansion = (
-                    self.coeffs.oddTailWaveExpansion.getExpansion(m, n)
+                    self.coeffs.oddTailWaveExpansion.data[m][n]
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
@@ -132,10 +132,10 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.evenTailExpansion.getExpansion(m, n)
+                    self.coeffs.evenTailExpansion.data[m][n]
                 )
                 waveNumberExpansion = (
-                    self.coeffs.evenTailWaveExpansion.getExpansion(m, n)
+                    self.coeffs.evenTailWaveExpansion.data[m][n]
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(

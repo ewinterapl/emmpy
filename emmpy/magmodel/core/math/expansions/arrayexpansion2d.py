@@ -40,23 +40,23 @@ class ArrayExpansion2D(Expansion2D):
         self.lastAzimuthalExpansionNumber = len(data) - 1
         self.lastRadialExpansionNumber = len(data[0]) - 1
 
-    def getExpansion(self, azimuthalExpansion, radialExpansion):
-        """Return the specified expansion component.
+    # def getExpansion(self, azimuthalExpansion, radialExpansion):
+    #     """Return the specified expansion component.
         
-        Return the specified expansion component.
+    #     Return the specified expansion component.
 
-        Parameters
-        ----------
-        azimuthalExpansion : int
-            Expansion index in first dimension.
-        radialExpansion : int
-            Expansion index in second dimension.
+    #     Parameters
+    #     ----------
+    #     azimuthalExpansion : int
+    #         Expansion index in first dimension.
+    #     radialExpansion : int
+    #         Expansion index in second dimension.
         
-        Returns
-        -------
-        result : float
-            Value of expansion at specified index.
-        """
-        return (
-            self.data[azimuthalExpansion][radialExpansion]
-        )
+    #     Returns
+    #     -------
+    #     result : float
+    #         Value of expansion at specified index.
+    #     """
+    #     return (
+    #         self.data[azimuthalExpansion][radialExpansion]
+    #     )

@@ -12,7 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 import numpy as np
 
 
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
@@ -202,7 +202,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                     evenBasisFunction.evaluate(cartesianLocation)*aEven)
 
         return TailSheetExpansions(
-            Expansion1Ds.createFromArray(symmetricExpansions),
+            ArrayExpansion1D(symmetricExpansions),
             Expansion2Ds.createFromArray(oddExpansions),
             Expansion2Ds.createFromArray(evenExpansions)
         )

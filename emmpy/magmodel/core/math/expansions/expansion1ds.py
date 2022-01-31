@@ -46,26 +46,3 @@ class Expansion1Ds:
 
         Internal class for vectors.
         """
-
-        @staticmethod
-        def add(a, b):
-            """Add 2 1-D expansions.
-
-            Add 2 1-D expansions.
-
-            Parameters
-            ----------
-            a, b : Expansion1D
-                Expansions to add.
-
-            Returns
-            -------
-            ae1d : ArrayExpansion1D
-                An expansion that is the sum of a and b.
-            """
-            array = []
-            for i in range(len(a.array)):
-                array.append(CartesianVector(a.array[i] + b.array[i]))
-            ae1d = ArrayExpansion1D(array)
-
-            return ae1d

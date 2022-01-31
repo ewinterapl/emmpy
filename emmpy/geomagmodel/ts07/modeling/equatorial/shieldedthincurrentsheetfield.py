@@ -12,7 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
     ThinAsymmetricCurrentSheetBasisVectorShieldingField
 )
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -132,8 +132,8 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
             tailSheetOddShieldValues = shield.tailSheetOddValues
             tailSheetEvenShieldValues = shield.tailSheetEvenValues
             tailSheetSymmetricValues = (
-                Expansion1Ds.Vectors.add(tailSheetSymmetricValues,
-                                         tailSheetSymmetricShieldValues)
+                ArrayExpansion1D.add(tailSheetSymmetricValues,
+                                     tailSheetSymmetricShieldValues)
             )
             tailSheetOddValues = Expansion2Ds.Vectors.add(
                 tailSheetOddValues, tailSheetOddShieldValues

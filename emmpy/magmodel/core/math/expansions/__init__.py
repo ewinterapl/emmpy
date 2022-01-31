@@ -9,8 +9,6 @@ Modules
 -------
 arrayexpansion1d.py
 arrayexpansion2d.py
-expansion1d.py
-expansion2d.py
 
 Packages
 --------

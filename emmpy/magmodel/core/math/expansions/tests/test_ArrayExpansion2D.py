@@ -8,14 +8,14 @@ from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
 class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
-        e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
+        e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
         self.assertAlmostEqual(e.data, [[0, 1, 2], [3, 4, 5], [6, 7, 8]])
-        self.assertEqual(e.lastAzimuthalExpansionNumber, 3)
-        self.assertEqual(e.lastRadialExpansionNumber, 3)
+        self.assertEqual(e.lastAzimuthalExpansionNumber, 2)
+        self.assertEqual(e.lastRadialExpansionNumber, 2)
 
     def test_getExpansion(self):
-        e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]], 1, 1)
-        self.assertAlmostEqual(e.getExpansion(1, 2), 1)
+        e = ArrayExpansion2D([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
+        self.assertAlmostEqual(e.getExpansion(1, 2), 5)
 
 
 if __name__ == '__main__':

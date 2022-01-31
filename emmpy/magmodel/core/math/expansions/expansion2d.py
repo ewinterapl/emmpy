@@ -27,23 +27,6 @@ class Expansion2D:
     CoefficientExpansion2D can be used instead to avoid autoboxing.
     """
 
-    def iSize(self):
-        """Return count of elements in the 1st dimension of the expansion.
-        
-        Return count of elements in the 1st dimension of the expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        size : int
-            Number of elements in 1st dimension.
-        """
-        size = self.lastAzimuthalExpansionNumber + 1
-        return size
-
     def jSize(self):
         """Return count of elements in the 2nd dimension of the expansion.
         

@@ -5,9 +5,6 @@ from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
 
 class TestBuilder(unittest.TestCase):
 
-    def test_iSize(self):
-        pass
-
     def test_jSize(self):
         pass
 

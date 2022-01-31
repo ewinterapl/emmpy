@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 
-class ArrayExpansion1D:
+class ArrayExpansion1D(list):
     """A 1-D array of expansion values.
 
     A 1-D array of expansion values.
@@ -32,7 +32,7 @@ class ArrayExpansion1D:
         array : list of float
             Expansion values.
         """
-        self.array = array
+        self[:] = array[:]
 
     @staticmethod
     def add(a, b):
@@ -51,8 +51,8 @@ class ArrayExpansion1D:
             An expansion that is the sum of a and b.
         """
         array = []
-        for i in range(len(a.array)):
-            array.append(CartesianVector(a.array[i] + b.array[i]))
+        for i in range(len(a)):
+            array.append(CartesianVector(a[i] + b[i]))
         ae1d = ArrayExpansion1D(array)
 
         return ae1d

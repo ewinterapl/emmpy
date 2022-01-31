@@ -94,10 +94,10 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         # n is the radial expansion number.
         for n in range(self.numRadialExpansions):
             tailExpansion = (
-                self.coeffs.symmetricTailExpansion.array[n]
+                self.coeffs.symmetricTailExpansion[n]
             )
             waveNumberExpansion = (
-                self.coeffs.symmetricTailWaveExpansion.array[n]
+                self.coeffs.symmetricTailWaveExpansion[n]
             )
             buffer = VectorIJK()
             chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,

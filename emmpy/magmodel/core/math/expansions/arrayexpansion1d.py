@@ -34,19 +34,19 @@ class ArrayExpansion1D(Expansion1D):
         """
         self.array = array
 
-    def getExpansion(self, radialExpansion):
-        """Return the the specified expansion value.
+    # def getExpansion(self, radialExpansion):
+    #     """Return the the specified expansion value.
         
-        Return the the specified expansion value.
+    #     Return the the specified expansion value.
 
-        Parameters
-        ----------
-        radialExpansion : int
-            Index of expansion value to retrieve.
+    #     Parameters
+    #     ----------
+    #     radialExpansion : int
+    #         Index of expansion value to retrieve.
 
-        Returns
-        -------
-        result : float
-            Value of expansion at specified index.
-        """
-        return self.array[radialExpansion]
+    #     Returns
+    #     -------
+    #     result : float
+    #         Value of expansion at specified index.
+    #     """
+    #     return self.array[radialExpansion]

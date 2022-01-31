@@ -11,9 +11,9 @@ class TestBuilder(unittest.TestCase):
         e = ArrayExpansion1D([0, 1, 2])
         self.assertAlmostEqual(e.array, [0, 1, 2])
 
-    def test_getExpansion(self):
-        e = ArrayExpansion1D([0, 1, 2])
-        self.assertEqual(e.getExpansion(0), 0)
+    # def test_getExpansion(self):
+    #     e = ArrayExpansion1D([0, 1, 2])
+    #     self.assertEqual(e.getExpansion(0), 0)
 
 
 if __name__ == '__main__':

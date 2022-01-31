@@ -13,7 +13,6 @@ from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
 from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (

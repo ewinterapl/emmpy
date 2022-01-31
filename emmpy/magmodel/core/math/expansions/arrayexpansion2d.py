@@ -38,7 +38,7 @@ class ArrayExpansion2D(list):
             Expansion values.
         """
         self[:] = data[:]
-        self.lastAzimuthalExpansionNumber = len(data) - 1
+        # self.lastAzimuthalExpansionNumber = len(data) - 1
         self.lastRadialExpansionNumber = len(data[0]) - 1
 
     @staticmethod

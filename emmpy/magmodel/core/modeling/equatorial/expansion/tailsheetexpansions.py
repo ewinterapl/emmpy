@@ -50,7 +50,7 @@ class TailSheetExpansions:
         self.tailSheetSymmetricValues = tailSheetSymmetricValues
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
-        self.numAzimuthalExpansions = tailSheetOddValues.lastAzimuthalExpansionNumber + 1
+        self.numAzimuthalExpansions = len(tailSheetOddValues)
         self.numRadialExpansions = tailSheetOddValues.lastRadialExpansionNumber + 1
 
     def getExpansionsAsList(self):

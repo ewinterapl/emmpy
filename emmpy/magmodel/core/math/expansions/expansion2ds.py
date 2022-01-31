@@ -13,6 +13,7 @@ from emmpy.magmodel.core.math.expansions.arrayexpansion2d import (
     ArrayExpansion2D
 )
 from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.utilities.nones import nones
 
 
@@ -56,24 +57,17 @@ class Expansion2Ds:
 
             Returns
             -------
-            e2d : Expansion2D
-                Wrapper object for expansion sum.
+            ae2d : ArrayExpansion2D
+                Object for expansion sum.
             """
-            lastAzimuthalExpansion = a.lastAzimuthalExpansionNumber
-            lastRadialExpansion = a.lastRadialExpansionNumber
-            array = nones((lastAzimuthalExpansion + 1, lastRadialExpansion + 1))
-            e2d = Expansion2D()
-            e2d.lastAzimuthalExpansionNumber = lastAzimuthalExpansion
-            e2d.lastRadialExpansionNumber = lastRadialExpansion
+            numAzimuthalExpansions = len(a.data)
+            numRadialExpansions = len(a.data[0])
+            array = nones((numAzimuthalExpansions, numRadialExpansions))
+            for i in range(numAzimuthalExpansions):
+                for j in range(numRadialExpansions):
+                    array[i][j] = CartesianVector(
+                        a.data[i][j] + b.data[i][j]
+                    )
+            ae2d = ArrayExpansion2D(array)
 
-            def my_getExpansion(azimuthalExpansion, radialExpansion):
-                value = array[azimuthalExpansion][radialExpansion]
-                if value is None:
-                    value = (
-                        a.getExpansion(azimuthalExpansion, radialExpansion) +
-                        b.getExpansion(azimuthalExpansion, radialExpansion))
-                    array[azimuthalExpansion][radialExpansion] = value
-                    return value
-                return value
-            e2d.getExpansion = my_getExpansion
-            return e2d
+            return ae2d

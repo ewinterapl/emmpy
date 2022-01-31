@@ -8,11 +8,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 
-class ArrayExpansion1D(Expansion1D):
+class ArrayExpansion1D:
     """A 1-D array of expansion values.
 
     A 1-D array of expansion values.

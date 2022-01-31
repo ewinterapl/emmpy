@@ -23,24 +23,6 @@ class Expansion1Ds:
     Utility functions for 1-D expansions.
     """
 
-    @staticmethod
-    def createFromArray(array):
-        """Create an expansion from an array.
-
-        Create an expansion from an array.
-
-        Parameters
-        ----------
-        array : list of float
-            List of values for expansion.
-        
-        Returns
-        -------
-        result : ArrayExpansion1D
-            New expansion object.
-        """
-        return ArrayExpansion1D(array)
-
     class Vectors:
         """Internal class for vectors.
 

@@ -12,6 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
 from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
 from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
@@ -145,7 +146,7 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                 evenExpansions[m][n] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
-        return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions),
+        return TailSheetExpansions(ArrayExpansion1D(symmetricExpansions),
             Expansion2Ds.createFromArray(oddExpansions),
             Expansion2Ds.createFromArray(evenExpansions))
 

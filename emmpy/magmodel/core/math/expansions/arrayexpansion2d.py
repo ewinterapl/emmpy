@@ -12,7 +12,7 @@ from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.utilities.nones import nones
 
 
-class ArrayExpansion2D:
+class ArrayExpansion2D(list):
     """A 2-D array of expansion values.
     
     A 2-D array of expansion values.
@@ -37,7 +37,7 @@ class ArrayExpansion2D:
         data : 2-D list of float
             Expansion values.
         """
-        self.data = data
+        self[:] = data[:]
         self.lastAzimuthalExpansionNumber = len(data) - 1
         self.lastRadialExpansionNumber = len(data[0]) - 1
 
@@ -57,14 +57,12 @@ class ArrayExpansion2D:
         ae2d : ArrayExpansion2D
             Object for expansion sum.
         """
-        numAzimuthalExpansions = len(a.data)
-        numRadialExpansions = len(a.data[0])
+        numAzimuthalExpansions = len(a)
+        numRadialExpansions = len(a[0])
         array = nones((numAzimuthalExpansions, numRadialExpansions))
         for i in range(numAzimuthalExpansions):
             for j in range(numRadialExpansions):
-                array[i][j] = CartesianVector(
-                    a.data[i][j] + b.data[i][j]
-                )
+                array[i][j] = CartesianVector(a[i][j] + b[i][j])
         ae2d = ArrayExpansion2D(array)
 
         return ae2d

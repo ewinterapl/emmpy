@@ -169,5 +169,5 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         expansions = self.evaluateExpansion2D(location)
         for i in range(len(self.aikCoeffs)):
             for k in range(len(self.aikCoeffs[0])):
-                functions.append(expansions.data[i][k])
+                functions.append(expansions[i][k])
         return functions

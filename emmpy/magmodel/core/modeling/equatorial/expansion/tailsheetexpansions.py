@@ -79,14 +79,13 @@ class TailSheetExpansions:
         # m is the azimuthal expansion number.
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
-                basisFunctions.append(self.tailSheetOddValues.data[m][n])
+                basisFunctions.append(self.tailSheetOddValues[m][n])
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
-                basisFunctions.append(
-                    self.tailSheetEvenValues.data[m][n])
+                basisFunctions.append(self.tailSheetEvenValues[m][n])
 
         return basisFunctions
 
@@ -119,7 +118,7 @@ class TailSheetExpansions:
         # m is the azimuthal expansion number.
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
-                basisFunction = self.tailSheetOddValues.data[m][n]
+                basisFunction = self.tailSheetOddValues[m][n]
                 bxSum += basisFunction.i
                 bySum += basisFunction.j
                 bzSum += basisFunction.k
@@ -128,7 +127,7 @@ class TailSheetExpansions:
         # m is the azimuthal expansion number.
         for n in range(self.numRadialExpansions):
             for m in range(self.numAzimuthalExpansions):
-                basisFunction = self.tailSheetEvenValues.data[m][n]
+                basisFunction = self.tailSheetEvenValues[m][n]
                 bxSum += basisFunction.i
                 bySum += basisFunction.j
                 bzSum += basisFunction.k

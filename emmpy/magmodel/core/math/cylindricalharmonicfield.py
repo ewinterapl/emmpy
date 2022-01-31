@@ -144,5 +144,5 @@ class CylindricalHarmonicField(BasisVectorField):
         expansions = self.evaluateExpansion2D(location)
         for m in range(len(self.coefficientsExpansion)):
             for n in range(len(self.coefficientsExpansion[0])):
-                functions.append(expansions.data[m][n])
+                functions.append(expansions[m][n])
         return functions

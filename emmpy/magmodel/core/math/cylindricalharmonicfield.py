@@ -15,7 +15,7 @@ import numpy as np
 from scipy.special import jv
 
 from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -123,7 +123,7 @@ class CylindricalHarmonicField(BasisVectorField):
                 # B=-del U.
                 vect = VectorIJK(bx, by, bz)*-coeff
                 expansions[m][n] = vect
-        return Expansion2Ds.createFromArray(expansions)
+        return ArrayExpansion2D(expansions)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.

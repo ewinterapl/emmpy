@@ -13,7 +13,7 @@ from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
 from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -146,8 +146,8 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
         return TailSheetExpansions(ArrayExpansion1D(symmetricExpansions),
-            Expansion2Ds.createFromArray(oddExpansions),
-            Expansion2Ds.createFromArray(evenExpansions))
+            ArrayExpansion2D(oddExpansions),
+            ArrayExpansion2D(evenExpansions))
 
     def getNumberOfBasisFunctions(self):
         """Return the number of basis functions.

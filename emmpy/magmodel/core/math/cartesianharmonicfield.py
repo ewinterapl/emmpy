@@ -11,7 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, exp, sin, sqrt
 
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField

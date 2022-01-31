@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
@@ -148,7 +148,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             for k in range(nk):
                 vect = VectorIJK(bx[i, k], by[i, k], bz[i, k])
                 expansions[i][k] = vect
-        return Expansion2Ds.createFromArray(expansions)
+        return ArrayExpansion2D(expansions)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion.

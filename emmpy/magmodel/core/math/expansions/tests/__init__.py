@@ -6,7 +6,6 @@ test_ArrayExpansion1D.py
 test_ArrayExpansion2D.py
 test_Expansion1D.py
 test_Expansion2D.py
-test_Expansion2Ds.py
 
 Packages
 --------

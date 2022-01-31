@@ -48,34 +48,6 @@ class Expansion1Ds:
         """
 
         @staticmethod
-        def createConstant(firstRadialExpansionNumber, lastRadialExpansionNumber,
-                           constant):
-            """Create an array of constant vectors.
-
-            Parameters
-            ----------
-            firstRadialExpansionNumber : int
-                Lowest index of expansion.
-            lastRadialExpansionNumber : int
-                Highest index of expansion.
-            constant : VectorIJK
-                Constant vector to use for expansion.
-
-            Returns
-            -------
-            e1d : Expansion1D
-                New expansion object.
-            """
-            constantCopy = VectorIJK.copyOf(constant)
-
-            # Create a custom wrapper object for this expansion.
-            e1d = Expansion1D()
-            e1d.getUpperBoundIndex = lambda: lastRadialExpansionNumber
-            e1d.getLowerBoundIndex = lambda: firstRadialExpansionNumber
-            e1d.getExpansion = lambda radialExpansion: constantCopy
-            return e1d
-
-        @staticmethod
         def add(a, b):
             """Add 2 1-D expansions.
 

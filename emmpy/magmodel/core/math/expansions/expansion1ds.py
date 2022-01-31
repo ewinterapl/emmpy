@@ -12,6 +12,7 @@ from emmpy.magmodel.core.math.expansions.arrayexpansion1d import (
     ArrayExpansion1D
 )
 from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
@@ -87,20 +88,12 @@ class Expansion1Ds:
 
             Returns
             -------
-            e1d : Expansion1D
-                Wrapper object for expansion sum.
+            ae1d : ArrayExpansion1D
+                An expansion that is the sum of a and b.
             """
-            lastExpansion = len(a.array)
-            array = nones((lastExpansion + 1,))
-            e1d = Expansion1D()
+            array = []
+            for i in range(len(a.array)):
+                array.append(CartesianVector(a.array[i] + b.array[i]))
+            ae1d = ArrayExpansion1D(array)
 
-            def my_getExpansion(radialExpansion):
-                value = array[radialExpansion]
-                if value is None:
-                    value = (a.array[radialExpansion] +
-                             b.array[radialExpansion])
-                    array[radialExpansion] = value
-                    return value
-                return value
-            e1d.getExpansion = my_getExpansion
-            return e1d
+            return ae1d

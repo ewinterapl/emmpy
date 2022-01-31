@@ -72,7 +72,7 @@ class TailSheetExpansions:
         # n is the radial expansion number.
         for n in range(self.numRadialExpansions):
             basisFunctions.append(
-                self.tailSheetSymmetricValues.getExpansion(n)
+                self.tailSheetSymmetricValues.array[n]
             )
 
         # n is the radial expansion number.

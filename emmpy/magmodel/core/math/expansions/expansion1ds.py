@@ -97,8 +97,8 @@ class Expansion1Ds:
             def my_getExpansion(radialExpansion):
                 value = array[radialExpansion]
                 if value is None:
-                    value = (a.getExpansion(radialExpansion) +
-                             b.getExpansion(radialExpansion))
+                    value = (a.array[radialExpansion] +
+                             b.array[radialExpansion])
                     array[radialExpansion] = value
                     return value
                 return value

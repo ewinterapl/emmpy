@@ -19,12 +19,9 @@ class ArrayExpansion2D(list):
 
     Attributes
     ----------
-    data : 2-D list of float
-        Expansion values.
-    lastAzimuthalExpansionNumber : int
-        Last index of expansion values in 1st dimension.
-    lastRadialExpansionNumber : int
-        Last index of expansion values in 2nd dimension.
+    data : 2-D list of object
+        Expansion values. Can be float, or other objects such as VectorIJK
+        or nested ArrayExpansion1D or ArrayExpansion2D objects.
     """
 
     def __init__(self, data):
@@ -34,21 +31,21 @@ class ArrayExpansion2D(list):
 
         Parameters
         ----------
-        data : 2-D list of float
-            Expansion values.
+        data : 2-D list of object
+            Expansion values. Can be float, or other objects such as VectorIJK
+            or nested ArrayExpansion1D or ArrayExpansion2D objects.
         """
         self[:] = data[:]
-        # self.lastRadialExpansionNumber = len(data[0]) - 1
 
     @staticmethod
     def add(a, b):
-        """Add two expansions using a wrapper object.
+        """Add two expansions of CartesianVectors.
 
-        Add two expansions using a wrapper object.
+        Add two expansions of CartesianVectors.
 
         Parameters
         ----------
-        a, b : ArrayExpansion2D
+        a, b : ArrayExpansion2D of CartesianVector
             Expansions to add.
 
         Returns

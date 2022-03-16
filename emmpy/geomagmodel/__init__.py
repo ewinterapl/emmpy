@@ -5,7 +5,7 @@ Modules
 
 Packages
 --------
+magnetopause
 t01
-tests
 ts07
 """

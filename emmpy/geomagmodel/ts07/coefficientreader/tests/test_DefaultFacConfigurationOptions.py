@@ -19,14 +19,6 @@ class TestBuilder(unittest.TestCase):
     def test_createFromCoeffs(self):
         pass
 
-    def test_getNumberOfFields(self):
-        dfco = DefaultFacConfigurationOptions(
-            DefaultFacConfigurationOptions.TS07D
-        )
-        self.assertEqual(
-            dfco.getNumberOfFields(), DefaultFacConfigurationOptions.TS07D
-        )
-
     def test_getTs07(self):
         pass
 

@@ -12,8 +12,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
     ThinAsymmetricCurrentSheetBasisVectorShieldingField
 )
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -62,11 +62,11 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         self.thinCurrentSheet = thinCurrentSheet
         self.thinCurrentSheetShield = thinCurrentSheetShield
         self.includeShield = includeShield
-        self.numAzimuthalExpansions = thinCurrentSheet.getNumAzimuthalExpansions()
-        self.numRadialExpansions = thinCurrentSheet.getNumRadialExpansions()
+        self.numAzimuthalExpansions = thinCurrentSheet.numAzimuthalExpansions
+        self.numRadialExpansions = thinCurrentSheet.numRadialExpansions
 
     @staticmethod
-    def createUnity(currentSheetHalfThickness, tailLength, bessel,
+    def createUnity(currentSheetHalfThickness, tailLength,
                     staticCoefficients, includeShield):
         """The createUnity method.
 
@@ -78,8 +78,6 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
             currentSheetHalfThickness
         tailLength : float
             Tail length,
-        bessel : BesselFunctionEvaluator
-            Bessel function evaluator.
         staticCoefficients : ThinCurrentSheetShieldingCoefficients
             Static coefficients.
         includeShield : bool
@@ -93,11 +91,11 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         thinCurrentSheet = (
             ThinAsymmetricCurrentSheetBasisVectorField.createUnity(
                 tailLength, currentSheetHalfThickness,
-                staticCoefficients.getNumAzimuthalExpansions(),
-                staticCoefficients.getNumRadialExpansions(), bessel)
+                staticCoefficients.numAzimuthalExpansions,
+                staticCoefficients.numRadialExpansions)
         )
         thinCurrentSheetShield = ThinAsymmetricCurrentSheetBasisVectorShieldingField(
-            staticCoefficients, bessel)
+            staticCoefficients)
         return ShieldedThinCurrentSheetField(
             thinCurrentSheet, thinCurrentSheetShield, includeShield)
 
@@ -121,30 +119,26 @@ class ShieldedThinCurrentSheetField(BasisVectorField):
         )
 
         # Calculate the field expansions.
-        tailSheetSymmetricValues = (
-            equatorialExpansions.getTailSheetSymmetricValues()
-        )
-        tailSheetOddValues = equatorialExpansions.getTailSheetOddValues()
-        tailSheetEvenValues = equatorialExpansions.getTailSheetEvenValues()
+        tailSheetSymmetricValues = equatorialExpansions.tailSheetSymmetricValues
+        tailSheetOddValues = equatorialExpansions.tailSheetOddValues
+        tailSheetEvenValues = equatorialExpansions.tailSheetEvenValues
 
         # This is the most expensive lines of the module, If you don't need the
         # shielding, it should NOT be computed. These three lines account for
         # for over 90% of the model evaluation.
         if self.includeShield:
             shield = self.thinCurrentSheetShield.evaluateExpansions(position)
-            tailSheetSymmetricShieldValues = (
-                shield.getTailSheetSymmetricValues()
-            )
-            tailSheetOddShieldValues = shield.getTailSheetOddValues()
-            tailSheetEvenShieldValues = shield.getTailSheetEvenValues()
+            tailSheetSymmetricShieldValues = shield.tailSheetSymmetricValues
+            tailSheetOddShieldValues = shield.tailSheetOddValues
+            tailSheetEvenShieldValues = shield.tailSheetEvenValues
             tailSheetSymmetricValues = (
-                Expansion1Ds.Vectors.add(tailSheetSymmetricValues,
-                                         tailSheetSymmetricShieldValues)
+                ArrayExpansion1D.add(tailSheetSymmetricValues,
+                                     tailSheetSymmetricShieldValues)
             )
-            tailSheetOddValues = Expansion2Ds.Vectors.add(
+            tailSheetOddValues = ArrayExpansion2D.add(
                 tailSheetOddValues, tailSheetOddShieldValues
             )
-            tailSheetEvenValues = Expansion2Ds.Vectors.add(
+            tailSheetEvenValues = ArrayExpansion2D.add(
                 tailSheetEvenValues, tailSheetEvenShieldValues
             )
 

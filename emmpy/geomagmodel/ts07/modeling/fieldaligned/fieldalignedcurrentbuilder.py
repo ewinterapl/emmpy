@@ -28,6 +28,7 @@ from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
 from emmpy.magmodel.core.modeling.fac.twoconicalfields import TwoConicalFields
+from emmpy.math.vectorfields.vectorfield import scaleLocation
 
 
 # Below are the TS07 values, if you don't overrride these, this is what will
@@ -153,7 +154,7 @@ class FieldAlignedCurrentBuilder:
             self.smoothed = options.isSmoothed()
             self.theta0 = options.getTheta0()
             self.deltaTheta = options.getDeltaTheta()
-            self.trigParity = options.getTrigParity()
+            self.trigParity = options.trigParity
             # Needed to deform the conical field, eq. 18 & 19 T02.
             self.a = A[region - 1][self.mode - 1]
             self.b = B[region - 1][self.mode - 1]
@@ -202,24 +203,6 @@ class FieldAlignedCurrentBuilder:
             The current object.
         """
         self.smoothed = True
-        return self
-
-    def setSmoothing(self, smoothing):
-        """Set the FAC smoothing flag to the specified value.
-
-        Set the FAC smoothing flag to the specified value.
-
-        Parameters
-        ----------
-        smoothing : bool
-            True for smoothing, False if not.
-
-        Returns
-        -------
-        self : FieldAlignedCurrentBuilder
-            The current object.
-        """
-        self.smoothed = smoothing
         return self
 
     def withTheta0(self, theta0):
@@ -316,8 +299,6 @@ class FieldAlignedCurrentBuilder:
         )
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4).
-        pDynScaledField = vectorfields.scaleLocation(
-            stretchedField, dynamicPressureScalingFactor
-        )
+        pDynScaledField = scaleLocation(stretchedField, dynamicPressureScalingFactor)
 
         return pDynScaledField

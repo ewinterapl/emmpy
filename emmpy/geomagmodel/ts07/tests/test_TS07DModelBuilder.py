@@ -29,12 +29,6 @@ class TestBuilder(unittest.TestCase):
     def test_withoutEquatorialShielding(self):
         pass
 
-    def test_withAlbertBessel(self):
-        pass
-
-    def test_withoutAlbertBessel(self):
-        pass
-
     def test_withTA15deformation(self):
         pass
 

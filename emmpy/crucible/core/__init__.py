@@ -9,8 +9,6 @@ Modules
 
 Packages
 --------
-exceptions
 math
 rotations
-units
 """

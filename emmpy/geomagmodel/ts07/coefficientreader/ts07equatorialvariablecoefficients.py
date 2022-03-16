@@ -9,7 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.utilities.isrealnumber import isRealNumber
+import numbers
 
 
 class Ts07EquatorialVariableCoefficients:
@@ -55,7 +55,7 @@ class Ts07EquatorialVariableCoefficients:
         TypeError
             If invalid parameters are provided.
         """
-        if isRealNumber(currThicks):
+        if isinstance(currThicks, numbers.Real):
             self.currThicks = [currThicks]
         elif isinstance(currThicks, list):
             # The current sheet thickness and the number of sets of linear
@@ -67,86 +67,6 @@ class Ts07EquatorialVariableCoefficients:
         self.warpingParam = warpingParam
         self.twistParam = twistParam
         self.equatorialLinearCoeffs = equatorialLinearCoeffs
-
-    def getCurrThicks(self):
-        """Return the current sheet thicknesses.
-
-        Return the current sheet thicknesses.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : list of float
-            Current sheet thicknesses.
-        """
-        return self.currThicks
-
-    def getHingeDistance(self):
-        """Return the hinge distance.
-
-        Return the hinge distance.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            Hinge distance.
-        """
-        return self.hingeDist
-
-    def getWarpingParam(self):
-        """Return the warping parameter.
-
-        Return the warping parameter.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            Warping parameter.
-        """
-        return self.warpingParam
-
-    def getTwistParam(self):
-        """Return the twist parameter.
-
-        Return the twist parameter.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            Twist parameter.
-        """
-        return self.twistParam
-
-    def getLinearCoeffs(self):
-        """Return the linear coefficients.
-
-        Return the linear coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : list of Ts07EquatorialLinearCoefficients
-            The linear coefficients.
-        """
-        return self.equatorialLinearCoeffs
 
     def getTotalNumberOfParameters(self):
         """Return the total number of parameters.
@@ -183,8 +103,8 @@ class Ts07EquatorialVariableCoefficients:
 
         # Loop through all the linear parameters and add them up.
         for lin in self.equatorialLinearCoeffs:
-            m = lin.getNumAzimuthalExpansions()
-            n = lin.getNumRadialExpansions()
+            m = lin.numAzimuthalExpansions
+            n = lin.numRadialExpansions
             numLinear += 2 * (n + 2 * (n * m))
         return numLinear
 

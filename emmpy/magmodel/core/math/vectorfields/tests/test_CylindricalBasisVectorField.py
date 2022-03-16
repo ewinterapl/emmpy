@@ -7,9 +7,6 @@ from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
 
 class TestBuilder(unittest.TestCase):
 
-    def test___init__(self):
-        self.assertIsNotNone(CylindricalBasisVectorField)
-
     def test_evaluateExpansion(self):
         pass
 

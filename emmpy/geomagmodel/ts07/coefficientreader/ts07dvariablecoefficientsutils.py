@@ -29,8 +29,9 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients
 from emmpy.geomagmodel.ts07.coefficientreader.ts07facvariablecoefficients import (
     Ts07FacVariableCoefficients
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
 )
 from emmpy.utilities.nones import nones
 
@@ -102,61 +103,54 @@ class TS07DVariableCoefficientsUtils:
                     variableCoefficientsFile
                 )
             )
-            return TS07DVariableCoefficientsUtils.create(
-                variableCoefficientsFile, numCurrentSheets,
-                numAzimuthalExpansions, numRadialExpansions, facConfiguration
-            )
-        elif len(args) == 4:
-            raise Exception
         elif len(args) == 5:
             (variableCoefficientsFile, numCurrentSheets,
              numAzimuthalExpansions, numRadialExpansions,
              facConfiguration) = args
-            # Constructs the TS07D set of coefficients from the ASCII file WITH
-            # a customized resolution and with MANY current sheets. This set of
-            # coefficient can be used to construct the TS07D model.
-            # This is package private because (at least for now) we want to
-            # limit the public API to only support 1 or 2 current sheets, not
-            # many current sheets.
-
-            # The number of asymmetric expansions is simply n*m.
-            numAsymmetricExpansions = (
-                numRadialExpansions*numAzimuthalExpansions
-            )
-
-            # Half the number of equatorial expansion coefficients, r+2*(r*a).
-            # This is half the expansions as the dynamic pressure terms double
-            # this number.
-            numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
-            numExpansions = numHalfExpansions*2*numCurrentSheets
-
-            totalNumberOfCoefficients = (
-                1 + numExpansions + numCurrentSheets + 5 +
-                facConfiguration.getNumberOfFields()
-            )
-
-            coeffs = nones((totalNumberOfCoefficients,))
-            lineNumber = 0
-            for line in open(variableCoefficientsFile):
-                try:
-                    coeffs[lineNumber] = float(line.split()[0])
-                    lineNumber += 1
-                except ValueError:
-                    break
-
-            # NOTE, this is a deviation from the FORTRAN code, the FORTRAN
-            # code handles this in the WARPED subroutine.
-            twist = coeffs[-1]/10
-            coeffs[-1] = twist
-
-            return TS07DVariableCoefficientsUtils.createFromArray(
-                coeffs, numCurrentSheets, numAzimuthalExpansions,
-                numRadialExpansions, facConfiguration
-            )
-        elif len(args) == 6:
-            raise TypeError
         else:
             raise TypeError
+
+        # Constructs the TS07D set of coefficients from the ASCII file WITH
+        # a customized resolution and with MANY current sheets. This set of
+        # coefficient can be used to construct the TS07D model.
+        # This is package private because (at least for now) we want to
+        # limit the public API to only support 1 or 2 current sheets, not
+        # many current sheets.
+
+        # The number of asymmetric expansions is simply n*m.
+        numAsymmetricExpansions = (
+            numRadialExpansions*numAzimuthalExpansions
+        )
+
+        # Half the number of equatorial expansion coefficients, r+2*(r*a).
+        # This is half the expansions as the dynamic pressure terms double
+        # this number.
+        numHalfExpansions = numRadialExpansions + 2*numAsymmetricExpansions
+        numExpansions = numHalfExpansions*2*numCurrentSheets
+
+        totalNumberOfCoefficients = (
+            1 + numExpansions + numCurrentSheets + 5 +
+            facConfiguration.numberOfFields
+        )
+
+        coeffs = nones((totalNumberOfCoefficients,))
+        lineNumber = 0
+        for line in open(variableCoefficientsFile):
+            try:
+                coeffs[lineNumber] = float(line.split()[0])
+                lineNumber += 1
+            except ValueError:
+                break
+
+        # NOTE, this is a deviation from the FORTRAN code, the FORTRAN
+        # code handles this in the WARPED subroutine.
+        twist = coeffs[-1]/10
+        coeffs[-1] = twist
+
+        return TS07DVariableCoefficientsUtils.createFromArray(
+            coeffs, numCurrentSheets, numAzimuthalExpansions,
+            numRadialExpansions, facConfiguration
+        )
 
     @staticmethod
     def readDynamicPressure(variableCoefficientsFile):
@@ -384,29 +378,15 @@ class TS07DVariableCoefficientsUtils:
                         coeffs[index + numHalfExpansions +
                                numAsymmetricExpansions]
                     )
-            aSymExpansion = (
-                CoefficientExpansions.createExpansionFromArray(aSym, 1)
+            aSymExpansion = ScalarExpansion1D(aSym)
+            aSymPdynDependentExpansion = ScalarExpansion1D(aSymPdynDependent)
+            aOddExpansion = ArrayCoefficientExpansion2D(aOdd)
+            aOddPdynDependentExpansion = ArrayCoefficientExpansion2D(
+                aOddPdynDependent
             )
-            aSymPdynDependentExpansion = (
-                CoefficientExpansions.createExpansionFromArray(
-                    aSymPdynDependent, 1
-                )
-            )
-            aOddExpansion = (
-                CoefficientExpansions.createExpansionFromArray(aOdd, 1, 1)
-            )
-            aOddPdynDependentExpansion = (
-                CoefficientExpansions.createExpansionFromArray(
-                    aOddPdynDependent, 1, 1
-                )
-            )
-            aEvenExpansion = (
-                CoefficientExpansions.createExpansionFromArray(aEven, 1, 1)
-            )
-            aEvenPdynDependentExpansion = (
-                CoefficientExpansions.createExpansionFromArray(
-                    aEvenPdynDependent, 1, 1
-                )
+            aEvenExpansion = ArrayCoefficientExpansion2D(aEven)
+            aEvenPdynDependentExpansion = ArrayCoefficientExpansion2D(
+               aEvenPdynDependent
             )
             equatorialLinearCoeffs = (
                 Ts07EquatorialLinearCoefficients.create(
@@ -418,7 +398,7 @@ class TS07DVariableCoefficientsUtils:
             )
             eqLinearCoeffs.append(equatorialLinearCoeffs)
 
-        numFacFields = facConfiguration.getNumberOfFields()
+        numFacFields = facConfiguration.numberOfFields
 
         # The field aligned current amplitudes.
         facAmps = nones((numFacFields,))

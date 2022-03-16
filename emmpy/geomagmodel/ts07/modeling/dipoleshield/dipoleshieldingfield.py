@@ -13,13 +13,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import cos, sin
 
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
+from emmpy.math.expansions.arraycoefficientexpansion2d import ArrayCoefficientExpansion2D
+from emmpy.math.vectorfields.vectorfield import scaleLocation
 
 
 class DipoleShieldingField:
@@ -58,34 +58,30 @@ class DipoleShieldingField:
     kappaParallel = .3477844929  # Previously T2
 
     # These coefficients were determined in Tsyganenko 2002-1 referenced above.
-    p = CoefficientExpansions.createExpansionFromArray(
-        [9.620648151, 6.082014949, 27.75216226], 1)
-    r = CoefficientExpansions.createExpansionFromArray(
-        [12.44199571, 5.122226936, 6.982039615], 1)
-    q = CoefficientExpansions.createExpansionFromArray(
-        [20.12149582, 6.150973118, 4.663639687], 1)
-    s = CoefficientExpansions.createExpansionFromArray(
-        [15.73319647, 2.303504968, 5.840511214], 1)
-    a = CoefficientExpansions.createExpansionFromArray(
+    p = ScalarExpansion1D([9.620648151, 6.082014949, 27.75216226])
+    r = ScalarExpansion1D([12.44199571, 5.122226936, 6.982039615])
+    q = ScalarExpansion1D([20.12149582, 6.150973118, 4.663639687])
+    s = ScalarExpansion1D([15.73319647, 2.303504968, 5.840511214])
+    a = ArrayCoefficientExpansion2D(
         [[-901.2327248, 817.6208321, -83.73539535],
          [336.8781402, -311.2947120, 31.94469304],
-         [125.8739681, -235.4720434, 21.86305585]],
-        1, 1)
-    b = CoefficientExpansions.createExpansionFromArray(
+         [125.8739681, -235.4720434, 21.86305585]]
+    )
+    b = ArrayCoefficientExpansion2D(
         [[895.8011176, -845.5880889, 86.58542841],
          [-329.3619944, 308.6011161, -31.30824526],
-         [-372.3384278, 286.7594095, -27.42344605]],
-        1, 1)
-    c = CoefficientExpansions.createExpansionFromArray(
+         [-372.3384278, 286.7594095, -27.42344605]]
+    )
+    c = ArrayCoefficientExpansion2D(
         [[-150.4874688, 1.395023949, -56.85224007],
          [-43.48705106, 1.073551279, 12.21404266],
-         [5.799964188, -1.044652977, 3.536082962]],
-        1, 1)
-    d = CoefficientExpansions.createExpansionFromArray(
+         [5.799964188, -1.044652977, 3.536082962]]
+    )
+    d = ArrayCoefficientExpansion2D(
         [[2.669338538, -.5540427503, 3.681827033],
          [5.103131905, -.6673083508, 4.177465543],
-         [-.3977802319, .5703560010, -3.222069852]],
-        1, 1)
+         [-.3977802319, .5703560010, -3.222069852]]
+    )
 
     @staticmethod
     def create(dipoleTiltAngle, dynamicPressure):
@@ -109,28 +105,26 @@ class DipoleShieldingField:
             The dipole shielding field.
         """
         pDynScale = pow(dynamicPressure/2, 0.155)
-        perpCoeffs = CoefficientExpansions.add(
+        perpCoeffs = ArrayCoefficientExpansion2D.add(
             DipoleShieldingField.a,
-            CoefficientExpansions.scale(DipoleShieldingField.b,
-                                        cos(dipoleTiltAngle)))
-        parrCoeffs = CoefficientExpansions.add(
-            CoefficientExpansions.scale(DipoleShieldingField.c,
-                                        sin(dipoleTiltAngle)),
-            CoefficientExpansions.scale(DipoleShieldingField.d,
-                                        sin(2*dipoleTiltAngle)))
+            DipoleShieldingField.b.scale(cos(dipoleTiltAngle))
+        )
+        parrCoeffs = ArrayCoefficientExpansion2D.add(
+            DipoleShieldingField.c.scale(sin(dipoleTiltAngle)),
+            DipoleShieldingField.d.scale(sin(2*dipoleTiltAngle))
+        )
         ppchf = PerpendicularAndParallelCartesianHarmonicField.createWithRotationAndAlternate(
-            TrigParity.EVEN,
+            EVEN,
             dipoleTiltAngle*DipoleShieldingField.kappaPerp,
-            CoefficientExpansions.invert(DipoleShieldingField.p),
-            CoefficientExpansions.invert(DipoleShieldingField.r),
+            DipoleShieldingField.p.invert(),
+            DipoleShieldingField.r.invert(),
             perpCoeffs,
             dipoleTiltAngle*DipoleShieldingField.kappaParallel,
-            CoefficientExpansions.invert(DipoleShieldingField.q),
-            CoefficientExpansions.invert(DipoleShieldingField.s),
+            DipoleShieldingField.q.invert(),
+            DipoleShieldingField.s.invert(),
             parrCoeffs)
         pDynScale3 = pDynScale*pDynScale*pDynScale
-        dipoleShieldingField = (vectorfields.scale(
-            vectorfields.scaleLocation(ppchf, pDynScale), pDynScale3))
+        dipoleShieldingField = vectorfields.scale(scaleLocation(ppchf, pDynScale), pDynScale3)
 
         return dipoleShieldingField
 

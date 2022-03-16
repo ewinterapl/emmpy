@@ -12,10 +12,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import atan2, cos, sin, sqrt
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.ffunction import Ffunction
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class StretchedField(VectorField):
@@ -112,11 +112,11 @@ class StretchedField(VectorField):
         fValues = self.fFunction.evaluate(CylindricalVector(rho, phi, y))
 
         # The derivatives.
-        dF_dPhi = fValues.getdF_dPhi()
-        dF_dRho = fValues.getdF_dRho()
-        dF_dy = fValues.getdF_dy()
-        sinF = sin(fValues.getF())
-        cosF = cos(fValues.getF())
+        dF_dPhi = fValues.dF_dPhi
+        dF_dRho = fValues.dF_dRho
+        dF_dy = fValues.dF_dy
+        sinF = sin(fValues.f)
+        cosF = cos(fValues.f)
         xStar = rho*cosF
         yStar = y
         zStar = -rho*sinF
@@ -164,9 +164,9 @@ class StretchedField(VectorField):
         buffer : VectorIJK
             Field evaluated at location.
         """
-        x = location.getI()
-        y = location.getJ()
-        z = location.getK()
+        x = location.i
+        y = location.j
+        z = location.k
 
         # Convert to spherical and cylindrical.
         rho2 = x*x + z*z
@@ -223,17 +223,17 @@ class StretchedField(VectorField):
         # Tsy 2002-1 eqn 22, B* the original undeformed field evaluated with
         # the deformed coordinates.
         bRhoStar = (
-            unstretchedVector.getI()*cosF - unstretchedVector.getK()*sinF
+            unstretchedVector.i*cosF - unstretchedVector.k*sinF
         )
         bPhiStar = (
-            -unstretchedVector.getI()*sinF - unstretchedVector.getK()*cosF
+            -unstretchedVector.i*sinF - unstretchedVector.k*cosF
         )
 
         # Tsy 2002-1 eqn 23, B' apply the transformation matrix.
         bRho = bRhoStar*dF_dPhi
-        bPhi = bPhiStar - rho*(unstretchedVector.getJ()*dF_dy +
+        bPhi = bPhiStar - rho*(unstretchedVector.j*dF_dy +
                                bRhoStar*dF_dRho)
-        by = unstretchedVector.getJ()*dF_dPhi
+        by = unstretchedVector.j*dF_dPhi
 
         # Tsy 2002-1 eqn 24, and now convert B' from cylindrial to Cartesian.
         bx = bRho*cosPhi - bPhi*sinPhi

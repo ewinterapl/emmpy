@@ -10,8 +10,12 @@ Modules
 cartesianvector2d.py
 cartesianvector3d.py
 cylindricalvector.py
+latitudinalvector.py
 polarvector.py
+radecvector.py
 sphericalvector.py
+vectorij.py
+vectorijk.py
 
 Packages
 --------

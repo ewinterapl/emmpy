@@ -11,15 +11,12 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import sys
 
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.magmodel.core.math.vectorfields.cylindricalvectorfield import (
-    CylindricalVectorField
-)
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.matrices.matrixijk import MatrixIJK
 
 
-class CylindricalFieldDeformation(CylindricalVectorField):
+class CylindricalFieldDeformation:
     """Deformation for a cylindrical field.
 
     Deformation for a cylindrical field.
@@ -67,7 +64,7 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         # Evaluate the deformed field.
         v = trans.mxv(VectorIJK(bField.rho, bField.phi, bField.z))
 
-        return CylindricalVector(v.getI(), v.getJ(), v.getK())
+        return CylindricalVector(v.i, v.j, v.k)
 
     @staticmethod
     def computeMatrix(deformed, originalCoordinate):
@@ -92,17 +89,17 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         hp = r
         hz = 1.0
         hrDef = 1.0
-        hpDef = deformed.getF().rho
+        hpDef = deformed.f.rho
         hzDef = 1.0
-        dFrDr = deformed.getdFrDr()
-        dFrDp = deformed.getdFrDp()
-        dFrDz = deformed.getdFrDz()
-        dFpDr = deformed.getdFpDr()
-        dFpDp = deformed.getdFpDp()
-        dFpDz = deformed.getdFpDz()
-        dFzDr = deformed.getdFzDr()
-        dFzDp = deformed.getdFzDp()
-        dFzDz = deformed.getdFzDz()
+        dFrDr = deformed.dFrDr
+        dFrDp = deformed.dFrDp
+        dFrDz = deformed.dFrDz
+        dFpDr = deformed.dFpDr
+        dFpDp = deformed.dFpDp
+        dFpDz = deformed.dFpDz
+        dFzDr = deformed.dFzDr
+        dFzDp = deformed.dFzDp
+        dFzDz = deformed.dFzDz
         trr = (hpDef*hzDef/(hp*hz))*(dFpDp*dFzDz - dFpDz*dFzDp)
         trp = (hrDef*hzDef/(hp*hz))*(dFrDz*dFzDp - dFrDp*dFzDz)
         trz = (hrDef*hpDef/(hp*hz))*(dFrDp*dFpDz - dFrDz*dFpDp)
@@ -112,7 +109,9 @@ class CylindricalFieldDeformation(CylindricalVectorField):
         tzr = (hpDef*hzDef/(hr*hp))*(dFpDr*dFzDp - dFpDp*dFzDr)
         tzp = (hrDef*hzDef/(hr*hp))*(dFrDp*dFzDr - dFrDr*dFzDp)
         tzz = (hrDef*hpDef/(hr*hp))*(dFrDr*dFpDp - dFrDp*dFpDr)
-        trans = MatrixIJK(trr, tpr, tzr, trp, tpp, tzp, trz, tpz, tzz)
+        trans = MatrixIJK([[trr, trp, trz],
+                           [tpr, tpp, tpz],
+                           [tzr, tzp, tzz]])
 
         if hp == 0:
             trr = (1*hzDef/(1*hz))*(dFpDp*dFzDz - dFpDz*dFzDp)

@@ -10,15 +10,6 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         pass
 
-    def test_getRegion1KappaScaling(self):
-        pass
-
-    def test_getRegion2KappaScaling(self):
-        pass
-
-    def test_getFacConfigurations(self):
-        pass
-
     def test_getLienarCoefficients(self):
         pass
 

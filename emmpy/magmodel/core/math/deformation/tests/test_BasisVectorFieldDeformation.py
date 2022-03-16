@@ -1,3 +1,6 @@
+"""Tests for the basisvectorfielddeformation module."""
+
+
 import unittest
 
 from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
@@ -6,23 +9,21 @@ from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
 
 
 class TestBuilder(unittest.TestCase):
+    """Tests for the basisvectorfielddeformation module."""
 
     def test___init__(self):
+        """Test the __init__ method."""
         with self.assertRaises(Exception):
             BasisVectorFieldDeformation()
 
-    def test_evaluate(self):
-        # IMPLEMENT
-        pass
-
     def test_evaluateExpansion(self):
-        # IMPLEMENT
+        """Test the evaluateExpansion method."""
         pass
 
     def test_getNumberOfBasisFunctions(self):
-        # IMPLEMENT
+        """Test the getNumberOfBasisFunctions method."""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

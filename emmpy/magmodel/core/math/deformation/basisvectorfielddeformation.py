@@ -8,13 +8,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.deformation.vectorfielddeformation import (
     VectorFieldDeformation
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class BasisVectorFieldDeformation(BasisVectorField):
@@ -38,29 +38,6 @@ class BasisVectorFieldDeformation(BasisVectorField):
         self.originalField = originalField
         self.coordDeformation = coordDeformation
 
-    def evaluate(self, originalCoordinate, buffer):
-        """Evaluate the basis vector field deformation.
-        
-        Evaluate the basis vector field deformation.
-
-        Parameters
-        ----------
-        originalCoordinate : VectorIJK
-            Location to evaluate the deformed field.
-        buffer : VectorIJK
-            Buffer to hold the deformed vector field value.
-        
-        Returns
-        -------
-        buffer : VectorIJK
-            The deformed vector field value.
-        """
-        deformed = self.coordDeformation.differentiate(originalCoordinate)
-        trans = VectorFieldDeformation.computeMatrix(deformed)
-        bField = self.originalField.evaluate(deformed.getF())
-        v = trans.mxv(VectorIJK(bField.getI(), bField.getJ(), bField.getK()))
-        return buffer.setTo(v.getI(), v.getJ(), v.getK())
-
     def evaluateExpansion(self, originalCoordinate):
         """Evaluate and deform the expansion at the specified location.
         
@@ -78,7 +55,7 @@ class BasisVectorFieldDeformation(BasisVectorField):
         """
         deformed = self.coordDeformation.differentiate(originalCoordinate)
         trans = VectorFieldDeformation.computeMatrix(deformed)
-        bFieldExpansion = self.originalField.evaluateExpansion(deformed.getF())
+        bFieldExpansion = self.originalField.evaluateExpansion(deformed.f)
         bFieldExpansionDeformed = []
         for bField in bFieldExpansion:
             v = VectorIJK()

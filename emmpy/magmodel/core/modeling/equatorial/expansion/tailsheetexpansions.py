@@ -9,7 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TailSheetExpansions:
@@ -50,56 +50,8 @@ class TailSheetExpansions:
         self.tailSheetSymmetricValues = tailSheetSymmetricValues
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
-        self.numAzimuthalExpansions = tailSheetOddValues.iSize()
-        self.numRadialExpansions = tailSheetOddValues.jSize()
-
-    def getTailSheetSymmetricValues(self):
-        """Return the symmetric expansion values.
-
-        Return the symmetric expansion values.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion1D
-            tailSheetSymmetricValues
-        """
-        return self.tailSheetSymmetricValues
-
-    def getTailSheetOddValues(self):
-        """Return the odd expansion values.
-        
-        Return the odd expansion values.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion2D
-            tailSheetOddValues
-        """
-        return self.tailSheetOddValues
-
-    def getTailSheetEvenValues(self):
-        """Return the even expansion values.
-        
-        Return the even expansion values.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion2D
-            tailSheeEvenValues
-        """
-        return self.tailSheetEvenValues
+        self.numAzimuthalExpansions = len(tailSheetOddValues)
+        self.numRadialExpansions = len(tailSheetOddValues[0])
 
     def getExpansionsAsList(self):
         """Return the basis functions in a list.
@@ -118,26 +70,22 @@ class TailSheetExpansions:
         basisFunctions = []
 
         # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
             basisFunctions.append(
-                self.tailSheetSymmetricValues.getExpansion(n)
+                self.tailSheetSymmetricValues[n]
             )
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
-                basisFunctions.append(
-                    self.tailSheetOddValues.getExpansion(m, n)
-                )
+        for n in range(self.numRadialExpansions):
+            for m in range(self.numAzimuthalExpansions):
+                basisFunctions.append(self.tailSheetOddValues[m][n])
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
-                basisFunctions.append(
-                    self.tailSheetEvenValues.getExpansion(m, n)
-                )
+        for n in range(self.numRadialExpansions):
+            for m in range(self.numAzimuthalExpansions):
+                basisFunctions.append(self.tailSheetEvenValues[m][n])
 
         return basisFunctions
 
@@ -160,26 +108,26 @@ class TailSheetExpansions:
         bzSum = 0.0
 
         # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
-            basisFunction = self.tailSheetSymmetricValues.getExpansion(n)
-            bxSum += basisFunction.i
-            bySum += basisFunction.j
-            bzSum += basisFunction.k
+        for n in range(self.numRadialExpansions):
+            basisFunction = self.tailSheetSymmetricValues[n]
+            bxSum += basisFunction.x
+            bySum += basisFunction.y
+            bzSum += basisFunction.z
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
-                basisFunction = self.tailSheetOddValues.getExpansion(m, n)
+        for n in range(self.numRadialExpansions):
+            for m in range(self.numAzimuthalExpansions):
+                basisFunction = self.tailSheetOddValues[m][n]
                 bxSum += basisFunction.i
                 bySum += basisFunction.j
                 bzSum += basisFunction.k
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
-                basisFunction = self.tailSheetEvenValues.getExpansion(m, n)
+        for n in range(self.numRadialExpansions):
+            for m in range(self.numAzimuthalExpansions):
+                basisFunction = self.tailSheetEvenValues[m][n]
                 bxSum += basisFunction.i
                 bySum += basisFunction.j
                 bzSum += basisFunction.k

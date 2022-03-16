@@ -9,8 +9,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import sin
+from math import cos, sin
 
+from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
@@ -120,8 +121,12 @@ class ConicalCurrentMagneticField(SphericalVectorField):
         t = self.tFunction.evaluate(theta)
         dt_dTheta = self.tFunction.differentiate(theta)
         # Even or odd.
-        sinMphi = self.trigParity.evaluate(self.mode*phi)
-        cosMphi = self.trigParity.differentiate(self.mode*phi)
+        if self.trigParity is ODD:
+            sinMphi = sin(self.mode*phi)
+            cosMphi = cos(self.mode*phi)
+        else:
+            sinMphi = cos(self.mode*phi)
+            cosMphi = -sin(self.mode*phi)
         br = 0.0
         bTheta = self.mode*t*cosMphi/(r*sin(theta))
         bPhi = -dt_dTheta*sinMphi/r

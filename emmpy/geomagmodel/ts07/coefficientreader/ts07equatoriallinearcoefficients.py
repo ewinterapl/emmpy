@@ -11,9 +11,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import sqrt
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
@@ -100,70 +97,6 @@ class Ts07EquatorialLinearCoefficients:
             numRadialExpansions
         )
 
-    def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions.
-        
-        Return the number of azimuthal expansions.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of azimuthal expansions.
-        """
-        return self.numAzimuthalExpansions
-
-    def getNumRadialExpansions(self):
-        """Return the number of radial expansions.
-
-        Return the number of radial expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of radial expansions.
-        """
-        return self.numRadialExpansions
-
-    def getCoeffs(self):
-        """Return the coefficients.
-        
-        Return the coefficients.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : TailSheetCoefficients
-            The tail sheet coefficients.
-        """
-        return self.coeffs
-
-    def getPdynDependentCoeffs(self):
-        """Return the coefficients dependent on the dynamic pressure.
-
-        Return the coefficients dependent on the dynamic pressure.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : TailSheetCoefficients
-            The coefficients which are dependent on dynamic pressure.
-        """
-        return self.pdynDependentCoeffs
-
     def getPdynScaledCoeffs(self, dynamicPressure):
         """Return the coefficients scaled by the dynamic pressure.
         
@@ -181,16 +114,9 @@ class Ts07EquatorialLinearCoefficients:
         """
         pDyn0 = 2.0
         pDynNormalized = sqrt(dynamicPressure/pDyn0) - 1
-        symPdynDependent = CoefficientExpansions.scale(
-            self.pdynDependentCoeffs.getTailSheetSymmetricValues(),
-            pDynNormalized
-        )
-        aOddPdynDependent = CoefficientExpansions.scale(
-            self.pdynDependentCoeffs.getTailSheetOddValues(), pDynNormalized
-        )
-        aEvenPdynDependent = CoefficientExpansions.scale(
-            self.pdynDependentCoeffs.getTailSheetEvenValues(), pDynNormalized
-        )
+        symPdynDependent = self.pdynDependentCoeffs.tailSheetSymmetricValues.scale(pDynNormalized)
+        aOddPdynDependent = self.pdynDependentCoeffs.tailSheetOddValues.scale(pDynNormalized)
+        aEvenPdynDependent = self.pdynDependentCoeffs.tailSheetEvenValues.scale(pDynNormalized)
         return TailSheetCoefficients(
             symPdynDependent, aOddPdynDependent, aEvenPdynDependent
         )

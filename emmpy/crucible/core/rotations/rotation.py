@@ -10,13 +10,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.rotations.unwritablerotation import (
-    UnwritableRotation
-)
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 
-class Rotation(UnwritableRotation):
+class Rotation:
     """Abstract class representing a rotation matrix.
 
     N.B. This class was based on a Java interface, and therefore these

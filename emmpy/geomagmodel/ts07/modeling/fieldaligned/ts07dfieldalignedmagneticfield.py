@@ -10,17 +10,18 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder import (
     FieldAlignedCurrentBuilder
 )
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder import (
     FieldAlignedCurrentShiedingBuilder
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import add, addAll
 
 
 class Ts07DFieldAlignedMagneticField(BasisVectorField):
@@ -94,45 +95,45 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         # Construct all the fields, unlike in the original TS07D, instead of 4
         # FAC systems, this now supports any number.
         for option in options:
-            amp = option.getAmplitudeScaling()
+            amp = option.amplitudeScaling
             basisCoefficientsBuilder.append(amp)
-            region = option.getRegion()
+            region = option.region
             kappa = region1KappaScaling
             if region == 2:
                 kappa = region2KappaScaling
-            shieldingParity = TrigParity.EVEN
+            shieldingParity = EVEN
             scaleFactor = amp*scaling
-            if option.getTrigParity() is TrigParity.EVEN:
+            if option.trigParity is EVEN:
                 scaleFactor = -scaleFactor
-                shieldingParity = TrigParity.ODD
+                shieldingParity = ODD
 
             builder = FieldAlignedCurrentBuilder(
-                option.getRegion(), option.getMode(), option.getTrigParity(),
+                option.region, option.mode, option.trigParity,
                 dipoleTiltAngle, dynamicPressure, kappa, scaleFactor)
-            builder.withTheta0(option.getTheta0())
-            builder.withDeltaTheta(option.getDeltaTheta())
-            builder.setSmoothing(option.isSmoothed())
+            builder.withTheta0(option.theta0)
+            builder.withDeltaTheta(option.deltaTheta)
+            builder.smoothing = option.isSmoothed()
 
             field = builder.build()
             internalFieldsBuilder.append(field)
 
             if option.isShielded():
                 shieldingField = FieldAlignedCurrentShiedingBuilder(
-                    option.getRegion(), option.getMode(),
+                    option.region, option.mode,
                     shieldingParity, dipoleTiltAngle, dynamicPressure, kappa,
                     amp).build()
                 shieldingFieldsBuilder.append(shieldingField)
                 basisFunctionsBuilder.append(
-                    vectorfields.scale(vectorfields.add(field, shieldingField), 1.0/amp))
+                    vectorfields.scale(add(field, shieldingField), 1.0/amp))
             else:
                 basisFunctionsBuilder.append(vectorfields.scale(field, 1.0/amp))
 
         self.internalFields = internalFieldsBuilder
         self.shieldingFields = shieldingFieldsBuilder
-        self.internalField = vectorfields.addAll(self.internalFields)
+        self.internalField = addAll(self.internalFields)
 
         # Scale position vector for solar wind (see Tsy 2002-1 2.4).
-        self.shieldingField = vectorfields.addAll(self.shieldingFields)
+        self.shieldingField = addAll(self.shieldingFields)
 
         self.basisFunctions = basisFunctionsBuilder
         self.basisCoefficients = basisCoefficientsBuilder
@@ -198,38 +199,6 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
         v = VectorIJK.addAll([internal, shield], buffer)
         return v
 
-    def getBasisFunctions(self):
-        """Return the list of basis functions.
-
-        Return the list of basis functions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.basisFunctions : list of VectorField
-            The basis functions for the field.
-        """
-        return self.basisFunctions
-
-    def getBasisCoefficients(self):
-        """Return the list of basis coefficients.
-
-        Return the list of basis coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.basisCoefficients : list of float
-            The basis coefficients for the field.
-        """
-        return self.basisCoefficients
-
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.
 
@@ -251,7 +220,7 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             coeff = self.basisCoefficients[count]
             count += 1
             bfe = basisFunction.evaluate(location)
-            v = VectorIJK(coeff, bfe)
+            v = coeff*VectorIJK(bfe)
             values.append(v)
         return values
 
@@ -270,35 +239,3 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
             Number of basis functions.
         """
         return self.basisFunctions.size()
-
-    def getInternalFields(self):
-        """Return the list of internal fields.
-
-        Return the list of internal fields.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.internalFields : list of VectorField
-            Internal fields for the overall field.
-        """
-        return self.internalFields
-
-    def getShieldingFields(self):
-        """Return the list of shielding fields.
-
-        Return the list of shielding fields.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.shieldingFields : list of VectorField
-            Shielding fields for the overall field.
-        """
-        return self.shieldingFields

@@ -9,20 +9,24 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
+import numpy as np
+
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
 )
-from emmpy.utilities.nones import nones
+
+
+# Names of computed attributes, used by __getattr__().
+computed_attributes = ["numAzimuthalExpansions", "numRadialExpansions"]
 
 
 class TailSheetCoefficients:
     """Tail sheet coefficients for an equatorial expansion.
 
-    This is a container class for the coefficients used for the
-    ThinAsymmetricCurrentSheetBasisVectorField class.
-
-    That is, this class holds the symmetric a_n^s, odd a_mn^o>, and even
-    a_mn^e coefficients used in the expansion.
+    This is a container class for the coefficients used for an equatorial
+    expansion. That is, this class holds the symmetric a_n^s, odd a_mn^o, and
+    even a_mn^e coefficients used in the expansion.
 
     Attributes
     ----------
@@ -33,9 +37,9 @@ class TailSheetCoefficients:
     tailSheetEvenValues : CoefficientExpansion2D
         tailSheetEvenValues
     numAzimuthalExpansions : int
-        Number of components in the azimuthal expansion.
-    numRadialExpansionsm: int
-        Number of components in the radial expansion.
+        Number of components in the azimuthal expansions.
+    numRadialExpansions: int
+        Number of components in the radial expansions.
     """
 
     def __init__(self, tailSheetSymmetricValues, tailSheetOddValues,
@@ -56,14 +60,30 @@ class TailSheetCoefficients:
         self.tailSheetSymmetricValues = tailSheetSymmetricValues
         self.tailSheetOddValues = tailSheetOddValues
         self.tailSheetEvenValues = tailSheetEvenValues
-        self.numAzimuthalExpansions = tailSheetOddValues.iSize()
-        self.numRadialExpansions = tailSheetOddValues.jSize()
+
+    def __getattr__(self, name):
+        """Return the value of a computed attribute.
+
+        Return the value of an attribute not found by the standard
+        attribute search process. The valid attributes are listed in the
+        computed_attributes dictionary.
+
+        Returns
+        -------
+        result : object
+            Value of specified attribute.
+        """
+        if name == "numAzimuthalExpansions":
+            result = len(self.tailSheetOddValues)
+        elif name == "numRadialExpansions":
+            result = len(self.tailSheetSymmetricValues)
+        return result
 
     @staticmethod
     def createUnity(numAzimuthalExpansions, numRadialExpansions):
-        """Create a coefficient set of all 1s.
+        """Create a coefficient set with all values set to unity.
         
-        Create a coefficient set of all 1s.
+        Create a coefficient set with all values set to unity.
 
         Parameters
         ----------
@@ -71,129 +91,93 @@ class TailSheetCoefficients:
             Number of azimuthal expansions.
         numRadialExpansions : int
             Number of radial expansions.
-        
+
         Returns
         -------
         result : TailSheetCoefficients
             Expansion of unit value in all components.
         """
-        return TailSheetCoefficients(
-            CoefficientExpansions.createUnity(1, numRadialExpansions),
-            CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
-                                              numRadialExpansions),
-            CoefficientExpansions.createUnity(1, numAzimuthalExpansions, 1,
-                                              numRadialExpansions)
+        # Create the symmetric values.
+        tailSheetSymmetricValues = ScalarExpansion1D.createUnity(
+            numRadialExpansions
         )
+
+        # Create the odd values.
+        tailSheetOddValues = ArrayCoefficientExpansion2D.createUnity(
+                numAzimuthalExpansions, numRadialExpansions
+        )
+
+        # Create the even values.
+        tailSheetEvenValues = ArrayCoefficientExpansion2D.createUnity(
+                numAzimuthalExpansions, numRadialExpansions
+        )
+
+        # Create the coefficients object.
+        tsc = TailSheetCoefficients(
+            tailSheetSymmetricValues, tailSheetOddValues, tailSheetEvenValues
+        )
+
+        return tsc
 
     @staticmethod
     def createFromArray(array, numAzimuthalExpansions, numRadialExpansions):
-        """Create a TailSheetCoefficients from a float array.
+        """Create a TailSheetCoefficients from a 1-D array.
 
-        Create a TailSheetCoefficients from a float array.
+        Create a TailSheetCoefficients from a 1-D array. Note that the values
+        in the array are assumed to be in column-major order for the odd and
+        even coefficients.
 
         Parameters
         ----------
-        array : 2-D array of float
+        array : 1-D array of float
             Values to use for expansion.
         numAzimuthalExpansions : int
-            Number of azimuthal expansions
+            Number of components in the azimuthal expansions
         numRadialExpansions : int
-            Number of radial expansions.
+            Number of components in the radial expansions.
 
         Returns
         -------
-        result : TailSheetCoefficients
+        tsc : TailSheetCoefficients
             Object with values copied from array.
         """
-        sym = nones((numRadialExpansions,))
-        odd = nones((numAzimuthalExpansions, numRadialExpansions))
-        even = nones((numAzimuthalExpansions, numRadialExpansions))
-        # n is the radial expansion number.
-        count = 0
-        for n in range(1, numRadialExpansions + 1):
-            sym[n - 1] = array[count]
-            count += 1
+        # Convert the array to np.ndarray format.
+        data = np.array(array)
 
-        # n is the radial expansion number.
-        # m is the azimuthal expansion number.
-        for n in range(1, numRadialExpansions + 1):
-            for m in range(1, numAzimuthalExpansions + 1):
-                odd[m - 1][n - 1] = array[count]
-                count += 1
+        # Extract the symmetric values.
+        i1 = 0
+        i2 = numRadialExpansions
+        sym = data[i1:i2]
 
-        # n is the radial expansion number.
-        # m is the azimuthal expansion number.
-        for n in range(1, numRadialExpansions + 1):
-            for m in range(1, numAzimuthalExpansions + 1):
-                even[m - 1][n - 1] = array[count]
-                count += 1
+        # Extract the odd values.
+        i1 = i2
+        i2 += numAzimuthalExpansions*numRadialExpansions
+        odd = data[i1:i2].reshape(
+            (numRadialExpansions, numAzimuthalExpansions)
+        ).T
 
-        if numAzimuthalExpansions == 0:
-            return TailSheetCoefficients(
-                CoefficientExpansions.createExpansionFromArray(sym, 1),
-                CoefficientExpansions.createNullExpansion(
-                    1, 1, numRadialExpansions),
-                CoefficientExpansions.createNullExpansion(
-                    1, 1, numRadialExpansions)
-            )
+        # Extract the even values.
+        i1 = i2
+        i2 += numAzimuthalExpansions*numRadialExpansions
+        even = data[i1:i2].reshape(
+            (numRadialExpansions, numAzimuthalExpansions)
+        ).T
 
-        return TailSheetCoefficients(
-            CoefficientExpansions.createExpansionFromArray(sym, 1),
-            CoefficientExpansions.createExpansionFromArray(odd, 1, 1),
-            CoefficientExpansions.createExpansionFromArray(even, 1, 1))
+        # Create the new coefficients object.
+        tailSheetSymmetricValues = ScalarExpansion1D(sym)
+        tailSheetOddValues = ArrayCoefficientExpansion2D(odd)
+        tailSheetEvenValues = ArrayCoefficientExpansion2D(even)
+        tsc = TailSheetCoefficients(
+            tailSheetSymmetricValues, tailSheetOddValues, tailSheetEvenValues
+        )
 
-    def getTailSheetSymmetricValues(self):
-        """Return the symmetric coefficients a_n^s.
-        
-        Return the symmetric coefficients a_n^s.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        result : CoefficientExpansion1D
-            Symmetric coefficients a_n^s.
-        """
-        return self.tailSheetSymmetricValues
-
-    def getTailSheetOddValues(self):
-        """Return the odd coefficients a_mn^o.
-
-        Return the odd coefficients a_mn^o.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : CoefficientExpansion2D
-            Tail sheet odd values.
-        """
-        return self.tailSheetOddValues
-
-    def getTailSheetEvenValues(self):
-        """Return the even coefficients a_n^e.
-
-        Return the even coefficients a_n^e.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : CoefficientExpansion2D
-            Tail sheet even values.
-        """
-        return self.tailSheetEvenValues
+        return tsc
 
     def getAsSingleExpansion(self):
         """Return the coefficients as a single 1D expansion.
         
-        Return the coefficients as a single 1D expansion.
+        Return the coefficients as a single 1D expansion. Note that the values
+        are packed in column-major order for the odd and even coefficients.
 
         Parameters
         ----------
@@ -201,78 +185,31 @@ class TailSheetCoefficients:
 
         Returns
         -------
-        result : CoefficientExpansion1D
+        ce1d : CoefficientExpansion1D
             Expansion with all coefficients collapsed to 1 dimension.
         """
-        firstM = 1
-        lastM = self.numAzimuthalExpansions
-        firstN = 1
-        lastN = self.numRadialExpansions
-        coeffs = nones((self.getNumberOfExpansions(),))
-        count = 0
+        # Allocate the array to hold all coefficients.
+        na = self.numAzimuthalExpansions
+        nr = self.numRadialExpansions
+        n_expansions = nr + 2*na*nr
+        coeffs = np.empty((n_expansions,))
 
-        # The pressure independent terms.
-        for n in range(firstN, lastN + 1):
-            coeffs[count] = self.tailSheetSymmetricValues.getCoefficient(n)
-            count += 1
+        # Extract the symmetric values.
+        i1 = 0
+        i2 = nr
+        coeffs[i1:i2] = self.tailSheetSymmetricValues
 
-        for n in range(firstN, lastN + 1):
-            for m in range(firstM, lastM + 1):
-                coeffs[count] = self.tailSheetOddValues.getCoefficient(m, n)
-                count += 1
+        # Extract the odd values.
+        i1 = i2
+        i2 += na*nr
+        coeffs[i1:i2] = self.tailSheetOddValues.T.flatten()
 
-        for n in range(firstN, lastN + 1):
-            for m in range(firstM, lastM + 1):
-                coeffs[count] = self.tailSheetEvenValues.getCoefficient(m, n)
-                count += 1
+        # Extract the even values.
+        i1 = i2
+        i2 += na*nr
+        coeffs[i1:i2] = self.tailSheetEvenValues.T.flatten()
 
-        return CoefficientExpansions.createExpansionFromArray(coeffs, 1)
+        # Create the 1-D expansion.
+        ce1d = ScalarExpansion1D(coeffs)
 
-    def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions.
-        
-        Return the number of azimuthal expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of azimuthal expansions.
-        """
-        return self.numAzimuthalExpansions
-
-    def getNumRadialExpansions(self):
-        """Return the number of radial expansions.
-        
-        Return the number of radial expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of radial expansions.
-        """
-        return self.numRadialExpansions
-
-    def getNumberOfExpansions(self):
-        """Return the total number of expansions.
-
-        Return the total number of expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Total number of expansions.
-        """
-        return (self.numRadialExpansions +
-                2*(self.numAzimuthalExpansions*self.numRadialExpansions))
+        return ce1d

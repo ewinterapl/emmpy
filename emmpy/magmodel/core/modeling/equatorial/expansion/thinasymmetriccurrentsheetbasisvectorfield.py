@@ -9,10 +9,12 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.magmodel.core.math.trigparity import TrigParity
+import numpy as np
+
+
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
@@ -28,6 +30,8 @@ from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions impor
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
+from emmpy.math.coordinates.cartesianvector import CartesianVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 
@@ -51,15 +55,13 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
         currentSheetHalfThickness
     coeffs : DifferentiableScalarFieldIJ
         Coefficients for expansion.
-    bessel : BesselFunctionEvaluator, ignored
-        Bessel function evaluator.
     numAzimuthalExpansions : int
         Number of azimuthal expansions.
     numRadialExpansions : int
         Number of radial expansions.
     """
 
-    def __init__(self, tailLength, currentSheetHalfThickness, coeffs, bessel):
+    def __init__(self, tailLength, currentSheetHalfThickness, coeffs):
         """Initialize a new ThinAsymmetricCurrentSheetBasisVectorField object.
 
         Initialize a new ThinAsymmetricCurrentSheetBasisVectorField object.
@@ -72,20 +74,17 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             currentSheetHalfThickness
         coeffs : DifferentiableScalarFieldIJ
             Coefficients for expansion.
-        bessel : BesselFunctionEvaluator, ignored
-            Bessel function evaluator.
         """
         self.coeffs = coeffs
-        self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
-        self.numRadialExpansions = coeffs.getNumRadialExpansions()
+        self.numAzimuthalExpansions = coeffs.numAzimuthalExpansions
+        self.numRadialExpansions = coeffs.numRadialExpansions
         self.tailLength = tailLength
         self.currentSheetHalfThickness = currentSheetHalfThickness
-        self.bessel = bessel
 
     @staticmethod
     def createUnity(
         tailLength, currentSheetHalfThickness, numAzimuthalExpansions,
-        numRadialExpansions, bessel
+        numRadialExpansions
     ):
         """Create a field where all coefficients are unity.
 
@@ -102,8 +101,6 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             Number of azimuthal expansions.
         numRadialExpansions : int
             Number of radial expansions.
-        bessel : BesselFunctionEvaluator, ignored
-            Bessel function evaluator.
         
         Returns
         -------
@@ -114,7 +111,7 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
             numAzimuthalExpansions, numRadialExpansions
         )
         return ThinAsymmetricCurrentSheetBasisVectorField(
-            tailLength, currentSheetHalfThickness, coeffs, bessel)
+            tailLength, currentSheetHalfThickness, coeffs)
 
     def evaluate(self, location):
         """Evaluate the field.
@@ -173,80 +170,42 @@ class ThinAsymmetricCurrentSheetBasisVectorField(BasisVectorField):
                                self.numRadialExpansions))
         evenExpansions = nones((self.numAzimuthalExpansions,
                                 self.numRadialExpansions))
-        # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
 
-            # Calculate the wave number (kn = n/rho0).
-            kn = n/self.tailLength
+        # Precompute the wavenumbers for each radial expansion.
+        kn = np.arange(1, self.numRadialExpansions + 1)/self.tailLength
+
+        # Make a CartesianVector for the location.
+        cartesianLocation = CartesianVector(location)
+
+        # n is the radial expansion number.
+        for n in range(self.numRadialExpansions):
 
             symBasisFunction = TailSheetSymmetricExpansion(
-                kn, self.currentSheetHalfThickness, self.bessel
+                kn[n], self.currentSheetHalfThickness
             )
-            a = self.coeffs.getTailSheetSymmetricValues().getCoefficient(n)
-            symmetricExpansions[n - 1] = symBasisFunction.evaluate(location)*a
+            a = self.coeffs.tailSheetSymmetricValues[n]
+            symmetricExpansions[n] = symBasisFunction.evaluate(cartesianLocation)*a
 
             # m is the azimuthal expansion number.
-            for m in range(1, self.numAzimuthalExpansions + 1):
-                aOdd = self.coeffs.getTailSheetOddValues().getCoefficient(m, n)
+            for m in range(self.numAzimuthalExpansions):
+                aOdd = self.coeffs.tailSheetOddValues[m, n]
                 oddBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.ODD, self.currentSheetHalfThickness,
-                    self.bessel
+                    kn[n], m + 1, ODD, self.currentSheetHalfThickness
                 )
-                oddExpansions[m - 1][n - 1] = (
-                    oddBasisFunction.evaluate(location)*aOdd)
-                aEven = (
-                    self.coeffs.getTailSheetEvenValues().getCoefficient(m, n)
-                )
+                oddExpansions[m][n] = (
+                    oddBasisFunction.evaluate(cartesianLocation)*aOdd)
+                aEven = self.coeffs.tailSheetEvenValues[m, n]
                 evenBasisFunction = TailSheetAsymmetricExpansion(
-                    kn, m, TrigParity.EVEN, self.currentSheetHalfThickness,
-                    self.bessel
+                    kn[n], m + 1, EVEN, self.currentSheetHalfThickness
                 )
-                evenExpansions[m - 1][n - 1] = (
-                    evenBasisFunction.evaluate(location)*aEven)
+                evenExpansions[m][n] = (
+                    evenBasisFunction.evaluate(cartesianLocation)*aEven)
 
-        if self.numAzimuthalExpansions == 0:
-            return TailSheetExpansions(
-                Expansion1Ds.createFromArray(symmetricExpansions, 1),
-                Expansion2Ds.createNull(1, 1, self.numRadialExpansions),
-                Expansion2Ds.createNull(1, 1, self.numRadialExpansions)
-            )
         return TailSheetExpansions(
-            Expansion1Ds.createFromArray(symmetricExpansions, 1),
-            Expansion2Ds.createFromArray(oddExpansions, 1, 1),
-            Expansion2Ds.createFromArray(evenExpansions, 1, 1)
+            ArrayExpansion1D(symmetricExpansions),
+            ArrayExpansion2D(oddExpansions),
+            ArrayExpansion2D(evenExpansions)
         )
-
-    def getNumAzimuthalExpansions(self):
-        """Return the number of azimuthal expansions.
-        
-        Return the number of azimuthal expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of azimuthal expansions.
-        """
-        return self.numAzimuthalExpansions
-
-    def getNumRadialExpansions(self):
-        """Return the number of radial expansions.
-        
-        Return the number of radial expansions.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            Number of radial expansions.
-        """
-        return self.numRadialExpansions
 
     def getNumberOfBasisFunctions(self):
         """Return the number of basis functions.

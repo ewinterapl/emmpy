@@ -9,14 +9,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.coords.coordconverters import CoordConverters
-from emmpy.crucible.core.math.coords.sphericalvectorfieldvalue import (
-    SphericalVectorFieldValue
+from emmpy.math.coordinates.cartesianvector import CartesianVector
+from emmpy.math.coordinates.sphericalvector import cartesianToSpherical
+from emmpy.math.vectorfields.vectorfield import VectorField
+from emmpy.math.vectorfields.sphericalvectorfieldvalue import (
+    SphericalVectorFieldValue,
+    convertToCartesian
 )
-from emmpy.crucible.core.math.coords.vectorfieldvalueconversions import (
-    VectorFieldValueConversions
-)
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 
 
 class SphericalVectorField(VectorField):
@@ -44,7 +43,7 @@ class SphericalVectorField(VectorField):
             Cartesian field value.
         """
         # Convert the Cartesian position to spherical.
-        locSphere = CoordConverters.convertToSpherical(location)
+        locSphere = cartesianToSpherical(CartesianVector(location))
 
         # Evaluate the field value.
         fieldValue = self.evaluate(locSphere)
@@ -54,7 +53,7 @@ class SphericalVectorField(VectorField):
         sphere = SphericalVectorFieldValue(locSphere, fieldValue)
 
         # Convert the vector field value back to Cartesian.
-        valueSphere = VectorFieldValueConversions.convert(sphere).getValue()
+        valueSphere = convertToCartesian(sphere).value
 
         # Return the value.
         buffer[:] = valueSphere

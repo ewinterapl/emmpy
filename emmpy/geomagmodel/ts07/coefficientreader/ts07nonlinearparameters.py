@@ -61,19 +61,3 @@ class Ts07NonLinearParameters:
         self.hingeDist = hingeDist
         self.warpParam = warpParam
         self.twistFact = twistFact
-
-    def getCurrentSheetThicknesses(self):
-        """Return the current sheet thicknesses.
-        
-        Return the current sheet thicknesses.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : list of float
-            Thicknesses of current sheets.
-        """
-        return self.currThicks

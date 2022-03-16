@@ -23,11 +23,18 @@ class Vector3D(Vector):
     system information is assumed.
     """
 
-    def __new__(cls, *args, **kargs):
+    def __new__(cls, *args, **kwargs):
         """Allocate a new Vector3D object.
 
         Allocate a new Vector3D object by allocating a new 3-element
         Vector object on which the Vector3D will expand.
+
+        Parameters
+        ----------
+        args : tuple of object, optional
+            Additional positional arguments to pass to inherited methods.
+        kwargs : dictionary of str: object, optional
+            Additional keyword arguments to pass to inherited methods.
 
         Returns
         -------

@@ -3,7 +3,6 @@
 Modules
 -------
 test_DefaultFacConfigurationOptions.py
-test_FacConfiguration.py
 test_FacRegion.py
 test_ThinCurrentSheetShieldingCoefficients.py
 test_TS07DStaticCoefficientsFactory.py

@@ -3,7 +3,6 @@
 Modules
 -------
 differentiablescalarfieldij.py
-scalarfieldspatialderivative.py
 
 Packages
 --------

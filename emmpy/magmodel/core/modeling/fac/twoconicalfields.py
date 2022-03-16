@@ -10,10 +10,12 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
     XYPlaneReflectedField
+)
+from emmpy.math.vectorfields.vectorfield import (
+    VectorField, add, negate
 )
 
 
@@ -46,8 +48,7 @@ class TwoConicalFields(VectorField):
         field : VectorField
             field
         """
-        self.field = vectorfields.add(
-            field, XYPlaneReflectedField(vectorfields.negate(field)))
+        self.field = add(field, XYPlaneReflectedField(negate(field)))
 
     def evaluate(self, location, buffer):
         """Evaluate the field.

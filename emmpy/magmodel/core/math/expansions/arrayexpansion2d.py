@@ -8,131 +8,57 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.expansions.expansion2d import Expansion2D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
+from emmpy.utilities.nones import nones
 
 
-class ArrayExpansion2D(Expansion2D):
+class ArrayExpansion2D(list):
     """A 2-D array of expansion values.
     
     A 2-D array of expansion values.
 
     Attributes
     ----------
-    data : 2-D list of float
-        Expansion values.
-    firstAzimuthalExpansionNumber, lastAzimuthalExpansionNumber : int
-        First and last index of expansion values in 1st dimension.
-    firstRadialExpansionNumber, lastRadialExpansionNumber : int
-        First and last index of expansion values in 2nd dimension.
+    data : 2-D list of object
+        Expansion values. Can be float, or other objects such as VectorIJK
+        or nested ArrayExpansion1D or ArrayExpansion2D objects.
     """
 
-    def __init__(self, data, firstAzimuthalExpansionNumber,
-                 firstRadialExpansionNumber):
+    def __init__(self, data):
         """Initialize a new ArrayExpansion2D object.
 
         Initialize a new ArrayExpansion2D object.
 
         Parameters
         ----------
-        data : 2-D list of float
-            Expansion values.
-        firstAzimuthalExpansionNumber : int
-            First index of expansion values in 1st dimension.
-        firstRadialExpansionNumber : int
-            First index of expansion values in 2nd dimension.
+        data : 2-D list of object
+            Expansion values. Can be float, or other objects such as VectorIJK
+            or nested ArrayExpansion1D or ArrayExpansion2D objects.
         """
-        self.data = data
-        self.firstAzimuthalExpansionNumber = firstAzimuthalExpansionNumber
-        self.lastAzimuthalExpansionNumber = (
-            firstAzimuthalExpansionNumber + len(data) - 1
-        )
-        self.firstRadialExpansionNumber = firstRadialExpansionNumber
-        self.lastRadialExpansionNumber = (
-            firstRadialExpansionNumber + len(data[0]) - 1
-        )
+        self[:] = data[:]
 
-    def getJLowerBoundIndex(self):
-        """Return the lowest second index.
-        
-        Return the lowest second index.
+    @staticmethod
+    def add(a, b):
+        """Add two expansions of CartesianVectors.
+
+        Add two expansions of CartesianVectors.
 
         Parameters
         ----------
-        None
+        a, b : ArrayExpansion2D of CartesianVector
+            Expansions to add.
 
         Returns
         -------
-        self.firstRadialExpansionNumber : int
-            Lowest index of 2nd expansion dimension.
+        ae2d : ArrayExpansion2D
+            Object for expansion sum.
         """
-        return self.firstRadialExpansionNumber
+        numAzimuthalExpansions = len(a)
+        numRadialExpansions = len(a[0])
+        array = nones((numAzimuthalExpansions, numRadialExpansions))
+        for i in range(numAzimuthalExpansions):
+            for j in range(numRadialExpansions):
+                array[i][j] = CartesianVector(a[i][j] + b[i][j])
+        ae2d = ArrayExpansion2D(array)
 
-    def getJUpperBoundIndex(self):
-        """Return the highest second index.
-        
-        Return the highest second index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.lastRadialExpansionNumber : int
-            Highest index of 2nd expansion dimension.
-        """
-        return self.lastRadialExpansionNumber
-
-    def getILowerBoundIndex(self):
-        """Return the lowest first index.
-        
-        Return the lowest first index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.firstAzimuthalExpansionNumber : int
-            Lowest index of first expansion dimension.
-        """
-        return self.firstAzimuthalExpansionNumber
-
-    def getIUpperBoundIndex(self):
-        """Return the highest first index.
-        
-        Return the highest first index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.lastAzimuthalExpansionNumber : int
-            Highest index of first expansion dimension.
-        """
-        return self.lastAzimuthalExpansionNumber
-
-    def getExpansion(self, azimuthalExpansion, radialExpansion):
-        """Return the specified expansion component.
-        
-        Return the specified expansion component.
-
-        Parameters
-        ----------
-        azimuthalExpansion : int
-            Expansion index in first dimension.
-        radialExpansion : int
-            Expansion index in second dimension.
-        
-        Returns
-        -------
-        result : float
-            Value of expansion at specified index.
-        """
-        return (
-            self.data[azimuthalExpansion - self.firstAzimuthalExpansionNumber]
-            [radialExpansion - self.firstRadialExpansionNumber]
-        )
+        return ae2d

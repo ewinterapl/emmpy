@@ -8,25 +8,21 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.expansions.expansion1d import Expansion1D
+from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 
-class ArrayExpansion1D(Expansion1D):
+class ArrayExpansion1D(list):
     """A 1-D array of expansion values.
 
     A 1-D array of expansion values.
 
     Attributes
     ----------
-    array : list of float
+    array : array-like of float
         Expansion values.
-    firstRadialExpansionNumber : int
-        Index of first value in expansion.
-    lastRadialExpansionNumber : int
-        Index of last value in expansion.
     """
 
-    def __init__(self, array, firstRadialExpansionNumber):
+    def __init__(self, array):
         """Initialize a new ArrayEpansion1D object.
 
         Initialize a new ArrayEpansion1D object.
@@ -35,60 +31,28 @@ class ArrayExpansion1D(Expansion1D):
         ----------
         array : list of float
             Expansion values.
-        firstRadialExpansionNumber : int
-            Index of first value in expansion.
         """
-        self.array = array
-        self.firstRadialExpansionNumber = firstRadialExpansionNumber
-        self.lastRadialExpansionNumber = (
-            firstRadialExpansionNumber + len(array) - 1
-        )
+        self[:] = array[:]
 
-    def getLowerBoundIndex(self):
-        """Return the lowest expansion value index.
+    @staticmethod
+    def add(a, b):
+        """Add 2 1-D expansions.
 
-        Return the lowest expansion value index.
+        Add 2 1-D expansions.
 
         Parameters
         ----------
-        None
+        a, b : ArrayExpansion1D
+            Expansions to add.
 
         Returns
         -------
-        self.firstRadialExpansionNumber : int
-            Index of first expansion value.
+        ae1d : ArrayExpansion1D
+            An expansion that is the sum of a and b.
         """
-        return self.firstRadialExpansionNumber
+        array = []
+        for i in range(len(a)):
+            array.append(CartesianVector(a[i] + b[i]))
+        ae1d = ArrayExpansion1D(array)
 
-    def getUpperBoundIndex(self):
-        """Return the highest expansion value index.
-
-        Return the highest expansion value index.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.lastRadialExpansionNumber : int
-            Index of last expansion value.
-        """
-        return self.lastRadialExpansionNumber
-
-    def getExpansion(self, radialExpansion):
-        """Return the the specified expansion value.
-        
-        Return the the specified expansion value.
-
-        Parameters
-        ----------
-        radialExpansion : int
-            Index of expansion value to retrieve.
-
-        Returns
-        -------
-        result : float
-            Value of expansion at specified index.
-        """
-        return self.array[radialExpansion - self.firstRadialExpansionNumber]
+        return ae1d

@@ -9,19 +9,16 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.geomagmodel.ts07.coefficientreader.facconfiguration import (
-    FacConfiguration
-)
 from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
-    FacRegion
+    REGION_1, REGION_2
 )
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
     FacConfigurationOptions
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 
 
-class DefaultFacConfigurationOptions(FacConfiguration):
+class DefaultFacConfigurationOptions:
     """Default configuration options for field-aligned currents.
 
     Default configuration options for field-aligned currents.
@@ -91,22 +88,6 @@ class DefaultFacConfigurationOptions(FacConfiguration):
         else:
             raise TypeError
 
-    def getNumberOfFields(self):
-        """Get the number of fields.
-        
-        Get the number of fields.
-        
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : int
-            The number of fields.
-        """
-        return self.numberOfFields
-
     @staticmethod
     def getTs07(coeffs):
         """Get the TS07 field-aligned currents.
@@ -123,14 +104,14 @@ class DefaultFacConfigurationOptions(FacConfiguration):
 
         # region 1
         region1Mode1Asym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_1, 1, TrigParity.ODD,
+            coeffs[count], REGION_1, 1, ODD,
             DefaultFacConfigurationOptions.r1_m1_theta0,
             DefaultFacConfigurationOptions.r1_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
         )
         count += 1
         region1Mode2Asym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_1, 2, TrigParity.ODD,
+            coeffs[count], REGION_1, 2, ODD,
             DefaultFacConfigurationOptions.r1_m2_theta0,
             DefaultFacConfigurationOptions.r1_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
@@ -139,14 +120,14 @@ class DefaultFacConfigurationOptions(FacConfiguration):
 
         # region 2
         region2Mode1Asym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_2, 1, TrigParity.ODD,
+            coeffs[count], REGION_2, 1, ODD,
             DefaultFacConfigurationOptions.r2_m1_theta0,
             DefaultFacConfigurationOptions.r2_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded
         )
         count += 1
         region2Mode1Sym = FacConfigurationOptions(
-            coeffs[count], FacRegion.REGION_2, 1, TrigParity.EVEN,
+            coeffs[count], REGION_2, 1, EVEN,
             DefaultFacConfigurationOptions.r2_m1_theta0,
             DefaultFacConfigurationOptions.r2_deltaTheta,
             smoothed, DefaultFacConfigurationOptions.shielded

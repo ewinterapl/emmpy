@@ -9,7 +9,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
@@ -34,6 +33,7 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TS07DModelBuilder:
@@ -67,8 +67,6 @@ class TS07DModelBuilder:
         includeEquatorialShielding
     staticCoefficients : ThinCurrentSheetShieldingCoefficients
         staticCoefficients
-    withAlbertBessel : bool
-        withAlbertBessel
     _withTA15deformation : float
         withTA15deformation
     _withMagnetopause : bool
@@ -106,10 +104,6 @@ class TS07DModelBuilder:
         # never called a withStaticCoeffs method), construct using the default
         # at that time.
         self.staticCoefficients = None
-
-        # By default, do not use Albert's Bessel function evaluator, use
-        # Tsyganenko's by default.
-        self.withAlbertBesselFunction = False
 
         # By default, we will be consistent with the original FORTRAN code and
         # will not check the magnetopause boundary.
@@ -310,46 +304,6 @@ class TS07DModelBuilder:
         self.includeEquatorialShielding = False
         return self
 
-    def withAlbertBessel(self):
-        """Set the Albert Bessel function flag.
-
-        By default, the Bessel function evaluator will be Tsyganenko's, if
-        this is set, Jay Albert's Bessel function evaluator will be used
-        instead. Jay Albert's implementation is about 4 times faster,
-        although it gives slightly different, but negligible, differences.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : TS07DModelBuilder
-            This object.
-        """
-        self.withAlbertBesselFunction = True
-        return self
-
-    def withoutAlbertBessel(self):
-        """Clear the Albert Bessel function flag.
-
-        By default, the Bessel function evaluator will be Tsyganenko's, if
-        this is set, Jay Albert's Bessel function evaluator will be used
-        instead. Jay Albert's implementation is about 4 times faster,
-        although it gives slightly different, but negligible, differences.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : TS07DModelBuilder
-            This object.
-        """
-        self.withAlbertBesselFunction = False
-        return self
-
     def withTA15deformation(self, bzIMF):
         """Set the z-component of the IMF.
 
@@ -424,7 +378,7 @@ class TS07DModelBuilder:
         )
         numRadialExpansions = (
             self.variableCoefficients.getEquatorialCoefficients().
-            getLinearCoeffs().get(0).getNumRadialExpansions()
+            getLinearCoeffs().get(0).numRadialExpansions
         )
         self.staticCoefficients = TS07DStaticCoefficientsFactory.create(
             TS07DStaticCoefficientsFactory.retrieveNewBuiltInCoefficientsPath(),
@@ -569,7 +523,7 @@ class TS07DModelBuilder:
             BasisVectorFields.asBasisField(
                 DipoleShieldingField.createScaled(
                     self.dipoleTiltAngle, self.dynamicPressure,
-                    self.variableCoefficients.getDipoleShieldingAmplitude()
+                    self.variableCoefficients.cfAmplitude
                 )
             )
         )
@@ -587,30 +541,24 @@ class TS07DModelBuilder:
 
         # These are constant across all the current sheets.
         hingeDistance = (
-            self.variableCoefficients.getEquatorialCoefficients().
-            getHingeDistance()
+            self.variableCoefficients.equatorialCoeffs.hingeDist
         )
         warpingParam = (
-            self.variableCoefficients.getEquatorialCoefficients().
-            getWarpingParam()
+            self.variableCoefficients.equatorialCoeffs.warpingParam
         )
         twistFact = (
-            self.variableCoefficients.getEquatorialCoefficients().
-            getTwistParam()
+            self.variableCoefficients.equatorialCoeffs.twistParam
         )
         region1KappaScaling = (
-            self.variableCoefficients.getFacCoefficients().
-            getRegion1KappaScaling()
+            self.variableCoefficients.facCoeffs.region1KappaScaling
         )
         region2KappaScaling = (
-            self.variableCoefficients.getFacCoefficients().
-            getRegion2KappaScaling()
+            self.variableCoefficients.facCoeffs.region2KappaScaling
         )
 
         # Current sheet thickness.
         currentSheetThicknesses = (
-            self.variableCoefficients.getNonLinearParameters().
-            getCurrentSheetThicknesses()
+            self.variableCoefficients.nonLinearParameters.currThicks
         )
 
         # The parameters have been updated.
@@ -634,18 +582,13 @@ class TS07DModelBuilder:
 
         currentCoeffs = Ts07EquatorialVariableCoefficients(
             currentSheetThicknesses, hingeDistance, warpingParam, twistFact,
-            self.variableCoefficients.getEquatorialCoefficients().
-            getLinearCoeffs()
+            self.variableCoefficients.equatorialCoeffs.equatorialLinearCoeffs
         )
 
         equatorialFieldBuilder = Ts07EquatorialMagneticFieldBuilder(
             self.dipoleTiltAngle, self.dynamicPressure, currentCoeffs,
             self.tailLength, self.staticCoefficients
         )
-
-        # If true, use Jay Albert's Bessel function evaluator.
-        if self.withAlbertBesselFunction:
-            equatorialFieldBuilder.withAlbertBessel()
 
         # If true, the equatorial fields are shielded.
         if self.includeEquatorialShielding:
@@ -661,8 +604,8 @@ class TS07DModelBuilder:
             )
 
         # The field aligned current.
-        fc = self.variableCoefficients.getFacCoefficients()
-        fcs = fc.getFacConfigurations()
+        fc = self.variableCoefficients.facCoeffs
+        fcs = fc.facConfigurations
         fieldAlignedField = Ts07DFieldAlignedMagneticField.create(
             self.dipoleTiltAngle, self.dynamicPressure, region1KappaScaling,
             region2KappaScaling, fcs, True)

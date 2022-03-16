@@ -9,19 +9,19 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 
@@ -34,15 +34,13 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
     ----------
     coeffs : ThinCurrentSheetShieldingCoefficients
         Shielding coefficients.
-    bessel : BesselFunctionEvaluator
-        Bessel function evaluator.
     numAzimuthalExpansions : int
         Number of azimuthal expansions
     numRadialExpansions : int
         Number of radial expansions.
     """
 
-    def __init__(self, coeffs, bessel):
+    def __init__(self, coeffs):
         """Initialize a new object.
 
         Initialize a new object.
@@ -51,13 +49,10 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         ----------
         coeffs : ThinCurrentSheetShieldingCoefficients
             Shielding coefficients.
-        bessel : BesselFunctionEvaluator
-            Bessel function evaluator.
         """
         self.coeffs = coeffs
-        self.bessel = bessel
-        self.numAzimuthalExpansions = coeffs.getNumAzimuthalExpansions()
-        self.numRadialExpansions = coeffs.getNumRadialExpansions()
+        self.numAzimuthalExpansions = coeffs.numAzimuthalExpansions
+        self.numRadialExpansions = coeffs.numRadialExpansions
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion at a location.
@@ -97,66 +92,62 @@ class ThinAsymmetricCurrentSheetBasisVectorShieldingField(BasisVectorField):
         evenExpansions = nones((self.numAzimuthalExpansions,
                                 self.numRadialExpansions))
         # n is the radial expansion number.
-        for n in range(1, self.numRadialExpansions + 1):
+        for n in range(self.numRadialExpansions):
             tailExpansion = (
-                self.coeffs.getSymmetricTailExpansion().getExpansion(n)
+                self.coeffs.symmetricTailExpansion[n]
             )
             waveNumberExpansion = (
-                self.coeffs.getSymmetricTailWaveExpansion().getExpansion(n)
+                self.coeffs.symmetricTailWaveExpansion[n]
             )
             buffer = VectorIJK()
             chf = CylindricalHarmonicField(tailExpansion, waveNumberExpansion,
-                                           self.bessel, TrigParity.ODD)
+                                           ODD)
             chf.evaluate(location, buffer)
-            symmetricExpansions[n - 1] = VectorIJK(
+            symmetricExpansions[n] = VectorIJK(
                 buffer.i, buffer.j, buffer.k
             )
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
         negateConst = 1.0
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
+        for n in range(self.numRadialExpansions):
+            for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.getOddTailExpansion().getExpansion(m, n)
+                    self.coeffs.oddTailExpansion[m][n]
                 )
                 waveNumberExpansion = (
-                    self.coeffs.getOddTailWaveExpansion().getExpansion(m, n)
+                    self.coeffs.oddTailWaveExpansion[m][n]
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
-                    tailExpansion, waveNumberExpansion, self.bessel,
-                    TrigParity.ODD
-                )
+                    tailExpansion, waveNumberExpansion, ODD)
                 chf.evaluate(location, buffer)
                 buffer *= negateConst
-                oddExpansions[m - 1][n - 1] = (
+                oddExpansions[m][n] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
         # n is the radial expansion number.
         # m is the azimuthal expansion number.
         negateConst = -1.0
-        for n in range(1, self.numRadialExpansions + 1):
-            for m in range(1, self.numAzimuthalExpansions + 1):
+        for n in range(self.numRadialExpansions):
+            for m in range(self.numAzimuthalExpansions):
                 tailExpansion = (
-                    self.coeffs.getEvenTailExpansion().getExpansion(m, n)
+                    self.coeffs.evenTailExpansion[m][n]
                 )
                 waveNumberExpansion = (
-                    self.coeffs.getEvenTailWaveExpansion().getExpansion(m, n)
+                    self.coeffs.evenTailWaveExpansion[m][n]
                 )
                 buffer = VectorIJK()
                 chf = CylindricalHarmonicField(
-                    tailExpansion, waveNumberExpansion, self.bessel,
-                    TrigParity.EVEN
-                )
+                    tailExpansion, waveNumberExpansion, EVEN)
                 chf.evaluate(location, buffer)
                 buffer *= negateConst
-                evenExpansions[m - 1][n - 1] = (
+                evenExpansions[m][n] = (
                     VectorIJK(buffer.i, buffer.j, buffer.k))
 
-        return TailSheetExpansions(Expansion1Ds.createFromArray(symmetricExpansions, 1),
-            Expansion2Ds.createFromArray(oddExpansions, 1, 1),
-            Expansion2Ds.createFromArray(evenExpansions, 1, 1))
+        return TailSheetExpansions(ArrayExpansion1D(symmetricExpansions),
+            ArrayExpansion2D(oddExpansions),
+            ArrayExpansion2D(evenExpansions))
 
     def getNumberOfBasisFunctions(self):
         """Return the number of basis functions.

@@ -9,13 +9,14 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import exp, sqrt
+import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 
@@ -38,9 +39,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
     by an unlimited growth of the corresponding linear coefficients in the
     course of the iterative minimization of Bn^2"
 
-    TODO Using SVD to solve for the coefficients may alleviate the issue
-    described above.
-
     Attributes
     ----------
     piCoeffs : CoefficientExpansion1D
@@ -53,14 +51,6 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         trigParityI
     trigParityK : TrigParity
         trigParityK
-    firstI : int
-        firstI
-    lastI : int
-        lastI
-    firstK : int
-        firstK
-    lastK : int
-        lastK
     """
 
     def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
@@ -81,24 +71,12 @@ class AlternateCartesianHarmonicField(BasisVectorField):
             trigParityI
         trigParityK : TrigParity
             trigParityK
-        firstI : int
-            firstI
-        lastI : int
-            lastI
-        firstK : int
-            firstK
-        lastK : int
-            lastK
         """
         self.piCoeffs = piCoeffs
         self.pkCoeffs = pkCoeffs
         self.aikCoeffs = aikCoeffs
         self.trigParityI = trigParityI
         self.trigParityK = trigParityK
-        self.firstI = aikCoeffs.getILowerBoundIndex()
-        self.lastI = aikCoeffs.getIUpperBoundIndex()
-        self.firstK = aikCoeffs.getJLowerBoundIndex()
-        self.lastK = aikCoeffs.getJUpperBoundIndex()
 
     def evaluateExpansion2D(self, location):
         """Return the full expansion results.
@@ -118,36 +96,59 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
-        expansions = nones((self.aikCoeffs.iSize(), self.aikCoeffs.jSize()))
-        for i in range(self.firstI, self.lastI + 1):
-            pi = self.piCoeffs.getCoefficient(i)
-            sinYpi = self.trigParityI.evaluate(pi*y)
-            cosYpi = self.trigParityI.differentiate(pi*y)
-            for k in range(self.firstK, self.lastK + 1):
-                pk = self.pkCoeffs.getCoefficient(k)
-                sqrtP = sqrt(pi*pi + pk*pk)
-                exp_ = exp(x*sqrtP)
-                sinZpk = self.trigParityK.evaluate(pk*z)
-                cosZpk = self.trigParityK.differentiate(pk*z)
-                aik = self.aikCoeffs.getCoefficient(i, k)
-                if k == self.lastK:
-                    bx = (-aik*exp_*sinYpi*(sqrtP*z*cosZpk +
-                          sinZpk*pk*(x + 1.0/sqrtP)))
-                    by = -aik*exp_*pi*cosYpi*(z*cosZpk + x*pk*sinZpk/sqrtP)
-                    bz = (-aik*exp_*sinYpi*(cosZpk*(1.0 + x*pk*pk/sqrtP)
-                                            - z*pk*sinZpk))
-                    # Scale the vector, the minus sign comes from the B=-del U.
-                    vect = VectorIJK(bx, by, bz)
-                    expansions[i - self.firstI][k - self.firstK] = vect
-                else:
-                    bx = -aik*exp_*sqrtP*sinYpi*sinZpk
-                    by = -aik*exp_*pi*cosYpi*sinZpk
-                    bz = -aik*exp_*pk*sinYpi*cosZpk
-                    # Scale the vector, the minus sign comes from the B=-del U.
-                    vect = VectorIJK(bx, by, bz)
-                    expansions[i - self.firstI][k - self.firstK] = vect
-        return Expansion2Ds.createFromArray(expansions, self.firstI,
-                                            self.firstK)
+        if self.trigParityI is ODD:
+            itrig = np.sin
+            idtrig = np.cos
+        else:
+            itrig = np.cos
+            idtrig = lambda x: -np.sin(x)
+        if self.trigParityK is ODD:
+            ktrig = np.sin
+            kdtrig = np.cos
+        else:
+            ktrig = np.cos
+            kdtrig = lambda x: -np.sin(x)
+        expansions = nones((len(self.aikCoeffs), len(self.aikCoeffs[0])))
+        sinYpi = itrig(self.piCoeffs*y)
+        cosYpi = idtrig(self.piCoeffs*y)
+        sinZpk = ktrig(self.pkCoeffs*z)
+        cosZpk = kdtrig(self.pkCoeffs*z)
+        sqrtP = np.sqrt(np.array([[pi**2 + pk**2 for pk in self.pkCoeffs] for pi in self.piCoeffs]))
+        exp_ = np.exp(x*sqrtP)
+        aik = np.array(self.aikCoeffs[...])
+        pi = np.array(self.piCoeffs)
+        pk = np.array(self.pkCoeffs)
+        sinYpiXsinZpk = np.outer(sinYpi, sinZpk)
+        sinYpiXcosZpk = np.outer(sinYpi, cosZpk)
+        cosYpiXsinZpk = np.outer(cosYpi, sinZpk)
+        ni = len(self.piCoeffs)
+        nk = len(self.pkCoeffs)
+        bx = np.empty((ni, nk))
+        bx[:, :-1] = -aik[:, :-1]*exp_[:, :-1]*sqrtP[:, :-1]*sinYpiXsinZpk[:, :-1]
+        bx[:, -1] = (
+            -aik[:, -1]*exp_[:, -1]*sinYpi *
+            (sqrtP[:, -1]*z*cosZpk[-1] + sinZpk[-1]*pk[-1]*(x + 1.0/sqrtP[:, -1]))
+        )
+        by = np.empty((ni, nk))
+        by[:, :-1] = (
+            -aik[:, :-1]*exp_[:, :-1]*np.broadcast_to(pi, (nk, ni)).T[:, :-1]*cosYpiXsinZpk[:, :-1]
+        )
+        by[:, -1] = (
+            -aik[:, -1]*exp_[:, -1]*np.broadcast_to(pi, (nk, ni)).T[:, -1] *
+            np.broadcast_to(cosYpi, (nk, ni)).T[:, -1] *
+            (z*cosZpk[-1] + x*pk[-1]*sinZpk[-1]/sqrtP[:, -1])
+        )
+        bz = np.empty((ni, nk))
+        bz[:, :-1] = -aik[:, :-1]*exp_[:, :-1]*pk[:-1]*sinYpiXcosZpk[:, :-1]
+        bz[:, -1] = (
+            -aik[:, -1]*exp_[:, -1] * sinYpi * 
+            (cosZpk[-1]*(1.0 + x*pk[-1]*pk[-1]/sqrtP[:, -1]) - z*pk[-1]*sinZpk[-1])
+        )
+        for i in range(ni):
+            for k in range(nk):
+                vect = VectorIJK(bx[i, k], by[i, k], bz[i, k])
+                expansions[i][k] = vect
+        return ArrayExpansion2D(expansions)
 
     def evaluateExpansion(self, location):
         """Evaluate the expansion.
@@ -166,7 +167,7 @@ class AlternateCartesianHarmonicField(BasisVectorField):
         """
         functions = []
         expansions = self.evaluateExpansion2D(location)
-        for i in range(self.firstI, self.lastI + 1):
-            for k in range(self.firstK, self.lastK + 1):
-                functions.append(expansions.getExpansion(i, k))
+        for i in range(len(self.aikCoeffs)):
+            for k in range(len(self.aikCoeffs[0])):
+                functions.append(expansions[i][k])
         return functions

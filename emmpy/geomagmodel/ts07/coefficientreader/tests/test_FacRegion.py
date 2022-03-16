@@ -1,21 +1,14 @@
+"""Tests for the facregion module."""
+
+
 import unittest
 
-from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
-    FacRegion
-)
+import emmpy.geomagmodel.ts07.coefficientreader.facregion
 
 
 class TestBuilder(unittest.TestCase):
-
-    def test___init__(self):
-        fr = FacRegion(FacRegion.REGION_1)
-        self.assertIsNotNone(fr)
-        self.assertEqual(fr.number, FacRegion.REGION_1)
-
-    def test_getAsInt(self):
-        fr = FacRegion(FacRegion.REGION_1)
-        self.assertEqual(fr.getAsInt(), FacRegion.REGION_1)
+    """Tests for the facregion module."""
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

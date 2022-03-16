@@ -9,10 +9,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class BasisVectorFields:
@@ -67,11 +67,11 @@ class BasisVectorFields:
         bvf = BasisVectorField()
         bvf.evaluate = (
             lambda location, buffer:
-            field.evaluate(VectorIJK(scaleFactor, location), buffer)
+            field.evaluate(scaleFactor*VectorIJK(location), buffer)
         )
         bvf.evaluateExpansion = (
             lambda location:
-            field.evaluateExpansion(VectorIJK(scaleFactor, location))
+            field.evaluateExpansion(scaleFactor*VectorIJK(location))
         )
         bvf.getNumberOfBasisFunctions = (
             lambda: field.getNumberOfBasisFunctions()
@@ -110,13 +110,6 @@ class BasisVectorFields:
                                  for field in fields])
         )
 
-        def my_toString():
-            s = ""
-            for field in fields:
-                s += field.toString()
-                s += " "
-            return s
-        bvf.toString = my_toString
         return bvf
 
     @staticmethod
@@ -148,18 +141,14 @@ class BasisVectorFields:
         def my_evaluateExpansion(location):
             expansions = field.evaluateExpansion(location)
             scaledExpansions = []
-            expansionIndex = coeffs.getLowerBoundIndex()
+            expansionIndex = 0
             for expansion in expansions:
-                scaledExpansions.append(
-                    expansion*coeffs.getCoefficient(expansionIndex)
-                )
+                scaledExpansions.append(expansion*coeffs[expansionIndex])
                 expansionIndex += 1
             for c in moreCoeffs:
-                expansionIndex = coeffs.getLowerBoundIndex()
+                expansionIndex = 0
                 for expansion in expansions:
-                    scaledExpansions.append(
-                        expansion*c.getCoefficient(expansionIndex)
-                    )
+                    scaledExpansions.append(expansion*c[expansionIndex])
                     expansionIndex += 1
             return scaledExpansions
         bvf.evaluateExpansion = my_evaluateExpansion

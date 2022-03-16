@@ -2,9 +2,6 @@
 
 Modules
 -------
-doubletolongbits.py
-isragged.py
-isrealnumber.py
 nones.py
 
 Packages

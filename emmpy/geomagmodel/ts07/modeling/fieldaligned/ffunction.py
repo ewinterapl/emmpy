@@ -11,9 +11,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import math
 
-from emmpy.crucible.core.math.vectorfields.scalarfield import ScalarField
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class FDerivatives:
@@ -56,72 +55,8 @@ class FDerivatives:
         self.dF_dRho = dF_dRho
         self.dF_dy = dF_dy
 
-    def getF(self):
-        """Return the value of F.
-        
-        Return the value of F.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.f : float
-            Valule of the deformed coordinate F.
-        """
-        return self.f
 
-    def getdF_dPhi(self):
-        """Return the value of dF_dPhi.
-        
-        Return the value of dF_dPhi.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.dF_dPhi : float
-            Valule of the partial derivative of F wrt phi.
-        """
-        return self.dF_dPhi
-
-    def getdF_dRho(self):
-        """Return the value of dF_dRho.
-        
-        Return the value of dF_dRho.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.dF_dRho : float
-            Valule of the partial derivative of F wrt rho.
-        """
-        return self.dF_dRho
-
-    def getdF_dy(self):
-        """Return the value of dF_dy.
-        
-        Return the value of dF_dy.
-        
-        Parameters
-        ----------
-        None
-        
-        Returns
-        -------
-        self.dF_dy : float
-            Valule of the partial derivative of F wrt y.
-        """
-        return self.dF_dy
-
-
-class Ffunction(ScalarField):
+class Ffunction:
     """A stretch transformation for the magnetic field.
 
     From Tsyganenko 2002, A model of the near magnetosphere with a
@@ -237,9 +172,9 @@ class Ffunction(ScalarField):
             )
             return FDerivatives(phiStretched, dF_dPhi, dF_dRho, dF_dy)
         elif isinstance(location, VectorIJK):
-            x = location.getI()
-            y = location.getJ()
-            z = location.getK()
+            x = location.i
+            y = location.j
+            z = location.k
 
             # Convert to spherical and cylindrical.
             rho2 = x*x + z*z

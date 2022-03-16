@@ -60,76 +60,12 @@ class TS07DVariableCoefficients:
         self.cfAmplitude = cfAmplitude
         self.equatorialCoeffs = equatorialCoeffs
         self.facCoeffs = facCoeffs
-        currThicks = equatorialCoeffs.getCurrThicks()
-        hingeDist = equatorialCoeffs.getHingeDistance()
-        warpParam = equatorialCoeffs.getWarpingParam()
-        twistFact = equatorialCoeffs.getTwistParam()
+        currThicks = equatorialCoeffs.currThicks
+        hingeDist = equatorialCoeffs.hingeDist
+        warpParam = equatorialCoeffs.warpingParam
+        twistFact = equatorialCoeffs.twistParam
         self.nonLinearParameters = Ts07NonLinearParameters(
-            facCoeffs.getRegion1KappaScaling(),
-            facCoeffs.getRegion2KappaScaling(),
+            facCoeffs.region1KappaScaling,
+            facCoeffs.region2KappaScaling,
             currThicks, hingeDist, warpParam, twistFact
         )
-
-    def getEquatorialCoefficients(self):
-        """Return the equatorial coefficients.
-
-        Return the equatorial coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Ts07EquatorialVariableCoefficients
-            The equatorial coefficients.
-        """
-        return self.equatorialCoeffs
-
-    def getDipoleShieldingAmplitude(self):
-        """Return the dipole shielding amplitude.
-
-        Return the dipole shielding amplitude.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : float
-            The dipole shielding amplitude.
-        """
-        return self.cfAmplitude
-
-    def getFacCoefficients(self):
-        """Return the field-aligned current coefficients.
-
-        Return the field-aligned current coefficients.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Ts07FacVariableCoefficients
-            The field-aligned current coefficients.
-        """
-        return self.facCoeffs
-
-    def getNonLinearParameters(self):
-        """Return all the non-linear parameters in the TS07D model.
-
-        Return all the non-linear parameters in the TS07D model.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Ts07NonLinearParameters
-            The nonlinear parameters.
-        """
-        return self.nonLinearParameters

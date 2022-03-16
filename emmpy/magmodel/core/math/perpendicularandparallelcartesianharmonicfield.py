@@ -13,7 +13,6 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import (J, VectorIJK)
 from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
 
 from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
@@ -22,12 +21,15 @@ from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
 from emmpy.magmodel.core.math.cartesianharmonicfield import (
     CartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import EVEN, ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
     BasisVectorFields
+)
+from emmpy.math.coordinates.vectorijk import (
+    VectorIJK, I, J, K
 )
 from emmpy.math.vectors.vector import Vector
 
@@ -108,9 +110,9 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         """
         # Construct the unrotated fields.
         perpField = CartesianHarmonicField(
-            p, r, perpCoeffs, trigParityI, TrigParity.ODD)
+            p, r, perpCoeffs, trigParityI, ODD)
         paraField = CartesianHarmonicField(
-            q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
+            q, s, parrCoeffs, trigParityI, EVEN)
 
         # The rotation matrices about Y axis.
         aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)
@@ -168,9 +170,9 @@ class PerpendicularAndParallelCartesianHarmonicField(BasisVectorField):
         """
         # Construct the unrotated fields.
         perpField = AlternateCartesianHarmonicField(
-            p, r, perpCoeffs, trigParityI, TrigParity.ODD)
+            p, r, perpCoeffs, trigParityI, ODD)
         paraField = CartesianHarmonicField(
-            q, s, parrCoeffs, trigParityI, TrigParity.EVEN)
+            q, s, parrCoeffs, trigParityI, EVEN)
 
         # The rotation matrices about Y axis.
         aaa1 = AxisAndAngle(J, -perpendicularTiltAngle)

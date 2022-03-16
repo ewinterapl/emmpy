@@ -10,14 +10,14 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+    DifferentiableScalarFieldIJ
+)
 from emmpy.geomagmodel.t01.deformation.positionbender import (
     PositionBender
 )
 from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
     TwistWarpFfunction
-)
-from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
-    CurrentSheetHalfThicknesses
 )
 from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield import (
     ShieldedThinCurrentSheetField
@@ -45,8 +45,6 @@ class Ts07EquatorialMagneticFieldBuilder:
         The tail length.
     shieldingCoeffs : ThinCurrentSheetShieldingCoefficients
         Shielding coefficients.
-    bessel : BesselFunctionEvaluator (ignored)
-        Bessel function evaluator.
     includeShield : bool
         True to include the shielding field.
     withTA15deformation : float
@@ -77,51 +75,8 @@ class Ts07EquatorialMagneticFieldBuilder:
         self.coeffs = coeffs
         self.tailLength = tailLength
         self.shieldingCoeffs = shieldingCoeffs
-        self.bessel = None
         self.includeShield = True
         self.withTA15deformation = 0.0
-
-    def withAlbertBessel(self):
-        """Use Jay Albert's faster Bessel function evaluator.
-
-        Use Jay Albert's faster Bessel function evaluator. By default, the
-        Bessel function evaluator will be Tsyganenko's, if this is set,
-        Jay Albert's Bessel function evaluator will be used instead. Jay
-        Albert's implementation is about 4 times faster, although it gives
-        slightly different, but negligible, differences.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self : Ts07EquatorialMagneticFieldBuilder
-            This builder object.
-        """
-        return self
-
-    def set_withTA15deformation(self, bzIMF):
-        """Use the TA15 bending and warping deformation.
-
-        Use the TA15 bending and warping deformation instead of the T01
-        bending and warping deformation.
-
-        By default, the model uses the T01 bending and warping deformation.
-
-        Parameters
-        ----------
-        bzIMF : float
-            The z-component of the IMF (interplanetary magnetic field)
-             averaged over the previous 30 minutes.
-        
-        Returns
-        -------
-        self : Ts07EquatorialMagneticFieldBuilder
-            This builder object.
-        """
-        self.withTA15deformation = bzIMF
-        return self
 
     def withEquatorialShielding(self):
         """Turn on equatorial shielding.
@@ -178,25 +133,25 @@ class Ts07EquatorialMagneticFieldBuilder:
         result : BasisVectorField
             The magnetic field components.
         """
-        numCurrSheets = len(self.coeffs.getCurrThicks())
-        hingeDistance = self.coeffs.getHingeDistance()
-        warpingParam = self.coeffs.getWarpingParam()
-        twistParam = self.coeffs.getTwistParam()
+        numCurrSheets = len(self.coeffs.currThicks)
+        hingeDistance = self.coeffs.hingeDist
+        warpingParam = self.coeffs.warpingParam
+        twistParam = self.coeffs.twistParam
         equatorialFields = nones((numCurrSheets,))
 
         # Loop through each of the current sheets.
         for currSheetIndex in range(numCurrSheets):
-            currSheetThick = self.coeffs.getCurrThicks()[currSheetIndex]
-            linearCoeffs = self.coeffs.getLinearCoeffs()[currSheetIndex]
+            currSheetThick = self.coeffs.currThicks[currSheetIndex]
+            linearCoeffs = self.coeffs.equatorialLinearCoeffs[currSheetIndex]
 
             # Construct a constant current sheet half thickness.
-            currentSheetHalfThickness = (
-                CurrentSheetHalfThicknesses.createConstant(currSheetThick)
+            currentSheetHalfThickness = DifferentiableScalarFieldIJ.createConstant(
+                currSheetThick
             )
     
             # Construct the shielded thin current sheet.
             thinCurrentSheet = ShieldedThinCurrentSheetField.createUnity(
-                currentSheetHalfThickness, self.tailLength, self.bessel,
+                currentSheetHalfThickness, self.tailLength,
                 self.shieldingCoeffs, self.includeShield)
 
             # If the with TA15 deformation was called, apply the TA15
@@ -226,7 +181,7 @@ class Ts07EquatorialMagneticFieldBuilder:
                 pdynScaling = pow(self.dynamicPressure/2.0, 0.155)
                 scaledBentWarpedField = BasisVectorFields.scaleLocation(
                     bentWarpedField, pdynScaling)
-                coeffs = linearCoeffs.getCoeffs().getAsSingleExpansion()
+                coeffs = linearCoeffs.coeffs.getAsSingleExpansion()
                 pdsc = linearCoeffs.getPdynScaledCoeffs(self.dynamicPressure)
                 pdynCoeffs = pdsc.getAsSingleExpansion()
 

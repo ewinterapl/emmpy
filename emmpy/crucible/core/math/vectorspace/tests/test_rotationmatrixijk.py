@@ -6,11 +6,10 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
 from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -51,14 +50,7 @@ class TestBuilder(unittest.TestCase):
         for row in range(3):
             for col in range(3):
                 self.assertAlmostEqual(m2[row, col], data1[row][col])
-        # 9 args
-        # Individual matrix elements in column-major order.
-        flat_data1 = data1[0] + data1[1] + data1[2]
-        m = RotationMatrixIJK(*flat_data1)
-        for row in range(3):
-            for col in range(3):
-                self.assertAlmostEqual(m2[row, col], data1[row][col])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

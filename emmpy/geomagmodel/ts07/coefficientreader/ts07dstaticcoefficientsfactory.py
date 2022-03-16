@@ -15,11 +15,12 @@ import os
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
+from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
 )
-from emmpy.magmodel.core.math.expansions.expansion1ds import Expansion1Ds
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
 from emmpy.utilities.nones import nones
 
 
@@ -51,38 +52,6 @@ class SymmetricCylindricalExpansionPair:
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
 
-    def getTailExpansion(self):
-        """Return the tail expansion.
-        
-        Return the tail expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion1D
-            Coefficients for tail expansion.
-        """
-        return self.tailExpansion
-
-    def getWaveExpansion(self):
-        """Return the wave expansion.
-        
-        Return the wave expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion1D
-            Coefficients for wave expansion.
-        """
-        return self.waveExpansion
-
 
 class AsymmetricCylindricalExpansionPair:
     """Wrap a pair of asymmetric expansion coefficient sets.
@@ -111,38 +80,6 @@ class AsymmetricCylindricalExpansionPair:
         """
         self.tailExpansion = tailExpansion
         self.waveExpansion = waveExpansion
-
-    def getTailExpansion(self):
-        """Return the tail expansion.
-        
-        Return the tail expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion1D
-            Coefficients for tail expansion.
-        """
-        return self.tailExpansion
-
-    def getWaveExpansion(self):
-        """Return the wave expansion.
-        
-        Return the wave expansion.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        result : Expansion1D
-            Coefficients for wave expansion.
-        """
-        return self.waveExpansion
 
 
 class TS07DStaticCoefficientsFactory:
@@ -201,9 +138,9 @@ class TS07DStaticCoefficientsFactory:
                 numRadialExpansions, "tailamhr_e_")
             return ThinCurrentSheetShieldingCoefficients(
                 numAzimuthalExpansions, numRadialExpansions,
-                tailS.getTailExpansion(), tailS.getWaveExpansion(),
-                tailO.getTailExpansion(), tailO.getWaveExpansion(),
-                tailE.getTailExpansion(), tailE.getWaveExpansion())
+                tailS.tailExpansion, tailS.waveExpansion,
+                tailO.tailExpansion, tailO.waveExpansion,
+                tailE.tailExpansion, tailE.waveExpansion)
         else:
             raise Exception
 
@@ -229,35 +166,30 @@ class TS07DStaticCoefficientsFactory:
         numShieldRadialExpansions = 5
         expansions = nones((numRadialExpansions,))
         waveExpansions = nones((numRadialExpansions,))
-        for i in range(1, numRadialExpansions + 1):
-            fileName = "tailamebhr_%02d.par" % i
+        for i in range(numRadialExpansions):
+            fileName = "tailamebhr_%02d.par" % (i + 1)
             inFile = os.path.join(staticCoeffDirectory, fileName)
             values = nones((numShieldAzimuthalExpansions,
                             numShieldRadialExpansions))
             waveNumberValues = nones((numShieldRadialExpansions,))
             with open(inFile) as f:
                 for l in range(numShieldAzimuthalExpansions):
-                    for k in range(1, numShieldRadialExpansions + 1):
+                    for k in range(numShieldRadialExpansions):
                         # IS THIS RIGHT? ASSUMES 1 VALUE PER LINE.
                         line = f.readline()
                         val = float(line.split()[0])
-                        values[l][k - 1] = val
-                for k in range(1, numShieldRadialExpansions + 1):
+                        values[l][k] = val
+                for k in range(numShieldRadialExpansions):
                     # IS THIS RIGHT? ASSUMES 1 VALUE PER LINE.
                     line = f.readline()
                     val = float(line.split()[0])
-                    waveNumberValues[k - 1] = val
-            expansions[i - 1] = (
-                CoefficientExpansions.createExpansionFromArray(values, 0, 1)
-            )
-            waveExpansions[i - 1] = (
-                CoefficientExpansions.createExpansionFromArray(
-                    waveNumberValues, 1)
-            )
+                    waveNumberValues[k] = val
+            expansions[i] = ArrayCoefficientExpansion2D(values)
+            waveExpansions[i] = ScalarExpansion1D(waveNumberValues)
 
         return SymmetricCylindricalExpansionPair(
-            Expansion1Ds.createFromArray(expansions, 1),
-            Expansion1Ds.createFromArray(waveExpansions, 1)
+            ArrayExpansion1D(expansions),
+            ArrayExpansion1D(waveExpansions)
         )
 
     @staticmethod
@@ -287,35 +219,28 @@ class TS07DStaticCoefficientsFactory:
         numShieldRadialExpansions = 5
         expansions = nones((numAzimuthalExpansions, numRadialExpansions))
         waveExpansions = nones((numAzimuthalExpansions, numRadialExpansions))
-        for n in range(1, numRadialExpansions + 1):
-            for m in range(1, numAzimuthalExpansions + 1):
+        for n in range(numRadialExpansions):
+            for m in range(numAzimuthalExpansions):
                 inFile = os.path.join(staticCoeffDirectory,
-                                      fileName + "%02d_%02d.par" % (n, m))
+                                      fileName + "%02d_%02d.par" % (n + 1, m + 1))
                 with open(inFile) as f:
                     values = nones((numShieldAzimuthalExpansions,
                                     numShieldRadialExpansions))
                     for l in range(numShieldAzimuthalExpansions):
-                        for k in range(1, numShieldRadialExpansions + 1):
-                            # IS THIS RIGHT? ASSUMES 1 VALUE PER LINE.
+                        for k in range(numShieldRadialExpansions):
                             line = f.readline()
                             val = float(line.split()[0])
-                            values[l][k - 1] = val
+                            values[l][k] = val
                     waveNumberValues = nones((numShieldRadialExpansions,))
-                    for k in range(1, numShieldRadialExpansions + 1):
+                    for k in range(numShieldRadialExpansions):
                         line = f.readline()
                         val = float(line.split()[0])
-                        waveNumberValues[k - 1] = val
-                expansions[m - 1][n - 1] = (
-                    CoefficientExpansions.createExpansionFromArray(
-                        values, 0, 1)
-                )
-                waveExpansions[m - 1][n - 1] = (
-                    CoefficientExpansions.createExpansionFromArray(
-                        waveNumberValues, 1)
-                )
+                        waveNumberValues[k] = val
+                expansions[m][n] = ArrayCoefficientExpansion2D(values)
+                waveExpansions[m][n] = ScalarExpansion1D(waveNumberValues)
         return AsymmetricCylindricalExpansionPair(
-            Expansion2Ds.createFromArray(expansions, 1, 1),
-            Expansion2Ds.createFromArray(waveExpansions, 1, 1)
+            ArrayExpansion2D(expansions),
+            ArrayExpansion2D(waveExpansions)
         )
 
     @staticmethod

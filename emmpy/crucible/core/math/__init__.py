@@ -13,8 +13,6 @@ Modules
 
 Packages
 --------
-coords
-functions
 vectorfields
 vectorspace
 """

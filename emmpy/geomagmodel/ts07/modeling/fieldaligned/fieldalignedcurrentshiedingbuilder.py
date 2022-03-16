@@ -12,13 +12,15 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import cos, sin
 
 import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
-from emmpy.magmodel.core.math.expansions.coefficientexpansions import (
-    CoefficientExpansions
-)
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import TrigParity
+from emmpy.magmodel.core.math.trigparity import ODD
+from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
+from emmpy.math.expansions.arraycoefficientexpansion2d import (
+    ArrayCoefficientExpansion2D
+)
+from emmpy.math.vectorfields.vectorfield import scaleLocation
 from emmpy.utilities.nones import nones
 
 
@@ -266,21 +268,17 @@ class FieldAlignedCurrentShiedingBuilder:
             self.region, self.mode, self.dipoleTilt, xScale, self.trigParityI,
             aPerpenValues, aParallValues
         )
-        if self.trigParityI is TrigParity.ODD:
+        if self.trigParityI is ODD:
             T1 = FieldAlignedCurrentShiedingBuilder.T1Sym
             T2 = FieldAlignedCurrentShiedingBuilder.T2Sym
             p = FieldAlignedCurrentShiedingBuilder.pSym
             q = FieldAlignedCurrentShiedingBuilder.qSym
             r = FieldAlignedCurrentShiedingBuilder.rSym
             s = FieldAlignedCurrentShiedingBuilder.sSym
-            aPerpendicular = CoefficientExpansions.negate(
-                CoefficientExpansions.createExpansionFromArray(
-                    aPerpenValues, 1, 1)
-            )
-            aParallel = CoefficientExpansions.negate(
-                CoefficientExpansions.createExpansionFromArray(
-                    aParallValues, 1, 1)
-            )
+            aPerpendicular = ArrayCoefficientExpansion2D(
+                aPerpenValues).negate()
+            aParallel = ArrayCoefficientExpansion2D(
+                    aParallValues).negate()
         else:
             T1 = FieldAlignedCurrentShiedingBuilder.T1ASym
             T2 = FieldAlignedCurrentShiedingBuilder.T2ASym
@@ -288,40 +286,20 @@ class FieldAlignedCurrentShiedingBuilder:
             q = FieldAlignedCurrentShiedingBuilder.qASym
             r = FieldAlignedCurrentShiedingBuilder.rASym
             s = FieldAlignedCurrentShiedingBuilder.sASym
-            aPerpendicular = CoefficientExpansions.createExpansionFromArray(
-                aPerpenValues, 1, 1
-            )
-            aParallel = CoefficientExpansions.createExpansionFromArray(
-                aParallValues, 1, 1
-            )
+            aPerpendicular = ArrayCoefficientExpansion2D(aPerpenValues)
+            aParallel = ArrayCoefficientExpansion2D(aParallValues)
         psiT1 = self.dipoleTilt*T1[self.region - 1][self.mode - 1]
         psiT2 = self.dipoleTilt*T2[self.region - 1][self.mode - 1]
-        pExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                p[self.region - 1][self.mode - 1], 1
-            )
-        )
-        qExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                q[self.region - 1][self.mode - 1], 1
-            )
-        )
-        rExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                r[self.region - 1][self.mode - 1], 1
-            )
-        )
-        sExpansion = CoefficientExpansions.invert(
-            CoefficientExpansions.createExpansionFromArray(
-                s[self.region - 1][self.mode - 1], 1
-            )
-        )
+        pExpansion = ScalarExpansion1D(p[self.region - 1][self.mode - 1]).invert()
+        qExpansion = ScalarExpansion1D(q[self.region - 1][self.mode - 1]).invert()
+        rExpansion = ScalarExpansion1D(r[self.region - 1][self.mode - 1]).invert()
+        sExpansion = ScalarExpansion1D(s[self.region - 1][self.mode - 1]).invert()
         f = vectorfields.scale(
             PerpendicularAndParallelCartesianHarmonicField.createWithRotation(
                 self.trigParityI, psiT1, pExpansion, rExpansion,
                 aPerpendicular, psiT2, qExpansion, sExpansion, aParallel),
                 self.scalingCoefficient)
-        return vectorfields.scaleLocation(f, dynamicPressureScalingFactor)
+        return scaleLocation(f, dynamicPressureScalingFactor)
 
     @staticmethod
     def fillShieldingCoeffs(region, mode, dipoleTilt, xScale, trigParityI,
@@ -362,7 +340,7 @@ class FieldAlignedCurrentShiedingBuilder:
                     coeff2 = 0.0
                     coeff3 = 0.0
                     coeff4 = 0.0
-                    if trigParityI is TrigParity.ODD:
+                    if trigParityI is ODD:
                         coeff = FieldAlignedCurrentShiedingBuilder.shieldingAmpSym[region - 1][mode - 1][loop]
                         loop += 1
                         coeff2 = FieldAlignedCurrentShiedingBuilder.shieldingAmpSym[region - 1][mode - 1][loop]

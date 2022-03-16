@@ -1,38 +1,77 @@
-"""An interface for a differentiable 2-D scalar field.
+"""The value and derivatives of a 2-D scalar field.
 
-This class defines the interface for a differentiable scalar field in 2
-dimensions.
-
-Note
-----
-This class was created from a Java interface, and therefore most of these
-methods will raise exceptions if invoked.
+This class defines a differentiable scalar field in 2 dimensions.
 """
 
 
-from emmpy.crucible.core.math.vectorfields.scalarfield2d import ScalarField2D
-from emmpy.crucible.crust.vectorfieldsij.scalarfieldijspatialderivative import (
-    ScalarFieldIJSpatialDerivative
-)
+class DifferentiableScalarFieldIJ:
+    """The value and derivatives of a 2-D scalar field.
 
+    This class defines a differentiable scalar field in 2 dimensions.
 
-class DifferentiableScalarFieldIJ(
-      ScalarField2D, ScalarFieldIJSpatialDerivative):
-    """An interface for a differentiable 2-D scalar field.
+    Attributes
+    ----------
+    evaluate: function(Vector2D)->float
+        Function to evaluate the scalar field at the specified position.
 
-    Represents the Cartesian spatial derivatives of a 2-D scalar field.
+    differentiateFDi: function(Vector2D)->float
+        Function to evaluate the first derivative with respect to the first
+        coordinate of the scalar field at the specified position.
+
+    differentiateFDi: function(Vector2D)->float
+        Function to evaluate the first derivative with respect to the
+        second coordinate of the scalar field at the specified position.
     """
 
-    def __init__(self):
-        """Initialize a DifferentiableScalarFieldIJ object.
+    def __init__(self, evaluateFunction, iDerivativeFunction,
+                 jDerivativeFunction):
+        """Initialize a new DifferentiableScalarFieldIJ object.
 
-        Initialize a DifferentiableScalarFieldIJ object.
-
-        This constructor does a pass instead of raise an Exception since this
-        class is instantiated in some other classes, such as
-        CurrentSheetHalfThicknesses.
+        Initialize a new DifferentiableScalarFieldIJ object by setting the
+        functions to use for evaluation and differentiation.
 
         Parameters
         ----------
+        evaluateFunction: function(Vector2D)->float
+            Function to evaluate the scalar field at the specified position.
+
+        iDerivativeFunction: function(Vector2D)->float
+            Function to evaluate the first derivative with respect to the first
+            coordinate of the scalar field at the specified position.
+
+        jDerivativeFunction: function(Vector2D)->float
+            Function to evaluate the first derivative with respect to the
+            second coordinate of the scalar field at the specified position.
+
+        Returns
+        -------
         None
         """
+        self.evaluate = evaluateFunction
+        self.differentiateFDi = iDerivativeFunction
+        self.differentiateFDj = jDerivativeFunction
+
+    @staticmethod
+    def createConstant(constant):
+        """Create a constant differentiable scalar field.
+
+        Return a constant differentiable scalar field. The derivatives of the
+        constant field are always 0.
+
+        Parameters
+        ----------
+        constant : float
+            The constant field value.
+        
+        Returns
+        -------
+        dsfij : DifferentiableScalarFieldIJ
+            The constant differentiable 2-D scalar field.
+        """
+        evaluateFunction = lambda location: constant
+        iDerivativeFunction = lambda location: 0
+        jDerivativeFunction = lambda location: 0
+        dsfij = DifferentiableScalarFieldIJ(
+            evaluateFunction, iDerivativeFunction, jDerivativeFunction
+        )
+        return dsfij

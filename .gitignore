@@ -128,9 +128,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# No VS code files
-.vscode/
-settings.json
-
 # Mac miscellanea
 .DS_Store
+
+# Temporary file duplicates in VS Code.
+*copy.py
+
+# VS Code config files
+.vscode/
+

@@ -9,13 +9,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from math import exp, sqrt
+from math import cos, exp, sin, sqrt
 
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
-from emmpy.magmodel.core.math.expansions.expansion2ds import Expansion2Ds
+from emmpy.magmodel.core.math.trigparity import ODD
 from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.utilities.nones import nones
 
 
@@ -50,14 +50,6 @@ class CartesianHarmonicField(BasisVectorField):
     trigParityK : TrigParity
         The TrigParity associated with the Z terms (odd=sine,
         even=cosine).
-    firstI : int
-        Lowest index in 1st dimension of aik.
-    lastI : int
-        Highest index in 1st dimension of aik.
-    firstK : int
-        Lowest index in 2nd dimension of aik.
-    lastK : int
-        Highest index in 2nd dimension of aik.
     """
 
     def __init__(self, piCoeffs, pkCoeffs, aikCoeffs, trigParityI,
@@ -86,10 +78,6 @@ class CartesianHarmonicField(BasisVectorField):
         self.aikCoeffs = aikCoeffs
         self.trigParityI = trigParityI
         self.trigParityK = trigParityK
-        self.firstI = aikCoeffs.getILowerBoundIndex()
-        self.lastI = aikCoeffs.getIUpperBoundIndex()
-        self.firstK = aikCoeffs.getJLowerBoundIndex()
-        self.lastK = aikCoeffs.getJUpperBoundIndex()
 
     def evaluate(self, location, buffer):
         """Evaluate the field.
@@ -111,87 +99,35 @@ class CartesianHarmonicField(BasisVectorField):
         x = location.i
         y = location.j
         z = location.k
-        firstI = self.piCoeffs.getLowerBoundIndex()
-        lastI = self.piCoeffs.getUpperBoundIndex()
-        firstK = self.pkCoeffs.getLowerBoundIndex()
-        lastK = self.pkCoeffs.getUpperBoundIndex()
+        firstK = 0
         bx = 0.0
         by = 0.0
         bz = 0.0
-        for i in range(firstI, lastI + 1):
-            pi = self.piCoeffs.getCoefficient(i)
-            sinYpi = self.trigParityI.evaluate(pi*y)
-            cosYpi = self.trigParityI.differentiate(pi*y)
-            for k in range(firstK, lastK + 1):
-                pk = self.pkCoeffs.getCoefficient(k)
+        if self.trigParityI is ODD:
+            itrig = sin
+            idtrig = cos
+        else:
+            itrig = cos
+            idtrig = lambda x: -sin(x)
+        if self.trigParityK is ODD:
+            ktrig = sin
+            kdtrig = cos
+        else:
+            ktrig = cos
+            kdtrig = lambda x: -sin(x)
+        for i in range(len(self.piCoeffs)):
+            pi = self.piCoeffs[i]
+            sinYpi = itrig(pi*y)
+            cosYpi = idtrig(pi*y)
+            for k in range(len(self.pkCoeffs)):
+                pk = self.pkCoeffs[k]
                 sqrtP = sqrt(pi*pi + pk*pk)
                 exp_ = exp(x*sqrtP)
-                sinZpk = self.trigParityK.evaluate(pk*z)
-                cosZpk = self.trigParityK.differentiate(pk*z)
-                aik = self.aikCoeffs.getCoefficient(i, k)
+                sinZpk = ktrig(pk*z)
+                cosZpk = kdtrig(pk*z)
+                aik = self.aikCoeffs[i, k + firstK]
                 bx += aik*exp_*sqrtP*sinYpi*sinZpk
                 by += aik*exp_*pi*cosYpi*sinZpk
                 bz += aik*exp_*pk*sinYpi*cosZpk
         buffer[:] = [-bx, -by, -bz]
         return buffer
-
-    def evaluateExpansion2D(self, location):
-        """Return the full expansion results.
-        
-        Return the full expansion results.
-        
-        Parameters
-        ----------
-        location : VectorIJK
-            Location to evaluate the field.
-        
-        Returns
-        -------
-        result : Expansion2D
-            2D expansion at location.
-        """
-        x = location.getI()
-        y = location.getJ()
-        z = location.getK()
-        expansions = nones((self.aikCoeffs.iSize(), self.aikCoeffs.jSize()))
-        for i in range(self.firstI, self.lastI + 1):
-            pi = self.piCoeffs.getCoefficient(i)
-            sinYpi = self.trigParityI.evaluate(pi*y)
-            cosYpi = self.trigParityI.differentiate(pi*y)
-            for k in range(self.firstK, self.lastK + 1):
-                pk = self.pkCoeffs.getCoefficient(k)
-                sqrtP = sqrt(pi*pi + pk*pk)
-                exp_ = exp(x*sqrtP)
-                sinZpk = self.trigParityK.evaluate(pk*z)
-                cosZpk = self.trigParityK.differentiate(pk*z)
-                aik = self.aikCoeffs.getCoefficient(i, k)
-                bx = -aik*exp_*sqrtP*sinYpi*sinZpk
-                by = -aik*exp_*pi*cosYpi*sinZpk
-                bz = -aik*exp_*pk*sinYpi*cosZpk
-                # scale the vector, the minus sign comes from the B=-dell U
-                vect = VectorIJK(bx, by, bz)
-                expansions[i - self.firstI][k - self.firstK] = vect
-        return Expansion2Ds.createFromArray(expansions, self.firstI,
-                                            self.firstK)
-
-    def evaluateExpansion(self, location):
-        """Evaluate the expansion at a location.
-        
-        Evaluate the expansion at a location.
-        
-        Parameters
-        ----------
-        location : VectorIJK
-            Location to evaluate the expansion.
-        
-        Returns
-        -------
-        functions : list of functions
-            Functions which make up the harmonic field.
-        """
-        functions = []
-        expansions = self.evaluateExpansion2D(location)
-        for i in range(self.firstI, self.lastI + 1):
-            for k in range(self.firstK, self.lastK + 1):
-                functions.append(expansions.getExpansion(i, k))
-        return functions

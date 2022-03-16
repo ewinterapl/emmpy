@@ -10,7 +10,7 @@ class TestBuildser(unittest.TestCase):
     """Build and run tests for the nones module."""
 
     def test_nones(self):
-        """Test the nones() function."""
+        """Test the nones function."""
         shape = (2,)
         n = nones(shape)
         for i in range(shape[0]):

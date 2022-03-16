@@ -13,22 +13,10 @@ class TestBuilder(unittest.TestCase):
     def test_evaluateExpansion2D(self):
         pass
 
-    def test_getFirstAzimuthalExpansionNumber(self):
-        pass
-
     def test_getLastAzimuthalExpansionNumber(self):
         pass
 
-    def test_getFirstRadialExpansionNumber(self):
-        pass
-
     def test_getLastRadialExpansionNumber(self):
-        pass
-
-    def test_getTrigParity(self):
-        pass
-
-    def test_getBessel(self):
         pass
 
     def test_getCoefficients(self):

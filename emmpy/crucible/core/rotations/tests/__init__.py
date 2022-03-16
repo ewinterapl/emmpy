@@ -5,7 +5,6 @@ Modules
 test_axisandangle.py
 test_privilegedrotationmatrixijk.py
 test_rotation.py
-test_unwritablerotation.py
 
 Packages
 --------

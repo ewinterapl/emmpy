@@ -11,12 +11,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, sin, tan
 
-from emmpy.crucible.core.math.functions.differentiableunivariatefunction import (
-    DifferentiableUnivariateFunction
-)
 
-
-class TFunction(DifferentiableUnivariateFunction):
+class TFunction:
     """A modeling function for Birkeland currents.
 
     Represents the function given in "Methods for quantitative modeling of

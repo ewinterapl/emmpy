@@ -9,9 +9,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.matrixijk import MatrixIJK
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.matrices.matrixijk import MatrixIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class VectorFieldDeformation(VectorField):
@@ -62,10 +62,10 @@ class VectorFieldDeformation(VectorField):
         bField = self.originalField.evaluate(deformed.getF())
 
         # Evaluate the deformed field.
-        v = trans.mxv(VectorIJK(bField.getI(), bField.getJ(), bField.getK()))
+        v = trans.mxv(VectorIJK(bField.i, bField.j, bField.k))
 
         # Return the updated buffer.
-        return buffer.setTo(v.getI(), v.getJ(), v.getK())
+        return buffer.setTo(v.i, v.j, v.k)
 
     @staticmethod
     def computeMatrix(deformed):
@@ -83,15 +83,15 @@ class VectorFieldDeformation(VectorField):
         trans : MatrixIJK
             The deformation matrix.
         """
-        dFxDx = deformed.getdFxDx()
-        dFxDy = deformed.getdFxDy()
-        dFxDz = deformed.getdFxDz()
-        dFyDx = deformed.getdFyDx()
-        dFyDy = deformed.getdFyDy()
-        dFyDz = deformed.getdFyDz()
-        dFzDx = deformed.getdFzDx()
-        dFzDy = deformed.getdFzDy()
-        dFzDz = deformed.getdFzDz()
+        dFxDx = deformed.dFxDx
+        dFxDy = deformed.dFxDy
+        dFxDz = deformed.dFxDz
+        dFyDx = deformed.dFyDx
+        dFyDy = deformed.dFyDy
+        dFyDz = deformed.dFyDz
+        dFzDx = deformed.dFzDx
+        dFzDy = deformed.dFzDy
+        dFzDz = deformed.dFzDz
         txx = dFyDy*dFzDz - dFyDz*dFzDy
         txy = dFxDz*dFzDy - dFxDy*dFzDz
         txz = dFxDy*dFyDz - dFxDz*dFyDy
@@ -101,5 +101,7 @@ class VectorFieldDeformation(VectorField):
         tzx = dFyDx*dFzDy - dFyDy*dFzDx
         tzy = dFxDy*dFzDx - dFxDx*dFzDy
         tzz = dFxDx*dFyDy - dFxDy*dFyDx
-        trans = MatrixIJK(txx, tyx, tzx, txy, tyy, tzy, txz, tyz, tzz)
+        trans = MatrixIJK([[txx, txy, txz],
+                           [tyx, tyy, tyz],
+                           [tzx, tzy, tzz]])
         return trans

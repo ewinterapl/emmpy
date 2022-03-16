@@ -9,8 +9,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorfields.vectorfield import VectorField
-from emmpy.crucible.core.math.vectorspace.vectorijk import VectorIJK
+from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.vectorfield import VectorField
 
 
 class XYPlaneReflectedField(VectorField):
@@ -60,6 +60,5 @@ class XYPlaneReflectedField(VectorField):
             location.i, location.j, -location.k
         )
         self.delgate.evaluate(reflectedLocation, buffer)
-        bz = buffer.k
-        buffer.k = -bz
+        buffer.k = -buffer.k
         return buffer

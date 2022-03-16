@@ -6,12 +6,23 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+from math import atan2, cos, pi, sin, sqrt
 import unittest
 
 import numpy as np
+from emmpy.math.coordinates.cartesianvector2d import CartesianVector2D
 
-from emmpy.math.coordinates.polarvector import PolarVector
+from emmpy.math.coordinates.polarvector import (
+    PolarVector, polarToCartesian, cartesianToPolar
+)
 
+
+# Test grids.
+n = 33
+xs = np.linspace(-10, 10, n)
+ys = np.linspace(-10, 10, n)
+rs = np.linspace(0, 10, n)
+phis = np.linspace(0, 2*pi, n)
 
 class TestBuilder(unittest.TestCase):
     """Tests for the polarvector module."""
@@ -49,6 +60,28 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(v.phi, phi)
         with self.assertRaises(KeyError):
             v.bad = 0
+
+    def test_polarToCartesian(self):
+        """Test the polarToCartesian function."""
+        for r in rs:
+            for phi in phis:
+                x = r*cos(phi)
+                y = r*sin(phi)
+                polar = PolarVector(r, phi)
+                cartesian = polarToCartesian(polar)
+                self.assertAlmostEqual(cartesian.x, x)
+                self.assertAlmostEqual(cartesian.y, y)
+
+    def test_cartesianToPolar(self):
+        """Test the cartesianToPolar function."""
+        for x in xs:
+            for y in ys:
+                cartesian = CartesianVector2D(x, y)
+                r = sqrt(x**2 + y**2)
+                phi = atan2(y, x)
+                polar = cartesianToPolar(cartesian)
+                self.assertAlmostEqual(polar.r, r)
+                self.assertAlmostEqual(polar.phi, phi)
 
 
 if __name__ == '__main__':

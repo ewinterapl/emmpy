@@ -36,6 +36,10 @@ import numpy as np
 from emmpy.geomagmodel.magnetopause.magnetopauseoutput import (
     MagnetopauseOutput
 )
+from emmpy.geomagmodel.t01.deformation.positionbender import PositionBender
+from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
+    TwistWarpFfunction
+)
 from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
@@ -95,78 +99,6 @@ class T96Magnetopause:
         self.scaledX0 = x00/scalingFactor
         self.XM = self.scaledX0 - self.scaledA0
         self.semiMinorAxis = self.scaledA0*sqrt((sigma0**2 - 1))
-
-    @staticmethod
-    def createGeopack(dynamicPressure):
-        """Construct the Geopack-equivalent T96 magnetopause model.
-
-        Construct the T96 magnetopause model consistent with the T96_MGNP_08
-        subroutine from Geopack.
-
-        Note: This does not apply the dipole tilt angle deformation effects.
-
-        Parameters
-        ----------
-        dynamicPressure : float
-            Solar wind dynamic pressure (nPa)
-
-        Returns
-        -------
-        t96mp : T96Magnetopause
-            A new T96 magnetopause model.
-        """
-        # These values are very similar to those given in the T96 paper:
-        # x0 = 5.48 RE, a = 70.48 RE, sigma0 = 1.078, see eq. (2).
-        A0 = 70.0
-        sigma0 = 1.08
-        X00 = 5.48
-
-        # The value used in the T96 model, see the second T96 paper, section 3.1.
-        # This value was determined by a best fit to data.
-        scalingPowerIndex = 0.14
-
-        # Create the new model.
-        t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
-        return t96mp
-
-    def createTS07(dynamicPressure):
-        """Construct the TS07-equivalent T96 magnetopause model.
-
-        Construct the T96 magnetopause model consistent with the TS07D model.
-
-        Note: This does not apply the dipole tilt angle deformation effects.
-
-        Parameters
-        ----------
-        dynamicPressure : float
-            Solar wind dynamic pressure (nPa)
-
-        Returns
-        -------
-        t96mp : T96Magnetopause
-            A new T96 magnetopause model.
-        """
-        # These values originate in the T01 model source code. They are similar
-        # (although not quite the same) as those given in the first T01 paper
-        # [https://doi.org/2001JA000219, section 2.4]:
-
-        # x0 = 3.486, sigma0 = 1.198, a = 35.13
-
-        # According to the paper they were "... derived by fitting the surface
-        # (equation (26)) to an average boundary of Shue et al. [1998]". These
-        # values were also used in the TS05 model and the TS07 model.
-        A0 = 34.586
-        sigma0 = 1.1960
-        X00 = 3.4397
-
-        # The value used in the TS07D model, very similar to that used in the
-        # TS05 model (0.152759)
-        scalingPowerIndex = 0.155
-
-        # Create the new model.
-        t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
-        return t96mp
-
 
     def evaluate(self, positionGSM):
         """Evaluate the magnetopause model.
@@ -270,42 +202,121 @@ class T96Magnetopause:
         return mo.withinMagnetosphere
 
 
-#   /**
-#    * Constructs the version of T96 magnetopause model used in the TS07D model which includes the
-#    * dipole tilt angle deformation effects.
-#    * 
-#    * @param dynamicPressure the solar wind dynamic pressure in nPa
-#    * @param dipoleTiltAngle the dipole tilt angle in radians
-#    * @param hingeDist the hinging distance RH as defined in the TS07D model
-#    * @param warpParam the warping parameter G as defined in the TS07D model
-#    * @param twistFact the twisting parameter T as defined in the TS07D model
-#    * 
-#    * @return a newly constructed T96 magnetopause model as utilized in the TS07D model
-#    */
-#   public static Predicate<UnwritableVectorIJK> createBentTS07(double dynamicPressure,
-#       double dipoleTiltAngle, double hingeDist, double warpParam, double twistFact) {
+    @staticmethod
+    def createGeopack(dynamicPressure):
+        """Construct the Geopack-equivalent T96 magnetopause model.
 
-#     PositionBender bender = new PositionBender(dipoleTiltAngle, hingeDist);
-#     TwistWarpFfunction warper = new TwistWarpFfunction(warpParam, twistFact, dipoleTiltAngle);
+        Construct the T96 magnetopause model consistent with the T96_MGNP_08
+        subroutine from Geopack.
 
-#     // the value from TS05 according to the Fortran source
-#     double scalingPowerIndex = 0.155;
+        Note: This does not apply the dipole tilt angle deformation effects.
 
-#     double pdynScaling = pow(dynamicPressure / averagePressure, scalingPowerIndex);
+        Parameters
+        ----------
+        dynamicPressure : float
+            Solar wind dynamic pressure (nPa)
 
-#     final T96Magnetopause unbent = createTS07(averagePressure);
+        Returns
+        -------
+        t96mp : T96Magnetopause
+            A new T96 magnetopause model.
+        """
+        # These values are very similar to those given in the T96 paper:
+        # x0 = 5.48 RE, a = 70.48 RE, sigma0 = 1.078, see eq. (2).
+        A0 = 70.0
+        sigma0 = 1.08
+        X00 = 5.48
 
-#     return new Predicate<UnwritableVectorIJK>() {
+        # The value used in the T96 model, see the second T96 paper, section 3.1.
+        # This value was determined by a best fit to data.
+        scalingPowerIndex = 0.14
 
-#       @Override
-#       public boolean apply(UnwritableVectorIJK location) {
+        # Create the new model.
+        t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
+        return t96mp
 
-#         UnwritableVectorIJK pdynScaledLocation = new UnwritableVectorIJK(pdynScaling, location);
+    @staticmethod
+    def createTS07(dynamicPressure):
+        """Construct the TS07-equivalent T96 magnetopause model.
 
-#         UnwritableVectorIJK bentLocation = bender.evaluate(pdynScaledLocation);
-#         UnwritableVectorIJK bentWarpedLocation = warper.evaluate(bentLocation);
+        Construct the T96 magnetopause model consistent with the TS07D model.
 
-#         return unbent.apply(bentWarpedLocation);
-#       }
-#     };
-#   }
+        Note: This does not apply the dipole tilt angle deformation effects.
+
+        Parameters
+        ----------
+        dynamicPressure : float
+            Solar wind dynamic pressure (nPa)
+
+        Returns
+        -------
+        t96mp : T96Magnetopause
+            A new T96 magnetopause model.
+        """
+        # These values originate in the T01 model source code. They are similar
+        # (although not quite the same) as those given in the first T01 paper
+        # [https://doi.org/2001JA000219, section 2.4]:
+
+        # x0 = 3.486, sigma0 = 1.198, a = 35.13
+
+        # According to the paper they were "... derived by fitting the surface
+        # (equation (26)) to an average boundary of Shue et al. [1998]". These
+        # values were also used in the TS05 model and the TS07 model.
+        A0 = 34.586
+        sigma0 = 1.1960
+        X00 = 3.4397
+
+        # The value used in the TS07D model, very similar to that used in the
+        # TS05 model (0.152759)
+        scalingPowerIndex = 0.155
+
+        # Create the new model.
+        t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
+        return t96mp
+
+    @staticmethod
+    def createBentTS07(dynamicPressure, dipoleTiltAngle, hingeDist, warpParam,
+                       twistFact):
+        """Create a model with the dipole tilt angle deformation.
+        
+        Create a model with the dipole tilt angle deformation. This method
+        creates a standard T96Magnetopause object, then modifies it by
+        replacing the apply() method with a custom version.
+
+        Parameters
+        ----------
+        dynamicPressure : float
+            Solar wind dynamic pressure (nPa).
+        dipoleTiltAngle : float
+            Dipole tilt angle in (radians).
+        hingeDist : float
+            Hinging distance RH as defined in the TS07D model.
+        warpParam : float
+            Warping parameter G as defined in the TS07D model.
+        twistFact : float
+            Twisting parameter T as defined in the TS07D model.
+
+        Returns
+        -------
+        t96mp : T96Magnetopause
+            New T96Magnetopause obejct for the dipole-tilted model.
+        """
+        bender = PositionBender(dipoleTiltAngle, hingeDist)
+        warper = TwistWarpFfunction(warpParam, twistFact, dipoleTiltAngle)
+
+        # The value from TS05 according to the Fortran source.
+        scalingPowerIndex = 0.155
+
+        pdynScaling = pow(averagePressure, scalingPowerIndex)
+
+        # Create the model object.
+        unbent = T96Magnetopause.createTS07(averagePressure)
+
+        # Create the custom apply method.
+        def my_apply(location):
+            pdynScaledLocation = pdynScaling*VectorIJK(location)
+            bentLocation = bender.evaluate(pdynScaledLocation)
+            bentWarpedLocation = warper.evaluate(bentLocation)
+            return unbent.apply(bentWarpedLocation)
+    
+        return unbent

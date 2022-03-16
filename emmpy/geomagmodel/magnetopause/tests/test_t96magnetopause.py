@@ -55,6 +55,12 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(mo.magnetopauseLocation.k, 8.947835270524108)
         self.assertTrue(mo.withinMagnetosphere)
 
+    def test_apply(self):
+        """Test the apply method."""
+        t96mp = T96Magnetopause.createTS07(1)
+        location = VectorIJK(1, 2, 3)
+        self.assertTrue(t96mp.apply(location))
+
 
 if __name__ == "__main__":
     unittest.main()

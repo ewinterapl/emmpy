@@ -251,6 +251,24 @@ class T96Magnetopause:
 
         return MagnetopauseOutput(magnetopauseLocation, distance, withinMagnetosphere)
 
+    def apply(self, positionGSM):
+        """Check if a point is within the magnetosphere.
+
+        Check if a point is within the magnetosphere.
+
+        Parameters
+        ----------
+        positionGSM : VectorIJK
+            Position in GSM coordinates.
+
+        Returns
+        -------
+        mo.isWithinMagnetosphere : bool
+            True if the position is inside the magnetopause, otherwise False.
+        """
+        mo = self.evaluate(positionGSM)
+        return mo.withinMagnetosphere
+
 
 #   /**
 #    * Constructs the version of T96 magnetopause model used in the TS07D model which includes the
@@ -291,14 +309,3 @@ class T96Magnetopause:
 #       }
 #     };
 #   }
-
-#   /**
-#    * @return true if the query point is within the magnetopause (inside the magnetosphere), false if
-#    *         it is outside the magnetopaause (outside the magnetosphere)
-#    */
-#   @Override
-#   public boolean apply(UnwritableVectorIJK positionGSM) {
-#     return evaluate(positionGSM).isWithinMagnetosphere();
-#   }
-
-# }

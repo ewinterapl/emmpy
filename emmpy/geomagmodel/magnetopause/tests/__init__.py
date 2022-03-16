@@ -2,6 +2,8 @@
 
 Modules
 -------
+test_magnetopauseoutput.py
+test_t96magnetopause.py
 
 Packages
 --------

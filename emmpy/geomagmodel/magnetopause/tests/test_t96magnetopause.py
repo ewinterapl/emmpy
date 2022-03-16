@@ -2,10 +2,12 @@
 
 
 import unittest
+from emmpy.geomagmodel.magnetopause.magnetopauseoutput import MagnetopauseOutput
 
 from emmpy.geomagmodel.magnetopause.t96magnetopause import (
     T96Magnetopause
 )
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 class TestBuilder(unittest.TestCase):
@@ -40,6 +42,18 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(t96mp.scaledX0, 3.8298363402212128)
         self.assertAlmostEqual(t96mp.XM, -34.678963747836136)
         self.assertAlmostEqual(t96mp.semiMinorAxis, 25.26412084621354)
+
+    def test_evaluate(self):
+        """Test the evaluate method."""
+        t96mp = T96Magnetopause.createTS07(1)
+        location = VectorIJK(1, 2, 3)
+        mo = t96mp.evaluate(location)
+        self.assertIsInstance(mo, MagnetopauseOutput)
+        self.assertAlmostEqual(mo.distanceToMagnetopause, 9.330655552712768)
+        self.assertAlmostEqual(mo.magnetopauseLocation.i, 6.996781730613225)
+        self.assertAlmostEqual(mo.magnetopauseLocation.j, 5.965223513682737)
+        self.assertAlmostEqual(mo.magnetopauseLocation.k, 8.947835270524108)
+        self.assertTrue(mo.withinMagnetosphere)
 
 
 if __name__ == "__main__":

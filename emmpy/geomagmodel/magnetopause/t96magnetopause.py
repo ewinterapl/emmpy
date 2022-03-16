@@ -27,7 +27,16 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 # Import standard modules.
-from math import sqrt
+from math import atan2, cos, sin, sqrt
+
+# Import 3rd-party modules.
+import numpy as np
+
+# Import project modules.
+from emmpy.geomagmodel.magnetopause.magnetopauseoutput import (
+    MagnetopauseOutput
+)
+from emmpy.math.coordinates.vectorijk import VectorIJK
 
 
 # Program constants.
@@ -159,12 +168,88 @@ class T96Magnetopause:
         return t96mp
 
 
-#   public static Predicate<UnwritableVectorIJK> createBentTS07(double dynamicPressure,
-#       double dipoleTiltAngle, double hingeDist, double warpParam, double twistFact) {
-#   public MagnetopauseOutput evaluate(UnwritableVectorIJK positionGSM) {
-#   public boolean apply(UnwritableVectorIJK positionGSM) {
-#     return evaluate(positionGSM).isWithinMagnetosphere();
-#   }
+    def evaluate(self, positionGSM):
+        """Evaluate the magnetopause model.
+
+        For any point in space (xgsw, ygsw, zgsw), compute the position of a
+        point (xmgnp, ymgnp, zmgnp) at the T96 model magnetopause with the
+        same value of the ellipsoidal tau-coordinate, and the distance between
+        them. This is not the shortest distance d_min to the boundary, but this
+        distance asymptotically approaches d_min, as the observation point gets
+        closer to the magnetopause.
+
+        The pressure-dependent magnetopause is that used in the T96_01 model
+        as described in Tsyganenko, JGR 100, p. 5599 (1995), and
+        ESA SP-389, p. 181, Oct. 1996.
+
+        Original code by N.A. Tsyganenko, 1 August 1995, revised 3 April 2003.
+
+        Parameters
+        ----------
+        positionGSM : VectorIJK
+            Position in GSM coordinates.
+
+        Returns
+        -------
+        mo : MagnetopauseOutput
+            Results of magnetopause calculations.
+        """
+        # Extract the position coordinates.
+        xGsw = positionGSM.i
+        yGsw = positionGSM.j
+        zGsw = positionGSM.k
+
+        # XM is the x-coordinate of the seam between the ellipsoid and the
+        # cylinder. For details of the ellipsoidal coordinates, see
+        # N.A. Tsyganenko, "Solution of Chapman-Ferraro Problem for an
+        # Ellipsoidal Magnetopause", Planetary and Space Science v37,
+        # p1037 (1989)
+        phiGsw = 0.0
+        if yGsw != 0 or zGsw != 0:
+            phiGsw = atan2(yGsw, zGsw)
+        rhoGsw = sqrt(yGsw**2 + zGsw**2)
+        withinMagnetosphere = False
+        magnetopauseLocation = None
+
+        if xGsw < self.XM:
+            # We are in the tailward of the ellipsoid center, so the
+            # magnetopause is defined using the cylinder.
+            xMgnp = xGsw
+            yMgnp = self.semiMinorAxis*sin(phiGsw)
+            zMgnp = self.semiMinorAxis*cos(phiGsw)
+            # The magnetopause is outside of where we are, so we are in the
+            # magnetosphere.
+            if self.semiMinorAxis > rhoGsw:
+                withinMagnetosphere = True
+            magnetopauseLocation = VectorIJK(xMgnp, yMgnp, zMgnp)
+        else:
+            # Otherwise, we are in the ellipse region.
+            XKSI = (xGsw - self.scaledX0)/self.scaledA0 + 1
+            XDZT = rhoGsw/self.scaledA0
+            sq1 = sqrt((1.0 + XKSI)*(1 + XKSI) + XDZT**2)
+            sq2 = sqrt((1.0 - XKSI) * (1 - XKSI) + XDZT**2)
+            sigma = 0.5*(sq1 + sq2)
+            tau = 0.5*(sq1 - sq2)
+
+            # Now calculate (X,Y,Z) for the closest point on the magnetopause.
+            xMgnp = self.scaledX0 - self.scaledA0*(1 - self.sigma0*tau)
+            arg = (self.sigma0**2 - 1)*(1 - tau**2)
+            if arg < 0:
+                arg = 0.0
+            rhoMagnetopause = self.scaledA0*sqrt(arg)
+            yMgnp = rhoMagnetopause*sin(phiGsw)
+            zMgnp = rhoMagnetopause*cos(phiGsw)
+            if sigma > self.sigma0:
+                withinMagnetosphere = False
+            if sigma <= self.sigma0:
+                withinMagnetosphere = True
+            magnetopauseLocation = VectorIJK(xMgnp, yMgnp, zMgnp)
+
+        # Now compute the distance between the points (xGsw, yGsw, zGsw) and
+        # (xMgnp, yMgnp, zMgnp).
+        distance = np.linalg.norm(positionGSM - magnetopauseLocation)
+
+        return MagnetopauseOutput(magnetopauseLocation, distance, withinMagnetosphere)
 
 
 #   /**
@@ -205,174 +290,6 @@ class T96Magnetopause:
 #         return unbent.apply(bentWarpedLocation);
 #       }
 #     };
-#   }
-
-#   /**
-#    * Constructor.
-#    * 
-#    * @param dynamicPressure the solar wind dynamic pressure in nPa
-#    * @param a0
-#    * @param sigma0
-#    * @param x00
-#    * @param scalingPowerIndex referred to Kappa in the literature
-#    */
-#   T96Magnetopause(double dynamicPressure, double a0, double sigma0, double x00,
-#       double scalingPowerIndex) {
-
-#     // RATIO OF PD TO THE AVERAGE PRESSURE, ASSUMED EQUAL TO 2 nPa:
-#     double pdynRatio = dynamicPressure / averagePressure;
-
-#     // the magnetopause is scaled by it's linear dimensions by X = (Pd/<Pd>)^(k)
-#     double scalingFactor = pow(pdynRatio, scalingPowerIndex);
-
-#     // VALUES OF THE MAGNETOPAUSE PARAMETERS, SCALED BY THE ACTUAL PRESSURE:
-#     this.scaledA0 = a0 / scalingFactor;
-#     this.sigma0 = sigma0;
-#     this.scaledX0 = x00 / scalingFactor;
-
-#     this.XM = scaledX0 - scaledA0;
-
-#     this.semiMinorAxis = scaledA0 * sqrt((sigma0 * sigma0 - 1));
-
-#   }
-
-#   /**
-#    * From Geopack:
-#    * 
-#    * <pre>
-  
-#   FOR ANY POINT OF SPACE WITH GIVEN COORDINATES (XGSW,YGSW,ZGSW), THIS SUBROUTINE DEFINES
-#   THE POSITION OF A POINT (XMGNP,YMGNP,ZMGNP) AT THE T96 MODEL MAGNETOPAUSE WITH THE
-#   SAME VALUE OF THE ELLIPSOIDAL TAU-COORDINATE, AND THE DISTANCE BETWEEN THEM.  THIS IS
-#   NOT THE SHORTEST DISTANCE D_MIN TO THE BOUNDARY, BUT DIST ASYMPTOTICALLY TENDS TO D_MIN,
-#   AS THE OBSERVATION POINT GETS CLOSER TO THE MAGNETOPAUSE.
-  
-#   INPUT: XN_PD - EITHER SOLAR WIND PROTON NUMBER DENSITY (PER C.C.) (IF VEL>0)
-#                     OR THE SOLAR WIND RAM PRESSURE IN NANOPASCALS   (IF VEL<0)
-#          VEL - EITHER SOLAR WIND VELOCITY (KM/SEC)
-#                   OR ANY NEGATIVE NUMBER, WHICH INDICATES THAT XN_PD STANDS
-#                      FOR THE SOLAR WIND PRESSURE, RATHER THAN FOR THE DENSITY
-  
-#          XGSW,YGSW,ZGSW - COORDINATES OF THE OBSERVATION POINT IN EARTH RADII
-  
-#   OUTPUT: XMGNP,YMGNP,ZMGNP - GSW POSITION OF THE BOUNDARY POINT, HAVING THE SAME
-#           VALUE OF TAU-COORDINATE AS THE OBSERVATION POINT (XGSW,YGSW,ZGSW)
-#           DIST -  THE DISTANCE BETWEEN THE TWO POINTS, IN RE,
-#           ID -    POSITION FLAG; ID=+1 (-1) MEANS THAT THE POINT (XGSW,YGSW,ZGSW)
-#           LIES INSIDE (OUTSIDE) THE MODEL MAGNETOPAUSE, RESPECTIVELY.
-  
-#   THE PRESSURE-DEPENDENT MAGNETOPAUSE IS THAT USED IN THE T96_01 MODEL
-#   (TSYGANENKO, JGR, V.100, P.5599, 1995; ESA SP-389, P.181, OCT. 1996)
-  
-#    AUTHOR:  N.A. TSYGANENKO
-#    DATE:    AUG.1, 1995, REVISED APRIL 3, 2003.
-  
-  
-#   DEFINE SOLAR WIND DYNAMIC PRESSURE (NANOPASCALS, ASSUMING 4% OF ALPHA-PARTICLES),
-#    IF NOT EXPLICITLY SPECIFIED IN THE INPUT:
-#    * </pre>
-#    * 
-#    * @param positionGSM
-#    * 
-#    * @return
-#    */
-#   public MagnetopauseOutput evaluate(UnwritableVectorIJK positionGSM) {
-
-#     double xGsw = positionGSM.getI();
-#     double yGsw = positionGSM.getJ();
-#     double zGsw = positionGSM.getK();
-
-#     /**
-#      * From Geopack:
-#      * 
-#      * <pre>
-#     (XM IS THE X-COORDINATE OF THE "SEAM" BETWEEN THE ELLIPSOID AND THE CYLINDER)
-    
-#      (FOR DETAILS OF THE ELLIPSOIDAL COORDINATES, SEE THE PAPER:
-#       N.A.TSYGANENKO, SOLUTION OF CHAPMAN-FERRARO PROBLEM FOR AN
-#       ELLIPSOIDAL MAGNETOPAUSE, PLANET.SPACE SCI., V.37, P.1037, 1989).
-#      * </pre>
-#      */
-
-#     double phiGsw = 0.0;
-#     if (yGsw != 0.0 || zGsw != 0.0) {
-#       phiGsw = atan2(yGsw, zGsw);
-#     } else {
-#       phiGsw = 0.0;
-#     }
-
-#     double rhoGsw = sqrt(yGsw * yGsw + zGsw * zGsw);
-
-#     boolean withinMagnetosphere = false;
-#     UnwritableVectorIJK magnetopauseLocation = null;
-
-#     /*
-#      * if X < XM, we are in the tailward of the ellipsoid center, so the magnetopause is defined
-#      * using the cylinder
-#      */
-#     if (xGsw < XM) {
-
-#       double xMgnp = xGsw;
-#       double yMgnp = semiMinorAxis * sin(phiGsw);
-#       double zMgnp = semiMinorAxis * cos(phiGsw);
-
-#       // the magnetopause is outside of where we are, so we are in the magnetosphere
-#       if (semiMinorAxis > rhoGsw) {
-#         withinMagnetosphere = true;
-#       }
-#       if (semiMinorAxis <= rhoGsw) {
-#         withinMagnetosphere = false;
-#       }
-
-#       magnetopauseLocation = new UnwritableVectorIJK(xMgnp, yMgnp, zMgnp);
-#     }
-#     /*
-#      * Otherwise, we are in the ellipse region
-#      */
-#     else {
-
-#       double XKSI = (xGsw - scaledX0) / scaledA0 + 1.0;
-#       double XDZT = rhoGsw / scaledA0;
-#       double sq1 = sqrt((1.0 + XKSI) * (1.0 + XKSI) + XDZT * XDZT);
-#       double sq2 = sqrt((1.0 - XKSI) * (1.0 - XKSI) + XDZT * XDZT);
-
-#       double sigma = 0.5 * (sq1 + sq2);
-#       double tau = 0.5 * (sq1 - sq2);
-
-#       // NOW CALCULATE (X,Y,Z) FOR THE CLOSEST POINT AT THE MAGNETOPAUSE
-
-#       double xMgnp = scaledX0 - scaledA0 * (1. - sigma0 * tau);
-
-#       double arg = (sigma0 * sigma0 - 1.) * (1. - tau * tau);
-#       if (arg < 0.0) {
-#         arg = 0.;
-#       }
-
-#       double rhoMagnetopause = scaledA0 * sqrt(arg);
-
-#       double yMgnp = rhoMagnetopause * sin(phiGsw);
-#       double zMgnp = rhoMagnetopause * cos(phiGsw);
-
-#       if (sigma > sigma0) {
-#         withinMagnetosphere = false; // ID=-1 MEANS THAT THE POINT LIES OUTSIDE
-#       }
-
-#       if (sigma <= sigma0) {
-#         withinMagnetosphere = true; // ID=+1 MEANS THAT THE POINT LIES INSIDE THE MAGNETOSPHERE
-#       }
-
-#       magnetopauseLocation = new UnwritableVectorIJK(xMgnp, yMgnp, zMgnp);
-#     }
-
-#     /*
-#      * NOW CALCULATE THE DISTANCE BETWEEN THE POINTS {XGSW,YGSW,ZGSW} AND {XMGNP,YMGNP,ZMGNP}: (IN
-#      * GENERAL, THIS IS NOT THE SHORTEST DISTANCE D_MIN, BUT DIST ASYMPTOTICALLY TENDS TO D_MIN, AS
-#      * WE ARE GETTING CLOSER TO THE MAGNETOPAUSE):
-#      */
-#     // compute the distance between the input position and the magnetopause
-#     double distance = VectorIJK.subtract(positionGSM, magnetopauseLocation).getLength();
-
-#     return new MagnetopauseOutput(magnetopauseLocation, distance, withinMagnetosphere);
 #   }
 
 #   /**

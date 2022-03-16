@@ -13,6 +13,13 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ method."""
+        t96mp = T96Magnetopause(1, 1, 1, 1, 1)
+        self.assertIsInstance(t96mp, T96Magnetopause)
+        self.assertAlmostEqual(t96mp.scaledA0, 2.0)
+        self.assertAlmostEqual(t96mp.sigma0, 1.0)
+        self.assertAlmostEqual(t96mp.scaledX0, 2.0)
+        self.assertAlmostEqual(t96mp.XM, 0.0)
+        self.assertAlmostEqual(t96mp.semiMinorAxis, 0.0)
 
 
 if __name__ == "__main__":

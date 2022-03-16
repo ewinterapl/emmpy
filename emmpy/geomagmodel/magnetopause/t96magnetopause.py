@@ -26,27 +26,79 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
+# Import standard modules.
+from math import sqrt
+
+
+# Program constants.
+
+# Nominal pressure used to scale the magnetopause (nPa)
+averagePressure = 2.0
+
+
 class T96Magnetopause:
     """Compute the magnetopause according to the T96 model.
 
     Attributes
     ----------
-    None
+    scaledA0 : float
+        XXX
+    sigma0 : float
+        XXX
+    scaledX0 : float
+        XXX
+    XM : float
+        Center of the ellipsoid
+    semiMinorAxis : float
+        XXX
     """
 
-    def __init__(self):
+    def __init__(self, dynamicPressure, a0, sigma0, x00, scalingPowerIndex):
         """Initialize a new T96Magnetopause object.
 
         Initialize a new T96Magnetopause object.
 
         Parameters
         ----------
-        None
-        
+        dynamicPressure : float
+            Solar wind dynamic pressure (nPa)
+        a0 : float
+            XXX
+        sigma0 : float
+            XXX
+        x00 : float
+            XXX
+        scalingPowerIndex : float
+            Referred to as Kappa in the literature.
+
         Returns
         -------
         None
         """
+
+        # Compute the ratio of the dynamic pressure to the average pressure.
+        pdynRatio = dynamicPressure/averagePressure
+
+        # Scale the magnetopause parameters.
+        scalingFactor = pow(pdynRatio, scalingPowerIndex)
+        self.scaledA0 = a0/scalingFactor
+        self.sigma0 = sigma0
+        self.scaledX0 = x00/scalingFactor
+        self.XM = self.scaledX0 - self.scaledA0
+        self.semiMinorAxis = self.scaledA0*sqrt((sigma0**2 - 1))
+
+
+#   public static T96Magnetopause createGeopack(double dynamicPressure) {
+#   public static T96Magnetopause createTS07(double dynamicPressure) {
+#   public static Predicate<UnwritableVectorIJK> createBentTS07(double dynamicPressure,
+#       double dipoleTiltAngle, double hingeDist, double warpParam, double twistFact) {
+#   T96Magnetopause(double dynamicPressure, double a0, double sigma0, double x00,
+#       double scalingPowerIndex) {
+#   public MagnetopauseOutput evaluate(UnwritableVectorIJK positionGSM) {
+#   public boolean apply(UnwritableVectorIJK positionGSM) {
+#     return evaluate(positionGSM).isWithinMagnetosphere();
+#   }
+
 
 #   // the nominal pressure used to scale the magnetopause
 #   private static double averagePressure = 2.0;

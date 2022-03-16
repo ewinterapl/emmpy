@@ -87,54 +87,47 @@ class T96Magnetopause:
         self.XM = self.scaledX0 - self.scaledA0
         self.semiMinorAxis = self.scaledA0*sqrt((sigma0**2 - 1))
 
+    @staticmethod
+    def createGeopack(dynamicPressure):
+        """Construct the Geopack-equivalent T96 magnetopause model.
 
-#   public static T96Magnetopause createGeopack(double dynamicPressure) {
+        Construct the T96 magnetopause model consistent with the T96_MGNP_08
+        subroutine from Geopack.
+
+        Note: This does not apply the dipole tilt angle deformation effects.
+
+        Parameters
+        ----------
+        dynamicPressure : float
+            Solar wind dynamic pressure (nPa)
+
+        Returns
+        -------
+        t96mp : T96Magnetopause
+            A new T96 magnetopause model.
+        """
+
+        # These values are very similar to those given in the T96 paper:
+        # x0 = 5.48 RE, a = 70.48 RE, sigma0 = 1.078, see eq. (2).
+        A0 = 70.0
+        sigma0 = 1.08
+        X00 = 5.48
+
+        # The value used in the T96 model, see the second T96 paper, section 3.1.
+        # This value was determined by a best fit to data.
+        scalingPowerIndex = 0.14
+
+        # Create the new model.
+        t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
+        return t96mp
+
+
 #   public static T96Magnetopause createTS07(double dynamicPressure) {
 #   public static Predicate<UnwritableVectorIJK> createBentTS07(double dynamicPressure,
 #       double dipoleTiltAngle, double hingeDist, double warpParam, double twistFact) {
-#   T96Magnetopause(double dynamicPressure, double a0, double sigma0, double x00,
-#       double scalingPowerIndex) {
 #   public MagnetopauseOutput evaluate(UnwritableVectorIJK positionGSM) {
 #   public boolean apply(UnwritableVectorIJK positionGSM) {
 #     return evaluate(positionGSM).isWithinMagnetosphere();
-#   }
-
-
-#   // the nominal pressure used to scale the magnetopause
-#   private static double averagePressure = 2.0;
-
-#   private final double scaledA0;
-#   private final double sigma0;
-#   private final double scaledX0;
-
-#   // XM is the center of the ellipsoid
-#   private final double XM;
-
-#   private final double semiMinorAxis;
-
-#   /**
-#    * Constructs the T96 magnetopause model consistent with the T96_MGNP_08 subroutine from Geopack.
-#    * Note, this does not apply the dipole tilt angle deformation effects.
-#    * 
-#    * @param dynamicPressure the solar wind dynamic pressure in nPa
-#    * @return a newly constructed T96 magnetopause model
-#    */
-#   public static T96Magnetopause createGeopack(double dynamicPressure) {
-
-#     // These values are very similar to those given in the T96 paper, x0 = 5.48 RE, a = 70.48 RE,
-#     // and sigma0 = 1.078, see eq. (2)
-#     double A0 = 70.0;
-#     double sigma0 = 1.08;
-#     double X00 = 5.48;
-
-#     /*
-#      * (THE POWER INDEX 0.14 IN THE SCALING FACTOR IS THE BEST-FIT VALUE OBTAINED FROM DATA AND USED
-#      * IN THE T96_01 VERSION)
-#      */
-#     // the value used in the T96 model, see the second T96 paper, section 3.1
-#     double scalingPowerIndex = 0.14;
-
-#     return new T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex);
 #   }
 
 #   /**

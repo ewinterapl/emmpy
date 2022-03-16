@@ -133,3 +133,7 @@ dmypy.json
 
 # Temporary file duplicates in VS Code.
 *copy.py
+
+# VS Code config files
+.vscode/
+

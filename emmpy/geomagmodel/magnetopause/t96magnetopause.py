@@ -106,7 +106,6 @@ class T96Magnetopause:
         t96mp : T96Magnetopause
             A new T96 magnetopause model.
         """
-
         # These values are very similar to those given in the T96 paper:
         # x0 = 5.48 RE, a = 70.48 RE, sigma0 = 1.078, see eq. (2).
         A0 = 70.0
@@ -121,8 +120,45 @@ class T96Magnetopause:
         t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
         return t96mp
 
+    def createTS07(dynamicPressure):
+        """Construct the TS07-equivalent T96 magnetopause model.
 
-#   public static T96Magnetopause createTS07(double dynamicPressure) {
+        Construct the T96 magnetopause model consistent with the TS07D model.
+
+        Note: This does not apply the dipole tilt angle deformation effects.
+
+        Parameters
+        ----------
+        dynamicPressure : float
+            Solar wind dynamic pressure (nPa)
+
+        Returns
+        -------
+        t96mp : T96Magnetopause
+            A new T96 magnetopause model.
+        """
+        # These values originate in the T01 model source code. They are similar
+        # (although not quite the same) as those given in the first T01 paper
+        # [https://doi.org/2001JA000219, section 2.4]:
+
+        # x0 = 3.486, sigma0 = 1.198, a = 35.13
+
+        # According to the paper they were "... derived by fitting the surface
+        # (equation (26)) to an average boundary of Shue et al. [1998]". These
+        # values were also used in the TS05 model and the TS07 model.
+        A0 = 34.586
+        sigma0 = 1.1960
+        X00 = 3.4397
+
+        # The value used in the TS07D model, very similar to that used in the
+        # TS05 model (0.152759)
+        scalingPowerIndex = 0.155
+
+        # Create the new model.
+        t96mp =  T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex)
+        return t96mp
+
+
 #   public static Predicate<UnwritableVectorIJK> createBentTS07(double dynamicPressure,
 #       double dipoleTiltAngle, double hingeDist, double warpParam, double twistFact) {
 #   public MagnetopauseOutput evaluate(UnwritableVectorIJK positionGSM) {
@@ -130,32 +166,6 @@ class T96Magnetopause:
 #     return evaluate(positionGSM).isWithinMagnetosphere();
 #   }
 
-#   /**
-#    * Constructs the version of T96 magnetopause model used in the TS07D model. Note, this does not
-#    * apply the dipole tilt angle deformation effects, which are included in
-#    * {@link #createBentTS07(double, double, double, double, double)}.
-#    * 
-#    * @param dynamicPressure the solar wind dynamic pressure in nPa
-#    * @return a newly constructed T96 magnetopause model as utilized in the TS07D model
-#    */
-#   public static T96Magnetopause createTS07(double dynamicPressure) {
-
-#     /*
-#      * these values originate in the T01 model source code, they are similar (although not quite the
-#      * same) as those given in the first T01 paper (https://doi.org/2001JA000219) section 2.4: x0 =
-#      * 3.486, sigma0 = 1.198, a = 35.13. According to the paper they were "... derived by fitting
-#      * the surface (equation (26)) to an average boundary of Shue et al. [1998]". These values were
-#      * also used in the TS05 model and the TS07 model.
-#      */
-#     double A0 = 34.586;
-#     double sigma0 = 1.1960;
-#     double X00 = 3.4397;
-
-#     // the value used in the TS07D model, very similar to that used in the TS05 model (0.152759)
-#     double scalingPowerIndex = 0.155;
-
-#     return new T96Magnetopause(dynamicPressure, A0, sigma0, X00, scalingPowerIndex);
-#   }
 
 #   /**
 #    * Constructs the version of T96 magnetopause model used in the TS07D model which includes the

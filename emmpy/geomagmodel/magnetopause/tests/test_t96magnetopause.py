@@ -31,6 +31,16 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(t96mp.XM, -71.09491807635892)
         self.assertAlmostEqual(t96mp.semiMinorAxis, 31.464359852702326)
 
+    def test_createTS07(self):
+        """Test the createTS07 method."""
+        t96mp = T96Magnetopause.createTS07(1)
+        self.assertIsInstance(t96mp, T96Magnetopause)
+        self.assertAlmostEqual(t96mp.scaledA0, 38.50880008805735)
+        self.assertAlmostEqual(t96mp.sigma0, 1.196)
+        self.assertAlmostEqual(t96mp.scaledX0, 3.8298363402212128)
+        self.assertAlmostEqual(t96mp.XM, -34.678963747836136)
+        self.assertAlmostEqual(t96mp.semiMinorAxis, 25.26412084621354)
+
 
 if __name__ == "__main__":
     unittest.main()

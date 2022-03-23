@@ -1,3 +1,50 @@
+"""Compute the current density field around Earth.
+
+Constructs the current density from the magnetic field via Ampere's Law.
+This is computed numerically using the finite difference method.
+
+Authors
+-------
+G.K. Stephens
+Eric Winter (eric.winter@jhuapl.edu)
+"""
+
+# Import standard modules.
+
+# Import 3rd-party modules.
+
+# Import project modules.
+from emmpy.math.vectorfields.vectorfield import VectorField
+
+
+# Program constants
+
+
+class EarthCurrentDensityField(VectorField):
+    """Compute the current density field around Earth.
+
+    Constructs the current density from the magnetic field via Ampere's
+    Law. This is computed numerically using the finite difference method.
+
+    Attributes
+    ----------
+    """
+
+    def __init__(self):
+        """Initialize a new EarthCurrentDensityField object.
+
+        Initialize a new EarthCurrentDensityField object.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
+
+
 # package geomagmodel;
 
 # import static crucible.core.math.vectorfields.VectorFields.curl;

@@ -199,6 +199,29 @@ class TS07DVariableCoefficientsUtils:
         return tilt
 
     @staticmethod
+    def readTwistFactor(variableCoefficientsFile):
+        """Parse the twist factor from the variable coefficients file.
+
+        Parse the twist factor from the variable coefficients file.
+
+        Parameters
+        ----------
+        variableCoefficientsFile : str
+            An ASCII file containing a list of the coefficients.
+        
+        Returns
+        -------
+        twist_factor : float
+            The twist factor parsed from the file.
+        """
+        twist_factor = None
+        for line in open(variableCoefficientsFile):
+            if "twist factor" in line:
+                twist_factor = float(line.split()[0])
+                break
+        return twist_factor
+
+    @staticmethod
     def readCurrentSheetNumber(variableCoefficientsFile):
         """Parse the number of current sheets from the coefficients file.
 

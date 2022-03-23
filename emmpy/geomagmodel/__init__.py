@@ -2,10 +2,12 @@
 
 Modules
 -------
+earthcurrentdensityfield.py
 
 Packages
 --------
 magnetopause
 t01
+tests
 ts07
 """

@@ -318,5 +318,6 @@ class T96Magnetopause:
             bentLocation = bender.evaluate(pdynScaledLocation)
             bentWarpedLocation = warper.evaluate(bentLocation)
             return unbent.apply(bentWarpedLocation)
-    
+        unbent.apply = my_apply
+
         return unbent

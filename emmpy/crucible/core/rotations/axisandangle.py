@@ -88,7 +88,7 @@ class AxisAndAngle(Rotation):
             Buffer holding the rotation matrix.
         """
         if self.angle == 0.0:
-            buffer.setToWithoutCheck(IDENTITY)
+            buffer[...] = IDENTITY
         else:
             matrix = PrivilegedRotationMatrixIJK()
             vi = rotate(I, self.axis, self.angle)

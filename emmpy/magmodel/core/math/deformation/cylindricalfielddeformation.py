@@ -123,6 +123,6 @@ class CylindricalFieldDeformation:
             tzr = (1*hzDef/(hr*1))*(dFpDr*dFzDp - dFpDp*dFzDr)
             tzp = sys.float_info.max*(dFrDp*dFzDr - dFrDr*dFzDp)
             tzz = (hrDef*1/(hr*1))*(dFrDr*dFpDp - dFrDp*dFpDr)
-            trans = MatrixIJK(trr, tpr, tzr, trp, tpp, tzp, trz, tpz, tzz)
+            trans = MatrixIJK([[trr, tpr, tzr], [trp, tpp, tzp], [trz, tpz, tzz]])
 
         return trans

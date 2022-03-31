@@ -13,7 +13,9 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ method."""
-        qadvf = QuadraticApproximationDifferentiableVectorField()
+        qadvf = QuadraticApproximationDifferentiableVectorField(
+            None, None, None, None
+        )
         self.assertIsInstance(qadvf, QuadraticApproximationDifferentiableVectorField)
 
 

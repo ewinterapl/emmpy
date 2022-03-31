@@ -7,32 +7,43 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-class QuadraticApproximationDifferentiableVectorField:
+# Import project modules.
+from emmpy.math.vectorfields.differentiablevectorfield import (
+    DifferentiableVectorField
+)
+
+
+class QuadraticApproximationDifferentiableVectorField(DifferentiableVectorField):
     """A quadratic approximation of a differentiable vector field.
 
     Attributes
     ----------
+    field : VectorField
+        Vector field to differentiate.
+    deltaI, deltaJ, deltaK : float
+        Differential distances along each dimension, for computing numerical
+        derivatives.
     """
 
-    def __init__(self):
+    def __init__(self, field, deltaI, deltaJ, deltaK):
         """Initialize a new object.
-        
+
         Parameters
         ----------
-        None
-        
+        field : VectorField
+            Vector field to differentiate.
+        deltaI, deltaJ, deltaK : float
+            Differential distances along each dimension, for computing
+            numerical derivatives.
+
         Returns
         -------
         None
         """
-
-# package crucible.core.math.vectorfields;
-
-# import static com.google.common.base.Preconditions.checkArgument;
-# import static com.google.common.base.Preconditions.checkNotNull;
-
-# import crucible.core.math.vectorspace.UnwritableVectorIJK;
-# import crucible.core.math.vectorspace.VectorIJK;
+        self.field = field
+        self.deltaI = deltaI
+        self.deltaJ = deltaJ
+        self.deltaK = deltaK
 
 # class QuadraticApproximationDifferentiableVectorField implements DifferentiableVectorField {
 

@@ -15,7 +15,9 @@ from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
     BasisVectorFieldDeformation
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
-from emmpy.math.vectorfields.differentiablevectorfield import Results
+from emmpy.math.vectorfields.differentiablevectorfield import (
+    DifferentiableVectorField, Results
+)
 
 
 # WHAT ARE THESE CONSTANTS?
@@ -25,7 +27,7 @@ RH2 = -5.2
 EPSILON = 3
 
 
-class PositionBender:
+class PositionBender(DifferentiableVectorField):
     """Compute deformation in the X-Z plane related to the dipole tilt.
 
     From Tsyganeneko's code, an implementation of Tsyganenko [1998]
@@ -69,35 +71,51 @@ class PositionBender:
         self.sinTilt = sin(dipoleTilt)
         self.rh0 = hingeDistance
 
-    @staticmethod
-    def deformBasisField(dipoleTilt, hingeDistance, undeformedField):
-        """Deform a basis vector field.
+    def evaluate(self, location, buffer):
+        """Bend the position vector.
 
-        Deform a basis vector field.
+        Bend the position vector to account for the bending of the tail field
+        in the X-Z GSM plane.
+
+        Derivation: Tsyganenko 2002-1 Eqn 13
 
         Parameters
         ----------
-        dipoleTilt : float
-            Dipole tilt angle (radians).
-        hingeDistance : float
-            ???
-        undeformedField : BasisVectorField
-            The basis vector field to deform.
+        location : VectorIJK
+            Location to evaluate the field.
+        buffer : VectorIJK
+            Buffer to hold the evaluation result.
 
         Returns
         -------
-        deformedField : BasisVectorField
-            The deformed basis vector field.
+        buffer : VectorIJK
+            Bent evaluation at location.
         """
-        # Create a PositionBender to compute the deformation.
-        deformation = PositionBender(dipoleTilt, hingeDistance)
+        (x, y, z) = location[...]
+        r2 = x**2 + y**2 + z**2
+        r = sqrt(r2)
+        z_r = z/r
 
-        # Deform the field.
-        deformedField = BasisVectorFieldDeformation(undeformedField,
-                                                    deformation)
+        # Allow the hinging distance to be a function of position
+        # See Tsy. 1998 eq. 12.
+        rh = self.rh0 + RH2*z_r**2
+        r_rh = r/rh
 
-        # Return the deformed field.
-        return deformedField
+        # Eq. 10 Tsy. 1998, Q(r) = [1+ (r/RH)^ep ]^(-1/ep)
+        Q = 1/ pow(1 + pow(r_rh, EPSILON), 1/EPSILON)
+
+        # Now compute the cosine and sine of the radial dependent tilt angle,
+        # this is Tsy. 1998 eq. 7.
+        sinTiltS = self.sinTilt*Q
+        cosTiltS = sqrt(1 - sinTiltS**2)
+
+        # The point deformation from eq. 7 in Tsy. 1998.
+        xS = x*cosTiltS - z*sinTiltS
+        yS = y
+        zS = x*sinTiltS + z*cosTiltS
+
+        buffer[...] = (xS, yS, zS)
+        return buffer
 
     def differentiate(self, location):
         """Differentiate the field at the specified Cartesian location.
@@ -182,3 +200,33 @@ class PositionBender:
                           dYsDx, dYsDy, dYsDz,
                           dZsDx, dZsDy, dZsDz)
         return results
+
+    @staticmethod
+    def deformBasisField(dipoleTilt, hingeDistance, undeformedField):
+        """Deform a basis vector field.
+
+        Deform a basis vector field.
+
+        Parameters
+        ----------
+        dipoleTilt : float
+            Dipole tilt angle (radians).
+        hingeDistance : float
+            ???
+        undeformedField : BasisVectorField
+            The basis vector field to deform.
+
+        Returns
+        -------
+        deformedField : BasisVectorField
+            The deformed basis vector field.
+        """
+        # Create a PositionBender to compute the deformation.
+        deformation = PositionBender(dipoleTilt, hingeDistance)
+
+        # Deform the field.
+        deformedField = BasisVectorFieldDeformation(undeformedField,
+                                                    deformation)
+
+        # Return the deformed field.
+        return deformedField

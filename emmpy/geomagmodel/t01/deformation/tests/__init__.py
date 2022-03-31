@@ -2,8 +2,8 @@
 
 Modules
 -------
-test_PositionBender.py
-test_TwistWarpFfunction.py
+test_positionbender.py
+test_twistwarpffunction.py
 
 Packages
 --------

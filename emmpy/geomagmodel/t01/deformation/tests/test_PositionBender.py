@@ -21,14 +21,18 @@ class TestBuilder(unittest.TestCase):
         self.assertAlmostEqual(pb.sinTilt, sin(dipoleTilt))
         self.assertAlmostEqual(pb.rh0, hingeDistance)
 
-    def test_deformBasisField(self):
-        """Test the deformBasisField method."""
+    def test_evaluate(self):
+        """Test the evaluate method."""
         pass
 
     def test_differentiate(self):
         """Test the differentiate method."""
         pass
 
+    def test_deformBasisField(self):
+        """Test the deformBasisField method."""
+        pass
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

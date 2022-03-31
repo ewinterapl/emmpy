@@ -315,7 +315,8 @@ class T96Magnetopause:
         # Create the custom apply method.
         def my_apply(location):
             pdynScaledLocation = pdynScaling*VectorIJK(location)
-            bentLocation = bender.evaluate(pdynScaledLocation)
+            buffer = VectorIJK()
+            bentLocation = bender.evaluate(pdynScaledLocation, buffer)
             bentWarpedLocation = warper.evaluate(bentLocation)
             return unbent.apply(bentWarpedLocation)
         unbent.apply = my_apply

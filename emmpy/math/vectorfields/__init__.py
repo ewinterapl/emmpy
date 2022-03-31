@@ -8,6 +8,7 @@ cartesianvectorfield.py
 cartesianvectorfieldvalue.py
 cylindricalvectorfield.py
 cylindricalvectorfieldvalue.py
+differentiablevectorfield.py
 quadraticapproximationdifferentiablevectorfield.py
 sphericalvectorfield.py
 sphericalvectorfieldvalue.py

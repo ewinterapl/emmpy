@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
+from emmpy.math.vectorfields.differentiablevectorfield import (
     DifferentiableVectorField
 )
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
@@ -68,5 +68,5 @@ class TestBuilder(unittest.TestCase):
             DifferentiableVectorField.differentiate(None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

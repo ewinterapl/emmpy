@@ -11,13 +11,11 @@ from math import sin, sqrt
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorfields.differentiablevectorfield import (
-    Results
-)
 from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
     BasisVectorFieldDeformation
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK
+from emmpy.math.vectorfields.differentiablevectorfield import Results
 
 
 # WHAT ARE THESE CONSTANTS?

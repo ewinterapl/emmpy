@@ -13,8 +13,9 @@ class TestBuilder(unittest.TestCase):
 
     def test___init__(self):
         """Test the __init__ method."""
-        ecdf = EarthCurrentDensityField()
+        ecdf = EarthCurrentDensityField(None, None)
         self.assertIsInstance(ecdf, EarthCurrentDensityField)
+        self.assertIsNone(ecdf.jField)
 
 
 if __name__ == "__main__":

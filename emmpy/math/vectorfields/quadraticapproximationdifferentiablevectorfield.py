@@ -8,8 +8,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 # Import project modules.
+from emmpy.math.coordinates.vectorijk import VectorIJK
 from emmpy.math.vectorfields.differentiablevectorfield import (
-    DifferentiableVectorField
+    DifferentiableVectorField, Results
 )
 
 
@@ -45,180 +46,273 @@ class QuadraticApproximationDifferentiableVectorField(DifferentiableVectorField)
         self.deltaJ = deltaJ
         self.deltaK = deltaK
 
-# class QuadraticApproximationDifferentiableVectorField implements DifferentiableVectorField {
+    def differentiateFiDi(self, location):
+        """Compute derivative of x-component of field wrt x.
+        
+        Compute derivative of x-component of field wrt x.
 
-#   private final VectorField field;
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of x-component of field wrt x.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i + self.deltaI, j, k)
+        sub = VectorIJK(i - self.deltaI, j, k)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaI*(v_add.i - v_sub.i)
+        return d
 
-#   private final double deltaI;
-#   private final double deltaJ;
-#   private final double deltaK;
+    def differentiateFjDi(self, location):
+        """Compute derivative of y-component of field wrt x.
+        
+        Compute derivative of y-component of field wrt x.
 
-#   public QuadraticApproximationDifferentiableVectorField(VectorField field, double deltaI,
-#       double deltaJ, double deltaK) {
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of y-component of field wrt x.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i + self.deltaI, j, k)
+        sub = VectorIJK(i - self.deltaI, j, k)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaI*(v_add.j - v_sub.j)
+        return d
 
-#     this.field = checkNotNull(field);
-#     checkArgument(deltaI > 0.0 && deltaJ > 0.0 && deltaK > 0.0);
+    def differentiateFkDi(self, location):
+        """Compute derivative of z-component of field wrt x.
+        
+        Compute derivative of z-component of field wrt x.
 
-#     this.deltaI = deltaI;
-#     this.deltaJ = deltaJ;
-#     this.deltaK = deltaK;
-#   }
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of z-component of field wrt x.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i + self.deltaI, j, k)
+        sub = VectorIJK(i - self.deltaI, j, k)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaI*(v_add.k - v_sub.k)
+        return d
 
-#   @Override
-#   public double differentiateFiDi(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+    def differentiateFiDj(self, location):
+        """Compute derivative of x-component of field wrt y.
+        
+        Compute derivative of x-component of field wrt y.
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i + deltaI, j, k);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i - deltaI, j, k);
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of x-component of field wrt y.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i, j + self.deltaJ, k)
+        sub = VectorIJK(i, j - self.deltaJ, k)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaJ*(v_add.i - v_sub.i)
+        return d
 
-#     return 0.5 / deltaI * (field.evaluate(add).getI() - field.evaluate(sub).getI());
-#   }
+    def differentiateFjDj(self, location):
+        """Compute derivative of y-component of field wrt y.
+        
+        Compute derivative of y-component of field wrt y.
 
-#   @Override
-#   public double differentiateFjDi(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of y-component of field wrt y.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i, j + self.deltaJ, k)
+        sub = VectorIJK(i, j - self.deltaJ, k)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaJ*(v_add.j - v_sub.j)
+        return d
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i + deltaI, j, k);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i - deltaI, j, k);
+    def differentiateFkDj(self, location):
+        """Compute derivative of z-component of field wrt y.
+        
+        Compute derivative of z-component of field wrt y.
 
-#     return 0.5 / deltaI * (field.evaluate(add).getJ() - field.evaluate(sub).getJ());
-#   }
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of z-component of field wrt y.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i, j + self.deltaJ, k)
+        sub = VectorIJK(i, j - self.deltaJ, k)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaJ*(v_add.k - v_sub.k)
+        return d
 
-#   @Override
-#   public double differentiateFkDi(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+    def differentiateFiDk(self, location):
+        """Compute derivative of x-component of field wrt z.
+        
+        Compute derivative of x-component of field wrt z.
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i + deltaI, j, k);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i - deltaI, j, k);
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of x-component of field wrt z.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i, j, k + self.deltaK)
+        sub = VectorIJK(i, j, k - self.deltaK)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaK*(v_add.i - v_sub.i)
+        return d
 
-#     return 0.5 / deltaI * (field.evaluate(add).getK() - field.evaluate(sub).getK());
-#   }
+    def differentiateFjDk(self, location):
+        """Compute derivative of y-component of field wrt z.
+        
+        Compute derivative of y-component of field wrt z.
 
-#   @Override
-#   public double differentiateFiDj(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of y-component of field wrt z.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i, j, k + self.deltaK)
+        sub = VectorIJK(i, j, k - self.deltaK)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaK*(v_add.j - v_sub.j)
+        return d
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i, j + deltaJ, k);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i, j - deltaJ, k);
+    def differentiateFkDk(self, location):
+        """Compute derivative of z-component of field wrt z.
+        
+        Compute derivative of z-component of field wrt z.
 
-#     return 0.5 / deltaJ * (field.evaluate(add).getI() - field.evaluate(sub).getI());
-#   }
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate derivative.
+        
+        Returns
+        -------
+        d : float
+            Derivative of z-component of field wrt z.
+        """
+        (i, j, k) = location[:]
+        add = VectorIJK(i, j, k + self.deltaK)
+        sub = VectorIJK(i, j, k - self.deltaK)
+        v_add = self.field.evaluate(add)
+        v_sub = self.field.evaluate(sub)
+        d = 0.5/self.deltaK*(v_add.k - v_sub.k)
+        return d
 
-#   @Override
-#   public double differentiateFjDj(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+    def evaluate(self, location):
+        """Compute the vector field value at location.
+        
+        Compute the vector field value at location.
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i, j + deltaJ, k);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i, j - deltaJ, k);
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to evaluate.
+        
+        Returns
+        -------
+        v : VectorIJK
+            Vector field value at location.
+        """
+        v = self.field.evaluate(location)
+        return v
 
-#     return 0.5 / deltaJ * (field.evaluate(add).getJ() - field.evaluate(sub).getJ());
-#   }
+    def differentiate(self, location):
+        """Compute the field value and Jacobian at location.
+        
+        Compute the field value and Jacobian at location.
+        
+        Parameters
+        ----------
+        location : VectorIJK
+            Location to compute Jacobian.
+        
+        Returns
+        -------
+        results : Results
+            Field value and Jacobian at location.
+        """
+        (x, y, z) = location[...]
 
-#   @Override
-#   public double differentiateFkDj(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+        f = self.field.evaluate(location)
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i, j + deltaJ, k);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i, j - deltaJ, k);
+        addX = VectorIJK(x + self.deltaI, y, z)
+        subX = VectorIJK(x - self.deltaI, y, z)
+        addY = VectorIJK(x, y + self.deltaJ, z)
+        subY = VectorIJK(x, y - self.deltaJ, z)
+        addZ = VectorIJK(x, y, z + self.deltaK)
+        subZ = VectorIJK(x, y, z - self.deltaK)
 
-#     return 0.5 / deltaJ * (field.evaluate(add).getK() - field.evaluate(sub).getK());
-#   }
+        fieldAddX = self.field.evaluate(addX)
+        fieldSubX = self.field.evaluate(subX)
+        fieldAddY = self.field.evaluate(addY)
+        fieldSubY = self.field.evaluate(subY)
+        fieldAddZ = self.field.evaluate(addZ)
+        fieldSubZ = self.field.evaluate(subZ)
 
-#   @Override
-#   public double differentiateFiDk(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
+        dFxDx = 0.5/self.deltaI*(fieldAddX.i - fieldSubX.i)
+        dFyDx = 0.5/self.deltaI*(fieldAddX.j - fieldSubX.j)
+        dFzDx = 0.5/self.deltaI*(fieldAddX.k - fieldSubX.k)
+        dFxDy = 0.5/self.deltaJ*(fieldAddY.i - fieldSubY.i)
+        dFyDy = 0.5/self.deltaJ*(fieldAddY.j - fieldSubY.j)
+        dFzDy = 0.5/self.deltaJ*(fieldAddY.k - fieldSubY.k)
+        dFxDz = 0.5/self.deltaK*(fieldAddZ.i - fieldSubZ.i)
+        dFyDz = 0.5/self.deltaK*(fieldAddZ.j - fieldSubZ.j)
+        dFzDz = 0.5/self.deltaK*(fieldAddZ.k - fieldSubZ.k)
 
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i, j, k + deltaK);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i, j, k - deltaK);
-
-#     return 0.5 / deltaK * (field.evaluate(add).getI() - field.evaluate(sub).getI());
-#   }
-
-#   @Override
-#   public double differentiateFjDk(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
-
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i, j, k + deltaK);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i, j, k - deltaK);
-
-#     return 0.5 / deltaK * (field.evaluate(add).getJ() - field.evaluate(sub).getJ());
-#   }
-
-#   @Override
-#   public double differentiateFkDk(UnwritableVectorIJK location) {
-#     double i = location.getI();
-#     double j = location.getJ();
-#     double k = location.getK();
-
-#     UnwritableVectorIJK add = new UnwritableVectorIJK(i, j, k + deltaK);
-#     UnwritableVectorIJK sub = new UnwritableVectorIJK(i, j, k - deltaK);
-
-#     return 0.5 / deltaK * (field.evaluate(add).getK() - field.evaluate(sub).getK());
-#   }
-
-#   @Override
-#   public VectorIJK evaluate(UnwritableVectorIJK location, VectorIJK buffer) {
-#     return field.evaluate(location, buffer);
-#   }
-
-#   @Override
-#   public Results differentiate(UnwritableVectorIJK location) {
-
-#     double x = location.getI();
-#     double y = location.getJ();
-#     double z = location.getK();
-
-#     UnwritableVectorIJK f = field.evaluate(location);
-
-#     UnwritableVectorIJK addX = new UnwritableVectorIJK(x + deltaI, y, z);
-#     UnwritableVectorIJK subX = new UnwritableVectorIJK(x - deltaI, y, z);
-
-#     UnwritableVectorIJK addY = new UnwritableVectorIJK(x, y + deltaJ, z);
-#     UnwritableVectorIJK subY = new UnwritableVectorIJK(x, y - deltaJ, z);
-
-#     UnwritableVectorIJK addZ = new UnwritableVectorIJK(x, y, z + deltaK);
-#     UnwritableVectorIJK subZ = new UnwritableVectorIJK(x, y, z - deltaK);
-
-#     UnwritableVectorIJK fieldAddX = field.evaluate(addX);
-#     UnwritableVectorIJK fieldSubX = field.evaluate(subX);
-
-#     UnwritableVectorIJK fieldAddY = field.evaluate(addY);
-#     UnwritableVectorIJK fieldSubY = field.evaluate(subY);
-
-#     UnwritableVectorIJK fieldAddZ = field.evaluate(addZ);
-#     UnwritableVectorIJK fieldSubZ = field.evaluate(subZ);
-
-#     double dFxDx = 0.5 / deltaI * (fieldAddX.getI() - fieldSubX.getI());
-#     double dFyDx = 0.5 / deltaI * (fieldAddX.getJ() - fieldSubX.getJ());
-#     double dFzDx = 0.5 / deltaI * (fieldAddX.getK() - fieldSubX.getK());
-
-#     double dFxDy = 0.5 / deltaJ * (fieldAddY.getI() - fieldSubY.getI());
-#     double dFyDy = 0.5 / deltaJ * (fieldAddY.getJ() - fieldSubY.getJ());
-#     double dFzDy = 0.5 / deltaJ * (fieldAddY.getK() - fieldSubY.getK());
-
-#     double dFxDz = 0.5 / deltaK * (fieldAddZ.getI() - fieldSubZ.getI());
-#     double dFyDz = 0.5 / deltaK * (fieldAddZ.getJ() - fieldSubZ.getJ());
-#     double dFzDz = 0.5 / deltaK * (fieldAddZ.getK() - fieldSubZ.getK());
-
-#     Results results = new Results(f, dFxDx, dFxDy, dFxDz, dFyDx, dFyDy, dFyDz, dFzDx, dFzDy, dFzDz);
-
-#     return results;
-#   }
-
-# }
+        results = Results(f, dFxDx, dFxDy, dFxDz, dFyDx, dFyDy, dFyDz, dFzDx, dFzDy, dFzDz);
+        return results

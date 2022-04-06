@@ -23,6 +23,10 @@ from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield 
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 
 
+# Module constants
+xL = 20.0
+
+
 class TwistWarpFfunction:
     """A polar angle transformation for twisting and warping.
 
@@ -75,44 +79,43 @@ class TwistWarpFfunction:
         self.twistParam = twistParam
         self.sinDipoleTilt = sin(dipoleTilt)
 
-    @staticmethod
-    def deformBasisField(dipoleTilt, warpParam, twistParam, undeformedField):
-        """Deform the basis field.
-
-        Deform the basis field.
-
+    def evaluate(self, location, buffer):
+        """Evaluate the function at the specified location.
+        
         Parameters
         ----------
-        dipoleTilt : float
-            dipoleTilt
-        warpParam : float
-            warpParam
-        twistParam : float
-            twistParam
-        undeformedField : BasisVectorField
-            undeformedField
+        location : VectorIJK
+            Location of evaluation.
+        buffer : VectorIJK
+            Buffer to hold result.
         
         Returns
         -------
-        deformedField : BasisVectorField
-            deformedField
+        buffer : VectorIJK
+            Result of computation.
         """
-        # Convert the supplied undeformed field to cylindrical coordinates.
-        undeformedFieldCyl = CylindricalCoordsXAligned.convertBasisField(
-            undeformedField)
+        # Convert the Cartesian position to cylindrical.
+        locCyl = CylindricalCoordsXAligned.convert(location)
 
-        # Construct the deformation.
-        deformation = TwistWarpFfunction(warpParam, twistParam, dipoleTilt)
+        # Evaluate the cylindrical vector field value for the given position.
+        x = locCyl.z
+        rho = locCyl.rho
+        if rho == 0.0:
+            rho = 1.0E-14
+        rho2 = rho**2
+        phi = locCyl.phi
+        cosPhi = cos(phi)
+        rho4L4 = rho/(rho2**2 + xL**4)
 
-        # Deform the cylindrical field.
-        deformedFieldCyl = CylindricalBasisFieldDeformation(
-            undeformedFieldCyl, deformation)
+        # Calculate F (the adjusted phi measurement) and its derivatives.
+        F = phi + self.warpParam*rho2*rho4L4*cosPhi*self.sinDipoleTilt + self.twistParam*x
 
-        # Convert the deformed field back to Cartesian coordinates.
-        deformedField = CylindricalCoordsXAligned.convertBasisField(
-            deformedFieldCyl)
+        cylValue =  CylindricalVector(rho, F, x)
 
-        return deformedField
+        # Convert the vector field value to Cartesian.
+        value = CylindricalCoordsXAligned.convert(cylValue);
+        buffer[...] = value[...]
+        return buffer
 
     def differentiate(self, location):
         """Evaluate the twist and warp transformation of the polar angle.
@@ -180,3 +183,42 @@ class TwistWarpFfunction:
             dF_dRho, dF_dPhi, dF_dx,
             dx_dRho, dx_dPhi, dx_dx
         )
+
+    @staticmethod
+    def deformBasisField(dipoleTilt, warpParam, twistParam, undeformedField):
+        """Deform the basis field.
+
+        Deform the basis field.
+
+        Parameters
+        ----------
+        dipoleTilt : float
+            dipoleTilt
+        warpParam : float
+            warpParam
+        twistParam : float
+            twistParam
+        undeformedField : BasisVectorField
+            undeformedField
+        
+        Returns
+        -------
+        deformedField : BasisVectorField
+            deformedField
+        """
+        # Convert the supplied undeformed field to cylindrical coordinates.
+        undeformedFieldCyl = CylindricalCoordsXAligned.convertBasisField(
+            undeformedField)
+
+        # Construct the deformation.
+        deformation = TwistWarpFfunction(warpParam, twistParam, dipoleTilt)
+
+        # Deform the cylindrical field.
+        deformedFieldCyl = CylindricalBasisFieldDeformation(
+            undeformedFieldCyl, deformation)
+
+        # Convert the deformed field back to Cartesian coordinates.
+        deformedField = CylindricalCoordsXAligned.convertBasisField(
+            deformedFieldCyl)
+
+        return deformedField

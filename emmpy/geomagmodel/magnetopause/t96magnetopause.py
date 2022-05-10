@@ -317,7 +317,7 @@ class T96Magnetopause:
             pdynScaledLocation = pdynScaling*VectorIJK(location)
             buffer = VectorIJK()
             bentLocation = bender.evaluate(pdynScaledLocation, buffer)
-            bentWarpedLocation = warper.evaluate(bentLocation)
+            bentWarpedLocation = warper.evaluate(bentLocation, buffer)
             return unbent.apply(bentWarpedLocation)
         unbent.apply = my_apply
 

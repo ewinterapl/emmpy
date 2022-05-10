@@ -48,7 +48,7 @@ class DifferentiableVectorField(VectorField):
         AbstractMethodException
             When invoked.
         """
-        raise AbstractMethodException
+        # raise AbstractMethodException
 
     def differentiateFiDi(self, location):
         """Compute dFi/dxi.

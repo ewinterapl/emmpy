@@ -96,7 +96,7 @@ def curl(field):
         dFzDx = results.dFzDx
         dFyDx = results.dFyDx
         dFxDy = results.dFxDy
-        buffer[:] = dFzDy - dFyDz, dFxDz - dFzDx, dFyDx - dFxDy
+        buffer[:] = (dFzDy - dFyDz, dFxDz - dFzDx, dFyDx - dFxDy)
         return buffer
 
     vf.evaluate = my_evaluate

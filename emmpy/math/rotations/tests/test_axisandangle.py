@@ -3,8 +3,8 @@
 
 import unittest
 
-from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
-from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
+from emmpy.math.rotations.axisandangle import AxisAndAngle
+from emmpy.math.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

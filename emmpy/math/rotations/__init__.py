@@ -2,6 +2,9 @@
 
 Modules
 -------
+axisandangle.py
+privilegedrotationmatrix.py
+rotation.py
 rotationmatrix2d.py
 
 Packages

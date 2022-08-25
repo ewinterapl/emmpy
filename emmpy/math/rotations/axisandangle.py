@@ -14,10 +14,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.math.vectorspace.rotationmatrixijk import (
     IDENTITY
 )
-from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (
+from emmpy.math.rotations.privilegedrotationmatrixijk import (
     PrivilegedRotationMatrixIJK
 )
-from emmpy.crucible.core.rotations.rotation import Rotation
+from emmpy.math.rotations.rotation import Rotation
 from emmpy.math.coordinates.vectorijk import  (
     I, J, K, VectorIJK, rotate
 )

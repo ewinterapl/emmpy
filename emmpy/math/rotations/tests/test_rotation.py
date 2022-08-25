@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.rotations.rotation import Rotation
+from emmpy.math.rotations.rotation import Rotation
 from emmpy.exceptions.abstractmethodexception import AbstractMethodException
 
 

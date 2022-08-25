@@ -13,7 +13,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
-from emmpy.crucible.core.rotations.axisandangle import AxisAndAngle
+from emmpy.math.rotations.axisandangle import AxisAndAngle
 
 from emmpy.magmodel.core.math.alternatecartesianharmonicfield import (
     AlternateCartesianHarmonicField

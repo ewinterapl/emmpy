@@ -7,6 +7,5 @@ Modules
 
 Packages
 --------
-core
 crust
 """

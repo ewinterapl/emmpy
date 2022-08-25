@@ -2,7 +2,7 @@
 
 Modules
 -------
-test_TS07DModelBuilder.py
+test_ts07dmodelbuilder.py
 
 Packages
 --------

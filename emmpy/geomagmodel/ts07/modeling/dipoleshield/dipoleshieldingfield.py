@@ -13,10 +13,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 from math import cos, sin
 
 import emmpy.math.vectorfields.vectorfields as vectorfields
-from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
+from emmpy.magmodel.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )
-from emmpy.magmodel.core.math.trigparity import EVEN
+from emmpy.magmodel.math.trigparity import EVEN
 from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import ArrayCoefficientExpansion2D
 from emmpy.math.vectorfields.vectorfield import scaleLocation

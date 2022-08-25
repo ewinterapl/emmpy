@@ -9,13 +9,13 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.cylindricalharmonicfield import (
+from emmpy.magmodel.math.cylindricalharmonicfield import (
     CylindricalHarmonicField
 )
-from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
-from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
-from emmpy.magmodel.core.math.trigparity import EVEN, ODD
-from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+from emmpy.magmodel.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.magmodel.math.trigparity import EVEN, ODD
+from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (

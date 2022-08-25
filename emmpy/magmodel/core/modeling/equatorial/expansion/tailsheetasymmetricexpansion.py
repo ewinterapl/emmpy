@@ -13,7 +13,7 @@ from math import atan2, cos, exp, sin, sqrt
 
 from scipy.special import jv
 
-from emmpy.magmodel.core.math.trigparity import ODD
+from emmpy.magmodel.math.trigparity import ODD
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.vectorij import VectorIJ
 from emmpy.math.coordinates.vectorijk import VectorIJK

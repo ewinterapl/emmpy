@@ -5,10 +5,10 @@ from math import atan2, cos, pi, sin, sqrt
 from emmpy.math.coordinates.cartesianvector import CartesianVector
 
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
-from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.magmodel.core.math.vectorfields.cylindricalbasisvectorfield import (
+from emmpy.magmodel.math.vectorfields.cylindricalbasisvectorfield import (
     CylindricalBasisVectorField
 )
 from emmpy.math.coordinates.cartesianvector import CartesianVector

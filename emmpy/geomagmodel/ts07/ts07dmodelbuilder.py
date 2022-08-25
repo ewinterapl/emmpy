@@ -30,7 +30,7 @@ from emmpy.geomagmodel.ts07.modeling.equatorial.ts07equatorialmagneticfieldbuild
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.ts07dfieldalignedmagneticfield import (
     Ts07DFieldAlignedMagneticField
 )
-from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
+from emmpy.magmodel.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

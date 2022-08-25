@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, sin, sqrt
 
-from emmpy.magmodel.core.math.vectorfields.differentiablesphericalvectorfield import (
+from emmpy.magmodel.math.vectorfields.differentiablesphericalvectorfield import (
     Results
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector

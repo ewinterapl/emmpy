@@ -10,7 +10,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 import emmpy.math.vectorfields.vectorfields as vectorfields
-from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
+from emmpy.magmodel.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
 from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (

@@ -11,8 +11,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, sin
 
-from emmpy.magmodel.core.math.trigparity import ODD
-from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
+from emmpy.magmodel.math.trigparity import ODD
+from emmpy.magmodel.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
 from emmpy.magmodel.core.modeling.fac.tfunction import TFunction

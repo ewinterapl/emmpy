@@ -16,8 +16,8 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentbuilder imp
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.fieldalignedcurrentshiedingbuilder import (
     FieldAlignedCurrentShiedingBuilder
 )
-from emmpy.magmodel.core.math.trigparity import EVEN, ODD
-from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+from emmpy.magmodel.math.trigparity import EVEN, ODD
+from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

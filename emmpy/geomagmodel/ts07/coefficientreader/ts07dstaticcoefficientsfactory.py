@@ -15,8 +15,8 @@ import os
 from emmpy.geomagmodel.ts07.coefficientreader.thincurrentsheetshieldingcoefficients import (
     ThinCurrentSheetShieldingCoefficients
 )
-from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
-from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.magmodel.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D

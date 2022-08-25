@@ -10,10 +10,10 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
+from emmpy.magmodel.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )
-from emmpy.magmodel.core.math.vectorfields.sphericalvectorfield import (
+from emmpy.magmodel.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

@@ -21,7 +21,7 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.smoothedconicalcurrentmagnetic
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.stretchedfield import (
     StretchedField
 )
-from emmpy.magmodel.core.math.deformation.sphericalfielddeformation import (
+from emmpy.magmodel.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )
 from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (

@@ -11,7 +11,7 @@ from math import sin, sqrt
 
 import numpy as np
 
-from emmpy.magmodel.core.math.deformation.basisvectorfielddeformation import (
+from emmpy.magmodel.math.deformation.basisvectorfielddeformation import (
     BasisVectorFieldDeformation
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

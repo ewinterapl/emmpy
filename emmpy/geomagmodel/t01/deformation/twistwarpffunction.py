@@ -14,10 +14,10 @@ from math import cos, sin
 from emmpy.math.coordinates.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
-from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation import (
+from emmpy.magmodel.math.deformation.cylindricalbasisfielddeformation import (
     CylindricalBasisFieldDeformation
 )
-from emmpy.magmodel.core.math.vectorfields.differentiablecylindricalvectorfield import (
+from emmpy.magmodel.math.vectorfields.differentiablecylindricalvectorfield import (
     Results
 )
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector

@@ -12,9 +12,9 @@ Eric Winter (eric.winter@jhuapl.edu)
 from emmpy.geomagmodel.ts07.modeling.equatorial.thinasymmetriccurrentsheetbasisvectorshieldingfield import (
     ThinAsymmetricCurrentSheetBasisVectorShieldingField
 )
-from emmpy.magmodel.core.math.expansions.arrayexpansion1d import ArrayExpansion1D
-from emmpy.magmodel.core.math.expansions.arrayexpansion2d import ArrayExpansion2D
-from emmpy.magmodel.core.math.vectorfields.basisvectorfield import (
+from emmpy.magmodel.math.expansions.arrayexpansion1d import ArrayExpansion1D
+from emmpy.magmodel.math.expansions.arrayexpansion2d import ArrayExpansion2D
+from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
 from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (

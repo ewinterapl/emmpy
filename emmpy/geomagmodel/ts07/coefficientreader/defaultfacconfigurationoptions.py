@@ -15,7 +15,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.facregion import (
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.facconfigurationoptions import (
     FacConfigurationOptions
 )
-from emmpy.magmodel.core.math.trigparity import EVEN, ODD
+from emmpy.magmodel.math.trigparity import EVEN, ODD
 
 
 class DefaultFacConfigurationOptions:

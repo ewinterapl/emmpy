@@ -22,7 +22,7 @@ from emmpy.geomagmodel.t01.deformation.twistwarpffunction import (
 from emmpy.geomagmodel.ts07.modeling.equatorial.shieldedthincurrentsheetfield import (
     ShieldedThinCurrentSheetField
 )
-from emmpy.magmodel.core.math.vectorfields.basisvectorfields import (
+from emmpy.magmodel.math.vectorfields.basisvectorfields import (
     BasisVectorFields
 )
 from emmpy.utilities.nones import nones

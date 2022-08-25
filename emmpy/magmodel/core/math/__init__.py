@@ -10,7 +10,6 @@ trigparity.py
 
 Packages
 --------
-coords
 deformation
 expansions
 tests

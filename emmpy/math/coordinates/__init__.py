@@ -9,6 +9,7 @@ Modules
 -------
 cartesianvector2d.py
 cartesianvector3d.py
+cylindricalcoordsxaligned.py
 cylindricalvector.py
 latitudinalvector.py
 polarvector.py

@@ -5,7 +5,7 @@ from emmpy.math.coordinates.cartesianvector import CartesianVector
 from emmpy.math.coordinates.cylindricalvector import CylindricalVector
 import unittest
 
-from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
+from emmpy.math.coordinates.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

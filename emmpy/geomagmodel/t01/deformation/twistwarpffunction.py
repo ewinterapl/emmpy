@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, sin
 
-from emmpy.magmodel.core.math.coords.cylindricalcoordsxaligned import (
+from emmpy.math.coordinates.cylindricalcoordsxaligned import (
     CylindricalCoordsXAligned
 )
 from emmpy.magmodel.core.math.deformation.cylindricalbasisfielddeformation import (

@@ -4,6 +4,7 @@ Modules
 -------
 test_cartesianvector2d.py
 test_cartesianvector3d.py
+test_cylindricalcoordsxaligned.py
 test_cylindricalvector.py
 test_latitudinalvector.py
 test_polarvector.py

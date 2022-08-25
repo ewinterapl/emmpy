@@ -2,11 +2,11 @@
 
 Modules
 -------
-test_AlternateCartesianHarmonicField.py
-test_CartesianHarmonicField.py
-test_CylindricalHarmonicField.py
-test_PerpendicularAndParallelCartesianHarmonicField.py
-test_TrigParity.py
+test_alternatecartesianharmonicfield.py
+test_cartesianharmonicfield.py
+test_cylindricalharmonicfield.py
+test_perpendicularandparallelcartesianharmonicfield.py
+test_trigparity.py
 
 Packages
 --------

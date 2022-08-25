@@ -5,5 +5,6 @@ Modules
 
 Packages
 --------
-core
+math
+modeling
 """

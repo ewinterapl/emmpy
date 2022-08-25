@@ -2,16 +2,16 @@
 
 Modules
 -------
-test_DefaultFacConfigurationOptions.py
-test_FacRegion.py
-test_ThinCurrentSheetShieldingCoefficients.py
-test_TS07DStaticCoefficientsFactory.py
-test_TS07DVariableCoefficients.py
-test_TS07DVariableCoefficientsUtils.py
-test_Ts07EquatorialLinearCoefficients.py
-test_Ts07EquatorialVariableCoefficients.py
-test_Ts07FacVariableCoefficients.py
-test_Ts07NonLinearParameters.py
+test_defaultfacconfigurationoptions.py
+test_facregion.py
+test_thincurrentsheetshieldingcoefficients.py
+test_ts07dstaticcoefficientsfactory.py
+test_ts07dvariablecoefficients.py
+test_ts07dvariablecoefficientsutils.py
+test_ts07equatoriallinearcoefficients.py
+test_ts07equatorialvariablecoefficients.py
+test_ts07facvariablecoefficients.py
+test_ts07nonlinearparameters.py
 
 Packages
 --------

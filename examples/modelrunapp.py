@@ -5,7 +5,7 @@ import sys
 
 import numpy as np
 
-from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+from emmpy.math.vectorfields.differentiablescalarfieldij import (
     DifferentiableScalarFieldIJ
 )
 from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils import (

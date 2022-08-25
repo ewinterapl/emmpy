@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+from emmpy.math.vectorfields.differentiablescalarfieldij import (
     DifferentiableScalarFieldIJ
 )
 from emmpy.math.vectors.vector2d import Vector2D

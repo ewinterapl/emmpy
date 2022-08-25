@@ -10,7 +10,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.crust.vectorfieldsij.differentiablescalarfieldij import (
+from emmpy.math.vectorfields.differentiablescalarfieldij import (
     DifferentiableScalarFieldIJ
 )
 from emmpy.geomagmodel.t01.deformation.positionbender import (

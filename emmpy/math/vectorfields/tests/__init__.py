@@ -6,6 +6,7 @@ test_cartesianvectorfield.py
 test_cartesianvectorfieldvalue.py
 test_cylindricalvectorfield.py
 test_cylindricalvectorfieldvalue.py
+test_differentiablescalarfieldij.py
 test_differentiablevectorfield.py
 test_quadraticapproximationdifferentiablevectorfield.py
 test_sphericalvectorfield.py

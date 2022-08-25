@@ -9,7 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
+from emmpy.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
 

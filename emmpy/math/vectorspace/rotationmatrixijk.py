@@ -9,7 +9,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-from emmpy.crucible.core.math.vectorspace.internaloperations import (
+from emmpy.math.vectorspace.internaloperations import (
     checkRotation
 )
 from emmpy.math.matrices.matrixijk import MatrixIJK

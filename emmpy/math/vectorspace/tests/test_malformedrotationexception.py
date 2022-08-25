@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
+from emmpy.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
 

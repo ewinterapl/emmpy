@@ -1,14 +1,14 @@
 """Tests for the internaloperations module."""
 
 
-from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import RotationMatrixIJK
+from emmpy.math.vectorspace.rotationmatrixijk import RotationMatrixIJK
 from math import cos, pi, sin
 import unittest
 
 from emmpy.crucible.core.math.vectorspace.internaloperations import (
     checkRotation
 )
-from emmpy.crucible.core.math.vectorspace.malformedrotationexception import (
+from emmpy.math.vectorspace.malformedrotationexception import (
     MalformedRotationException
 )
 

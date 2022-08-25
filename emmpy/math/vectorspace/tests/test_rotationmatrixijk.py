@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 
-from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
+from emmpy.math.vectorspace.rotationmatrixijk import (
     RotationMatrixIJK
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

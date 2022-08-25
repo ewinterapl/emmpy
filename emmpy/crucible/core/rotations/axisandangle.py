@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 # from math import atan2, pi
 
-from emmpy.crucible.core.math.vectorspace.rotationmatrixijk import (
+from emmpy.math.vectorspace.rotationmatrixijk import (
     IDENTITY
 )
 from emmpy.crucible.core.rotations.privilegedrotationmatrixijk import (

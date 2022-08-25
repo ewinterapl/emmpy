@@ -1,6 +1,6 @@
 import unittest
 
-from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
+from emmpy.magmodel.math.chebysheviteration import ChebyshevIteration
 
 
 class TestBuilder(unittest.TestCase):

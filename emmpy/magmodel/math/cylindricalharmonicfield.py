@@ -14,7 +14,7 @@ from math import cosh, sinh
 import numpy as np
 from scipy.special import jv
 
-from emmpy.magmodel.core.chebysheviteration import ChebyshevIteration
+from emmpy.magmodel.math.chebysheviteration import ChebyshevIteration
 from emmpy.magmodel.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField

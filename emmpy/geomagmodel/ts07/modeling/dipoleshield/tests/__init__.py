@@ -2,7 +2,7 @@
 
 Modules
 -------
-test_DipoleShieldingField.py
+test_dipoleshieldingfield.py
 
 Packages
 --------

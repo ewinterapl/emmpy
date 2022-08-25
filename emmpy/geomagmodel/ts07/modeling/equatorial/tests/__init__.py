@@ -2,9 +2,9 @@
 
 Modules
 -------
-test_ShieldedThinCurrentSheetField.py
-test_ThinAsymmetricCurrentSheetBasisVectorShieldingField.py
-test_Ts07EquatorialMagneticFieldBuilder.py
+test_shieldedthincurrentsheetfield.py
+test_thinasymmetriccurrentsheetbasisvectorshieldingfield.py
+test_ts07equatorialmagneticfieldbuilder.py
 
 Packages
 --------

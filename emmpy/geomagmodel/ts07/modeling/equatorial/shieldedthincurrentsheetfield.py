@@ -17,10 +17,10 @@ from emmpy.magmodel.math.expansions.arrayexpansion2d import ArrayExpansion2D
 from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
+from emmpy.magmodel.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
     ThinAsymmetricCurrentSheetBasisVectorField
 )
 

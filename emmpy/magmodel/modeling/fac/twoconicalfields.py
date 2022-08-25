@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 
 import emmpy.math.vectorfields.vectorfields as vectorfields
-from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
+from emmpy.magmodel.modeling.fac.xyplanereflectedfield import (
     XYPlaneReflectedField
 )
 from emmpy.math.vectorfields.vectorfield import (

@@ -1,4 +1,4 @@
-"""Python port of Java classes from the magmodel.core.modeling.fac hierarchy.
+"""Python port of Java classes from the magmodel.modeling.fac hierarchy.
 
 Modules
 -------

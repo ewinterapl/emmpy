@@ -1,4 +1,4 @@
-"""Tests for Python port of Java classes from the magmodel.core.modeling.equatorial.expansions hierarchy.
+"""Tests for Python port of Java classes from the magmodel.modeling.equatorial.expansions hierarchy.
 
 Modules
 -------

@@ -12,10 +12,10 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07dvariablecoefficientsutils imp
     TS07DVariableCoefficientsUtils
 )
 from emmpy.geomagmodel.ts07.ts07dmodelbuilder import TS07DModelBuilder
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
+from emmpy.magmodel.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
     ThinAsymmetricCurrentSheetBasisVectorField
 )
 from emmpy.math.coordinates.cartesianvector import CartesianVector

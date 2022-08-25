@@ -18,16 +18,16 @@ from emmpy.magmodel.math.trigparity import EVEN, ODD
 from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
     TailSheetAsymmetricExpansion
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
 from emmpy.math.coordinates.cartesianvector import CartesianVector

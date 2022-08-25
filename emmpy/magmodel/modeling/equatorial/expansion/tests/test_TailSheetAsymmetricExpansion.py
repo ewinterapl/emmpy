@@ -1,7 +1,7 @@
 import unittest
 
-from emmpy.magmodel.core.modeling.fac.twoconicalfields import (
-    TwoConicalFields
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
+    TailSheetAsymmetricExpansion
 )
 
 

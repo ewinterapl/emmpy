@@ -15,7 +15,7 @@ from emmpy.magmodel.math.trigparity import ODD
 from emmpy.magmodel.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
-from emmpy.magmodel.core.modeling.fac.tfunction import TFunction
+from emmpy.magmodel.modeling.fac.tfunction import TFunction
 from emmpy.math.coordinates.sphericalvector import SphericalVector
 
 

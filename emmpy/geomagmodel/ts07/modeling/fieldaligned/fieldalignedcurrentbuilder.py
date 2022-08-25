@@ -24,10 +24,10 @@ from emmpy.geomagmodel.ts07.modeling.fieldaligned.stretchedfield import (
 from emmpy.magmodel.math.deformation.sphericalfielddeformation import (
     SphericalFieldDeformation
 )
-from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
+from emmpy.magmodel.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
-from emmpy.magmodel.core.modeling.fac.twoconicalfields import TwoConicalFields
+from emmpy.magmodel.modeling.fac.twoconicalfields import TwoConicalFields
 from emmpy.math.vectorfields.vectorfield import scaleLocation
 
 

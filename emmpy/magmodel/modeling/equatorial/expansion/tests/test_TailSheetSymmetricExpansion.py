@@ -1,6 +1,6 @@
 import unittest
 
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetsymmetricexpansion import (
     TailSheetSymmetricExpansion
 )
 

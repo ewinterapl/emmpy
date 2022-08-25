@@ -6,7 +6,7 @@ import unittest
 # from emmpy.geomagmodel.ts07.modeling.equatorial.currentsheethalfthicknesses import (
 #     CurrentSheetHalfThicknesses
 # )
-# from emmpy.magmodel.core.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
+# from emmpy.magmodel.modeling.equatorial.expansion.thinasymmetriccurrentsheetbasisvectorfield import (
 #     ThinAsymmetricCurrentSheetBasisVectorField
 # )
 

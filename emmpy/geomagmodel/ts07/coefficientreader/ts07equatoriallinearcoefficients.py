@@ -11,7 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import sqrt
 
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
 

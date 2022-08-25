@@ -18,7 +18,7 @@ from emmpy.magmodel.math.trigparity import EVEN, ODD
 from emmpy.magmodel.math.vectorfields.basisvectorfield import (
     BasisVectorField
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetexpansions import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetexpansions import (
     TailSheetExpansions
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

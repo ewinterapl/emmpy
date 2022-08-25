@@ -1,4 +1,4 @@
-"""Tests for Python port of Java classes from the magmodel.core.modeling.fac hierarchy.
+"""Tests for Python port of Java classes from the magmodel.modeling.fac hierarchy.
 
 Modules
 -------

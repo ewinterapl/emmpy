@@ -10,7 +10,7 @@ from emmpy.geomagmodel.ts07.coefficientreader.ts07equatoriallinearcoefficients i
 from emmpy.geomagmodel.ts07.coefficientreader.ts07equatorialvariablecoefficients import (
     Ts07EquatorialVariableCoefficients
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
 

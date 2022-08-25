@@ -16,7 +16,7 @@ from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetcoefficients import (
+from emmpy.magmodel.modeling.equatorial.expansion.tailsheetcoefficients import (
     TailSheetCoefficients
 )
 

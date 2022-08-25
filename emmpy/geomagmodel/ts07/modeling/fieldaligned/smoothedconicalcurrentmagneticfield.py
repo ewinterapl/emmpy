@@ -13,7 +13,7 @@ import emmpy.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.math.vectorfields.sphericalvectorfield import (
     SphericalVectorField
 )
-from emmpy.magmodel.core.modeling.fac.conicalcurrentmagneticfield import (
+from emmpy.magmodel.modeling.fac.conicalcurrentmagneticfield import (
     ConicalCurrentMagneticField
 )
 from emmpy.math.coordinates.sphericalvector import SphericalVector

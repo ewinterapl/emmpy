@@ -1,8 +1,6 @@
 import unittest
 
-from emmpy.magmodel.core.modeling.equatorial.expansion.tailsheetasymmetricexpansion import (
-    TailSheetAsymmetricExpansion
-)
+from emmpy.magmodel.modeling.fac.tfunction import TFunction
 
 
 class TestBuilder(unittest.TestCase):
@@ -10,7 +8,13 @@ class TestBuilder(unittest.TestCase):
     def test___init__(self):
         pass
 
+    def test_createFromDelta(self):
+        pass
+
     def test_evaluate(self):
+        pass
+
+    def test_differentiate(self):
         pass
 
 

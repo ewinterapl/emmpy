@@ -2,12 +2,12 @@
 
 Modules
 -------
-test_BasisVectorField.py
-test_BasisVectorFields.py
-test_CylindricalBasisVectorField.py
-test_DifferentiableCylindricalVectorField.py
-test_DifferentiableSphericalVectorField.py
-test_SphericalVectorField.py
+test_basisvectorfield.py
+test_basisvectorfields.py
+test_cylindricalbasisvectorfield.py
+test_differentiablecylindricalvectorfield.py
+test_differentiabledphericalvectorfield.py
+test_sphericalvectorfield.py
 
 Packages
 --------

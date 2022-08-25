@@ -2,8 +2,8 @@
 
 Modules
 -------
-test_ArrayExpansion1D.py
-test_ArrayExpansion2D.py
+test_arrayexpansion1d.py
+test_arrayexpansion2d.py
 
 Packages
 --------

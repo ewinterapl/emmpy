@@ -2,15 +2,15 @@
 
 Modules
 -------
-test_BirkelandDeformationFunction.py
-test_FacConfigurationOptions.py
-test_Ffunction.py
-test_FieldAlignedCurrentBuilder.py
-test_FieldAlignedCurrentShiedingBuilder.py
-test_ScaledField.py
-test_SmoothedConicalCurrentMagneticField.py
-test_StretchedField.py
-test_Ts07DFieldAlignedMagneticField.py
+test_birkelanddeformationfunction.py
+test_facconfigurationoptions.py
+test_ffunction.py
+test_fieldalignedcurrentbuilder.py
+test_fieldalignedcurrentshiedingbuilder.py
+test_scaledfield.py
+test_smoothedconicalcurrentmagneticfield.py
+test_stretchedfield.py
+test_ts07dfieldalignedmagneticfield.py
 
 Packages
 --------

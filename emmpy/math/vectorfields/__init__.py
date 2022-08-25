@@ -13,6 +13,7 @@ quadraticapproximationdifferentiablevectorfield.py
 sphericalvectorfield.py
 sphericalvectorfieldvalue.py
 vectorfield.py
+vectorfields.pys
 vectorfieldvalue.py
 
 Packages

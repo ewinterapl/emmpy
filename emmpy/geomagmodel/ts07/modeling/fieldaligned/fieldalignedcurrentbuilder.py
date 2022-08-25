@@ -8,7 +8,7 @@ G.K. Stephens
 Eric Winter (eric.winter@jhuapl.edu)
 """
 
-import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
+import emmpy.math.vectorfields.vectorfields as vectorfields
 from emmpy.geomagmodel.ts07.modeling.fieldaligned.birkelanddeformationfunction import (
     BirkelandDeformationFunction
 )

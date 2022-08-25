@@ -3,7 +3,7 @@
 
 import unittest
 
-from emmpy.crucible.core.math.vectorfields.vectorfields import (
+from emmpy.math.vectorfields.vectorfields import (
     curl, scale
 )
 from emmpy.math.coordinates.vectorijk import VectorIJK

@@ -10,7 +10,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 """
 
 
-import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
+import emmpy.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.modeling.fac.xyplanereflectedfield import (
     XYPlaneReflectedField
 )

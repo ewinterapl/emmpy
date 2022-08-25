@@ -11,6 +11,7 @@ test_quadraticapproximationdifferentiablevectorfield.py
 test_sphericalvectorfield.py
 test_sphericalvectorfieldvalue.py
 test_vectorfield.py
+test_vectorfields.py
 test_vectorfieldvalue.py
 
 Packages

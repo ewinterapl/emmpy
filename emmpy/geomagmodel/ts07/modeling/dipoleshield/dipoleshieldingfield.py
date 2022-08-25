@@ -12,7 +12,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 from math import cos, sin
 
-import emmpy.crucible.core.math.vectorfields.vectorfields as vectorfields
+import emmpy.math.vectorfields.vectorfields as vectorfields
 from emmpy.magmodel.core.math.perpendicularandparallelcartesianharmonicfield import (
     PerpendicularAndParallelCartesianHarmonicField
 )

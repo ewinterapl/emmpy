@@ -37,7 +37,7 @@ from emmpy.math.expansions.arraycoefficientexpansion2d import (
 )
 
 
-def readAzimuthalExpansionNumber(path):
+def readNumberOfAzimuthalExpansions(path):
     """Read the number of azimuthal expansions.
 
     Read the number of azimuthal expansions from the coefficients file.
@@ -60,7 +60,7 @@ def readAzimuthalExpansionNumber(path):
     return numAzimuthalExpansions
 
 
-def readCurrentSheetNumber(path):
+def readNumberOfCurrentSheets(path):
     """Read the number of current sheets.
 
     Read the number of current sheets from the coefficients file.
@@ -82,7 +82,7 @@ def readCurrentSheetNumber(path):
     return numCurrentSheets
 
 
-def readRadialExpansionNumber(path):
+def readNumberOfRadialExpansions(path):
     """Read the number of radial expansions.
 
     Read the number of radial expansions from the coefficients file.
@@ -167,16 +167,8 @@ class TS07DVariableCoefficientsUtils:
 
         Parameters
         ----------
-        variableCoefficientsFile : str
+        path : str
             Path to coefficients file.
-        numCurrentSheets : int
-            Number of current sheets.
-        numAzimuthalExpansions : int
-            Number of azimuthal expansions.
-        numRadialExpansions : int
-            Number of radial expansions.
-        facConfiguration : FacConfiguration
-            Configuration of FAC.
 
         Returns
         -------
@@ -188,23 +180,13 @@ class TS07DVariableCoefficientsUtils:
         TypeError
             If invalid parameters are provided.
         """
-        (variableCoefficientsFile,) = args
-        path = variableCoefficientsFile
-        # Constructs the TS07D set of coefficients from the ASCII file
-        # WITH a customized resolution. This set of coefficients can be
-        # used to construct the TS07D model. The model configuration is
-        # interpreted from the file.
-        numCurrentSheets = readCurrentSheetNumber(variableCoefficientsFile)
-        numAzimuthalExpansions = readAzimuthalExpansionNumber(path)
-        numRadialExpansions = readRadialExpansionNumber(variableCoefficientsFile)
-        facConfiguration = readFACConfiguration(variableCoefficientsFile)
+        (path,) = args
 
-        # Constructs the TS07D set of coefficients from the ASCII file WITH
-        # a customized resolution and with MANY current sheets. This set of
-        # coefficient can be used to construct the TS07D model.
-        # This is package private because (at least for now) we want to
-        # limit the public API to only support 1 or 2 current sheets, not
-        # many current sheets.
+        # Read the description of the coefficients.
+        numCurrentSheets = readNumberOfCurrentSheets(path)
+        numAzimuthalExpansions = readNumberOfAzimuthalExpansions(path)
+        numRadialExpansions = readNumberOfRadialExpansions(path)
+        facConfiguration = readFACConfiguration(path)
 
         # The number of asymmetric expansions is simply n*m.
         numAsymmetricExpansions = (
@@ -224,7 +206,7 @@ class TS07DVariableCoefficientsUtils:
 
         coeffs = np.empty((totalNumberOfCoefficients,))
         lineNumber = 0
-        for line in open(variableCoefficientsFile):
+        for line in open(path):
             try:
                 coeffs[lineNumber] = float(line.split()[0])
                 lineNumber += 1

@@ -11,6 +11,7 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import numbers
 
+import numpy as np
 
 class Ts07EquatorialVariableCoefficients:
     """Variable equatorial coefficients for TS07 geomagnetic field model.
@@ -57,7 +58,7 @@ class Ts07EquatorialVariableCoefficients:
         """
         if isinstance(currThicks, numbers.Real):
             self.currThicks = [currThicks]
-        elif isinstance(currThicks, list):
+        elif isinstance(currThicks, (list, np.ndarray)):
             # The current sheet thickness and the number of sets of linear
             # coeffs must be the same size.
             self.currThicks = currThicks

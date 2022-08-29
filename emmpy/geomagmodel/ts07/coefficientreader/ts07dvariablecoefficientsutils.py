@@ -12,6 +12,8 @@ Eric Winter (eric.winter@jhuapl.edu)
 
 import re
 
+import numpy as np
+
 from emmpy.exceptions.emmpyexception import EmmpyException
 
 from emmpy.geomagmodel.ts07.coefficientreader.defaultfacconfigurationoptions import (
@@ -133,7 +135,7 @@ class TS07DVariableCoefficientsUtils:
             facConfiguration.numberOfFields
         )
 
-        coeffs = nones((totalNumberOfCoefficients,))
+        coeffs = np.empty((totalNumberOfCoefficients,))
         lineNumber = 0
         for line in open(variableCoefficientsFile):
             try:
@@ -348,7 +350,7 @@ class TS07DVariableCoefficientsUtils:
 
         Parameters
         ----------
-        coefficients : array-like of float
+        coefficients : np.array of float
             An array containing the coefficients.
         numAzimuthalExpansions : int
             Referred to as m.
@@ -379,14 +381,12 @@ class TS07DVariableCoefficientsUtils:
         # Loop through the number of current sheets.
         for nCurr in range(numCurrentSheets):
             index = nCurr*numHalfExpansions*2
-            aSym = nones((numRadialExpansions,))
-            aSymPdynDependent = nones((numRadialExpansions,))
-            aOdd = nones((numAzimuthalExpansions, numRadialExpansions))
-            aOddPdynDependent = nones((numAzimuthalExpansions,
-                                       numRadialExpansions))
-            aEven = nones((numAzimuthalExpansions, numRadialExpansions))
-            aEvenPdynDependent = nones((numAzimuthalExpansions,
-                                        numRadialExpansions))
+            aSym = np.empty((numRadialExpansions,))
+            aSymPdynDependent = np.empty((numRadialExpansions,))
+            aOdd = np.empty((numAzimuthalExpansions, numRadialExpansions))
+            aOddPdynDependent = np.empty((numAzimuthalExpansions, numRadialExpansions))
+            aEven = np.empty((numAzimuthalExpansions, numRadialExpansions))
+            aEvenPdynDependent = np.empty((numAzimuthalExpansions, numRadialExpansions))
             for n in range(numRadialExpansions):
                 index += 1
                 aSym[n] = coeffs[index]
@@ -424,7 +424,7 @@ class TS07DVariableCoefficientsUtils:
         numFacFields = facConfiguration.numberOfFields
 
         # The field aligned current amplitudes.
-        facAmps = nones((numFacFields,))
+        facAmps = np.empty((numFacFields,))
         for i in range(numFacFields):
             facAmps[i] = coeffs[numExpansions + 1 + i]
 

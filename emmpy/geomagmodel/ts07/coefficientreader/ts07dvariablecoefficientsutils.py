@@ -77,34 +77,31 @@ class TS07DVariableCoefficientsUtils:
         TypeError
             If invalid parameters are provided.
         """
-        if len(args) == 1:
-            (variableCoefficientsFile,) = args
-            # Constructs the TS07D set of coefficients from the ASCII file
-            # WITH a customized resolution. This set of coefficients can be
-            # used to construct the TS07D model. The model configuration is
-            # interpreted from the file.
-            numCurrentSheets = (
-                TS07DVariableCoefficientsUtils.readCurrentSheetNumber(
-                    variableCoefficientsFile
-                )
+        (variableCoefficientsFile,) = args
+        # Constructs the TS07D set of coefficients from the ASCII file
+        # WITH a customized resolution. This set of coefficients can be
+        # used to construct the TS07D model. The model configuration is
+        # interpreted from the file.
+        numCurrentSheets = (
+            TS07DVariableCoefficientsUtils.readCurrentSheetNumber(
+                variableCoefficientsFile
             )
-            numAzimuthalExpansions = (
-                TS07DVariableCoefficientsUtils.readAzimuthalExpansionNumber(
-                    variableCoefficientsFile
-                )
+        )
+        numAzimuthalExpansions = (
+            TS07DVariableCoefficientsUtils.readAzimuthalExpansionNumber(
+                variableCoefficientsFile
             )
-            numRadialExpansions = (
-                TS07DVariableCoefficientsUtils.readRadialExpansionNumber(
-                    variableCoefficientsFile
-                )
+        )
+        numRadialExpansions = (
+            TS07DVariableCoefficientsUtils.readRadialExpansionNumber(
+                variableCoefficientsFile
             )
-            facConfiguration = (
-                TS07DVariableCoefficientsUtils.readFACConfiguration(
-                    variableCoefficientsFile
-                )
+        )
+        facConfiguration = (
+            TS07DVariableCoefficientsUtils.readFACConfiguration(
+                variableCoefficientsFile
             )
-        else:
-            raise TypeError
+        )
 
         # Constructs the TS07D set of coefficients from the ASCII file WITH
         # a customized resolution and with MANY current sheets. This set of

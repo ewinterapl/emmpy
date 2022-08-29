@@ -36,6 +36,117 @@ from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
 
+
+def readAzimuthalExpansionNumber(path):
+    """Read the number of azimuthal expansions.
+
+    Read the number of azimuthal expansions from the coefficients file.
+
+    Parameters
+    ----------
+    path : str
+        Path to file containing coefficients.
+    
+    Returns
+    -------
+    m : int
+        The number of azimuthal expansions.
+    """
+    numAzimuthalExpansions = 0
+    for line in open(path):
+        if "M=" in line:
+            numAzimuthalExpansions = int(line.split()[-1])
+            break
+    return numAzimuthalExpansions
+
+
+def readCurrentSheetNumber(path):
+    """Read the number of current sheets.
+
+    Read the number of current sheets from the coefficients file.
+
+    Parameters
+    ----------
+    path : str
+        Path to file containing coefficients.
+    
+    Returns
+    -------
+    numCurrentSheets : int
+        The number of current sheets.
+    """
+    numCurrentSheets = 0
+    for line in open(path):
+        if " # current sheet thickness" in line:
+            numCurrentSheets += 1
+    return numCurrentSheets
+
+
+def readRadialExpansionNumber(path):
+    """Read the number of radial expansions.
+
+    Read the number of radial expansions from the coefficients file.
+
+    Parameters
+    ----------
+    path : str
+        Path to file containing coefficients.
+    
+    Returns
+    -------
+    numRadialExpansions : int
+        The number of radial expansions.
+    """
+    numRadialExpansions = 0
+    for line in open(path):
+        if "N=" in line:
+            numRadialExpansions = int(line.split()[-1])
+            break
+    return numRadialExpansions
+
+
+def readFACConfiguration(path):
+    """Read the FAC configuration.
+
+    Parse the FAC configuration from the coefficients file.
+
+    Parameters
+    ----------
+    path : str
+        Path to file containing coefficients.
+    
+    Returns
+    -------
+    fac_confiuration : DefaultFacConfigurationOptions
+        The FAC configuration based on the number of FAC lines from the file.
+    
+    Raises
+    ------
+    EmmpyException
+        If the coefficients file contains an invalid FAC configuration
+        code.
+    """
+    count = 0
+    for line in open(path):
+        if re.search("# reg-[1|2] M-[1|2]", line):
+            count += 1
+    if count == 4:
+        return DefaultFacConfigurationOptions(
+            DefaultFacConfigurationOptions.TS07D)
+    elif count == 6:
+        return DefaultFacConfigurationOptions(
+            DefaultFacConfigurationOptions.FAC6)
+    elif count == 12:
+        return DefaultFacConfigurationOptions(
+            DefaultFacConfigurationOptions.FAC12)
+    elif count == 16:
+        return DefaultFacConfigurationOptions(
+            DefaultFacConfigurationOptions.FAC16)
+    else:
+        raise EmmpyException(
+            "Invalid number of FACs to construct a FAC configuration."
+        )
+
 class TS07DVariableCoefficientsUtils:
     """Utilities for time-dependent coefficients.
 
@@ -78,30 +189,15 @@ class TS07DVariableCoefficientsUtils:
             If invalid parameters are provided.
         """
         (variableCoefficientsFile,) = args
+        path = variableCoefficientsFile
         # Constructs the TS07D set of coefficients from the ASCII file
         # WITH a customized resolution. This set of coefficients can be
         # used to construct the TS07D model. The model configuration is
         # interpreted from the file.
-        numCurrentSheets = (
-            TS07DVariableCoefficientsUtils.readCurrentSheetNumber(
-                variableCoefficientsFile
-            )
-        )
-        numAzimuthalExpansions = (
-            TS07DVariableCoefficientsUtils.readAzimuthalExpansionNumber(
-                variableCoefficientsFile
-            )
-        )
-        numRadialExpansions = (
-            TS07DVariableCoefficientsUtils.readRadialExpansionNumber(
-                variableCoefficientsFile
-            )
-        )
-        facConfiguration = (
-            TS07DVariableCoefficientsUtils.readFACConfiguration(
-                variableCoefficientsFile
-            )
-        )
+        numCurrentSheets = readCurrentSheetNumber(variableCoefficientsFile)
+        numAzimuthalExpansions = readAzimuthalExpansionNumber(path)
+        numRadialExpansions = readRadialExpansionNumber(variableCoefficientsFile)
+        facConfiguration = readFACConfiguration(variableCoefficientsFile)
 
         # Constructs the TS07D set of coefficients from the ASCII file WITH
         # a customized resolution and with MANY current sheets. This set of
@@ -213,121 +309,6 @@ class TS07DVariableCoefficientsUtils:
                 twist_factor = float(line.split()[0])
                 break
         return twist_factor
-
-    @staticmethod
-    def readCurrentSheetNumber(variableCoefficientsFile):
-        """Parse the number of current sheets from the coefficients file.
-
-        Parse the number of current sheets from the coefficients file.
-
-        Parameters
-        ----------
-        variableCoefficientsFile : str
-            An ASCII file containing a list of the coefficients.
-        
-        Returns
-        -------
-        numCurrSheets : int
-            The number of current sheets parsed from the file.
-        """
-        numCurrSheets = 0
-        for line in open(variableCoefficientsFile):
-            if " # current sheet thickness" in line:
-                numCurrSheets += 1
-        return numCurrSheets
-
-    @staticmethod
-    def readAzimuthalExpansionNumber(variableCoefficientsFile):
-        """Parse the azimuthal expansion number from the coefficients file.
-
-        Parse the azimuthal expansion number from the coefficients file.
-
-        Parameters
-        ----------
-        variableCoefficientsFile : str
-            An ASCII file containing a list of the coefficients.
-        
-        Returns
-        -------
-        m : int
-            The azimuthal expansion number parsed from the file.
-        """
-        m = 0
-        for line in open(variableCoefficientsFile):
-            if "M=" in line:
-                m_str = line.split()[-1]
-                m = int(m_str)
-                break
-        return m
-
-    @staticmethod
-    def readRadialExpansionNumber(variableCoefficientsFile):
-        """Parse the radial expansion number from the coefficients file.
-
-        Parse the radial expansion number from the coefficients file.
-
-        Parameters
-        ----------
-        variableCoefficientsFile : str
-            An ASCII file containing a list of the coefficients.
-        
-        Returns
-        -------
-        n : int
-            The radial expansion number parsed from the file.
-        """
-        n = 0
-        for line in open(variableCoefficientsFile):
-            if "N=" in line:
-                n_str = line.split()[-1]
-                n = int(n_str)
-                break
-        return n
-
-    @staticmethod
-    def readFACConfiguration(variableCoefficientsFile):
-        """Read the FAC configuration number and return configuration.
-
-        Parse the FAC configuration number from the coefficients file, and
-        return the orresponding FAC configuration.
-
-        Parameters
-        ----------
-        variableCoefficientsFile : str
-            An ASCII file containing a list of the coefficients.
-        
-        Returns
-        -------
-        result : DefaultFacConfigurationOptions
-            The FAC configuration based on the configuration number parsed
-            from the file.
-        
-        Raises
-        ------
-        EmmpyException
-            If the coefficients file contains an invalid FAC configuration
-            code.
-        """
-        count = 0
-        for line in open(variableCoefficientsFile):
-            if re.search("# reg-[1|2] M-[1|2]", line):
-                count += 1
-        if count == 4:
-            return DefaultFacConfigurationOptions(
-                DefaultFacConfigurationOptions.TS07D)
-        elif count == 6:
-            return DefaultFacConfigurationOptions(
-                DefaultFacConfigurationOptions.FAC6)
-        elif count == 12:
-            return DefaultFacConfigurationOptions(
-                DefaultFacConfigurationOptions.FAC12)
-        elif count == 16:
-            return DefaultFacConfigurationOptions(
-                DefaultFacConfigurationOptions.FAC16)
-        else:
-            raise EmmpyException(
-                "Invalid number of FACs to construct a FAC configuration."
-            )
 
     @staticmethod
     def createFromArray(

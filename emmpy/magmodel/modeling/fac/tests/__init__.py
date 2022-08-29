@@ -2,10 +2,10 @@
 
 Modules
 -------
-test_ConicalCurrentMagneticField.py
-test_TFunction.py
-test_TwoConicalFields.py
-test_XYPlaneReflectedField.py
+test_conicalcurrentmagneticfield.py
+test_tfunction.py
+test_twoconicalfields.py
+test_xyplanereflectedfield.py
 
 Packages
 --------

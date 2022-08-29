@@ -35,8 +35,6 @@ from emmpy.math.expansions.scalarexpansion1d import ScalarExpansion1D
 from emmpy.math.expansions.arraycoefficientexpansion2d import (
     ArrayCoefficientExpansion2D
 )
-from emmpy.utilities.nones import nones
-
 
 class TS07DVariableCoefficientsUtils:
     """Utilities for time-dependent coefficients.

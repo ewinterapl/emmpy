@@ -103,10 +103,6 @@ class TS07DVariableCoefficientsUtils:
                     variableCoefficientsFile
                 )
             )
-        elif len(args) == 5:
-            (variableCoefficientsFile, numCurrentSheets,
-             numAzimuthalExpansions, numRadialExpansions,
-             facConfiguration) = args
         else:
             raise TypeError
 

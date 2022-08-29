@@ -112,12 +112,12 @@ class Ts07DFieldAlignedMagneticField(BasisVectorField):
                 dipoleTiltAngle, dynamicPressure, kappa, scaleFactor)
             builder.withTheta0(option.theta0)
             builder.withDeltaTheta(option.deltaTheta)
-            builder.smoothing = option.isSmoothed()
+            builder.smoothing = option.smoothed
 
             field = builder.build()
             internalFieldsBuilder.append(field)
 
-            if option.isShielded():
+            if option.shielded:
                 shieldingField = FieldAlignedCurrentShiedingBuilder(
                     option.region, option.mode,
                     shieldingParity, dipoleTiltAngle, dynamicPressure, kappa,

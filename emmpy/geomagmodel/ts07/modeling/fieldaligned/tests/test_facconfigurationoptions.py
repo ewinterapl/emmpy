@@ -24,18 +24,6 @@ class TestBuilder(unittest.TestCase):
         self.assertTrue(fco.smoothed)
         self.assertFalse(fco.shielded)
 
-    def test_isSmoothed(self):
-        fco = FacConfigurationOptions(
-            0.1, REGION_1, 2, EVEN, 4.4, 5.5, True, False
-        )
-        self.assertTrue(fco.isSmoothed())
-
-    def test_isShielded(self):
-        fco = FacConfigurationOptions(
-            0.1, REGION_1, 2, EVEN, 4.4, 5.5, True, False
-        )
-        self.assertFalse(fco.isShielded())
-
 
 if __name__ == '__main__':
     unittest.main()

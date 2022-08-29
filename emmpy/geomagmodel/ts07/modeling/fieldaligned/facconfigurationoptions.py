@@ -72,35 +72,3 @@ class FacConfigurationOptions:
         self.deltaTheta = float(deltaTheta)
         self.smoothed = smoothed
         self.shielded = shielded
-
-    def isSmoothed(self):
-        """Return the angular smoothing flag.
-        
-        Return the angular smoothing flag.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.smoothed : bool
-            The angular smoothing flag.
-        """
-        return self.smoothed
-
-    def isShielded(self):
-        """Return the shielding flag.
-        
-        Return the shielding flag.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        self.shielded : bool
-            The shielding flag.
-        """
-        return self.shielded
